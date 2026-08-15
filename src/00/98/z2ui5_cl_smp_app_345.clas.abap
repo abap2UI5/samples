@@ -92,15 +92,18 @@ CLASS z2ui5_cl_smp_app_345 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `RTTI IV`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `RTTI IV`
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `Button`
         )->a( n = `press` v = client->_event( `GO` )
@@ -133,12 +136,15 @@ CLASS z2ui5_cl_smp_app_345 IMPLEMENTATION.
       columns->ele( `Column`
           )->a( n = `visible` v = i_client->_bind( val       = layout->visible
                                                   tab       = i_layout->ms_data-t_layout
-                                                  tab_index = lv_index ) )->tag( `Text`
-            )->a( n = `text` v = layout->name ).
+                                                  tab_index = lv_index )
+          )->tag( `Text`
+              )->a( n = `text` v = layout->name ).
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->end( )->ele( `items` )->ele( `ColumnListItem` ).
+    DATA(column_list_item) = columns->end(
+        )->ele( `items`
+            )->ele( `ColumnListItem` ).
 
     DATA(cells) = column_list_item->ele( `cells` ).
 

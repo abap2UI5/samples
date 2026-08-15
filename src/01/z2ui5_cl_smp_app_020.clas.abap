@@ -49,9 +49,10 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
         RETURN.
     ENDCASE.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`      v = `sap.m`
-        )->a( n = `xmlns:core` v = `sap.ui.core` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
     DATA(dialog) = popup->ele( `Dialog`
         )->a( n = `title` v = `abap2UI5 - Popup to decide` ).
 
@@ -62,13 +63,18 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    dialog->ele( `VBox` )->tag( `Text`
-                )->a( n = `text` v = text )->end( )->ele( `buttons` )->tag( `Button`
-                    )->a( n = `press` v = client->_event( cancel_event )
-                    )->a( n = `text`  v = cancel_text )->tag( `Button`
-                    )->a( n = `press` v = client->_event( confirm_event )
-                    )->a( n = `text`  v = confirm_text
-                    )->a( n = `type`  v = `Emphasized` ).
+    dialog->ele( `VBox`
+        )->tag( `Text`
+            )->a( n = `text` v = text
+    )->end(
+        )->ele( `buttons`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( cancel_event )
+                )->a( n = `text`  v = cancel_text
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( confirm_event )
+                )->a( n = `text`  v = confirm_text
+                )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 

@@ -41,14 +41,16 @@ CLASS z2ui5_cl_smp_app_118 IMPLEMENTATION.
 
     ENDIF.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Weird Behavior Showcase`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
@@ -58,42 +60,84 @@ CLASS z2ui5_cl_smp_app_118 IMPLEMENTATION.
         )->a( n = `items` v = client->_bind( problematic_rows )
         )->a( n = `mode`  v = `MultiSelect` ).
 
-    tab_ko->ele( `headerToolbar` )->ele( `Toolbar` )->tag( `Title`
-                    )->a( n = `text` v = |This table has the weird behavior| )->tag( `ToolbarSpacer` )->tag( `Button`
-                    )->a( n = `press` v = client->_event( `ON_BTN_GO` )
-                    )->a( n = `text`  v = |Go|
-                    )->a( n = `icon`  v = `sap-icon://blur` ).
+    tab_ko->ele( `headerToolbar`
+        )->ele( `Toolbar`
+            )->tag( `Title`
+                )->a( n = `text` v = |This table has the weird behavior|
+            )->tag( `ToolbarSpacer`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `ON_BTN_GO` )
+                )->a( n = `text`  v = |Go|
+                )->a( n = `icon`  v = `sap-icon://blur` ).
 
-    tab_ko->ele( `columns` )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `ID` )->end( )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Description` )->end( )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Date ` )->end( )->ele( `Column` )->tag( `Text`
+    tab_ko->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `ID`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Description`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Date `
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
                 )->a( n = `text` v = `Time` ).
 
-    tab_ko->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->ele( `ObjectIdentifier`
-                     )->a( n = `title` v = `{ID}` )->end( )->tag( `Text`
-                     )->a( n = `text` v = `{DESCR}` )->tag( `Text`
-                     )->a( n = `text` v = `{ADATE}` )->tag( `Text`
-                     )->a( n = `text` v = `{ATIME}` ).
+    tab_ko->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+                )->ele( `ObjectIdentifier`
+                    )->a( n = `title` v = `{ID}`
+                )->end(
+                )->tag( `Text`
+                    )->a( n = `text` v = `{DESCR}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{ADATE}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{ATIME}` ).
 
     DATA(tab_ok) = page->ele( `Table`
         )->a( n = `items` v = client->_bind( these_are_fine_rows )
         )->a( n = `mode`  v = `MultiSelect` ).
 
-    tab_ok->ele( `headerToolbar` )->ele( `Toolbar` )->tag( `Title`
-                    )->a( n = `text` v = |This table is fine| ).
+    tab_ok->ele( `headerToolbar`
+        )->ele( `Toolbar`
+            )->tag( `Title`
+                )->a( n = `text` v = |This table is fine| ).
 
-    tab_ok->ele( `columns` )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `ID` )->end( )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Description` )->end( )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Date ` )->end( )->ele( `Column` )->tag( `Text`
+    tab_ok->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `ID`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Description`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Date `
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
                 )->a( n = `text` v = `Time` ).
 
-    tab_ok->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->ele( `ObjectIdentifier`
-                     )->a( n = `title` v = `{ID}` )->end( )->tag( `Text`
-                     )->a( n = `text` v = `{DESCR}` )->tag( `Text`
-                     )->a( n = `text` v = `{ADATE}` )->tag( `Text`
-                     )->a( n = `text` v = `{ATIME}` ).
+    tab_ok->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+                )->ele( `ObjectIdentifier`
+                    )->a( n = `title` v = `{ID}`
+                )->end(
+                )->tag( `Text`
+                    )->a( n = `text` v = `{DESCR}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{ADATE}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{ATIME}` ).
 
     client->view_display( view->stringify( ) ).
 

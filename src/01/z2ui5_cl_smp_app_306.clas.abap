@@ -68,13 +68,14 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
     DATA(cont) = view->ele( `Shell` ).
     DATA(page) = cont->ele( `Page`
@@ -90,26 +91,32 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Label`
-           )->a( n = `text`        v = `facingMode: `
-           )->a( n = `labelFor`    v = `ComboFacingMode` )->ele( `ComboBox`
-           )->a( n = `selectedKey` v = client->_bind( facing_mode )
-           )->a( n = `items`       v = |\{path:'{ client->_bind( val  = facing_modes
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Label`
+            )->a( n = `text`        v = `facingMode: `
+            )->a( n = `labelFor`    v = `ComboFacingMode`
+        )->ele( `ComboBox`
+            )->a( n = `selectedKey` v = client->_bind( facing_mode )
+            )->a( n = `items`       v = |\{path:'{ client->_bind( val  = facing_modes
                     path        = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
-           )->a( n = `id`   v = `ComboFacingMode` )->tag( n = `Item` ns = `core`
-           )->a( n = `key`  v = `{KEY}`
-           )->a( n = `text` v = `{TEXT}` ).
+            )->a( n = `id`   v = `ComboFacingMode`
+            )->tag( n = `Item` ns = `core`
+                )->a( n = `key`  v = `{KEY}`
+                )->a( n = `text` v = `{TEXT}` ).
 
     page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Label`
-           )->a( n = `text`        v = `device: `
-           )->a( n = `labelFor`    v = `ComboDevice` )->ele( n = `CameraSelector` ns = `z2ui5`
-           )->a( n = `selectedKey` v = client->_bind( device )
-           )->a( n = `items`       v = |\{path:'{ client->_bind( val  = devices
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Label`
+            )->a( n = `text`        v = `device: `
+            )->a( n = `labelFor`    v = `ComboDevice`
+        )->ele( n = `CameraSelector` ns = `z2ui5`
+            )->a( n = `selectedKey` v = client->_bind( device )
+            )->a( n = `items`       v = |\{path:'{ client->_bind( val  = devices
            path        = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
-           )->a( n = `id`   v = `ComboDevice` )->tag( n = `Item` ns = `core`
-           )->a( n = `key`  v = `{KEY}`
-           )->a( n = `text` v = `{TEXT}` ).
+            )->a( n = `id`   v = `ComboDevice`
+            )->tag( n = `Item` ns = `core`
+                )->a( n = `key`  v = `{KEY}`
+                )->a( n = `text` v = `{TEXT}` ).
 
     page->tag( n = `CameraPicture` ns = `z2ui5`
         )->a( n = `value`      v = client->_bind( mv_picture_base )

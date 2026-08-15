@@ -72,18 +72,20 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - File - Upload to the Backend`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - File - Upload to the Backend`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text` v = `The file_uploader custom control returns the picked file as a base64 data URL; the backend ` &&
@@ -98,23 +100,34 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
       ASSIGN table->* TO <table>.
 
       DATA(tab) = page->ele( `Table`
-          )->a( n = `items` v = client->_bind( <table> ) )->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `Title`
-                      )->a( n = `text` v = `CSV Content` )->tag( `ToolbarSpacer` )->end( )->end( ).
+          )->a( n = `items` v = client->_bind( <table> )
+          )->ele( `headerToolbar`
+              )->ele( `OverflowToolbar`
+                  )->tag( `Title`
+                      )->a( n = `text` v = `CSV Content`
+                  )->tag( `ToolbarSpacer`
+              )->end(
+          )->end( ).
 
       DATA(fields)  = z2ui5_cl_smp_context=>rtti_get_t_attri_by_any( <table> ).
       DATA(columns) = tab->ele( `columns` ).
-      DATA(cells)   = tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` ).
+      DATA(cells)   = tab->ele( `items`
+          )->ele( `ColumnListItem`
+              )->ele( `cells` ).
 
       LOOP AT fields REFERENCE INTO DATA(field).
-        columns->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = field->name ).
+        columns->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = field->name ).
         cells->tag( `Text`
             )->a( n = `text` v = |\{{ field->name }\}| ).
       ENDLOOP.
 
     ENDIF.
 
-    page->ele( `footer` )->ele( `OverflowToolbar` )->tag( n = `FileUploader` ns = `z2ui5`
+    page->ele( `footer`
+        )->ele( `OverflowToolbar`
+            )->tag( n = `FileUploader` ns = `z2ui5`
                 )->a( n = `placeholder` v = `filepath here...`
                 )->a( n = `upload`      v = client->_event( `UPLOAD` )
                 )->a( n = `path`        v = client->_bind( filepath )

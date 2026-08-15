@@ -78,10 +78,11 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`       v = `sap.m`
-        )->a( n = `xmlns:core`  v = `sap.ui.core`
-        )->a( n = `xmlns:z2ui5` v = `z2ui5.cc` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`       v = `sap.m`
+            )->a( n = `xmlns:core`  v = `sap.ui.core`
+            )->a( n = `xmlns:z2ui5` v = `z2ui5.cc` ).
     DATA(dialog) = popup->ele( `Dialog`
         )->a( n = `title` v = `abap2UI5 - Tree in a dialog` ).
 
@@ -90,7 +91,8 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
     dialog->ele( `Tree`
         )->a( n = `id`         v = `treePopup`
         )->a( n = `items`      v = client->_bind( t_nodes )
-        )->a( n = `headerText` v = `Documents` )->tag( `StandardTreeItem`
+        )->a( n = `headerText` v = `Documents`
+        )->tag( `StandardTreeItem`
             )->a( n = `title` v = `{TEXT}` ).
 
     " invisible companion: snapshots the tree's expand state before each
@@ -98,7 +100,8 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
     " shows the same nodes expanded as when it was closed
     dialog->tag( n = `Tree` ns = `z2ui5` ).
 
-    dialog->ele( `buttons` )->tag( `Button`
+    dialog->ele( `buttons`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `CLOSE_POPUP` )
             )->a( n = `text`  v = `Close` ).
 
@@ -109,14 +112,16 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Tree - Inside a Dialog`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -130,7 +135,8 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `OPEN_POPUP` )
             )->a( n = `text`  v = `Open tree popup`
             )->a( n = `icon`  v = `sap-icon://tree` ).

@@ -79,15 +79,17 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:dnd`    v = `sap.ui.core.dnd` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:dnd`    v = `sap.ui.core.dnd` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Table - Drag and Drop Rows`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -107,7 +109,8 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
     " dragDropConfig is a plain sap.m aggregation here (ns = ``); the
     " DragDropInfo goes through _generic because the typed builder method
     " has no dropPosition parameter
-    tab->ele( `dragDropConfig` )->ele( n = `DragDropInfo` ns = `dnd`
+    tab->ele( `dragDropConfig`
+        )->ele( n = `DragDropInfo` ns = `dnd`
             )->a( n = `sourceAggregation` v = `items`
             )->a( n = `targetAggregation` v = `items`
             )->a( n = `dropPosition`      v = `Between`
@@ -118,12 +121,22 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
                                       ( `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` )
                                       ( `${$parameters>/dropPosition}` ) ) ) ).
 
-    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Product` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Category` )->end( ).
+    tab->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Product`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Category`
+        )->end( ).
 
-    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
-                    )->a( n = `text` v = `{NAME}` )->tag( `Text`
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{NAME}`
+                )->tag( `Text`
                     )->a( n = `text` v = `{CATEGORY}` ).
 
     client->view_display( view->stringify( ) ).

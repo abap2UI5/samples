@@ -51,36 +51,55 @@ CLASS z2ui5_cl_smp_app_353 IMPLEMENTATION.
 
   METHOD render.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
-              )->a( n = `title`          v = `abap2UI5 - Multiple Timers`
-              )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-              )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `abap2UI5 - Multiple Timers`
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     DATA(form) = page->ele( n = `SimpleForm` ns = `form`
-        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
+        )->a( n = `editable` b = abap_true
+        )->ele( n = `content` ns = `form` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `device_browser` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( device_browser ) )->tag( `Label`
-            )->a( n = `text` v = `device_os` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( device_os ) )->tag( `Label`
-            )->a( n = `text` v = `device_systemtype` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( device_systemtype ) )->tag( `Label`
-            )->a( n = `text` v = `device_height` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( device_height ) )->tag( `Label`
-            )->a( n = `text` v = `device_width` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( device_width ) )->tag( `Label`
-            )->a( n = `text` v = `ui5_version` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( ui5_version ) )->tag( `Label`
-            )->a( n = `text` v = `ui5_theme` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( ui5_theme ) )->tag( `Label`
-            )->a( n = `text` v = `Cursor here ->` )->tag( `Input`
+        )->a( n = `text` v = `device_browser`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( device_browser )
+        )->tag( `Label`
+            )->a( n = `text` v = `device_os`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( device_os )
+        )->tag( `Label`
+            )->a( n = `text` v = `device_systemtype`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( device_systemtype )
+        )->tag( `Label`
+            )->a( n = `text` v = `device_height`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( device_height )
+        )->tag( `Label`
+            )->a( n = `text` v = `device_width`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( device_width )
+        )->tag( `Label`
+            )->a( n = `text` v = `ui5_version`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( ui5_version )
+        )->tag( `Label`
+            )->a( n = `text` v = `ui5_theme`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( ui5_theme )
+        )->tag( `Label`
+            )->a( n = `text` v = `Cursor here ->`
+        )->tag( `Input`
             )->a( n = `id`    v = `IdOne`
             )->a( n = `value` v = client->_bind( one ) ).
 

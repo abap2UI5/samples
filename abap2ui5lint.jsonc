@@ -87,11 +87,14 @@
     // different column than its siblings, a call written left of the element
     // it belongs to), never the step size, so the corpus already passes it.
     //
-    // `chain-element-per-line` is NOT raised, and that is deliberate: it flags
-    // 339 findings here, and one of them is the idiom AGENTS.md section 10
-    // documents - `view->ele( `Shell` )->ele( `Page`` on one line. Raising it
-    // means changing that convention first.
+    // `chain-element-per-line` is raised too, since the layout unification
+    // (AGENTS.md section 10): the convention it used to contradict - a control
+    // sharing its line with the container it opens, `view->ele( `Shell`
+    // )->ele( `Page`` - is gone, every call now stands on its own line at its
+    // own tree level, and the 339 findings with it. That also emptied the
+    // baseline of both layout rules, so from here they only guard.
     "chain-indentation": { "severity": "warning" },
+    "chain-element-per-line": { "severity": "warning" },
     "render-error": {
       "exclude": [
         // (a) not served by the harness

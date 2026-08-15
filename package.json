@@ -6,6 +6,8 @@
   "scripts": {
     "launchpad": "node scripts/generate-launchpad.js",
     "lint": "abaplint ./abaplint.jsonc",
+    "check:chains": "node scripts/chain-format.mjs",
+    "fmt:chains": "node scripts/chain-format.mjs --write",
     "check:abap2ui5": "abap2ui5lint",
     "rename": "abaplint .github/abaplint/rename_test.jsonc --rename",
     "check:agents": "node scripts/check-agents-structure.js",

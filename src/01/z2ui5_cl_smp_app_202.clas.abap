@@ -21,18 +21,20 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(lr_view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(lr_view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    lr_view        = lr_view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - Control - Wizard with Steps`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-        )->a( n = `id`             v = `page_main` ).
+    lr_view        = lr_view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Control - Wizard with Steps`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `id`             v = `page_main` ).
 
     lr_view->tag( `MessageStrip`
         )->a( n = `text`     v = `A sap.m.Wizard guides through numbered steps. Branching is enabled: ` &&

@@ -52,12 +52,13 @@ CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE data.
 
     IF mo_parent_page IS INITIAL.
-      DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-          )->a( n = `displayBlock` v = `true`
-          )->a( n = `height`       v = `100%`
-          )->a( n = `xmlns`        v = `sap.m`
-          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+      DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `displayBlock` v = `true`
+              )->a( n = `height`       v = `100%`
+              )->a( n = `xmlns`        v = `sap.m`
+              )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
     ELSE.
       page = mo_parent_page.
@@ -74,14 +75,18 @@ CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
 
     LOOP AT mt_comp INTO DATA(comp).
 
-      columns->ele( `Column` )->tag( `Text`
-          )->a( n = `text` v = comp-name ).
+      columns->ele( `Column`
+          )->tag( `Text`
+              )->a( n = `text` v = comp-name ).
 
     ENDLOOP.
 
-    DATA(cells) = columns->end( )->ele( `items` )->ele( `ColumnListItem`
-                                           )->a( n = `vAlign` v = `Middle`
-                                           )->a( n = `type`   v = `Navigation` )->ele( `cells` ).
+    DATA(cells) = columns->end(
+        )->ele( `items`
+            )->ele( `ColumnListItem`
+                )->a( n = `vAlign` v = `Middle`
+                )->a( n = `type`   v = `Navigation`
+                )->ele( `cells` ).
 
     LOOP AT mt_comp INTO comp.
       cells->ele( `ObjectIdentifier`

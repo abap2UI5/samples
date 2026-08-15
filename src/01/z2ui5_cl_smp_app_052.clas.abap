@@ -35,11 +35,12 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(lo_popover) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`      v = `sap.m`
-        )->a( n = `xmlns:core` v = `sap.ui.core`
-        )->a( n = `xmlns:f`    v = `sap.f`
-        )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
+    DATA(lo_popover) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:f`    v = `sap.f`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
     DATA(popover) = lo_popover->ele( `Popover`
         )->a( n = `title`        v = |abap2UI5 - Popover - { mv_product }|
@@ -50,20 +51,28 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
         )->a( n = `layout`   v = `ColumnLayout`
         )->a( n = `editable` b = abap_false
         )->ele( n = `content` ns = `form`
-            )->tag( `Label` )->a( n = `text` v = `Product`
-            )->tag( `Text`  )->a( n = `text` v = mv_product
-            )->tag( `Label` )->a( n = `text` v = `info2`
-            )->tag( `Text`  )->a( n = `text` v = `this is a text`
-            )->tag( `Label` )->a( n = `text` v = `info3`
-            )->tag( `Text`  )->a( n = `text` v = `this is a text`
-            )->tag( `Text`  )->a( n = `text` v = `this is a text` ).
+            )->tag( `Label`
+                )->a( n = `text` v = `Product`
+            )->tag( `Text`
+                )->a( n = `text` v = mv_product
+            )->tag( `Label`
+                )->a( n = `text` v = `info2`
+            )->tag( `Text`
+                )->a( n = `text` v = `this is a text`
+            )->tag( `Label`
+                )->a( n = `text` v = `info3`
+            )->tag( `Text`
+                )->a( n = `text` v = `this is a text`
+            )->tag( `Text`
+                )->a( n = `text` v = `this is a text` ).
 
-    popover->ele( `footer` )->ele( `OverflowToolbar`
-        )->tag( `ToolbarSpacer`
-        )->tag( `Button`
-            )->a( n = `press` v = client->_event( `BUTTON_DETAILS` )
-            )->a( n = `text`  v = `details`
-            )->a( n = `type`  v = `Emphasized` ).
+    popover->ele( `footer`
+        )->ele( `OverflowToolbar`
+            )->tag( `ToolbarSpacer`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_DETAILS` )
+                )->a( n = `text`  v = `details`
+                )->a( n = `type`  v = `Emphasized` ).
 
     client->popover_display( xml   = lo_popover->stringify( )
                              by_id = id ).
@@ -73,20 +82,22 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:f`      v = `sap.f`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:f`      v = `sap.f`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - Popover - Open from a Table Row`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-        )->a( n = `id`             v = `page_main` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Popover - Open from a Table Row`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `id`             v = `page_main` ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `List report layout: a dynamic page with a table whose product links open a popover ` &&
@@ -104,18 +115,24 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
         )->a( n = `id`    v = `tab` ).
 
     DATA(lo_columns) = tab->ele( `columns` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Product` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Date` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Name` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Location` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Quantity` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Product` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Date` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Name` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Location` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Quantity` ).
 
-    DATA(lo_cells) = tab->ele( `items` )->ele( `ColumnListItem` ).
+    DATA(lo_cells) = tab->ele( `items`
+        )->ele( `ColumnListItem` ).
     lo_cells->tag( `Link`
         )->a( n = `text`  v = `{PRODUCT}`
         )->a( n = `press` v = client->_event( val = `POPOVER_DETAIL` t_arg = VALUE #( ( `${$source>/id}` ) ( `${PRODUCT}` ) ) )

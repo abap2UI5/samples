@@ -105,14 +105,16 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Event - Keyboard Shortcuts, Ctrl+S`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -127,26 +129,31 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( `HBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `TOGGLE_REGISTRATION` )
             )->a( n = `text`  v = COND #( WHEN registered = abap_true
                             THEN `Unregister the shortcuts`
                             ELSE `Register the shortcuts` )
-            )->a( n = `icon`  v = `sap-icon://keyboard-and-mouse` )->tag( `Button`
+            )->a( n = `icon`  v = `sap-icon://keyboard-and-mouse`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `SAVE` )
             )->a( n = `text`  v = `Save (Ctrl+S)`
             )->a( n = `type`  v = `Emphasized`
-            )->a( n = `class` v = `sapUiTinyMarginBegin` )->tag( `Button`
+            )->a( n = `class` v = `sapUiTinyMarginBegin`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `DELETE` )
             )->a( n = `text`  v = `Delete (Ctrl+D)`
-            )->a( n = `class` v = `sapUiTinyMarginBegin` )->tag( `Button`
+            )->a( n = `class` v = `sapUiTinyMarginBegin`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `CLEAR` )
             )->a( n = `text`  v = `Clear log`
             )->a( n = `class` v = `sapUiTinyMarginBegin` ).
 
     page->ele( `List`
         )->a( n = `headerText` v = `Triggered events`
-        )->a( n = `items`      v = client->_bind( t_log ) )->tag( `StandardListItem`
+        )->a( n = `items`      v = client->_bind( t_log )
+        )->tag( `StandardListItem`
             )->a( n = `title` v = `{ENTRY}` ).
 
     client->view_display( view->stringify( ) ).

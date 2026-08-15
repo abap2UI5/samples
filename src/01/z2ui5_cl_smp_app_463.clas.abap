@@ -75,15 +75,17 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Tree - Editable Nodes with CustomTreeItem`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -97,7 +99,8 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `SHOW_MODEL` )
             )->a( n = `text`  v = `Show model`
             )->a( n = `icon`  v = `sap-icon://show` ).
@@ -110,7 +113,9 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
         )->a( n = `items`      v = client->_bind( t_nodes )
         )->a( n = `headerText` v = `Files (editable)` ).
 
-    tree->ele( `CustomTreeItem` )->ele( `content` )->tag( `Input`
+    tree->ele( `CustomTreeItem`
+        )->ele( `content`
+            )->tag( `Input`
                 )->a( n = `value` v = `{TEXT}`
                 )->a( n = `width` v = `24rem` ).
 

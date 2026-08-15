@@ -70,38 +70,43 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    view_nested = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:f`      v = `sap.f`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout`
-        " the sub-apps build into this shared root, so their prefixes are
-        " declared here - z2ui5_cl_smp_app_105 injects a form:SimpleForm
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    view_nested = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:f`      v = `sap.f`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout`
+            " the sub-apps build into this shared root, so their prefixes are
+            " declared here - z2ui5_cl_smp_app_105 injects a form:SimpleForm
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
     DATA(page) = view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
     grid_sub = page->ele( n = `Grid` ns = `layout`
-        )->a( n = `defaultSpan` v = `L12 M12 S12` )->ele( n = `content` ns = `layout` ).
+        )->a( n = `defaultSpan` v = `L12 M12 S12`
+        )->ele( n = `content` ns = `layout` ).
 
   ENDMETHOD.
 
 
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:f`      v = `sap.f`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` )->ele( `Shell` )->ele( `Page`
-           )->a( n = `title`          v = `abap2UI5 - Nested View - Embed Another App's View`
-           )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-           )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:f`      v = `sap.f`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout`
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `abap2UI5 - Nested View - Embed Another App's View`
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Selecting a list row instantiates another abap2UI5 app by its class name and ` &&
@@ -120,13 +125,14 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
         )->a( n = `headerText`      v = `List Output`
         )->a( n = `items`           v = client->_bind( val = t_tab )
         )->a( n = `mode`            v = `SingleSelectMaster`
-        )->a( n = `selectionChange` v = client->_event( val = `SELCHANGE` ) )->tag( `StandardListItem`
-              )->a( n = `title`       v = `{TITLE}`
-              )->a( n = `description` v = `{DESCR}`
-              )->a( n = `icon`        v = `{ICON}`
-              )->a( n = `info`        v = `{INFO}`
-              )->a( n = `press`       v = client->_event( `TEST` )
-              )->a( n = `selected`    v = `{SELECTED}` ).
+        )->a( n = `selectionChange` v = client->_event( val = `SELCHANGE` )
+        )->tag( `StandardListItem`
+            )->a( n = `title`       v = `{TITLE}`
+            )->a( n = `description` v = `{DESCR}`
+            )->a( n = `icon`        v = `{ICON}`
+            )->a( n = `info`        v = `{INFO}`
+            )->a( n = `press`       v = client->_event( `TEST` )
+            )->a( n = `selected`    v = `{SELECTED}` ).
 
     client->view_display( list->stringify( ) ).
 

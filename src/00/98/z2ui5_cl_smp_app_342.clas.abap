@@ -104,12 +104,13 @@ CLASS z2ui5_cl_smp_app_342 IMPLEMENTATION.
 
     IF mo_parent_page IS INITIAL.
 
-      DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-          )->a( n = `displayBlock` v = `true`
-          )->a( n = `height`       v = `100%`
-          )->a( n = `xmlns`        v = `sap.m`
-          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+      DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `displayBlock` v = `true`
+              )->a( n = `height`       v = `100%`
+              )->a( n = `xmlns`        v = `sap.m`
+              )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
     ELSE.
 
@@ -136,15 +137,18 @@ CLASS z2ui5_cl_smp_app_342 IMPLEMENTATION.
       columns->ele( `Column`
           )->a( n = `visible` v = client->_bind( val       = layout->visible
                                                 tab       = mo_lay->ms_data-t_layout
-                                                tab_index = lv_index ) )->tag( `Text`
-           )->a( n = `text` v = layout->name ).
+                                                tab_index = lv_index )
+          )->tag( `Text`
+              )->a( n = `text` v = layout->name ).
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->end( )->ele( `items` )->ele( `ColumnListItem`
-                                           )->a( n = `vAlign`   v = `Middle`
-                                           )->a( n = `selected` v = `{SELKZ}`
-                                           )->a( n = `type`     v = `Inactive` ).
+    DATA(column_list_item) = columns->end(
+        )->ele( `items`
+            )->ele( `ColumnListItem`
+                )->a( n = `vAlign`   v = `Middle`
+                )->a( n = `selected` v = `{SELKZ}`
+                )->a( n = `type`     v = `Inactive` ).
 
     DATA(cells) = column_list_item->ele( `cells` ).
 

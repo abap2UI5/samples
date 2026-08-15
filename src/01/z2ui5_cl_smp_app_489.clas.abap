@@ -52,18 +52,20 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - Navigation - Data Input App`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Navigation - Data Input App`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Change the data and return: 'confirm' leaves with event DATA_CONFIRMED plus the ` &&
@@ -74,9 +76,12 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     DATA(form) = page->ele( n = `Grid` ns = `layout`
-        )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
-            )->a( n = `title`    v = `Data returned to the caller`
-            )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
+        )->a( n = `defaultSpan` v = `L6 M12 S12`
+        )->ele( n = `content` ns = `layout`
+            )->ele( n = `SimpleForm` ns = `form`
+                )->a( n = `title`    v = `Data returned to the caller`
+                )->a( n = `editable` b = abap_true
+                )->ele( n = `content` ns = `form` ).
 
     form->tag( `Label`
         )->a( n = `text` v = `Product` ).

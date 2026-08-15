@@ -41,17 +41,20 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
     body       = `body`
     new_window = `true` ).
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` )->ele( `Shell` )->ele( `Page`
-                )->a( n = `title`          v = `abap2UI5 - Browser - Open Mail, Phone and SMS Links`
-                )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-                )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout`
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `abap2UI5 - Browser - Open Mail, Phone and SMS Links`
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `The URL helper triggers native browser actions from ABAP: open e-mail, telephone and SMS links, or ` &&
@@ -101,12 +104,13 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
         )->a( n = `class`       v = `sapUiSmallMarginBottom` ).
 
     email_form->tag( `Label`
-        )->a( n = `text` v = `Mail Body` )->tag( `TextArea`
-             )->a( n = `value`           v = client->_bind( email-body )
-             )->a( n = `width`           v = `100%`
-             )->a( n = `valueLiveUpdate` b = abap_true
-             )->a( n = `growing`         b = abap_true
-             )->a( n = `growingMaxLines` v = `7` ).
+        )->a( n = `text` v = `Mail Body`
+        )->tag( `TextArea`
+            )->a( n = `value`           v = client->_bind( email-body )
+            )->a( n = `width`           v = `100%`
+            )->a( n = `valueLiveUpdate` b = abap_true
+            )->a( n = `growing`         b = abap_true
+            )->a( n = `growingMaxLines` v = `7` ).
 
     email_form->tag( `Button`
         )->a( n = `press` v = client->follow_up_action( val   = client->cs_event-urlhelper

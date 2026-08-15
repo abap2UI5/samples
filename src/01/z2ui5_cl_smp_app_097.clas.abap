@@ -35,14 +35,15 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:f`      v = `sap.f`
-        )->a( n = `xmlns:table`  v = `sap.ui.table` ).
+    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:f`      v = `sap.f`
+            )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
     DATA(page) = lo_view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
@@ -56,28 +57,42 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         )->a( n = `filter`             v = client->_event( `FILTER` )
         )->a( n = `sort`               v = client->_event( `SORT` )
         )->a( n = `customFilter`       v = client->_event( `CUSTOMFILTER` ) ).
-    tab->ele( n = `extension` ns = `table` )->ele( `OverflowToolbar` )->tag( `Title`
-        )->a( n = `text` v = `Products` ).
+    tab->ele( n = `extension` ns = `table`
+        )->ele( `OverflowToolbar`
+            )->tag( `Title`
+                )->a( n = `text` v = `Products` ).
     DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
 
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `TITLE`
-        )->a( n = `filterProperty` v = `TITLE` )->tag( `Text`
-                                              )->a( n = `text` v = `Index` )->ele( n = `template` ns = `table` )->tag( `Text`
-                                              )->a( n = `text` v = `{TITLE}` ).
+        )->a( n = `filterProperty` v = `TITLE`
+        )->tag( `Text`
+            )->a( n = `text` v = `Index`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{TITLE}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `DESCR`
-        )->a( n = `filterProperty` v = `DESCR` )->tag( `Text`
-                               )->a( n = `text` v = `DESCR` )->ele( n = `template` ns = `table` )->tag( `Text`
-                               )->a( n = `text` v = `{DESCR}` ).
+        )->a( n = `filterProperty` v = `DESCR`
+        )->tag( `Text`
+            )->a( n = `text` v = `DESCR`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{DESCR}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `INFO`
-        )->a( n = `filterProperty` v = `INFO` )->tag( `Text`
-                               )->a( n = `text` v = `INFO` )->ele( n = `template` ns = `table` )->tag( `Text`
-                               )->a( n = `text` v = `{INFO}` ).
-    lo_columns->end( )->ele( n = `rowActionTemplate` ns = `table` )->ele( n = `RowAction` ns = `table` )->ele( n = `RowActionItem` ns = `table`
-           )->a( n = `icon`  v = `sap-icon://delete`
-           )->a( n = `press` v = client->_event( val = `ROW_DELETE` t_arg = VALUE #( ( `${UUID}` ) ) ) ).
+        )->a( n = `filterProperty` v = `INFO`
+        )->tag( `Text`
+            )->a( n = `text` v = `INFO`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{INFO}` ).
+    lo_columns->end(
+        )->ele( n = `rowActionTemplate` ns = `table`
+            )->ele( n = `RowAction` ns = `table`
+                )->ele( n = `RowActionItem` ns = `table`
+                    )->a( n = `icon`  v = `sap-icon://delete`
+                    )->a( n = `press` v = client->_event( val = `ROW_DELETE` t_arg = VALUE #( ( `${UUID}` ) ) ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
@@ -90,17 +105,20 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:f`      v = `sap.f`
-        )->a( n = `xmlns:table`  v = `sap.ui.table` )->ele( `Shell` )->ele( `Page`
-           )->a( n = `title`          v = `abap2UI5 - Nested View - Master-Detail with FlexibleColumnLayout`
-           )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-           )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:f`      v = `sap.f`
+            )->a( n = `xmlns:table`  v = `sap.ui.table`
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `abap2UI5 - Nested View - Master-Detail with FlexibleColumnLayout`
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A master-detail screen built with FlexibleColumnLayout: select a list row and its ` &&
@@ -119,13 +137,14 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         )->a( n = `headerText`      v = `List Output`
         )->a( n = `items`           v = client->_bind( val = t_tab )
         )->a( n = `mode`            v = `SingleSelectMaster`
-        )->a( n = `selectionChange` v = client->_event( `SELCHANGE` ) )->tag( `StandardListItem`
-              )->a( n = `title`       v = `{TITLE}`
-              )->a( n = `description` v = `{DESCR}`
-              )->a( n = `icon`        v = `{ICON}`
-              )->a( n = `info`        v = `{INFO}`
-              )->a( n = `press`       v = client->_event( `TEST` )
-              )->a( n = `selected`    v = `{SELECTED}` ).
+        )->a( n = `selectionChange` v = client->_event( `SELCHANGE` )
+        )->tag( `StandardListItem`
+            )->a( n = `title`       v = `{TITLE}`
+            )->a( n = `description` v = `{DESCR}`
+            )->a( n = `icon`        v = `{ICON}`
+            )->a( n = `info`        v = `{INFO}`
+            )->a( n = `press`       v = client->_event( `TEST` )
+            )->a( n = `selected`    v = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).
 

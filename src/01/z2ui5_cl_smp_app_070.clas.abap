@@ -137,22 +137,24 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
       (   n = `!<leer>` v = `!(<leer>)` )
       (   n = `<leer>`  v = `<leer>` ) ).
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:f`      v = `sap.f`
-        )->a( n = `xmlns:table`  v = `sap.ui.table`
-        )->a( n = `xmlns:u`      v = `sap.ui.unified` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:f`      v = `sap.f`
+            )->a( n = `xmlns:table`  v = `sap.ui.table`
+            )->a( n = `xmlns:u`      v = `sap.ui.unified` ).
 
-    DATA(page1) = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - Grid Table - Full Example with sap.ui.table`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-        )->a( n = `class`          v = `sapUiContentPadding`
-        )->a( n = `id`             v = `page_main` ).
+    DATA(page1) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Grid Table - Full Example with sap.ui.table`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `class`          v = `sapUiContentPadding`
+            )->a( n = `id`             v = `page_main` ).
 
     page1->tag( `MessageStrip`
         )->a( n = `text`     v = `A full sap.ui.table.Table inside a DynamicPage: fixed column, row-action buttons, ` &&
@@ -164,9 +166,12 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     DATA(page) = page1->ele( n = `DynamicPage` ns = `f`
         )->a( n = `headerExpanded` b = abap_true ).
 
-    DATA(header_title) = page->ele( n = `title` ns = `f` )->ele( n = `DynamicPageTitle` ns = `f` ).
-    header_title->ele( n = `heading` ns = `f` )->ele( `HBox` )->tag( `Title`
-        )->a( n = `text` v = `Search Field` ).
+    DATA(header_title) = page->ele( n = `title` ns = `f`
+        )->ele( n = `DynamicPageTitle` ns = `f` ).
+    header_title->ele( n = `heading` ns = `f`
+        )->ele( `HBox`
+            )->tag( `Title`
+                )->a( n = `text` v = `Search Field` ).
     header_title->ele( n = `expandedContent` ns = `f` ).
     header_title->ele( n = `snappedContent` ns = `f` ).
 
@@ -174,25 +179,32 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     " tag renders as <header xmlns="sap.m"/>, and UI5 looks for a DEFAULT
     " aggregation on sap.f.DynamicPage - which has none - so the view dies with
     " "Cannot add direct child without default aggregation defined"
-    DATA(lo_box) = page->ele( n = `header` ns = `f` )->ele( n = `DynamicPageHeader` ns = `f`
-        )->a( n = `pinnable` b = abap_true )->ele( `FlexBox`
-             )->a( n = `alignItems`     v = `Start`
-             )->a( n = `justifyContent` v = `SpaceBetween` )->ele( `FlexBox`
-                          )->a( n = `alignItems` v = `Start` ).
+    DATA(lo_box) = page->ele( n = `header` ns = `f`
+        )->ele( n = `DynamicPageHeader` ns = `f`
+            )->a( n = `pinnable` b = abap_true
+            )->ele( `FlexBox`
+                )->a( n = `alignItems`     v = `Start`
+                )->a( n = `justifyContent` v = `SpaceBetween`
+                )->ele( `FlexBox`
+                    )->a( n = `alignItems` v = `Start` ).
 
-    lo_box->ele( `VBox` )->tag( `Text`
-        )->a( n = `text` v = `Search` )->tag( `SearchField`
-        )->a( n = `width`       v = `17.5rem`
-        )->a( n = `search`      v = client->_event( `BUTTON_SEARCH` )
-        )->a( n = `value`       v = client->_bind( mv_search_value )
-        )->a( n = `id`          v = `SEARCH`
-        )->a( n = `placeholder` v = `Search products` ).
+    lo_box->ele( `VBox`
+        )->tag( `Text`
+            )->a( n = `text` v = `Search`
+        )->tag( `SearchField`
+            )->a( n = `width`       v = `17.5rem`
+            )->a( n = `search`      v = client->_event( `BUTTON_SEARCH` )
+            )->a( n = `value`       v = client->_bind( mv_search_value )
+            )->a( n = `id`          v = `SEARCH`
+            )->a( n = `placeholder` v = `Search products` ).
 
-    lo_box->end( )->ele( `HBox`
-        )->a( n = `justifyContent` v = `End` )->tag( `Button`
-        )->a( n = `press` v = client->_event( `BUTTON_START` )
-        )->a( n = `text`  v = `Go`
-        )->a( n = `type`  v = `Emphasized` ).
+    lo_box->end(
+        )->ele( `HBox`
+            )->a( n = `justifyContent` v = `End`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_START` )
+                )->a( n = `text`  v = `Go`
+                )->a( n = `type`  v = `Emphasized` ).
 
     DATA(cont) = page->ele( n = `content` ns = `f` ).
 
@@ -205,82 +217,118 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->a( n = `filter`             v = client->_event( `FILTER` )
         )->a( n = `sort`               v = client->_event( `SORT` )
         )->a( n = `customFilter`       v = client->_event( `CUSTOMFILTER` ) ).
-    tab->ele( n = `extension` ns = `table` )->ele( `OverflowToolbar` )->tag( `Title`
-        )->a( n = `text` v = `Products` ).
+    tab->ele( n = `extension` ns = `table`
+        )->ele( `OverflowToolbar`
+            )->tag( `Title`
+                )->a( n = `text` v = `Products` ).
     DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
     lo_columns->ele( n = `Column` ns = `table`
-        )->a( n = `width` v = `4rem` )->tag( `CheckBox`
-        )->a( n = `selected` v = client->_bind( lv_selkz )
-        )->a( n = `enabled`  b = abap_true
-        )->a( n = `select`   v = client->_event( `SELKZ` ) )->ele( n = `template` ns = `table` )->tag( `CheckBox`
-                                                           )->a( n = `selected` v = `{SELKZ}` ).
+        )->a( n = `width` v = `4rem`
+        )->tag( `CheckBox`
+            )->a( n = `selected` v = client->_bind( lv_selkz )
+            )->a( n = `enabled`  b = abap_true
+            )->a( n = `select`   v = client->_event( `SELKZ` )
+        )->ele( n = `template` ns = `table`
+            )->tag( `CheckBox`
+                )->a( n = `selected` v = `{SELKZ}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `5rem`
         )->a( n = `sortProperty`   v = `ROW_ID`
-        )->a( n = `filterProperty` v = `ROW_ID` )->tag( `Text`
-                               )->a( n = `text` v = `Index` )->ele( n = `template` ns = `table` )->tag( `Text`
-                               )->a( n = `text` v = `{ROW_ID}` ).
+        )->a( n = `filterProperty` v = `ROW_ID`
+        )->tag( `Text`
+            )->a( n = `text` v = `Index`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{ROW_ID}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `PROCESS`
-        )->a( n = `filterProperty` v = `PROCESS` )->tag( `Text`
-                               )->a( n = `text` v = `Process Indicator` )->ele( n = `template` ns = `table` )->tag( `ProgressIndicator`
-          )->a( n = `class`        v = `sapUiSmallMarginBottom`
-          )->a( n = `percentValue` v = `{PROCESS}`
-          )->a( n = `displayValue` v = `{PROCESS} %`
-          )->a( n = `showValue`    v = `true`
-          )->a( n = `state`        v = `{PROCESS_STATE}` ).
+        )->a( n = `filterProperty` v = `PROCESS`
+        )->tag( `Text`
+            )->a( n = `text` v = `Process Indicator`
+        )->ele( n = `template` ns = `table`
+            )->tag( `ProgressIndicator`
+                )->a( n = `class`        v = `sapUiSmallMarginBottom`
+                )->a( n = `percentValue` v = `{PROCESS}`
+                )->a( n = `displayValue` v = `{PROCESS} %`
+                )->a( n = `showValue`    v = `true`
+                )->a( n = `state`        v = `{PROCESS_STATE}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `PRODUCT`
-        )->a( n = `filterProperty` v = `PRODUCT` )->tag( `Text`
-                               )->a( n = `text` v = `Product` )->ele( n = `template` ns = `table` )->tag( `Input`
-                               )->a( n = `editable` b = abap_false
-                               )->a( n = `value`    v = `{PRODUCT}` ).
+        )->a( n = `filterProperty` v = `PRODUCT`
+        )->tag( `Text`
+            )->a( n = `text` v = `Product`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Input`
+                )->a( n = `editable` b = abap_false
+                )->a( n = `value`    v = `{PRODUCT}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `CREATE_DATE`
-        )->a( n = `filterProperty` v = `CREATE_DATE` )->tag( `Text`
-                               )->a( n = `text` v = `Date` )->ele( n = `template` ns = `table` )->tag( `Text`
-                               )->a( n = `text` v = `{CREATE_DATE}` ).
+        )->a( n = `filterProperty` v = `CREATE_DATE`
+        )->tag( `Text`
+            )->a( n = `text` v = `Date`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{CREATE_DATE}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `CREATE_BY`
-        )->a( n = `filterProperty` v = `CREATE_BY` )->tag( `Text`
-                               )->a( n = `text` v = `Name` )->ele( n = `template` ns = `table` )->tag( `Text`
-                               )->a( n = `text` v = `{CREATE_BY}` ).
+        )->a( n = `filterProperty` v = `CREATE_BY`
+        )->tag( `Text`
+            )->a( n = `text` v = `Name`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{CREATE_BY}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `STORAGE_LOCATION`
-        )->a( n = `filterProperty` v = `STORAGE_LOCATION` )->tag( `Text`
-                               )->a( n = `text` v = `Location` )->ele( n = `template` ns = `table` )->tag( `Text`
-                               )->a( n = `text` v = `{STORAGE_LOCATION}` ).
+        )->a( n = `filterProperty` v = `STORAGE_LOCATION`
+        )->tag( `Text`
+            )->a( n = `text` v = `Location`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{STORAGE_LOCATION}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `QUANTITY`
-        )->a( n = `filterProperty` v = `QUANTITY` )->tag( `Text`
-                               )->a( n = `text` v = `Quantity` )->ele( n = `template` ns = `table` )->tag( `Text`
-                               )->a( n = `text` v = `{QUANTITY}` ).
+        )->a( n = `filterProperty` v = `QUANTITY`
+        )->tag( `Text`
+            )->a( n = `text` v = `Quantity`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{QUANTITY}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `6rem`
         )->a( n = `sortProperty`   v = `MEINS`
-        )->a( n = `filterProperty` v = `MEINS` )->tag( `Text`
-                               )->a( n = `text` v = `Unit` )->ele( n = `template` ns = `table` )->tag( `Text`
-                               )->a( n = `text` v = `{MEINS}` ).
+        )->a( n = `filterProperty` v = `MEINS`
+        )->tag( `Text`
+            )->a( n = `text` v = `Unit`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{MEINS}` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `PRICE`
-        )->a( n = `filterProperty` v = `PRICE` )->tag( `Text`
-                               )->a( n = `text` v = `Price` )->ele( n = `template` ns = `table` )->ele( n = `Currency` ns = `u`
-                               )->a( n = `value`    v = `{PRICE}`
-                               )->a( n = `currency` v = `{WAERS}` ).
-    lo_columns->end( )->ele( n = `rowActionTemplate` ns = `table` )->ele( n = `RowAction` ns = `table` )->ele( n = `RowActionItem` ns = `table`
-          )->a( n = `type`  v = `Navigation`
-          )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
-          )->end( )->ele( n = `RowActionItem` ns = `table`
-                              )->a( n = `icon`  v = `sap-icon://edit`
-                              )->a( n = `text`  v = `Edit`
-                              )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_EDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
+        )->a( n = `filterProperty` v = `PRICE`
+        )->tag( `Text`
+            )->a( n = `text` v = `Price`
+        )->ele( n = `template` ns = `table`
+            )->ele( n = `Currency` ns = `u`
+                )->a( n = `value`    v = `{PRICE}`
+                )->a( n = `currency` v = `{WAERS}` ).
+    lo_columns->end(
+        )->ele( n = `rowActionTemplate` ns = `table`
+            )->ele( n = `RowAction` ns = `table`
+                )->ele( n = `RowActionItem` ns = `table`
+                    )->a( n = `type`  v = `Navigation`
+                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
+                )->end(
+                )->ele( n = `RowActionItem` ns = `table`
+                    )->a( n = `icon`  v = `sap-icon://edit`
+                    )->a( n = `text`  v = `Edit`
+                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_EDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 

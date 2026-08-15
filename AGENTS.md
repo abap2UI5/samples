@@ -952,30 +952,54 @@ Always build the view in `view_display` and call
 `client->view_display( view->stringify( ) )` as a **standalone statement at the
 end** — never nested inside the chain.
 
-The chain layout carries the XML hierarchy: the closing paren rides with the
-next arrow, one indent level per container, and the `v =` column is aligned.
+The chain is the only picture of the view's tree there is, so its layout is
+load-bearing rather than cosmetic. **Six rules, and they are identical in
+`abap2UI5/samples-controls`** — the two corpora were unified in one pass after
+a survey found them following opposite conventions:
+
+1. **One call per line.** Every `ele( )`, `tag( )`, `a( )` and `end( )` opens
+   its own line with `)->`. A control never shares its line with the container
+   it opens, nor with its own attributes.
+2. **Four spaces per level, everywhere.** A child sits one level in from its
+   container, a control's attributes one level in from the control. The same
+   step throughout every file — a chain that steps by 2 and then by 4 and then
+   stops moving is no longer describing the tree, it is decorating it.
+3. **The closing paren rides with the arrow.** Never a `)` alone at a line end;
+   carry it to the next segment so it always reads `)->`.
+4. **`end( )` stands alone in the column of the `ele( )` it closes.** That is
+   what makes an ascent over several levels visible instead of hidden. What is
+   forbidden is the *run on one line* —
+   `` )->end( )->end( )->ele( `footer` )->ele( `OverflowToolbar` `` changes four
+   levels where nobody can see them.
+5. **Align the `v =` / `b =` column** within one control's attribute block.
+6. **`stringify( )` is a standalone final statement** — never nested in the
+   chain.
 
 ```abap
 METHOD view_display.
 
-  DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-      )->a( n = `displayBlock` v = `true`
-      )->a( n = `height`       v = `100%`
-      )->a( n = `xmlns`        v = `sap.m`
-      )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-      )->a( n = `xmlns:core`   v = `sap.ui.core`
-      )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+  DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+      )->ele( n = `View` ns = `mvc`
+          )->a( n = `displayBlock` v = `true`
+          )->a( n = `height`       v = `100%`
+          )->a( n = `xmlns`        v = `sap.m`
+          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+          )->a( n = `xmlns:core`   v = `sap.ui.core`
+          )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-  view->ele( `Shell` )->ele( `Page`
-      )->a( n = `title`          v = `My App`
-      )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-      )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+  view->ele( `Shell`
+      )->ele( `Page`
+          )->a( n = `title`          v = `My App`
+          )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+          )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
           )->ele( n = `SimpleForm` ns = `form`
               )->a( n = `title`    v = `Form Title`
               )->a( n = `editable` b = abap_true
               )->ele( n = `content` ns = `form`
-                  )->tag( `Label` )->a( n = `text` v = `Quantity`
-                  )->tag( `Input` )->a( n = `value` v = client->_bind( quantity )
+                  )->tag( `Label`
+                      )->a( n = `text` v = `Quantity`
+                  )->tag( `Input`
+                      )->a( n = `value` v = client->_bind( quantity )
                   )->tag( `Button`
                       )->a( n = `text`  v = `Post`
                       )->a( n = `press` v = client->_event( `POST` ) ).
@@ -986,33 +1010,42 @@ ENDMETHOD.
 ```
 
 The hierarchy is `mvc:View` → `Shell` → `Page` → `form:SimpleForm` →
-`form:content` → leaves. `Label`, `Input` and `Button` are siblings inside
-`content`, so they are added with `tag( )` and stay at the same indent.
+`form:content` → leaves, and every one of those levels is four spaces. `Label`,
+`Input` and `Button` are siblings inside `content`, so they are added with
+`tag( )` and stay at the same indent while their attributes step in.
 
-Three rules keep that picture true, and the port of the corpus onto this
-builder (#752) broke all three in a handful of classes:
+#### One chain, or one statement per subtree
 
-- **The indent states the depth.** One level per container, the same step
-  throughout the file — a chain that steps by 2 and then by 4 and then stops
-  moving is no longer describing the tree, it is decorating it.
-- **Never unwind with a run of `end( )` to start a sibling.** A line ending in
-  `` )->end( )->end( )->ele( `footer` )->ele( `OverflowToolbar` `` changes four
-  levels where nobody can see them, and every line after it starts in a column
-  that means nothing. When you need a node again, **keep it in a variable** —
-  `DATA(page)`, `DATA(cont)`, `DATA(lo_columns)` in the sample above — and
-  start a new statement per subtree. That is what the corpus does, and it is
-  what lets a statement indent monotonically.
-- **A control may share its line with its own attributes**
-  (`` )->tag( `Label` )->a( n = `text` … ``) **and with the container it opens**
-  (`` view->ele( `Shell` )->ele( `Page` ``) — but a line carrying a whole
-  subtree hides the tree.
+Both shapes are correct, and the choice is about the view, not about style:
 
-The abap2UI5-linter judges this (`chain-indentation`, `chain-element-per-line`),
-but read `abap2ui5lint.jsonc` before relying on it: `chain-element-per-line` is
-still a hint with 339 findings in the baseline, so it fails nothing today. The
-layout is on the author and the reviewer. `z2ui5_cl_smp_app_052` is the worked
-example — its `popover_display` was the broken shape above and is now the
-sound one.
+- **One chain** — the whole view in a single statement, ascending with
+  `end( )`. The shape `samples-controls` uses throughout, because a 1:1 port
+  mirrors one original XML file.
+- **One statement per subtree** — hold a container in a variable
+  (`DATA(page)`, `DATA(cont)`, `DATA(lo_columns)`) and start a new statement
+  from it. The shape most of this corpus uses, and the better one when a
+  subtree is filled from a loop, when the same node is filled twice, or when a
+  teaching sample reads better with the parts named. `z2ui5_cl_smp_app_052`
+  is the worked example.
+
+The split shape reconstructs and renders fine — the linter reads all 172
+documents in this corpus from it. What is *not* allowed is mixing them inside
+one subtree, and blank lines inside a chain: they belong to the long
+single-chain shape, where they separate an `ele( )` block from its first child.
+
+#### What checks this
+
+`node scripts/chain-format.mjs` (`npm run check:chains`, and a job in
+`check-docs.yaml`) checks all six rules and `npm run fmt:chains` applies them.
+It rewrites whitespace *between* chain segments only, and verifies that
+collapsing every run of code-whitespace leaves the file identical — a
+formatting change can never alter what the view builds.
+
+The abap2UI5-linter covers part of it: `chain-indentation` and
+`chain-element-per-line` are both raised to `warning` in `abap2ui5lint.jsonc`
+and the baseline holds none of either any more. Neither rule judges the *step*,
+though — a chain uniformly indented by 8 passes both — which is what
+`chain-format` is for.
 
 #### Namespaces
 
@@ -1028,9 +1061,10 @@ A popup is a `core:FragmentDefinition` root you build the same way, and hand
 to `client->popup_display( )`:
 
 ```abap
-DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-    )->a( n = `xmlns`      v = `sap.m`
-    )->a( n = `xmlns:core` v = `sap.ui.core` ).
+DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core` ).
 ```
 
 ### 2. Bindings

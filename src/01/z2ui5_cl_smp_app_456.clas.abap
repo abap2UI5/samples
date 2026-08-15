@@ -54,13 +54,14 @@ CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:u`      v = `sap.ui.unified` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:u`      v = `sap.ui.unified` ).
 
     " calendar date properties (CalendarAppointment startDate/endDate,
     " PlanningCalendar startDate) are typed "object" - they demand a real JS
@@ -70,7 +71,8 @@ CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
     " use - the model itself stays plain strings everywhere.
     view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Formatter - Date Objects for the PlanningCalendar`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -91,13 +93,17 @@ CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
         )->a( n = `startDate` v = |\{ path: '{ client->_bind( val = start_date path = abap_true ) }', | &&
                     |formatter: 'Formatter.DateCreateObject' \}|
         )->a( n = `id`        v = `PC1`
-        )->a( n = `class`     v = `sapUiSmallMargin` )->ele( `rows` )->ele( `PlanningCalendarRow`
-            )->a( n = `appointments` v = `{path: 'T_APPOINTMENTS', templateShareable: true}`
-            )->a( n = `title`        v = `{NAME}` )->ele( `appointments` )->ele( n = `CalendarAppointment` ns = `u`
-                )->a( n = `startDate` v = `{ path: 'START_AT', formatter: 'Formatter.DateCreateObject' }`
-                )->a( n = `endDate`   v = `{ path: 'END_AT', formatter: 'Formatter.DateCreateObject' }`
-                )->a( n = `title`     v = `{TITLE}`
-                )->a( n = `type`      v = `{TYPE}` ).
+        )->a( n = `class`     v = `sapUiSmallMargin`
+        )->ele( `rows`
+            )->ele( `PlanningCalendarRow`
+                )->a( n = `appointments` v = `{path: 'T_APPOINTMENTS', templateShareable: true}`
+                )->a( n = `title`        v = `{NAME}`
+                )->ele( `appointments`
+                    )->ele( n = `CalendarAppointment` ns = `u`
+                        )->a( n = `startDate` v = `{ path: 'START_AT', formatter: 'Formatter.DateCreateObject' }`
+                        )->a( n = `endDate`   v = `{ path: 'END_AT', formatter: 'Formatter.DateCreateObject' }`
+                        )->a( n = `title`     v = `{TITLE}`
+                        )->a( n = `type`      v = `{TYPE}` ).
 
     client->view_display( view->stringify( ) ).
 

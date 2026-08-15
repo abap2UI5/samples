@@ -96,14 +96,16 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Focus - Focus a Table Cell by Column and Row`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -118,33 +120,63 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->ele( `Table` )->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `Title`
-                    )->a( n = `text` v = client->_bind( focusid ) )->tag( `ToolbarSpacer` )->tag( `Label`
-                    )->a( n = `text` v = `Column Id` )->tag( `Input`
+    DATA(tab) = page->ele( `Table`
+        )->ele( `headerToolbar`
+            )->ele( `OverflowToolbar`
+                )->tag( `Title`
+                    )->a( n = `text` v = client->_bind( focusid )
+                )->tag( `ToolbarSpacer`
+                )->tag( `Label`
+                    )->a( n = `text` v = `Column Id`
+                )->tag( `Input`
                     )->a( n = `placeholder` v = `Column`
                     )->a( n = `value`       v = client->_bind( focuscolumn )
                     )->a( n = `submit`      v = client->_event( `FOCUS` )
-                    )->a( n = `width`       v = `8rem` )->tag( `Label`
-                    )->a( n = `text` v = `Row Index` )->tag( `Input`
+                    )->a( n = `width`       v = `8rem`
+                )->tag( `Label`
+                    )->a( n = `text` v = `Row Index`
+                )->tag( `Input`
                     )->a( n = `placeholder` v = `Row`
                     )->a( n = `type`        v = `Number`
                     )->a( n = `value`       v = client->_bind( focusrow )
                     )->a( n = `submit`      v = client->_event( `FOCUS` )
-                    )->a( n = `width`       v = `6rem` )->tag( `Button`
+                    )->a( n = `width`       v = `6rem`
+                )->tag( `Button`
                     )->a( n = `press` v = client->_event( `FOCUS` )
-                    )->a( n = `text`  v = `Set Focus` )->tag( `Button`
+                    )->a( n = `text`  v = `Set Focus`
+                )->tag( `Button`
                     )->a( n = `press` v = client->_event( `NEXT` )
-                    )->a( n = `text`  v = `Next Focus` )->tag( `Button`
+                    )->a( n = `text`  v = `Next Focus`
+                )->tag( `Button`
                     )->a( n = `press` v = client->_event( `RESET` )
-                    )->a( n = `text`  v = `Reset Focus` )->end( )->end( ).
+                    )->a( n = `text`  v = `Reset Focus`
+            )->end(
+        )->end( ).
 
-    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Index` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Title` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Color` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Info` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Checkbox` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Description` ).
+    tab->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Index`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Title`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Color`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Info`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Checkbox`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Description` ).
 
     " Build the rows explicitly (no aggregation binding): only then does every
     " cell keep the stable control id <column>_<row> that set_focus can target.
@@ -156,19 +188,26 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
 
       DATA(i) = sy-tabix - 1.
 
-      items->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
-                  )->a( n = `text` v = |{ row->index }| )->tag( `Input`
+      items->ele( `ColumnListItem`
+          )->ele( `cells`
+              )->tag( `Text`
+                  )->a( n = `text` v = |{ row->index }|
+              )->tag( `Input`
                   )->a( n = `id`     v = |{ cs_column-title }_{ i }|
                   )->a( n = `value`  v = |\{{ path }/{ i }/TITLE\}|
-                  )->a( n = `submit` v = client->_event( `NEXT` ) )->tag( `Input`
+                  )->a( n = `submit` v = client->_event( `NEXT` )
+              )->tag( `Input`
                   )->a( n = `id`     v = |{ cs_column-color }_{ i }|
                   )->a( n = `value`  v = |\{{ path }/{ i }/VALUE\}|
-                  )->a( n = `submit` v = client->_event( `NEXT` ) )->tag( `Input`
+                  )->a( n = `submit` v = client->_event( `NEXT` )
+              )->tag( `Input`
                   )->a( n = `id`     v = |{ cs_column-info }_{ i }|
                   )->a( n = `value`  v = |\{{ path }/{ i }/INFO\}|
-                  )->a( n = `submit` v = client->_event( `NEXT` ) )->tag( `CheckBox`
+                  )->a( n = `submit` v = client->_event( `NEXT` )
+              )->tag( `CheckBox`
                   )->a( n = `id`       v = |{ cs_column-checkbox }_{ i }|
-                  )->a( n = `selected` v = |\{{ path }/{ i }/CHECKBOX\}| )->tag( `Input`
+                  )->a( n = `selected` v = |\{{ path }/{ i }/CHECKBOX\}|
+              )->tag( `Input`
                   )->a( n = `id`     v = |{ cs_column-description }_{ i }|
                   )->a( n = `value`  v = |\{{ path }/{ i }/DESCRIPTION\}|
                   )->a( n = `submit` v = client->_event( `NEXT` ) ).

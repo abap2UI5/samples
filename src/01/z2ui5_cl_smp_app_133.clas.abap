@@ -24,15 +24,17 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Focus - Set Focus and Select Text in an Input`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -46,22 +48,34 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
 
     page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Focus & Cursor`
-        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Title`
-                    )->a( n = `text` v = `Input` )->tag( `Label`
-                    )->a( n = `text` v = `Sel_Start` )->tag( `Input`
-                    )->a( n = `value` v = client->_bind( selstart ) )->tag( `Label`
-                    )->a( n = `text` v = `Sel_End` )->tag( `Input`
-                    )->a( n = `value` v = client->_bind( selend ) )->tag( `Label`
-                    )->a( n = `text` v = `field_01` )->tag( `Input`
-                    )->a( n = `id`    v = `BUTTON01`
-                    )->a( n = `value` v = client->_bind( field_01 ) )->tag( `Button`
-                    )->a( n = `press` v = client->_event( `BUTTON01` )
-                    )->a( n = `text`  v = `focus here` )->tag( `Label`
-                    )->a( n = `text` v = `field_02` )->tag( `Input`
-                    )->a( n = `id`    v = `BUTTON02`
-                    )->a( n = `value` v = client->_bind( field_02 ) )->tag( `Button`
-                    )->a( n = `press` v = client->_event( `BUTTON02` )
-                    )->a( n = `text`  v = `focus here` ).
+        )->a( n = `editable` b = abap_true
+        )->ele( n = `content` ns = `form`
+            )->tag( `Title`
+                )->a( n = `text` v = `Input`
+            )->tag( `Label`
+                )->a( n = `text` v = `Sel_Start`
+            )->tag( `Input`
+                )->a( n = `value` v = client->_bind( selstart )
+            )->tag( `Label`
+                )->a( n = `text` v = `Sel_End`
+            )->tag( `Input`
+                )->a( n = `value` v = client->_bind( selend )
+            )->tag( `Label`
+                )->a( n = `text` v = `field_01`
+            )->tag( `Input`
+                )->a( n = `id`    v = `BUTTON01`
+                )->a( n = `value` v = client->_bind( field_01 )
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON01` )
+                )->a( n = `text`  v = `focus here`
+            )->tag( `Label`
+                )->a( n = `text` v = `field_02`
+            )->tag( `Input`
+                )->a( n = `id`    v = `BUTTON02`
+                )->a( n = `value` v = client->_bind( field_02 )
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON02` )
+                )->a( n = `text`  v = `focus here` ).
 
     client->view_display( view->stringify( ) ).
 

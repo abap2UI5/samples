@@ -81,16 +81,18 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - Popup - Element Binding to the Selected Row`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Popup - Element Binding to the Selected Row`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `The table is bound to the product aggregation. Press a row's "components" button - the ` &&
@@ -103,16 +105,33 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
     DATA(tab) = page->ele( `Table`
         )->a( n = `items` v = client->_bind( t_product ) ).
 
-    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Product` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Category` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Price` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Components` ).
+    tab->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Product`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Category`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Price`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Components` ).
 
-    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
-                    )->a( n = `text` v = `{NAME}` )->tag( `Text`
-                    )->a( n = `text` v = `{CATEGORY}` )->tag( `Text`
-                    )->a( n = `text` v = `{PRICE} EUR` )->tag( `Button`
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{NAME}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{CATEGORY}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{PRICE} EUR`
+                )->tag( `Button`
                     )->a( n = `press` v = client->_event(
                         val   = `SHOW`
                         t_arg = VALUE #( ( `$event.oSource.getBindingContext().getPath().split('/').pop()` ) ) )
@@ -126,9 +145,10 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
   METHOD popup_components.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`      v = `sap.m`
-        )->a( n = `xmlns:core` v = `sap.ui.core` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
     DATA(dialog) = popup->ele( `Dialog`
         )->a( n = `title`        v = `{NAME}`
         )->a( n = `contentWidth` v = `24rem` ).
@@ -146,11 +166,13 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
     " the popup's own aggregation binding: the product's component list ({T_ITEM})
     dialog->ele( `List`
         )->a( n = `headerText` v = `Components`
-        )->a( n = `items`      v = `{T_ITEM}` )->tag( `StandardListItem`
+        )->a( n = `items`      v = `{T_ITEM}`
+        )->tag( `StandardListItem`
             )->a( n = `title` v = `{NAME}`
             )->a( n = `info`  v = `{QTY} {UNIT}` ).
 
-    dialog->ele( `buttons` )->tag( `Button`
+    dialog->ele( `buttons`
+        )->tag( `Button`
             )->a( n = `press` v = client->follow_up_action( client->cs_event-popup_close )
             )->a( n = `text`  v = `Close`
             )->a( n = `type`  v = `Emphasized` ).

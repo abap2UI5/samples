@@ -91,12 +91,14 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->ele( `Shell` ).
 
     DATA(page) = view->ele( `Page`
         )->a( n = `title`          v = `abap2UI5 - Event - Control Objects in t_arg (FacetFilter)`
@@ -118,32 +120,40 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
         )->a( n = `showPersonalization` b = abap_true
         )->a( n = `showReset`           b = abap_true
         )->a( n = `type`                v = `Light`
-        )->a( n = `reset`               v = client->_event( `RESET` ) )->ele( `FacetFilterList`
-          )->a( n = `mode`      v = `MultiSelect`
-          )->a( n = `title`     v = `Products`
-          )->a( n = `listClose` v = client->_event( val   = `FILTER`
-                                                        t_arg = VALUE #( ( `$event.mParameters.selectedItems` ) ) )
-          )->a( n = `items`     v = client->_bind( mt_table_products ) )->ele( `FacetFilterItem`
-            )->a( n = `key`  v = `{PRODUCT}`
-            )->a( n = `text` v = `{PRODUCT}` ).
+        )->a( n = `reset`               v = client->_event( `RESET` )
+        )->ele( `FacetFilterList`
+            )->a( n = `mode`      v = `MultiSelect`
+            )->a( n = `title`     v = `Products`
+            )->a( n = `listClose` v = client->_event( val   = `FILTER`
+                                                          t_arg = VALUE #( ( `$event.mParameters.selectedItems` ) ) )
+            )->a( n = `items`     v = client->_bind( mt_table_products )
+            )->ele( `FacetFilterItem`
+                )->a( n = `key`  v = `{PRODUCT}`
+                )->a( n = `text` v = `{PRODUCT}` ).
 
     DATA(tab) = page->ele( `Table`
         )->a( n = `items` v = client->_bind( val = mt_table )
         )->a( n = `id`    v = `tab` ).
 
     DATA(lo_columns) = tab->ele( `columns` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Product` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Date` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Name` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Location` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Quantity` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Product` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Date` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Name` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Location` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Quantity` ).
 
-    DATA(lo_cells) = tab->ele( `items` )->ele( `ColumnListItem` ).
+    DATA(lo_cells) = tab->ele( `items`
+        )->ele( `ColumnListItem` ).
     lo_cells->tag( `Text`
         )->a( n = `text` v = `{PRODUCT}` ).
     lo_cells->tag( `Text`

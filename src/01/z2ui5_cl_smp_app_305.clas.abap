@@ -24,16 +24,18 @@ CLASS z2ui5_cl_smp_app_305 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-                        )->a( n = `title`          v = `abap2UI5 - CSS - Color Table Cells from the Backend`
-                        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-                        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - CSS - Color Table Cells from the Backend`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Table cells are coloured from the backend: each cell carries a data-color attribute bound to the ` &&
@@ -44,48 +46,68 @@ CLASS z2ui5_cl_smp_app_305 IMPLEMENTATION.
 
     " raw markup travels in the content attribute of a core:HTML leaf - the
     " builder re-escapes it on stringify, so the literal markup is written here
-    page->tag( n = `HTML` ns = `core` )->a( n = `content` v = `<style>`
-        && `td:has([data-color="red"])\{ `
-        && `    background-color: red;`
-        && `\}`
-        && ``
-        && `td:has([data-color="green"])\{`
-        && `    background-color: green;`
-        && `\}`
-        && ``
-        && `td:has([data-color="blue"])\{`
-        && `    background-color: blue;`
-        && `\}`
-        && ``
-        && `td:has([data-color="orange"])\{`
-        && `    background-color: orange;`
-        && `\}`
-        && ``
-        && `td:has([data-color="grey"])\{`
-        && `    background-color: grey;`
-        && `\}`
-        && ``
-        && `td:has([data-color="yellow"])\{`
-        && `    background-color: yellow;`
-        && `\}`
-        && `</style>` ).
+    page->tag( n = `HTML` ns = `core`
+        )->a( n = `content` v = `<style>`
+&& `td:has([data-color="red"])\{ `
+&& `    background-color: red;`
+&& `\}`
+&& ``
+&& `td:has([data-color="green"])\{`
+&& `    background-color: green;`
+&& `\}`
+&& ``
+&& `td:has([data-color="blue"])\{`
+&& `    background-color: blue;`
+&& `\}`
+&& ``
+&& `td:has([data-color="orange"])\{`
+&& `    background-color: orange;`
+&& `\}`
+&& ``
+&& `td:has([data-color="grey"])\{`
+&& `    background-color: grey;`
+&& `\}`
+&& ``
+&& `td:has([data-color="yellow"])\{`
+&& `    background-color: yellow;`
+&& `\}`
+&& `</style>` ).
 
     DATA(tab) = page->ele( `Table`
         )->a( n = `items` v = client->_bind( t_tab )
-        )->a( n = `mode`  v = `MultiSelect` )->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `Title`
-                    )->a( n = `text` v = `change cell color` )->end( )->end( ).
+        )->a( n = `mode`  v = `MultiSelect`
+        )->ele( `headerToolbar`
+            )->ele( `OverflowToolbar`
+                )->tag( `Title`
+                    )->a( n = `text` v = `change cell color`
+            )->end(
+        )->end( ).
 
-    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Title` )->end( )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Color` )->end( ).
+    tab->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Title`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Color`
+        )->end( ).
 
-    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->ele( `Text`
-            )->a( n = `text` v = `{TITLE}` )->ele( `customData` )->tag( n = `CustomData` ns = `core`
-                  )->a( n = `value`      v = `{VALUE}`
-                  )->a( n = `key`        v = `color`
-                  )->a( n = `writeToDom` b = abap_true )->end( )->end( )->tag( `Input`
-            )->a( n = `enabled` b = abap_true
-            )->a( n = `value`   v = `{VALUE}` ).
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+                )->ele( `Text`
+                    )->a( n = `text` v = `{TITLE}`
+                    )->ele( `customData`
+                        )->tag( n = `CustomData` ns = `core`
+                            )->a( n = `value`      v = `{VALUE}`
+                            )->a( n = `key`        v = `color`
+                            )->a( n = `writeToDom` b = abap_true
+                    )->end(
+                )->end(
+                )->tag( `Input`
+                    )->a( n = `enabled` b = abap_true
+                    )->a( n = `value`   v = `{VALUE}` ).
 
     client->view_display( view->stringify( ) ).
 

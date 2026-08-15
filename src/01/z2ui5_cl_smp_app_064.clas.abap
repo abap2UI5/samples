@@ -119,21 +119,23 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
     temp1 = VALUE #( ).
 
     mv_check_enabled = abap_true.
-    view             = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    view             = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
 
     temp5          = client->check_app_prev_stack( ).
-    page1          = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - Timer - Progress Indicator during a Backend Call`
-        )->a( n = `showNavButton`  b = temp5
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-        )->a( n = `class`          v = `sapUiContentPadding`
-        )->a( n = `id`             v = `page_main` ).
+    page1          = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Timer - Progress Indicator during a Backend Call`
+            )->a( n = `showNavButton`  b = temp5
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `class`          v = `sapUiContentPadding`
+            )->a( n = `id`             v = `page_main` ).
 
     page1->tag( `MessageStrip`
         )->a( n = `text`     v = `A ProgressIndicator driven from the backend: pressing Load runs a WAIT-delayed server ` &&
@@ -145,11 +147,12 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
     layout = page1->ele( n = `VerticalLayout` ns = `layout`
         )->a( n = `class` v = `sapuicontentpadding`
         )->a( n = `width` v = `100%` ).
-    layout->ele( `VBox` )->tag( `ProgressIndicator`
-        )->a( n = `percentValue` v = client->_bind( mv_percent )
-        )->a( n = `displayValue` v = client->_bind( screen-display_value )
-        )->a( n = `showValue`    b = abap_true
-        )->a( n = `state`        v = `Success` ).
+    layout->ele( `VBox`
+        )->tag( `ProgressIndicator`
+            )->a( n = `percentValue` v = client->_bind( mv_percent )
+            )->a( n = `displayValue` v = client->_bind( screen-display_value )
+            )->a( n = `showValue`    b = abap_true
+            )->a( n = `state`        v = `Success` ).
 
     layout->tag( `Button`
         )->a( n = `press`   v = client->_event( `LOAD` )

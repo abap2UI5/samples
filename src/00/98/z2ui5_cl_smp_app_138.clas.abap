@@ -42,13 +42,14 @@ CLASS z2ui5_cl_smp_app_138 IMPLEMENTATION.
       ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val  = `tomato`.
       quantity = `500`.
 
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-          )->a( n = `displayBlock` v = `true`
-          )->a( n = `height`       v = `100%`
-          )->a( n = `xmlns`        v = `sap.m`
-          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core`
-          )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `displayBlock` v = `true`
+              )->a( n = `height`       v = `100%`
+              )->a( n = `xmlns`        v = `sap.m`
+              )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core`   v = `sap.ui.core`
+              )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
       client->view_display( view->ele( `Shell` )->ele( `Page`
                 )->a( n = `title`          v = `abap2UI5 - First Example`
                 )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

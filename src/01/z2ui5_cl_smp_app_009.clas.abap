@@ -162,15 +162,17 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popup - Value Help: Suggestions and F4 Dialog`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -183,48 +185,62 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     DATA(form) = page->ele( n = `Grid` ns = `layout`
-        )->a( n = `defaultSpan` v = `L7 M7 S7` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `defaultSpan` v = `L7 M7 S7`
+        )->ele( n = `content` ns = `layout`
+            )->ele( n = `SimpleForm` ns = `form`
                 )->a( n = `title`    v = `Input with Value Help`
-                )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
+                )->a( n = `editable` b = abap_true
+                )->ele( n = `content` ns = `form` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Input with suggestion items` )->ele( `Input`
+        )->a( n = `text` v = `Input with suggestion items`
+        )->ele( `Input`
             )->a( n = `placeholder`     v = `fill in your favorite colour`
             )->a( n = `value`           v = client->_bind( s_screen-color_01 )
             )->a( n = `suggestionItems` v = client->_bind( t_suggestion )
-            )->a( n = `showSuggestion`  b = abap_true )->ele( `suggestionItems` )->tag( n = `ListItem` ns = `core`
-                )->a( n = `text`           v = `{VALUE}`
-                )->a( n = `additionalText` v = `{DESCR}` ).
+            )->a( n = `showSuggestion`  b = abap_true
+            )->ele( `suggestionItems`
+                )->tag( n = `ListItem` ns = `core`
+                    )->a( n = `text`           v = `{VALUE}`
+                    )->a( n = `additionalText` v = `{DESCR}` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Input only numbers allowed` )->tag( `Input`
+        )->a( n = `text` v = `Input only numbers allowed`
+        )->tag( `Input`
             )->a( n = `placeholder` v = `quantity`
             )->a( n = `type`        v = `Number`
             )->a( n = `value`       v = client->_bind( s_screen-quantity ) ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Input with value` )->tag( `Input`
+        )->a( n = `text` v = `Input with value`
+        )->tag( `Input`
             )->a( n = `placeholder`      v = `fill in your favorite colour`
             )->a( n = `value`            v = client->_bind( s_screen-color_02 )
             )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE` )
             )->a( n = `showValueHelp`    b = abap_true ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Custom value Popup` )->tag( `Input`
+        )->a( n = `text` v = `Custom value Popup`
+        )->tag( `Input`
             )->a( n = `placeholder`      v = `name`
             )->a( n = `value`            v = client->_bind( s_screen-name )
             )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
-            )->a( n = `showValueHelp`    b = abap_true )->tag( `Input`
+            )->a( n = `showValueHelp`    b = abap_true
+        )->tag( `Input`
             )->a( n = `placeholder`      v = `lastname`
             )->a( n = `value`            v = client->_bind( s_screen-lastname )
             )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
             )->a( n = `showValueHelp`    b = abap_true ).
 
-    page->ele( `footer` )->ele( `OverflowToolbar` )->tag( `ToolbarSpacer` )->tag( `Button`
+    page->ele( `footer`
+        )->ele( `OverflowToolbar`
+            )->tag( `ToolbarSpacer`
+            )->tag( `Button`
                 )->a( n = `press` v = client->_event( `BUTTON_CLEAR` )
                 )->a( n = `text`  v = `Clear`
                 )->a( n = `icon`  v = `sap-icon://delete`
-                )->a( n = `type`  v = `Reject` )->tag( `Button`
+                )->a( n = `type`  v = `Reject`
+            )->tag( `Button`
                 )->a( n = `press` v = client->_event( `BUTTON_SEND` )
                 )->a( n = `text`  v = `Send to Server`
                 )->a( n = `icon`  v = `sap-icon://paper-plane`
@@ -237,28 +253,40 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
   METHOD popup_value_suggestion.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     DATA(dialog) = popup->ele( `Dialog`
         )->a( n = `title` v = `abap2UI5 - Value Help` ).
     DATA(tab) = dialog->ele( `Table`
         )->a( n = `items` v = client->_bind( t_suggestion_sel )
         )->a( n = `mode`  v = `SingleSelectLeft` ).
 
-    tab->ele( `columns` )->ele( `Column`
-            )->a( n = `width` v = `20rem` )->tag( `Text`
-                )->a( n = `text` v = `Color` )->end( )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Description` )->end( ).
+    tab->ele( `columns`
+        )->ele( `Column`
+            )->a( n = `width` v = `20rem`
+            )->tag( `Text`
+                )->a( n = `text` v = `Color`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Description`
+        )->end( ).
 
-    tab->ele( `items` )->ele( `ColumnListItem`
-        )->a( n = `selected` v = `{SELKZ}` )->ele( `cells` )->tag( `Text`
-                )->a( n = `text` v = `{VALUE}` )->tag( `Text`
-                )->a( n = `text` v = `{DESCR}` ).
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->a( n = `selected` v = `{SELKZ}`
+            )->ele( `cells`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{VALUE}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{DESCR}` ).
 
-    dialog->ele( `buttons` )->tag( `Button`
+    dialog->ele( `buttons`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `POPUP_TABLE_VALUE_CONTINUE` )
             )->a( n = `text`  v = `continue`
             )->a( n = `type`  v = `Emphasized` ).
@@ -270,22 +298,30 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
   METHOD popup_value_employee.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     DATA(dialog) = popup->ele( `Dialog`
         )->a( n = `title` v = `abap2UI5 - Value Help` ).
 
     dialog->ele( n = `SimpleForm` ns = `form`
-        )->a( n = `editable` b = abap_true )->tag( `Label`
-            )->a( n = `text` v = `Location` )->ele( `Input`
+        )->a( n = `editable` b = abap_true
+        )->tag( `Label`
+            )->a( n = `text` v = `Location`
+        )->ele( `Input`
             )->a( n = `value`           v = client->_bind( s_screen-city )
             )->a( n = `suggestionItems` v = client->_bind( t_cities )
-            )->a( n = `showSuggestion`  b = abap_true )->ele( `suggestionItems` )->tag( n = `ListItem` ns = `core`
-                )->a( n = `text`           v = `{VALUE}`
-                )->a( n = `additionalText` v = `{DESCR}` )->end( )->end( )->tag( `Button`
+            )->a( n = `showSuggestion`  b = abap_true
+            )->ele( `suggestionItems`
+                )->tag( n = `ListItem` ns = `core`
+                    )->a( n = `text`           v = `{VALUE}`
+                    )->a( n = `additionalText` v = `{DESCR}`
+            )->end(
+        )->end(
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `SEARCH` )
             )->a( n = `text`  v = `search...` ).
 
@@ -294,24 +330,43 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
         )->a( n = `headerText` v = `Employees`
         )->a( n = `mode`       v = `SingleSelectLeft` ).
 
-    tab->ele( `columns` )->ele( `Column`
-            )->a( n = `width` v = `10rem` )->tag( `Text`
-                )->a( n = `text` v = `City` )->end( )->ele( `Column`
-            )->a( n = `width` v = `10rem` )->tag( `Text`
-                )->a( n = `text` v = `Nr` )->end( )->ele( `Column`
-            )->a( n = `width` v = `15rem` )->tag( `Text`
-                )->a( n = `text` v = `Name` )->end( )->ele( `Column`
-            )->a( n = `width` v = `30rem` )->tag( `Text`
-                )->a( n = `text` v = `Lastname` )->end( ).
+    tab->ele( `columns`
+        )->ele( `Column`
+            )->a( n = `width` v = `10rem`
+            )->tag( `Text`
+                )->a( n = `text` v = `City`
+        )->end(
+        )->ele( `Column`
+            )->a( n = `width` v = `10rem`
+            )->tag( `Text`
+                )->a( n = `text` v = `Nr`
+        )->end(
+        )->ele( `Column`
+            )->a( n = `width` v = `15rem`
+            )->tag( `Text`
+                )->a( n = `text` v = `Name`
+        )->end(
+        )->ele( `Column`
+            )->a( n = `width` v = `30rem`
+            )->tag( `Text`
+                )->a( n = `text` v = `Lastname`
+        )->end( ).
 
-    tab->ele( `items` )->ele( `ColumnListItem`
-        )->a( n = `selected` v = `{SELKZ}` )->ele( `cells` )->tag( `Text`
-                )->a( n = `text` v = `{CITY}` )->tag( `Text`
-                )->a( n = `text` v = `{NR}` )->tag( `Text`
-                )->a( n = `text` v = `{NAME}` )->tag( `Text`
-                )->a( n = `text` v = `{LASTNAME}` ).
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->a( n = `selected` v = `{SELKZ}`
+            )->ele( `cells`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{CITY}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{NR}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{NAME}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{LASTNAME}` ).
 
-    dialog->ele( `buttons` )->tag( `Button`
+    dialog->ele( `buttons`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM_CONTINUE` )
             )->a( n = `text`  v = `continue`
             )->a( n = `type`  v = `Emphasized` ).

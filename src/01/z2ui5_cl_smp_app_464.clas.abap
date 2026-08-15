@@ -51,14 +51,16 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Navigation - Uncaught Error and Error Popup`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -73,15 +75,18 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `RAISE_EXCEPTION` )
             )->a( n = `text`  v = `Raise an exception`
             )->a( n = `icon`  v = `sap-icon://error`
-            )->a( n = `type`  v = `Reject` )->tag( `Button`
+            )->a( n = `type`  v = `Reject`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `DIVIDE_BY_ZERO` )
             )->a( n = `text`  v = `Trigger a runtime dump (divide by zero)`
             )->a( n = `icon`  v = `sap-icon://alert`
-            )->a( n = `class` v = `sapUiTinyMarginTop` )->tag( `Button`
+            )->a( n = `class` v = `sapUiTinyMarginTop`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `ASSERT` )
             )->a( n = `text`  v = `Trigger an Assert`
             )->a( n = `icon`  v = `sap-icon://alert`
