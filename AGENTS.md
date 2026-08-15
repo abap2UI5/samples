@@ -904,7 +904,7 @@ ENDMETHOD.
 
 Views are XML strings passed to `client->view_display()`, built with
 `z2ui5_cl_ui5_view_builder` — the released builder in the framework's `src/02`.
-It is generic: eight methods build any UI5 view 1:1, so there is no list of
+It is generic: six methods build any UI5 view 1:1, so there is no list of
 supported controls and nothing to wait for when UI5 adds one. Element and
 property names come straight from the
 [UI5 API Reference](https://ui5.sap.com/#/api) and are written exactly as
