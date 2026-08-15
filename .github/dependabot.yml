@@ -1,0 +1,32 @@
+# Weekly dependency updates, opened as pull requests so the abaplint and
+# abap2UI5-linter gates decide whether they are safe.
+#
+# The interesting one is @abap2ui5/linter: `npm ci` reads package-lock.json,
+# so the version pinned there is the version the gate actually runs. A new
+# release reaches this corpus only when the lock moves, and this is what
+# moves it. A release that changes what a rule reports shows up as a failing
+# check on the bump pull request - which is the point.
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: tuesday
+      time: "06:30"
+    open-pull-requests-limit: 5
+    groups:
+      gates:
+        patterns: ["*"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: tuesday
+      time: "06:30"
+    open-pull-requests-limit: 5
+    groups:
+      actions:
+        patterns: ["*"]
