@@ -178,6 +178,27 @@ function scanSamples() {
   for (const list of Object.values(areas)) list.sort(order);
   hidden.sort(order);
 
+  /* Two samples with the same short text are two catalogue entries the reader
+   * cannot tell apart - and the short text is the only thing either catalogue
+   * has to offer about a sample. src/00/98 carried four such pairs (two
+   * `Deep Structure Sub App`, two `App in App - Subapp`, two
+   * `RTTI - with many Layouts`, two `RTTI - Table with Class Data and Popup`)
+   * plus a `Deep Structure Sub App` on the app that EMBEDS the sub app. Nobody
+   * had a reason to notice while the classes were listed nowhere; SAMPLES.md
+   * lists them, so this is refused at the source. */
+  const seenText = new Map();
+  for (const entry of [...Object.values(areas).flat(), ...hidden]) {
+    const key = `${entry.header} - ${entry.sub}`.toLowerCase();
+    const first = seenText.get(key);
+    if (first) {
+      throw new Error(
+        `${entry.app} and ${first} carry the same short text ("${key}") - `
+        + 'a catalogue entry has to say which sample it is',
+      );
+    }
+    seenText.set(key, entry.app);
+  }
+
   return { areas, hidden };
 }
 

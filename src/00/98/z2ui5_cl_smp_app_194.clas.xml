@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_194</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Deep Structure Sub App</DESCRIPT>
+    <DESCRIPT>Deep Structure - Sub App with Row Binding</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

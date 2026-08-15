@@ -244,7 +244,7 @@ plain OpenUI5 1.71. Each adds one idea.
 
 ## Not in any overview — `src/00`
 
-43 apps with no tile anywhere (AGENTS.md section 3) — reachable
+42 apps with no tile anywhere (AGENTS.md section 3) — reachable
 by class name only, which is what this section is for. They are held to a
 lower bar than `src/01`: an experimental sample may use something newer than
 UI5 1.71, and a testing app exists to be run by a check, not to be learned
@@ -266,7 +266,7 @@ is absent there.
 
 ### testing — `src/00/98`
 
-37 app(s).
+36 app(s).
 
 | Sample | Class |
 |---|---|
@@ -275,8 +275,8 @@ is absent there.
 | **App Calling App with REF** | [`Z2UI5_CL_SMP_APP_192`](src/00/98/z2ui5_cl_smp_app_192.clas.abap) |
 | **App in App** — Main App | [`Z2UI5_CL_SMP_APP_338`](src/00/98/z2ui5_cl_smp_app_338.clas.abap) |
 | **App in App** — Popup | [`Z2UI5_CL_SMP_APP_340`](src/00/98/z2ui5_cl_smp_app_340.clas.abap) |
-| **App in App** — Subapp | [`Z2UI5_CL_SMP_APP_339`](src/00/98/z2ui5_cl_smp_app_339.clas.abap) |
-| **App in App** — Subapp | [`Z2UI5_CL_SMP_APP_342`](src/00/98/z2ui5_cl_smp_app_342.clas.abap) |
+| **App in App** — Subapp, 3 Rows | [`Z2UI5_CL_SMP_APP_339`](src/00/98/z2ui5_cl_smp_app_339.clas.abap) |
+| **App in App** — Subapp, 5 Rows | [`Z2UI5_CL_SMP_APP_342`](src/00/98/z2ui5_cl_smp_app_342.clas.abap) |
 | **App in App I** | [`Z2UI5_CL_SMP_APP_211`](src/00/98/z2ui5_cl_smp_app_211.clas.abap) |
 | **App in App II** | [`Z2UI5_CL_SMP_APP_212`](src/00/98/z2ui5_cl_smp_app_212.clas.abap) |
 | **basic** — popups with ref from prev App | [`Z2UI5_CL_SMP_APP_328`](src/00/98/z2ui5_cl_smp_app_328.clas.abap) |
@@ -285,34 +285,33 @@ is absent there.
 | **Check throw error when ref used for binding** | [`Z2UI5_CL_SMP_APP_343`](src/00/98/z2ui5_cl_smp_app_343.clas.abap) |
 | **data binding tables with invalid date and time** | [`Z2UI5_CL_SMP_APP_118`](src/00/98/z2ui5_cl_smp_app_118.clas.abap) |
 | **data container** | [`Z2UI5_CL_SMP_APP_193`](src/00/98/z2ui5_cl_smp_app_193.clas.abap) |
-| **Deep Structure** | [`Z2UI5_CL_SMP_APP_190`](src/00/98/z2ui5_cl_smp_app_190.clas.abap) |
-| **Deep Structure Main App** | [`Z2UI5_CL_SMP_APP_195`](src/00/98/z2ui5_cl_smp_app_195.clas.abap) |
-| **Deep Structure Sub App** | [`Z2UI5_CL_SMP_APP_191`](src/00/98/z2ui5_cl_smp_app_191.clas.abap) |
-| **Deep Structure Sub App** | [`Z2UI5_CL_SMP_APP_194`](src/00/98/z2ui5_cl_smp_app_194.clas.abap) |
+| **Deep Structure** — Main App Embedding Sub App 190 | [`Z2UI5_CL_SMP_APP_191`](src/00/98/z2ui5_cl_smp_app_191.clas.abap) |
+| **Deep Structure** — Main App Embedding Sub App 194 | [`Z2UI5_CL_SMP_APP_195`](src/00/98/z2ui5_cl_smp_app_195.clas.abap) |
+| **Deep Structure** — Sub App with Row Binding | [`Z2UI5_CL_SMP_APP_194`](src/00/98/z2ui5_cl_smp_app_194.clas.abap) |
+| **Deep Structure** — Sub App, Table Only | [`Z2UI5_CL_SMP_APP_190`](src/00/98/z2ui5_cl_smp_app_190.clas.abap) |
 | **model update input editable with focus** | [`Z2UI5_CL_SMP_APP_443`](src/00/98/z2ui5_cl_smp_app_443.clas.abap) |
 | **Multiple Timers** | [`Z2UI5_CL_SMP_APP_353`](src/00/98/z2ui5_cl_smp_app_353.clas.abap) |
 | **Nested Apps I** — Calling another app for rendering | [`Z2UI5_CL_SMP_APP_117`](src/00/98/z2ui5_cl_smp_app_117.clas.abap) |
 | **Nested Apps II** — Use RTTI to render different Subapps | [`Z2UI5_CL_SMP_APP_131`](src/00/98/z2ui5_cl_smp_app_131.clas.abap) |
 | **Nested Apps III** — User Generic Data Refs in Subapps | [`Z2UI5_CL_SMP_APP_185`](src/00/98/z2ui5_cl_smp_app_185.clas.abap) |
+| **RTTI** — One Table with many Layouts | [`Z2UI5_CL_SMP_APP_345`](src/00/98/z2ui5_cl_smp_app_345.clas.abap) |
 | **RTTI** — Struc | [`Z2UI5_CL_SMP_APP_331`](src/00/98/z2ui5_cl_smp_app_331.clas.abap) |
 | **RTTI** — Struc with Cell Binding | [`Z2UI5_CL_SMP_APP_332`](src/00/98/z2ui5_cl_smp_app_332.clas.abap) |
 | **RTTI** — Struc with Class Data | [`Z2UI5_CL_SMP_APP_334`](src/00/98/z2ui5_cl_smp_app_334.clas.abap) |
 | **RTTI** — Struc with Class Data and Popup | [`Z2UI5_CL_SMP_APP_335`](src/00/98/z2ui5_cl_smp_app_335.clas.abap) |
 | **RTTI** — Struc with Ref in Object | [`Z2UI5_CL_SMP_APP_348`](src/00/98/z2ui5_cl_smp_app_348.clas.abap) |
 | **RTTI** — Table with Class Data and Popup | [`Z2UI5_CL_SMP_APP_337`](src/00/98/z2ui5_cl_smp_app_337.clas.abap) |
-| **RTTI** — Table with Class Data and Popup | [`Z2UI5_CL_SMP_APP_349`](src/00/98/z2ui5_cl_smp_app_349.clas.abap) |
 | **RTTI** — Table with Ref in Object | [`Z2UI5_CL_SMP_APP_347`](src/00/98/z2ui5_cl_smp_app_347.clas.abap) |
-| **RTTI** — with many Layouts | [`Z2UI5_CL_SMP_APP_344`](src/00/98/z2ui5_cl_smp_app_344.clas.abap) |
-| **RTTI** — with many Layouts | [`Z2UI5_CL_SMP_APP_345`](src/00/98/z2ui5_cl_smp_app_345.clas.abap) |
+| **RTTI** — Table, Class Data, Popup, Refs Checked | [`Z2UI5_CL_SMP_APP_349`](src/00/98/z2ui5_cl_smp_app_349.clas.abap) |
+| **RTTI** — Two Tables with many Layouts | [`Z2UI5_CL_SMP_APP_344`](src/00/98/z2ui5_cl_smp_app_344.clas.abap) |
 | **Type Ref to Data Table with refresh** | [`Z2UI5_CL_SMP_APP_199`](src/00/98/z2ui5_cl_smp_app_199.clas.abap) |
 | **unit test** — long variable | [`Z2UI5_CL_SMP_APP_138`](src/00/98/z2ui5_cl_smp_app_138.clas.abap) |
-| **ZZZ Data Object for Sample 328** | [`Z2UI5_CL_SMP_APP_329`](src/00/98/z2ui5_cl_smp_app_329.clas.abap) |
 
 ---
 
 ## Helper apps
 
-12 classes that are only ever *called* by another sample — a
+13 classes that are only ever *called* by another sample — a
 sub-app, a data object, the other half of a navigation demo. Their short text
 starts with `ZZZ`, which is how the generator knows to give them no tile.
 Listed here so nothing in the tree is invisible; there is no point starting
@@ -330,6 +329,7 @@ one on its own.
 | **ZZZ** — called by Nested Apps I | [`Z2UI5_CL_SMP_APP_126`](src/00/98/z2ui5_cl_smp_app_126.clas.abap) |
 | **ZZZ** — called by Nested Apps II | [`Z2UI5_CL_SMP_APP_132`](src/00/98/z2ui5_cl_smp_app_132.clas.abap) |
 | **ZZZ** — called by Nested Apps III | [`Z2UI5_CL_SMP_APP_184`](src/00/98/z2ui5_cl_smp_app_184.clas.abap) |
+| **ZZZ** — Data Object for Samples 328 and 331 | [`Z2UI5_CL_SMP_APP_329`](src/00/98/z2ui5_cl_smp_app_329.clas.abap) |
 | **ZZZ** — Data Object with Data Ref for multiple samples | [`Z2UI5_CL_SMP_APP_333`](src/00/98/z2ui5_cl_smp_app_333.clas.abap) |
 | **ZZZ** — RTTI With Data Refs for multiple apps | [`Z2UI5_CL_SMP_APP_336`](src/00/98/z2ui5_cl_smp_app_336.clas.abap) |
 
