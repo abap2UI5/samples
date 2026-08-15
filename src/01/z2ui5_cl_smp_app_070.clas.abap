@@ -276,7 +276,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
                                )->a( n = `currency` v = `{WAERS}` ).
     lo_columns->end( )->ele( n = `rowActionTemplate` ns = `table` )->ele( n = `RowAction` ns = `table` )->ele( n = `RowActionItem` ns = `table`
           )->a( n = `type`  v = `Navigation`
-          )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) 
+          )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
           )->end( )->ele( n = `RowActionItem` ns = `table`
                               )->a( n = `icon`  v = `sap-icon://edit`
                               )->a( n = `text`  v = `Edit`

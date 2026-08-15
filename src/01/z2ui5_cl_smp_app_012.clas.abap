@@ -162,7 +162,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
         )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     popup->ele( `Dialog`
         )->a( n = `title` v = `Popup - Info` )->ele( `VBox` )->tag( `Text`
-                    )->a( n = `text` v = `this is an information, press close to go back to the main view without a server roundtrip` 
+                    )->a( n = `text` v = `this is an information, press close to go back to the main view without a server roundtrip`
                     )->end( )->ele( `buttons` )->tag( `Button`
                     )->a( n = `press` v = client->follow_up_action( client->cs_event-popup_close )
                     )->a( n = `text`  v = `close`

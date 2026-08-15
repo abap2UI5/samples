@@ -91,7 +91,7 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
             )->a( n = `list` v = `{template>/MT_LAYOUT}`
             )->a( n = `var`  v = `LO` )->ele( `Column`
               )->a( n = `mergeDuplicates` v = `{LO>MERGE}`
-              )->a( n = `visible`         v = `{LO>VISIBLE}` )->end( )->end( )->end( )->ele( `items` )->ele( `ColumnListItem` 
+              )->a( n = `visible`         v = `{LO>VISIBLE}` )->end( )->end( )->end( )->ele( `items` )->ele( `ColumnListItem`
               )->ele( `cells` )->ele( n = `repeat` ns = `template`
                   )->a( n = `list` v = `{template>/MT_LAYOUT}`
                   )->a( n = `var`  v = `LO2` )->ele( `ObjectIdentifier`

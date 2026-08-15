@@ -53,7 +53,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
               )->a( n = `text` v = `this is a text` )->tag( `Label`
               )->a( n = `text` v = `info3` )->tag( `Text`
               )->a( n = `text` v = `this is a text` )->tag( `Text`
-              )->a( n = `text` v = `this is a text` )->end( )->end( )->ele( `footer` )->ele( `OverflowToolbar` 
+              )->a( n = `text` v = `this is a text` )->end( )->end( )->ele( `footer` )->ele( `OverflowToolbar`
               )->tag( `ToolbarSpacer` )->tag( `Button`
                 )->a( n = `press` v = client->_event( `BUTTON_DETAILS` )
                 )->a( n = `text`  v = `details`

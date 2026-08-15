@@ -116,7 +116,7 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
                                    )->a( n = `autoResizable`  v = `true`
                                    )->a( n = `filterProperty` v = `FIELD3` )->tag( `Text`
                                                   )->a( n = `text` v = `Field3` )->ele( n = `template` ns = `table` )->tag( `Text`
-                                                   )->a( n = `text` v = `{FIELD3}` )->end( )->end( )->end( )->ele( n = `rowActionTemplate` ns = `table` 
+                                                   )->a( n = `text` v = `{FIELD3}` )->end( )->end( )->end( )->ele( n = `rowActionTemplate` ns = `table`
                                                    )->ele( n = `RowAction` ns = `table` )->ele( n = `RowActionItem` ns = `table`
                                   )->a( n = `icon`  v = `sap-icon://add`
                                   )->a( n = `text`  v = `Add`
