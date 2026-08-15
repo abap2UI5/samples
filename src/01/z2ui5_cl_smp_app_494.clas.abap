@@ -34,7 +34,7 @@ CLASS z2ui5_cl_smp_app_494 IMPLEMENTATION.
 
       page->tag( `MessageStrip`
           )->a( n = `text`     v = `client->_bind( name ) connects the public attribute NAME with the input ` &&
-                     `below - in both directions. Type a name and leave the field: the text ` &&
+                     `below. Type a name and leave the field: the text ` &&
                      `next to it changes without any ABAP code, because both are bound to the ` &&
                      `same attribute. Press Greet and the backend reads NAME - already filled ` &&
                      `in, no event argument needed - and writes GREETING back into the view.`
