@@ -1,14 +1,11 @@
 [![ABAP NW 7.02 to ABAP Cloud](https://img.shields.io/badge/ABAP-NW%207.02%20%E2%86%92%20Cloud-blue)](#try-it-in-60-seconds)
 [![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
-[![dependency](https://img.shields.io/badge/dependency-abap2UI5-blue)](https://github.com/abap2UI5/abap2UI5)
-<br>
-[![abap2UI5-linter](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fabap2UI5%2Fsamples%2Fmain%2F.github%2Fbadges%2Fabap2ui5lint.json)](https://github.com/abap2UI5/linter)
-<br>
-<br>
+[![abap2UI5](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fabap2UI5%2Fsamples%2Fmain%2F.github%2Fbadges%2Fabap2ui5.json)](#learn-abap2ui5)
+<br><br>
 [![abap-standard](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml)
 [![abap-cloud](https://github.com/abap2UI5/samples/actions/workflows/abap-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-cloud.yaml)
 <br>
-[![check-abap2UI5](https://github.com/abap2UI5/samples/actions/workflows/check-abap2UI5.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-abap2UI5.yaml)
+[![check-abap2UI5](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fabap2UI5%2Fsamples%2Fmain%2F.github%2Fbadges%2Fcheck-abap2ui5.json)](https://github.com/abap2UI5/samples/actions/workflows/check-abap2UI5.yaml)
 [![check-rename](https://github.com/abap2UI5/samples/actions/workflows/check-rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-rename.yaml)
 <br>
 [![publish-702](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml)

@@ -60,12 +60,12 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
              )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                  path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showMeasure: false\}  \}| 
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showMeasure: false\}  \}|
                                                      )->tag( `Input`
              )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                  path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}| 
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}|
                                                      )->tag( `Label`
              )->a( n = `text` v = `Default` )->tag( `Text`
              )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
@@ -88,13 +88,13 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
              )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                  path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}| 
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}|
                                                      )->tag( `Label`
              )->a( n = `text` v = `style:'long'` )->tag( `Text`
              )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                  path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}| 
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
                                                      )->tag( `Label`
              )->a( n = `text` v = `event` )->tag( `Button`
              )->a( n = `press` v = client->_event( `BUTTON` )

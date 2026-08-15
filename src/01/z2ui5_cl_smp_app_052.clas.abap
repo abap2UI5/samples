@@ -41,23 +41,30 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
         )->a( n = `xmlns:f`    v = `sap.f`
         )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    lo_popover->ele( `Popover`
+    DATA(popover) = lo_popover->ele( `Popover`
         )->a( n = `title`        v = |abap2UI5 - Popover - { mv_product }|
         )->a( n = `placement`    v = `Right`
-        )->a( n = `contentWidth` v = `20rem` )->ele( n = `SimpleForm` ns = `form`
-          )->a( n = `layout`   v = `ColumnLayout`
-          )->a( n = `editable` b = abap_false )->ele( n = `content` ns = `form` )->tag( `Label`
-              )->a( n = `text` v = `Product` )->tag( `Text`
-              )->a( n = `text` v = mv_product )->tag( `Label`
-              )->a( n = `text` v = `info2` )->tag( `Text`
-              )->a( n = `text` v = `this is a text` )->tag( `Label`
-              )->a( n = `text` v = `info3` )->tag( `Text`
-              )->a( n = `text` v = `this is a text` )->tag( `Text`
-              )->a( n = `text` v = `this is a text` )->end( )->end( )->ele( `footer` )->ele( `OverflowToolbar` 
-              )->tag( `ToolbarSpacer` )->tag( `Button`
-                )->a( n = `press` v = client->_event( `BUTTON_DETAILS` )
-                )->a( n = `text`  v = `details`
-                )->a( n = `type`  v = `Emphasized` ).
+        )->a( n = `contentWidth` v = `20rem` ).
+
+    popover->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `layout`   v = `ColumnLayout`
+        )->a( n = `editable` b = abap_false
+        )->ele( n = `content` ns = `form`
+            )->tag( `Label` )->a( n = `text` v = `Product`
+            )->tag( `Text`  )->a( n = `text` v = mv_product
+            )->tag( `Label` )->a( n = `text` v = `info2`
+            )->tag( `Text`  )->a( n = `text` v = `this is a text`
+            )->tag( `Label` )->a( n = `text` v = `info3`
+            )->tag( `Text`  )->a( n = `text` v = `this is a text`
+            )->tag( `Text`  )->a( n = `text` v = `this is a text` ).
+
+    popover->ele( `footer` )->ele( `OverflowToolbar`
+        )->tag( `ToolbarSpacer`
+        )->tag( `Button`
+            )->a( n = `press` v = client->_event( `BUTTON_DETAILS` )
+            )->a( n = `text`  v = `details`
+            )->a( n = `type`  v = `Emphasized` ).
+
     client->popover_display( xml   = lo_popover->stringify( )
                              by_id = id ).
 

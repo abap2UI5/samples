@@ -24,15 +24,22 @@
   // Refresh it with `npx abap2ui5lint --update-baseline` after fixing things.
   "baseline": "abap2ui5lint-baseline.json",
 
-  // The README badge. Every run rewrites this shields.io endpoint file: grey
-  // half how far the check reached ("148 apps - 172 views - 2,176 controls",
-  // the numbers the run summary prints), coloured half the verdict - and
-  // check-abap2UI5 commits it onto the pull request branch, so the badge on
-  // main updates when the pull request that changed the corpus merges. It
-  // says something the workflow badge next to it cannot: a green workflow
+  // The two README badges. Every run rewrites these shields.io endpoint
+  // files, and they are two because they say two different things:
+  //
+  //   abap2UI5       | 148 apps - 172 views - 2,176 controls   what is here
+  //   check-abap2UI5 | 83 rules passed                         what CI made of it
+  //
+  // check-abap2UI5 commits them onto the pull request branch, so the badges
+  // on main update when the pull request that changed the corpus merges.
+  // Together they say something a workflow badge cannot: a green workflow
   // means "the job exited zero", which was also true while the linter found
-  // nothing checkable here at all (AGENTS.md 6).
-  "badge": ".github/badges/abap2ui5lint.json",
+  // nothing checkable here at all (AGENTS.md 6) - and that run would now
+  // print "nothing checkable", grey, on both.
+  "badge": [
+    { "kind": "corpus", "file": ".github/badges/abap2ui5.json" },
+    { "kind": "checks", "file": ".github/badges/check-abap2ui5.json" }
+  ],
 
   // A render error carries no line and its message text is unstable, so it
   // cannot be baselined — naming the file is the only instrument. Two groups,
@@ -67,6 +74,24 @@
   //     helper, so there is nothing to render. A gate can say nothing about
   //     them either way.
   "rules": {
+    // The chain's layout is the only picture of the view's tree there is, and
+    // nothing else formats it: abaplint's `indentation` is off for app code on
+    // purpose, so a mangled chain is lint-green everywhere else. Both layout
+    // rules ship as `hint`, which `failOn: warning` does not even print - the
+    // port to z2ui5_cl_ui5_view_builder (#752) therefore left classes like
+    // z2ui5_cl_smp_app_052 with an indent that steps by 2, then by 4, then
+    // stops moving, and every gate stayed green.
+    //
+    // `chain-indentation` is raised here because it costs one baseline entry:
+    // it judges only that a chain keeps its OWN rhythm (a sibling in a
+    // different column than its siblings, a call written left of the element
+    // it belongs to), never the step size, so the corpus already passes it.
+    //
+    // `chain-element-per-line` is NOT raised, and that is deliberate: it flags
+    // 339 findings here, and one of them is the idiom AGENTS.md section 10
+    // documents - `view->ele( `Shell` )->ele( `Page`` on one line. Raising it
+    // means changing that convention first.
+    "chain-indentation": { "severity": "warning" },
     "render-error": {
       "exclude": [
         // (a) not served by the harness

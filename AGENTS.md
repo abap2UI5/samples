@@ -655,15 +655,15 @@ newline). **Run `abaplint` — 0 issues — before committing.**
   | `abap2ui5` | defects living in the relationship between the ABAP class and the view it builds; silent at runtime, invisible to any UI5 tooling |
 
 - Configuration: `abap2ui5lint.jsonc` (UI5 floor `1.71`, distribution
-  `openui5`, `failOn: warning`, baseline, badge)
+  `openui5`, `failOn: warning`, baseline, badges)
 - Run: `npm run check:abap2ui5`
 - CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
   `abap-702`, which lint ABAP itself against three target releases
 - **The gate is effective**: 148 app classes, 172 reconstructed views, and
   the adoption-time debt frozen in `abap2ui5lint-baseline.json` (#753). It was
   not always: while the linter still looked for the view builder's former name
-  it found no checkable file at all, and a green `abap2UI5` badge then meant
-  "nothing was checkable", not "the apps are clean".
+  it found no checkable file at all, and a green `check-abap2UI5` badge then
+  meant "nothing was checkable", not "the apps are clean".
 - **That is why a run reports what it LOOKED at**, not only what it found.
   The gates log every file into a collapsed group while they run, and the run
   closes with a summary — classes, views reconstructed (**and how many
@@ -681,15 +681,17 @@ newline). **Run `abaplint` — 0 issues — before committing.**
   A `judged` line of zeroes, or `148 classes produced none`, is the earlier
   failure repeating itself — and now it says so instead of printing
   "Success! No findings detected."
-- **The README badge** (`.github/badges/abap2ui5lint.json`, a shields.io
-  endpoint file) carries the same statement: the grey half is the reach —
-  *abap2UI5-linter 148 apps · 172 views · 2,176 controls* — and the green (or
-  red) half next to it is the verdict, *clean*. Every run rewrites it,
-  `check-abap2UI5` commits it onto the pull request branch, and main picks it
-  up when that pull request merges — so the numbers next to "clean" are what
-  the last run actually checked. **A sample added or
-  removed changes this file**; commit it with the change (the workflow pushes
-  it if you forget, and reports it when it cannot).
+- **The two README badges** (`.github/badges/abap2ui5.json` and
+  `.github/badges/check-abap2ui5.json`, shields.io endpoint files) carry the
+  same statement, split along what they mean: *abap2UI5 | 148 apps · 172 views
+  · 2,176 controls* is what is here, blue, a fact; *check-abap2UI5 | 83 rules
+  passed* is what the gate made of it, green (or *3 problems*, *7 errors*,
+  red). A run that finds nothing checkable turns both grey and says so. Every
+  run rewrites them, `check-abap2UI5` commits them onto the pull request
+  branch, and main picks them up when that pull request merges — so the counts
+  are what the last run actually checked. **A sample added or removed changes
+  these files**; commit them with the change (the workflow pushes them if you
+  forget, and reports it when it cannot).
 
 ### abapGit file consistency
 
@@ -847,7 +849,7 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 | Nested views | `nest_view_display/destroy`, `nest2_view_*` | Embedded sub-views |
 | Popups | `popup_display`, `popup_destroy` | Modal dialogs |
 | Popovers | `popover_display`, `popover_destroy` | Context popovers |
-| Binding | `_bind(val)` | Data binding, values travel in both directions (`_bind_edit` is an obsolete alias) |
+| Binding | `_bind(val)` | Data binding — the value is written back before the event handler runs (`_bind_edit` is an obsolete alias) |
 | Events | `_event(val)`, `follow_up_action(val)`, `check_on_event(val)` | Event registration and checking (`_event_client` is an obsolete alias — `follow_up_action` covers both roles: returned into a view attribute it binds the frontend action to a control, called on `client` it queues the action after the current response renders) |
 | Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
 | Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
@@ -987,6 +989,31 @@ The hierarchy is `mvc:View` → `Shell` → `Page` → `form:SimpleForm` →
 `form:content` → leaves. `Label`, `Input` and `Button` are siblings inside
 `content`, so they are added with `tag( )` and stay at the same indent.
 
+Three rules keep that picture true, and the port of the corpus onto this
+builder (#752) broke all three in a handful of classes:
+
+- **The indent states the depth.** One level per container, the same step
+  throughout the file — a chain that steps by 2 and then by 4 and then stops
+  moving is no longer describing the tree, it is decorating it.
+- **Never unwind with a run of `end( )` to start a sibling.** A line ending in
+  `` )->end( )->end( )->ele( `footer` )->ele( `OverflowToolbar` `` changes four
+  levels where nobody can see them, and every line after it starts in a column
+  that means nothing. When you need a node again, **keep it in a variable** —
+  `DATA(page)`, `DATA(cont)`, `DATA(lo_columns)` in the sample above — and
+  start a new statement per subtree. That is what the corpus does, and it is
+  what lets a statement indent monotonically.
+- **A control may share its line with its own attributes**
+  (`` )->tag( `Label` )->a( n = `text` … ``) **and with the container it opens**
+  (`` view->ele( `Shell` )->ele( `Page` ``) — but a line carrying a whole
+  subtree hides the tree.
+
+The abap2UI5-linter judges this (`chain-indentation`, `chain-element-per-line`),
+but read `abap2ui5lint.jsonc` before relying on it: `chain-element-per-line` is
+still a hint with 339 findings in the baseline, so it fails nothing today. The
+layout is on the author and the reviewer. `z2ui5_cl_smp_app_052` is the worked
+example — its `popover_display` was the broken shape above and is now the
+sound one.
+
 #### Namespaces
 
 Every namespace prefix a view uses must be declared on the view element —
@@ -1028,9 +1055,10 @@ at the call.
 
 **Call it "binding", never "one-way"/"two-way" binding** — in sample titles,
 message strips, comments and `@keywords` alike. With only `_bind( )` left, and
-values always travelling in both directions, the qualifier distinguishes
-nothing and makes readers look for a second mode that does not exist. Say
-"bound attribute", "the value is written back before the event handler runs".
+the value always written back before the event handler runs, the qualifier
+distinguishes nothing and makes readers look for a second mode that does not
+exist. Say "bound attribute", "the value is written back before the event
+handler runs".
 "One-way" is correct only for a real UI5 one-way model that is not `_bind( )`
 — the `device>` JSONModel in `z2ui5_cl_smp_app_445`, for example.
 

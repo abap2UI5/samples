@@ -258,7 +258,16 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         CREATE OBJECT li_app TYPE (name).
         s_scroll = CORRESPONDING #( client->get( )-s_scroll-main ).
         client->nav_app_call( li_app ).
-      CATCH cx_root ##NO_HANDLER.
+
+      CATCH cx_root INTO DATA(error) ##CATCH_ALL.
+        " a press that does nothing at all is the worst answer this page can
+        " give, and it is what the silent catch here used to produce. The class
+        " name is dynamic, so only the running system knows why it did not
+        " start - the class was not installed with the rest, the release cannot
+        " activate it, one of the classes it references is missing - and none
+        " of that is guessable from the outside. Say it instead of swallowing it.
+        client->message_box_display( text = |{ name }: { error->get_text( ) }|
+                                     type = `error` ).
     ENDTRY.
 
   ENDMETHOD.
@@ -556,14 +565,28 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
                                    THEN `sapUiMediumMarginBegin sapUiTinyMarginEnd`
                                    ELSE `sapUiTinyMarginBeginEnd` ).
 
-    toolbar->ele( n = `Icon` ns = `core`
+    toolbar->tag( n = `Icon` ns = `core`
         )->a( n = `src`     v = icon
-        )->a( n = `id`      v = class
         )->a( n = `size`    v = `1.125rem`
         )->a( n = `class`   v = css_class
-        )->a( n = `color`   v = color
-        )->a( n = `tooltip` v = hint
-        )->a( n = `press`   v = press ).
+        )->a( n = `tooltip` v = hint ).
+
+    " a( ) writes on the element just added, and an EMPTY attribute would be
+    " rendered as one - id="" is not a control id, color="" is not a valid
+    " IconColor and press="" is not a handler, so the three optional ones are
+    " added only when they carry something. The documentation and GitHub
+    " entries have no class, and the entry you are standing on has no press.
+    IF class IS NOT INITIAL.
+      toolbar->a( n = `id` v = class ).
+    ENDIF.
+
+    IF color IS NOT INITIAL.
+      toolbar->a( n = `color` v = color ).
+    ENDIF.
+
+    IF press IS NOT INITIAL.
+      toolbar->a( n = `press` v = press ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -613,16 +636,31 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD class_installed.
 
-    " the same question the framework's start page asks: an absent, inactive
-    " or not-activatable class raises here, it does not return a flag. The name
-    " has to be upper case - the repository stores it that way, and the class
-    " constants above follow the repository's lower-case spelling rule.
+    " Is the class ON this system - the same question the framework's start
+    " page asks (z2ui5_cl_ui5_util_context=>rtti_check_class_exists), and
+    " deliberately NOT "can it be instantiated". CREATE OBJECT was the check
+    " here, and it answers a far bigger question than the header has: it loads
+    " the whole class pool of the OTHER repository's overview app together with
+    " everything that pool statically references, and runs its constructor.
+    " Every failure in there - a helper class of that repository the release
+    " cannot activate, a repository that landed on the system only in part -
+    " came back as "not installed on this system", so the icon offered the
+    " abapGit link for a repository that is sitting right there and refused to
+    " navigate into it.
+    " Existence is what this row has to decide. Whether the app then starts is
+    " app_call( )'s question, and since the silent catch there is gone, a jump
+    " that cannot happen says why instead of doing nothing.
+    " The name has to be upper case - the repository stores it that way, and
+    " the class constants above follow the repository's lower-case spelling rule.
     DATA(name) = to_upper( val ).
 
     TRY.
-        DATA obj TYPE REF TO object ##NEEDED.
-        CREATE OBJECT obj TYPE (name).
-        result = abap_true.
+        cl_abap_classdescr=>describe_by_name( EXPORTING  p_name         = name
+                                              EXCEPTIONS type_not_found = 1 ).
+        IF sy-subrc = 0.
+          result = abap_true.
+        ENDIF.
+
       CATCH cx_root ##CATCH_ALL.
         result = abap_false.
     ENDTRY.
