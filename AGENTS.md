@@ -655,15 +655,15 @@ newline). **Run `abaplint` — 0 issues — before committing.**
   | `abap2ui5` | defects living in the relationship between the ABAP class and the view it builds; silent at runtime, invisible to any UI5 tooling |
 
 - Configuration: `abap2ui5lint.jsonc` (UI5 floor `1.71`, distribution
-  `openui5`, `failOn: warning`, baseline, badge)
+  `openui5`, `failOn: warning`, baseline, badges)
 - Run: `npm run check:abap2ui5`
 - CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
   `abap-702`, which lint ABAP itself against three target releases
 - **The gate is effective**: 148 app classes, 172 reconstructed views, and
   the adoption-time debt frozen in `abap2ui5lint-baseline.json` (#753). It was
   not always: while the linter still looked for the view builder's former name
-  it found no checkable file at all, and a green `abap2UI5` badge then meant
-  "nothing was checkable", not "the apps are clean".
+  it found no checkable file at all, and a green `check-abap2UI5` badge then
+  meant "nothing was checkable", not "the apps are clean".
 - **That is why a run reports what it LOOKED at**, not only what it found.
   The gates log every file into a collapsed group while they run, and the run
   closes with a summary — classes, views reconstructed (**and how many
@@ -681,15 +681,17 @@ newline). **Run `abaplint` — 0 issues — before committing.**
   A `judged` line of zeroes, or `148 classes produced none`, is the earlier
   failure repeating itself — and now it says so instead of printing
   "Success! No findings detected."
-- **The README badge** (`.github/badges/abap2ui5lint.json`, a shields.io
-  endpoint file) carries the same statement: the grey half is the reach —
-  *abap2UI5-linter 148 apps · 172 views · 2,176 controls* — and the green (or
-  red) half next to it is the verdict, *clean*. Every run rewrites it,
-  `check-abap2UI5` commits it onto the pull request branch, and main picks it
-  up when that pull request merges — so the numbers next to "clean" are what
-  the last run actually checked. **A sample added or
-  removed changes this file**; commit it with the change (the workflow pushes
-  it if you forget, and reports it when it cannot).
+- **The two README badges** (`.github/badges/abap2ui5.json` and
+  `.github/badges/check-abap2ui5.json`, shields.io endpoint files) carry the
+  same statement, split along what they mean: *abap2UI5 | 148 apps · 172 views
+  · 2,176 controls* is what is here, blue, a fact; *check-abap2UI5 | 83 rules
+  passed* is what the gate made of it, green (or *3 problems*, *7 errors*,
+  red). A run that finds nothing checkable turns both grey and says so. Every
+  run rewrites them, `check-abap2UI5` commits them onto the pull request
+  branch, and main picks them up when that pull request merges — so the counts
+  are what the last run actually checked. **A sample added or removed changes
+  these files**; commit them with the change (the workflow pushes them if you
+  forget, and reports it when it cannot).
 
 ### abapGit file consistency
 

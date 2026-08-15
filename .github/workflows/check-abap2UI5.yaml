@@ -17,7 +17,7 @@ name: check-abap2UI5
 # between "148 classes were checked" and "nothing was checkable" - a
 # distinction this repository has been on the wrong side of before
 # (AGENTS.md 6). It also goes into the job summary of the run, and into the
-# README badge below.
+# two README badges below.
 
 on:
   pull_request:
@@ -60,18 +60,19 @@ jobs:
       if: always()
       run: npx abap2ui5lint --no-render --advisory --no-progress --no-badge --format markdown >> "$GITHUB_STEP_SUMMARY"
 
-    # abap2ui5lint.jsonc points "badge" at .github/badges/abap2ui5lint.json,
-    # so the step above already rewrote it with what the corpus now is. The
-    # default branch is protected and github-actions[bot] can never be added
-    # to a bypass list, so the badge is committed onto the PULL REQUEST branch
-    # - the pull request that changes the corpus is what changes the badge,
-    # and main picks it up when that pull request merges. Same mechanism as
-    # publish-overview-apps, including the fallback for refs that cannot be
-    # pushed to: there the stale badge is reported, never silently accepted.
-    # only after a green gate: a red pull request cannot merge, so its badge
-    # would never reach main anyway - and a badge commit on top of a failing
-    # run reads as if something had been fixed
-    - name: Publish the badge
+    # abap2ui5lint.jsonc points "badge" at .github/badges/abap2ui5.json (what
+    # the corpus is) and .github/badges/check-abap2ui5.json (what this gate
+    # made of it), so the step above already rewrote both with what the corpus
+    # now is. The default branch is protected and github-actions[bot] can
+    # never be added to a bypass list, so they are committed onto the PULL
+    # REQUEST branch - the pull request that changes the corpus is what
+    # changes the badges, and main picks them up when that pull request
+    # merges. Same mechanism as publish-overview-apps, including the fallback
+    # for refs that cannot be pushed to: there the stale badge is reported,
+    # never silently accepted. Only after a green gate: a red pull request
+    # cannot merge, so its badges would never reach main anyway - and a badge
+    # commit on top of a failing run reads as if something had been fixed
+    - name: Publish the badges
       if: success()
       env:
         # only a same-repository pull request can be pushed to with
@@ -80,16 +81,16 @@ jobs:
                       && github.event.pull_request.head.repo.full_name == github.repository }}
       run: |
         if git diff --quiet -- .github/badges; then
-          echo "The linter badge is up to date."
+          echo "The linter badges are up to date."
           exit 0
         fi
         git diff -- .github/badges
         if [ "$PUSHABLE" != "true" ]; then
-          echo "::warning::The linter badge is out of date and this ref cannot be pushed to. Run 'npm run check:abap2ui5' and commit .github/badges/abap2ui5lint.json."
+          echo "::warning::The linter badges are out of date and this ref cannot be pushed to. Run 'npm run check:abap2ui5' and commit .github/badges/."
           exit 0
         fi
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
-        git commit -qm 'Refresh the abap2UI5-linter badge' -- .github/badges
+        git commit -qm 'Refresh the abap2UI5-linter badges' -- .github/badges
         git push
-        echo "Badge refreshed and pushed onto the pull request branch."
+        echo "Badges refreshed and pushed onto the pull request branch."
