@@ -59,8 +59,11 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         )->a( n = `fixedColumnCount`   v = `1`
         )->a( n = `rowActionCount`     v = `1`
         )->a( n = `selectionMode`      v = `None`
+        " abap2ui5lint-disable-next-line event-without-handler -- sap.ui.table fires it; the roundtrip re-renders and that is the point
         )->a( n = `filter`             v = client->_event( `FILTER` )
+        " abap2ui5lint-disable-next-line event-without-handler -- sap.ui.table fires it; the roundtrip re-renders and that is the point
         )->a( n = `sort`               v = client->_event( `SORT` )
+        " abap2ui5lint-disable-next-line event-without-handler -- sap.ui.table fires it; the roundtrip re-renders and that is the point
         )->a( n = `customFilter`       v = client->_event( `CUSTOMFILTER` ) ).
     tab->ele( n = `extension` ns = `table`
         )->ele( `OverflowToolbar`
@@ -179,6 +182,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->a( n = `description` v = `{DESCR}`
             )->a( n = `icon`        v = `{ICON}`
             )->a( n = `info`        v = `{INFO}`
+            " abap2ui5lint-disable-next-line event-without-handler -- item press; the master-detail wiring below is what this sample shows
             )->a( n = `press`       v = client->_event( `TEST` )
             )->a( n = `selected`    v = `{SELECTED}` ).
 

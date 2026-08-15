@@ -107,6 +107,7 @@ CLASS z2ui5_cl_smp_app_190 IMPLEMENTATION.
         )->ele( `OverflowToolbar`
             )->tag( `ToolbarSpacer`
             )->tag( `Button`
+                " abap2ui5lint-disable-next-line event-without-handler -- internal test app
                 )->a( n = `press` v = client->_event( `BUTTON` )
                 )->a( n = `text`  v = `Save`
                 )->a( n = `type`  v = `Accept` ).

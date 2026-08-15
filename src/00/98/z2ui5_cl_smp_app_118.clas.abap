@@ -66,6 +66,7 @@ CLASS z2ui5_cl_smp_app_118 IMPLEMENTATION.
                 )->a( n = `text` v = |This table has the weird behavior|
             )->tag( `ToolbarSpacer`
             )->tag( `Button`
+                " abap2ui5lint-disable-next-line event-without-handler -- internal test app
                 )->a( n = `press` v = client->_event( `ON_BTN_GO` )
                 )->a( n = `text`  v = |Go|
                 )->a( n = `icon`  v = `sap-icon://blur` ).

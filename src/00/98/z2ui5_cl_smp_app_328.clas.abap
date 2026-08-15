@@ -102,6 +102,7 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
         )->a( n = `items`           v = client->_bind( <table> )
         )->a( n = `headerText`      v = `Table`
         )->a( n = `mode`            v = `MultiSelect`
+        " abap2ui5lint-disable-next-line event-without-handler -- internal test app
         )->a( n = `selectionChange` v = client->_event( `SELECTION_CHANGE` )
         )->ele( `columns`
             )->ele( `Column`

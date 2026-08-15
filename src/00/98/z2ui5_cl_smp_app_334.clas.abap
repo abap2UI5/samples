@@ -71,6 +71,7 @@ CLASS z2ui5_cl_smp_app_334 IMPLEMENTATION.
                     )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `Button`
+        " abap2ui5lint-disable-next-line event-without-handler -- internal test app
         )->a( n = `press` v = client->_event( `GO` )
         )->a( n = `text`  v = `GO`
         )->a( n = `type`  v = `Accept` ).

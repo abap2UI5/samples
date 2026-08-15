@@ -86,6 +86,7 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->tag( n = `Geolocation` ns = `z2ui5`
+        " abap2ui5lint-disable-next-line event-without-handler -- the position arrives with the roundtrip and the view re-renders with it
         )->a( n = `finished` v = client->_event( `GEOLOCATION_LOADED` )
         )->a( n = `error`    v = client->_event( val   = `GEOLOCATION_ERROR`
                                                                            t_arg = VALUE #( ( `${$parameters>/code}` )

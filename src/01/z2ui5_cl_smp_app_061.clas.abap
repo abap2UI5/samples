@@ -53,6 +53,7 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
                     )->a( n = `text` v = `Dynamic typed table`
                 )->tag( `ToolbarSpacer`
                 )->tag( `Button`
+                    " abap2ui5lint-disable-next-line event-without-handler -- the roundtrip IS the demo: the runtime-typed table travels back and re-renders
                     )->a( n = `press` v = client->_event( `SEND` )
                     )->a( n = `text`  v = `server <-> client`
             )->end(

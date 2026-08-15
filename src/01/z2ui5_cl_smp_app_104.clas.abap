@@ -131,6 +131,7 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
             )->a( n = `description` v = `{DESCR}`
             )->a( n = `icon`        v = `{ICON}`
             )->a( n = `info`        v = `{INFO}`
+            " abap2ui5lint-disable-next-line event-without-handler -- item press; SELCHANGE below carries the selection this sample is about
             )->a( n = `press`       v = client->_event( `TEST` )
             )->a( n = `selected`    v = `{SELECTED}` ).
 

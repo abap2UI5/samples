@@ -62,6 +62,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
                 )->tag( `Title`
                     )->a( n = `text` v = `title of the table`
                 )->tag( `Button`
+                    " abap2ui5lint-disable-next-line event-without-handler -- shows an OverflowToolbar filling up - the press is a plain roundtrip
                     )->a( n = `press` v = client->_event( `BUTTON_TEST` )
                     )->a( n = `text`  v = `test`
                 )->tag( `ToolbarSpacer`

@@ -117,6 +117,7 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `event`
             )->tag( `Button`
+                " abap2ui5lint-disable-next-line event-without-handler -- the roundtrip IS the demo: the edited amounts travel back and re-render
                 )->a( n = `press` v = client->_event( `BUTTON` )
                 )->a( n = `text`  v = `send` ).
 
