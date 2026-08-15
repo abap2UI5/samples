@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Learn how to code with abap2UI5.",
   "scripts": {
-    "launchpad": "node scripts/generate-launchpad.js",
+    "launchpad": "node scripts/generate-launchpad.js && node scripts/generate-samples-md.js",
     "lint": "abaplint ./abaplint.jsonc",
     "check:chains": "node scripts/chain-format.mjs",
     "fmt:chains": "node scripts/chain-format.mjs --write",
@@ -13,7 +13,7 @@
     "check:agents": "node scripts/check-agents-structure.js",
     "check:strip": "node scripts/check-strip-lists.js",
     "syfixes": "find . -type f -name '*.abap' -exec sed -i -e 's/ RAISE EXCEPTION TYPE cx_sy_itab_line_not_found/ ASSERT 1 = 0/g' {} + ",
-    "downport": "rm -rf src/00/97 src/00/98 && abaplint --fix .github/abaplint/abap_702.jsonc && npm run syfixes",
+    "downport": "rm -rf src/00/97 src/00/98 && abaplint --fix .github/abaplint/abap_702.jsonc && npm run syfixes && node scripts/generate-samples-md.js",
     "check": "npm run lint && npm run check:abap2ui5 && npm run check:chains && npm run check:agents && npm run check:strip"
   },
   "repository": {
