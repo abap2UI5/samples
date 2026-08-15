@@ -46,14 +46,17 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
 
     view_parent->ele( `List`
         )->a( n = `headerText` v = `Class 2 - Products`
-        )->a( n = `items`      v = client->_bind( t_items ) )->tag( `StandardListItem`
+        )->a( n = `items`      v = client->_bind( t_items )
+        )->tag( `StandardListItem`
             )->a( n = `title` v = `{PRODUCT}`
             )->a( n = `info`  v = `{INFO}` ).
 
     view_parent->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Input`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Input`
             )->a( n = `placeholder` v = `type here - the value lives in sub-app 2`
-            )->a( n = `value`       v = client->_bind( mv_class_2 ) )->tag( `Button`
+            )->a( n = `value`       v = client->_bind( mv_class_2 )
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `MESSAGE_SUB` )
             )->a( n = `text`  v = `raise event in sub-app 2`
             )->a( n = `icon`  v = `sap-icon://table-view` ).

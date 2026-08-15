@@ -53,17 +53,19 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-             )->a( n = `title`          v = `abap2UI5 - File - Download to the Browser`
-             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - File - Download to the Browser`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `The download_b64_file front-end action hands a base64 encoded file to the browser, which saves it ` &&
@@ -76,21 +78,29 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
         )->a( n = `width`          v = `100%`
         )->a( n = `height`         v = `600px`
         )->a( n = `alignItems`     v = `Center`
-        )->a( n = `justifyContent` v = `SpaceAround` )->ele( `VBox` )->tag( `Text`
-          )->a( n = `text` v = `Base64 String:` )->tag( `TextArea`
-          )->a( n = `value`    v = client->_bind( file_content_64 )
-          )->a( n = `rows`     v = `20`
-          )->a( n = `width`    v = `800px`
-          )->a( n = `wrapping` v = `Soft` )->end( )->ele( `VBox`
-          )->a( n = `justifyContent` v = `Center`
-          )->a( n = `alignItems`     v = `Center` )->tag( `Text`
-          )->a( n = `text` v = `fill filename:` )->tag( `Input`
-          )->a( n = `value` v = client->_bind( file_name )
-          )->a( n = `class` v = `sapUiLargeMarginBottom`
-          )->a( n = `width` v = `15rem` )->tag( `Button`
-          )->a( n = `press` v = client->_event( `BUTTON_DOWNLOAD` )
-          )->a( n = `text`  v = `Open Download Popup`
-          )->a( n = `type`  v = `Emphasized` ).
+        )->a( n = `justifyContent` v = `SpaceAround`
+        )->ele( `VBox`
+            )->tag( `Text`
+                )->a( n = `text` v = `Base64 String:`
+            )->tag( `TextArea`
+                )->a( n = `value`    v = client->_bind( file_content_64 )
+                )->a( n = `rows`     v = `20`
+                )->a( n = `width`    v = `800px`
+                )->a( n = `wrapping` v = `Soft`
+        )->end(
+        )->ele( `VBox`
+            )->a( n = `justifyContent` v = `Center`
+            )->a( n = `alignItems`     v = `Center`
+            )->tag( `Text`
+                )->a( n = `text` v = `fill filename:`
+            )->tag( `Input`
+                )->a( n = `value` v = client->_bind( file_name )
+                )->a( n = `class` v = `sapUiLargeMarginBottom`
+                )->a( n = `width` v = `15rem`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_DOWNLOAD` )
+                )->a( n = `text`  v = `Open Download Popup`
+                )->a( n = `type`  v = `Emphasized` ).
 
     client->view_display( page->stringify( ) ).
 

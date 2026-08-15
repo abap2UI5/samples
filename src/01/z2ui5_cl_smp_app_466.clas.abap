@@ -35,12 +35,13 @@ CLASS z2ui5_cl_smp_app_466 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
     " require the framework's curated formatter module into the view -
     " expandInlineIcons is the sap.m.MessageStripUtilities.getInlineIcon()
@@ -50,7 +51,8 @@ CLASS z2ui5_cl_smp_app_466 IMPLEMENTATION.
     " codepoints. Rendered by MessageStrip with enableFormattedText.
     view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Formatter - Inline Icons in a Text`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).

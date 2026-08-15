@@ -24,13 +24,15 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - Single Table Cell (tab_index)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -52,13 +54,31 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
 
     DATA(tab) = page->ele( `Table`
         )->a( n = `items` v = client->_bind( t_tab )
-        )->a( n = `mode`  v = `MultiSelect` )->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `Title`
-                    )->a( n = `text` v = `title of the table` )->end( )->end( )->ele( `columns` )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Title` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Value` )->end( )->end( )->ele( `items` )->ele( `ColumnListItem`
-          )->a( n = `selected` v = `{SELKZ}` )->ele( `cells` )->tag( `Input`
-              )->a( n = `value` v = `{TITLE}` )->tag( `Input`
-              )->a( n = `value` v = `{VALUE}` ).
+        )->a( n = `mode`  v = `MultiSelect`
+        )->ele( `headerToolbar`
+            )->ele( `OverflowToolbar`
+                )->tag( `Title`
+                    )->a( n = `text` v = `title of the table`
+            )->end(
+        )->end(
+        )->ele( `columns`
+            )->ele( `Column`
+                )->tag( `Text`
+                    )->a( n = `text` v = `Title`
+            )->end(
+            )->ele( `Column`
+                )->tag( `Text`
+                    )->a( n = `text` v = `Value`
+            )->end(
+        )->end(
+        )->ele( `items`
+            )->ele( `ColumnListItem`
+                )->a( n = `selected` v = `{SELKZ}`
+                )->ele( `cells`
+                    )->tag( `Input`
+                        )->a( n = `value` v = `{TITLE}`
+                    )->tag( `Input`
+                        )->a( n = `value` v = `{VALUE}` ).
 
     page->tag( `Input`
         )->a( n = `value` v = client->_bind( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).

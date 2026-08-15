@@ -55,19 +55,20 @@ CLASS z2ui5_cl_smp_app_190 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE data.
 
     IF mo_parent_page IS INITIAL.
-      DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-          )->a( n = `displayBlock` v = `true`
-          )->a( n = `height`       v = `100%`
-          )->a( n = `xmlns`        v = `sap.m`
-          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core`
+      DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `displayBlock` v = `true`
+              )->a( n = `height`       v = `100%`
+              )->a( n = `xmlns`        v = `sap.m`
+              )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core`   v = `sap.ui.core`
 
-          " a real sap.m.Page, because the footer below needs one: mvc:View has
-          " no footer aggregation, and UI5 resolves the unknown lowercase tag as
-          " a control class - sap/m/footer.js, 404, and the whole view dies
-          " instead of rendering without its toolbar. Embedded, the caller
-          " supplies the Page; standalone this is it
-          )->ele( `Page` ).
+              " a real sap.m.Page, because the footer below needs one: mvc:View has
+              " no footer aggregation, and UI5 resolves the unknown lowercase tag as
+              " a control class - sap/m/footer.js, 404, and the whole view dies
+              " instead of rendering without its toolbar. Embedded, the caller
+              " supplies the Page; standalone this is it
+              )->ele( `Page` ).
 
     ELSE.
       page = mo_parent_page.
@@ -84,24 +85,31 @@ CLASS z2ui5_cl_smp_app_190 IMPLEMENTATION.
 
     LOOP AT mt_comp INTO DATA(comp).
 
-      columns->ele( `Column` )->tag( `Text`
-          )->a( n = `text` v = comp-name ).
+      columns->ele( `Column`
+          )->tag( `Text`
+              )->a( n = `text` v = comp-name ).
 
     ENDLOOP.
 
-    DATA(cells) = columns->end( )->ele( `items` )->ele( `ColumnListItem`
-                                           )->a( n = `vAlign` v = `Middle`
-                                           )->a( n = `type`   v = `Navigation` )->ele( `cells` ).
+    DATA(cells) = columns->end(
+        )->ele( `items`
+            )->ele( `ColumnListItem`
+                )->a( n = `vAlign` v = `Middle`
+                )->a( n = `type`   v = `Navigation`
+                )->ele( `cells` ).
 
     LOOP AT mt_comp INTO comp.
       cells->ele( `ObjectIdentifier`
           )->a( n = `text` v = `{` && comp-name && `}` ).
     ENDLOOP.
 
-    page->ele( `footer` )->ele( `OverflowToolbar` )->tag( `ToolbarSpacer` )->tag( `Button`
-                             )->a( n = `press` v = client->_event( `BUTTON` )
-                             )->a( n = `text`  v = `Save`
-                             )->a( n = `type`  v = `Success` ).
+    page->ele( `footer`
+        )->ele( `OverflowToolbar`
+            )->tag( `ToolbarSpacer`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON` )
+                )->a( n = `text`  v = `Save`
+                )->a( n = `type`  v = `Success` ).
 
     IF mo_parent_page IS INITIAL.
       client->view_display( page->stringify( ) ).

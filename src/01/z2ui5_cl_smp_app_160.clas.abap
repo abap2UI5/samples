@@ -101,18 +101,23 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:table`  v = `sap.ui.table` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-          )->a( n = `title`          v = `abap2UI5 - Grid Table - Events on Cell Level`
-          )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-          )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) )->ele( `headerContent` )->tag( `Link` )->end( ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Grid Table - Events on Cell Level`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->ele( `headerContent`
+                )->tag( `Link`
+            )->end( ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Pressing ENTER in a sap.ui.table cell input fires a backend event that carries the cell id, ` &&
@@ -125,7 +130,8 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
         )->a( n = `text` v = `Make an input and press ENTER` ).
 
     DATA(table) = page->ele( `FlexBox`
-        )->a( n = `height` v = `85vh` )->ele( n = `Table` ns = `table`
+        )->a( n = `height` v = `85vh`
+        )->ele( n = `Table` ns = `table`
             )->a( n = `rows`               v = client->_bind( mt_output )
             )->a( n = `alternateRowColors` v = `true`
             )->a( n = `selectionMode`      v = `None` ).
@@ -135,37 +141,49 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `5.2rem`
         )->a( n = `sortProperty`   v = `SET_SK`
-        )->a( n = `filterProperty` v = `SET_SK` )->tag( `Text`
-                            )->a( n = `text` v = `Column 1` )->ele( n = `template` ns = `table` )->tag( `Text`
-                            )->a( n = `text` v = `{SET_SK}` ).
+        )->a( n = `filterProperty` v = `SET_SK`
+        )->tag( `Text`
+            )->a( n = `text` v = `Column 1`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{SET_SK}` ).
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `5rem`
         )->a( n = `sortProperty`   v = `MATNR`
-        )->a( n = `filterProperty` v = `MATNR` )->tag( `Text`
-                            )->a( n = `text` v = `Column 2` )->ele( n = `template` ns = `table` )->tag( `Text`
-                            )->a( n = `text` v = `{MATNR}` ).
+        )->a( n = `filterProperty` v = `MATNR`
+        )->tag( `Text`
+            )->a( n = `text` v = `Column 2`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{MATNR}` ).
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `5rem`
         )->a( n = `sortProperty`   v = `PL_TOTAL`
-        )->a( n = `filterProperty` v = `PL_TOTAL` )->tag( `Text`
-                            )->a( n = `text` v = `Column 5` )->ele( n = `template` ns = `table` )->tag( `Input`
-                            )->a( n = `type`     v = `Number`
-                            )->a( n = `editable` b = abap_true
-                            )->a( n = `value`    v = `{PL_TOTAL}`
-                            )->a( n = `submit`   v = client->_event( val = `PL_TOTAL_CHANGE` t_arg = VALUE #(
-        ( `${$source>/id}` )
-        ( `$event.oSource.sId` )
-        ( `${INDEX}` )
-        ( `$event.oSource.oParent.sId` )
-        ( `${$parameters>/value}` )
-         ) ) ).
+        )->a( n = `filterProperty` v = `PL_TOTAL`
+        )->tag( `Text`
+            )->a( n = `text` v = `Column 5`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Input`
+                )->a( n = `type`     v = `Number`
+                )->a( n = `editable` b = abap_true
+                )->a( n = `value`    v = `{PL_TOTAL}`
+                )->a( n = `submit`   v = client->_event( val = `PL_TOTAL_CHANGE` t_arg = VALUE #(
+( `${$source>/id}` )
+( `$event.oSource.sId` )
+( `${INDEX}` )
+( `$event.oSource.oParent.sId` )
+( `${$parameters>/value}` )
+) ) ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `4rem`
         )->a( n = `sortProperty`   v = `per_cent_total`
-        )->a( n = `filterProperty` v = `per_cent_total` )->tag( `Text`
-                            )->a( n = `text` v = `Column 6` )->ele( n = `template` ns = `table` )->tag( `Text`
-                            )->a( n = `text` v = `{PL_TOTAL} %` ).
+        )->a( n = `filterProperty` v = `per_cent_total`
+        )->tag( `Text`
+            )->a( n = `text` v = `Column 6`
+        )->ele( n = `template` ns = `table`
+            )->tag( `Text`
+                )->a( n = `text` v = `{PL_TOTAL} %` ).
 
     client->view_display( view->stringify( ) ).
 

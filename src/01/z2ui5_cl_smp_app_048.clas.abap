@@ -50,15 +50,18 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
         client->message_box_display( |SELECTION_CHANGED - { lt_sel[ 1 ]-title }| ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - List - StandardListItem, Highlight and Events`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `abap2UI5 - List - StandardListItem, Highlight and Events`
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A List of generic StandardListItems showing highlight bars, colored infoState and ` &&
@@ -71,24 +74,25 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
         )->a( n = `headerText`      v = `List Output`
         )->a( n = `items`           v = client->_bind( t_tab )
         )->a( n = `mode`            v = `SingleSelectMaster`
-        )->a( n = `selectionChange` v = client->_event( `SELCHANGE` ) )->ele( `StandardListItem`
-          )->a( n = `title`       v = `{TITLE}`
-          )->a( n = `description` v = `{DESCR}`
-          )->a( n = `icon`        v = `{ICON}`
-          )->a( n = `iconInset`   v = `false`
-          )->a( n = `highlight`   v = `{HIGHLIGHT}`
-          )->a( n = `info`        v = `{INFO}`
-          )->a( n = `infoState`   v = `{HIGHLIGHT}`
-          )->a( n = `type`        v = `Detail`
-          )->a( n = `wrapping`    v = `true`
-          )->a( n = `selected`    v = `{SELECTED}`
-          )->a( n = `detailPress` v = client->_event( val = `EDIT` t_arg = VALUE #( ( `${TITLE}` )
-                                                                                      ( `${DESCR}` )
-                                                                                      ( `${ICON}` )
-                                                                                      ( `${HIGHLIGHT}` )
-                                                                                      ( `${INFO}` )
-                                                                                      ( `${SELECTED}` )
-                                                                                     ) ) ).
+        )->a( n = `selectionChange` v = client->_event( `SELCHANGE` )
+        )->ele( `StandardListItem`
+            )->a( n = `title`       v = `{TITLE}`
+            )->a( n = `description` v = `{DESCR}`
+            )->a( n = `icon`        v = `{ICON}`
+            )->a( n = `iconInset`   v = `false`
+            )->a( n = `highlight`   v = `{HIGHLIGHT}`
+            )->a( n = `info`        v = `{INFO}`
+            )->a( n = `infoState`   v = `{HIGHLIGHT}`
+            )->a( n = `type`        v = `Detail`
+            )->a( n = `wrapping`    v = `true`
+            )->a( n = `selected`    v = `{SELECTED}`
+            )->a( n = `detailPress` v = client->_event( val = `EDIT` t_arg = VALUE #( ( `${TITLE}` )
+                                                                                        ( `${DESCR}` )
+                                                                                        ( `${ICON}` )
+                                                                                        ( `${HIGHLIGHT}` )
+                                                                                        ( `${INFO}` )
+                                                                                        ( `${SELECTED}` )
+                                                                                       ) ) ).
 
     client->view_display( page->stringify( ) ).
 

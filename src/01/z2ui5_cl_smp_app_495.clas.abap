@@ -62,13 +62,15 @@ CLASS z2ui5_cl_smp_app_495 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Basics III - Lifecycle: Init, Event, Navigated`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -85,9 +87,11 @@ CLASS z2ui5_cl_smp_app_495 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( `HBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `LOG` )
-            )->a( n = `text`  v = `Log an Event` )->tag( `Button`
+            )->a( n = `text`  v = `Log an Event`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `CALL` )
             )->a( n = `text`  v = `Call a Sub-App`
             )->a( n = `class` v = `sapUiTinyMarginBegin` ).
@@ -95,7 +99,8 @@ CLASS z2ui5_cl_smp_app_495 IMPLEMENTATION.
     page->ele( `List`
         )->a( n = `headerText` v = `Calls of main( )`
         )->a( n = `items`      v = client->_bind( t_log )
-        )->a( n = `class`      v = `sapUiSmallMargin` )->tag( `StandardListItem`
+        )->a( n = `class`      v = `sapUiSmallMargin`
+        )->tag( `StandardListItem`
             )->a( n = `title`       v = `{CHECK}`
             )->a( n = `description` v = `call {NO}` ).
 

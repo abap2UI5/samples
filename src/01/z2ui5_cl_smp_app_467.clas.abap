@@ -57,15 +57,17 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Message - Message Model and MessageManager`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -88,19 +90,24 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
         )->a( n = `items` v = client->_bind( t_messages ) ).
 
     page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Label`
-                )->a( n = `text`  v = `Name (message authored by the app)` )->tag( `Input`
-                )->a( n = `value` v = client->_bind( name ) )->tag( `Label`
-                )->a( n = `text`  v = `Amount (integer only - validation collected automatically)` )->tag( `Input`
-                )->a( n = `value` v = |\{ path: '{ client->_bind( val = amount path = abap_true ) }', | &&
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Label`
+            )->a( n = `text`  v = `Name (message authored by the app)`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( name )
+        )->tag( `Label`
+            )->a( n = `text`  v = `Amount (integer only - validation collected automatically)`
+        )->tag( `Input`
+            )->a( n = `value` v = |\{ path: '{ client->_bind( val = amount path = abap_true ) }', | &&
                               |type: 'sap.ui.model.type.Integer' \}|
-                )->a( n = `width` v = `12rem` ).
+            )->a( n = `width` v = `12rem` ).
 
     page->ele( `List`
         )->a( n = `headerText` v = `Collected messages (message> model)`
         )->a( n = `items`      v = `{message>/}`
         )->a( n = `class`      v = `sapUiSmallMargin`
-        )->a( n = `noDataText` v = `no messages` )->tag( `StandardListItem`
+        )->a( n = `noDataText` v = `no messages`
+        )->tag( `StandardListItem`
             )->a( n = `title`       v = `{message>message}`
             )->a( n = `description` v = `{message>additionalText}`
             )->a( n = `info`        v = `{message>type}` ).

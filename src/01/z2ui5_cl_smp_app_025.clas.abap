@@ -70,15 +70,17 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - flow logic - APP 02`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -94,31 +96,49 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
 
       WHEN `MAIN` OR ``.
         page->ele( n = `Grid` ns = `layout`
-            )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
-                )->a( n = `title`    v = `View: FIRST`
-                )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
-                )->a( n = `text` v = `Input set by previous app` )->tag( `Input`
-                )->a( n = `value` v = input_previous_set )->tag( `Label`
-                )->a( n = `text` v = `Data of previous app` )->tag( `Input`
-                )->a( n = `value` v = input_previous )->tag( `Button`
-                )->a( n = `press` v = client->_event( `BUTTON_READ_PREVIOUS` )
-                )->a( n = `text`  v = `read` )->tag( `Label`
-                )->a( n = `text` v = `Call previous app and show data of this app` )->tag( `Input`
-                )->a( n = `value` v = client->_bind( input ) )->tag( `Button`
-                )->a( n = `press` v = client->_event( `BACK_WITH_EVENT` )
-                )->a( n = `text`  v = `back` ).
+            )->a( n = `defaultSpan` v = `L6 M12 S12`
+            )->ele( n = `content` ns = `layout`
+                )->ele( n = `SimpleForm` ns = `form`
+                    )->a( n = `title`    v = `View: FIRST`
+                    )->a( n = `editable` b = abap_true
+                    )->ele( n = `content` ns = `form`
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Input set by previous app`
+                        )->tag( `Input`
+                            )->a( n = `value` v = input_previous_set
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Data of previous app`
+                        )->tag( `Input`
+                            )->a( n = `value` v = input_previous
+                        )->tag( `Button`
+                            )->a( n = `press` v = client->_event( `BUTTON_READ_PREVIOUS` )
+                            )->a( n = `text`  v = `read`
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Call previous app and show data of this app`
+                        )->tag( `Input`
+                            )->a( n = `value` v = client->_bind( input )
+                        )->tag( `Button`
+                            )->a( n = `press` v = client->_event( `BACK_WITH_EVENT` )
+                            )->a( n = `text`  v = `back` ).
 
       WHEN `SECOND`.
         page->ele( n = `Grid` ns = `layout`
-            )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
-                )->a( n = `title`    v = `View: SECOND`
-                )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
-                )->a( n = `text` v = `Demo` )->tag( `Button`
-                )->a( n = `press` v = client->_event_nav_app_leave( )
-                )->a( n = `text`  v = `leave to previous app` )->tag( `Label`
-                )->a( n = `text` v = `Demo` )->tag( `Button`
-                )->a( n = `press` v = client->_event( `SHOW_VIEW_MAIN` )
-                )->a( n = `text`  v = `show view main` ).
+            )->a( n = `defaultSpan` v = `L6 M12 S12`
+            )->ele( n = `content` ns = `layout`
+                )->ele( n = `SimpleForm` ns = `form`
+                    )->a( n = `title`    v = `View: SECOND`
+                    )->a( n = `editable` b = abap_true
+                    )->ele( n = `content` ns = `form`
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Demo`
+                        )->tag( `Button`
+                            )->a( n = `press` v = client->_event_nav_app_leave( )
+                            )->a( n = `text`  v = `leave to previous app`
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Demo`
+                        )->tag( `Button`
+                            )->a( n = `press` v = client->_event( `SHOW_VIEW_MAIN` )
+                            )->a( n = `text`  v = `show view main` ).
 
     ENDCASE.
 

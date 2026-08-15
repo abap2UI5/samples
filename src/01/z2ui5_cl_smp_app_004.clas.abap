@@ -64,15 +64,17 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
 
     view_main = `MAIN`.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Basics IV - Events, Views and Roundtrips`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -85,21 +87,32 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( n = `Grid` ns = `layout`
-        )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
-            )->a( n = `title`    v = `Controller`
-            )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
-                )->a( n = `text` v = `Roundtrip` )->tag( `Button`
-                )->a( n = `press` v = client->_event( `BUTTON_ROUNDTRIP` )
-                )->a( n = `text`  v = `Client/Server Interaction` )->tag( `Label`
-                )->a( n = `text` v = `System` )->tag( `Button`
-                )->a( n = `press` v = client->_event( `BUTTON_RESTART` )
-                )->a( n = `text`  v = `Restart App` )->tag( `Label`
-                )->a( n = `text` v = `Change View` )->tag( `Button`
-                )->a( n = `press` v = client->_event( `BUTTON_CHANGE_VIEW` )
-                )->a( n = `text`  v = `Display View SECOND` )->tag( `Label`
-                )->a( n = `text` v = `CX_SY_ZERO_DIVIDE` )->tag( `Button`
-                )->a( n = `press` v = client->_event( `BUTTON_ERROR` )
-                )->a( n = `text`  v = `Error not catched by the user` ).
+        )->a( n = `defaultSpan` v = `L6 M12 S12`
+        )->ele( n = `content` ns = `layout`
+            )->ele( n = `SimpleForm` ns = `form`
+                )->a( n = `title`    v = `Controller`
+                )->a( n = `editable` b = abap_true
+                )->ele( n = `content` ns = `form`
+                    )->tag( `Label`
+                        )->a( n = `text` v = `Roundtrip`
+                    )->tag( `Button`
+                        )->a( n = `press` v = client->_event( `BUTTON_ROUNDTRIP` )
+                        )->a( n = `text`  v = `Client/Server Interaction`
+                    )->tag( `Label`
+                        )->a( n = `text` v = `System`
+                    )->tag( `Button`
+                        )->a( n = `press` v = client->_event( `BUTTON_RESTART` )
+                        )->a( n = `text`  v = `Restart App`
+                    )->tag( `Label`
+                        )->a( n = `text` v = `Change View`
+                    )->tag( `Button`
+                        )->a( n = `press` v = client->_event( `BUTTON_CHANGE_VIEW` )
+                        )->a( n = `text`  v = `Display View SECOND`
+                    )->tag( `Label`
+                        )->a( n = `text` v = `CX_SY_ZERO_DIVIDE`
+                    )->tag( `Button`
+                        )->a( n = `press` v = client->_event( `BUTTON_ERROR` )
+                        )->a( n = `text`  v = `Error not catched by the user` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -110,25 +123,32 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
 
     view_main = `SECOND`.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Basics IV - Events, Views and Roundtrips`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->ele( n = `Grid` ns = `layout`
-        )->a( n = `defaultSpan` v = `L12 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
-            )->a( n = `title` v = `View Second` )->ele( n = `content` ns = `form` )->tag( `Label`
-                )->a( n = `text` v = `Change View` )->tag( `Button`
-                )->a( n = `press` v = client->_event( `BUTTON_CHANGE_VIEW` )
-                )->a( n = `text`  v = `Display View MAIN` ).
+        )->a( n = `defaultSpan` v = `L12 M12 S12`
+        )->ele( n = `content` ns = `layout`
+            )->ele( n = `SimpleForm` ns = `form`
+                )->a( n = `title` v = `View Second`
+                )->ele( n = `content` ns = `form`
+                    )->tag( `Label`
+                        )->a( n = `text` v = `Change View`
+                    )->tag( `Button`
+                        )->a( n = `press` v = client->_event( `BUTTON_CHANGE_VIEW` )
+                        )->a( n = `text`  v = `Display View MAIN` ).
 
     client->view_display( view->stringify( ) ).
 

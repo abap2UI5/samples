@@ -66,12 +66,14 @@ CLASS z2ui5_cl_smp_app_185 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->ele( `Shell` ).
     DATA(page) = view->ele( `Page`
         )->a( n = `title`          v = `Main App calling Subapps`
         )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -82,7 +84,8 @@ CLASS z2ui5_cl_smp_app_185 IMPLEMENTATION.
     DATA(lo_items) = page->ele( `IconTabBar`
         )->a( n = `class`       v = `sapUiResponsiveContentPadding`
         )->a( n = `select`      v = client->_event( `ONSELECTICONTABBAR` )
-        )->a( n = `selectedKey` v = client->_bind( mv_selectedkey ) )->ele( `items` ).
+        )->a( n = `selectedKey` v = client->_bind( mv_selectedkey )
+        )->ele( `items` ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
       lo_items->ele( `IconTabFilter`

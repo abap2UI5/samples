@@ -68,14 +68,16 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Scroll - Scroll a Control into View`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -86,7 +88,8 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
 
     DATA(form) = page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Long form`
-        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
+        )->a( n = `editable` b = abap_true
+        )->ele( n = `content` ns = `form` ).
 
     " Top section
     form->tag( `Label`
@@ -125,16 +128,21 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
         )->a( n = `id`    v = `bottom_input`
         )->a( n = `value` v = client->_bind( field_03 ) ).
 
-    page->ele( `footer` )->ele( `OverflowToolbar` )->tag( `Button`
-             )->a( n = `press` v = client->_event( `JUMP_TOP` )
-             )->a( n = `text`  v = `Jump to Top` )->tag( `Button`
-             )->a( n = `press` v = client->_event( `JUMP_MIDDLE` )
-             )->a( n = `text`  v = `Jump to Middle` )->tag( `Button`
-             )->a( n = `press` v = client->_event( `JUMP_BOTTOM` )
-             )->a( n = `text`  v = `Jump to Bottom` )->tag( `Button`
-             )->a( n = `press` v = client->_event( `VALIDATE` )
-             )->a( n = `text`  v = `Validate`
-             )->a( n = `type`  v = `Emphasized` ).
+    page->ele( `footer`
+        )->ele( `OverflowToolbar`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `JUMP_TOP` )
+                )->a( n = `text`  v = `Jump to Top`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `JUMP_MIDDLE` )
+                )->a( n = `text`  v = `Jump to Middle`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `JUMP_BOTTOM` )
+                )->a( n = `text`  v = `Jump to Bottom`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `VALIDATE` )
+                )->a( n = `text`  v = `Validate`
+                )->a( n = `type`  v = `Emphasized` ).
 
     client->view_display( view->stringify( ) ).
 

@@ -120,15 +120,18 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
 
     FIELD-SYMBOLS <row> TYPE any.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`      v = `sap.m`
-        )->a( n = `xmlns:core` v = `sap.ui.core`
-        )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
     DATA(content) = popup->ele( `Dialog`
-        )->a( n = `contentWidth` v = `60%` )->ele( n = `SimpleForm` ns = `form`
-              )->a( n = `layout`   v = `ResponsiveGridLayout`
-              )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
+        )->a( n = `contentWidth` v = `60%`
+        )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `layout`   v = `ResponsiveGridLayout`
+            )->a( n = `editable` b = abap_true
+            )->ele( n = `content` ns = `form` ).
 
     " Walk through all comps — in edit mode the key fields are not editable.
     LOOP AT mt_dfies REFERENCE INTO DATA(dfies).
@@ -171,13 +174,14 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE data.
 
     IF mo_parent_page IS INITIAL.
-      DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-          )->a( n = `displayBlock` v = `true`
-          )->a( n = `height`       v = `100%`
-          )->a( n = `xmlns`        v = `sap.m`
-          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core`
-          )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+      DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `displayBlock` v = `true`
+              )->a( n = `height`       v = `100%`
+              )->a( n = `xmlns`        v = `sap.m`
+              )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core`   v = `sap.ui.core`
+              )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
     ELSE.
       page = mo_parent_page.
@@ -190,7 +194,9 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
         )->a( n = `growing` v = `true`
         )->a( n = `width`   v = `auto` ).
 
-    DATA(headder) = table->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `ToolbarSpacer` ).
+    DATA(headder) = table->ele( `headerToolbar`
+        )->ele( `OverflowToolbar`
+            )->tag( `ToolbarSpacer` ).
 
     IF mo_parent_page IS INITIAL.
       client->view_display( page->stringify( ) ).

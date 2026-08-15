@@ -103,16 +103,18 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc`
-        )->a( n = `xmlns:dnd`    v = `sap.ui.core.dnd` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc`
+            )->a( n = `xmlns:dnd`    v = `sap.ui.core.dnd` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Tree - Drag and Drop Nodes`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -130,7 +132,8 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
         )->a( n = `items`      v = client->_bind( t_nodes )
         )->a( n = `headerText` v = `Folders` ).
 
-    tree->ele( `dragDropConfig` )->ele( n = `DragDropInfo` ns = `dnd`
+    tree->ele( `dragDropConfig`
+        )->ele( n = `DragDropInfo` ns = `dnd`
             )->a( n = `sourceAggregation` v = `items`
             )->a( n = `targetAggregation` v = `items`
             )->a( n = `dropPosition`      v = `On`

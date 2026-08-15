@@ -50,27 +50,32 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popover - Toggle by ID (toggleBy)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     " the popover kept as a dependent of the page; opened and closed
     " imperatively from the backend, anchored to the button that fired
-    page->ele( `dependents` )->ele( `Popover`
+    page->ele( `dependents`
+        )->ele( `Popover`
             )->a( n = `id`           v = `demoPopover`
             )->a( n = `title`        v = `Details`
             )->a( n = `placement`    v = `Bottom`
-            )->a( n = `contentWidth` v = `18rem` )->tag( `Text`
+            )->a( n = `contentWidth` v = `18rem`
+            )->tag( `Text`
                 )->a( n = `text` v = `Toggled open and closed from the backend - the same button opens ` &&
-                     `it when closed and closes it when open, no view rebuild and no payload.` )->end( ).
+                     `it when closed and closes it when open, no view rebuild and no payload.`
+        )->end( ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `The button toggles the popover via the whitelisted toggleBy method ` &&
@@ -81,7 +86,8 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( val   = `TOGGLE`
                                            t_arg = VALUE #( ( `$event.oSource.sId` ) ) )
             )->a( n = `text`  v = `Toggle popover`

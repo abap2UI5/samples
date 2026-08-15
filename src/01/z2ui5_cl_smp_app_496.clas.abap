@@ -90,14 +90,16 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Basics V - The Developer Tools (Ctrl+F12)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -115,23 +117,33 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
 
     page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Something to look at`
-        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
-            )->a( n = `text` v = `bound to the public attribute TEXT` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( text ) )->tag( `Label`
-            )->a( n = `text` v = `roundtrips so far` )->tag( `Text`
-            )->a( n = `text` v = client->_bind( roundtrips ) )->tag( `Label`
-            )->a( n = `text` v = `send it to the backend` )->tag( `Button`
-            )->a( n = `press` v = client->_event( cs_event-ping )
-            )->a( n = `text`  v = `Send` )->tag( `Label`
-            )->a( n = `text` v = `how do I open the tools?` )->tag( `Button`
-            )->a( n = `press` v = client->_event( cs_event-where )
-            )->a( n = `text`  v = `Show me`
-            )->a( n = `icon`  v = `sap-icon://sys-help` ).
+        )->a( n = `editable` b = abap_true
+        )->ele( n = `content` ns = `form`
+            )->tag( `Label`
+                )->a( n = `text` v = `bound to the public attribute TEXT`
+            )->tag( `Input`
+                )->a( n = `value` v = client->_bind( text )
+            )->tag( `Label`
+                )->a( n = `text` v = `roundtrips so far`
+            )->tag( `Text`
+                )->a( n = `text` v = client->_bind( roundtrips )
+            )->tag( `Label`
+                )->a( n = `text` v = `send it to the backend`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( cs_event-ping )
+                )->a( n = `text`  v = `Send`
+            )->tag( `Label`
+                )->a( n = `text` v = `how do I open the tools?`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( cs_event-where )
+                )->a( n = `text`  v = `Show me`
+                )->a( n = `icon`  v = `sap-icon://sys-help` ).
 
     page->ele( `List`
         )->a( n = `headerText` v = `What the tabs of the tools show`
         )->a( n = `items`      v = client->_bind( t_tab )
-        )->a( n = `class`      v = `sapUiSmallMargin` )->tag( `StandardListItem`
+        )->a( n = `class`      v = `sapUiSmallMargin`
+        )->tag( `StandardListItem`
             )->a( n = `title`       v = `{NAME}`
             )->a( n = `description` v = `{DESCR}` ).
 

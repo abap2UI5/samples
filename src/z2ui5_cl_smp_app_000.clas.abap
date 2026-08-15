@@ -305,17 +305,19 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     DATA(t_catalog) = catalog_filter( t_catalog_all ).
     DATA(t_blocks) = block_widths( t_catalog ).
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
     " title and back button come with the custom header (render_header), not
     " with the page - a Page renders either its own header or a custom one
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `id` v = `page` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `id` v = `page` ).
 
     render_header( page ).
     render_sub_header( page ).
@@ -372,7 +374,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         row->tag( `Link`
             )->a( n = `text`  v = tile-header
             )->a( n = `press` v = client->_event( tile-app )
-            )->a( n = `width` v = width )->tag( `Text`
+            )->a( n = `width` v = width
+            )->tag( `Text`
                 )->a( n = `text` v = tile-sub ).
       ENDIF.
 
@@ -418,7 +421,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     " 3rem. This row used to put a ToolbarSeparator between its two groups and
     " lost the documentation and GitHub icons on 1.71 because of it; the gap
     " now rides on the first icon of the second group (group_start).
-    DATA(bar) = page->ele( `customHeader` )->ele( `Bar` ).
+    DATA(bar) = page->ele( `customHeader`
+        )->ele( `Bar` ).
 
     " left: what the stock page header would render on its own
     DATA(left) = bar->ele( `contentLeft` ).
@@ -482,7 +486,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD render_sub_header.
 
-    DATA(toolbar) = page->ele( `subHeader` )->ele( `OverflowToolbar` ).
+    DATA(toolbar) = page->ele( `subHeader`
+        )->ele( `OverflowToolbar` ).
 
     " the filter sits in the header, not above the list: it stays in place
     " while the list below it grows and shrinks
@@ -593,17 +598,21 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD install_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`      v = `sap.m`
-        )->a( n = `xmlns:core` v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
 
     view->ele( `Popover`
         )->a( n = `title`        v = |{ name } - not installed|
         )->a( n = `placement`    v = `Bottom`
-        )->a( n = `contentWidth` v = `26rem` )->ele( `VBox`
-            )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Text`
+        )->a( n = `contentWidth` v = `26rem`
+        )->ele( `VBox`
+            )->a( n = `class` v = `sapUiSmallMargin`
+            )->tag( `Text`
                 )->a( n = `text` v = |This system does not have { name } installed, so there is no app to jump to. | &&
-                     |Install the repository with abapGit, then this icon opens it right here.| )->tag( `Link`
+                     |Install the repository with abapGit, then this icon opens it right here.|
+            )->tag( `Link`
                 )->a( n = `text`   v = href
                 )->a( n = `target` v = `_blank`
                 )->a( n = `href`   v = href

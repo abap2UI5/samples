@@ -108,16 +108,18 @@ CLASS z2ui5_cl_smp_app_453 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
     " no core:require, no formatter, no client-side logic: every cell binds a
     " field the backend already finished
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Formatter - When Not to Use One: Compute in ABAP`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -135,25 +137,52 @@ CLASS z2ui5_cl_smp_app_453 IMPLEMENTATION.
         )->a( n = `items` v = client->_bind( t_products )
         )->a( n = `id`    v = `productTable` ).
 
-    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Product` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Weight (g)` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Price` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Dimensions` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Status` )->end( )->ele( `Column` )->tag( `Text`
-            )->a( n = `text` v = `Delivery` )->end( ).
+    tab->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Product`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Weight (g)`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Price`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Dimensions`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Status`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Delivery`
+        )->end( ).
 
-    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
-                    )->a( n = `text` v = `{NAME}` )->tag( `ObjectNumber`
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{NAME}`
+                )->tag( `ObjectNumber`
                     )->a( n = `number` v = `{WEIGHT}`
                     )->a( n = `state`  v = `{WEIGHT_STATE}`
-                    )->a( n = `unit`   v = `g` )->tag( `ObjectNumber`
+                    )->a( n = `unit`   v = `g`
+                )->tag( `ObjectNumber`
                     )->a( n = `number` v = `{PRICE_DISP}`
-                    )->a( n = `unit`   v = `{CURRENCY}` )->tag( `Text`
-                    )->a( n = `text` v = `{DIMENSIONS}` )->ele( `ObjectStatus`
+                    )->a( n = `unit`   v = `{CURRENCY}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{DIMENSIONS}`
+                )->ele( `ObjectStatus`
                     )->a( n = `icon`  v = `{STATUS_ICON}`
                     )->a( n = `state` v = `{STATUS_STATE}`
-                    )->a( n = `text`  v = `{STATUS}` )->end( )->ele( `ObjectStatus`
+                    )->a( n = `text`  v = `{STATUS}`
+                )->end(
+                )->ele( `ObjectStatus`
                     )->a( n = `state` v = `{DELIVERY_STATE}`
                     )->a( n = `text`  v = `{DELIVERY}` ).
 

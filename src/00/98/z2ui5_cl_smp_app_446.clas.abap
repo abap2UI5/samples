@@ -64,14 +64,16 @@ CLASS z2ui5_cl_smp_app_446 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Action - CONTROL_GLOBAL`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -92,15 +94,18 @@ CLASS z2ui5_cl_smp_app_446 IMPLEMENTATION.
         )->tag( `Button`
             )->a( n = `press` v = client->_event( `TOAST` )
             )->a( n = `text`  v = `MessageToast.show`
-            )->a( n = `icon`  v = `sap-icon://message-information` )->tag( `Button`
+            )->a( n = `icon`  v = `sap-icon://message-information`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `MSGBOX` )
             )->a( n = `text`  v = `MessageBox.show`
             )->a( n = `icon`  v = `sap-icon://message-popup`
-            )->a( n = `class` v = `sapUiTinyMarginTop` )->tag( `Button`
+            )->a( n = `class` v = `sapUiTinyMarginTop`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `THEME_DARK` )
             )->a( n = `text`  v = `Theming.setTheme( dark )`
             )->a( n = `icon`  v = `sap-icon://palette`
-            )->a( n = `class` v = `sapUiTinyMarginTop` )->tag( `Button`
+            )->a( n = `class` v = `sapUiTinyMarginTop`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `THEME_LIGHT` )
             )->a( n = `text`  v = `Theming.setTheme( light )`
             )->a( n = `icon`  v = `sap-icon://palette`

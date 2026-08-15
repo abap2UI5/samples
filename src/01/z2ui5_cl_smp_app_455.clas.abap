@@ -43,14 +43,16 @@ CLASS z2ui5_cl_smp_app_455 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - List - Live Filter on the Client, No Roundtrip`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -68,7 +70,8 @@ CLASS z2ui5_cl_smp_app_455 IMPLEMENTATION.
     " against the liveChange event, so the current query reaches the filter
     " without any server contact.
     page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `SearchField`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `SearchField`
             )->a( n = `width`       v = `30%`
             )->a( n = `placeholder` v = `Search products`
             )->a( n = `liveChange`  v = client->follow_up_action(
@@ -84,7 +87,8 @@ CLASS z2ui5_cl_smp_app_455 IMPLEMENTATION.
         )->a( n = `headerText` v = `Products`
         )->a( n = `items`      v = client->_bind( t_products )
         )->a( n = `class`      v = `sapUiSmallMargin`
-        )->a( n = `id`         v = `productList` )->tag( `StandardListItem`
+        )->a( n = `id`         v = `productList`
+        )->tag( `StandardListItem`
             )->a( n = `title`       v = `{NAME}`
             )->a( n = `description` v = `{CATEGORY}` ).
 

@@ -60,18 +60,20 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - Table - Search in the Backend (SearchField)`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-        )->a( n = `id`             v = `page_main` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Table - Search in the Backend (SearchField)`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `id`             v = `page_main` ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A search field triggers a backend filter on Enter or via the Go button; the matching ` &&
@@ -82,32 +84,40 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
 
     DATA(vbox) = page->ele( `VBox` ).
 
-    vbox->ele( `HBox` )->tag( `SearchField`
-        )->a( n = `width`       v = `17.5rem`
-        )->a( n = `search`      v = client->_event( `BUTTON_SEARCH` )
-        )->a( n = `value`       v = client->_bind( mv_search_value )
-        )->a( n = `id`          v = `SEARCH`
-        )->a( n = `placeholder` v = `Search products` )->tag( `Button`
-             )->a( n = `press` v = client->_event( `BUTTON_START` )
-             )->a( n = `text`  v = `Go`
-             )->a( n = `type`  v = `Emphasized` ).
+    vbox->ele( `HBox`
+        )->tag( `SearchField`
+            )->a( n = `width`       v = `17.5rem`
+            )->a( n = `search`      v = client->_event( `BUTTON_SEARCH` )
+            )->a( n = `value`       v = client->_bind( mv_search_value )
+            )->a( n = `id`          v = `SEARCH`
+            )->a( n = `placeholder` v = `Search products`
+        )->tag( `Button`
+            )->a( n = `press` v = client->_event( `BUTTON_START` )
+            )->a( n = `text`  v = `Go`
+            )->a( n = `type`  v = `Emphasized` ).
 
     DATA(tab) = vbox->ele( `Table`
         )->a( n = `items` v = client->_bind( val = mt_table ) ).
 
     DATA(lo_columns) = tab->ele( `columns` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Product` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Date` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Name` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Location` ).
-    lo_columns->ele( `Column` )->tag( `Text`
-        )->a( n = `text` v = `Quantity` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Product` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Date` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Name` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Location` ).
+    lo_columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Quantity` ).
 
-    DATA(lo_cells) = tab->ele( `items` )->ele( `ColumnListItem` ).
+    DATA(lo_cells) = tab->ele( `items`
+        )->ele( `ColumnListItem` ).
     lo_cells->tag( `Text`
         )->a( n = `text` v = `{PRODUCT}` ).
     lo_cells->tag( `Text`

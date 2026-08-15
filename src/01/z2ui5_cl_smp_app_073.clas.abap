@@ -17,18 +17,20 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - Browser - Open a URL in a New Tab`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Browser - Open a URL in a New Tab`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Press the button to open the app's own URL in a new browser tab: the backend builds the ` &&
@@ -39,7 +41,9 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
 
     page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Form Title`
-        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Button`
+        )->a( n = `editable` b = abap_true
+        )->ele( n = `content` ns = `form`
+            )->tag( `Button`
                 )->a( n = `press` v = client->_event( val = `BUTTON_OPEN_NEW_TAB` )
                 )->a( n = `text`  v = `open new tab` ).
 

@@ -87,16 +87,19 @@ CLASS z2ui5_cl_smp_app_349 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `RTTI IV`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `RTTI IV`
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `Button`
         )->a( n = `press` v = client->_event( `GO` )
@@ -128,14 +131,17 @@ CLASS z2ui5_cl_smp_app_349 IMPLEMENTATION.
       columns->ele( `Column`
           )->a( n = `visible` v = i_client->_bind( val       = layout->visible
                                                   tab       = mo_layout_obj->ms_data-t_layout
-                                                  tab_index = lv_index ) )->tag( `Text`
-            )->a( n = `text` v = layout->name ).
+                                                  tab_index = lv_index )
+          )->tag( `Text`
+              )->a( n = `text` v = layout->name ).
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->end( )->ele( `items` )->ele( `ColumnListItem`
-                                           )->a( n = `vAlign` v = `Middle`
-                                           )->a( n = `type`   v = `Inactive` ).
+    DATA(column_list_item) = columns->end(
+        )->ele( `items`
+            )->ele( `ColumnListItem`
+                )->a( n = `vAlign` v = `Middle`
+                )->a( n = `type`   v = `Inactive` ).
 
     DATA(cells) = column_list_item->ele( `cells` ).
 
@@ -172,7 +178,8 @@ CLASS z2ui5_cl_smp_app_349 IMPLEMENTATION.
     DATA(form) = i_page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `layout`          v = `ResponsiveGridLayout`
         )->a( n = `adjustLabelSpan` b = abap_true
-        )->a( n = `editable`        b = abap_true )->ele( n = `content` ns = `form` ).
+        )->a( n = `editable`        b = abap_true
+        )->ele( n = `content` ns = `form` ).
 
     DATA(index) = 0.
 

@@ -79,15 +79,18 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `RTTI IV`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `RTTI IV`
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `Button`
         )->a( n = `press` v = client->_event( `GO` )
@@ -99,10 +102,19 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
         )->a( n = `items`           v = client->_bind( <table> )
         )->a( n = `headerText`      v = `Table`
         )->a( n = `mode`            v = `MultiSelect`
-        )->a( n = `selectionChange` v = client->_event( `SELECTION_CHANGE` ) )->ele( `columns` )->ele( `Column` )->tag( `Text`
-                      )->a( n = `text` v = `id ` )->end( )->end( )->ele( `items` )->ele( `ColumnListItem`
-                      )->a( n = `selected` v = `{SELKZ}` )->ele( `cells` )->tag( `Text`
-                              )->a( n = `text` v = `{ID}` ).
+        )->a( n = `selectionChange` v = client->_event( `SELECTION_CHANGE` )
+        )->ele( `columns`
+            )->ele( `Column`
+                )->tag( `Text`
+                    )->a( n = `text` v = `id `
+            )->end(
+        )->end(
+        )->ele( `items`
+            )->ele( `ColumnListItem`
+                )->a( n = `selected` v = `{SELKZ}`
+                )->ele( `cells`
+                    )->tag( `Text`
+                        )->a( n = `text` v = `{ID}` ).
 
     client->view_display( page->stringify( ) ).
 

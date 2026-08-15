@@ -86,13 +86,15 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Table - Large Table with Growing and ScrollContainer`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -106,44 +108,81 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
 
     DATA(tab) = page->ele( `ScrollContainer`
         )->a( n = `height`   v = `70%`
-        )->a( n = `vertical` b = abap_true )->ele( `Table`
+        )->a( n = `vertical` b = abap_true
+        )->ele( `Table`
             )->a( n = `items`               v = client->_bind( t_tab )
             )->a( n = `growing`             b = abap_true
             )->a( n = `growingThreshold`    v = `20`
             )->a( n = `growingScrollToLoad` b = abap_true
             )->a( n = `sticky`              v = `ColumnHeaders,HeaderToolbar` ).
 
-    tab->ele( `headerToolbar` )->ele( `Toolbar` )->tag( `Title`
-                )->a( n = `text` v = `title of the table` )->tag( `Button`
+    tab->ele( `headerToolbar`
+        )->ele( `Toolbar`
+            )->tag( `Title`
+                )->a( n = `text` v = `title of the table`
+            )->tag( `Button`
                 )->a( n = `press` v = client->_event( `BUTTON_SORT` )
                 )->a( n = `text`  v = `left side button`
-                )->a( n = `icon`  v = `sap-icon://account` )->ele( `SegmentedButton`
-                )->a( n = `selectedKey` v = key )->ele( `items` )->tag( `SegmentedButtonItem`
+                )->a( n = `icon`  v = `sap-icon://account`
+            )->ele( `SegmentedButton`
+                )->a( n = `selectedKey` v = key
+                )->ele( `items`
+                    )->tag( `SegmentedButtonItem`
                         )->a( n = `icon` v = `sap-icon://accept`
                         )->a( n = `key`  v = `BLUE`
-                        )->a( n = `text` v = `blue` )->tag( `SegmentedButtonItem`
+                        )->a( n = `text` v = `blue`
+                    )->tag( `SegmentedButtonItem`
                         )->a( n = `icon` v = `sap-icon://add-favorite`
                         )->a( n = `key`  v = `GREEN`
-                        )->a( n = `text` v = `green` )->end( )->end( )->tag( `ToolbarSpacer` )->tag( `Button`
+                        )->a( n = `text` v = `green`
+                )->end(
+            )->end(
+            )->tag( `ToolbarSpacer`
+            )->tag( `Button`
                 )->a( n = `press` v = client->_event( `SORT_DESCENDING` )
-                )->a( n = `icon`  v = `sap-icon://sort-descending` )->tag( `Button`
+                )->a( n = `icon`  v = `sap-icon://sort-descending`
+            )->tag( `Button`
                 )->a( n = `press` v = client->_event( `SORT_ASCENDING` )
                 )->a( n = `icon`  v = `sap-icon://sort-ascending` ).
 
-    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Color` )->end( )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Info` )->end( )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Description` )->end( )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Checkbox` )->end( )->ele( `Column` )->tag( `Text`
-                )->a( n = `text` v = `Counter` )->end( )->ele( `Column` )->tag( `Text`
+    tab->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Color`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Info`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Description`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Checkbox`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Counter`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
                 )->a( n = `text` v = `Radial Micro Chart` ).
 
-    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
-                    )->a( n = `text` v = `{VALUE}` )->tag( `Text`
-                    )->a( n = `text` v = `{INFO}` )->tag( `Text`
-                    )->a( n = `text` v = `{DESCR}` )->tag( `CheckBox`
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{VALUE}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{INFO}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{DESCR}`
+                )->tag( `CheckBox`
                     )->a( n = `selected` v = `{CHECKBOX}`
-                    )->a( n = `enabled`  b = abap_false )->tag( `Text`
+                    )->a( n = `enabled`  b = abap_false
+                )->tag( `Text`
                     )->a( n = `text` v = `{COUNT}` ).
 
     client->view_display( view->stringify( ) ).

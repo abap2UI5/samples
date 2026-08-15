@@ -38,13 +38,14 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
     " require the framework's curated formatter module into the view, like an
     " original UI5 app requires its model/formatter. DateAbapDateToDateObject
@@ -53,7 +54,8 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
     " has no date type, so this is the one conversion the backend cannot do.
     view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Formatter - ABAP Date and Time Strings (DATS/TIMS)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -70,19 +72,26 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
     " registered in the model and the frontend receives no data for it
     page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `DATS / TIMS strings as date objects`
-        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
-                )->a( n = `text` v = `DATS 20260720` )->tag( `DatePicker`
+        )->a( n = `editable` b = abap_true
+        )->ele( n = `content` ns = `form`
+            )->tag( `Label`
+                )->a( n = `text` v = `DATS 20260720`
+            )->tag( `DatePicker`
                 )->a( n = `displayFormat` v = `long`
                 )->a( n = `dateValue`     v = |\{ path: '{ client->_bind( val = dats path = abap_true ) }', | &&
                                 |formatter: 'Formatter.DateAbapDateToDateObject' \}|
-                )->a( n = `editable`      b = abap_false )->tag( `Label`
-                )->a( n = `text` v = `DATS 00000000 (initial)` )->tag( `DatePicker`
+                )->a( n = `editable`      b = abap_false
+            )->tag( `Label`
+                )->a( n = `text` v = `DATS 00000000 (initial)`
+            )->tag( `DatePicker`
                 )->a( n = `displayFormat` v = `long`
                 )->a( n = `placeholder`   v = `no date`
                 )->a( n = `dateValue`     v = |\{ path: '{ client->_bind( val = dats_initial path = abap_true ) }', | &&
                                 |formatter: 'Formatter.DateAbapDateToDateObject' \}|
-                )->a( n = `editable`      b = abap_false )->tag( `Label`
-                )->a( n = `text` v = `DATS 20260720 + TIMS 134501` )->ele( `DateTimePicker`
+                )->a( n = `editable`      b = abap_false
+            )->tag( `Label`
+                )->a( n = `text` v = `DATS 20260720 + TIMS 134501`
+            )->ele( `DateTimePicker`
                 )->a( n = `editable`  v = `false`
                 )->a( n = `dateValue` v = |\{ parts: [\{path: '{ client->_bind( val = dats path = abap_true ) }'\}, | &&
                                           |\{path: '{ client->_bind( val = tims path = abap_true ) }'\}], | &&

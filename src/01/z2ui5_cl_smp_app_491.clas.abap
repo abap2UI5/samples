@@ -17,14 +17,16 @@ CLASS z2ui5_cl_smp_app_491 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-          )->a( n = `displayBlock` v = `true`
-          )->a( n = `height`       v = `100%`
-          )->a( n = `xmlns`        v = `sap.m`
-          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core`
-          )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-      DATA(page) = view->ele( `Shell` )->ele( `Page`
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `displayBlock` v = `true`
+              )->a( n = `height`       v = `100%`
+              )->a( n = `xmlns`        v = `sap.m`
+              )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core`   v = `sap.ui.core`
+              )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+      DATA(page) = view->ele( `Shell`
+          )->ele( `Page`
               )->a( n = `title`          v = `abap2UI5 - Browser - Set the Tab Favicon`
               )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
               )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -38,11 +40,15 @@ CLASS z2ui5_cl_smp_app_491 IMPLEMENTATION.
 
       page->ele( n = `SimpleForm` ns = `form`
           )->a( n = `title`    v = `Favicon`
-          )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
-              )->a( n = `text` v = `favicon url` )->tag( `Input`
-              )->a( n = `value` v = client->_bind( favicon ) )->tag( `Button`
-              )->a( n = `press` v = client->_event( `SET_FAVICON` )
-              )->a( n = `text`  v = `Set Favicon` ).
+          )->a( n = `editable` b = abap_true
+          )->ele( n = `content` ns = `form`
+              )->tag( `Label`
+                  )->a( n = `text` v = `favicon url`
+              )->tag( `Input`
+                  )->a( n = `value` v = client->_bind( favicon )
+              )->tag( `Button`
+                  )->a( n = `press` v = client->_event( `SET_FAVICON` )
+                  )->a( n = `text`  v = `Set Favicon` ).
       client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `SET_FAVICON` ).

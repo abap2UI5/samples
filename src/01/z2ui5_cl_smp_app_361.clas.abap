@@ -15,13 +15,15 @@ CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-          )->a( n = `displayBlock` v = `true`
-          )->a( n = `height`       v = `100%`
-          )->a( n = `xmlns`        v = `sap.m`
-          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-      DATA(page) = view->ele( `Shell` )->ele( `Page`
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `displayBlock` v = `true`
+              )->a( n = `height`       v = `100%`
+              )->a( n = `xmlns`        v = `sap.m`
+              )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+      DATA(page) = view->ele( `Shell`
+          )->ele( `Page`
               )->a( n = `title`          v = `abap2UI5 - Browser - Logout from the Client`
               )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
               )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -32,26 +34,28 @@ CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
                      `Launchpad the shell container handles the sign-out; otherwise the app navigates to the ICF logoff endpoint.`
           )->a( n = `type`     v = `Information`
           )->a( n = `showIcon` b = abap_true
-          )->a( n = `class`    v = `sapUiMediumMargin` )->tag( `Button`
-          )->a( n = `press` v = client->follow_up_action( client->cs_event-system_logout )
-          )->a( n = `text`  v = `Logout (client)`
-          )->a( n = `icon`  v = `sap-icon://log`
-          )->a( n = `type`  v = `Reject`
-          )->a( n = `class` v = `sapUiSmallMargin` ).
+          )->a( n = `class`    v = `sapUiMediumMargin`
+          )->tag( `Button`
+              )->a( n = `press` v = client->follow_up_action( client->cs_event-system_logout )
+              )->a( n = `text`  v = `Logout (client)`
+              )->a( n = `icon`  v = `sap-icon://log`
+              )->a( n = `type`  v = `Reject`
+              )->a( n = `class` v = `sapUiSmallMargin` ).
 
       page->tag( `MessageStrip`
           )->a( n = `text`     v = `The same client-side call, but with an argument: t_arg passes the ICF logoff endpoint, here with a ` &&
                      `redirect to google.com appended. Still no backend roundtrip - the argument is baked into the view.`
           )->a( n = `type`     v = `Information`
           )->a( n = `showIcon` b = abap_true
-          )->a( n = `class`    v = `sapUiMediumMargin` )->tag( `Button`
-          )->a( n = `press` v = client->follow_up_action(
-                      val   = client->cs_event-system_logout
-                      t_arg = VALUE #( ( `/sap/public/bc/icf/logoff?redirecturl=www.google.com` ) ) )
-          )->a( n = `text`  v = `Logout (client, with redirect)`
-          )->a( n = `icon`  v = `sap-icon://log`
-          )->a( n = `type`  v = `Reject`
-          )->a( n = `class` v = `sapUiSmallMargin` ).
+          )->a( n = `class`    v = `sapUiMediumMargin`
+          )->tag( `Button`
+              )->a( n = `press` v = client->follow_up_action(
+                          val   = client->cs_event-system_logout
+                          t_arg = VALUE #( ( `/sap/public/bc/icf/logoff?redirecturl=www.google.com` ) ) )
+              )->a( n = `text`  v = `Logout (client, with redirect)`
+              )->a( n = `icon`  v = `sap-icon://log`
+              )->a( n = `type`  v = `Reject`
+              )->a( n = `class` v = `sapUiSmallMargin` ).
 
       page->tag( `MessageStrip`
           )->a( n = `text`     v = `The other way round: _event( 'LOGOUT' ) makes the button call the backend, and follow_up_action( ) ` &&
@@ -59,12 +63,13 @@ CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
                      `Take this route when the logout depends on backend logic, e.g. saving a draft first.`
           )->a( n = `type`     v = `Information`
           )->a( n = `showIcon` b = abap_true
-          )->a( n = `class`    v = `sapUiMediumMargin` )->tag( `Button`
-          )->a( n = `press` v = client->_event( `LOGOUT` )
-          )->a( n = `text`  v = `Logout (via backend)`
-          )->a( n = `icon`  v = `sap-icon://log`
-          )->a( n = `type`  v = `Reject`
-          )->a( n = `class` v = `sapUiSmallMargin` ).
+          )->a( n = `class`    v = `sapUiMediumMargin`
+          )->tag( `Button`
+              )->a( n = `press` v = client->_event( `LOGOUT` )
+              )->a( n = `text`  v = `Logout (via backend)`
+              )->a( n = `icon`  v = `sap-icon://log`
+              )->a( n = `type`  v = `Reject`
+              )->a( n = `class` v = `sapUiSmallMargin` ).
 
       client->view_display( view->stringify( ) ).
 

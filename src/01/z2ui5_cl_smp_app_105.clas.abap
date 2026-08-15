@@ -34,21 +34,26 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     DATA(form) = view_parent->ele( `Panel`
-        )->a( n = `headerText` v = `Class 1 - Form` )->ele( n = `SimpleForm` ns = `form`
-            )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
+        )->a( n = `headerText` v = `Class 1 - Form`
+        )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `editable` b = abap_true
+            )->ele( n = `content` ns = `form` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Embedded class` )->ele( `ObjectStatus`
+        )->a( n = `text` v = `Embedded class`
+        )->ele( `ObjectStatus`
             )->a( n = `state` v = `Success`
             )->a( n = `text`  v = `z2ui5_cl_smp_app_105` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Input from class 1` )->tag( `Input`
+        )->a( n = `text` v = `Input from class 1`
+        )->tag( `Input`
             )->a( n = `placeholder` v = `type here - the value lives in sub-app 1`
             )->a( n = `value`       v = client->_bind( mv_class_1 ) ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Event` )->tag( `Button`
+        )->a( n = `text` v = `Event`
+        )->tag( `Button`
             )->a( n = `press` v = client->_event( `MESSAGE_SUB` )
             )->a( n = `text`  v = `raise event in sub-app 1`
             )->a( n = `icon`  v = `sap-icon://form` ).

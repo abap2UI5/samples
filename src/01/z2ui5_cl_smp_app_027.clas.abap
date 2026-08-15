@@ -57,14 +57,16 @@ CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
     bind_input51  = client->_bind( val = input51 path = abap_true ).
     bind_input52  = client->_bind( val = input52 path = abap_true ).
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - Expression Binding, Types and Composite Parts`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -78,36 +80,56 @@ CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
 
     DATA(form) = page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Binding Syntax`
-        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
+        )->a( n = `editable` b = abap_true
+        )->ele( n = `content` ns = `form` ).
 
     form->tag( `Title`
-        )->a( n = `text` v = `Expression Binding` )->tag( `Label`
-            )->a( n = `text` v = `Documentation` )->tag( `Link`
+        )->a( n = `text` v = `Expression Binding`
+        )->tag( `Label`
+            )->a( n = `text` v = `Documentation`
+        )->tag( `Link`
             )->a( n = `text` v = `Expression Binding`
-            )->a( n = `href` v = `https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0` )->tag( `Label`
-            )->a( n = `text` v = `input in uppercase` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( input2 ) )->tag( `Input`
+            )->a( n = `href` v = `https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0`
+        )->tag( `Label`
+            )->a( n = `text` v = `input in uppercase`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input2 )
+        )->tag( `Input`
             )->a( n = `enabled` b = abap_false
-            )->a( n = `value`   v = |\{= ${ client->_bind( input2 ) }.toUpperCase() \}| )->tag( `Label`
-            )->a( n = `text` v = `max value of the first two inputs` )->tag( `Input`
+            )->a( n = `value`   v = |\{= ${ client->_bind( input2 ) }.toUpperCase() \}|
+        )->tag( `Label`
+            )->a( n = `text` v = `max value of the first two inputs`
+        )->tag( `Input`
             )->a( n = `value` v = `{ type : "sap.ui.model.type.Integer",` &&
-            `  path:"` && bind_input31 && `" }` )->tag( `Input`
+            `  path:"` && bind_input31 && `" }`
+        )->tag( `Input`
             )->a( n = `value` v = `{ type : "sap.ui.model.type.Integer",` && |\n| &&
-            `  path:"` && bind_input32 && `" }` )->tag( `Input`
+            `  path:"` && bind_input32 && `" }`
+        )->tag( `Input`
             )->a( n = `enabled` b = abap_false
-            )->a( n = `value`   v = |\{= Math.max(${ client->_bind( input31 ) }, ${ client->_bind( input32 ) }) \}| )->tag( `Label`
-            )->a( n = `text` v = `only enabled when the quantity equals 500` )->tag( `Input`
+            )->a( n = `value`   v = |\{= Math.max(${ client->_bind( input31 ) }, ${ client->_bind( input32 ) }) \}|
+        )->tag( `Label`
+            )->a( n = `text` v = `only enabled when the quantity equals 500`
+        )->tag( `Input`
             )->a( n = `value` v = `{ type : "sap.ui.model.type.Integer",` &&
-            `  path:"` && bind_quantity && `" }` )->tag( `Input`
+            `  path:"` && bind_quantity && `" }`
+        )->tag( `Input`
             )->a( n = `enabled` v = |\{= 500===${ client->_bind( quantity ) } \}|
-            )->a( n = `value`   v = product )->tag( `Label`
-            )->a( n = `text` v = `RegExp Set to enabled if the input contains VIP, ignoring the case.` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( input41 ) )->tag( `Button`
+            )->a( n = `value`   v = product
+        )->tag( `Label`
+            )->a( n = `text` v = `RegExp Set to enabled if the input contains VIP, ignoring the case.`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input41 )
+        )->tag( `Button`
             )->a( n = `text`    v = `VIP`
-            )->a( n = `enabled` v = |\{= RegExp('vip', 'i').test(${ client->_bind( input41 ) }) \}| )->tag( `Label`
-            )->a( n = `text` v = `concatenate both inputs` )->tag( `Input`
-            )->a( n = `value` v = client->_bind( input51 ) )->tag( `Input`
-            )->a( n = `value` v = client->_bind( input52 ) )->tag( `Input`
+            )->a( n = `enabled` v = |\{= RegExp('vip', 'i').test(${ client->_bind( input41 ) }) \}|
+        )->tag( `Label`
+            )->a( n = `text` v = `concatenate both inputs`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input51 )
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input52 )
+        )->tag( `Input`
             )->a( n = `enabled` b = abap_false
             )->a( n = `value`   v = `{ parts: [` && |\n| &&
                       `                "` && bind_input51 && `",` && |\n| &&

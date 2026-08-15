@@ -76,12 +76,13 @@ CLASS z2ui5_cl_smp_app_132 IMPLEMENTATION.
   METHOD view_display.
 
     IF mo_parent_page IS INITIAL.
-      DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-          )->a( n = `displayBlock` v = `true`
-          )->a( n = `height`       v = `100%`
-          )->a( n = `xmlns`        v = `sap.m`
-          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+      DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `displayBlock` v = `true`
+              )->a( n = `height`       v = `100%`
+              )->a( n = `xmlns`        v = `sap.m`
+              )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
     ELSE.
       page = mo_parent_page.
@@ -89,7 +90,8 @@ CLASS z2ui5_cl_smp_app_132 IMPLEMENTATION.
     ENDIF.
 
     page->tag( `Label`
-        )->a( n = `text` v = `ProgressIndicator` )->tag( `ProgressIndicator`
+        )->a( n = `text` v = `ProgressIndicator`
+        )->tag( `ProgressIndicator`
             )->a( n = `percentValue` v = mv_perc
             )->a( n = `displayValue` v = `0,44GB of 32GB used`
             )->a( n = `showValue`    b = abap_true

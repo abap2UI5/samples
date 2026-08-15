@@ -39,20 +39,22 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock`   v = `true`
-        )->a( n = `height`         v = `100%`
-        )->a( n = `xmlns`          v = `sap.m`
-        )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`     v = `sap.ui.core`
-        )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock`   v = `true`
+            )->a( n = `height`         v = `100%`
+            )->a( n = `xmlns`          v = `sap.m`
+            )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`     v = `sap.ui.core`
+            )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1` ).
 
-    view           = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - Templating - Build Columns Dynamically (template:repeat)`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-        )->a( n = `class`          v = `sapUiContentPadding`
-        )->a( n = `id`             v = `page_main` ).
+    view           = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Templating - Build Columns Dynamically (template:repeat)`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `class`          v = `sapUiContentPadding`
+            )->a( n = `id`             v = `page_main` ).
 
     view->tag( `MessageStrip`
         )->a( n = `text`     v = `This sample builds table columns and cells dynamically from a layout table ` &&
@@ -62,16 +64,27 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     view->ele( `Table`
-        )->a( n = `items` v = client->_bind( mt_data ) )->ele( `columns` )->ele( n = `repeat` ns = `template`
-            )->a( n = `list` v = `{template>/MT_LAYOUT}`
-            )->a( n = `var`  v = `L0` )->ele( `Column`
-              )->a( n = `mergeDuplicates` v = `{L0>MERGE}`
-              )->a( n = `visible`         v = `{L0>VISIBLE}` )->tag( `Text`
-                         )->a( n = `text` v = `{L0>FNAME}` )->end( )->end( )->end( )->ele( `items` )->ele( `ColumnListItem`
-                         )->ele( `cells` )->ele( n = `repeat` ns = `template`
-                  )->a( n = `list` v = `{template>/MT_LAYOUT}`
-                  )->a( n = `var`  v = `L1` )->ele( `ObjectIdentifier`
-                    )->a( n = `text` v = `{= '{' + ${L1>FNAME} + '}' }` ).
+        )->a( n = `items` v = client->_bind( mt_data )
+        )->ele( `columns`
+            )->ele( n = `repeat` ns = `template`
+                )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                )->a( n = `var`  v = `L0`
+                )->ele( `Column`
+                    )->a( n = `mergeDuplicates` v = `{L0>MERGE}`
+                    )->a( n = `visible`         v = `{L0>VISIBLE}`
+                    )->tag( `Text`
+                        )->a( n = `text` v = `{L0>FNAME}`
+                )->end(
+            )->end(
+        )->end(
+        )->ele( `items`
+            )->ele( `ColumnListItem`
+                )->ele( `cells`
+                    )->ele( n = `repeat` ns = `template`
+                        )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                        )->a( n = `var`  v = `L1`
+                        )->ele( `ObjectIdentifier`
+                            )->a( n = `text` v = `{= '{' + ${L1>FNAME} + '}' }` ).
 
     view->tag( `Label`
         )->a( n = `text` v = `IF Template (with re-rendering)` ).
@@ -81,11 +94,16 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
                   view   = view->ele( `VBox` ).
 
     view->ele( n = `if` ns = `template`
-        )->a( n = `test` v = `{template>/MV_FLAG}` )->ele( n = `then` ns = `template` )->tag( n = `Icon` ns = `core`
-            )->a( n = `color` v = `green`
-            )->a( n = `src`   v = `sap-icon://accept` )->end( )->ele( n = `else` ns = `template` )->tag( n = `Icon` ns = `core`
-            )->a( n = `color` v = `red`
-            )->a( n = `src`   v = `sap-icon://decline` ).
+        )->a( n = `test` v = `{template>/MV_FLAG}`
+        )->ele( n = `then` ns = `template`
+            )->tag( n = `Icon` ns = `core`
+                )->a( n = `color` v = `green`
+                )->a( n = `src`   v = `sap-icon://accept`
+        )->end(
+        )->ele( n = `else` ns = `template`
+            )->tag( n = `Icon` ns = `core`
+                )->a( n = `color` v = `red`
+                )->a( n = `src`   v = `sap-icon://decline` ).
 
     client->view_display( view->stringify( ) ).
 

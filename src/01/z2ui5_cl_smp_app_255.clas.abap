@@ -66,20 +66,23 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
                 `    font-size: 0.875rem;`                       &&
                 `\}`.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
     " raw markup travels in the content attribute of a core:HTML leaf - the
     " builder re-escapes it on stringify, so the literal markup is written here
-    view->tag( n = `HTML` ns = `core` )->a( n = `content` v = `<style>` && css && `</style>` ).
+    view->tag( n = `HTML` ns = `core`
+        )->a( n = `content` v = `<style>` && css && `</style>` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-             )->a( n = `title`          v = `abap2UI5 - CSS - FlexBox Layouts with Custom Classes`
-             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - CSS - FlexBox Layouts with Custom Classes`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Navigation layouts built with sap.m.FlexBox and own CSS classes: variable width, equal width with ` &&
@@ -92,40 +95,66 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
     " merged, the second tag REPLACES the first - written as two blocks the
     " hint Button silently disappeared and only the Link ever rendered
     page->ele( `headerContent`
-           )->tag( `Button`
-           )->a( n = `press`   v = client->_event( `POPOVER` )
-           )->a( n = `icon`    v = `sap-icon://hint`
-           )->a( n = `id`      v = `hint_icon`
-           )->a( n = `tooltip` v = `Sample information`
-           )->tag( `Link`
-           )->a( n = `text`   v = `UI5 Demo Kit`
-           )->a( n = `target` v = `_blank`
-           )->a( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxNav` ).
+        )->tag( `Button`
+            )->a( n = `press`   v = client->_event( `POPOVER` )
+            )->a( n = `icon`    v = `sap-icon://hint`
+            )->a( n = `id`      v = `hint_icon`
+            )->a( n = `tooltip` v = `Sample information`
+        )->tag( `Link`
+            )->a( n = `text`   v = `UI5 Demo Kit`
+            )->a( n = `target` v = `_blank`
+            )->a( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxNav` ).
 
     DATA(layout) = page->ele( `VBox`
-        )->a( n = `class` v = `navigationExamples` )->ele( `Panel`
-                              )->a( n = `headerText` v = `Variable width` )->ele( `FlexBox`
-                                  )->a( n = `class`          v = `ne-flexbox1`
-                                  )->a( n = `renderType`     v = `List`
-                                  )->a( n = `alignItems`     v = `Center`
-                                  )->a( n = `justifyContent` v = `Center` )->ele( n = `HTML` ns = `core`
-                                      )->a( n = `content` v = `<a >Item 1</a>` )->end( )->ele( n = `HTML` ns = `core`
-                                      )->a( n = `content` v = `<a >Long item 2</a>` )->end( )->ele( n = `HTML` ns = `core`
-                                      )->a( n = `content` v = `<a >Item 3</a>` )->end( )->end( )->ele( `Panel`
-          )->a( n = `headerText` v = `Same width, transition effect` )->ele( `FlexBox`
-                                  )->a( n = `class`          v = `ne-flexbox2`
-                                  )->a( n = `renderType`     v = `List`
-                                  )->a( n = `alignItems`     v = `Center`
-                                  )->a( n = `justifyContent` v = `SpaceBetween` )->ele( n = `HTML` ns = `core`
-                                      )->a( n = `content` v = `<a >Item 1</a>` )->ele( n = `layoutData` ns = `core` )->tag( `FlexItemData`
-                                              )->a( n = `growFactor` v = `1`
-                                              )->a( n = `baseSize`   v = `25%` )->end( )->end( )->ele( n = `HTML` ns = `core`
-                                      )->a( n = `content` v = `<a >Long item 2</a>` )->ele( n = `layoutData` ns = `core` )->tag( `FlexItemData`
-                                              )->a( n = `growFactor` v = `1`
-                                              )->a( n = `baseSize`   v = `25%` )->end( )->end( )->ele( n = `HTML` ns = `core`
-                                      )->a( n = `content` v = `<a >Item 3</a>` )->ele( n = `layoutData` ns = `core` )->tag( `FlexItemData`
-                                              )->a( n = `growFactor` v = `1`
-                                              )->a( n = `baseSize`   v = `25%` )->end( )->end( ).
+        )->a( n = `class` v = `navigationExamples`
+        )->ele( `Panel`
+            )->a( n = `headerText` v = `Variable width`
+            )->ele( `FlexBox`
+                )->a( n = `class`          v = `ne-flexbox1`
+                )->a( n = `renderType`     v = `List`
+                )->a( n = `alignItems`     v = `Center`
+                )->a( n = `justifyContent` v = `Center`
+                )->ele( n = `HTML` ns = `core`
+                    )->a( n = `content` v = `<a >Item 1</a>`
+                )->end(
+                )->ele( n = `HTML` ns = `core`
+                    )->a( n = `content` v = `<a >Long item 2</a>`
+                )->end(
+                )->ele( n = `HTML` ns = `core`
+                    )->a( n = `content` v = `<a >Item 3</a>`
+                )->end(
+            )->end(
+            )->ele( `Panel`
+                )->a( n = `headerText` v = `Same width, transition effect`
+                )->ele( `FlexBox`
+                    )->a( n = `class`          v = `ne-flexbox2`
+                    )->a( n = `renderType`     v = `List`
+                    )->a( n = `alignItems`     v = `Center`
+                    )->a( n = `justifyContent` v = `SpaceBetween`
+                    )->ele( n = `HTML` ns = `core`
+                        )->a( n = `content` v = `<a >Item 1</a>`
+                        )->ele( n = `layoutData` ns = `core`
+                            )->tag( `FlexItemData`
+                                )->a( n = `growFactor` v = `1`
+                                )->a( n = `baseSize`   v = `25%`
+                        )->end(
+                    )->end(
+                    )->ele( n = `HTML` ns = `core`
+                        )->a( n = `content` v = `<a >Long item 2</a>`
+                        )->ele( n = `layoutData` ns = `core`
+                            )->tag( `FlexItemData`
+                                )->a( n = `growFactor` v = `1`
+                                )->a( n = `baseSize`   v = `25%`
+                        )->end(
+                    )->end(
+                    )->ele( n = `HTML` ns = `core`
+                        )->a( n = `content` v = `<a >Item 3</a>`
+                        )->ele( n = `layoutData` ns = `core`
+                            )->tag( `FlexItemData`
+                                )->a( n = `growFactor` v = `1`
+                                )->a( n = `baseSize`   v = `25%`
+                        )->end(
+                    )->end( ).
 
     client->view_display( page->stringify( ) ).
 
@@ -143,15 +172,17 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`      v = `sap.m`
-        )->a( n = `xmlns:core` v = `sap.ui.core` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
     view->ele( `QuickView`
         )->a( n = `placement` v = `Bottom`
-        )->a( n = `width`     v = `auto` )->ele( `QuickViewPage`
-                  )->a( n = `description` v = `Here is an example of how you can use navigation items as unordered list items in a Flex Box.`
-                  )->a( n = `header`      v = `Sample information`
-                  )->a( n = `pageId`      v = `sampleInformationId` ).
+        )->a( n = `width`     v = `auto`
+        )->ele( `QuickViewPage`
+            )->a( n = `description` v = `Here is an example of how you can use navigation items as unordered list items in a Flex Box.`
+            )->a( n = `header`      v = `Sample information`
+            )->a( n = `pageId`      v = `sampleInformationId` ).
 
     client->popover_display(
       xml   = view->stringify( )

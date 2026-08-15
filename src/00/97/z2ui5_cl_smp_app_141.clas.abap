@@ -59,18 +59,20 @@ CLASS z2ui5_cl_smp_app_141 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-        )->a( n = `displayBlock` v = `true`
-        )->a( n = `height`       v = `100%`
-        )->a( n = `xmlns`        v = `sap.m`
-        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell` )->ele( `Page`
-        )->a( n = `title`          v = `abap2UI5 - Popups`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Popups`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     " A style class the app owns. There is no bindable property for "carry
     " this CSS class", so the class itself is declared here and put on the
@@ -99,10 +101,13 @@ CLASS z2ui5_cl_smp_app_141 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( n = `SimpleForm` ns = `form`
-        )->a( n = `title` v = `Inputs` )->ele( n = `content` ns = `form` )->tag( `Label`
-            )->a( n = `text` v = `01` )->tag( `Button`
-            )->a( n = `press` v = client->_event( `POPUP_OPEN` )
-            )->a( n = `text`  v = `Popup Get Input Values` ).
+        )->a( n = `title` v = `Inputs`
+        )->ele( n = `content` ns = `form`
+            )->tag( `Label`
+                )->a( n = `text` v = `01`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `POPUP_OPEN` )
+                )->a( n = `text`  v = `Popup Get Input Values` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -111,30 +116,46 @@ CLASS z2ui5_cl_smp_app_141 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`      v = `sap.m`
-        )->a( n = `xmlns:core` v = `sap.ui.core`
-        )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
     DATA(dialog) = popup->ele( `Dialog`
         )->a( n = `title`         v = `Title`
         )->a( n = `contentWidth`  v = `500px`
         )->a( n = `contentHeight` v = `500px` ).
 
-    dialog->ele( `content` )->ele( n = `SimpleForm` ns = `form`
-            )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+    dialog->ele( `content`
+        )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `editable` b = abap_true
+            )->ele( n = `content` ns = `form`
+                )->tag( `Label`
                     )->a( n = `text` v = client->_bind( s_input-hint )
-                    )->a( n = `id`   v = `lbl1` )->tag( `Label`
-                    )->a( n = `text` v = `Input1` )->tag( `Input`
-                    )->a( n = `value` v = client->_bind( s_input-value1 ) )->tag( `Label`
-                    )->a( n = `text` v = `Input2` )->tag( `Input`
-                    )->a( n = `value` v = client->_bind( s_input-value2 ) )->tag( `Label`
-                    )->a( n = `text` v = `Checkbox` )->tag( `CheckBox`
+                    )->a( n = `id`   v = `lbl1`
+                )->tag( `Label`
+                    )->a( n = `text` v = `Input1`
+                )->tag( `Input`
+                    )->a( n = `value` v = client->_bind( s_input-value1 )
+                )->tag( `Label`
+                    )->a( n = `text` v = `Input2`
+                )->tag( `Input`
+                    )->a( n = `value` v = client->_bind( s_input-value2 )
+                )->tag( `Label`
+                    )->a( n = `text` v = `Checkbox`
+                )->tag( `CheckBox`
                     )->a( n = `text`     v = `this is a checkbox`
                     )->a( n = `selected` v = client->_bind( s_input-is_active )
-                    )->a( n = `enabled`  b = abap_true )->end( )->end( )->end( )->ele( `buttons` )->tag( `Button`
+                    )->a( n = `enabled`  b = abap_true
+            )->end(
+        )->end(
+    )->end(
+        )->ele( `buttons`
+            )->tag( `Button`
                 )->a( n = `press` v = client->follow_up_action( client->cs_event-popup_close )
-                )->a( n = `text`  v = `Cancel` )->tag( `Button`
+                )->a( n = `text`  v = `Cancel`
+            )->tag( `Button`
                 )->a( n = `press` v = client->_event( `POPUP_CONFIRM` )
                 )->a( n = `text`  v = `Confirm`
                 )->a( n = `type`  v = `Emphasized` ).
