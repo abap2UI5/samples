@@ -6,8 +6,18 @@ name: check-abap2UI5
 # UI5 version and deprecation floor, the data and usability of the result,
 # and the abap2ui5 semantics - the defects that live in the relationship
 # between the ABAP class and the view it builds, which no UI5 tooling sees.
-# Configuration lives in abap2ui5lint.jsonc; the linter is pinned as a
-# devDependency so CI and `npm run check:abap2ui5` run the same version.
+# Configuration lives in abap2ui5lint.jsonc; the linter is a devDependency
+# resolved through package-lock.json, so CI and `npm run check:abap2ui5` run
+# the same version.
+#
+# @abap2ui5/render-runtime is the SECOND devDependency, and the render gate
+# below is the only reason for it: it carries the @openui5 source packages and
+# playwright the gate serves. The linter names it as an OPTIONAL PEER, which
+# is the one dependency kind npm does not install on its own - so it has to be
+# declared here, or `npx abap2ui5lint` reports the runtime missing and the 172
+# documents stop being rendered. It used to arrive by itself, as an optional
+# DEPENDENCY of the linter, which npm does install by default; splitting it
+# out is what keeps a plain `npx @abap2ui5/linter` a small download.
 #
 # The run reports what it LOOKED at, not only what it found: the gates log
 # every file into a collapsed group while they run, and the job closes with
