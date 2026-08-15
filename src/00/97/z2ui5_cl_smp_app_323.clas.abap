@@ -22,24 +22,39 @@ CLASS z2ui5_cl_smp_app_323 IMPLEMENTATION.
               )->a( n = `xmlns`        v = `sap.m`
               )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
               )->a( n = `xmlns:core`   v = `sap.ui.core`
-              )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-      client->view_display( view->ele( `Shell` )->ele( `Page`
-                 )->a( n = `title`          v = `abap2UI5 - Navigation with app state`
-                 )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-                 )->a( n = `navButtonPress` v = client->_event( `BACK` ) )->tag( `MessageStrip`
-              )->a( n = `text`     v = `The clipboard_app_state front-end action copies a link to the CURRENT app state `
-                      && `into the clipboard, so the state can be shared with someone else. Enter a `
-                      && `quantity, press share and open the copied link.`
-              )->a( n = `type`     v = `Information`
-              )->a( n = `showIcon` b = abap_true
-              )->a( n = `class`    v = `sapUiSmallMargin` )->ele( n = `SimpleForm` ns = `form`
-              )->a( n = `title`    v = `Form Title`
-              )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Title`
-                             )->a( n = `text` v = `Input` )->tag( `Label`
-                             )->a( n = `text` v = `quantity` )->tag( `Input`
-                             )->a( n = `value` v = client->_bind( mv_quantity ) )->tag( `Button`
-                             )->a( n = `press` v = client->_event( `BUTTON_POST` )
-                             )->a( n = `text`  v = `share` )->stringify( ) ).
+              )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title`          v = `abap2UI5 - Navigation with app state`
+                      )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                      )->a( n = `navButtonPress` v = client->_event( `BACK` )
+
+                      )->tag( `MessageStrip`
+                          )->a( n = `text`     v = `The clipboard_app_state front-end action copies a link to the CURRENT app state `
+                                                && `into the clipboard, so the state can be shared with someone else. Enter a `
+                                                && `quantity, press share and open the copied link.`
+                          )->a( n = `type`     v = `Information`
+                          )->a( n = `showIcon` b = abap_true
+                          )->a( n = `class`    v = `sapUiSmallMargin`
+
+                      )->ele( n = `SimpleForm` ns = `form`
+                          )->a( n = `title`    v = `Form Title`
+                          )->a( n = `editable` b = abap_true
+
+                          )->ele( n = `content` ns = `form`
+                              )->tag( `Title`
+                                  )->a( n = `text`  v = `Input`
+                              )->tag( `Label`
+                                  )->a( n = `text`  v = `quantity`
+                              )->tag( `Input`
+                                  )->a( n = `value` v = client->_bind( mv_quantity )
+                              )->tag( `Button`
+                                  )->a( n = `press` v = client->_event( `BUTTON_POST` )
+                                  )->a( n = `text`  v = `share` ).
+
+      client->view_display( view->stringify( ) ).
+
     ENDIF.
 
     CASE client->get_event( ).

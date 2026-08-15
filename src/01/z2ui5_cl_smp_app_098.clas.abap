@@ -22,8 +22,6 @@ CLASS z2ui5_cl_smp_app_098 DEFINITION PUBLIC.
 
     DATA mv_layout TYPE string.
     DATA mv_title TYPE string.
-    DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.
-    DATA mv_check_enabled_02 TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

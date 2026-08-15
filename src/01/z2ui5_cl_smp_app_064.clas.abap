@@ -23,10 +23,7 @@ CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
         key    TYPE string,
       END OF ty_s_filter_pop.
 
-    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value.
-    DATA mv_search_value TYPE string.
     DATA mt_table TYPE ty_t_table.
-    DATA lv_selkz TYPE abap_bool.
     DATA mv_check_active TYPE abap_bool.
     DATA:
       BEGIN OF screen,

@@ -37,23 +37,23 @@ CLASS z2ui5_cl_smp_app_335 IMPLEMENTATION.
 
       view_display( client ).
 
-    ENDIF.
-
-    CASE client->get_event( ).
-      WHEN `GO`.
-
-        DATA(app) = z2ui5_cl_smp_app_336=>factory( ).
-        client->nav_app_call( app ).
-
-      WHEN `CHANGE`.
-
-        get_data_2( ).
-
-    ENDCASE.
-
-    IF     client->check_on_navigated( )     = abap_true
-       AND client->check_on_init( )          = abap_false.
+    ELSEIF client->check_on_navigated( ).
       view_display( client ).
+
+    ELSEIF client->check_on_event( ).
+
+      CASE client->get_event( ).
+        WHEN `GO`.
+
+          DATA(app) = z2ui5_cl_smp_app_336=>factory( ).
+          client->nav_app_call( app ).
+
+        WHEN `CHANGE`.
+
+          get_data_2( ).
+
+      ENDCASE.
+
     ENDIF.
 
     IF ms_struc IS INITIAL.

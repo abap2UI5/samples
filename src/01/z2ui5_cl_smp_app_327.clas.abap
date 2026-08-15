@@ -84,9 +84,11 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
             " corresponding fields only: whatever sits under the key may carry
             " more (or other) fields than this app models - an earlier shape,
             " or a value someone else wrote
+            " abap2ui5lint-disable-next-line non-released-api -- abap2UI5 ships no RELEASED JSON parser for app code, and an event argument arrives as a JSON string. The mirror is what every app has to reach for until src/02 offers one
             z2ui5_cl_ajson=>parse( client->get_event_arg( 4 )
               )->to_abap_corresponding_only(
               )->to_abap( IMPORTING ev_container = s_storage-value ).
+          " abap2ui5lint-disable-next-line non-released-api -- the exception of the parser above
           CATCH z2ui5_cx_ajson_error INTO DATA(lx_load).
             client->message_box_display( lx_load->get_text( ) ).
         ENDTRY.

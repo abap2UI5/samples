@@ -19,24 +19,35 @@ CLASS z2ui5_cl_smp_app_324 IMPLEMENTATION.
 
     me->client = client.
 
-        IF client->check_on_init( ).
-          client->view_display( z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+    IF client->check_on_init( ).
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
               )->a( n = `displayBlock` v = `true`
               )->a( n = `height`       v = `100%`
               )->a( n = `xmlns`        v = `sap.m`
               )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-              )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` )->ele( `Page`
-                                        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-                                        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) )->tag( `Button`
-                                        )->a( n = `press` v = client->_event( `PRESS` )
-                                        )->a( n = `text`  v = `Call dynpro` )->stringify( ) ).
-        ENDIF.
+              )->a( n = `xmlns:core`   v = `sap.ui.core`
 
-        CASE client->get_event( ).
-          WHEN `PRESS`.
-            call_dynpro( ).
-        ENDCASE.
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                      )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
 
+                      )->tag( `Button`
+                          )->a( n = `press` v = client->_event( `PRESS` )
+                          )->a( n = `text`  v = `Call dynpro` ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( ).
+
+      CASE client->get_event( ).
+        WHEN `PRESS`.
+          call_dynpro( ).
+      ENDCASE.
+
+    ENDIF.
 
   ENDMETHOD.
 

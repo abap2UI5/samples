@@ -49,20 +49,34 @@ CLASS z2ui5_cl_smp_app_138 IMPLEMENTATION.
               )->a( n = `xmlns`        v = `sap.m`
               )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
               )->a( n = `xmlns:core`   v = `sap.ui.core`
-              )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-      client->view_display( view->ele( `Shell` )->ele( `Page`
-                )->a( n = `title`          v = `abap2UI5 - First Example`
-                )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-                )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) )->ele( n = `SimpleForm` ns = `form`
-                    )->a( n = `title`    v = `Form Title`
-                    )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Title`
-                            )->a( n = `text` v = `Input` )->tag( `Label`
-                            )->a( n = `text` v = `quantity` )->tag( `Input`
-                            )->a( n = `value` v = client->_bind( quantity ) )->tag( `Label`
-                            )->a( n = `text` v = `product` )->tag( `Input`
-                            )->a( n = `value` v = client->_bind( ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val ) )->tag( `Button`
-                            )->a( n = `press` v = client->_event( `BUTTON_POST` )
-                            )->a( n = `text`  v = `post` )->stringify( ) ).
+              )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title`          v = `abap2UI5 - First Example`
+                      )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                      )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+
+                      )->ele( n = `SimpleForm` ns = `form`
+                          )->a( n = `title`    v = `Form Title`
+                          )->a( n = `editable` b = abap_true
+
+                          )->ele( n = `content` ns = `form`
+                              )->tag( `Title`
+                                  )->a( n = `text`  v = `Input`
+                              )->tag( `Label`
+                                  )->a( n = `text`  v = `quantity`
+                              )->tag( `Input`
+                                  )->a( n = `value` v = client->_bind( quantity )
+                              )->tag( `Label`
+                                  )->a( n = `text`  v = `product`
+                              )->tag( `Input`
+                                  )->a( n = `value` v = client->_bind( ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val )
+                              )->tag( `Button`
+                                  )->a( n = `press` v = client->_event( `BUTTON_POST` )
+                                  )->a( n = `text`  v = `post` ).
+
+      client->view_display( view->stringify( ) ).
 
     ENDIF.
 

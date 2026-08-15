@@ -22,7 +22,6 @@ CLASS z2ui5_cl_smp_app_120 DEFINITION PUBLIC.
     DATA altitudeaccuracy TYPE string.
     DATA accuracy TYPE string.
 
-    DATA mt_spot TYPE TABLE OF ty_s_spot.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
