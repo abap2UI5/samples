@@ -19,7 +19,6 @@ CLASS z2ui5_cl_smp_app_339 DEFINITION PUBLIC.
         !table TYPE string.
 
   PROTECTED SECTION.
-    DATA mv_init TYPE abap_bool.
 
     METHODS on_event     IMPORTING !client TYPE REF TO z2ui5_if_client.
     METHODS view_display IMPORTING !client TYPE REF TO z2ui5_if_client.
@@ -142,6 +141,7 @@ CLASS z2ui5_cl_smp_app_339 IMPLEMENTATION.
         )->ele( `items`
             )->ele( `ColumnListItem`
                 )->a( n = `vAlign`   v = `Middle`
+                " abap2ui5lint-disable-next-line relative-binding-without-context -- SELKZ is appended to the row type at RUNTIME (cl_abap_datadescr above), so no static shape can carry it
                 )->a( n = `selected` v = `{SELKZ}`
                 )->a( n = `type`     v = `Inactive` ).
 
@@ -176,16 +176,12 @@ CLASS z2ui5_cl_smp_app_339 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF mv_init = abap_false.
-      mv_init = abap_true.
+    IF client->check_on_init( ).
 
       get_data( ).
       view_display( client ).
 
-    ENDIF.
-
-    IF client->check_on_navigated( )     = abap_true
-        AND client->check_on_init( )          = abap_false.
+    ELSEIF client->check_on_navigated( ).
       view_display( client ).
     ENDIF.
 

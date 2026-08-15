@@ -95,7 +95,13 @@ CLASS z2ui5_cl_smp_app_343 IMPLEMENTATION.
 
     TRY.
 
+        " The binding below is WRONG ON PURPOSE and this app exists to prove
+        " it stays wrong: mt_data1 is TYPE REF TO data, and the framework has
+        " to refuse it rather than serialize a reference. If _bind( ) ever
+        " stops raising, the first message_box below fires and the test fails.
+        " abap2ui5lint-disable-next-line missing-required-aggregation -- the chain never gets as far as `columns`: the line below is expected to raise
         DATA(table) = page->ele( `Table`
+            " abap2ui5lint-disable-next-line binding-to-reference -- this is the assertion, not a mistake
             )->a( n = `items` v = client->_bind( mt_data1 )
             )->a( n = `width` v = `auto` ).
 

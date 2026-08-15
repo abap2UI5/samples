@@ -112,6 +112,7 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
         )->end(
         )->ele( `items`
             )->ele( `ColumnListItem`
+                " abap2ui5lint-disable-next-line relative-binding-without-context -- SELKZ is appended to the row type at RUNTIME (cl_abap_datadescr above), so no static shape can carry it
                 )->a( n = `selected` v = `{SELKZ}`
                 )->ele( `cells`
                     )->tag( `Text`

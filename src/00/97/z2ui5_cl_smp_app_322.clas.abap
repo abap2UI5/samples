@@ -60,6 +60,7 @@ CLASS z2ui5_cl_smp_app_322 IMPLEMENTATION.
         " JavaScript expression when what it gets is not a framework event
         " name, which is how a browser capability without its own event is
         " reached
+        " abap2ui5lint-disable-next-line raw-javascript-to-frontend -- the raw-JS escape hatch is what this sample demonstrates: a browser capability with no framework event of its own
         client->follow_up_action( |history.back()| ).
     ENDCASE.
 

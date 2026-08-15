@@ -83,6 +83,11 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
   METHOD view_display.
 
+    " Both SearchFields below round-trip on every keystroke on purpose: this
+    " sample EXISTS to show what that does - requests overtaking each other,
+    " the busy queue, the value lagging behind fast typing.
+    " abap2ui5lint-disable live-event-roundtrip
+
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
@@ -163,6 +168,8 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
         )->a( n = `text` v = `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
+
+    " abap2ui5lint-enable live-event-roundtrip
 
   ENDMETHOD.
 ENDCLASS.

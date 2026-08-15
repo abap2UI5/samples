@@ -54,7 +54,6 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
 
     DATA(tab) = page->ele( `Table`
         )->a( n = `items` v = client->_bind( t_tab )
-        )->a( n = `mode`  v = `MultiSelect`
         )->ele( `headerToolbar`
             )->ele( `OverflowToolbar`
                 )->tag( `Title`
@@ -73,7 +72,6 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
         )->end(
         )->ele( `items`
             )->ele( `ColumnListItem`
-                )->a( n = `selected` v = `{SELKZ}`
                 )->ele( `cells`
                     )->tag( `Input`
                         )->a( n = `value` v = `{TITLE}`
