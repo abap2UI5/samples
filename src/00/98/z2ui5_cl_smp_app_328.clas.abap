@@ -95,7 +95,7 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
     page->tag( `Button`
         )->a( n = `press` v = client->_event( `GO` )
         )->a( n = `text`  v = `GO`
-        )->a( n = `type`  v = `Success` ).
+        )->a( n = `type`  v = `Accept` ).
 
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
     page->ele( `Table`

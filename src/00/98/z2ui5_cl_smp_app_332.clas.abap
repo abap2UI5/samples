@@ -58,7 +58,7 @@ CLASS z2ui5_cl_smp_app_332 IMPLEMENTATION.
     page->tag( `Button`
         )->a( n = `press` v = client->_event( `GO` )
         )->a( n = `text`  v = `GO`
-        )->a( n = `type`  v = `Success` ).
+        )->a( n = `type`  v = `Accept` ).
 
     DATA(form) = page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `layout`          v = `ResponsiveGridLayout`

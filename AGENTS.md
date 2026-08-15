@@ -620,13 +620,28 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 4. `abaplint` → 0 issues → commit.
 
 **Before every commit**
-- `abaplint` reports 0 issues (config `abaplint.jsonc`).
-- `node scripts/check-agents-structure.js` reports no drift between the §1
-  tree and the actual `package.devc.xml` CTEXTs.
-- `node scripts/check-strip-lists.js` reports no drift in the strip list (§2).
+
+```sh
+npm run check
+```
+
+which is all five, in the order they fail fastest:
+
+- `npm run lint` — `abaplint` reports 0 issues (config `abaplint.jsonc`).
+- `npm run check:abap2ui5` — the abap2UI5-linter: the app class and the view
+  it builds, plus a headless render of every view. New findings fail;
+  `abap2ui5lint-baseline.json` holds the debt frozen at adoption, and an
+  entry whose finding is gone fails too.
+- `npm run check:chains` — the builder chains are in the house layout (§10).
+- `npm run check:agents` — no drift between the §1 tree and the actual
+  `package.devc.xml` CTEXTs.
+- `npm run check:strip` — no drift in the strip list (§2).
+
+By hand, because no script covers them:
 - abapGit file format for all file types: UTF-8, LF only, final newline,
   2-space indent (§6).
-- The overview catalog still mirrors the folder tree (§4).
+- The overview catalog still mirrors the folder tree (§4) — `npm run
+  launchpad` regenerates it, and leaves the tree clean when it is current.
 
 ---
 

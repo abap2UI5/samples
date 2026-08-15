@@ -44,7 +44,7 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
     page->tag( `Link`
         )->a( n = `text`   v = `More information...`
         )->a( n = `target` v = `_blank`
-        )->a( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/topic/b0fb4de7364f4bcbb053a99aa645affe` ).
+        )->a( n = `href`   v = `https://sdk.openui5.org/topic/b0fb4de7364f4bcbb053a99aa645affe` ).
 
     page->tag( `Button`
         )->a( n = `press` v = client->_event( val = `EVENT_FIX_VAL` t_arg = VALUE #(

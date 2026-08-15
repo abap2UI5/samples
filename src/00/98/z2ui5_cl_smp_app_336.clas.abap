@@ -56,7 +56,7 @@ CLASS z2ui5_cl_smp_app_336 IMPLEMENTATION.
     page->tag( `Button`
         )->a( n = `press` v = client->_event_nav_app_leave( )
         )->a( n = `text`  v = `BACK`
-        )->a( n = `type`  v = `Success` ).
+        )->a( n = `type`  v = `Accept` ).
 
     client->view_display( page->stringify( ) ).
 

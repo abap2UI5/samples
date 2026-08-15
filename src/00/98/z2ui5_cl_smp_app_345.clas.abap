@@ -108,7 +108,7 @@ CLASS z2ui5_cl_smp_app_345 IMPLEMENTATION.
     page->tag( `Button`
         )->a( n = `press` v = client->_event( `GO` )
         )->a( n = `text`  v = `CALL Next App`
-        )->a( n = `type`  v = `Success` ).
+        )->a( n = `type`  v = `Accept` ).
 
     xml_table( i_page = page
       i_client        = client

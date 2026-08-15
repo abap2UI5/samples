@@ -102,7 +102,7 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
         )->tag( `Link`
             )->a( n = `text`   v = `UI5 Demo Kit`
             )->a( n = `target` v = `_blank`
-            )->a( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MessageToast/sample/sap.m.sample.MessageToast` ).
+            )->a( n = `href`   v = `https://sdk.openui5.org/entity/sap.m.MessageToast/sample/sap.m.sample.MessageToast` ).
 
     DATA(form) = page->ele( `Panel`
         )->a( n = `headerText` v = `Message Toast Configuration`

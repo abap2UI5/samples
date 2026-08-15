@@ -139,7 +139,7 @@ CLASS z2ui5_cl_smp_app_094 IMPLEMENTATION.
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( `BUTTON_SAVE` )
                 )->a( n = `text`  v = `Save`
-                )->a( n = `type`  v = `Success` ).
+                )->a( n = `type`  v = `Accept` ).
 
     client->view_display( page->stringify( ) ).
 

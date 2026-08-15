@@ -92,12 +92,12 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
     page->tag( `Button`
         )->a( n = `press` v = client->_event( `GO` )
         )->a( n = `text`  v = `CALL Next App`
-        )->a( n = `type`  v = `Success` ).
+        )->a( n = `type`  v = `Accept` ).
 
     page->tag( `Button`
         )->a( n = `press` v = client->_event( `GET_DATA` )
         )->a( n = `text`  v = `Read from DB`
-        )->a( n = `type`  v = `Success` ).
+        )->a( n = `type`  v = `Accept` ).
 
     xml_form( i_data   = REF #( ms_struc )
               i_page   = page

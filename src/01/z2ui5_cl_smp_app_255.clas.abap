@@ -103,7 +103,7 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
         )->tag( `Link`
             )->a( n = `text`   v = `UI5 Demo Kit`
             )->a( n = `target` v = `_blank`
-            )->a( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxNav` ).
+            )->a( n = `href`   v = `https://sdk.openui5.org/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxNav` ).
 
     DATA(layout) = page->ele( `VBox`
         )->a( n = `class` v = `navigationExamples`
