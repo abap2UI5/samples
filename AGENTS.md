@@ -738,6 +738,31 @@ By hand, because no script covers them:
 - Configuration: `abaplint.jsonc`
 - Install: `npm install -g @abaplint/cli`
 - Run: `abaplint`
+- **Every rule abaplint ships is listed in the config — all 188 of them**
+  (2026-08-16; it was 17 before, the rest defaulting to off unnoticed). 174
+  are on. **A rule is never left out of the file.** When an abaplint upgrade
+  adds one, add the key: on if the corpus passes, off with the reason in a
+  comment above it if it does not. Leaving it unlisted is how the previous
+  gap opened, and an unlisted rule reads as "nobody decided" rather than
+  "decided against".
+- The 14 that are off carry their reason in the file. In short: four rules
+  want Hungarian notation and `no_public_attributes` wants the model hidden,
+  both against §7 and §9; `abapdoc` treats demos as a published API; six
+  rules read a view builder chain as a malformed parameter list, and that
+  layout has its own gate (`npm run check:chains`, §10); `prefer_inline` /
+  `no_inline_in_optional_branches` move declarations the samples place
+  deliberately; and `prefer_corresponding` proposes a rewrite that does not
+  activate on a generic field symbol.
+- Three rules run with flags off rather than wholesale: `check_subrc`
+  (`selectSingle`, `selectTable` — "no rows" is a legitimate state here, and
+  the SELECT either feeds a binding or is read back with `OPTIONAL`),
+  `dangerous_statement` (`dynamicSQL` — it is the subject of the generic
+  table browser samples in `src/00/98`) and `double_space` (`keywords` — it
+  would strip the corpus' column alignment).
+- **Write the flag set out in full when configuring a rule.** abaplint
+  replaces the whole options object, so a partial one silently turns every
+  flag it omits *off* — `"check_subrc": { "selectTable": false }` disables
+  the rule entirely instead of narrowing it.
 
 ### abap2UI5-linter
 
@@ -877,6 +902,23 @@ manually or via editor tooling that the above rules are met.
 - ABAP Doc is parsed as HTML: escape a literal `<`, `>` or `&` as `&lt;`, `&gt;`, `&amp;`.
 - Always run `abaplint` after every change. It must report 0 issues before committing.
 - Before starting app development, read all active rules in `abaplint.jsonc` and follow them throughout.
+- **The rules that most often bite when writing a new sample** (all of them
+  enforced since 2026-08-16, see §6):
+  - A table type is `WITH EMPTY KEY`, never `WITH DEFAULT KEY`.
+  - A local type name starts with `ty_` (`ty_s_` / `ty_t_`, §7 above).
+  - `CASE` needs two `WHEN` branches. One event is an `IF` — which is what §9
+    asks for anyway; `CASE` starts at four.
+  - Every `SELECT` carries an `ORDER BY` (`ORDER BY PRIMARY KEY` if the order
+    itself does not matter), and `SELECT SINGLE` needs the full key — without
+    it, use `ORDER BY PRIMARY KEY ... UP TO 1 ROWS` and read row 1.
+  - `ASSIGN` and `READ TABLE` are followed by an `sy-subrc` check. Reading an
+    unassigned field symbol dumps; a missed `READ TABLE` leaves the previous
+    work area in place, which is worse than a dump because it looks like data.
+  - An explicit `DATA` belongs at the top of its method (`definitions_top`).
+    An inline `DATA( )` at the point of use is fine and is not affected.
+  - No commented-out code, no unused variable, type or method, no empty
+    `WHEN`, no end-of-line comment, no `!` before a parameter name.
+  - Two blank lines between methods — three is a finding.
 
 ---
 
