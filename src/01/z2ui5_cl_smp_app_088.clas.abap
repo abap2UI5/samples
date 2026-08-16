@@ -80,7 +80,7 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
     page->ele( `IconTabHeader`
         )->a( n = `selectedKey` v = client->_bind( mv_selected_key )
         )->a( n = `select`      v = client->follow_up_action( val   = client->cs_event-control_by_id
-                                                                                     t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
+                                                                                     t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/key}` ) ) )
         )->a( n = `mode`        v = `Inline`
         )->ele( `items`
             )->ele( `IconTabFilter`

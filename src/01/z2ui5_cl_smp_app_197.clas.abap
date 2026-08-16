@@ -66,6 +66,7 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
     DATA t_range TYPE RANGE OF string.
 
     TRY.
+        " abap2ui5lint-disable-next-line non-released-api -- abap2UI5 ships no RELEASED JSON parser for app code, and an event argument arrives as a JSON string. The mirror is what every app has to reach for until src/02 offers one
         DATA(json) = z2ui5_cl_ajson=>parse( client->get_event_arg( ) ).
         DATA(t_members) = json->members( `/` ).
 

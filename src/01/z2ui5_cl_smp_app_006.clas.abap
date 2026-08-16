@@ -121,6 +121,7 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
             )->tag( `Title`
                 )->a( n = `text` v = `title of the table`
             )->tag( `Button`
+                " abap2ui5lint-disable-next-line event-without-handler -- toolbar layout demo; the sort buttons on the right are the working pair
                 )->a( n = `press` v = client->_event( `BUTTON_SORT` )
                 )->a( n = `text`  v = `left side button`
                 )->a( n = `icon`  v = `sap-icon://account`
@@ -139,11 +140,13 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
             )->end(
             )->tag( `ToolbarSpacer`
             )->tag( `Button`
-                )->a( n = `press` v = client->_event( `SORT_DESCENDING` )
-                )->a( n = `icon`  v = `sap-icon://sort-descending`
+                )->a( n = `press`   v = client->_event( `SORT_DESCENDING` )
+                )->a( n = `icon`    v = `sap-icon://sort-descending`
+                )->a( n = `tooltip` v = `Sort descending`
             )->tag( `Button`
-                )->a( n = `press` v = client->_event( `SORT_ASCENDING` )
-                )->a( n = `icon`  v = `sap-icon://sort-ascending` ).
+                )->a( n = `press`   v = client->_event( `SORT_ASCENDING` )
+                )->a( n = `icon`    v = `sap-icon://sort-ascending`
+                )->a( n = `tooltip` v = `Sort ascending` ).
 
     tab->ele( `columns`
         )->ele( `Column`

@@ -95,13 +95,14 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
     page->tag( `Button`
         )->a( n = `press` v = client->_event( `GO` )
         )->a( n = `text`  v = `GO`
-        )->a( n = `type`  v = `Success` ).
+        )->a( n = `type`  v = `Accept` ).
 
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
     page->ele( `Table`
         )->a( n = `items`           v = client->_bind( <table> )
         )->a( n = `headerText`      v = `Table`
         )->a( n = `mode`            v = `MultiSelect`
+        " abap2ui5lint-disable-next-line event-without-handler -- internal test app
         )->a( n = `selectionChange` v = client->_event( `SELECTION_CHANGE` )
         )->ele( `columns`
             )->ele( `Column`
@@ -111,6 +112,7 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
         )->end(
         )->ele( `items`
             )->ele( `ColumnListItem`
+                " abap2ui5lint-disable-next-line relative-binding-without-context -- SELKZ is appended to the row type at RUNTIME (cl_abap_datadescr above), so no static shape can carry it
                 )->a( n = `selected` v = `{SELKZ}`
                 )->ele( `cells`
                     )->tag( `Text`

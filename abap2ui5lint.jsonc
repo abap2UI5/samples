@@ -14,6 +14,13 @@
   "ui5": "1.71",
   "distribution": "openui5",
 
+  // The render gate is REQUIRED here, not merely left on. It is on by default,
+  // and a default-on gate whose runtime is missing steps aside for the property
+  // gate and the run stays green - which for a corpus whose whole claim is that
+  // every one of its views loads in a browser would be the wrong kind of quiet.
+  // Saying so makes a missing @abap2ui5/render-runtime an error instead.
+  "render": true,
+
   // Adoption-time debt. The corpus only became readable by the linter when it
   // moved onto z2ui5_cl_ui5_view_builder (#752) — before that every class built
   // its view with the retired builder and the linter found nothing to check, so
@@ -95,6 +102,20 @@
     // baseline of both layout rules, so from here they only guard.
     "chain-indentation": { "severity": "warning" },
     "chain-element-per-line": { "severity": "warning" },
+
+    // src/00/98 is the TEST package (AGENTS.md section 2): apps whose purpose
+    // is to exercise the framework from the outside, not to be copied. Several
+    // read z2ui5_t_01 - the framework's own draft table - precisely because
+    // that is what they assert about. Excluding the folder rather than
+    // baselining fourteen entries says WHY they are allowed, and keeps the
+    // rule loud for src/01, where a reader would copy it: app 061 was the one
+    // real finding this hid, and it is fixed.
+    // The pattern is written to match the path in BOTH forms a runner can
+    // produce: `abap2ui5lint` reaches these files by an absolute path when
+    // `paths` comes from this file, while the report prints them relative.
+    // Linter 0.2.0 tries both, so `^src/00/98/` will work there - until the
+    // pin moves, a pattern anchored on the folder is the one that holds.
+    "non-released-api": { "exclude": ["/00/98/"] },
     "render-error": {
       "exclude": [
         // (a) not served by the harness

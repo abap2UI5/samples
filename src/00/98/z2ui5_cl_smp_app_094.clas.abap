@@ -127,19 +127,22 @@ CLASS z2ui5_cl_smp_app_094 IMPLEMENTATION.
         )->ele( `OverflowToolbar`
             )->tag( `ToolbarSpacer`
             )->tag( `Button`
+                " abap2ui5lint-disable-next-line event-without-handler -- internal test app
                 )->a( n = `press` v = client->_event( `BUTTON_DELETE` )
                 )->a( n = `text`  v = `Delete`
                 )->a( n = `icon`  v = `sap-icon://delete`
                 )->a( n = `type`  v = `Reject`
             )->tag( `Button`
+                " abap2ui5lint-disable-next-line event-without-handler -- internal test app
                 )->a( n = `press` v = client->_event( `BUTTON_ADD` )
                 )->a( n = `text`  v = `Add`
                 )->a( n = `icon`  v = `sap-icon://add`
                 )->a( n = `type`  v = `Default`
             )->tag( `Button`
+                " abap2ui5lint-disable-next-line event-without-handler -- internal test app
                 )->a( n = `press` v = client->_event( `BUTTON_SAVE` )
                 )->a( n = `text`  v = `Save`
-                )->a( n = `type`  v = `Success` ).
+                )->a( n = `type`  v = `Accept` ).
 
     client->view_display( page->stringify( ) ).
 

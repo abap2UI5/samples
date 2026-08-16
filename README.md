@@ -53,6 +53,10 @@ the rest. Everything in this repository grows from this pattern.
 3. Run `Z2UI5_CL_SMP_APP_000` — the overview app linking every sample of the
    portable set.
 
+No system at hand? **[SAMPLES.md](SAMPLES.md) is the same catalogue as a
+page** — every app, what it shows, and a link to its source. It is generated
+from the tree, so it is what is actually here.
+
 #### The learning path
 
 This repository is step 1 of 3. When the basics feel familiar, the other two
@@ -60,7 +64,7 @@ sample repositories take you further:
 
 |      | Repository | What you learn | Where to start |
 |------|------------|----------------|----------------|
-| 1️⃣ | **samples** — 📍 *you are here* | **the abap2UI5 basics** — bindings, events, popups, navigation, complete apps | run `Z2UI5_CL_SMP_APP_000` |
+| 1️⃣ | **samples** — 📍 *you are here* | **the abap2UI5 basics** — bindings, events, popups, navigation, complete apps | run `Z2UI5_CL_SMP_APP_000`, or read [SAMPLES.md](SAMPLES.md) |
 | 2️⃣ | [**samples-controls**](https://github.com/abap2UI5/samples-controls) | **how to use every UI5 control** — the UI5 Demo Kit rebuilt with abap2UI5 | run `z2ui5_cl_dmo_app_overview` |
 | 3️⃣ | [**samples-stack**](https://github.com/abap2UI5/samples-stack) | **how abap2UI5 plays with your stack** — OData, RAP, WebSockets, the Fiori Launchpad and more | pick your technology in its package table |
 
@@ -88,7 +92,8 @@ read it before contributing.
 Every pull request is linted against ABAP Standard (`v750`), ABAP Cloud and
 7.02 (after the downport), checked with the
 [abap2UI5-linter](https://github.com/abap2UI5/linter), and the overview
-catalog and docs are verified against the folder tree.
+catalog, [SAMPLES.md](SAMPLES.md) and the docs are verified against the folder
+tree.
 
 
 #### Contributing & Issues

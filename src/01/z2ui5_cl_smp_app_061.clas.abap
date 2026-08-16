@@ -53,6 +53,7 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
                     )->a( n = `text` v = `Dynamic typed table`
                 )->tag( `ToolbarSpacer`
                 )->tag( `Button`
+                    " abap2ui5lint-disable-next-line event-without-handler -- the roundtrip IS the demo: the runtime-typed table travels back and re-renders
                     )->a( n = `press` v = client->_event( `SEND` )
                     )->a( n = `text`  v = `server <-> client`
             )->end(
@@ -96,6 +97,11 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
+      " The point of this sample is CREATE DATA over a DDIC name computed at
+      " runtime; it needs SOME table that is present on every abap2UI5 system,
+      " and the framework ships no RELEASED DDIC object to use instead. Reading
+      " the draft table is not the lesson here - the dynamic typing is.
+      " abap2ui5lint-disable non-released-api
       CREATE DATA t_tab TYPE STANDARD TABLE OF (`Z2UI5_T_01`).
       ASSIGN t_tab->* TO <tab>.
 
@@ -105,6 +111,7 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
         INTO TABLE <tab>.
       INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
         INTO TABLE <tab>.
+      " abap2ui5lint-enable non-released-api
 
       set_view( ).
 

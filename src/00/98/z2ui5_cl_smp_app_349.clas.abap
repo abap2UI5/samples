@@ -42,17 +42,18 @@ CLASS z2ui5_cl_smp_app_349 IMPLEMENTATION.
       mo_layout_obj_2 = z2ui5_cl_smp_app_333=>factory( i_data   = REF #( ms_data )
                                                         vis_cols = 3 ).
       view_display( client ).
-    ENDIF.
 
-    CASE client->get_event( ).
-      WHEN `GO`.
-        DATA(app) = z2ui5_cl_smp_app_336=>factory( ).
-        client->nav_app_call( app ).
-    ENDCASE.
-
-    IF client->check_on_navigated( )     = abap_true
-        AND client->check_on_init( )          = abap_false.
+    ELSEIF client->check_on_navigated( ).
       view_display( client ).
+
+    ELSEIF client->check_on_event( ).
+
+      CASE client->get_event( ).
+        WHEN `GO`.
+          DATA(app) = z2ui5_cl_smp_app_336=>factory( ).
+          client->nav_app_call( app ).
+      ENDCASE.
+
     ENDIF.
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
@@ -104,7 +105,7 @@ CLASS z2ui5_cl_smp_app_349 IMPLEMENTATION.
     page->tag( `Button`
         )->a( n = `press` v = client->_event( `GO` )
         )->a( n = `text`  v = `CALL Next App`
-        )->a( n = `type`  v = `Success` ).
+        )->a( n = `type`  v = `Accept` ).
 
     xml_table( i_page   = page
                i_client = client ).

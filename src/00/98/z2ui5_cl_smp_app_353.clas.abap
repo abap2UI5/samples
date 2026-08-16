@@ -119,9 +119,8 @@ CLASS z2ui5_cl_smp_app_353 IMPLEMENTATION.
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_focus
           t_arg = VALUE #( ( `IdOne` ) ) ).
-    ENDIF.
 
-    IF client->check_on_event( `TIMER_FINISHED` ).
+    ELSEIF client->check_on_event( `TIMER_FINISHED` ).
 
       client->message_toast_display( `Timer finished` ).
       start_timer( ).

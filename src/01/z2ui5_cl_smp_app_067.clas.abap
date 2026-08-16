@@ -56,8 +56,8 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `Documentation`
             )->tag( `Link`
-                )->a( n = `text` v = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
-                )->a( n = `href` v = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
+                )->a( n = `text` v = `https://sdk.openui5.org/entity/sap.ui.model.type.Currency`
+                )->a( n = `href` v = `https://sdk.openui5.org/entity/sap.ui.model.type.Currency`
             )->tag( `Label`
                 )->a( n = `text` v = `One field`
             )->tag( `Input`
@@ -117,6 +117,7 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `event`
             )->tag( `Button`
+                " abap2ui5lint-disable-next-line event-without-handler -- the roundtrip IS the demo: the edited amounts travel back and re-render
                 )->a( n = `press` v = client->_event( `BUTTON` )
                 )->a( n = `text`  v = `send` ).
 
@@ -129,8 +130,8 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `Documentation`
             )->tag( `Link`
-                )->a( n = `text` v = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
-                )->a( n = `href` v = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
+                )->a( n = `text` v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
+                )->a( n = `href` v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
             )->tag( `Label`
                 )->a( n = `text` v = `Numeric`
             )->tag( `Input`

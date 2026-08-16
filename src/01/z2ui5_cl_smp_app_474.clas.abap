@@ -111,7 +111,7 @@ CLASS z2ui5_cl_smp_app_474 IMPLEMENTATION.
                 )->a( n = `type`              v = `Warning`
                 )->a( n = `title`             v = `Delivery date in the past`
                 )->a( n = `description`       v = `Open the <a href="#/deliveries">delivery list</a> or the ` &&
-                                    `<a href="https://ui5.sap.com">UI5 demo kit</a>.`
+                                    `<a href="https://sdk.openui5.org">UI5 demo kit</a>.`
                 )->a( n = `markupDescription` b = abap_true
             )->end(
         )->end( ).

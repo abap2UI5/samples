@@ -35,6 +35,11 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
 
     menu_view->a( n = `core:require` v = `{ MessageToast: 'sap/m/MessageToast' }` ).
 
+    " Every MenuItem below calls the core:require'd MessageToast in the
+    " BROWSER through an expression binding - no roundtrip, which is the point
+    " of this sample. binding-for-event is about a MODEL binding landing on an
+    " event by accident; this is the deliberate other thing.
+    " abap2ui5lint-disable binding-for-event
     menu_view->ele( `Menu`
         )->a( n = `title` v = `Choose Your Action`
         )->tag( `MenuItem`
@@ -60,6 +65,7 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
         )->tag( `MenuItem`
             )->a( n = `press` v = `MessageToast.show('selected action is ' + ${$source>/text})`
             )->a( n = `text`  v = `Other` ).
+    " abap2ui5lint-enable binding-for-event
 
     client->popover_display( xml   = menu_view->stringify( )
                              by_id = `menuButton` ).
