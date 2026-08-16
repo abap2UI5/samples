@@ -116,6 +116,27 @@
     // Linter 0.2.0 tries both, so `^src/00/98/` will work there - until the
     // pin moves, a pattern anchored on the folder is the one that holds.
     "non-released-api": { "exclude": ["/00/98/"] },
+
+    /* 0.2.0 brought `missing-on-navigated-branch`, and it is RIGHT: 85 apps
+     * here dispatch on check_on_init( ) alone, so nothing re-displays when a
+     * called app or a popup hands control back, or when a bookmarked state is
+     * restored. abap2UI5/samples-controls made the branch part of its port
+     * recipe on the same day - "NOT optional and stays even in a static app
+     * with no data and no events".
+     *
+     * NOT baselined, deliberately. 85 entries would be the biggest suppression
+     * this repository has ever carried, and a baseline says "known and
+     * accepted" - this is neither. A hint keeps every one of them on the
+     * report, where the next person to open an app sees it.
+     *
+     * Why it is not just fixed here: most of these build the view INLINE
+     * inside the IF branch, so each needs its view extracted into a method
+     * before an ELSEIF has anything to call. 85 apps, and the samples are what
+     * people copy - the conversion has to be done properly, not swept.
+     *
+     * RAISE THIS BACK to warning as the apps are converted; the last one
+     * deletes the line. */
+    "missing-on-navigated-branch": "hint",
     "render-error": {
       "exclude": [
         // (a) not served by the harness
