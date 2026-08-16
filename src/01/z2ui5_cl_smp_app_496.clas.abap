@@ -1,4 +1,5 @@
 " @keywords developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export
+" @summary What Ctrl+F12 opens: the request and response payload, the generated XML view, the model, the source and the error log - the first place to look when something does not render.
 " @docs https://abap2ui5.github.io/docs/cookbook/troubleshooting/common_failures
 CLASS z2ui5_cl_smp_app_496 DEFINITION PUBLIC.
 

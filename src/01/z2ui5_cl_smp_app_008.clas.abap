@@ -1,4 +1,5 @@
 " @keywords t100 message class number exception cx_root error abend
+" @summary Turns what ABAP already has into a MessageBox - a SY message, a BAPIRET2 table or a caught exception.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/exception https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_008 DEFINITION PUBLIC.
 

@@ -1,4 +1,5 @@
 " @keywords app state share clipboard copy link colleague send url
+" @summary The same app state, sent to a colleague: the link goes into the clipboard, and opening it puts them where you were.
 " @docs https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share
 CLASS z2ui5_cl_smp_app_323 DEFINITION PUBLIC.
 

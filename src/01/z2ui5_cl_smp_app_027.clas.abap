@@ -1,4 +1,5 @@
 " @keywords formatter parts conditional regexp visible enabled syntax
+" @summary Expression binding in the view - conditions, composite parts and a regular expression decide visible and enabled without asking the backend.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/expression_binding
 CLASS z2ui5_cl_smp_app_027 DEFINITION PUBLIC.
 

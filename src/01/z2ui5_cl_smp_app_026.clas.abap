@@ -1,4 +1,5 @@
 " @keywords placement anchor button confirm cancel popover_display
+" @summary A Popover anchored to the control that opened it, with the placements to choose from and a confirm/cancel footer.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover
 CLASS z2ui5_cl_smp_app_026 DEFINITION PUBLIC.
 

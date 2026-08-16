@@ -1,4 +1,5 @@
 " @keywords filter server side form growing where
+" @summary Filters table rows in the BACKEND from a form above it, so the WHERE runs where the data is.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_045 DEFINITION PUBLIC.
 

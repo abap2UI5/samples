@@ -556,12 +556,43 @@ and the **abap2UI5 API** it demonstrates (`nav_app_call`, `binding_call`,
 `control_by_id`). Four to eight terms, no backticks. The line is optional — a
 sample without one is simply found by its header, sub and class name.
 
-**`@docs` is the way back to the documentation**, a second optional comment
-line directly under `@keywords`, holding one or more full URLs into
+**`@summary` is the sentence under the title**, a second comment line directly
+under `@keywords` — one sentence saying what the sample SHOWS:
+
+```abap
+" @keywords f4 search help suggestion input dialog select
+" @summary The value help, both halves: suggestions while typing and the F4 dialog behind the field, over the same data.
+CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
+```
+
+The two lines answer the two halves of one question. `@keywords` decides
+whether somebody *finds* the sample; `@summary` decides whether they can tell
+it is the one they want — which a 60-character DESCRIPT cannot ("Popup -
+change a popup control from the backend" names the thing and stops). It is
+rendered in `SAMPLES.md` directly under the row title, in normal type:
+everything else in the row is metadata, this is its content.
+
+**Required on every tile, and required together**: `npm run launchpad`
+refuses an overview app whose tile has no `@summary`, and refuses any sample
+carrying one of the two lines without the other — including in `src/00/97`,
+which has no tile but whose six samples are linked from the cookbook. ZZZ
+helpers are exempt, as with `@keywords`.
+
+Write it, do not derive it. The sibling repositories can: `samples-controls`
+**fetches** the demo kit's own sentence (`ui5/descriptions.json`) and
+`samples-stack` derives half of its metadata from the package scheme. Here
+there is no upstream to quote — these apps were written for this repository —
+so the line is the author's, which is exactly why it needs a gate: nothing
+else fails when it is missing. Say what the sample demonstrates and what it is
+good for, not which controls it happens to contain.
+
+**`@docs` is the way back to the documentation**, a third optional comment
+line under `@summary`, holding one or more full URLs into
 `https://abap2ui5.github.io/docs/`:
 
 ```abap
 " @keywords f4 search help suggestion input dialog select
+" @summary The value help, both halves: suggestions while typing and the F4 dialog behind the field, over the same data.
 " @docs https://abap2ui5.github.io/docs/cookbook/expert_more/value_help
 CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
 ```

@@ -1,4 +1,5 @@
 " @keywords sap.m.list standardlistitem highlight infostate press selection
+" @summary A sap.m.List of StandardListItems: highlight, info state, press events and what a selection sends back.
 CLASS z2ui5_cl_smp_app_048 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

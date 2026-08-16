@@ -141,6 +141,51 @@ for (const [area, list] of Object.entries(tiles)) {
   }
 }
 
+/* And a tile without `" @summary` is one nobody can CHOOSE.
+ *
+ * Being findable and being recognisable are two different failures. The
+ * keywords put a sample in front of somebody; the summary is what tells them
+ * whether it is the one they want, and until it existed the answer was a
+ * 60-character short text ("Popup - change a popup control from the backend")
+ * that names the thing and stops. The same three readers are affected - the
+ * overview app, SAMPLES.md, an agent through abap2UI5/ai-mcp - and here the
+ * degradation is not silence but a wrong guess, which costs more.
+ *
+ * Written, not generated. abap2UI5/samples-controls fetches the sentence from
+ * the demo kit and samples-stack derives half of its metadata; here there is
+ * no upstream to quote, so the line is the author's. That is exactly why it
+ * needs a gate: nothing else fails when it is missing. */
+for (const [area, list] of Object.entries(tiles)) {
+  if (!TARGETS[area]) continue;
+  const unrecognisable = list.filter((t) => !t.summary);
+  if (unrecognisable.length) {
+    console.error(`${unrecognisable.length} tile(s) in src/${area} carry no \` @summary\` line, so nothing says what they show:`);
+    for (const t of unrecognisable) console.error(`  ${t.app}  (${t.header})`);
+    console.error('\nAdd it under the @keywords line (AGENTS.md section 4, tile schema):');
+    console.error('  " @summary <one sentence: what this sample SHOWS, not which controls it uses>');
+    process.exit(1);
+  }
+}
+
+/* The two lines travel together, everywhere - including where there is no
+ * tile. src/00/97 has no overview app, and its six experimental samples still
+ * carry both lines because they are documented samples that people are sent
+ * to from the cookbook. A class with one line and not the other is the state
+ * nobody chose: it means an author added a sample the way the last one looked
+ * and stopped halfway. (The ZZZ helpers are out of this by construction -
+ * `scanSamples` flags them, and a helper is reached BY a sample, never looked
+ * up.) */
+const halfDone = Object.values(tiles).flat()
+  .filter((t) => Boolean(t.keywords) !== Boolean(t.summary));
+if (halfDone.length) {
+  console.error(`${halfDone.length} sample(s) carry one search line but not the other:`);
+  for (const t of halfDone) {
+    console.error(`  ${t.app}  (${t.header}) — has ${t.keywords ? '@keywords, no @summary' : '@summary, no @keywords'}`);
+  }
+  console.error('\nBoth or neither: they answer the two halves of one question.');
+  process.exit(1);
+}
+
 let total = 0;
 for (const [area, list] of Object.entries(tiles)) {
   const file = TARGETS[area];

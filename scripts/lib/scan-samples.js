@@ -140,6 +140,14 @@ function scanSamples() {
     // is reported by the extended check.
     const keywords = (source.match(/^" @keywords (.+?)\r?$/m) || [, ''])[1].trim();
 
+    // one sentence about what the sample SHOWS, from the class's " @summary
+    // line. `@keywords` answers "which words find this sample"; this answers
+    // the next question, "is this the one I want", which nothing here could:
+    // the 60-character DESCRIPT carries the name of the thing and no more.
+    // Unlike the two sibling repositories' summaries it is written rather than
+    // fetched or derived - these apps have no upstream original to quote.
+    const summary = (source.match(/^" @summary (.+?)\r?$/m) || [, ''])[1].trim();
+
     // the chapter of abap2UI5/docs that explains what this sample demonstrates,
     // as full URLs so the line is useful to somebody reading the class itself -
     // which is the point: a search engine drops people into a class, and until
@@ -167,6 +175,7 @@ function scanSamples() {
     // generators would emit something broken, so it is refused at the source.
     if ((header + fullSub).includes('`')) throw new Error(`backtick in DESCRIPT of ${cls}`);
     if (keywords.includes('`')) throw new Error(`backtick in @keywords of ${cls}`);
+    if (summary.includes('`')) throw new Error(`backtick in @summary of ${cls}`);
 
     const entry = {
       area,
@@ -176,6 +185,7 @@ function scanSamples() {
       base: headerBase(header),
       sub: fullSub,
       keywords,
+      summary,
       docs,
       // repository-relative folder of the class, so a link to the source can
       // be built - the class name does not encode the folder

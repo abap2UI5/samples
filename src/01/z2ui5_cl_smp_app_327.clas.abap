@@ -1,4 +1,5 @@
 " @keywords localstorage sessionstorage persist store_data offline
+" @summary Writes to the browser's local and session storage and reads it back, so a value survives a reload without any state in the backend.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/clipboard
 CLASS z2ui5_cl_smp_app_327 DEFINITION PUBLIC.
 

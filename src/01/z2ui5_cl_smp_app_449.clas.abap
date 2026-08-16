@@ -1,4 +1,5 @@
 " @keywords pdfviewer pdf document viewer popup control_by_id whitelisted
+" @summary Opens the PDF viewer by calling it by ID, so a document can be shown from an event without rebuilding the view.
 " @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/pdf https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action
 CLASS z2ui5_cl_smp_app_449 DEFINITION PUBLIC.
 

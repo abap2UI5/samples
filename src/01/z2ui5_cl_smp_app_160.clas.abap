@@ -1,4 +1,5 @@
 " @keywords cell enter row index event grid alv
+" @summary Events on cell level in a grid table: which row and which column the user was in, and what arrives in the backend.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_160 DEFINITION PUBLIC.
 

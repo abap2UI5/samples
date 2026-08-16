@@ -1,4 +1,5 @@
 " @keywords cursor enter tab next field form set_focus
+" @summary Moves the cursor to the next Input when Enter is pressed - the fast entry a form needs.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/focus
 CLASS z2ui5_cl_smp_app_189 DEFINITION PUBLIC.
 

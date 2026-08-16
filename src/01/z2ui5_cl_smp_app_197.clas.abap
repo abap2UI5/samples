@@ -1,4 +1,5 @@
 " @keywords facetfilter filter object marshalling selected items
+" @summary Passes whole control objects to the backend in t_arg: a FacetFilter's selected items arrive as data instead of being reconstructed by hand.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/backend
 CLASS z2ui5_cl_smp_app_197 DEFINITION PUBLIC.
 

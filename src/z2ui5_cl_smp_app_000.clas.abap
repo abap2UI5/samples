@@ -1,3 +1,5 @@
+" @keywords overview launchpad catalogue index all samples search start tiles
+" @summary Every sample in this repository as a searchable tile, grouped the way the folders are - the app the other 149 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

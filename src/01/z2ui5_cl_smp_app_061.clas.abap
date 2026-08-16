@@ -1,4 +1,5 @@
 " @keywords generic data reference create data ddic dynamic itab
+" @summary Builds a table whose columns are only known at runtime: RTTI over a DDIC name, CREATE DATA, and the generic reference bound into the view.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/binding
 CLASS z2ui5_cl_smp_app_061 DEFINITION PUBLIC.
 

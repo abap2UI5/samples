@@ -1,4 +1,5 @@
 " @keywords nav_app_call nav_app_leave sub app stack call back
+" @summary Calling another app and coming back: nav_app_call puts the caller on a stack, nav_app_leave returns to it.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation
 CLASS z2ui5_cl_smp_app_024 DEFINITION PUBLIC.
 

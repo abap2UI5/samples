@@ -56,6 +56,12 @@ function row(tile, underHeading) {
     : tile.sub
       ? `**${cell(tile.header)}** — ${cell(tile.sub)}`
       : `**${cell(tile.header)}**`;
+  // What the sample SHOWS, in the author's one sentence (AGENTS.md section 4).
+  // It goes directly under the title, in normal type: the title says which
+  // sample this is and the keywords say how to find it, but only this line
+  // answers the question a reader scanning 97 rows actually has - is this the
+  // one I want. Everything below it is metadata; this is the row's content.
+  const says = tile.summary ? `<br>${cell(tile.summary)}` : '';
   // The keywords are the app's search terms (AGENTS.md section 4). The app
   // never renders them; here the page IS the search box, so they belong in it -
   // quietly, in the small type the summary line of a row deserves.
@@ -67,7 +73,7 @@ function row(tile, underHeading) {
     ? `<br><sub>docs: ${tile.docs.map((u) => `[${u.replace(DOCS_SITE, '')}](${u})`).join(', ')}</sub>`
     : '';
   const source = `${tile.path}/${tile.app}.clas.abap`;
-  return `| ${title}${terms}${chapters} | [\`${tile.app.toUpperCase()}\`](${source}) |`;
+  return `| ${title}${says}${terms}${chapters} | [\`${tile.app.toUpperCase()}\`](${source}) |`;
 }
 
 function table(tiles, underHeading = false) {

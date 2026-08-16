@@ -1,4 +1,5 @@
 " @keywords interval polling auto refresh follow_up_action seconds
+" @summary Refreshes the view every n seconds - the polling interval as a follow-up action the app renews itself.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer
 CLASS z2ui5_cl_smp_app_028 DEFINITION PUBLIC.
 

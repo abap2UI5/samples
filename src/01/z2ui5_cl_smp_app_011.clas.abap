@@ -1,4 +1,5 @@
 " @keywords edit input add row delete multiselect toolbar
+" @summary An editable table: input cells, adding and deleting rows, multi-select and a toolbar over them.
 " @docs https://abap2ui5.github.io/docs/get_started/full_example https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_011 DEFINITION PUBLIC.
 

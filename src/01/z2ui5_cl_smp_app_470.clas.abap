@@ -1,4 +1,5 @@
 " @keywords element binding relative path aggregation dialog row
+" @summary Element binding on a popup: the dialog binds RELATIVELY to the row that was pressed, so its fields need no path of their own.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend https://abap2ui5.github.io/docs/cookbook/popup_popover/popup
 "! Aggregation binding on a popup via an element bind. The main table is bound
 "! to the product aggregation ({/T_PRODUCT}); pressing a row's "components"

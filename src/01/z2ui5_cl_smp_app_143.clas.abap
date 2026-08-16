@@ -1,4 +1,5 @@
 " @keywords column filter reset refresh uitableext grid alv
+" @summary Keeps the active sap.ui.table column filters across a view model update, through the abap2UI5 uitableext custom control - without it they are reset.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_143 DEFINITION PUBLIC.
 

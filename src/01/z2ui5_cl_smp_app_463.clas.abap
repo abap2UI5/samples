@@ -1,4 +1,5 @@
 " @keywords customtreeitem rename input binding write back
+" @summary Editable tree nodes with a CustomTreeItem, so a rename in the tree writes back into the ABAP hierarchy.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/trees
 CLASS z2ui5_cl_smp_app_463 DEFINITION PUBLIC.
 

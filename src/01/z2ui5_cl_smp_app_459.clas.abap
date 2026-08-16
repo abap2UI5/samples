@@ -1,4 +1,5 @@
 " @keywords dnd dragdropinfo reorder rows move
+" @summary Drag and drop of table rows (DragDropInfo), and how the new order reaches the internal table.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_459 DEFINITION PUBLIC.
 

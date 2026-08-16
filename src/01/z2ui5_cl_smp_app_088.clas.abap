@@ -1,4 +1,5 @@
 " @keywords navcontainer icontabbar icontabheader page switch control_by_id whitelisted
+" @summary Switches the page of a NavContainer and the tab of an IconTabBar by ID, so navigation inside a view costs no roundtrip.
 " @docs https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action
 CLASS z2ui5_cl_smp_app_088 DEFINITION PUBLIC.
 

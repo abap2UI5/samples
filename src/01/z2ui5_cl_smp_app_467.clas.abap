@@ -1,4 +1,5 @@
 " @keywords messagemanager validation target field state central model
+" @summary The UI5 message model: validation messages carry the field they belong to, so the control shows the state and one list holds them all.
 " @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_467 DEFINITION PUBLIC.
 

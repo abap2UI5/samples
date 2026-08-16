@@ -1,4 +1,5 @@
 " @keywords argument parameter payload event data fixed value
+" @summary Sends extra arguments with an event (t_arg), so a handler knows which row, which value or which fixed payload it was called for.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/backend
 CLASS z2ui5_cl_smp_app_167 DEFINITION PUBLIC.
 

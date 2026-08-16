@@ -1,4 +1,5 @@
 " @keywords selectionmode none single multi segmentedbutton checkbox
+" @summary The table selection modes - none, single and multi - side by side, and what each returns.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_019 DEFINITION PUBLIC.
 

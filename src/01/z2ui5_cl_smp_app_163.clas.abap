@@ -1,4 +1,5 @@
 " @keywords menubutton menuitem popover messagetoast require module
+" @summary A MenuButton whose items call a UI5 module loaded with core:require, so the click is answered in the frontend.
 CLASS z2ui5_cl_smp_app_163 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

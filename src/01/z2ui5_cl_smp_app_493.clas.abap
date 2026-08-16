@@ -1,4 +1,5 @@
 " @keywords hello world smallest first app minimal start here template
+" @summary The smallest app that runs: one class, one view_display( ), a Page with a title - the shape every other sample starts from.
 " @docs https://abap2ui5.github.io/docs/get_started/hello_world https://abap2ui5.github.io/docs/cookbook/view/definition https://abap2ui5.github.io/docs/cookbook/expert_more/snippets
 CLASS z2ui5_cl_smp_app_493 DEFINITION PUBLIC.
 

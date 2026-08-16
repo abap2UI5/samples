@@ -1,4 +1,5 @@
 " @keywords app state url bookmark restore set_app_state_active reload deep link
+" @summary Turns the running app into a URL somebody else can open: set_app_state_active writes the state, the link restores it.
 " @docs https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share
 CLASS z2ui5_cl_smp_app_321 DEFINITION PUBLIC.
 

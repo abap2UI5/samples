@@ -1,4 +1,5 @@
 " @keywords icon glyph placeholder text status expandinlineicons
+" @summary Puts icons inside a text through placeholders that UI5 expands, so a status line can carry a glyph without its own control.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_466 DEFINITION PUBLIC.
 
