@@ -1,4 +1,5 @@
 " @keywords sub app class embed instantiate another app rtti
+" @summary Embeds ANOTHER app's view into this one - the class is instantiated over RTTI and renders inside the page it is given.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views
 CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
 

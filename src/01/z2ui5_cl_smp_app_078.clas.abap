@@ -1,4 +1,5 @@
 " @keywords multiinput token tokens suggestion custom control
+" @summary A MultiInput with tokens and suggestions bound to an internal table - the value help for a field that holds many values at once.
 " @docs https://abap2ui5.github.io/docs/cookbook/expert_more/value_help
 CLASS z2ui5_cl_smp_app_078 DEFINITION PUBLIC.
 

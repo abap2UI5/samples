@@ -1,4 +1,5 @@
 " @keywords flexbox layout responsive navigation tile panel
+" @summary Lays a page out with FlexBox and custom CSS classes - tiles, panels and a QuickView popover, all from the view chain.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/definition
 CLASS z2ui5_cl_smp_app_255 DEFINITION PUBLIC.
 

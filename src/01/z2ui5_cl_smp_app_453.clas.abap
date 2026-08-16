@@ -1,4 +1,5 @@
 " @keywords no formatter computed backend thin frontend prepare
+" @summary The counter-example: no formatter at all. The value is computed in ABAP and bound ready-made, which keeps the frontend thin and the logic testable.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_453 DEFINITION PUBLIC.
 

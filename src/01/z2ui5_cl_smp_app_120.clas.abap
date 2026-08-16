@@ -1,4 +1,5 @@
 " @keywords gps position latitude longitude altitude location
+" @summary Asks the browser for the device's position - latitude, longitude and altitude - and what happens when the user says no.
 " @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/geolocation
 CLASS z2ui5_cl_smp_app_120 DEFINITION PUBLIC.
 

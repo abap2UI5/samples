@@ -1,4 +1,5 @@
 " @keywords amount decimals leading zeros number format
+" @summary Formats amounts with sap.ui.model.type.Currency, so decimals and leading zeros follow the currency rather than the ABAP field.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_067 DEFINITION PUBLIC.
 

@@ -1,4 +1,5 @@
 " @keywords quickview contact card links grouped fields
+" @summary A QuickView contact card in a Popover: grouped fields, and links that call the phone or the mail app.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover
 CLASS z2ui5_cl_smp_app_109 DEFINITION PUBLIC.
 

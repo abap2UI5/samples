@@ -1,4 +1,5 @@
 " @keywords push state browser history back button hash url set_push_state
+" @summary Writes the browser history from the app (set_push_state), so the Back button walks the app's own steps instead of leaving it.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/routing
 CLASS z2ui5_cl_smp_app_322 DEFINITION PUBLIC.
 

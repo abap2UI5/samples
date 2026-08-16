@@ -1,4 +1,5 @@
 " @keywords link href default action check_prevent_default
+" @summary A Link whose default browser action is suppressed (check_prevent_default), so the app handles the click instead of the href.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend
 CLASS z2ui5_cl_smp_app_472 DEFINITION PUBLIC.
 

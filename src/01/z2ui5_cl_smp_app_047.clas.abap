@@ -1,4 +1,5 @@
 " @keywords type conversion sum amount number field
+" @summary Binding types for integer, decimal, date and time - the conversion between the ABAP field and what the control shows, with a sum over the bound table.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/binding
 CLASS z2ui5_cl_smp_app_047 DEFINITION PUBLIC.
 

@@ -1,4 +1,5 @@
 " @keywords cell input internal table row field level
+" @summary Edits one cell of an internal table: tab_index addresses the row, so the Input writes back to a single field instead of the whole line.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/binding
 CLASS z2ui5_cl_smp_app_144 DEFINITION PUBLIC.
 

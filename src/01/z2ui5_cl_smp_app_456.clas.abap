@@ -1,4 +1,5 @@
 " @keywords planningcalendar appointment javascript date object iso
+" @summary Appointments in a PlanningCalendar: start and end as date objects, which is what the control binds against.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_456 DEFINITION PUBLIC.
 

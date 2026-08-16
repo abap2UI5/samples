@@ -1,4 +1,5 @@
 " @keywords position pixel scroll_to restore refresh toolbar
+" @summary Scrolls to a pixel position and back: reading the position before a refresh and restoring it afterwards.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling
 CLASS z2ui5_cl_smp_app_362 DEFINITION PUBLIC.
 

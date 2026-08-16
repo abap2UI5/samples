@@ -1,4 +1,5 @@
 " @keywords routing mode fresh navigation restart new instance nav_app_call
+" @summary Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/routing
 "! Hash-based app routing (UI5 Router style), mode FRESH:
 "! follow_up_action( cs_event-set_nav_routing ) with mode FRESH makes the URL

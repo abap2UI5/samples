@@ -1,4 +1,5 @@
 " @keywords table cell column row aggregation set_focus
+" @summary Puts the cursor in one table cell, addressed by column and row of the aggregation, which is how a validation jumps to the field it is about.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/focus
 CLASS z2ui5_cl_smp_app_421 DEFINITION PUBLIC.
 

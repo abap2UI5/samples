@@ -1,4 +1,5 @@
 " @keywords reload refresh restart location_reload url
+" @summary Navigates the browser to a same-domain URL with the location_reload front-end action, with a scratch input beside it to show what the reload takes with it.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling
 CLASS z2ui5_cl_smp_app_492 DEFINITION PUBLIC.
 

@@ -1,4 +1,5 @@
 " @keywords toggleby open close control_by_id whitelisted
+" @summary Opens and closes a Popover by ID (toggleBy), so the anchor decides and no roundtrip is needed.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action
 CLASS z2ui5_cl_smp_app_465 DEFINITION PUBLIC.
 

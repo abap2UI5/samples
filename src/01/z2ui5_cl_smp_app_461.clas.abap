@@ -1,4 +1,5 @@
 " @keywords dnd move node hierarchy binding context
+" @summary Drag and drop of tree nodes: which node was moved where, and what that does to the hierarchy behind it.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/trees
 CLASS z2ui5_cl_smp_app_461 DEFINITION PUBLIC.
 

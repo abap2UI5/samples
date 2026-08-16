@@ -1,4 +1,5 @@
 " @keywords popup dialog change control backend control_by_id update running
+" @summary Changes a control INSIDE an open popup from the backend, by ID, without closing and rebuilding the dialog.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popup
 CLASS z2ui5_cl_smp_app_141 DEFINITION PUBLIC.
 

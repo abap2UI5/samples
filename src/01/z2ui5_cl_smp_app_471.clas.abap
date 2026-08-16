@@ -1,4 +1,5 @@
 " @keywords shortcut hotkey ctrl key combination keyboard_shortcut
+" @summary Binds keyboard shortcuts such as Ctrl+S to backend events, so the app answers a key combination the way a desktop program would.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/keyboard_shortcuts
 CLASS z2ui5_cl_smp_app_471 DEFINITION PUBLIC.
 

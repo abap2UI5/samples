@@ -1,4 +1,5 @@
 " @keywords live search parallel requests busy queue typing
+" @summary Two SearchFields that round-trip on every keystroke on purpose - to show what that does: requests overtaking each other, the busy queue, the value lagging behind fast typing.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_059 DEFINITION PUBLIC.
 

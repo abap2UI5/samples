@@ -1,4 +1,5 @@
 " @keywords structure component include flat form level
+" @summary Binds a form to a structure with INCLUDEs, so the included components are reachable under their own names on one flat level.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/binding
 CLASS z2ui5_cl_smp_app_166 DEFINITION PUBLIC.
 

@@ -1,4 +1,5 @@
 " @keywords progressindicator busy wait long running backend
+" @summary A ProgressIndicator during a long backend call, driven by follow-up actions rather than by a frozen screen.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer
 CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
 

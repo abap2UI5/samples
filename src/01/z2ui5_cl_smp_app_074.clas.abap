@@ -1,4 +1,5 @@
 " @keywords fileuploader base64 attachment import picture document
+" @summary Takes a file from the FileUploader into the backend as base64 - a picture or a document, arriving as an xstring.
 " @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download
 CLASS z2ui5_cl_smp_app_074 DEFINITION PUBLIC.
 

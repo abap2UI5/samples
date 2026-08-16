@@ -1,4 +1,5 @@
 " @keywords style stylesheet inline html class own design
+" @summary Ships a stylesheet with the view, so an app can carry its own design without a change to the UI5 theme.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/definition
 CLASS z2ui5_cl_smp_app_050 DEFINITION PUBLIC.
 

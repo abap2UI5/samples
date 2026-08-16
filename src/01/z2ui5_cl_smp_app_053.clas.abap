@@ -1,4 +1,5 @@
 " @keywords search go enter server side where
+" @summary A SearchField that searches in the backend on Go or Enter, rather than filtering what was already sent.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_053 DEFINITION PUBLIC.
 

@@ -1,4 +1,5 @@
 " @keywords navcontainer dialog pages back forward
+" @summary A NavContainer inside a dialog: several pages in one popup, with back and forward between them.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popup
 CLASS z2ui5_cl_smp_app_170 DEFINITION PUBLIC.
 

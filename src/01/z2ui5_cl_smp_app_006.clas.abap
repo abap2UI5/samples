@@ -1,4 +1,5 @@
 " @keywords growing 10000 rows sticky toolbar sort performance
+" @summary 10.000 rows in one table: growing, a sticky toolbar and sorting - and what that costs on the way to the browser.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_006 DEFINITION PUBLIC.
 

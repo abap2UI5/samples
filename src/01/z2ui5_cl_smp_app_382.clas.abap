@@ -1,4 +1,5 @@
 " @keywords confirm warning error success information dialog action
+" @summary Every MessageBox type - confirm, warning, error, success, information - and what a custom action button changes about the answer.
 " @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_382 DEFINITION PUBLIC.
 

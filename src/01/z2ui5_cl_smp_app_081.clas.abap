@@ -1,4 +1,5 @@
 " @keywords list selection placement anchor
+" @summary A Popover holding a list to pick from - the anchored alternative to a full dialog.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover
 CLASS z2ui5_cl_smp_app_081 DEFINITION PUBLIC.
 
