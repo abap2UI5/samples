@@ -22,6 +22,8 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSE.
       on_event( ).
     ENDIF.
@@ -41,6 +43,7 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
       WHEN `DIVIDE_BY_ZERO`.
         DATA(lv_zero) = 0.
         DATA(lv_result) = 1 / lv_zero.
+        client->message_box_display( |{ lv_result }| ).
 
       WHEN `ASSERT`.
         ASSERT 1 = 0.

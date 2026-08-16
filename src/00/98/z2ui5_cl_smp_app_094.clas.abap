@@ -155,6 +155,8 @@ CLASS z2ui5_cl_smp_app_094 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       on_init( ).
+    ELSEIF client->check_on_navigated( ).
+      view_build( ).
 
     ENDIF.
 

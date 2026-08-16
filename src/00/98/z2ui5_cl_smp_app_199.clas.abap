@@ -109,11 +109,13 @@ CLASS z2ui5_cl_smp_app_199 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       on_init( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ENDIF.
 
     ASSIGN mt_table->* TO <tab>.
 
-    IF mv_counter <> lines( <tab> ) AND mv_counter IS NOT INITIAL.
+    IF lines( <tab> ) <> mv_counter AND mv_counter IS NOT INITIAL.
       client->message_box_display( text = `Frontend Lines <> Backend!`
                                    type = `error` ).
     ENDIF.
@@ -134,6 +136,7 @@ CLASS z2ui5_cl_smp_app_199 IMPLEMENTATION.
         mt_comp = z2ui5_cl_smp_context=>rtti_get_t_attri_by_any( <table> ).
 
         SELECT id, id_prev FROM z2ui5_t_01
+          ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 2 ROWS.
 

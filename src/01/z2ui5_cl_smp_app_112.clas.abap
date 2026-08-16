@@ -11,13 +11,10 @@ CLASS z2ui5_cl_smp_app_112 DEFINITION PUBLIC.
 
     DATA view_parent TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA mv_class_2 TYPE string.
-    DATA mr_data TYPE REF TO data.
     DATA t_items TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
 
     METHODS on_event.
-    METHODS view_display
-      CHANGING
-        xml TYPE REF TO z2ui5_cl_ui5_view_builder OPTIONAL.
+    METHODS view_display.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -75,6 +72,9 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    " No check_on_navigated( ) branch: this is a SUB-APP. It never calls
+    " client->view_display( ) - it renders into the parent's view reference
+    " (view_parent), and the parent app owns the screen and re-displays it.
     me->client = client.
     IF client->check_on_init( ).
       view_display( ).

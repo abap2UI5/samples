@@ -20,7 +20,6 @@ CLASS z2ui5_cl_smp_app_455 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_455 IMPLEMENTATION.
 
 
@@ -35,6 +34,8 @@ CLASS z2ui5_cl_smp_app_455 IMPLEMENTATION.
           ( name = `Flat Basic`         category = `Screens` )
           ( name = `Comfort Easy`       category = `PDAs` )
           ( name = `ITelO Vault`        category = `PDAs` ) ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
       view_display( ).
     ENDIF.
 

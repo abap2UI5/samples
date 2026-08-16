@@ -28,7 +28,6 @@ CLASS z2ui5_cl_smp_app_011 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
 
 
@@ -144,6 +143,8 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
           ( title = `entry 05` value = `grey`   info = `completed` descr = `this is a description` checkbox = abap_true )
           ( ) ).
 
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
       view_display( ).
 
     ELSEIF client->check_on_event( `BUTTON_EDIT` ).

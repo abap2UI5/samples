@@ -23,7 +23,6 @@ CLASS z2ui5_cl_smp_app_027 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
 
 
@@ -36,6 +35,8 @@ CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
       product  = `tomato`.
       quantity = `500`.
       input41  = `faasdfdfsaVIp`.
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ENDIF.
 

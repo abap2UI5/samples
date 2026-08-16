@@ -14,8 +14,8 @@ CLASS z2ui5_cx_smp_error DEFINITION
 
     METHODS constructor
       IMPORTING
-        val       TYPE any            OPTIONAL
-        !previous TYPE REF TO cx_root OPTIONAL
+        val      TYPE any            OPTIONAL
+        previous TYPE REF TO cx_root OPTIONAL
           PREFERRED PARAMETER val.
 
     METHODS if_message~get_text REDEFINITION.

@@ -21,7 +21,7 @@ CLASS z2ui5_cl_smp_app_173 DEFINITION PUBLIC.
       END OF ty_s_layout,
       ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH EMPTY KEY.
 
-    DATA mv_flag TYPE abap_bool. " VALUE abap_true.
+    DATA mv_flag TYPE abap_bool.
     DATA mt_layout TYPE ty_t_layout.
     DATA mt_data   TYPE ty_t_data.
 
@@ -32,7 +32,6 @@ CLASS z2ui5_cl_smp_app_173 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
@@ -127,13 +126,14 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
                            ( fname = `AGE`  merge = `false` visible = `false` ) ).
 
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ENDIF.
 
-    CASE client->get_event( ).
-      WHEN `CHANGE_FLAG`.
-        view_display( ).
-    ENDCASE.
+    IF client->get_event( ) = `CHANGE_FLAG`.
+      view_display( ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

@@ -3,18 +3,8 @@ CLASS z2ui5_cl_smp_app_193 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES if_serializable_object.
 
-    TYPES:
-      BEGIN OF ty_s_key_value,
-        fname   TYPE char30,
-        value   TYPE string,
-        tabname TYPE char30,
-        comp    TYPE abap_componentdescr,
-      END OF ty_s_key_value,
-      ty_t_key_values TYPE STANDARD TABLE OF ty_s_key_value WITH EMPTY KEY.
-
-    DATA mt_kopf  TYPE REF TO data.
-    DATA mt_pos   TYPE REF TO data.
-    DATA mt_keyva TYPE ty_t_key_values.
+    DATA mt_kopf TYPE REF TO data.
+    DATA mt_pos  TYPE REF TO data.
 
     DATA mt_kopf_xml  TYPE string.
     DATA mt_pos_xml   TYPE string.

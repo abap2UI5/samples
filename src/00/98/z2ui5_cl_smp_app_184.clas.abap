@@ -15,7 +15,6 @@ CLASS z2ui5_cl_smp_app_184 DEFINITION PUBLIC.
 
     METHODS set_app_data
       IMPORTING
-        count TYPE string
         table TYPE string.
 
   PROTECTED SECTION.
@@ -33,7 +32,6 @@ CLASS z2ui5_cl_smp_app_184 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
@@ -109,6 +107,8 @@ CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       on_init( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ENDIF.
 
@@ -144,6 +144,7 @@ CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
 
         SELECT *
           FROM (mv_table)
+          ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 2 ROWS.
 

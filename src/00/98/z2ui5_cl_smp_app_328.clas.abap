@@ -22,57 +22,56 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     FIELD-SYMBOLS <line> TYPE any.
-    FIELD-SYMBOLS: <tab> TYPE ANY TABLE.
+    FIELD-SYMBOLS <tab> TYPE ANY TABLE.
 
     IF client->check_on_init( ).
 
       get_data( ).
       mo_table_obj = z2ui5_cl_smp_app_329=>factory( mt_table ).
       view_display( client ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( client ).
     ENDIF.
 
-    CASE client->get_event( ).
-      WHEN `GO`.
+    IF client->get_event( ) = `GO`.
+      ASSIGN mt_table->* TO <tab>.
 
-        ASSIGN mt_table->* TO <tab>.
+      LOOP AT <tab> ASSIGNING <line>.
 
-        LOOP AT <tab> ASSIGNING <line>.
+        ASSIGN COMPONENT `SELKZ` OF STRUCTURE <line> TO FIELD-SYMBOL(<selkz>).
 
-          ASSIGN COMPONENT `SELKZ` OF STRUCTURE <line> TO FIELD-SYMBOL(<selkz>).
-
-          IF sy-subrc <> 0.
-            CONTINUE.
-          ENDIF.
-
-          IF <selkz> = abap_true.
-
-            DATA(okay) = abap_true.
-            EXIT.
-          ENDIF.
-
-        ENDLOOP.
-
-        IF okay = abap_true.
-
-          get_data( ).
-          mo_table_obj = z2ui5_cl_smp_app_329=>factory( mt_table ).
-          view_display( client ).
-
-          ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
-          ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
-
-          IF <table> <> <val>.
-            client->message_toast_display( `Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA` ).
-
-          ELSE.
-            client->message_toast_display( `Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA` ).
-          ENDIF.
-
-        ELSE.
-          client->message_toast_display( `Please select a line` ).
+        IF sy-subrc <> 0.
+          CONTINUE.
         ENDIF.
 
-    ENDCASE.
+        IF <selkz> = abap_true.
+
+          DATA(okay) = abap_true.
+          EXIT.
+        ENDIF.
+
+      ENDLOOP.
+
+      IF okay = abap_true.
+
+        get_data( ).
+        mo_table_obj = z2ui5_cl_smp_app_329=>factory( mt_table ).
+        view_display( client ).
+
+        ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
+        ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+
+        IF <table> <> <val>.
+          client->message_toast_display( `Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA` ).
+
+        ELSE.
+          client->message_toast_display( `Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA` ).
+        ENDIF.
+
+      ELSE.
+        client->message_toast_display( `Please select a line` ).
+      ENDIF.
+    ENDIF.
 
   ENDMETHOD.
 
@@ -147,6 +146,7 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
         ASSIGN mt_table->* TO <table>.
 
         SELECT id FROM z2ui5_t_01
+          ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 4 ROWS.
 

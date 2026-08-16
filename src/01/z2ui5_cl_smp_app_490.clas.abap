@@ -34,6 +34,8 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
       " popover anchored to a control of that very view
       view_display( ).
       popover_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSEIF client->check_on_event( `REBUILD_AND_OPEN` ).
       " same pair on an event roundtrip: the view is REPLACED and the
       " popover opens on the freshly built anchor

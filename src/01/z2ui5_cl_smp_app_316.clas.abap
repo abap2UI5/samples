@@ -183,6 +183,8 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       view_display( client ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( client ).
     ENDIF.
 
   ENDMETHOD.

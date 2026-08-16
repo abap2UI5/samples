@@ -98,7 +98,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         )->ele( n = `rowActionTemplate` ns = `table`
             )->ele( n = `RowAction` ns = `table`
                 )->ele( n = `RowActionItem` ns = `table`
-                    )->a( n = `type`  v = `Navigation` "icon = `sap-icon://navigation-right-arrow`
+                    )->a( n = `type`  v = `Navigation`
                     )->a( n = `press` v = client->_event( val = `ROW_NAVIGATE` t_arg = VALUE #( ( `${TITLE}` ) ) ) ).
 
     client->nest_view_display(
@@ -156,7 +156,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
                     )->a( n = `title`          v = `abap2UI5 - Nested View - Three Columns with FlexibleColumnLayout`
                     )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
                     )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-                    )->a( n = `showHeader`     b = xsdbool( abap_false = client->get( )-check_launchpad_active ) ).
+                    )->a( n = `showHeader`     b = xsdbool( client->get( )-check_launchpad_active = abap_false ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A three-column FlexibleColumnLayout: select a row to open the detail column, then ` &&
@@ -208,13 +208,15 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
 
       view_display_master( ).
       view_display_detail( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display_master( ).
 
     ENDIF.
 
     CASE client->get_event( ).
 
       WHEN 'NN_VIEW'.
-        client->message_box_display(  `Event in nested nested view raised` ).
+        client->message_box_display( `Event in nested nested view raised` ).
 
       WHEN `ROW_NAVIGATE`.
 
@@ -230,7 +232,8 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         DELETE lt_sel WHERE selected = abap_false.
 
         READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-        IF NOT line_exists( t_tab2[ title = ls_sel-title ] ).
+
+        IF sy-subrc = 0 AND NOT line_exists( t_tab2[ title = ls_sel-title ] ).
           INSERT ls_sel INTO TABLE t_tab2.
         ENDIF.
 

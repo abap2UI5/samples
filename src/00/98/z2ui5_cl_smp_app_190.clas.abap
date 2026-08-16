@@ -13,14 +13,12 @@ CLASS z2ui5_cl_smp_app_190 DEFINITION PUBLIC.
     DATA mt_comp         TYPE abap_component_tab.
 
     METHODS set_app_data
-      IMPORTING count TYPE string
-                table TYPE string.
+      IMPORTING table TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
 
     METHODS view_display.
 
@@ -34,13 +32,6 @@ ENDCLASS.
 
 
 CLASS z2ui5_cl_smp_app_190 IMPLEMENTATION.
-
-  METHOD on_event.
-
-    FIELD-SYMBOLS <row> TYPE any.
-
-  ENDMETHOD.
-
 
   METHOD on_init.
 
@@ -128,10 +119,10 @@ CLASS z2ui5_cl_smp_app_190 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       on_init( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ENDIF.
-
-    on_event( ).
 
   ENDMETHOD.
 
@@ -145,8 +136,7 @@ CLASS z2ui5_cl_smp_app_190 IMPLEMENTATION.
 
   METHOD get_data.
 
-    FIELD-SYMBOLS <table>     TYPE STANDARD TABLE.
-    FIELD-SYMBOLS <table_tmp> TYPE STANDARD TABLE.
+    FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
 
     mt_comp = get_comp( ).
 
@@ -164,6 +154,7 @@ CLASS z2ui5_cl_smp_app_190 IMPLEMENTATION.
 
         SELECT *
           FROM (mv_table)
+          ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 100 ROWS.
 

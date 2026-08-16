@@ -103,6 +103,8 @@ CLASS z2ui5_cl_smp_app_166 IMPLEMENTATION.
       ms_struc2-incl_value2 = `val02_incl`.
 
       set_view( ).
+    ELSEIF client->check_on_navigated( ).
+      set_view( ).
     ENDIF.
 
   ENDMETHOD.

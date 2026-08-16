@@ -16,7 +16,6 @@ CLASS z2ui5_cl_smp_app_167 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
 
 
@@ -85,6 +84,8 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       mv_value = `my value`.
+      set_view( ).
+    ELSEIF client->check_on_navigated( ).
       set_view( ).
     ENDIF.
 

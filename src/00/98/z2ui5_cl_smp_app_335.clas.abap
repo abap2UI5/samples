@@ -123,7 +123,6 @@ CLASS z2ui5_cl_smp_app_335 IMPLEMENTATION.
 
       ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
       ASSIGN COMPONENT layout->name OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
-      " assign component layout->name of structure ms_struc to field-symbol(<value>).
 
       IF sy-subrc <> 0.
         RETURN.
@@ -148,17 +147,27 @@ CLASS z2ui5_cl_smp_app_335 IMPLEMENTATION.
 
   METHOD get_data.
 
-    SELECT SINGLE * FROM z2ui5_t_01
-      INTO CORRESPONDING FIELDS OF @ms_struc.
+    " any single row will do here, but it has to be the SAME one on every
+    " roundtrip - SELECT SINGLE without a full key leaves that to the database
+    SELECT * FROM z2ui5_t_01
+      ORDER BY PRIMARY KEY
+      INTO TABLE @DATA(lt_data)
+      UP TO 1 ROWS.
+
+    ms_struc = VALUE #( lt_data[ 1 ] OPTIONAL ).
 
   ENDMETHOD.
 
 
   METHOD get_data_2.
 
-    SELECT SINGLE * FROM z2ui5_t_01
+    SELECT * FROM z2ui5_t_01
       WHERE id <> @ms_struc-id
-      INTO CORRESPONDING FIELDS OF @ms_struc.
+      ORDER BY PRIMARY KEY
+      INTO TABLE @DATA(lt_data)
+      UP TO 1 ROWS.
+
+    ms_struc = VALUE #( lt_data[ 1 ] OPTIONAL ).
 
   ENDMETHOD.
 

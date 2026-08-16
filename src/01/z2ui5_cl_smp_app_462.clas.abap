@@ -32,7 +32,6 @@ CLASS z2ui5_cl_smp_app_462 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
 
 
@@ -50,6 +49,8 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
           ( text = `Purchasing` nodes = VALUE #(
               ( text = `Suppliers` nodes = VALUE #(
                   ( text = `Very Best Screens` ) ) ) ) ) ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSE.
       on_event( ).

@@ -54,11 +54,10 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
 
     ELSEIF client->check_on_event( ).
 
-      CASE client->get_event( ).
-        WHEN `GO`.
-          DATA(app) = z2ui5_cl_smp_app_336=>factory( ).
-          client->nav_app_call( app ).
-      ENDCASE.
+      IF client->get_event( ) = `GO`.
+        DATA(app) = z2ui5_cl_smp_app_336=>factory( ).
+        client->nav_app_call( app ).
+      ENDIF.
 
     ENDIF.
 
@@ -181,6 +180,7 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
 
         SELECT *
           FROM (iv_tabname)
+          ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 3 ROWS.
 
@@ -211,6 +211,7 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
 
         SELECT *
           FROM (iv_tabname)
+          ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 4 ROWS.
 

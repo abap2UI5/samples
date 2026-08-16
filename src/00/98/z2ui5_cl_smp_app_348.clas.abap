@@ -115,27 +115,37 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
 
   METHOD get_data.
 
-    SELECT SINGLE id,
-                  id_prev,
-                  id_prev_app,
-                  id_prev_app_stack,
-                  timestampl
+    " any single row will do here, but it has to be the SAME one on every
+    " roundtrip - SELECT SINGLE without a full key leaves that to the database
+    SELECT id,
+           id_prev,
+           id_prev_app,
+           id_prev_app_stack,
+           timestampl
       FROM z2ui5_t_01
-      INTO CORRESPONDING FIELDS OF @ms_struc.
+      ORDER BY PRIMARY KEY
+      INTO CORRESPONDING FIELDS OF TABLE @DATA(lt_data)
+      UP TO 1 ROWS.
+
+    ms_struc = VALUE #( lt_data[ 1 ] OPTIONAL ).
 
   ENDMETHOD.
 
 
   METHOD get_data2.
 
-    SELECT SINGLE id,
-                  id_prev,
-                  id_prev_app,
-                  id_prev_app_stack,
-                  timestampl
+    SELECT id,
+           id_prev,
+           id_prev_app,
+           id_prev_app_stack,
+           timestampl
       FROM z2ui5_t_01
       WHERE id <> @ms_struc-id
-      INTO CORRESPONDING FIELDS OF @ms_struc.
+      ORDER BY PRIMARY KEY
+      INTO CORRESPONDING FIELDS OF TABLE @DATA(lt_data2)
+      UP TO 1 ROWS.
+
+    ms_struc = VALUE #( lt_data2[ 1 ] OPTIONAL ).
 
   ENDMETHOD.
 

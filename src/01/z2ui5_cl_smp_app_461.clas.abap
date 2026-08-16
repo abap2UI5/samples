@@ -26,7 +26,6 @@ CLASS z2ui5_cl_smp_app_461 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
 
 
@@ -42,6 +41,8 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
               ( text = `Old_Report.pdf` ) ) )
           ( text = `Trash` ) ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSE.
       on_event( ).
     ENDIF.
@@ -51,53 +52,50 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get_event( ).
-
-      WHEN `MOVE_NODE`.
-        " both event args arrive resolved client-side: the binding context
-        " paths of the dragged and the drop target item, e.g.
-        " /T_NODES/0/NODES/1 (a file) and /T_NODES/2 (a folder) - so parse
-        " from the END of the path
-        SPLIT client->get_event_arg( ) AT `/` INTO TABLE DATA(lt_drag).
-        SPLIT client->get_event_arg( 2 ) AT `/` INTO TABLE DATA(lt_drop).
-        DATA(lv_drag_lines) = lines( lt_drag ).
-        DATA(lv_drop_lines) = lines( lt_drop ).
-        IF lv_drag_lines < 4 OR lv_drop_lines < 2
-            OR VALUE #( lt_drag[ lv_drag_lines - 1 ] OPTIONAL ) <> `NODES`
-            OR VALUE #( lt_drag[ lv_drag_lines - 3 ] OPTIONAL ) <> `T_NODES`
-            OR VALUE #( lt_drop[ lv_drop_lines - 1 ] OPTIONAL ) <> `T_NODES`.
-          client->message_toast_display( `drop a file onto a folder` ).
+    IF client->get_event( ) = `MOVE_NODE`.
+      " both event args arrive resolved client-side: the binding context
+      " paths of the dragged and the drop target item, e.g.
+      " /T_NODES/0/NODES/1 (a file) and /T_NODES/2 (a folder) - so parse
+      " from the END of the path
+      SPLIT client->get_event_arg( ) AT `/` INTO TABLE DATA(lt_drag).
+      SPLIT client->get_event_arg( 2 ) AT `/` INTO TABLE DATA(lt_drop).
+      DATA(lv_drag_lines) = lines( lt_drag ).
+      DATA(lv_drop_lines) = lines( lt_drop ).
+      IF lv_drag_lines < 4 OR lv_drop_lines < 2
+          OR VALUE #( lt_drag[ lv_drag_lines - 1 ] OPTIONAL ) <> `NODES`
+          OR VALUE #( lt_drag[ lv_drag_lines - 3 ] OPTIONAL ) <> `T_NODES`
+          OR VALUE #( lt_drop[ lv_drop_lines - 1 ] OPTIONAL ) <> `T_NODES`.
+        client->message_toast_display( `drop a file onto a folder` ).
+        RETURN.
+      ENDIF.
+      TRY.
+          DATA(lv_from_root)  = CONV i( lt_drag[ lv_drag_lines - 2 ] ) + 1.
+          DATA(lv_from_child) = CONV i( lt_drag[ lv_drag_lines ] ) + 1.
+          DATA(lv_to_root)    = CONV i( lt_drop[ lv_drop_lines ] ) + 1.
+          DATA(ls_child)      = t_nodes[ lv_from_root ]-nodes[ lv_from_child ].
+        CATCH cx_root.
           RETURN.
-        ENDIF.
-        TRY.
-            DATA(lv_from_root)  = CONV i( lt_drag[ lv_drag_lines - 2 ] ) + 1.
-            DATA(lv_from_child) = CONV i( lt_drag[ lv_drag_lines ] ) + 1.
-            DATA(lv_to_root)    = CONV i( lt_drop[ lv_drop_lines ] ) + 1.
-            DATA(ls_child)      = t_nodes[ lv_from_root ]-nodes[ lv_from_child ].
-          CATCH cx_root.
-            RETURN.
-        ENDTRY.
-        " dropping a file onto its own parent folder is a no-op
-        IF lv_from_root = lv_to_root.
-          RETURN.
-        ENDIF.
-        ASSIGN t_nodes[ lv_from_root ] TO FIELD-SYMBOL(<from>).
-        IF sy-subrc <> 0.
-          RETURN.
-        ENDIF.
-        ASSIGN t_nodes[ lv_to_root ] TO FIELD-SYMBOL(<to>).
-        IF sy-subrc <> 0.
-          RETURN.
-        ENDIF.
-        DELETE <from>-nodes INDEX lv_from_child.
-        APPEND ls_child TO <to>-nodes.
-        " full view rebuild instead of relying on the automatic model push:
-        " the z2ui5.cc.Tree companion re-applies the expand state (snapshotted
-        " before this roundtrip) only when it renders - a pure model refresh
-        " would leave the rebuilt tree binding collapsed
-        view_display( ).
-
-    ENDCASE.
+      ENDTRY.
+      " dropping a file onto its own parent folder is a no-op
+      IF lv_from_root = lv_to_root.
+        RETURN.
+      ENDIF.
+      ASSIGN t_nodes[ lv_from_root ] TO FIELD-SYMBOL(<from>).
+      IF sy-subrc <> 0.
+        RETURN.
+      ENDIF.
+      ASSIGN t_nodes[ lv_to_root ] TO FIELD-SYMBOL(<to>).
+      IF sy-subrc <> 0.
+        RETURN.
+      ENDIF.
+      DELETE <from>-nodes INDEX lv_from_child.
+      APPEND ls_child TO <to>-nodes.
+      " full view rebuild instead of relying on the automatic model push:
+      " the z2ui5.cc.Tree companion re-applies the expand state (snapshotted
+      " before this roundtrip) only when it renders - a pure model refresh
+      " would leave the rebuilt tree binding collapsed
+      view_display( ).
+    ENDIF.
 
   ENDMETHOD.
 

@@ -2,11 +2,7 @@
   "global": {
     // Nothing is suppressed: every package under src/ is really checked, the
     // experimental and testing packages that the 702 build strips
-    // (AGENTS.md section 2) included - they pass. The
-    // on-premise samples that once needed a `noIssues` entry here, because
-    // they referenced objects no dependency below can provide
-    // (cl_apc_wsp_ext_stateless_base, icfservloc, VBELN_VA, ...), are gone:
-    // main runs on ABAP Cloud, so it carries no on-premise-only ABAP.
+    // (AGENTS.md section 2) included - they pass.
     "files": "/src/**/*.*"
   },
   "dependencies": [
@@ -25,48 +21,503 @@
     "version": "v750",
     "errorNamespace": "."
   },
+  // ===================================================================
+  // THE RULE BLOCK BELOW IS KEPT BYTE-IDENTICAL IN THREE REPOSITORIES:
+  // abap2UI5/samples, abap2UI5/samples-controls and abap2UI5/samples-stack.
+  // Change it in one and copy it to the other two - the same rule
+  // scripts/chain-format.mjs already lives under.
+  //
+  // The ONE exception is "object_naming", the last rule in the file: it
+  // encodes which repository you are in (SMP / SMPC / SMPS) and is the only
+  // thing above the line that may differ. Everything else - what is checked,
+  // what is not, and why - is a joint decision of the three corpora.
+  //
+  // Every rule abaplint ships is listed: all 188. 171 are on, 17 are off and
+  // each says why. A rule is NEVER left out of the file. When an abaplint
+  // upgrade adds one, add the key: on if all three corpora pass, off with the
+  // reason if they do not. An unlisted rule reads as "nobody decided" rather
+  // than "decided against", and that is exactly how samples ran 17 rules for
+  // two years without anyone noticing.
+  //
+  // WRITE A CONFIGURED RULE'S FLAGS OUT IN FULL. abaplint replaces the whole
+  // options object, so a partial one silently turns every flag it omits OFF -
+  // "check_subrc": { "selectTable": false } disables the rule entirely
+  // instead of narrowing it.
+  // ===================================================================
   "rules": {
-    "exporting": true,
-    "omit_parameter_name": true,
+    // --- off: AGENTS.md documents the opposite convention -------------
+    // Type prefixes are for tables ("t_") and structures ("s_") only, local
+    // types carry "ty_s_" / "ty_t_", and scalars and object references carry
+    // no prefix at all. These four rules want Hungarian notation instead
+    // ("^L._.+$", "^M._.+$", "^I._.+$") or want the prefixes gone altogether.
+    "local_variable_names": false,
+    "class_attribute_names": false,
+    "method_parameter_names": false,
+    "no_prefixes": false,
+    // An abap2UI5 app binds its own public attributes into the view -
+    // client->_bind( quantity ) reads the attribute the view writes back to.
+    // The public attribute IS the model, not an encapsulation leak.
+    "no_public_attributes": false,
+    // Demo apps, read for their view code, not a published API. The
+    // explanation lives in the overview catalog and in the MessageStrip the
+    // app renders. abap2UI5 keeps this off for the same reason.
+    "abapdoc": false,
+    // --- off: the view builder chain owns its own layout --------------
+    // A view is one statement spanning up to several hundred lines, laid out
+    // by rules that "npm run check:chains" (scripts/chain-format.mjs) gates -
+    // and that gate is stricter than anything here. Every one of these rules
+    // reads a chain as a malformed parameter list: 5,087 findings from
+    // line_break_multiple_parameters alone, all of them correct chains.
+    "line_break_multiple_parameters": false,
+    "keep_single_parameter_on_one_line": false,
+    "align_parameters": false,
+    "in_statement_indentation": false,
+    "indentation": false,
+    // Blank lines inside a chain separate the view's sections - the Shell
+    // from the Page, the header from the form. Blank lines inside one
+    // statement is exactly what this rule forbids.
+    "empty_line_in_statement": false,
+    // A chain and a VALUE #( ) data table both close with ")." on its own
+    // line - 70 of them in samples-controls, in 61 files. Same layout
+    // question as the five rules above, same answer.
+    "line_only_punc": false,
+    // --- off: the samples declare deliberately ------------------------
+    // Both rules push declarations into the branch that first uses them. A
+    // sample is read top-down, so its data is declared where the reader
+    // looks for it, and the shared context classes carry downported shapes
+    // (DATA temp9, DATA comps LIKE temp9) that cannot be inlined at all.
+    "prefer_inline": false,
+    "no_inline_in_optional_branches": false,
+    // --- off: the proposed rewrite does not activate ------------------
+    // The MOVE-CORRESPONDING statements left in the tree copy between two
+    // generic "TYPE any" field symbols. CORRESPONDING #( ) derives its type
+    // from the target, and a generic field symbol has none at compile time,
+    // so the rewrite parses but does not activate on a real system.
+    "prefer_corresponding": false,
+    // The two .mp3 files in samples-stack (08/01) are SMIM objects whose
+    // parent MIME folder lives on the system, not in the repository, so the
+    // rule cannot resolve it from the sources alone.
+    "smim_consistency": false,
+    // --- on, with settings --------------------------------------------
+    // Hard ABAP limit, not a convention: a longer line breaks the abapGit
+    // import with "Literals across more than one line are not allowed".
     "line_length": {
       "length": 255
     },
-    // Every class carries the samples token: Z2UI5_CL_SMP_<object>.
-    // Length is capped at 25 characters by the leading lookahead. ABAP
+    // "ty_" covers the ty_s_ / ty_t_ scheme all three repositories use.
+    "types_naming": {
+      "pattern": "^TY_"
+    },
+    // The union of what the three corpora legitimately hold. samples and
+    // samples-controls are classes and packages only; samples-stack adds the
+    // RAP and on-premise objects. Anything else - a report, a function
+    // group, a message class - is still refused.
+    "allowed_object_types": {
+      "allowed": [
+        "CLAS",
+        "DEVC",
+        "INTF",
+        "TABL",
+        "DTEL",
+        "DDLS",
+        "BDEF",
+        "SRVD",
+        "SRVB",
+        "SICF",
+        "SAPC",
+        "SAMC",
+        "SUSH",
+        "SMIM",
+        "G4BA"
+      ]
+    },
+    // Two flags stay off because both read deliberate column alignment as a
+    // double space and would strip it: "keywords" aligns keyword operands
+    // (EXPORTING  p_name over RECEIVING  p_descr_ref), "endParen" aligns the
+    // rows of a literal data table before their closing paren (676 of those
+    // in samples-controls). The two that are left catch real sloppiness.
+    "double_space": {
+      "keywords": false,
+      "startParen": true,
+      "endParen": false,
+      "afterColon": true
+    },
+    // Two blank lines separate methods, so three is already one too many.
+    "sequential_blank": {
+      "lines": 3
+    },
+    // Restricted to literal constants on the left, which is the half worth
+    // having ("IF 5 = x"). Unrestricted, the rule also demands
+    // "lines( t ) < i" instead of "i > lines( t )" - 13 of those across the
+    // three corpora, and flipping them reads worse than the code it replaces.
+    "no_yoda_conditions": {
+      "onlyConstants": true
+    },
+    // All eight detectors on. endselect / execSQL / kernelCall /
+    // communication / systemCall are not keys of this rule any more - they
+    // moved to dangerous_statement below, which carries them.
+    "avoid_use": {
+      "skipQuickFix": false,
+      "define": true,
+      "statics": true,
+      "defaultKey": true,
+      "break": true,
+      "testSeams": true,
+      "describeLines": true,
+      "exportToMemory": true,
+      "exportToDatabase": true
+    },
+    // Every flag on except dynamicSQL: "SELECT * FROM (mv_table)" is not an
+    // accident in this corpus, it is the subject of the generic table
+    // browser samples in samples/src/00/98.
+    "dangerous_statement": {
+      "execSQL": true,
+      "kernelCall": true,
+      "systemCall": true,
+      "insertReport": true,
+      "generateDynpro": true,
+      "generateReport": true,
+      "generateSubroutine": true,
+      "deleteReport": true,
+      "deleteTextpool": true,
+      "insertTextpool": true,
+      "deleteDynpro": true,
+      "exportDynpro": true,
+      "editorCallForReport": true,
+      "dynamicSQL": false,
+      "ignoreRAPQueryProvider": true
+    },
+    // Every flag on except the two SELECT ones. The rule earns its keep with
+    // what is left - it found nine unchecked ASSIGN obj->(`NAME`) (reading
+    // an unassigned field symbol dumps) and four READ TABLE whose work area
+    // was used unconditionally, one of which inserted a stale row whenever
+    // the selection was empty.
+    // selectSingle / selectTable are off because "no rows" is never an error
+    // here: a table SELECT either feeds a binding, where an empty table is a
+    // legitimate view, or is read back through VALUE #( lt[ 1 ] OPTIONAL ),
+    // which handles the empty case in the expression itself.
+    "check_subrc": {
+      "openDataset": true,
+      "authorityCheck": true,
+      "selectSingle": false,
+      "selectTable": false,
+      "updateDatabase": true,
+      "insertDatabase": true,
+      "modifyDatabase": true,
+      "deleteDatabase": true,
+      "readTable": true,
+      "assign": true,
+      "find": true
+    },
+    // Every block must have code except WHEN: an event whose only job is to
+    // force a round-trip is a legitimate empty branch, and the samples that
+    // have one say so in a comment where the code would be.
+    "empty_structure": {
+      "loop": true,
+      "loopAllowIfSubrc": true,
+      "if": true,
+      "while": true,
+      "case": true,
+      "select": true,
+      "do": true,
+      "at": true,
+      "try": true,
+      "when": false
+    },
+    // The overview app is generated (npm run overview) - its render method is
+    // one long emit, and shortening it means changing the generator's output
+    // shape, not the repository's code.
+    "method_length": {
+      "statements": 100,
+      "errorWhenEmpty": false,
+      "ignoreTestClasses": true,
+      "checkForms": true,
+      "checkFunctionModules": true,
+      "exclude": [
+        "z2ui5_cl_smpc_app_overview\\.clas\\."
+      ]
+    },
+    // On, because non-7-bit source is an abapGit round-trip hazard - and it
+    // caught 22 em-dashes and ellipses in comments, which are now ASCII.
+    // The excluded files are the ones whose DATA is non-ASCII: ports whose
+    // product descriptions, supplier names or i18n strings come from the
+    // original demo kit sample, where scripts/data-fidelity.mjs compares
+    // them against that original. Changing them to ASCII would fail that
+    // gate. app_185 is the non-breaking-space constant the sample is about.
+    "7bit_ascii": {
+      "exclude": [
+        "z2ui5_cl_smpc_app_(012|040|092|103|104|114|134|185|191|194|215|218|254|290|302|303|350|356|357|358|360)\\.clas\\.",
+        "z2ui5_cl_smpc_app_overview\\.clas\\."
+      ]
+    },
+    // --- on, scoped to what the RAP corpus can comply with -------------
+    // Excluded for samples-stack: CDS entities, actions and fields are
+    // CamelCase by definition (Ticket, TravelUuid, Activate) and the rule
+    // reads every one of them as a lower-case violation - 31 findings, all
+    // of them correct ABAP.
+    "keyword_case": {
+      "style": "upper",
+      "ignoreExceptions": true,
+      "ignoreLowerClassImplmentationStatement": true,
+      "exclude": [
+        "z2ui5_cl_smps_"
+      ],
+      "ignoreKeywords": []
+    },
+    // A RAP behavior implementation is called by the runtime, never from
+    // ABAP, so every handler in a bp_ pool reads as unused - and so does a
+    // variable a RAISE ENTITY EVENT consumes, which abaplint has no grammar
+    // for.
+    "unused_methods": {
+      "exclude": [
+        "z2ui5_cl_smps_bp_[a-z]+\\.clas\\.locals_imp\\."
+      ]
+    },
+    "unused_variables": {
+      "exclude": [
+        "z2ui5_cl_smps_bp_[a-z]+\\.clas\\.locals_imp\\."
+      ]
+    },
+    // lhc_<entity> is the name RAP mandates for a handler class; ^LCL_ is
+    // not available there.
+    "local_class_naming": {
+      "exclude": [
+        "z2ui5_cl_smps_bp_[a-z]+\\.clas\\.locals_imp\\."
+      ],
+      "patternKind": "required",
+      "local": "^LCL_.+$",
+      "exception": "^LCX_.+$",
+      "test": "^LTCL_.+$"
+    },
+    // A RAP behavior pool is ABSTRACT FINAL by definition - that is the
+    // required shape, not a mistake.
+    "check_abstract": {
+      "exclude": [
+        "z2ui5_cl_smps_bp_[a-z]+\\.clas\\."
+      ]
+    },
+    // The persistent and draft tables are referenced from the CDS and
+    // behavior definitions, which abaplint does not trace into.
+    "unused_ddic": {
+      "exclude": [
+        "z2ui5_(t|d)_smps_"
+      ]
+    },
+    // Excluded for the two apps that declare TYPE RESPONSE FOR FAILED /
+    // REPORTED EARLY - fully typed RAP syntax abaplint reads as implicit.
+    "fully_type_constants": {
+      "checkData": true,
+      "exclude": [
+        "z2ui5_cl_smps_app_(07|10)\\.clas\\."
+      ]
+    },
+    // Excluded for the RAP handler pools: their SELECT SINGLE is an
+    // aggregate (MAX( travel_id )), which returns exactly one row by
+    // definition - the rule does not model that.
+    "select_single_full_key": {
+      "allowPseudo": true,
+      "exclude": [
+        "z2ui5_cl_smps_bp_[a-z]+\\.clas\\.locals_imp\\."
+      ]
+    },
+    // Excluded for samples-stack app 319: the operator mapping there is a
+    // table written as a CASE, one WHEN per line, and splitting it costs the
+    // shape that makes it readable.
+    "max_one_statement": {
+      "exclude": [
+        "z2ui5_cl_smps_app_319\\.clas\\."
+      ]
+    },
+    // ABAP Push Channels are on-premise only and therefore absent from the
+    // steampunk API dependency, so app 489's superclass cannot be resolved
+    // and every reference to it reports as unknown.
+    "check_syntax": {
+      "exclude": [
+        "z2ui5_cl_smps_app_489(_ws)?\\.clas\\."
+      ]
+    },
+    // See check_syntax above - same class, same missing superclass.
+    "superclass_final": {
+      "exclude": [
+        "z2ui5_cl_smps_app_489_ws\\.clas\\."
+      ]
+    },
+    // Every category set to the namespace the three repositories share. The
+    // per-category SAP prefixes (ZI_, ZC_, ZR_, ...) are not the scheme here:
+    // samples-stack names its root view entities Z2UI5_R_SMPS_<object>.
+    "cds_naming": {
+      "basicInterfaceView": "Z2UI5_",
+      "compositeInterfaceView": "Z2UI5_",
+      "consumptionView": "Z2UI5_",
+      "basicRestrictedReuseView": "Z2UI5_",
+      "compositeRestrictedReuseView": "Z2UI5_",
+      "privateView": "Z2UI5_",
+      "remoteAPIView": "Z2UI5_",
+      "viewExtend": "Z2UI5_",
+      "extensionIncludeView": "Z2UI5_",
+      "derivationFunction": "Z2UI5_",
+      "abstractEntity": "Z2UI5_"
+    },
+    // --- on, as shipped -----------------------------------------------
+    "add_test_attributes": true,
+    "aff_and_xml": true,
+    "align_pseudo_comments": true,
+    "align_type_expressions": true,
+    "allowed_object_naming": true,
+    "ambiguous_statement": true,
+    "begin_end_names": true,
+    "begin_single_include": true,
+    "call_transaction_authority_check": true,
+    "catch_and_raise": true,
+    "cds_association_name": true,
+    "cds_comment_style": true,
+    "cds_field_order": true,
+    "cds_legacy_view": true,
+    "cds_parser_error": true,
+    "chain_mainly_declarations": true,
+    "change_if_to_case": true,
+    "check_comments": true,
+    "check_ddic": true,
+    "check_include": true,
+    "check_text_elements": true,
+    "check_transformation_exists": true,
+    "classic_exceptions_overlap": true,
+    "clear_exporting_parameters": true,
+    "cloud_types": true,
+    "colon_missing_space": true,
+    "commented_code": true,
+    "constant_classes": true,
+    "constructor_visibility_public": true,
+    "contains_tab": true,
+    "cyclic_oo": true,
+    "cyclomatic_complexity": true,
+    "db_operation_in_loop": true,
+    "definitions_top": true,
+    "description_empty": true,
+    "downport": true,
+    "dynpro_checks": true,
+    "easy_to_find_messages": true,
+    "empty_event": true,
+    "empty_statement": true,
+    "exit_or_check": true,
+    "expand_macros": true,
+    "exporting": true,
+    "fm_global_parameters_obsolete": true,
+    "forbidden_identifier": true,
+    "forbidden_pseudo_and_pragma": true,
+    "forbidden_void_type": true,
+    "form_tables_obsolete": true,
+    "fully_type_itabs": true,
+    "function_module_recommendations": true,
+    "functional_writing": true,
+    "global_class": true,
+    "identical_conditions": true,
+    "identical_contents": true,
+    "identical_descriptions": true,
+    "identical_form_names": true,
+    "identical_move": true,
+    "if_in_if": true,
+    "implement_methods": true,
+    "implicit_start_of_selection": true,
+    "index_completely_contained": true,
+    "inline_data_old_versions": true,
+    "intf_referencing_clas": true,
+    "invalid_table_index": true,
+    "line_break_style": true,
+    "local_testclass_consistency": true,
+    "macro_naming": true,
+    "main_file_contents": true,
+    "many_parentheses": true,
+    "max_one_method_parameter_per_line": true,
+    "message_exists": true,
+    "method_implemented_twice": true,
+    "method_overwrites_builtin": true,
+    "mix_returning": true,
+    "modify_only_own_db_tables": true,
+    "msag_consistency": true,
+    "names_no_dash": true,
+    "nesting": true,
+    "newline_between_methods": true,
+    "no_aliases": true,
+    "no_chained_assignment": true,
+    "no_comments_between_methods": true,
+    "no_exclamation_escape": true,
+    "no_external_form_calls": true,
+    "no_macros": true,
+    "no_mandt_in_database_operations": true,
+    "nrob_consistency": true,
+    "obsolete_statement": true,
+    "omit_parameter_name": true,
+    "omit_preceding_zeros": true,
+    "omit_receiving": true,
+    "parser_702_chaining": true,
+    "parser_bad_exceptions": true,
+    "parser_error": true,
+    "parser_missing_space": true,
+    "pragma_style": true,
+    "prefer_is_not": true,
+    "prefer_pragmas": true,
+    "prefer_raise_exception_new": true,
+    "prefer_returning_to_exporting": true,
+    "prefer_xsdbool": true,
+    "preferred_compare_operator": true,
+    "prefix_is_current_class": true,
+    "reduce_procedural_code": true,
+    "reduce_string_templates": true,
+    "redundant_conversion": true,
+    "release_idoc": true,
+    "remove_descriptions": true,
+    "rfc_error_handling": true,
+    "select_add_order_by": true,
+    "select_performance": true,
+    "selection_screen_naming": true,
+    "selection_screen_texts_missing": true,
+    "short_case": true,
+    "sicf_consistency": true,
+    "slow_parameter_passing": true,
+    "space_before_colon": true,
+    "space_before_dot": true,
+    "sql_escape_host_variables": true,
+    "sql_value_conversion": true,
+    "start_at_tab": true,
+    "static_call_via_instance": true,
+    "strict_sql": true,
+    "superfluous_value": true,
+    "sy_modification": true,
+    "sy_read_restriction": true,
+    "tabl_enhancement_category": true,
+    "tables_declared_locally": true,
+    "try_without_catch": true,
+    "type_form_parameters": true,
+    "uncaught_exception": true,
+    "unknown_types": true,
+    "unnecessary_chaining": true,
+    "unnecessary_pragma": true,
+    "unnecessary_return": true,
+    "unreachable_code": true,
+    "unsecure_fae": true,
+    "unused_macros": true,
+    "unused_types": true,
+    "use_bool_expression": true,
+    "use_class_based_exceptions": true,
+    "use_line_exists": true,
+    "use_new": true,
+    "when_others_last": true,
+    "whitespace_end": true,
+    "xml_consistency": true,
+    // ===================================================================
+    // THE ONE PER-REPOSITORY RULE - everything above this line is identical
+    // in samples, samples-controls and samples-stack.
+    // ===================================================================
+    // Class names are capped at 25 characters by the leading lookahead. ABAP
     // allows 30, but build_rename (see abap2UI5) replaces the namespace
     // z2ui5 (5 chars) with up to 9, which costs 4 - so 26 is the hard
-    // ceiling and 25 keeps one character in reserve. A parallel
-    // installation therefore never needs truncation patterns.
-    // "Z2UI5_CL_SMP_" is 13 chars, so 12 remain for the object name.
-    // The legacy tokens DEMO and SAMPLE are gone - the last classes carrying
-    // them were renamed, so the alternation is dropped and only SMP is
-    // accepted.
+    // ceiling and 25 keeps one character in reserve. A parallel installation
+    // therefore never needs truncation patterns.
     "object_naming": {
       "patternKind": "required",
       "severity": "Error",
       "clas": "^(?=.{1,25}$)Z2UI5_C(L|X)_SMP_"
-    },
-    "downport": true,
-    "begin_end_names": true,
-    "check_ddic": true,
-    "check_include": true,
-    "check_syntax": true,
-    "global_class": true,
-    "definitions_top": false,
-    "implement_methods": true,
-    "method_implemented_twice": true,
-    "parser_error": true,
-    "superclass_final": true,
-    "unknown_types": true,
-    // The ABAP editor strips a trailing blank when it saves, so a line that
-    // ends in one comes back changed on the next pull - for everyone. Nothing
-    // here caught that: the port of the corpus onto z2ui5_cl_ui5_view_builder
-    // (#752) left a trailing blank on seven lines in seven app classes, all
-    // four workflows stayed green, and b7edbc6 "fix abaplint diffs" had to be
-    // found and pushed by hand. The tree is clean as of that commit, so the
-    // rule costs nothing and closes the hole. abap2UI5 has carried it for
-    // src/01 and src/02 all along.
-    "whitespace_end": true,
-    "xml_consistency": true
+    }
   }
 }

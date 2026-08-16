@@ -19,9 +19,8 @@ CLASS z2ui5_cl_smp_app_006 DEFINITION PUBLIC.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
-    DATA client    TYPE REF TO z2ui5_if_client.
-    DATA check_ui5 TYPE abap_bool.
-    DATA key       TYPE string.
+    DATA client TYPE REF TO z2ui5_if_client.
+    DATA key    TYPE string.
 
     METHODS on_init.
     METHODS on_event.
@@ -32,7 +31,6 @@ CLASS z2ui5_cl_smp_app_006 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
 
 
@@ -41,6 +39,8 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       on_init( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ELSEIF client->check_on_event( ).
       on_event( ).

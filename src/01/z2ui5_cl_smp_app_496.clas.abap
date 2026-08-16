@@ -13,7 +13,7 @@ CLASS z2ui5_cl_smp_app_496 DEFINITION PUBLIC.
 
     " a public attribute is serialized between the roundtrips - so everything
     " on this page is part of what the View Model tab of the tools shows
-    DATA t_tab      TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
+    DATA t_tab      TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
     DATA text       TYPE string.
     DATA roundtrips TYPE i.
 
@@ -43,6 +43,8 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
 
       text = `change me and press Send`.
       tabs_init( ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
       view_display( ).
 
     ELSEIF client->check_on_event( cs_event-ping ).

@@ -30,7 +30,7 @@ CLASS z2ui5_cl_smp_app_161 IMPLEMENTATION.
         )->a( n = `afterClose` v = client->_event( `BTN_OK_1ND` )
         )->ele( `content` ).
 
-    DATA(content) = dialog->tag( `Button`
+    dialog->tag( `Button`
         )->a( n = `press` v = client->_event( `GOTO_2ND` )
         )->a( n = `text`  v = `Open 2nd popup` ).
 
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_smp_app_161 IMPLEMENTATION.
         )->a( n = `afterClose` v = client->_event( `BTN_OK_2ND` )
         )->ele( `content` ).
 
-    DATA(content) = dialog->tag( `Label`
+    dialog->tag( `Label`
         )->a( n = `text` v = `this is a second popup` ).
 
     dialog->end(

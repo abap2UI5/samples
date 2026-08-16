@@ -9,10 +9,10 @@ CLASS z2ui5_cl_smp_app_118 DEFINITION PUBLIC.
              adate TYPE d,
              atime TYPE t,
            END OF ty_s_row.
-    TYPES t_rows TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    TYPES ty_t_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA problematic_rows TYPE t_rows.
-    DATA these_are_fine_rows TYPE t_rows.
+    DATA problematic_rows TYPE ty_t_row.
+    DATA these_are_fine_rows TYPE ty_t_row.
 
   PROTECTED SECTION.
   PRIVATE SECTION.

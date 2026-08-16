@@ -49,6 +49,8 @@ CLASS z2ui5_cl_smp_app_460 IMPLEMENTATION.
                   ( text = `Beach.jpg` ) ) ) ) )
           ( text = `Music` ) ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.

@@ -45,7 +45,7 @@ CLASS z2ui5_cl_smp_app_340 IMPLEMENTATION.
             )->a( n = `xmlns:core` v = `sap.ui.core`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    DATA(simple_form) = popup->ele( `Dialog`
+    popup->ele( `Dialog`
         )->a( n = `title`        v = `Test`
         )->a( n = `contentWidth` v = `60%`
         )->a( n = `afterClose`   v = client->_event( `POPUP_CLOSE` )
@@ -66,6 +66,10 @@ CLASS z2ui5_cl_smp_app_340 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    " No check_on_navigated( ) branch: this app shows a POPUP, not a main
+    " view. The framework pushes the model back into the still-standing
+    " popup by itself - only an app that owns the MAIN slot has to
+    " re-display (AGENTS.md 9).
     IF client->check_on_init( ).
       view_display( client ).
 

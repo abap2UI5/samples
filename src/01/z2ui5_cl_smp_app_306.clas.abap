@@ -10,8 +10,10 @@ CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
         time      TYPE string,
         id        TYPE string,
         name      TYPE string,
-        data      TYPE string,    " full resolution - backend only
-        thumbnail TYPE string,    " small preview - used in model
+        " data is the full resolution, backend only; thumbnail is the small
+        " preview that goes into the model
+        data      TYPE string,
+        thumbnail TYPE string,
         selected  TYPE abap_bool,
       END OF ty_s_picture.
 
@@ -20,7 +22,7 @@ CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
         key  TYPE string,
         text TYPE string,
       END OF ty_s_combo,
-      tt_combo TYPE STANDARD TABLE OF ty_s_combo WITH EMPTY KEY.
+      ty_t_combo TYPE STANDARD TABLE OF ty_s_combo WITH EMPTY KEY.
 
     DATA mt_picture       TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
     DATA mt_picture_out   TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
@@ -28,9 +30,9 @@ CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
     DATA mv_picture_base  TYPE string.
     DATA mv_picture_thumb TYPE string.
     DATA facing_mode      TYPE string.
-    DATA facing_modes     TYPE tt_combo.
+    DATA facing_modes     TYPE ty_t_combo.
     DATA device           TYPE string.
-    DATA devices          TYPE tt_combo.
+    DATA devices          TYPE ty_t_combo.
 
   PROTECTED SECTION.
     DATA selected_picture TYPE ty_s_picture.
@@ -52,12 +54,14 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
 
-      facing_modes = VALUE tt_combo( ( key = `` text = `` )
+      facing_modes = VALUE ty_t_combo( ( key = `` text = `` )
                                      ( key = `environment` text = `environment` )
                                      ( key = `user` text = `user` )
                                      ( key = `left` text = `left` )
                                      ( key = `right` text = `right` ) ).
 
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
       view_display( ).
 
     ELSEIF client->check_on_event( ).
@@ -186,8 +190,7 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
       INSERT VALUE #( name      = |picture { sy-tabix }|
                       id        = sy-tabix
                       thumbnail = ls_pic-thumbnail
-                      selected  = COND #( WHEN sy-tabix = selected_picture-id
-                                          THEN abap_true ) )
+                      selected  = xsdbool( sy-tabix = selected_picture-id ) )
              INTO TABLE mt_picture_out.
     ENDLOOP.
 

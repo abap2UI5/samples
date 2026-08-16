@@ -28,6 +28,8 @@ CLASS z2ui5_cl_smp_app_466 IMPLEMENTATION.
                     `%%icon:sap-icon://stethoscope%%`.
 
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ENDIF.
 

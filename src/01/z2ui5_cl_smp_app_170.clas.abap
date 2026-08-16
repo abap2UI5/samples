@@ -33,7 +33,7 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
         )->a( n = `afterClose` v = client->_event( `BTN_OK_1ND` )
         )->ele( `content` ).
 
-    DATA(content) = dialog->ele( `IconTabBar`
+    dialog->ele( `IconTabBar`
         )->a( n = `select`      v = client->follow_up_action( val   = client->cs_event-control_by_id
                                                                                          view  = client->cs_view-popup
                                                                                          t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
         )->a( n = `afterClose` v = client->_event( `BTN_OK_2ND` )
         )->ele( `content` ).
 
-    DATA(content) = dialog->tag( `Label`
+    dialog->tag( `Label`
         )->a( n = `text` v = `this is a second popup` ).
 
     dialog->end(

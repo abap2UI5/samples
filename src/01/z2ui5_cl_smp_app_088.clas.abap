@@ -28,6 +28,8 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
     IF client->check_on_init( ).
       mv_page = `page1`.
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ELSE.
       on_event( ).
@@ -38,25 +40,14 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get_event( ).
-      WHEN OTHERS.
-        mv_page = client->get_event( ).
-        view_display( ).
-
-    ENDCASE.
+    mv_page = client->get_event( ).
+    view_display( ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`

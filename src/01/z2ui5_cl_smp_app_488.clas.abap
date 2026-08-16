@@ -48,26 +48,28 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
     DATA(ls_get) = client->get( ).
     returned_event = ls_get-event.
 
-    IF returned_event = `DATA_CONFIRMED`.
+    CASE returned_event.
 
-      " the payload handed over by nav_app_leave( r_data = ... ) arrives as a
-      " generic data reference - the receiver decides the type
-      ASSIGN ls_get-r_event_data->* TO FIELD-SYMBOL(<s_result>).
+      WHEN `DATA_CONFIRMED`.
 
-      IF <s_result> IS ASSIGNED.
+        " the payload handed over by nav_app_leave( r_data = ... ) arrives as a
+        " generic data reference - the receiver decides the type
+        ASSIGN ls_get-r_event_data->* TO FIELD-SYMBOL(<s_result>).
 
-        s_result = <s_result>.
-        client->message_toast_display( |Returned event { returned_event }, | &&
-                                       |product { s_result-product }, quantity { s_result-quantity }| ).
+        IF <s_result> IS ASSIGNED.
 
-      ENDIF.
+          s_result = <s_result>.
+          client->message_toast_display( |Returned event { returned_event }, | &&
+                                         |product { s_result-product }, quantity { s_result-quantity }| ).
 
-    ELSEIF returned_event = `DATA_CANCELLED`.
+        ENDIF.
 
-      s_result = VALUE #( ).
-      client->message_toast_display( `Returned event DATA_CANCELLED, no data passed` ).
+      WHEN `DATA_CANCELLED`.
 
-    ENDIF.
+        s_result = VALUE #( ).
+        client->message_toast_display( `Returned event DATA_CANCELLED, no data passed` ).
+
+    ENDCASE.
 
     view_display( ).
 

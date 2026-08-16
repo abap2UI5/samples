@@ -32,6 +32,8 @@ CLASS z2ui5_cl_smp_app_336 IMPLEMENTATION.
                                                         vis_cols = 3 ).
 
       view_display( client ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( client ).
 
     ENDIF.
 

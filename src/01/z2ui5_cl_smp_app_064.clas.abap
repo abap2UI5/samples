@@ -5,26 +5,6 @@ CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    TYPES:
-      BEGIN OF ty_s_tab,
-        selkz     TYPE abap_bool,
-        row_id    TYPE string,
-        carrid    TYPE string,
-        connid    TYPE string,
-        fldate    TYPE string,
-        planetype TYPE string,
-      END OF ty_s_tab.
-    TYPES
-      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
-    TYPES:
-      BEGIN OF ty_s_filter_pop,
-        option TYPE string,
-        low    TYPE string,
-        high   TYPE string,
-        key    TYPE string,
-      END OF ty_s_filter_pop.
-
-    DATA mt_table TYPE ty_t_table.
     DATA mv_check_active TYPE abap_bool.
     DATA:
       BEGIN OF screen,
@@ -41,31 +21,18 @@ CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS on_event.
 
-    METHODS set_selkz
-      IMPORTING
-        iv_selkz TYPE abap_bool.
-
   PRIVATE SECTION.
 ENDCLASS.
 
 
 CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
-  METHOD set_selkz.
-
-    FIELD-SYMBOLS <ls_table> TYPE ty_s_tab.
-
-    LOOP AT mt_table ASSIGNING <ls_table>.
-      <ls_table>-selkz = iv_selkz.
-    ENDLOOP.
-
-  ENDMETHOD.
-
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
     IF client->check_on_init( ).
+      on_init( ).
+    ELSEIF client->check_on_navigated( ).
       on_init( ).
 
     ELSE.
@@ -76,9 +43,6 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
 
   METHOD on_event.
-
-    DATA lt_arg TYPE string_table.
-    DATA ls_arg TYPE string.
 
     IF client->check_on_event( `LOAD` ).
 

@@ -19,7 +19,7 @@ CLASS z2ui5_cl_smp_app_324 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
@@ -42,10 +42,9 @@ CLASS z2ui5_cl_smp_app_324 IMPLEMENTATION.
 
     ELSEIF client->check_on_event( ).
 
-      CASE client->get_event( ).
-        WHEN `PRESS`.
-          call_dynpro( ).
-      ENDCASE.
+      IF client->get_event( ) = `PRESS`.
+        call_dynpro( ).
+      ENDIF.
 
     ENDIF.
 

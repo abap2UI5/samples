@@ -3,21 +3,6 @@ CLASS z2ui5_cl_smp_app_192 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    TYPES: BEGIN OF ty_s_key_value,
-             fname   TYPE string,
-             value   TYPE string,
-             tabname TYPE string,
-             comp    TYPE abap_componentdescr,
-           END OF ty_s_key_value,
-           ty_t_key_values TYPE STANDARD TABLE OF ty_s_key_value WITH EMPTY KEY.
-
-    TYPES: BEGIN OF ty_s_merged_data,
-             t_kopf  TYPE REF TO data,
-             t_pos   TYPE REF TO data,
-             t_keyva TYPE ty_t_key_values,
-           END OF ty_s_merged_data,
-           ty_t_merged_data TYPE STANDARD TABLE OF ty_s_merged_data WITH EMPTY KEY.
-
     TYPES:
       BEGIN OF ty_s_out,
         aa TYPE string,

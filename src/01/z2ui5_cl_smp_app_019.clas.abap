@@ -153,6 +153,8 @@ CLASS z2ui5_cl_smp_app_019 IMPLEMENTATION.
           ( title = `title_03` value = `value_03` )
           ( title = `title_04` value = `value_04` )
           ( title = `title_05` value = `value_05` ) ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ELSEIF client->check_on_event( `BUTTON_SEGMENT_CHANGE` ).
       client->message_toast_display( `Selection Mode changed` ).

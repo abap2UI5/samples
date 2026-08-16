@@ -115,6 +115,8 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
 
       initialize( ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ENDIF.
 

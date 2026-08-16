@@ -48,6 +48,8 @@ CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
                 ( start_at = `2026-07-20T09:30:00` end_at = `2026-07-20T10:30:00`
                   title = `Code review` type = `Type06` ) ) ) ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.

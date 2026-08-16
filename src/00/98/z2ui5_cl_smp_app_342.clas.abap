@@ -17,12 +17,12 @@ CLASS z2ui5_cl_smp_app_342 DEFINITION PUBLIC.
 
     METHODS set_app_data
       IMPORTING
-        !table TYPE string.
+        table TYPE string.
 
   PROTECTED SECTION.
-    METHODS on_event    IMPORTING !client TYPE REF TO z2ui5_if_client.
+    METHODS on_event    IMPORTING client TYPE REF TO z2ui5_if_client.
 
-    METHODS render_main IMPORTING !client TYPE REF TO z2ui5_if_client.
+    METHODS render_main IMPORTING client TYPE REF TO z2ui5_if_client.
     METHODS get_data.
 
     METHODS get_comp
@@ -229,6 +229,7 @@ CLASS z2ui5_cl_smp_app_342 IMPLEMENTATION.
 
         SELECT *
           FROM (mv_table)
+          ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 5 ROWS.
 

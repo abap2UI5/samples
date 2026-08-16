@@ -24,6 +24,8 @@ CLASS z2ui5_cl_smp_app_457 IMPLEMENTATION.
     IF client->check_on_init( ).
       date_iso = `2026-07-20`.
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.

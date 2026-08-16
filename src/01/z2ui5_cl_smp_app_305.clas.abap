@@ -128,6 +128,8 @@ CLASS z2ui5_cl_smp_app_305 IMPLEMENTATION.
           ( title = `entry 06`  value = `grey` ) ).
 
       set_view( ).
+    ELSEIF client->check_on_navigated( ).
+      set_view( ).
     ENDIF.
 
   ENDMETHOD.

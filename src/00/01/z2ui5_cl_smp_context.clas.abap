@@ -76,15 +76,15 @@ CLASS z2ui5_cl_smp_context DEFINITION
 
     CLASS-METHODS msg_get_t
       IMPORTING
-        VALUE(val)    TYPE any
-        VALUE(val2)   TYPE any OPTIONAL
+        val           TYPE any
+        val2          TYPE any OPTIONAL
       RETURNING
         VALUE(result) TYPE ty_t_msg.
 
     CLASS-METHODS msg_get
       IMPORTING
-        VALUE(val)    TYPE any
-        VALUE(val2)   TYPE any OPTIONAL
+        val           TYPE any
+        val2          TYPE any OPTIONAL
       RETURNING
         VALUE(result) TYPE ty_s_msg.
 
@@ -101,7 +101,7 @@ CLASS z2ui5_cl_smp_context DEFINITION
 
     CLASS-METHODS rtti_get_t_attri_by_include
       IMPORTING
-        !type         TYPE REF TO cl_abap_datadescr
+        type          TYPE REF TO cl_abap_datadescr
       RETURNING
         VALUE(result) TYPE abap_component_tab.
 
@@ -138,13 +138,13 @@ CLASS z2ui5_cl_smp_context DEFINITION
 
     CLASS-METHODS xml_parse
       IMPORTING
-        !xml TYPE clike
+        xml TYPE clike
       EXPORTING
-        !any TYPE any.
+        any TYPE any.
 
     CLASS-METHODS xml_stringify
       IMPORTING
-        !any          TYPE any
+        any           TYPE any
       RETURNING
         VALUE(result) TYPE string
       RAISING
@@ -164,9 +164,9 @@ CLASS z2ui5_cl_smp_context DEFINITION
 
     CLASS-METHODS json_parse
       IMPORTING
-        val   TYPE any
+        val  TYPE any
       CHANGING
-        !data TYPE any.
+        data TYPE any.
 
     CLASS-METHODS c_trim_upper
       IMPORTING
@@ -176,7 +176,7 @@ CLASS z2ui5_cl_smp_context DEFINITION
 
     CLASS-METHODS xml_srtti_stringify
       IMPORTING
-        !data         TYPE any
+        data          TYPE any
       RETURNING
         VALUE(result) TYPE string.
 
@@ -278,9 +278,9 @@ CLASS z2ui5_cl_smp_context DEFINITION
 
     CLASS-METHODS itab_corresponding
       IMPORTING
-        val  TYPE STANDARD TABLE
+        val TYPE STANDARD TABLE
       CHANGING
-        !tab TYPE STANDARD TABLE.
+        tab TYPE STANDARD TABLE.
 
     CLASS-METHODS itab_filter_by_val
       IMPORTING
@@ -288,7 +288,7 @@ CLASS z2ui5_cl_smp_context DEFINITION
         fields      TYPE string_table OPTIONAL
         ignore_case TYPE abap_bool DEFAULT abap_false
       CHANGING
-        !tab        TYPE STANDARD TABLE.
+        tab         TYPE STANDARD TABLE.
 
     CLASS-METHODS uuid_get_c32
       RETURNING
@@ -370,14 +370,13 @@ CLASS z2ui5_cl_smp_context DEFINITION
         nohistory   TYPE c LENGTH 1,
         ampmformat  TYPE c LENGTH 1,
       END OF ty_s_dfies,
-      ty_t_dfies TYPE STANDARD TABLE OF ty_s_dfies WITH DEFAULT KEY.
+      ty_t_dfies TYPE STANDARD TABLE OF ty_s_dfies WITH EMPTY KEY.
 
     CLASS-METHODS rtti_get_t_dfies_by_table_name
       IMPORTING
         table_name    TYPE string
       RETURNING
         VALUE(result) TYPE ty_t_dfies.
-
 
 
     CLASS-METHODS context_check_abap_cloud
@@ -435,7 +434,6 @@ CLASS z2ui5_cl_smp_context DEFINITION
         tabname       TYPE string
       RETURNING
         VALUE(result) TYPE ty_t_dfies ##NEEDED.
-
 
 
     CLASS-DATA gv_check_cloud TYPE abap_bool.
@@ -695,7 +693,7 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
           CONTINUE.
         ENDIF.
         IF <field> NOT IN ls_filter-t_range.
-          DELETE val.
+          DELETE val INDEX sy-tabix.
           EXIT.
         ENDIF.
 
@@ -808,8 +806,7 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
     DATA(lt_tab) = VALUE ty_t_range( ).
 
     itab_corresponding( EXPORTING val = val
-                        CHANGING  tab = lt_tab
-    ).
+                        CHANGING  tab = lt_tab ).
 
     LOOP AT lt_tab REFERENCE INTO DATA(lr_row).
 
@@ -854,7 +851,7 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
             EXIT.
           ENDIF.
         ELSE.
-          IF lv_index > lines( fields ).
+          IF lines( fields ) < lv_index.
             EXIT.
           ENDIF.
           DATA(lv_name) = fields[ lv_index ].
@@ -872,19 +869,17 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
             lv_check_found = abap_true.
             EXIT.
           ENDIF.
-        ELSE.
-          " Case-sensitive: use find() because CS is always case-insensitive
-          IF find( val = lv_value sub = lv_search ) >= 0.
-            lv_check_found = abap_true.
-            EXIT.
-          ENDIF.
+        " Case-sensitive: use find() because CS is always case-insensitive
+        ELSEIF find( val = lv_value sub = lv_search ) >= 0.
+          lv_check_found = abap_true.
+          EXIT.
         ENDIF.
 
         lv_index = lv_index + 1.
       ENDDO.
 
       IF lv_check_found = abap_false.
-        DELETE tab.
+        DELETE tab INDEX sy-tabix.
       ENDIF.
 
     ENDLOOP.
@@ -896,6 +891,7 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE table.
     DATA lt_lines TYPE string_table.
     DATA lv_line TYPE string.
+    DATA lr_row TYPE REF TO data.
 
     ASSIGN val TO <tab>.
     DATA(tab) = CAST cl_abap_tabledescr( cl_abap_typedescr=>describe_by_data( <tab> ) ).
@@ -908,7 +904,6 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
     ENDLOOP.
     INSERT lv_line INTO TABLE lt_lines.
 
-    DATA lr_row TYPE REF TO data.
     LOOP AT <tab> REFERENCE INTO lr_row.
 
       CLEAR lv_line.
@@ -1191,15 +1186,16 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
 
   METHOD xml_srtti_parse.
 
-    DATA srtti TYPE REF TO object.
+    DATA srtti        TYPE REF TO object.
+    DATA rtti_type    TYPE REF TO cl_abap_typedescr.
+    DATA lo_datadescr TYPE REF TO cl_abap_datadescr.
+
     CALL TRANSFORMATION id SOURCE XML rtti_data RESULT srtti = srtti.
 
-    DATA rtti_type TYPE REF TO cl_abap_typedescr.
     CALL METHOD srtti->(`GET_RTTI`)
       RECEIVING
         rtti = rtti_type.
 
-    DATA lo_datadescr TYPE REF TO cl_abap_datadescr.
     lo_datadescr ?= rtti_type.
 
     CREATE DATA result TYPE HANDLE lo_datadescr.
@@ -1210,9 +1206,10 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
 
   METHOD xml_srtti_stringify.
 
+    DATA srtti TYPE REF TO object.
+
     IF rtti_check_class_exists( `ZCL_SRTTI_TYPEDESCR` ) = abap_true.
 
-      DATA srtti TYPE REF TO object.
       DATA(lv_classname) = `ZCL_SRTTI_TYPEDESCR`.
       CALL METHOD (lv_classname)=>(`CREATE_BY_DATA_OBJECT`)
         EXPORTING
@@ -1264,8 +1261,7 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
         cl_abap_structdescr=>describe_by_name( EXPORTING  p_name         = table_name
                                                RECEIVING  p_descr_ref    = DATA(lo_obj)
                                                EXCEPTIONS type_not_found = 1
-                                                          OTHERS         = 2
-            ).
+                                                          OTHERS         = 2 ).
 
         IF sy-subrc <> 0.
           RAISE EXCEPTION TYPE z2ui5_cx_smp_error
@@ -1280,8 +1276,7 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
             cl_abap_structdescr=>describe_by_name( EXPORTING  p_name         = table_name
                                                    RECEIVING  p_descr_ref    = lo_obj
                                                    EXCEPTIONS type_not_found = 1
-                                                              OTHERS         = 2
-            ).
+                                                              OTHERS         = 2 ).
             IF sy-subrc <> 0.
               RAISE EXCEPTION TYPE z2ui5_cx_smp_error
                 EXPORTING
@@ -1528,59 +1523,6 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
 
     comps = temp9.
 
-*    TYPES: BEGIN OF ty_s_dfies,
-*             tabname     TYPE c LENGTH 30,
-*             fieldname   TYPE c LENGTH 30,
-*             langu       TYPE c LENGTH 1,
-*             position    TYPE n LENGTH 4,
-*             offset      TYPE n LENGTH 6,
-*             domname     TYPE c LENGTH 30,
-*             rollname    TYPE c LENGTH 30,
-*             checktable  TYPE c LENGTH 30,
-*             leng        TYPE n LENGTH 6,
-*             intlen      TYPE n LENGTH 6,
-*             outputlen   TYPE n LENGTH 6,
-*             decimals    TYPE n LENGTH 6,
-*             datatype    TYPE c LENGTH 4,
-*             inttype     TYPE c LENGTH 1,
-*             reftable    TYPE c LENGTH 30,
-*             reffield    TYPE c LENGTH 30,
-*             precfield   TYPE c LENGTH 30,
-*             authorid    TYPE c LENGTH 3,
-*             memoryid    TYPE c LENGTH 20,
-*             logflag     TYPE c LENGTH 1,
-*             mask        TYPE c LENGTH 20,
-*             masklen     TYPE n LENGTH 4,
-*             convexit    TYPE c LENGTH 5,
-*             headlen     TYPE n LENGTH 2,
-*             scrlen1     TYPE n LENGTH 2,
-*             scrlen2     TYPE n LENGTH 2,
-*             scrlen3     TYPE n LENGTH 2,
-*             fieldtext   TYPE c LENGTH 60,
-*             reptext     TYPE c LENGTH 55,
-*             scrtext_s   TYPE c LENGTH 10,
-*             scrtext_m   TYPE c LENGTH 20,
-*             scrtext_l   TYPE c LENGTH 40,
-*             keyflag     TYPE c LENGTH 1,
-*             lowercase   TYPE c LENGTH 1,
-*             mac         TYPE c LENGTH 1,
-*             genkey      TYPE c LENGTH 1,
-*             noforkey    TYPE c LENGTH 1,
-*             valexi      TYPE c LENGTH 1,
-*             noauthch    TYPE c LENGTH 1,
-*             sign        TYPE c LENGTH 1,
-*             dynpfld     TYPE c LENGTH 1,
-*             f4availabl  TYPE c LENGTH 1,
-*             comptype    TYPE c LENGTH 1,
-*             lfieldname  TYPE c LENGTH 132,
-*             ltrflddis   TYPE c LENGTH 1,
-*             bidictrlc   TYPE c LENGTH 1,
-*             outputstyle TYPE n LENGTH 2,
-*             nohistory   TYPE c LENGTH 1,
-*             ampmformat  TYPE c LENGTH 1,
-*           END OF ty_s_dfies.
-*    temp10 ?= cl_abap_structdescr=>describe_by_name( `TY_S_DFIES` ).
-
     temp10 ?= cl_abap_structdescr=>describe_by_name( `DFIES` ).
 
     lo_struct = temp10.
@@ -1710,159 +1652,6 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
        ) INTO TABLE result.
 
     ENDLOOP.
-*            structdescr->
-*        <dfies> = structdescr->get_ddic_field_list( ).
-
-*        LOOP AT <dfies> ASSIGNING <line>.
-*
-*          LOOP AT comps INTO comp.
-*
-*            ASSIGN COMPONENT comp-name OF STRUCTURE <line> TO <value>.
-*            IF <value> IS NOT ASSIGNED.
-*              CONTINUE.
-*            ENDIF.
-*
-*            ASSIGN COMPONENT comp-name OF STRUCTURE s_dfies TO <value_dest>.
-*            IF <value_dest> IS NOT ASSIGNED.
-*              CONTINUE.
-*            ENDIF.
-*
-*            <value_dest> = <value>.
-*
-*            UNASSIGN <value>.
-*            UNASSIGN <value_dest>.
-*
-*          ENDLOOP.
-*
-*          APPEND s_dfies TO result.
-*          CLEAR s_dfies.
-*
-*        ENDLOOP.
-
-
-
-*    DATA db        TYPE REF TO object.
-*    DATA fields    TYPE REF TO object.
-*    DATA r_names   TYPE REF TO data.
-*    DATA t_param   TYPE abap_parmbind_tab.
-*    DATA field     TYPE REF TO object.
-*    DATA content   TYPE REF TO object.
-*    DATA r_content TYPE REF TO data.
-*    DATA type      TYPE REF TO object.
-*    DATA element   TYPE REF TO object.
-*    DATA tab       TYPE c LENGTH 16.
-*
-*    FIELD-SYMBOLS <any>   TYPE any.
-*    FIELD-SYMBOLS <names> TYPE STANDARD TABLE.
-*    FIELD-SYMBOLS <name>  TYPE any.
-*    FIELD-SYMBOLS <fiel>  TYPE REF TO object.
-*
-*    tab = tabname.
-*
-*    CALL METHOD (`XCO_CP_ABAP_DICTIONARY`)=>database_table
-*      EXPORTING
-*        iv_name           = tab
-*      RECEIVING
-*        ro_database_table = db.
-*
-*    ASSIGN db->(`IF_XCO_DATABASE_TABLE~FIELDS->IF_XCO_DBT_FIELDS_FACTORY~ALL`) TO <any>.
-*
-*    IF sy-subrc <> 0.
-*      RETURN.
-*    ENDIF.
-*
-*    fields = <any>.
-*
-*    CREATE DATA r_names TYPE (`SXCO_T_AD_FIELD_NAMES`).
-*    ASSIGN r_names->* TO <Names>.
-*    IF <Names> IS NOT ASSIGNED.
-*      RETURN.
-*    ENDIF.
-*
-*    CALL METHOD fields->(`IF_XCO_DBT_FIELDS~GET_NAMES`)
-*      RECEIVING
-*        rt_names = <Names>.
-*
-*    LOOP AT <Names> ASSIGNING <name>.
-*
-*      CLEAR t_param.
-*
-*      INSERT VALUE #( name  = `IV_NAME`
-*                      kind  = cl_abap_objectdescr=>exporting
-*                      value = REF #( <name> ) ) INTO TABLE t_param.
-*      INSERT VALUE #( name  = `RO_FIELD`
-*                      kind  = cl_abap_objectdescr=>receiving
-*                      value = REF #( field ) ) INTO TABLE t_param.
-*
-*      CALL METHOD db->(`IF_XCO_DATABASE_TABLE~FIELD`)
-*        PARAMETER-TABLE t_param.
-*
-*      ASSIGN t_param[ name = `RO_FIELD` ] TO FIELD-SYMBOL(<line>).
-*      IF <line> IS NOT ASSIGNED.
-*        CONTINUE.
-*      ENDIF.
-*      ASSIGN <line>-value->* TO <fiel>.
-*      IF <fiel> IS NOT ASSIGNED.
-*        CONTINUE.
-*      ENDIF.
-*
-*      CALL METHOD <fiel>->(`IF_XCO_DBT_FIELD~CONTENT`)
-*        RECEIVING
-*          ro_content = content.
-*
-*      CREATE DATA r_content TYPE (`IF_XCO_DBT_FIELD_CONTENT=>TS_CONTENT`).
-*      ASSIGN r_content->* TO FIELD-SYMBOL(<Content>) CASTING TYPE (`IF_XCO_DBT_FIELD_CONTENT=>TS_CONTENT`).
-*      IF <content> IS NOT ASSIGNED.
-*        CONTINUE.
-*      ENDIF.
-*
-*      CALL METHOD content->(`IF_XCO_DBT_FIELD_CONTENT~GET`)
-*        RECEIVING
-*          rs_content = <Content>.
-*
-*      ASSIGN COMPONENT `KEY_INDICATOR` OF STRUCTURE <content> TO FIELD-SYMBOL(<key>).
-*      IF <key> IS NOT ASSIGNED.
-*        CONTINUE.
-*      ENDIF.
-*      ASSIGN COMPONENT `SHORT_DESCRIPTION` OF STRUCTURE <content> TO FIELD-SYMBOL(<text>).
-*      IF <text> IS NOT ASSIGNED.
-*        CONTINUE.
-*      ENDIF.
-*      ASSIGN COMPONENT `TYPE` OF STRUCTURE <content> TO FIELD-SYMBOL(<type>).
-*      IF <type> IS NOT ASSIGNED.
-*        CONTINUE.
-*      ENDIF.
-*
-*      type = <type>.
-*
-*      CALL METHOD type->(`IF_XCO_DBT_FIELD_TYPE~GET_DATA_ELEMENT`)
-*        RECEIVING
-*          ro_data_element = element.
-*
-*      IF <text> IS INITIAL.
-*        <text> = <name>.
-*      ENDIF.
-*
-*      ASSIGN element->(`IF_XCO_AD_OBJECT~NAME`) TO FIELD-SYMBOL(<rname>).
-*      IF <rname> IS NOT ASSIGNED.
-*        CONTINUE.
-*      ENDIF.
-*
-*      IF sy-subrc = 0.
-*        result = VALUE #( BASE result
-*                          ( fieldname = <name> keyflag = <key> tabname = tab scrtext_s = <text> rollname = <rname> ) ).
-*      ELSE.
-*        result = VALUE #( BASE result
-*                          ( fieldname = <name> keyflag = <key> tabname = tab scrtext_s = <text> rollname = <name> ) ).
-*      ENDIF.
-*
-*      UNASSIGN <Content>.
-*      UNASSIGN <key>.
-*      UNASSIGN <Text>.
-*      UNASSIGN <type>.
-*      UNASSIGN <rname>.
-*
-*    ENDLOOP.
 
   ENDMETHOD.
 
@@ -1923,11 +1712,12 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
 
   METHOD msg_get_internal.
 
+    FIELD-SYMBOLS <tab> TYPE ANY TABLE.
+
     DATA(lv_kind) = rtti_get_type_kind( val ).
     CASE lv_kind.
 
       WHEN cl_abap_datadescr=>typekind_table.
-        FIELD-SYMBOLS <tab> TYPE ANY TABLE.
         ASSIGN val TO <tab>.
         LOOP AT <tab> ASSIGNING FIELD-SYMBOL(<row>).
           DATA(lt_tab) = msg_get_internal( <row> ).
@@ -1986,6 +1776,8 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
   METHOD msg_get_by_oref.
 
     FIELD-SYMBOLS <comp> TYPE any.
+    DATA obj    TYPE REF TO object.
+    DATA lr_tab TYPE REF TO data.
 
     TRY.
         DATA(lx) = CAST cx_root( val ).
@@ -2003,12 +1795,10 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
         INSERT ls_result INTO TABLE result.
       CATCH cx_root.
 
-        DATA obj TYPE REF TO object.
         obj = val.
 
         TRY.
 
-            DATA lr_tab TYPE REF TO data.
             CREATE DATA lr_tab TYPE (`if_bali_log=>ty_item_table`).
             ASSIGN lr_tab->* TO FIELD-SYMBOL(<tab2>).
 
@@ -2115,6 +1905,8 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
 
   METHOD msg_get_rap.
 
+    FIELD-SYMBOLS <ftab> TYPE ANY TABLE.
+
     DATA(lv_kind) = rtti_get_type_kind( val ).
     IF lv_kind <> cl_abap_datadescr=>typekind_struct1
        AND lv_kind <> cl_abap_datadescr=>typekind_struct2.
@@ -2135,7 +1927,6 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
       CHECK sy-subrc = 0.
       CHECK rtti_get_type_kind( <tab> ) = cl_abap_datadescr=>typekind_table.
 
-      FIELD-SYMBOLS <ftab> TYPE ANY TABLE.
       ASSIGN <tab> TO <ftab>.
 
       LOOP AT <ftab> ASSIGNING FIELD-SYMBOL(<row>).
@@ -2156,6 +1947,8 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD msg_get_rap_row.
+
+    DATA lv_cause TYPE i.
 
     CLEAR messages.
     is_row = abap_false.
@@ -2182,7 +1975,6 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
       is_row = abap_true.
       ASSIGN COMPONENT `CAUSE` OF STRUCTURE <fail> TO FIELD-SYMBOL(<cause>).
       IF sy-subrc = 0.
-        DATA lv_cause TYPE i.
         lv_cause = <cause>.
         DATA(lv_text) = msg_get_rap_fail_text( lv_cause ).
         IF entity_name IS NOT INITIAL.
@@ -2269,6 +2061,8 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
 
   METHOD msg_get_rap_flatten.
 
+    DATA lv_str TYPE string.
+
     DATA(lv_kind) = rtti_get_type_kind( val ).
     IF lv_kind <> cl_abap_datadescr=>typekind_struct1
        AND lv_kind <> cl_abap_datadescr=>typekind_struct2.
@@ -2292,7 +2086,6 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
         ENDIF.
       ELSEIF <comp> IS NOT INITIAL.
         TRY.
-            DATA lv_str TYPE string.
             lv_str = <comp>.
             IF result IS NOT INITIAL.
               result = |{ result }, |.

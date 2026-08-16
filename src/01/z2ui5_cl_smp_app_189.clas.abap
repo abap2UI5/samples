@@ -19,7 +19,6 @@ CLASS z2ui5_cl_smp_app_189 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
 
 
@@ -96,6 +95,8 @@ CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_focus
           t_arg = VALUE #( ( `IdOne` ) ) ).
+    ELSEIF client->check_on_navigated( ).
+      render( ).
     ENDIF.
 
     dispatch( ).

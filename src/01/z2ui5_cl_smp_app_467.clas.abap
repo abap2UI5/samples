@@ -50,6 +50,8 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
             additionaltext = `Autosave` ) ).
 
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ENDIF.
 
