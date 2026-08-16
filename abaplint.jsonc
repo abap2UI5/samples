@@ -457,7 +457,14 @@
     "pragma_style": true,
     "prefer_is_not": true,
     "prefer_pragmas": true,
-    "prefer_raise_exception_new": true,
+    // Excluded for samples-stack package 06, which ships at 7.40 SP08 (see
+    // .github/packages.json): RAISE EXCEPTION NEW is 7.52 syntax. The root
+    // abaplint.jsonc lints the whole tree at v757 and cannot see a per-package
+    // release floor - the one-package branch build is the gate that can, and
+    // it is the one that caught this.
+    "prefer_raise_exception_new": {
+      "exclude": ["z2ui5_cl_smps_app_485\\.clas\\."]
+    },
     "prefer_returning_to_exporting": true,
     "prefer_xsdbool": true,
     "preferred_compare_operator": true,
