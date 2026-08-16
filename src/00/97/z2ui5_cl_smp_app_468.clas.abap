@@ -1,3 +1,4 @@
+" @keywords routing mode fresh navigation restart new instance nav_app_call
 "! Hash-based app routing (UI5 Router style), mode FRESH:
 "! follow_up_action( cs_event-set_nav_routing ) with mode FRESH makes the URL
 "! mirror the running app by CLASS only ('#/app/[CLASS]'). Browser Back/Forward - and a

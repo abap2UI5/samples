@@ -257,12 +257,12 @@ is absent there.
 
 | Sample | Class |
 |---|---|
-| **Navigation** — app state | [`Z2UI5_CL_SMP_APP_321`](src/00/97/z2ui5_cl_smp_app_321.clas.abap) |
-| **Navigation** — app state share | [`Z2UI5_CL_SMP_APP_323`](src/00/97/z2ui5_cl_smp_app_323.clas.abap) |
-| **Navigation** — push state | [`Z2UI5_CL_SMP_APP_322`](src/00/97/z2ui5_cl_smp_app_322.clas.abap) |
-| **Navigation** — Routing mode fresh | [`Z2UI5_CL_SMP_APP_468`](src/00/97/z2ui5_cl_smp_app_468.clas.abap) |
-| **Navigation** — Routing mode keep | [`Z2UI5_CL_SMP_APP_480`](src/00/97/z2ui5_cl_smp_app_480.clas.abap) |
-| **Popup** — change a popup control from the backend | [`Z2UI5_CL_SMP_APP_141`](src/00/97/z2ui5_cl_smp_app_141.clas.abap) |
+| **Navigation** — app state<br><sub>app state url bookmark restore set_app_state_active reload deep link</sub> | [`Z2UI5_CL_SMP_APP_321`](src/00/97/z2ui5_cl_smp_app_321.clas.abap) |
+| **Navigation** — app state share<br><sub>app state share clipboard copy link colleague send url</sub> | [`Z2UI5_CL_SMP_APP_323`](src/00/97/z2ui5_cl_smp_app_323.clas.abap) |
+| **Navigation** — push state<br><sub>push state browser history back button hash url set_push_state</sub> | [`Z2UI5_CL_SMP_APP_322`](src/00/97/z2ui5_cl_smp_app_322.clas.abap) |
+| **Navigation** — Routing mode fresh<br><sub>routing mode fresh navigation restart new instance nav_app_call</sub> | [`Z2UI5_CL_SMP_APP_468`](src/00/97/z2ui5_cl_smp_app_468.clas.abap) |
+| **Navigation** — Routing mode keep<br><sub>routing mode keep navigation state preserved back nav_app_call</sub> | [`Z2UI5_CL_SMP_APP_480`](src/00/97/z2ui5_cl_smp_app_480.clas.abap) |
+| **Popup** — change a popup control from the backend<br><sub>popup dialog change control backend control_by_id update running</sub> | [`Z2UI5_CL_SMP_APP_141`](src/00/97/z2ui5_cl_smp_app_141.clas.abap) |
 
 ### testing — `src/00/98`
 

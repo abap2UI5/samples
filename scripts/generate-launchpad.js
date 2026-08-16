@@ -116,6 +116,31 @@ function rewrite(file, list) {
   fs.writeFileSync(file, text);
 }
 
+/* A TILE without `@keywords` is a tile nobody can find.
+ *
+ * DESCRIPT caps the short text at 60 characters, so it carries the name of the
+ * thing and little else; `@keywords` is where the words a newcomer actually
+ * types go ("f4 search help suggestion input"). Three readers use them - the
+ * overview app's search box, `Ctrl+F` on SAMPLES.md, and an agent asking
+ * whether a sample for X exists - and all three degrade the same silent way:
+ * the sample is still listed, still correct, and simply never comes up.
+ *
+ * Scoped to the areas that HAVE an overview app, because that is what a tile
+ * is. The ZZZ helpers are already out (scanSamples flags them): a helper is
+ * reached BY another sample, never looked up, so search terms for it would be
+ * words nobody will type. */
+for (const [area, list] of Object.entries(tiles)) {
+  if (!TARGETS[area]) continue;
+  const unsearchable = list.filter((t) => !t.keywords);
+  if (unsearchable.length) {
+    console.error(`${unsearchable.length} tile(s) in src/${area} carry no \` @keywords\` line, so nothing can find them:`);
+    for (const t of unsearchable) console.error(`  ${t.app}  (${t.header})`);
+    console.error('\nAdd it as the FIRST line of the class (AGENTS.md section 4, tile schema):');
+    console.error('  " @keywords <words a newcomer would type, lowercase, space separated>');
+    process.exit(1);
+  }
+}
+
 let total = 0;
 for (const [area, list] of Object.entries(tiles)) {
   const file = TARGETS[area];
