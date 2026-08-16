@@ -27,7 +27,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { ROOT, scanSamples } = require('./lib/scan-samples');
+const { ROOT, DOCS_SITE, scanSamples } = require('./lib/scan-samples');
 
 const OUT = path.join(ROOT, 'SAMPLES.md');
 
@@ -60,8 +60,14 @@ function row(tile, underHeading) {
   // never renders them; here the page IS the search box, so they belong in it -
   // quietly, in the small type the summary line of a row deserves.
   const terms = tile.keywords ? `<br><sub>${cell(tile.keywords)}</sub>` : '';
+  // A sample shows HOW; the documentation says WHY and when. Where a chapter
+  // exists, the reader of this page should not have to go looking for it - the
+  // two were written about the same thing.
+  const chapters = tile.docs.length
+    ? `<br><sub>docs: ${tile.docs.map((u) => `[${u.replace(DOCS_SITE, '')}](${u})`).join(', ')}</sub>`
+    : '';
   const source = `${tile.path}/${tile.app}.clas.abap`;
-  return `| ${title}${terms} | [\`${tile.app.toUpperCase()}\`](${source}) |`;
+  return `| ${title}${terms}${chapters} | [\`${tile.app.toUpperCase()}\`](${source}) |`;
 }
 
 function table(tiles, underHeading = false) {

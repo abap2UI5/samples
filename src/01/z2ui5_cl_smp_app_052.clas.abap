@@ -1,4 +1,5 @@
 " @keywords list report dynamicpage row link details table
+" @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover
 CLASS z2ui5_cl_smp_app_052 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

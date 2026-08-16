@@ -1,4 +1,5 @@
 " @keywords planningcalendar appointment javascript date object iso
+" @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_456 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

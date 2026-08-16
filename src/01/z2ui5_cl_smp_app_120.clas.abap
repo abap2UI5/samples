@@ -1,4 +1,5 @@
 " @keywords gps position latitude longitude altitude location
+" @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/geolocation
 CLASS z2ui5_cl_smp_app_120 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

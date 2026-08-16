@@ -1,4 +1,5 @@
 " @keywords roundtrip restart second view uncaught error controller basics
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle https://abap2ui5.github.io/docs/cookbook/expert_more/snippets
 CLASS z2ui5_cl_smp_app_004 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

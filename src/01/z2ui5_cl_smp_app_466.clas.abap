@@ -1,4 +1,5 @@
 " @keywords icon glyph placeholder text status expandinlineicons
+" @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_466 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

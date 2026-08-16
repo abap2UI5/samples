@@ -1,4 +1,5 @@
 " @keywords position pixel scroll_to restore refresh toolbar
+" @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling
 CLASS z2ui5_cl_smp_app_362 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

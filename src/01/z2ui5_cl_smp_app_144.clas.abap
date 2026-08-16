@@ -1,4 +1,5 @@
 " @keywords cell input internal table row field level
+" @docs https://abap2ui5.github.io/docs/cookbook/model/binding
 CLASS z2ui5_cl_smp_app_144 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

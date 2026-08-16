@@ -1,4 +1,5 @@
 " @keywords datepicker datevalue javascript date object iso
+" @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_457 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

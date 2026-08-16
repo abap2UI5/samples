@@ -1,4 +1,5 @@
 " @keywords confirm warning error success information dialog action
+" @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_382 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

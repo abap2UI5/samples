@@ -38,6 +38,11 @@ const OVERVIEW_APPS = new Set(['z2ui5_cl_smp_app_000']);
 // demo token is fully migrated. A class that does not carry it is not a sample.
 const SAMPLE_PREFIX = 'z2ui5_cl_smp_app';
 
+// Where a `" @docs` line has to point. Anything else is a typo or a link to
+// somewhere that is not the documentation, and both are worth refusing rather
+// than rendering.
+const DOCS_SITE = 'https://abap2ui5.github.io/docs/';
+
 function walk(dir, out = []) {
   for (const name of fs.readdirSync(dir)) {
     const full = path.join(dir, name);
@@ -135,6 +140,19 @@ function scanSamples() {
     // is reported by the extended check.
     const keywords = (source.match(/^" @keywords (.+?)\r?$/m) || [, ''])[1].trim();
 
+    // the chapter of abap2UI5/docs that explains what this sample demonstrates,
+    // as full URLs so the line is useful to somebody reading the class itself -
+    // which is the point: a search engine drops people into a class, and until
+    // now the code was all they got. The documentation declares the same pair
+    // from its side (docs/scripts/link-samples.mjs) and its check fails when the
+    // two disagree, so neither direction can rot on its own.
+    const docs = (source.match(/^" @docs (.+?)\r?$/m) || [, ''])[1].trim().split(/\s+/).filter(Boolean);
+    for (const url of docs) {
+      if (!url.startsWith(DOCS_SITE)) {
+        throw new Error(`@docs of ${cls} is not a documentation URL: ${url} (expected ${DOCS_SITE}...)`);
+      }
+    }
+
     // demo kit rebuilds (AGENTS.md section 1) carry the full, untruncated demo
     // kit description as ABAP Doc lines below the URL line - prefer it as sub
     // over the 60-char DESCRIPT. The Rebuild line may be preceded by marker
@@ -158,6 +176,7 @@ function scanSamples() {
       base: headerBase(header),
       sub: fullSub,
       keywords,
+      docs,
       // repository-relative folder of the class, so a link to the source can
       // be built - the class name does not encode the folder
       // (FOLDER_LOGIC=PREFIX), so only the scan knows where a sample lives
@@ -202,4 +221,4 @@ function scanSamples() {
   return { areas, hidden };
 }
 
-module.exports = { ROOT, SRC, AREAS, scanSamples, headerBase };
+module.exports = { ROOT, SRC, AREAS, DOCS_SITE, scanSamples, headerBase };

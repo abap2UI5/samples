@@ -1,4 +1,5 @@
 " @keywords template repeat runtime generated nested nest_view_display
+" @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views https://abap2ui5.github.io/docs/cookbook/view/xml_templating
 CLASS z2ui5_cl_smp_app_176 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

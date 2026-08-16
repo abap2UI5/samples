@@ -1,4 +1,5 @@
 " @keywords column filter reset refresh uitableext grid alv
+" @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_143 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

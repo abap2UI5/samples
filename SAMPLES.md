@@ -32,106 +32,106 @@ plain OpenUI5 1.71. Each adds one idea.
 
 | Sample | Class |
 |---|---|
-| **Basics I** — Hello World, the Smallest App<br><sub>hello world smallest first app minimal start here template</sub> | [`Z2UI5_CL_SMP_APP_493`](src/01/z2ui5_cl_smp_app_493.clas.abap) |
-| **Basics II** — Data Binding: Input and Button<br><sub>binding _bind model attribute value input button serialize</sub> | [`Z2UI5_CL_SMP_APP_494`](src/01/z2ui5_cl_smp_app_494.clas.abap) |
-| **Basics III** — Lifecycle: Init, Event, Navigated<br><sub>lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated</sub> | [`Z2UI5_CL_SMP_APP_495`](src/01/z2ui5_cl_smp_app_495.clas.abap) |
-| **Basics IV** — Events, Views and Roundtrips<br><sub>roundtrip restart second view uncaught error controller basics</sub> | [`Z2UI5_CL_SMP_APP_004`](src/01/z2ui5_cl_smp_app_004.clas.abap) |
-| **Basics V** — The Developer Tools (Ctrl+F12)<br><sub>developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export</sub> | [`Z2UI5_CL_SMP_APP_496`](src/01/z2ui5_cl_smp_app_496.clas.abap) |
+| **Basics I** — Hello World, the Smallest App<br><sub>hello world smallest first app minimal start here template</sub><br><sub>docs: [get_started/hello_world](https://abap2ui5.github.io/docs/get_started/hello_world), [cookbook/view/definition](https://abap2ui5.github.io/docs/cookbook/view/definition), [cookbook/expert_more/snippets](https://abap2ui5.github.io/docs/cookbook/expert_more/snippets)</sub> | [`Z2UI5_CL_SMP_APP_493`](src/01/z2ui5_cl_smp_app_493.clas.abap) |
+| **Basics II** — Data Binding: Input and Button<br><sub>binding _bind model attribute value input button serialize</sub><br><sub>docs: [cookbook/model/binding](https://abap2ui5.github.io/docs/cookbook/model/binding)</sub> | [`Z2UI5_CL_SMP_APP_494`](src/01/z2ui5_cl_smp_app_494.clas.abap) |
+| **Basics III** — Lifecycle: Init, Event, Navigated<br><sub>lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated</sub><br><sub>docs: [cookbook/event_navigation/life_cycle](https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle), [cookbook/expert_more/snippets](https://abap2ui5.github.io/docs/cookbook/expert_more/snippets)</sub> | [`Z2UI5_CL_SMP_APP_495`](src/01/z2ui5_cl_smp_app_495.clas.abap) |
+| **Basics IV** — Events, Views and Roundtrips<br><sub>roundtrip restart second view uncaught error controller basics</sub><br><sub>docs: [cookbook/event_navigation/life_cycle](https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle), [cookbook/expert_more/snippets](https://abap2ui5.github.io/docs/cookbook/expert_more/snippets)</sub> | [`Z2UI5_CL_SMP_APP_004`](src/01/z2ui5_cl_smp_app_004.clas.abap) |
+| **Basics V** — The Developer Tools (Ctrl+F12)<br><sub>developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export</sub><br><sub>docs: [cookbook/troubleshooting/common_failures](https://abap2ui5.github.io/docs/cookbook/troubleshooting/common_failures)</sub> | [`Z2UI5_CL_SMP_APP_496`](src/01/z2ui5_cl_smp_app_496.clas.abap) |
 
 ### Binding
 
 | Sample | Class |
 |---|---|
-| Currency Amounts (sap.ui.model.type.Currency)<br><sub>amount decimals leading zeros number format</sub> | [`Z2UI5_CL_SMP_APP_067`](src/01/z2ui5_cl_smp_app_067.clas.abap) |
-| Dynamic Table Typed at Runtime (RTTI)<br><sub>generic data reference create data ddic dynamic itab</sub> | [`Z2UI5_CL_SMP_APP_061`](src/01/z2ui5_cl_smp_app_061.clas.abap) |
-| Expression Binding, Types and Composite Parts<br><sub>formatter parts conditional regexp visible enabled syntax</sub> | [`Z2UI5_CL_SMP_APP_027`](src/01/z2ui5_cl_smp_app_027.clas.abap) |
-| Model setSizeLimit for Large Tables (A)<br><sub>combobox jsonmodel size limit large itab 100 entries</sub> | [`Z2UI5_CL_SMP_APP_071`](src/01/z2ui5_cl_smp_app_071.clas.abap) |
-| Single Table Cell (tab_index)<br><sub>cell input internal table row field level</sub> | [`Z2UI5_CL_SMP_APP_144`](src/01/z2ui5_cl_smp_app_144.clas.abap) |
-| Structure Fields and INCLUDEs<br><sub>structure component include flat form level</sub> | [`Z2UI5_CL_SMP_APP_166`](src/01/z2ui5_cl_smp_app_166.clas.abap) |
-| Types for Integer, Decimal, Date and Time<br><sub>type conversion sum amount number field</sub> | [`Z2UI5_CL_SMP_APP_047`](src/01/z2ui5_cl_smp_app_047.clas.abap) |
+| Currency Amounts (sap.ui.model.type.Currency)<br><sub>amount decimals leading zeros number format</sub><br><sub>docs: [cookbook/model/formatter](https://abap2ui5.github.io/docs/cookbook/model/formatter)</sub> | [`Z2UI5_CL_SMP_APP_067`](src/01/z2ui5_cl_smp_app_067.clas.abap) |
+| Dynamic Table Typed at Runtime (RTTI)<br><sub>generic data reference create data ddic dynamic itab</sub><br><sub>docs: [cookbook/model/binding](https://abap2ui5.github.io/docs/cookbook/model/binding)</sub> | [`Z2UI5_CL_SMP_APP_061`](src/01/z2ui5_cl_smp_app_061.clas.abap) |
+| Expression Binding, Types and Composite Parts<br><sub>formatter parts conditional regexp visible enabled syntax</sub><br><sub>docs: [cookbook/model/expression_binding](https://abap2ui5.github.io/docs/cookbook/model/expression_binding)</sub> | [`Z2UI5_CL_SMP_APP_027`](src/01/z2ui5_cl_smp_app_027.clas.abap) |
+| Model setSizeLimit for Large Tables (A)<br><sub>combobox jsonmodel size limit large itab 100 entries</sub><br><sub>docs: [cookbook/model/size_limit](https://abap2ui5.github.io/docs/cookbook/model/size_limit)</sub> | [`Z2UI5_CL_SMP_APP_071`](src/01/z2ui5_cl_smp_app_071.clas.abap) |
+| Single Table Cell (tab_index)<br><sub>cell input internal table row field level</sub><br><sub>docs: [cookbook/model/binding](https://abap2ui5.github.io/docs/cookbook/model/binding)</sub> | [`Z2UI5_CL_SMP_APP_144`](src/01/z2ui5_cl_smp_app_144.clas.abap) |
+| Structure Fields and INCLUDEs<br><sub>structure component include flat form level</sub><br><sub>docs: [cookbook/model/binding](https://abap2ui5.github.io/docs/cookbook/model/binding)</sub> | [`Z2UI5_CL_SMP_APP_166`](src/01/z2ui5_cl_smp_app_166.clas.abap) |
+| Types for Integer, Decimal, Date and Time<br><sub>type conversion sum amount number field</sub><br><sub>docs: [cookbook/model/binding](https://abap2ui5.github.io/docs/cookbook/model/binding)</sub> | [`Z2UI5_CL_SMP_APP_047`](src/01/z2ui5_cl_smp_app_047.clas.abap) |
 
 ### Browser
 
 | Sample | Class |
 |---|---|
-| Copy to Clipboard (A)<br><sub>clipboard paste copy text area</sub> | [`Z2UI5_CL_SMP_APP_325`](src/01/z2ui5_cl_smp_app_325.clas.abap) |
-| Local and Session Storage (A,C)<br><sub>localstorage sessionstorage persist store_data offline</sub> | [`Z2UI5_CL_SMP_APP_327`](src/01/z2ui5_cl_smp_app_327.clas.abap) |
+| Copy to Clipboard (A)<br><sub>clipboard paste copy text area</sub><br><sub>docs: [cookbook/browser_interaction/clipboard](https://abap2ui5.github.io/docs/cookbook/browser_interaction/clipboard)</sub> | [`Z2UI5_CL_SMP_APP_325`](src/01/z2ui5_cl_smp_app_325.clas.abap) |
+| Local and Session Storage (A,C)<br><sub>localstorage sessionstorage persist store_data offline</sub><br><sub>docs: [cookbook/browser_interaction/clipboard](https://abap2ui5.github.io/docs/cookbook/browser_interaction/clipboard)</sub> | [`Z2UI5_CL_SMP_APP_327`](src/01/z2ui5_cl_smp_app_327.clas.abap) |
 | Logout from the Client (A)<br><sub>logoff signout icf session end fiori launchpad</sub> | [`Z2UI5_CL_SMP_APP_361`](src/01/z2ui5_cl_smp_app_361.clas.abap) |
-| Open a URL in a New Tab (A)<br><sub>url window open_new_tab link target</sub> | [`Z2UI5_CL_SMP_APP_073`](src/01/z2ui5_cl_smp_app_073.clas.abap) |
-| Open Mail, Phone and SMS Links (A)<br><sub>mailto tel sms urlhelper redirect native link</sub> | [`Z2UI5_CL_SMP_APP_316`](src/01/z2ui5_cl_smp_app_316.clas.abap) |
-| Reload the Page (A)<br><sub>reload refresh restart location_reload url</sub> | [`Z2UI5_CL_SMP_APP_492`](src/01/z2ui5_cl_smp_app_492.clas.abap) |
-| Set the Tab Favicon (A)<br><sub>favicon icon tab image data uri</sub> | [`Z2UI5_CL_SMP_APP_491`](src/01/z2ui5_cl_smp_app_491.clas.abap) |
-| Set the Tab Title (A)<br><sub>document.title tab caption headline set_title</sub> | [`Z2UI5_CL_SMP_APP_125`](src/01/z2ui5_cl_smp_app_125.clas.abap) |
-| Soft Keyboard Mode on Mobile (A)<br><sub>mobile numeric keypad keyboard_set_mode phone input</sub> | [`Z2UI5_CL_SMP_APP_352`](src/01/z2ui5_cl_smp_app_352.clas.abap) |
+| Open a URL in a New Tab (A)<br><sub>url window open_new_tab link target</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_073`](src/01/z2ui5_cl_smp_app_073.clas.abap) |
+| Open Mail, Phone and SMS Links (A)<br><sub>mailto tel sms urlhelper redirect native link</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_316`](src/01/z2ui5_cl_smp_app_316.clas.abap) |
+| Reload the Page (A)<br><sub>reload refresh restart location_reload url</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_492`](src/01/z2ui5_cl_smp_app_492.clas.abap) |
+| Set the Tab Favicon (A)<br><sub>favicon icon tab image data uri</sub><br><sub>docs: [cookbook/browser_interaction/title](https://abap2ui5.github.io/docs/cookbook/browser_interaction/title)</sub> | [`Z2UI5_CL_SMP_APP_491`](src/01/z2ui5_cl_smp_app_491.clas.abap) |
+| Set the Tab Title (A)<br><sub>document.title tab caption headline set_title</sub><br><sub>docs: [cookbook/browser_interaction/title](https://abap2ui5.github.io/docs/cookbook/browser_interaction/title)</sub> | [`Z2UI5_CL_SMP_APP_125`](src/01/z2ui5_cl_smp_app_125.clas.abap) |
+| Soft Keyboard Mode on Mobile (A)<br><sub>mobile numeric keypad keyboard_set_mode phone input</sub><br><sub>docs: [cookbook/browser_interaction/soft_keyboard](https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard)</sub> | [`Z2UI5_CL_SMP_APP_352`](src/01/z2ui5_cl_smp_app_352.clas.abap) |
 
 ### Control
 
 | Sample | Class |
 |---|---|
-| Expand a Panel by ID (setExpanded) (A)<br><sub>panel collapse expand setexpanded control_by_id whitelisted</sub> | [`Z2UI5_CL_SMP_APP_448`](src/01/z2ui5_cl_smp_app_448.clas.abap) |
-| MultiInput with Tokens (C)<br><sub>multiinput token tokens suggestion custom control</sub> | [`Z2UI5_CL_SMP_APP_078`](src/01/z2ui5_cl_smp_app_078.clas.abap) |
-| Open the PDF Viewer by ID (A)<br><sub>pdfviewer pdf document viewer popup control_by_id whitelisted</sub> | [`Z2UI5_CL_SMP_APP_449`](src/01/z2ui5_cl_smp_app_449.clas.abap) |
-| Switch NavContainer Page by ID (A)<br><sub>navcontainer icontabbar icontabheader page switch control_by_id whitelisted</sub> | [`Z2UI5_CL_SMP_APP_088`](src/01/z2ui5_cl_smp_app_088.clas.abap) |
-| Wizard with Steps (A)<br><sub>wizard step branching discardprogress setnextstep control_by_id</sub> | [`Z2UI5_CL_SMP_APP_202`](src/01/z2ui5_cl_smp_app_202.clas.abap) |
+| Expand a Panel by ID (setExpanded) (A)<br><sub>panel collapse expand setexpanded control_by_id whitelisted</sub><br><sub>docs: [cookbook/expert_more/follow_up_action](https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action)</sub> | [`Z2UI5_CL_SMP_APP_448`](src/01/z2ui5_cl_smp_app_448.clas.abap) |
+| MultiInput with Tokens (C)<br><sub>multiinput token tokens suggestion custom control</sub><br><sub>docs: [cookbook/expert_more/value_help](https://abap2ui5.github.io/docs/cookbook/expert_more/value_help)</sub> | [`Z2UI5_CL_SMP_APP_078`](src/01/z2ui5_cl_smp_app_078.clas.abap) |
+| Open the PDF Viewer by ID (A)<br><sub>pdfviewer pdf document viewer popup control_by_id whitelisted</sub><br><sub>docs: [cookbook/device_capabilities/pdf](https://abap2ui5.github.io/docs/cookbook/device_capabilities/pdf), [cookbook/expert_more/follow_up_action](https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action)</sub> | [`Z2UI5_CL_SMP_APP_449`](src/01/z2ui5_cl_smp_app_449.clas.abap) |
+| Switch NavContainer Page by ID (A)<br><sub>navcontainer icontabbar icontabheader page switch control_by_id whitelisted</sub><br><sub>docs: [cookbook/expert_more/follow_up_action](https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action)</sub> | [`Z2UI5_CL_SMP_APP_088`](src/01/z2ui5_cl_smp_app_088.clas.abap) |
+| Wizard with Steps (A)<br><sub>wizard step branching discardprogress setnextstep control_by_id</sub><br><sub>docs: [cookbook/expert_more/follow_up_action](https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action)</sub> | [`Z2UI5_CL_SMP_APP_202`](src/01/z2ui5_cl_smp_app_202.clas.abap) |
 
 ### CSS
 
 | Sample | Class |
 |---|---|
 | Color Table Cells from the Backend<br><sub>color background conditional formatting style data attribute</sub> | [`Z2UI5_CL_SMP_APP_305`](src/01/z2ui5_cl_smp_app_305.clas.abap) |
-| FlexBox Layouts with Custom Classes<br><sub>flexbox layout responsive navigation tile panel</sub> | [`Z2UI5_CL_SMP_APP_255`](src/01/z2ui5_cl_smp_app_255.clas.abap) |
-| Ship Your Own CSS with the View<br><sub>style stylesheet inline html class own design</sub> | [`Z2UI5_CL_SMP_APP_050`](src/01/z2ui5_cl_smp_app_050.clas.abap) |
+| FlexBox Layouts with Custom Classes<br><sub>flexbox layout responsive navigation tile panel</sub><br><sub>docs: [cookbook/view/definition](https://abap2ui5.github.io/docs/cookbook/view/definition)</sub> | [`Z2UI5_CL_SMP_APP_255`](src/01/z2ui5_cl_smp_app_255.clas.abap) |
+| Ship Your Own CSS with the View<br><sub>style stylesheet inline html class own design</sub><br><sub>docs: [cookbook/view/definition](https://abap2ui5.github.io/docs/cookbook/view/definition)</sub> | [`Z2UI5_CL_SMP_APP_050`](src/01/z2ui5_cl_smp_app_050.clas.abap) |
 
 ### Device
 
 | Sample | Class |
 |---|---|
-| Camera, Take Photos (C)<br><sub>camera photo picture webcam capture facing mode</sub> | [`Z2UI5_CL_SMP_APP_306`](src/01/z2ui5_cl_smp_app_306.clas.abap) |
-| Device Model: Phone, Tablet, Desktop (A)<br><sub>sap.ui.device responsive orientation resize media model</sub> | [`Z2UI5_CL_SMP_APP_445`](src/01/z2ui5_cl_smp_app_445.clas.abap) |
-| Frontend Info: UI5 Version, Theme, OS, Browser<br><sub>client info ui5 version theme os user agent device</sub> | [`Z2UI5_CL_SMP_APP_122`](src/01/z2ui5_cl_smp_app_122.clas.abap) |
-| Geolocation from the Browser (C)<br><sub>gps position latitude longitude altitude location</sub> | [`Z2UI5_CL_SMP_APP_120`](src/01/z2ui5_cl_smp_app_120.clas.abap) |
+| Camera, Take Photos (C)<br><sub>camera photo picture webcam capture facing mode</sub><br><sub>docs: [cookbook/device_capabilities/camera](https://abap2ui5.github.io/docs/cookbook/device_capabilities/camera)</sub> | [`Z2UI5_CL_SMP_APP_306`](src/01/z2ui5_cl_smp_app_306.clas.abap) |
+| Device Model: Phone, Tablet, Desktop (A)<br><sub>sap.ui.device responsive orientation resize media model</sub><br><sub>docs: [cookbook/model/device_model](https://abap2ui5.github.io/docs/cookbook/model/device_model), [cookbook/device_capabilities/info](https://abap2ui5.github.io/docs/cookbook/device_capabilities/info)</sub> | [`Z2UI5_CL_SMP_APP_445`](src/01/z2ui5_cl_smp_app_445.clas.abap) |
+| Frontend Info: UI5 Version, Theme, OS, Browser<br><sub>client info ui5 version theme os user agent device</sub><br><sub>docs: [cookbook/device_capabilities/info](https://abap2ui5.github.io/docs/cookbook/device_capabilities/info)</sub> | [`Z2UI5_CL_SMP_APP_122`](src/01/z2ui5_cl_smp_app_122.clas.abap) |
+| Geolocation from the Browser (C)<br><sub>gps position latitude longitude altitude location</sub><br><sub>docs: [cookbook/device_capabilities/geolocation](https://abap2ui5.github.io/docs/cookbook/device_capabilities/geolocation)</sub> | [`Z2UI5_CL_SMP_APP_120`](src/01/z2ui5_cl_smp_app_120.clas.abap) |
 
 ### Event
 
 | Sample | Class |
 |---|---|
-| Control Objects in t_arg (FacetFilter)<br><sub>facetfilter filter object marshalling selected items</sub> | [`Z2UI5_CL_SMP_APP_197`](src/01/z2ui5_cl_smp_app_197.clas.abap) |
-| Extra Arguments with t_arg<br><sub>argument parameter payload event data fixed value</sub> | [`Z2UI5_CL_SMP_APP_167`](src/01/z2ui5_cl_smp_app_167.clas.abap) |
-| Keyboard Shortcuts, Ctrl+S (A)<br><sub>shortcut hotkey ctrl key combination keyboard_shortcut</sub> | [`Z2UI5_CL_SMP_APP_471`](src/01/z2ui5_cl_smp_app_471.clas.abap) |
-| Link with preventDefault (A)<br><sub>link href default action check_prevent_default</sub> | [`Z2UI5_CL_SMP_APP_472`](src/01/z2ui5_cl_smp_app_472.clas.abap) |
+| Control Objects in t_arg (FacetFilter)<br><sub>facetfilter filter object marshalling selected items</sub><br><sub>docs: [cookbook/event_navigation/backend](https://abap2ui5.github.io/docs/cookbook/event_navigation/backend)</sub> | [`Z2UI5_CL_SMP_APP_197`](src/01/z2ui5_cl_smp_app_197.clas.abap) |
+| Extra Arguments with t_arg<br><sub>argument parameter payload event data fixed value</sub><br><sub>docs: [cookbook/event_navigation/backend](https://abap2ui5.github.io/docs/cookbook/event_navigation/backend)</sub> | [`Z2UI5_CL_SMP_APP_167`](src/01/z2ui5_cl_smp_app_167.clas.abap) |
+| Keyboard Shortcuts, Ctrl+S (A)<br><sub>shortcut hotkey ctrl key combination keyboard_shortcut</sub><br><sub>docs: [cookbook/browser_interaction/keyboard_shortcuts](https://abap2ui5.github.io/docs/cookbook/browser_interaction/keyboard_shortcuts)</sub> | [`Z2UI5_CL_SMP_APP_471`](src/01/z2ui5_cl_smp_app_471.clas.abap) |
+| Link with preventDefault (A)<br><sub>link href default action check_prevent_default</sub><br><sub>docs: [cookbook/event_navigation/frontend](https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend)</sub> | [`Z2UI5_CL_SMP_APP_472`](src/01/z2ui5_cl_smp_app_472.clas.abap) |
 
 ### File
 
 | Sample | Class |
 |---|---|
-| Download to the Browser (A)<br><sub>export save base64 attachment xstring document</sub> | [`Z2UI5_CL_SMP_APP_186`](src/01/z2ui5_cl_smp_app_186.clas.abap) |
-| Upload to the Backend (C)<br><sub>fileuploader base64 attachment import picture document</sub> | [`Z2UI5_CL_SMP_APP_074`](src/01/z2ui5_cl_smp_app_074.clas.abap) |
+| Download to the Browser (A)<br><sub>export save base64 attachment xstring document</sub><br><sub>docs: [cookbook/device_capabilities/upload_download](https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download)</sub> | [`Z2UI5_CL_SMP_APP_186`](src/01/z2ui5_cl_smp_app_186.clas.abap) |
+| Upload to the Backend (C)<br><sub>fileuploader base64 attachment import picture document</sub><br><sub>docs: [cookbook/device_capabilities/upload_download](https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download)</sub> | [`Z2UI5_CL_SMP_APP_074`](src/01/z2ui5_cl_smp_app_074.clas.abap) |
 
 ### Focus
 
 | Sample | Class |
 |---|---|
-| Focus a Table Cell by Column and Row (A)<br><sub>table cell column row aggregation set_focus</sub> | [`Z2UI5_CL_SMP_APP_421`](src/01/z2ui5_cl_smp_app_421.clas.abap) |
-| Jump to the Next Input on Enter (A)<br><sub>cursor enter tab next field form set_focus</sub> | [`Z2UI5_CL_SMP_APP_189`](src/01/z2ui5_cl_smp_app_189.clas.abap) |
-| Set Focus and Select Text in an Input (A)<br><sub>cursor set_focus selection position textfield</sub> | [`Z2UI5_CL_SMP_APP_133`](src/01/z2ui5_cl_smp_app_133.clas.abap) |
+| Focus a Table Cell by Column and Row (A)<br><sub>table cell column row aggregation set_focus</sub><br><sub>docs: [cookbook/browser_interaction/focus](https://abap2ui5.github.io/docs/cookbook/browser_interaction/focus)</sub> | [`Z2UI5_CL_SMP_APP_421`](src/01/z2ui5_cl_smp_app_421.clas.abap) |
+| Jump to the Next Input on Enter (A)<br><sub>cursor enter tab next field form set_focus</sub><br><sub>docs: [cookbook/browser_interaction/focus](https://abap2ui5.github.io/docs/cookbook/browser_interaction/focus)</sub> | [`Z2UI5_CL_SMP_APP_189`](src/01/z2ui5_cl_smp_app_189.clas.abap) |
+| Set Focus and Select Text in an Input (A)<br><sub>cursor set_focus selection position textfield</sub><br><sub>docs: [cookbook/browser_interaction/focus](https://abap2ui5.github.io/docs/cookbook/browser_interaction/focus)</sub> | [`Z2UI5_CL_SMP_APP_133`](src/01/z2ui5_cl_smp_app_133.clas.abap) |
 
 ### Formatter
 
 | Sample | Class |
 |---|---|
-| ABAP Date and Time Strings (DATS/TIMS)<br><sub>dats tims conversion initial date 00000000 sy-datum</sub> | [`Z2UI5_CL_SMP_APP_450`](src/01/z2ui5_cl_smp_app_450.clas.abap) |
-| Date Object for the DatePicker<br><sub>datepicker datevalue javascript date object iso</sub> | [`Z2UI5_CL_SMP_APP_457`](src/01/z2ui5_cl_smp_app_457.clas.abap) |
-| Date Objects for the PlanningCalendar<br><sub>planningcalendar appointment javascript date object iso</sub> | [`Z2UI5_CL_SMP_APP_456`](src/01/z2ui5_cl_smp_app_456.clas.abap) |
-| Inline Icons in a Text<br><sub>icon glyph placeholder text status expandinlineicons</sub> | [`Z2UI5_CL_SMP_APP_466`](src/01/z2ui5_cl_smp_app_466.clas.abap) |
-| When Not to Use One: Compute in ABAP<br><sub>no formatter computed backend thin frontend prepare</sub> | [`Z2UI5_CL_SMP_APP_453`](src/01/z2ui5_cl_smp_app_453.clas.abap) |
+| ABAP Date and Time Strings (DATS/TIMS)<br><sub>dats tims conversion initial date 00000000 sy-datum</sub><br><sub>docs: [cookbook/model/formatter](https://abap2ui5.github.io/docs/cookbook/model/formatter)</sub> | [`Z2UI5_CL_SMP_APP_450`](src/01/z2ui5_cl_smp_app_450.clas.abap) |
+| Date Object for the DatePicker<br><sub>datepicker datevalue javascript date object iso</sub><br><sub>docs: [cookbook/model/formatter](https://abap2ui5.github.io/docs/cookbook/model/formatter)</sub> | [`Z2UI5_CL_SMP_APP_457`](src/01/z2ui5_cl_smp_app_457.clas.abap) |
+| Date Objects for the PlanningCalendar<br><sub>planningcalendar appointment javascript date object iso</sub><br><sub>docs: [cookbook/model/formatter](https://abap2ui5.github.io/docs/cookbook/model/formatter)</sub> | [`Z2UI5_CL_SMP_APP_456`](src/01/z2ui5_cl_smp_app_456.clas.abap) |
+| Inline Icons in a Text<br><sub>icon glyph placeholder text status expandinlineicons</sub><br><sub>docs: [cookbook/model/formatter](https://abap2ui5.github.io/docs/cookbook/model/formatter)</sub> | [`Z2UI5_CL_SMP_APP_466`](src/01/z2ui5_cl_smp_app_466.clas.abap) |
+| When Not to Use One: Compute in ABAP<br><sub>no formatter computed backend thin frontend prepare</sub><br><sub>docs: [cookbook/model/formatter](https://abap2ui5.github.io/docs/cookbook/model/formatter)</sub> | [`Z2UI5_CL_SMP_APP_453`](src/01/z2ui5_cl_smp_app_453.clas.abap) |
 
 ### Grid Table
 
 | Sample | Class |
 |---|---|
-| Events on Cell Level<br><sub>cell enter row index event grid alv</sub> | [`Z2UI5_CL_SMP_APP_160`](src/01/z2ui5_cl_smp_app_160.clas.abap) |
-| Full Example with sap.ui.table<br><sub>grid alv dynamicpage column row action currency search sort filter</sub> | [`Z2UI5_CL_SMP_APP_070`](src/01/z2ui5_cl_smp_app_070.clas.abap) |
-| Keep Column Filters on Refresh (C)<br><sub>column filter reset refresh uitableext grid alv</sub> | [`Z2UI5_CL_SMP_APP_143`](src/01/z2ui5_cl_smp_app_143.clas.abap) |
+| Events on Cell Level<br><sub>cell enter row index event grid alv</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_160`](src/01/z2ui5_cl_smp_app_160.clas.abap) |
+| Full Example with sap.ui.table<br><sub>grid alv dynamicpage column row action currency search sort filter</sub><br><sub>docs: [get_started/full_example](https://abap2ui5.github.io/docs/get_started/full_example), [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_070`](src/01/z2ui5_cl_smp_app_070.clas.abap) |
+| Keep Column Filters on Refresh (C)<br><sub>column filter reset refresh uitableext grid alv</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_143`](src/01/z2ui5_cl_smp_app_143.clas.abap) |
 
 ### List
 
@@ -152,93 +152,93 @@ plain OpenUI5 1.71. Each adds one idea.
 
 | Sample | Class |
 |---|---|
-| Message Model and MessageManager (C)<br><sub>messagemanager validation target field state central model</sub> | [`Z2UI5_CL_SMP_APP_467`](src/01/z2ui5_cl_smp_app_467.clas.abap) |
-| MessageBox from SY, BAPIRET2 or Exception<br><sub>t100 message class number exception cx_root error abend</sub> | [`Z2UI5_CL_SMP_APP_008`](src/01/z2ui5_cl_smp_app_008.clas.abap) |
-| MessageBox, Types and Custom Actions<br><sub>confirm warning error success information dialog action</sub> | [`Z2UI5_CL_SMP_APP_382`](src/01/z2ui5_cl_smp_app_382.clas.abap) |
-| MessagePopover URL Policy (A)<br><sub>url policy link security validator relative allow deny</sub> | [`Z2UI5_CL_SMP_APP_474`](src/01/z2ui5_cl_smp_app_474.clas.abap) |
-| MessageToast, Text and Duration<br><sub>toast notification duration position animation</sub> | [`Z2UI5_CL_SMP_APP_381`](src/01/z2ui5_cl_smp_app_381.clas.abap) |
-| MessageView and MessagePopover (A)<br><sub>messagepopover messageitem dialog grouped message list</sub> | [`Z2UI5_CL_SMP_APP_452`](src/01/z2ui5_cl_smp_app_452.clas.abap) |
+| Message Model and MessageManager (C)<br><sub>messagemanager validation target field state central model</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_467`](src/01/z2ui5_cl_smp_app_467.clas.abap) |
+| MessageBox from SY, BAPIRET2 or Exception<br><sub>t100 message class number exception cx_root error abend</sub><br><sub>docs: [cookbook/event_navigation/exception](https://abap2ui5.github.io/docs/cookbook/event_navigation/exception), [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_008`](src/01/z2ui5_cl_smp_app_008.clas.abap) |
+| MessageBox, Types and Custom Actions<br><sub>confirm warning error success information dialog action</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_382`](src/01/z2ui5_cl_smp_app_382.clas.abap) |
+| MessagePopover URL Policy (A)<br><sub>url policy link security validator relative allow deny</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_474`](src/01/z2ui5_cl_smp_app_474.clas.abap) |
+| MessageToast, Text and Duration<br><sub>toast notification duration position animation</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_381`](src/01/z2ui5_cl_smp_app_381.clas.abap) |
+| MessageView and MessagePopover (A)<br><sub>messagepopover messageitem dialog grouped message list</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_452`](src/01/z2ui5_cl_smp_app_452.clas.abap) |
 
 ### Navigation
 
 | Sample | Class |
 |---|---|
-| Call and Leave Apps (nav_app_call)<br><sub>nav_app_call nav_app_leave sub app stack call back</sub> | [`Z2UI5_CL_SMP_APP_024`](src/01/z2ui5_cl_smp_app_024.clas.abap) |
-| Data Loss Protection on Leaving (A,C)<br><sub>dirty unsaved changes leave confirmation warning</sub> | [`Z2UI5_CL_SMP_APP_279`](src/01/z2ui5_cl_smp_app_279.clas.abap) |
-| Return Data and Events to the Caller<br><sub>r_data result get_app_prev return event payload</sub> | [`Z2UI5_CL_SMP_APP_488`](src/01/z2ui5_cl_smp_app_488.clas.abap) |
-| Uncaught Error and Error Popup<br><sub>exception dump error handling debugtool restart retry</sub> | [`Z2UI5_CL_SMP_APP_464`](src/01/z2ui5_cl_smp_app_464.clas.abap) |
+| Call and Leave Apps (nav_app_call)<br><sub>nav_app_call nav_app_leave sub app stack call back</sub><br><sub>docs: [cookbook/event_navigation/navigation](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation)</sub> | [`Z2UI5_CL_SMP_APP_024`](src/01/z2ui5_cl_smp_app_024.clas.abap) |
+| Data Loss Protection on Leaving (A,C)<br><sub>dirty unsaved changes leave confirmation warning</sub><br><sub>docs: [cookbook/event_navigation/navigation](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation)</sub> | [`Z2UI5_CL_SMP_APP_279`](src/01/z2ui5_cl_smp_app_279.clas.abap) |
+| Return Data and Events to the Caller<br><sub>r_data result get_app_prev return event payload</sub><br><sub>docs: [cookbook/event_navigation/navigation](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation)</sub> | [`Z2UI5_CL_SMP_APP_488`](src/01/z2ui5_cl_smp_app_488.clas.abap) |
+| Uncaught Error and Error Popup<br><sub>exception dump error handling debugtool restart retry</sub><br><sub>docs: [cookbook/event_navigation/exception](https://abap2ui5.github.io/docs/cookbook/event_navigation/exception)</sub> | [`Z2UI5_CL_SMP_APP_464`](src/01/z2ui5_cl_smp_app_464.clas.abap) |
 
 ### Nested View
 
 | Sample | Class |
 |---|---|
-| Basic Example (nest_view_display)<br><sub>nest_view_display rerender model refresh sub view</sub> | [`Z2UI5_CL_SMP_APP_065`](src/01/z2ui5_cl_smp_app_065.clas.abap) |
-| Embed Another App's View<br><sub>sub app class embed instantiate another app rtti</sub> | [`Z2UI5_CL_SMP_APP_104`](src/01/z2ui5_cl_smp_app_104.clas.abap) |
-| Master-Detail with FlexibleColumnLayout<br><sub>fcl master detail list report two column split</sub> | [`Z2UI5_CL_SMP_APP_097`](src/01/z2ui5_cl_smp_app_097.clas.abap) |
-| Three Columns with FlexibleColumnLayout<br><sub>fcl three column detail detail deep navigation</sub> | [`Z2UI5_CL_SMP_APP_098`](src/01/z2ui5_cl_smp_app_098.clas.abap) |
+| Basic Example (nest_view_display)<br><sub>nest_view_display rerender model refresh sub view</sub><br><sub>docs: [cookbook/view/nested_views](https://abap2ui5.github.io/docs/cookbook/view/nested_views)</sub> | [`Z2UI5_CL_SMP_APP_065`](src/01/z2ui5_cl_smp_app_065.clas.abap) |
+| Embed Another App's View<br><sub>sub app class embed instantiate another app rtti</sub><br><sub>docs: [cookbook/view/nested_views](https://abap2ui5.github.io/docs/cookbook/view/nested_views)</sub> | [`Z2UI5_CL_SMP_APP_104`](src/01/z2ui5_cl_smp_app_104.clas.abap) |
+| Master-Detail with FlexibleColumnLayout<br><sub>fcl master detail list report two column split</sub><br><sub>docs: [cookbook/view/nested_views](https://abap2ui5.github.io/docs/cookbook/view/nested_views)</sub> | [`Z2UI5_CL_SMP_APP_097`](src/01/z2ui5_cl_smp_app_097.clas.abap) |
+| Three Columns with FlexibleColumnLayout<br><sub>fcl three column detail detail deep navigation</sub><br><sub>docs: [cookbook/view/nested_views](https://abap2ui5.github.io/docs/cookbook/view/nested_views)</sub> | [`Z2UI5_CL_SMP_APP_098`](src/01/z2ui5_cl_smp_app_098.clas.abap) |
 
 ### Popover
 
 | Sample | Class |
 |---|---|
-| Basic Example with Placement<br><sub>placement anchor button confirm cancel popover_display</sub> | [`Z2UI5_CL_SMP_APP_026`](src/01/z2ui5_cl_smp_app_026.clas.abap) |
-| Open from a Table Row<br><sub>list report dynamicpage row link details table</sub> | [`Z2UI5_CL_SMP_APP_052`](src/01/z2ui5_cl_smp_app_052.clas.abap) |
-| Open Together with the View Build<br><sub>initial render one roundtrip anchor button</sub> | [`Z2UI5_CL_SMP_APP_490`](src/01/z2ui5_cl_smp_app_490.clas.abap) |
-| QuickView Contact Card<br><sub>quickview contact card links grouped fields</sub> | [`Z2UI5_CL_SMP_APP_109`](src/01/z2ui5_cl_smp_app_109.clas.abap) |
-| Select from a List<br><sub>list selection placement anchor</sub> | [`Z2UI5_CL_SMP_APP_081`](src/01/z2ui5_cl_smp_app_081.clas.abap) |
-| Toggle by ID (toggleBy) (A)<br><sub>toggleby open close control_by_id whitelisted</sub> | [`Z2UI5_CL_SMP_APP_465`](src/01/z2ui5_cl_smp_app_465.clas.abap) |
+| Basic Example with Placement<br><sub>placement anchor button confirm cancel popover_display</sub><br><sub>docs: [cookbook/popup_popover/popover](https://abap2ui5.github.io/docs/cookbook/popup_popover/popover)</sub> | [`Z2UI5_CL_SMP_APP_026`](src/01/z2ui5_cl_smp_app_026.clas.abap) |
+| Open from a Table Row<br><sub>list report dynamicpage row link details table</sub><br><sub>docs: [cookbook/popup_popover/popover](https://abap2ui5.github.io/docs/cookbook/popup_popover/popover)</sub> | [`Z2UI5_CL_SMP_APP_052`](src/01/z2ui5_cl_smp_app_052.clas.abap) |
+| Open Together with the View Build<br><sub>initial render one roundtrip anchor button</sub><br><sub>docs: [cookbook/popup_popover/popover](https://abap2ui5.github.io/docs/cookbook/popup_popover/popover)</sub> | [`Z2UI5_CL_SMP_APP_490`](src/01/z2ui5_cl_smp_app_490.clas.abap) |
+| QuickView Contact Card<br><sub>quickview contact card links grouped fields</sub><br><sub>docs: [cookbook/popup_popover/popover](https://abap2ui5.github.io/docs/cookbook/popup_popover/popover)</sub> | [`Z2UI5_CL_SMP_APP_109`](src/01/z2ui5_cl_smp_app_109.clas.abap) |
+| Select from a List<br><sub>list selection placement anchor</sub><br><sub>docs: [cookbook/popup_popover/popover](https://abap2ui5.github.io/docs/cookbook/popup_popover/popover)</sub> | [`Z2UI5_CL_SMP_APP_081`](src/01/z2ui5_cl_smp_app_081.clas.abap) |
+| Toggle by ID (toggleBy) (A)<br><sub>toggleby open close control_by_id whitelisted</sub><br><sub>docs: [cookbook/popup_popover/popover](https://abap2ui5.github.io/docs/cookbook/popup_popover/popover), [cookbook/expert_more/follow_up_action](https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action)</sub> | [`Z2UI5_CL_SMP_APP_465`](src/01/z2ui5_cl_smp_app_465.clas.abap) |
 
 ### Popup
 
 | Sample | Class |
 |---|---|
-| Dialog inside a Dialog<br><sub>nested stack popup in popup second dialog</sub> | [`Z2UI5_CL_SMP_APP_161`](src/01/z2ui5_cl_smp_app_161.clas.abap) |
-| Element Binding to the Selected Row (A)<br><sub>element binding relative path aggregation dialog row</sub> | [`Z2UI5_CL_SMP_APP_470`](src/01/z2ui5_cl_smp_app_470.clas.abap) |
-| Navigate between Dialogs (NavContainer) (A)<br><sub>navcontainer dialog pages back forward</sub> | [`Z2UI5_CL_SMP_APP_170`](src/01/z2ui5_cl_smp_app_170.clas.abap) |
-| Value Help: Suggestions and F4 Dialog<br><sub>f4 search help suggestion input dialog select</sub> | [`Z2UI5_CL_SMP_APP_009`](src/01/z2ui5_cl_smp_app_009.clas.abap) |
-| Ways to Open a Dialog (A)<br><sub>dialog sub app destroy rerender background view</sub> | [`Z2UI5_CL_SMP_APP_012`](src/01/z2ui5_cl_smp_app_012.clas.abap) |
+| Dialog inside a Dialog<br><sub>nested stack popup in popup second dialog</sub><br><sub>docs: [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup)</sub> | [`Z2UI5_CL_SMP_APP_161`](src/01/z2ui5_cl_smp_app_161.clas.abap) |
+| Element Binding to the Selected Row (A)<br><sub>element binding relative path aggregation dialog row</sub><br><sub>docs: [cookbook/event_navigation/frontend](https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend), [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup)</sub> | [`Z2UI5_CL_SMP_APP_470`](src/01/z2ui5_cl_smp_app_470.clas.abap) |
+| Navigate between Dialogs (NavContainer) (A)<br><sub>navcontainer dialog pages back forward</sub><br><sub>docs: [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup)</sub> | [`Z2UI5_CL_SMP_APP_170`](src/01/z2ui5_cl_smp_app_170.clas.abap) |
+| Value Help: Suggestions and F4 Dialog<br><sub>f4 search help suggestion input dialog select</sub><br><sub>docs: [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup), [cookbook/expert_more/value_help](https://abap2ui5.github.io/docs/cookbook/expert_more/value_help)</sub> | [`Z2UI5_CL_SMP_APP_009`](src/01/z2ui5_cl_smp_app_009.clas.abap) |
+| Ways to Open a Dialog (A)<br><sub>dialog sub app destroy rerender background view</sub><br><sub>docs: [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup)</sub> | [`Z2UI5_CL_SMP_APP_012`](src/01/z2ui5_cl_smp_app_012.clas.abap) |
 
 ### Scroll
 
 | Sample | Class |
 |---|---|
-| Scroll a Control into View (A)<br><sub>scroll_into_view control id validation jump</sub> | [`Z2UI5_CL_SMP_APP_363`](src/01/z2ui5_cl_smp_app_363.clas.abap) |
-| Scroll to a Pixel Position (A)<br><sub>position pixel scroll_to restore refresh toolbar</sub> | [`Z2UI5_CL_SMP_APP_362`](src/01/z2ui5_cl_smp_app_362.clas.abap) |
+| Scroll a Control into View (A)<br><sub>scroll_into_view control id validation jump</sub><br><sub>docs: [cookbook/browser_interaction/scrolling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling)</sub> | [`Z2UI5_CL_SMP_APP_363`](src/01/z2ui5_cl_smp_app_363.clas.abap) |
+| Scroll to a Pixel Position (A)<br><sub>position pixel scroll_to restore refresh toolbar</sub><br><sub>docs: [cookbook/browser_interaction/scrolling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling)</sub> | [`Z2UI5_CL_SMP_APP_362`](src/01/z2ui5_cl_smp_app_362.clas.abap) |
 
 ### Table
 
 | Sample | Class |
 |---|---|
-| Drag and Drop Rows (A)<br><sub>dnd dragdropinfo reorder rows move</sub> | [`Z2UI5_CL_SMP_APP_459`](src/01/z2ui5_cl_smp_app_459.clas.abap) |
-| Editable Cells, Add and Delete Rows<br><sub>edit input add row delete multiselect toolbar</sub> | [`Z2UI5_CL_SMP_APP_011`](src/01/z2ui5_cl_smp_app_011.clas.abap) |
-| Filter Rows in the Backend<br><sub>filter server side form growing where</sub> | [`Z2UI5_CL_SMP_APP_045`](src/01/z2ui5_cl_smp_app_045.clas.abap) |
-| Large Table with Growing and ScrollContainer<br><sub>growing 10000 rows sticky toolbar sort performance</sub> | [`Z2UI5_CL_SMP_APP_006`](src/01/z2ui5_cl_smp_app_006.clas.abap) |
-| Live Search with Parallel Requests<br><sub>live search parallel requests busy queue typing</sub> | [`Z2UI5_CL_SMP_APP_059`](src/01/z2ui5_cl_smp_app_059.clas.abap) |
-| Search in the Backend (SearchField)<br><sub>search go enter server side where</sub> | [`Z2UI5_CL_SMP_APP_053`](src/01/z2ui5_cl_smp_app_053.clas.abap) |
-| Selection Modes: Single and Multi Select<br><sub>selectionmode none single multi segmentedbutton checkbox</sub> | [`Z2UI5_CL_SMP_APP_019`](src/01/z2ui5_cl_smp_app_019.clas.abap) |
+| Drag and Drop Rows (A)<br><sub>dnd dragdropinfo reorder rows move</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_459`](src/01/z2ui5_cl_smp_app_459.clas.abap) |
+| Editable Cells, Add and Delete Rows<br><sub>edit input add row delete multiselect toolbar</sub><br><sub>docs: [get_started/full_example](https://abap2ui5.github.io/docs/get_started/full_example), [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_011`](src/01/z2ui5_cl_smp_app_011.clas.abap) |
+| Filter Rows in the Backend<br><sub>filter server side form growing where</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_045`](src/01/z2ui5_cl_smp_app_045.clas.abap) |
+| Large Table with Growing and ScrollContainer<br><sub>growing 10000 rows sticky toolbar sort performance</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_006`](src/01/z2ui5_cl_smp_app_006.clas.abap) |
+| Live Search with Parallel Requests<br><sub>live search parallel requests busy queue typing</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_059`](src/01/z2ui5_cl_smp_app_059.clas.abap) |
+| Search in the Backend (SearchField)<br><sub>search go enter server side where</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_053`](src/01/z2ui5_cl_smp_app_053.clas.abap) |
+| Selection Modes: Single and Multi Select<br><sub>selectionmode none single multi segmentedbutton checkbox</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_019`](src/01/z2ui5_cl_smp_app_019.clas.abap) |
 
 ### Templating
 
 | Sample | Class |
 |---|---|
-| Build Columns Dynamically (template:repeat)<br><sub>template repeat runtime generated columns if then else</sub> | [`Z2UI5_CL_SMP_APP_173`](src/01/z2ui5_cl_smp_app_173.clas.abap) |
-| Dynamic Content in a Nested View<br><sub>template repeat runtime generated nested nest_view_display</sub> | [`Z2UI5_CL_SMP_APP_176`](src/01/z2ui5_cl_smp_app_176.clas.abap) |
+| Build Columns Dynamically (template:repeat)<br><sub>template repeat runtime generated columns if then else</sub><br><sub>docs: [cookbook/view/xml_templating](https://abap2ui5.github.io/docs/cookbook/view/xml_templating)</sub> | [`Z2UI5_CL_SMP_APP_173`](src/01/z2ui5_cl_smp_app_173.clas.abap) |
+| Dynamic Content in a Nested View<br><sub>template repeat runtime generated nested nest_view_display</sub><br><sub>docs: [cookbook/view/nested_views](https://abap2ui5.github.io/docs/cookbook/view/nested_views), [cookbook/view/xml_templating](https://abap2ui5.github.io/docs/cookbook/view/xml_templating)</sub> | [`Z2UI5_CL_SMP_APP_176`](src/01/z2ui5_cl_smp_app_176.clas.abap) |
 
 ### Timer
 
 | Sample | Class |
 |---|---|
-| Progress Indicator during a Backend Call (A)<br><sub>progressindicator busy wait long running backend</sub> | [`Z2UI5_CL_SMP_APP_064`](src/01/z2ui5_cl_smp_app_064.clas.abap) |
-| Refresh the View Every n Seconds (A)<br><sub>interval polling auto refresh follow_up_action seconds</sub> | [`Z2UI5_CL_SMP_APP_028`](src/01/z2ui5_cl_smp_app_028.clas.abap) |
+| Progress Indicator during a Backend Call (A)<br><sub>progressindicator busy wait long running backend</sub><br><sub>docs: [cookbook/browser_interaction/timer](https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer)</sub> | [`Z2UI5_CL_SMP_APP_064`](src/01/z2ui5_cl_smp_app_064.clas.abap) |
+| Refresh the View Every n Seconds (A)<br><sub>interval polling auto refresh follow_up_action seconds</sub><br><sub>docs: [cookbook/browser_interaction/timer](https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer)</sub> | [`Z2UI5_CL_SMP_APP_028`](src/01/z2ui5_cl_smp_app_028.clas.abap) |
 
 ### Tree
 
 | Sample | Class |
 |---|---|
-| Drag and Drop Nodes (A,C)<br><sub>dnd move node hierarchy binding context</sub> | [`Z2UI5_CL_SMP_APP_461`](src/01/z2ui5_cl_smp_app_461.clas.abap) |
-| Editable Nodes with CustomTreeItem (C)<br><sub>customtreeitem rename input binding write back</sub> | [`Z2UI5_CL_SMP_APP_463`](src/01/z2ui5_cl_smp_app_463.clas.abap) |
-| Inside a Dialog (C)<br><sub>popup expand state hierarchy nodes</sub> | [`Z2UI5_CL_SMP_APP_462`](src/01/z2ui5_cl_smp_app_462.clas.abap) |
-| Nested ABAP Table in a sap.m.Tree<br><sub>hierarchy nodes nested json items</sub> | [`Z2UI5_CL_SMP_APP_460`](src/01/z2ui5_cl_smp_app_460.clas.abap) |
+| Drag and Drop Nodes (A,C)<br><sub>dnd move node hierarchy binding context</sub><br><sub>docs: [cookbook/model/trees](https://abap2ui5.github.io/docs/cookbook/model/trees)</sub> | [`Z2UI5_CL_SMP_APP_461`](src/01/z2ui5_cl_smp_app_461.clas.abap) |
+| Editable Nodes with CustomTreeItem (C)<br><sub>customtreeitem rename input binding write back</sub><br><sub>docs: [cookbook/model/trees](https://abap2ui5.github.io/docs/cookbook/model/trees)</sub> | [`Z2UI5_CL_SMP_APP_463`](src/01/z2ui5_cl_smp_app_463.clas.abap) |
+| Inside a Dialog (C)<br><sub>popup expand state hierarchy nodes</sub><br><sub>docs: [cookbook/model/trees](https://abap2ui5.github.io/docs/cookbook/model/trees)</sub> | [`Z2UI5_CL_SMP_APP_462`](src/01/z2ui5_cl_smp_app_462.clas.abap) |
+| Nested ABAP Table in a sap.m.Tree<br><sub>hierarchy nodes nested json items</sub><br><sub>docs: [cookbook/model/trees](https://abap2ui5.github.io/docs/cookbook/model/trees)</sub> | [`Z2UI5_CL_SMP_APP_460`](src/01/z2ui5_cl_smp_app_460.clas.abap) |
 
 ---
 
@@ -257,12 +257,12 @@ is absent there.
 
 | Sample | Class |
 |---|---|
-| **Navigation** — app state<br><sub>app state url bookmark restore set_app_state_active reload deep link</sub> | [`Z2UI5_CL_SMP_APP_321`](src/00/97/z2ui5_cl_smp_app_321.clas.abap) |
-| **Navigation** — app state share<br><sub>app state share clipboard copy link colleague send url</sub> | [`Z2UI5_CL_SMP_APP_323`](src/00/97/z2ui5_cl_smp_app_323.clas.abap) |
-| **Navigation** — push state<br><sub>push state browser history back button hash url set_push_state</sub> | [`Z2UI5_CL_SMP_APP_322`](src/00/97/z2ui5_cl_smp_app_322.clas.abap) |
-| **Navigation** — Routing mode fresh<br><sub>routing mode fresh navigation restart new instance nav_app_call</sub> | [`Z2UI5_CL_SMP_APP_468`](src/00/97/z2ui5_cl_smp_app_468.clas.abap) |
-| **Navigation** — Routing mode keep<br><sub>routing mode keep navigation state preserved back nav_app_call</sub> | [`Z2UI5_CL_SMP_APP_480`](src/00/97/z2ui5_cl_smp_app_480.clas.abap) |
-| **Popup** — change a popup control from the backend<br><sub>popup dialog change control backend control_by_id update running</sub> | [`Z2UI5_CL_SMP_APP_141`](src/00/97/z2ui5_cl_smp_app_141.clas.abap) |
+| **Navigation** — app state<br><sub>app state url bookmark restore set_app_state_active reload deep link</sub><br><sub>docs: [cookbook/expert_more/app_state_share](https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share)</sub> | [`Z2UI5_CL_SMP_APP_321`](src/00/97/z2ui5_cl_smp_app_321.clas.abap) |
+| **Navigation** — app state share<br><sub>app state share clipboard copy link colleague send url</sub><br><sub>docs: [cookbook/expert_more/app_state_share](https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share)</sub> | [`Z2UI5_CL_SMP_APP_323`](src/00/97/z2ui5_cl_smp_app_323.clas.abap) |
+| **Navigation** — push state<br><sub>push state browser history back button hash url set_push_state</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_322`](src/00/97/z2ui5_cl_smp_app_322.clas.abap) |
+| **Navigation** — Routing mode fresh<br><sub>routing mode fresh navigation restart new instance nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_468`](src/00/97/z2ui5_cl_smp_app_468.clas.abap) |
+| **Navigation** — Routing mode keep<br><sub>routing mode keep navigation state preserved back nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_480`](src/00/97/z2ui5_cl_smp_app_480.clas.abap) |
+| **Popup** — change a popup control from the backend<br><sub>popup dialog change control backend control_by_id update running</sub><br><sub>docs: [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup)</sub> | [`Z2UI5_CL_SMP_APP_141`](src/00/97/z2ui5_cl_smp_app_141.clas.abap) |
 
 ### testing — `src/00/98`
 

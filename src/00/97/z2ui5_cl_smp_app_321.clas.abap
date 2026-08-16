@@ -1,4 +1,5 @@
 " @keywords app state url bookmark restore set_app_state_active reload deep link
+" @docs https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share
 CLASS z2ui5_cl_smp_app_321 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

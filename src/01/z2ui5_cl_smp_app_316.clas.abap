@@ -1,4 +1,5 @@
 " @keywords mailto tel sms urlhelper redirect native link
+" @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling
 CLASS z2ui5_cl_smp_app_316 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

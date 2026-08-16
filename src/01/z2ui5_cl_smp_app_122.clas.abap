@@ -1,4 +1,5 @@
 " @keywords client info ui5 version theme os user agent device
+" @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/info
 CLASS z2ui5_cl_smp_app_122 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

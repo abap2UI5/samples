@@ -1,4 +1,5 @@
 " @keywords search go enter server side where
+" @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_053 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

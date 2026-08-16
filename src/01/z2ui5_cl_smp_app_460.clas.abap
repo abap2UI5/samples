@@ -1,4 +1,5 @@
 " @keywords hierarchy nodes nested json items
+" @docs https://abap2ui5.github.io/docs/cookbook/model/trees
 CLASS z2ui5_cl_smp_app_460 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

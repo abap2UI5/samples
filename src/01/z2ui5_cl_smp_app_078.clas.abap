@@ -1,4 +1,5 @@
 " @keywords multiinput token tokens suggestion custom control
+" @docs https://abap2ui5.github.io/docs/cookbook/expert_more/value_help
 CLASS z2ui5_cl_smp_app_078 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

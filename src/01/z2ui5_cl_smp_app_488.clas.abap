@@ -1,4 +1,5 @@
 " @keywords r_data result get_app_prev return event payload
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation
 "! Calls a second app (z2ui5_cl_smp_app_489) via client->nav_app_call( ). The
 "! called app comes back with client->nav_app_leave( event = ... r_data = ... ),
 "! handing an event name and a data payload to its caller without knowing who

@@ -1,4 +1,5 @@
 " @keywords dirty unsaved changes leave confirmation warning
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation
 CLASS z2ui5_cl_smp_app_279 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

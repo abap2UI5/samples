@@ -1,4 +1,5 @@
 " @keywords panel collapse expand setexpanded control_by_id whitelisted
+" @docs https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action
 CLASS z2ui5_cl_smp_app_448 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,4 +1,5 @@
 " @keywords combobox jsonmodel size limit large itab 100 entries
+" @docs https://abap2ui5.github.io/docs/cookbook/model/size_limit
 CLASS z2ui5_cl_smp_app_071 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,4 +1,5 @@
 " @keywords sub app class embed instantiate another app rtti
+" @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views
 CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

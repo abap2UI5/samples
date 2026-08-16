@@ -1,4 +1,5 @@
 " @keywords camera photo picture webcam capture facing mode
+" @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/camera
 CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

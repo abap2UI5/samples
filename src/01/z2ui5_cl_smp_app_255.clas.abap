@@ -1,4 +1,5 @@
 " @keywords flexbox layout responsive navigation tile panel
+" @docs https://abap2ui5.github.io/docs/cookbook/view/definition
 CLASS z2ui5_cl_smp_app_255 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,4 +1,5 @@
 " @keywords placement anchor button confirm cancel popover_display
+" @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover
 CLASS z2ui5_cl_smp_app_026 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

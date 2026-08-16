@@ -1,4 +1,5 @@
 " @keywords binding _bind model attribute value input button serialize
+" @docs https://abap2ui5.github.io/docs/cookbook/model/binding
 CLASS z2ui5_cl_smp_app_494 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
