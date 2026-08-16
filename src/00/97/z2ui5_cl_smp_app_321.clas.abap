@@ -1,3 +1,4 @@
+" @keywords app state url bookmark restore set_app_state_active reload deep link
 CLASS z2ui5_cl_smp_app_321 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

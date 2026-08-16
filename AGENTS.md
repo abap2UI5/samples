@@ -513,7 +513,7 @@ One row per app; `group`, `header`, `sub` and `app` are always present,
 | `group`  | **Exactly** the CTEXT of the subpackage the app physically lives in. Becomes the H3 section title (rendered once, when the group changes). |
 | `header` | Link text shown to the user. **Derived from the class short text** (see below). |
 | `sub`    | Short description shown next to the link. **Derived from the class short text** (see below). May be empty (`` `` ``) → then only the link is rendered. |
-| `keywords` | **Never rendered — search only.** Extra terms so a sample is found by words that do not fit into the 60 characters of its DESCRIPT (see below). |
+| `keywords` | **Never rendered — search only.** Extra terms so a sample is found by words that do not fit into the 60 characters of its DESCRIPT (see below). **Required on every tile** — `npm run launchpad` refuses an area's overview app if one of its tiles has no `@keywords` line. Three readers depend on them and all three fail the same silent way (the sample stays listed, stays correct, and never comes up): the overview app's search box, `Ctrl+F` on SAMPLES.md, and an agent asking whether a sample for X exists. ZZZ helpers are exempt — a helper is reached BY another sample, never looked up. |
 | `path`   | The class's folder relative to the repository root (`src/01`). Generated, because the class name does **not** encode the folder — `source_url( )` builds the GitHub link of the sample from it. |
 | `app`    | The app's class name in **lowercase** (folder-independent). Drives navigation. |
 

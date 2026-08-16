@@ -1,3 +1,4 @@
+" @keywords push state browser history back button hash url set_push_state
 CLASS z2ui5_cl_smp_app_322 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

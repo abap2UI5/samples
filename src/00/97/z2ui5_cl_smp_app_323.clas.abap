@@ -1,3 +1,4 @@
+" @keywords app state share clipboard copy link colleague send url
 CLASS z2ui5_cl_smp_app_323 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
