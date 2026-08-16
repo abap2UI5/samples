@@ -463,6 +463,26 @@ lists what that branch actually ships.
 the overview app, and `publish-overview-apps` checks and pushes both together
 (§4).
 
+**It has readers outside this repository, and they parse the ROWS.** Two of
+them today:
+
+| | |
+|---|---|
+| [ai-mcp](https://github.com/abap2UI5/ai-mcp) `lib/examples.mjs` | the `examples` MCP tool — an agent asking "has somebody already built X" |
+| [docs](https://github.com/abap2UI5/docs) `scripts/link-samples.mjs` | the *Working Samples* block under a cookbook page |
+
+Both read this file live rather than a generated index, so what they see is
+always what it says — and both match a row with a regex. **Changing the shape
+of a row breaks them silently.** Adding the `@docs` line as a second
+`<br><sub>` block did exactly that: a parser expecting one small-type block
+matched no rows at all, and the `examples` tool would have answered "no sample
+for that" to every query — no error, no log, just an agent taking it at face
+value and writing the app from scratch.
+
+So a change to `row( )` in `generate-samples-md.js` is a change to their input.
+Grep both repositories for the row regex before merging one, and give them a
+fixture with the new shape.
+
 ---
 
 ## 4. The overview is ALWAYS (re)generated — schema & rules
