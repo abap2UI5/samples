@@ -18,7 +18,7 @@ CLASS z2ui5_cl_smp_app_492 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
 
       DATA(s_config) = client->get( )-s_config.
       url = s_config-pathname && s_config-search.
