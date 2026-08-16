@@ -72,6 +72,9 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    " No check_on_navigated( ) branch: this is a SUB-APP. It never calls
+    " client->view_display( ) - it renders into the parent's view reference
+    " (view_parent), and the parent app owns the screen and re-displays it.
     me->client = client.
     IF client->check_on_init( ).
       view_display( ).

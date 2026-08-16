@@ -161,6 +161,8 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
       view_display( ).
       set_data( ).
       RETURN.
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ENDIF.
 
     CASE client->get_event( ).

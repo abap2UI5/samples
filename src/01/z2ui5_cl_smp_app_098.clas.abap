@@ -208,6 +208,8 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
 
       view_display_master( ).
       view_display_detail( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display_master( ).
 
     ENDIF.
 

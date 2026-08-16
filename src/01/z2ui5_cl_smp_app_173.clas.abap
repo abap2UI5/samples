@@ -126,6 +126,8 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
                            ( fname = `AGE`  merge = `false` visible = `false` ) ).
 
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ENDIF.
 

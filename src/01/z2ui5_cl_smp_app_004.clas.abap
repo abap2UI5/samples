@@ -25,6 +25,16 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       on_init( ).
+    ELSEIF client->check_on_navigated( ).
+
+      " the app has two views and remembers which one is up, so returning
+      " from a sub-app brings back the one the user left, not the first
+      IF view_main = `SECOND`.
+        view_second_display( ).
+      ELSE.
+        view_main_display( ).
+      ENDIF.
+
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.

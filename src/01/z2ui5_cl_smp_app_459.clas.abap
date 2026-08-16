@@ -36,6 +36,8 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
           ( name = `Comfort Easy`       category = `PDAs` )
           ( name = `ITelO Vault`        category = `PDAs` ) ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSE.
       on_event( ).
     ENDIF.

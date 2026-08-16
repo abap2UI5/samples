@@ -59,6 +59,8 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ENDIF.
 
     IF client->get_event( ) = `BUTTON_OPEN_NEW_TAB`.

@@ -50,6 +50,8 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
               ( text = `Suppliers` nodes = VALUE #(
                   ( text = `Very Best Screens` ) ) ) ) ) ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSE.
       on_event( ).
     ENDIF.

@@ -105,6 +105,8 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
             ( title = `entry 02`  value = `blue` ) ).
       ENDDO.
       set_view( ).
+    ELSEIF client->check_on_navigated( ).
+      set_view( ).
     ENDIF.
 
   ENDMETHOD.

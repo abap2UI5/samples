@@ -144,6 +144,8 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
           ( ) ).
 
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ELSEIF client->check_on_event( `BUTTON_EDIT` ).
       check_editable_active = xsdbool( check_editable_active = abap_false ).

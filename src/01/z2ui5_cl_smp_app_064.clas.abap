@@ -32,6 +32,8 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       on_init( ).
+    ELSEIF client->check_on_navigated( ).
+      on_init( ).
 
     ELSE.
       on_event( ).

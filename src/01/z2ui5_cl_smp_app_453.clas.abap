@@ -56,6 +56,8 @@ CLASS z2ui5_cl_smp_app_453 IMPLEMENTATION.
             status = `Discontinued` delivery = `Pending` ) ).
       products_prepare( ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.

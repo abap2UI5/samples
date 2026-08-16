@@ -41,6 +41,8 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
               ( text = `Old_Report.pdf` ) ) )
           ( text = `Trash` ) ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSE.
       on_event( ).
     ENDIF.

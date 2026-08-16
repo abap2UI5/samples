@@ -164,6 +164,8 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
       layout = `OneColumn`.
       view_display_master( ).
       view_display_detail( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display_master( ).
 
     ELSEIF client->check_on_event( `SELCHANGE` ).
 

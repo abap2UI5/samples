@@ -95,6 +95,8 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
 
       view_display( ).
       RETURN.
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ENDIF.
 

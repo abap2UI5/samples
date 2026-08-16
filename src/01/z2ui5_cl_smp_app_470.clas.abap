@@ -61,6 +61,8 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
                             ( name = `Cable 1 m` qty = 1 unit = `pc` )
                             ( name = `Quick Guide` qty = 1 unit = `pc` ) ) ) ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ELSEIF client->check_on_event( ).
       on_event( ).

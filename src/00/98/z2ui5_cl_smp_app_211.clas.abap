@@ -101,6 +101,8 @@ CLASS z2ui5_cl_smp_app_211 IMPLEMENTATION.
       on_init( ).
 
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      render_sub_app( ).
 
     ENDIF.
 

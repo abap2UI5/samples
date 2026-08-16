@@ -30,6 +30,8 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
       IF event_backend = `NEW_APP_EVENT`.
         client->message_box_display( `new app called and event NEW_APP_EVENT raised` ).
       ENDIF.
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ELSEIF client->check_on_event( ).
       on_event( ).

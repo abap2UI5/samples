@@ -29,6 +29,8 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
       get_data( ).
       mo_table_obj = z2ui5_cl_smp_app_329=>factory( mt_table ).
       view_display( client ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( client ).
     ENDIF.
 
     IF client->get_event( ) = `GO`.

@@ -31,6 +31,8 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
     IF client->check_on_init( ).
       view_display( ).
       RETURN.
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ENDIF.
 
     IF client->get_event( ) = `GEOLOCATION_ERROR`.

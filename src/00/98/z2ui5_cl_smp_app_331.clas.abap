@@ -26,6 +26,8 @@ CLASS z2ui5_cl_smp_app_331 IMPLEMENTATION.
       get_data( ).
       mo_table_obj = z2ui5_cl_smp_app_329=>factory( REF #( ms_struc ) ).
       view_display( client ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( client ).
     ENDIF.
 
     IF ms_struc IS INITIAL.

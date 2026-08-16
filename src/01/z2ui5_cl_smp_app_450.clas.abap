@@ -32,6 +32,8 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
       tims         = `134501`.
       dats_initial = `00000000`.
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.

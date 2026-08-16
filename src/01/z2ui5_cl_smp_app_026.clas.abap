@@ -34,6 +34,8 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
       quantity  = `500`.
 
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ELSEIF client->check_on_event( `POPOVER` ).
       popover_display( `TEST` ).

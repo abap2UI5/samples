@@ -44,6 +44,8 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
       text = `change me and press Send`.
       tabs_init( ).
       view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
     ELSEIF client->check_on_event( cs_event-ping ).
 
