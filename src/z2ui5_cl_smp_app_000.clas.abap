@@ -20,7 +20,7 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         path     TYPE string,
         app      TYPE string,
       END OF ty_s_tile.
-    TYPES ty_t_tile TYPE STANDARD TABLE OF ty_s_tile WITH DEFAULT KEY.
+    TYPES ty_t_tile TYPE STANDARD TABLE OF ty_s_tile WITH EMPTY KEY.
 
   PROTECTED SECTION.
     TYPES:
@@ -29,7 +29,7 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         base  TYPE string,
         width TYPE i,
       END OF ty_s_block.
-    TYPES ty_t_block TYPE STANDARD TABLE OF ty_s_block WITH DEFAULT KEY.
+    TYPES ty_t_block TYPE STANDARD TABLE OF ty_s_block WITH EMPTY KEY.
 
     " sap.ui.core.IconColor knows no blue - Positive, Critical, Negative and
     " Neutral are the semantic four - so the interactive icons of the header
@@ -251,10 +251,11 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD app_call.
 
+    DATA li_app TYPE REF TO z2ui5_if_app.
+
     DATA(name) = to_upper( classname ).
 
     TRY.
-        DATA li_app TYPE REF TO z2ui5_if_app.
         CREATE OBJECT li_app TYPE (name).
         s_scroll = CORRESPONDING #( client->get( )-s_scroll-main ).
         client->nav_app_call( li_app ).
@@ -833,7 +834,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     " estimated render width in 1/100 em, weighted per character class
     DATA(off) = 0.
-    WHILE off < strlen( header ).
+    WHILE strlen( header ) > off.
 
       DATA(char) = substring( val = header
                               off = off

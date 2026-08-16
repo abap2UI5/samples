@@ -99,6 +99,7 @@ CLASS z2ui5_cl_smp_app_126 IMPLEMENTATION.
         ASSIGN mt_table->* TO <table>.
 
         SELECT * FROM z2ui5_t_01
+          ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 3 ROWS.
 

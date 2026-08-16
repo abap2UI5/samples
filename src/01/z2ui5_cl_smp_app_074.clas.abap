@@ -19,7 +19,6 @@ CLASS z2ui5_cl_smp_app_074 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
 
@@ -73,6 +72,8 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
   METHOD view_display.
 
+    FIELD-SYMBOLS <table> TYPE table.
+
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
@@ -97,7 +98,6 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
     IF table IS NOT INITIAL.
 
-      FIELD-SYMBOLS <table> TYPE table.
       ASSIGN table->* TO <table>.
 
       DATA(tab) = page->ele( `Table`

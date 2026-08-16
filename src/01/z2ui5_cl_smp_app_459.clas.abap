@@ -45,35 +45,32 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get_event( ).
-
-      WHEN `REORDER`.
-        " the three event args arrive resolved client-side from the drop
-        " event: dragged row index, drop target index (both 0-based) and
-        " the drop position (Before/After)
-        TRY.
-            DATA(lv_from) = CONV i( client->get_event_arg( ) ) + 1.
-            DATA(lv_to)   = CONV i( client->get_event_arg( 2 ) ) + 1.
-            DATA(lv_pos)  = client->get_event_arg( 3 ).
-            DATA(ls_row)  = t_products[ lv_from ].
-          CATCH cx_root.
-            RETURN.
-        ENDTRY.
-        " dropping a row onto itself is a no-op
-        IF lv_from = lv_to.
+    IF client->get_event( ) = `REORDER`.
+      " the three event args arrive resolved client-side from the drop
+      " event: dragged row index, drop target index (both 0-based) and
+      " the drop position (Before/After)
+      TRY.
+          DATA(lv_from) = CONV i( client->get_event_arg( ) ) + 1.
+          DATA(lv_to)   = CONV i( client->get_event_arg( 2 ) ) + 1.
+          DATA(lv_pos)  = client->get_event_arg( 3 ).
+          DATA(ls_row)  = t_products[ lv_from ].
+        CATCH cx_root.
           RETURN.
-        ENDIF.
-        DELETE t_products INDEX lv_from.
-        IF lv_from < lv_to.
-          lv_to = lv_to - 1.
-        ENDIF.
-        IF lv_pos = `Before`.
-          INSERT ls_row INTO t_products INDEX lv_to.
-        ELSE.
-          INSERT ls_row INTO t_products INDEX lv_to + 1.
-        ENDIF.
-
-    ENDCASE.
+      ENDTRY.
+      " dropping a row onto itself is a no-op
+      IF lv_from = lv_to.
+        RETURN.
+      ENDIF.
+      DELETE t_products INDEX lv_from.
+      IF lv_from < lv_to.
+        lv_to = lv_to - 1.
+      ENDIF.
+      IF lv_pos = `Before`.
+        INSERT ls_row INTO t_products INDEX lv_to.
+      ELSE.
+        INSERT ls_row INTO t_products INDEX lv_to + 1.
+      ENDIF.
+    ENDIF.
 
   ENDMETHOD.
 

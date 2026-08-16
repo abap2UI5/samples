@@ -15,7 +15,6 @@ CLASS z2ui5_cl_smp_app_008 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
 
 
@@ -48,6 +47,7 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
       WHEN `BUTTON_MESSAGE_BOX_CX_ROOT`.
         TRY.
             DATA(lv_val) = 1 / 0.
+            client->message_box_display( |{ lv_val }| ).
           CATCH cx_root INTO DATA(lx).
             client->message_box_display( lx ).
         ENDTRY.

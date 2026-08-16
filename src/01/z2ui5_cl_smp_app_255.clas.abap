@@ -106,7 +106,7 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
             )->a( n = `target` v = `_blank`
             )->a( n = `href`   v = `https://sdk.openui5.org/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxNav` ).
 
-    DATA(layout) = page->ele( `VBox`
+    page->ele( `VBox`
         )->a( n = `class` v = `navigationExamples`
         )->ele( `Panel`
             )->a( n = `headerText` v = `Variable width`

@@ -35,7 +35,6 @@ CLASS z2ui5_cl_smp_app_122 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
 
 

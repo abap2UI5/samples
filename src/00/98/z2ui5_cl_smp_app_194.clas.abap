@@ -190,6 +190,7 @@ CLASS z2ui5_cl_smp_app_194 IMPLEMENTATION.
 
         SELECT *
           FROM (mv_table)
+          ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 100 ROWS.
 
@@ -215,10 +216,10 @@ CLASS z2ui5_cl_smp_app_194 IMPLEMENTATION.
         ddlanguage TYPE string,
         ddtext     TYPE string,
       END OF ty_s_fixvalue.
-    TYPES fixvalues TYPE STANDARD TABLE OF ty_s_fixvalue WITH DEFAULT KEY.
+    TYPES ty_t_fixvalue TYPE STANDARD TABLE OF ty_s_fixvalue WITH EMPTY KEY.
 
     DATA comp        TYPE cl_abap_structdescr=>component_table.
-    DATA lt_fixval   TYPE fixvalues.
+    DATA lt_fixval   TYPE ty_t_fixvalue.
     DATA structdescr TYPE REF TO cl_abap_structdescr.
 
     LOOP AT mt_comp REFERENCE INTO DATA(dfies).

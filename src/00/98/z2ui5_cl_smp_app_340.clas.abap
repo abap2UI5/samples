@@ -45,7 +45,7 @@ CLASS z2ui5_cl_smp_app_340 IMPLEMENTATION.
             )->a( n = `xmlns:core` v = `sap.ui.core`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    DATA(simple_form) = popup->ele( `Dialog`
+    popup->ele( `Dialog`
         )->a( n = `title`        v = `Test`
         )->a( n = `contentWidth` v = `60%`
         )->a( n = `afterClose`   v = client->_event( `POPUP_CLOSE` )

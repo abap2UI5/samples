@@ -57,19 +57,16 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get_event( ).
-
-      WHEN `SHOW_MODEL`.
-        " the bound inputs have already written the edits back into
-        " t_nodes before on_event runs - read the (possibly renamed) roots
-        " back and echo them, proving the round-trip
-        DATA(lv_roots) = ``.
-        LOOP AT t_nodes INTO DATA(ls_node).
-          lv_roots = |{ lv_roots }{ COND #( WHEN sy-tabix > 1 THEN `, ` ) }{ ls_node-text }|.
-        ENDLOOP.
-        client->message_toast_display( |Root nodes now: { lv_roots }| ).
-
-    ENDCASE.
+    IF client->get_event( ) = `SHOW_MODEL`.
+      " the bound inputs have already written the edits back into
+      " t_nodes before on_event runs - read the (possibly renamed) roots
+      " back and echo them, proving the round-trip
+      DATA(lv_roots) = ``.
+      LOOP AT t_nodes INTO DATA(ls_node).
+        lv_roots = |{ lv_roots }{ COND #( WHEN sy-tabix > 1 THEN `, ` ) }{ ls_node-text }|.
+      ENDLOOP.
+      client->message_toast_display( |Root nodes now: { lv_roots }| ).
+    ENDIF.
 
   ENDMETHOD.
 

@@ -3,7 +3,7 @@ CLASS z2ui5_cl_smp_app_349 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mt_data         TYPE STANDARD TABLE OF z2ui5_t_01.
+    DATA mt_data         TYPE STANDARD TABLE OF z2ui5_t_01 WITH EMPTY KEY.
     DATA ms_data         TYPE z2ui5_t_01.
     DATA mo_layout_obj   TYPE REF TO z2ui5_cl_smp_app_333.
     DATA mo_layout_obj_2 TYPE REF TO z2ui5_cl_smp_app_333.
@@ -48,11 +48,10 @@ CLASS z2ui5_cl_smp_app_349 IMPLEMENTATION.
 
     ELSEIF client->check_on_event( ).
 
-      CASE client->get_event( ).
-        WHEN `GO`.
-          DATA(app) = z2ui5_cl_smp_app_336=>factory( ).
-          client->nav_app_call( app ).
-      ENDCASE.
+      IF client->get_event( ) = `GO`.
+        DATA(app) = z2ui5_cl_smp_app_336=>factory( ).
+        client->nav_app_call( app ).
+      ENDIF.
 
     ENDIF.
 
@@ -166,6 +165,7 @@ CLASS z2ui5_cl_smp_app_349 IMPLEMENTATION.
            id_prev_app_stack,
            timestampl
       FROM z2ui5_t_01
+      ORDER BY PRIMARY KEY
       INTO CORRESPONDING FIELDS OF TABLE @mt_data
       UP TO 10 ROWS.
 
@@ -189,7 +189,6 @@ CLASS z2ui5_cl_smp_app_349 IMPLEMENTATION.
       index = index + 1.
 
       ASSIGN COMPONENT layout->name OF STRUCTURE ms_data TO FIELD-SYMBOL(<value>).
-      " assign component layout->name of structure ms_struc to field-symbol(<value>).
 
       IF sy-subrc <> 0.
         RETURN.

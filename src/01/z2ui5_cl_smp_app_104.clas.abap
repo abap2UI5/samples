@@ -44,6 +44,11 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
     IF app_sub IS BOUND.
 
       ASSIGN app_sub->(`VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
+
+      IF sy-subrc <> 0.
+        RETURN.
+      ENDIF.
+
       <fs> = grid_sub.
       CALL METHOD app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
 
@@ -58,6 +63,11 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
     CREATE OBJECT app_sub TYPE (classname).
 
     ASSIGN app_sub->(`VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
+
+    IF sy-subrc <> 0.
+      RETURN.
+    ENDIF.
+
     <fs> = grid_sub.
     CALL METHOD app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
 
@@ -160,6 +170,10 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
       DATA(t_sel) = t_tab.
       DELETE t_sel WHERE selected = abap_false.
       READ TABLE t_sel INTO DATA(s_sel) INDEX 1.
+
+      IF sy-subrc <> 0.
+        RETURN.
+      ENDIF.
 
       IF classname IS NOT INITIAL.
         view_display_master( ).

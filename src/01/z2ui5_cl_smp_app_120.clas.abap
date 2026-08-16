@@ -5,17 +5,6 @@ CLASS z2ui5_cl_smp_app_120 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    TYPES:
-      BEGIN OF ty_s_spot,
-        tooltip       TYPE string,
-        type          TYPE string,
-        pos           TYPE string,
-        scale         TYPE string,
-        contentoffset TYPE string,
-        key           TYPE string,
-        icon          TYPE string,
-      END OF ty_s_spot.
-
     DATA longitude TYPE string.
     DATA latitude TYPE string.
     DATA altitude TYPE string.
@@ -44,18 +33,14 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    CASE client->get_event( ).
-
-      WHEN `GEOLOCATION_ERROR`.
-
-        " the Geolocation control fires `error` when the position cannot be
-        " read; the code (1 = permission denied, 2 = position unavailable,
-        " 3 = timeout) and message are passed as event arguments.
-        client->message_box_display(
-            text = |Location unavailable ({ client->get_event_arg( 1 ) }): { client->get_event_arg( 2 ) }|
-            type = `error` ).
-
-    ENDCASE.
+    IF client->get_event( ) = `GEOLOCATION_ERROR`.
+      " the Geolocation control fires `error` when the position cannot be
+      " read; the code (1 = permission denied, 2 = position unavailable,
+      " 3 = timeout) and message are passed as event arguments.
+      client->message_box_display(
+          text = |Location unavailable ({ client->get_event_arg( 1 ) }): { client->get_event_arg( 2 ) }|
+          type = `error` ).
+    ENDIF.
 
   ENDMETHOD.
 

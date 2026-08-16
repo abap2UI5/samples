@@ -41,7 +41,6 @@ CLASS z2ui5_cl_smp_app_470 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
 
@@ -72,10 +71,9 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get_event( ).
-      WHEN `SHOW`.
-        popup_components( client->get_event_arg( ) ).
-    ENDCASE.
+    IF client->get_event( ) = `SHOW`.
+      popup_components( client->get_event_arg( ) ).
+    ENDIF.
 
   ENDMETHOD.
 

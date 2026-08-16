@@ -61,23 +61,20 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
       view_display( ).
     ENDIF.
 
-    CASE client->get_event( ).
+    IF client->get_event( ) = `BUTTON_OPEN_NEW_TAB`.
+      DATA(ls_config) = client->get( )-s_config.
+      DATA(result) = z2ui5_cl_smp_context=>app_get_url( classname = `z2ui5_cl_smp_app_073`
+                                                        origin    = ls_config-origin
+                                                        pathname  = ls_config-pathname
+                                                        search    = ls_config-search
+                                                        hash      = ls_config-hash ).
 
-      WHEN `BUTTON_OPEN_NEW_TAB`.
-
-        DATA(ls_config) = client->get( )-s_config.
-        DATA(result) = z2ui5_cl_smp_context=>app_get_url( classname = `z2ui5_cl_smp_app_073`
-                                                          origin    = ls_config-origin
-                                                          pathname  = ls_config-pathname
-                                                          search    = ls_config-search
-                                                          hash      = ls_config-hash ).
-
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-open_new_tab
-            t_arg = VALUE #(
-                ( result )
-                ) ).
-    ENDCASE.
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-open_new_tab
+          t_arg = VALUE #(
+              ( result )
+              ) ).
+    ENDIF.
 
   ENDMETHOD.
 

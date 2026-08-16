@@ -5,12 +5,9 @@ CLASS z2ui5_cl_smp_app_105 DEFINITION PUBLIC.
 
     DATA view_parent TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA mv_class_1 TYPE string.
-    DATA mr_data TYPE REF TO data.
 
     METHODS on_event.
-    METHODS view_display
-      CHANGING
-        xml TYPE REF TO z2ui5_cl_ui5_view_builder OPTIONAL.
+    METHODS view_display.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

@@ -133,7 +133,7 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
             )->a( n = `editable` b = abap_true
             )->ele( n = `content` ns = `form` ).
 
-    " Walk through all comps — in edit mode the key fields are not editable.
+    " Walk through all comps - in edit mode the key fields are not editable.
     LOOP AT mt_dfies REFERENCE INTO DATA(dfies).
 
       ASSIGN ms_table_row->* TO <row>.
@@ -194,7 +194,7 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
         )->a( n = `growing` v = `true`
         )->a( n = `width`   v = `auto` ).
 
-    DATA(headder) = table->ele( `headerToolbar`
+    table->ele( `headerToolbar`
         )->ele( `OverflowToolbar`
             )->tag( `ToolbarSpacer` ).
 
@@ -251,6 +251,7 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
 
         SELECT *
           FROM (mv_table)
+          ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 100 ROWS.
 

@@ -56,6 +56,7 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
         ENDCASE.
       WHEN `BUTTON_ERROR`.
         DATA(dummy) = 1 / 0.
+        client->message_box_display( |{ dummy }| ).
     ENDCASE.
 
   ENDMETHOD.

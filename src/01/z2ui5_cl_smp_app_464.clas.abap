@@ -41,6 +41,7 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
       WHEN `DIVIDE_BY_ZERO`.
         DATA(lv_zero) = 0.
         DATA(lv_result) = 1 / lv_zero.
+        client->message_box_display( |{ lv_result }| ).
 
       WHEN `ASSERT`.
         ASSERT 1 = 0.

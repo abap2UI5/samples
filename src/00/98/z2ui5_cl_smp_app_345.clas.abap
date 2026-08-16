@@ -78,6 +78,7 @@ CLASS z2ui5_cl_smp_app_345 IMPLEMENTATION.
         ASSIGN mt_data1->* TO <table1>.
 
         SELECT * FROM z2ui5_t_01
+          ORDER BY PRIMARY KEY
           INTO TABLE @<table1>
           UP TO 5 ROWS.
 
@@ -172,11 +173,10 @@ CLASS z2ui5_cl_smp_app_345 IMPLEMENTATION.
 
     ELSEIF client->check_on_event( ).
 
-      CASE client->get_event( ).
-        WHEN `GO`.
-          DATA(app) = z2ui5_cl_smp_app_336=>factory( ).
-          client->nav_app_call( app ).
-      ENDCASE.
+      IF client->get_event( ) = `GO`.
+        DATA(app) = z2ui5_cl_smp_app_336=>factory( ).
+        client->nav_app_call( app ).
+      ENDIF.
 
     ENDIF.
 

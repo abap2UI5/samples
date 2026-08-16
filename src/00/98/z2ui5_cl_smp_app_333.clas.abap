@@ -16,7 +16,6 @@ CLASS z2ui5_cl_smp_app_333 DEFINITION PUBLIC.
           END OF test3,
         END OF test2,
       END OF ty_s_test.
-    TYPES ty_t_test TYPE STANDARD TABLE OF ty_s_test WITH EMPTY KEY.
 
     TYPES:
       BEGIN OF ty_s_layout,
@@ -31,12 +30,9 @@ CLASS z2ui5_cl_smp_app_333 DEFINITION PUBLIC.
              t_layout TYPE ty_t_layout,
              s_test   TYPE ty_s_test,
            END OF ty_s_data.
-    TYPES ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH EMPTY KEY.
 
     DATA ms_data TYPE ty_s_data.
     DATA mr_data TYPE REF TO data.
-
-    CLASS-DATA cv_value TYPE c LENGTH 10 VALUE `STRUCT`.
 
     CLASS-METHODS factory
       IMPORTING
@@ -48,7 +44,6 @@ CLASS z2ui5_cl_smp_app_333 DEFINITION PUBLIC.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_smp_app_333 IMPLEMENTATION.

@@ -25,9 +25,89 @@
     "version": "v750",
     "errorNamespace": "."
   },
+  // Every rule abaplint ships is listed below - all 188 of them, so that a new
+  // rule in a new abaplint release shows up here as a missing key rather than
+  // silently defaulting. 174 are on. The 14 that are off each say why, and the
+  // reason is always one of two: the repository documents the opposite
+  // convention in AGENTS.md, or the construct belongs to the view builder
+  // chain, whose layout has its own gate (`npm run check:chains`).
+  //
+  // This replaces the 17-rule set the repository ran until 2026-08-16 - the
+  // same move samples-controls made on 2026-07-16 and samples-stack after it.
+  // The gap was not theoretical: the corpus had commented-out code in five
+  // apps, 28 variables and 6 types nobody read, two unreachable methods, seven
+  // dynamic SELECTs whose sy-subrc was never looked at, and a READ TABLE ...
+  // INDEX 1 whose result was used unconditionally (app 097).
   "rules": {
-    "exporting": true,
-    "omit_parameter_name": true,
+
+    // ---------------------------------------------------------------------
+    // Off - the repository documents the opposite convention (AGENTS.md 7)
+    // ---------------------------------------------------------------------
+    // Section 7 spells the naming scheme out: type prefixes are for tables
+    // (`t_`) and structures (`s_`) only, local types carry `ty_s_` / `ty_t_`,
+    // and scalars and object references carry no prefix at all. These four
+    // rules all want Hungarian notation instead (`^L._.+$`, `^M._.+$`,
+    // `^I._.+$`), or want the prefixes gone altogether - both directions
+    // contradict the documented scheme, so all four stay off.
+    "local_variable_names": false,
+    "class_attribute_names": false,
+    "method_parameter_names": false,
+    "no_prefixes": false,
+    // An abap2UI5 app binds its own public attributes into the view -
+    // `client->_bind( quantity )` reads the attribute the view writes back to.
+    // The public attribute IS the model, so it is not an encapsulation leak
+    // to be closed but the framework's contract (AGENTS.md 9, 11).
+    "no_public_attributes": false,
+    // These are demo apps read for their view code, not a published API. The
+    // sample's explanation lives in the overview catalog (AGENTS.md 4) and in
+    // the MessageStrip the app renders, not in an ABAP Doc block above every
+    // method. abap2UI5 itself keeps this off for the same reason.
+    "abapdoc": false,
+
+    // ---------------------------------------------------------------------
+    // Off - the view builder chain owns its own layout
+    // ---------------------------------------------------------------------
+    // A view is one statement spanning up to several hundred lines, laid out
+    // by the rules in AGENTS.md 10: one call per line, four spaces per tree
+    // level, the closing paren leading the next line. `npm run check:chains`
+    // (scripts/chain-format.mjs) is the gate for exactly that shape, and it
+    // is stricter than anything below. Every one of these rules reads the
+    // chain as a malformed parameter list - 5,087 findings from
+    // line_break_multiple_parameters alone, all of them correctly formatted
+    // chains.
+    "line_break_multiple_parameters": false,
+    "keep_single_parameter_on_one_line": false,
+    "align_parameters": false,
+    "in_statement_indentation": false,
+    "indentation": false,
+    // Blank lines inside a chain separate the view's sections - the Shell from
+    // the Page, the header from the form. They are blank lines inside one
+    // statement, which is what this rule forbids.
+    "empty_line_in_statement": false,
+
+    // ---------------------------------------------------------------------
+    // Off - the samples declare deliberately
+    // ---------------------------------------------------------------------
+    // Both rules push declarations into the branch that first uses them. The
+    // corpus does the opposite on purpose: a sample is read top-down, so its
+    // data is declared where the reader looks for it, and the shared context
+    // class carries downported shapes (`DATA temp9`, `DATA comps LIKE temp9`)
+    // that the 702 build writes and that cannot be inlined at all.
+    "prefer_inline": false,
+    "no_inline_in_optional_branches": false,
+    // The single MOVE-CORRESPONDING left in the tree
+    // (z2ui5_cl_smp_context=>itab_corresponding) copies between two generic
+    // `TYPE any` field symbols. `CORRESPONDING #( )` derives its type from the
+    // target, and a generic field symbol has none at compile time, so the
+    // rewrite abaplint proposes here parses but does not activate.
+    "prefer_corresponding": false,
+
+    // ---------------------------------------------------------------------
+    // On, with settings
+    // ---------------------------------------------------------------------
+    // Hard ABAP limit, not a convention: a longer line breaks the abapGit
+    // import with "Literals across more than one line are not allowed"
+    // (AGENTS.md 6).
     "line_length": {
       "length": 255
     },
@@ -46,27 +126,260 @@
       "severity": "Error",
       "clas": "^(?=.{1,25}$)Z2UI5_C(L|X)_SMP_"
     },
-    "downport": true,
+    // `ty_` covers the `ty_s_` / `ty_t_` scheme of AGENTS.md 7; the pattern is
+    // the one samples-controls uses, so a type moved between the two
+    // repositories keeps its name.
+    "types_naming": {
+      "pattern": "^TY_"
+    },
+    // The tree holds classes and packages today. INTF is allowed because a
+    // shared interface is a legitimate addition; anything else - a report, a
+    // table, a message class - is not, and would not survive the 702 build.
+    "allowed_object_types": {
+      "allowed": ["CLAS", "DEVC", "INTF"]
+    },
+    // `keywords` is the one flag that has to stay off: it reads the column
+    // alignment the corpus uses for keyword operands
+    // (`EXPORTING  p_name` over `RECEIVING  p_descr_ref`) as a double space
+    // and would strip it. The three flags that are left catch real
+    // sloppiness - `display(  \`text\`` and `` `text`  )`` - and found three.
+    "double_space": {
+      "keywords": false,
+      "startParen": true,
+      "endParen": true,
+      "afterColon": true
+    },
+    // Two blank lines separate methods (AGENTS.md 7), so three is already one
+    // too many. Same value as samples-controls and samples-stack.
+    "sequential_blank": {
+      "lines": 3
+    },
+    // All eight detectors on. `endselect`, `execSQL`, `kernelCall`,
+    // `communication` and `systemCall` are NOT keys of this rule any more -
+    // they moved to `dangerous_statement` below, which carries them.
+    "avoid_use": {
+      "skipQuickFix": false,
+      "define": true,
+      "statics": true,
+      "defaultKey": true,
+      "break": true,
+      "testSeams": true,
+      "describeLines": true,
+      "exportToMemory": true,
+      "exportToDatabase": true
+    },
+    // Every flag is on except dynamicSQL. `SELECT * FROM (mv_table)` is not an
+    // accident in this corpus - it is the subject of the generic table browser
+    // samples in src/00/98 (184, 190, 194, 212, 339, 342, 344), which exist to
+    // show RTTI-built tables filled from a table name the user types. The
+    // samples are in the testing package and never reach the 702 build.
+    "dangerous_statement": {
+      "execSQL": true,
+      "kernelCall": true,
+      "systemCall": true,
+      "insertReport": true,
+      "generateDynpro": true,
+      "generateReport": true,
+      "generateSubroutine": true,
+      "deleteReport": true,
+      "deleteTextpool": true,
+      "insertTextpool": true,
+      "deleteDynpro": true,
+      "exportDynpro": true,
+      "editorCallForReport": true,
+      "dynamicSQL": false,
+      "ignoreRAPQueryProvider": true
+    },
+    // Every flag is on except the two SELECT ones, and the rule earns its keep
+    // with what is left: it found nine ASSIGN obj->(`NAME`) whose result was
+    // read without checking that the component exists (a dump, not a wrong
+    // value), and three READ TABLE ... INDEX 1 whose work area was used
+    // unconditionally - app 097 inserted a stale row into the target table
+    // whenever the selection was empty. All twelve are fixed.
+    // selectSingle / selectTable are off because in this corpus "no rows" is
+    // never an error: every table SELECT either feeds a binding, where an
+    // empty table is a legitimate view, or is read back through
+    // `VALUE #( lt[ 1 ] OPTIONAL )`, which handles the empty case in the
+    // expression itself. A sy-subrc branch after those would be dead code.
+    "check_subrc": {
+      "openDataset": true,
+      "authorityCheck": true,
+      "selectSingle": false,
+      "selectTable": false,
+      "updateDatabase": true,
+      "insertDatabase": true,
+      "modifyDatabase": true,
+      "deleteDatabase": true,
+      "readTable": true,
+      "assign": true,
+      "find": true
+    },
+
+    // ---------------------------------------------------------------------
+    // On, as shipped
+    // ---------------------------------------------------------------------
+    "7bit_ascii": true,
+    "add_test_attributes": true,
+    "aff_and_xml": true,
+    "align_pseudo_comments": true,
+    "align_type_expressions": true,
+    "allowed_object_naming": true,
+    "ambiguous_statement": true,
     "begin_end_names": true,
+    "begin_single_include": true,
+    "call_transaction_authority_check": true,
+    "catch_and_raise": true,
+    "cds_association_name": true,
+    "cds_comment_style": true,
+    "cds_field_order": true,
+    "cds_legacy_view": true,
+    "cds_naming": true,
+    "cds_parser_error": true,
+    "chain_mainly_declarations": true,
+    "change_if_to_case": true,
+    "check_abstract": true,
+    "check_comments": true,
     "check_ddic": true,
     "check_include": true,
     "check_syntax": true,
+    "check_text_elements": true,
+    "check_transformation_exists": true,
+    "classic_exceptions_overlap": true,
+    "clear_exporting_parameters": true,
+    "cloud_types": true,
+    "colon_missing_space": true,
+    "commented_code": true,
+    "constant_classes": true,
+    "constructor_visibility_public": true,
+    "contains_tab": true,
+    "cyclic_oo": true,
+    "cyclomatic_complexity": true,
+    "db_operation_in_loop": true,
+    "definitions_top": true,
+    "description_empty": true,
+    "downport": true,
+    "dynpro_checks": true,
+    "easy_to_find_messages": true,
+    "empty_event": true,
+    "empty_statement": true,
+    "empty_structure": true,
+    "exit_or_check": true,
+    "expand_macros": true,
+    "exporting": true,
+    "fm_global_parameters_obsolete": true,
+    "forbidden_identifier": true,
+    "forbidden_pseudo_and_pragma": true,
+    "forbidden_void_type": true,
+    "form_tables_obsolete": true,
+    "fully_type_constants": true,
+    "fully_type_itabs": true,
+    "function_module_recommendations": true,
+    "functional_writing": true,
     "global_class": true,
-    "definitions_top": false,
+    "identical_conditions": true,
+    "identical_contents": true,
+    "identical_descriptions": true,
+    "identical_form_names": true,
+    "identical_move": true,
+    "if_in_if": true,
     "implement_methods": true,
+    "implicit_start_of_selection": true,
+    "index_completely_contained": true,
+    "inline_data_old_versions": true,
+    "intf_referencing_clas": true,
+    "invalid_table_index": true,
+    "keyword_case": true,
+    "line_break_style": true,
+    "line_only_punc": true,
+    "local_class_naming": true,
+    "local_testclass_consistency": true,
+    "macro_naming": true,
+    "main_file_contents": true,
+    "many_parentheses": true,
+    "max_one_method_parameter_per_line": true,
+    "max_one_statement": true,
+    "message_exists": true,
     "method_implemented_twice": true,
+    "method_length": true,
+    "method_overwrites_builtin": true,
+    "mix_returning": true,
+    "modify_only_own_db_tables": true,
+    "msag_consistency": true,
+    "names_no_dash": true,
+    "nesting": true,
+    "newline_between_methods": true,
+    "no_aliases": true,
+    "no_chained_assignment": true,
+    "no_comments_between_methods": true,
+    "no_exclamation_escape": true,
+    "no_external_form_calls": true,
+    "no_macros": true,
+    "no_mandt_in_database_operations": true,
+    "no_yoda_conditions": true,
+    "nrob_consistency": true,
+    "obsolete_statement": true,
+    "omit_parameter_name": true,
+    "omit_preceding_zeros": true,
+    "omit_receiving": true,
+    "parser_702_chaining": true,
+    "parser_bad_exceptions": true,
     "parser_error": true,
+    "parser_missing_space": true,
+    "pragma_style": true,
+    "prefer_is_not": true,
+    "prefer_pragmas": true,
+    "prefer_raise_exception_new": true,
+    "prefer_returning_to_exporting": true,
+    "prefer_xsdbool": true,
+    "preferred_compare_operator": true,
+    "prefix_is_current_class": true,
+    "reduce_procedural_code": true,
+    "reduce_string_templates": true,
+    "redundant_conversion": true,
+    "release_idoc": true,
+    "remove_descriptions": true,
+    "rfc_error_handling": true,
+    "select_add_order_by": true,
+    "select_performance": true,
+    "select_single_full_key": true,
+    "selection_screen_naming": true,
+    "selection_screen_texts_missing": true,
+    "short_case": true,
+    "sicf_consistency": true,
+    "slow_parameter_passing": true,
+    "smim_consistency": true,
+    "space_before_colon": true,
+    "space_before_dot": true,
+    "sql_escape_host_variables": true,
+    "sql_value_conversion": true,
+    "start_at_tab": true,
+    "static_call_via_instance": true,
+    "strict_sql": true,
     "superclass_final": true,
+    "superfluous_value": true,
+    "sy_modification": true,
+    "sy_read_restriction": true,
+    "tabl_enhancement_category": true,
+    "tables_declared_locally": true,
+    "try_without_catch": true,
+    "type_form_parameters": true,
+    "uncaught_exception": true,
     "unknown_types": true,
-    // The ABAP editor strips a trailing blank when it saves, so a line that
-    // ends in one comes back changed on the next pull - for everyone. Nothing
-    // here caught that: the port of the corpus onto z2ui5_cl_ui5_view_builder
-    // (#752) left a trailing blank on seven lines in seven app classes, all
-    // four workflows stayed green, and b7edbc6 "fix abaplint diffs" had to be
-    // found and pushed by hand. The tree is clean as of that commit, so the
-    // rule costs nothing and closes the hole. abap2UI5 has carried it for
-    // src/01 and src/02 all along.
+    "unnecessary_chaining": true,
+    "unnecessary_pragma": true,
+    "unnecessary_return": true,
+    "unreachable_code": true,
+    "unsecure_fae": true,
+    "unused_ddic": true,
+    "unused_macros": true,
+    "unused_methods": true,
+    "unused_types": true,
+    "unused_variables": true,
+    "use_bool_expression": true,
+    "use_class_based_exceptions": true,
+    "use_line_exists": true,
+    "use_new": true,
+    "when_others_last": true,
     "whitespace_end": true,
-    "xml_consistency": true
-  }
+    "xml_consistency": true  }
 }

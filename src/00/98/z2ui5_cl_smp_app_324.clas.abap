@@ -42,10 +42,9 @@ CLASS z2ui5_cl_smp_app_324 IMPLEMENTATION.
 
     ELSEIF client->check_on_event( ).
 
-      CASE client->get_event( ).
-        WHEN `PRESS`.
-          call_dynpro( ).
-      ENDCASE.
+      IF client->get_event( ) = `PRESS`.
+        call_dynpro( ).
+      ENDIF.
 
     ENDIF.
 

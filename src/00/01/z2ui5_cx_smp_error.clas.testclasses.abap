@@ -59,6 +59,7 @@ CLASS ltcl_unit_test IMPLEMENTATION.
 
     TRY.
         DATA(lv_val) = 1 / 0.
+        cl_abap_unit_assert=>fail( |unreachable { lv_val }| ).
       CATCH cx_root INTO DATA(lx_root).
     ENDTRY.
 
