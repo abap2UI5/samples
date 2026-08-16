@@ -738,27 +738,50 @@ By hand, because no script covers them:
 - Configuration: `abaplint.jsonc`
 - Install: `npm install -g @abaplint/cli`
 - Run: `abaplint`
+- **The rule block is byte-identical in three repositories** — this one,
+  [samples-controls](https://github.com/abap2UI5/samples-controls) and
+  [samples-stack](https://github.com/abap2UI5/samples-stack) — the same way
+  `scripts/chain-format.mjs` already is. **Change it in one and copy it to
+  the other two**, then re-run that repository's gates: what is checked is a
+  joint decision of the three corpora, not a local preference.
+  - abaplint has no `extends`, so there is no shared file to include — the
+    copy is the mechanism, and the block carries a header saying so.
+  - Only `global`, `dependencies` and `syntax` are per repository (release
+    floor, dependency set, suppressions) — plus exactly **one** rule:
+    `object_naming`, which encodes the repository's token (SMP / SMPC /
+    SMPS). It sits last in the file behind a marker that says so. Everything
+    above that marker must be identical.
 - **Every rule abaplint ships is listed in the config — all 188 of them**
-  (2026-08-16; it was 17 before, the rest defaulting to off unnoticed). 174
-  are on. **A rule is never left out of the file.** When an abaplint upgrade
-  adds one, add the key: on if the corpus passes, off with the reason in a
-  comment above it if it does not. Leaving it unlisted is how the previous
-  gap opened, and an unlisted rule reads as "nobody decided" rather than
-  "decided against".
-- The 14 that are off carry their reason in the file. In short: four rules
+  (2026-08-16; it was 17 here, 44 in samples-controls and 41 in
+  samples-stack, the rest defaulting to off unnoticed). 171 are on. **A rule
+  is never left out of the file.** When an abaplint upgrade adds one, add
+  the key in all three: on if all three corpora pass, off with the reason in
+  a comment above it if they do not. An unlisted rule reads as "nobody
+  decided" rather than "decided against".
+- The 17 that are off carry their reason in the file. In short: four rules
   want Hungarian notation and `no_public_attributes` wants the model hidden,
-  both against §7 and §9; `abapdoc` treats demos as a published API; six
-  rules read a view builder chain as a malformed parameter list, and that
-  layout has its own gate (`npm run check:chains`, §10); `prefer_inline` /
+  both against §7 and §9; `abapdoc` treats demos as a published API; seven
+  rules read a view builder chain or a `VALUE #( )` data table as a
+  malformed parameter list, and that layout has its own gate
+  (`npm run check:chains`, §10); `prefer_inline` /
   `no_inline_in_optional_branches` move declarations the samples place
-  deliberately; and `prefer_corresponding` proposes a rewrite that does not
-  activate on a generic field symbol.
-- Three rules run with flags off rather than wholesale: `check_subrc`
-  (`selectSingle`, `selectTable` — "no rows" is a legitimate state here, and
-  the SELECT either feeds a binding or is read back with `OPTIONAL`),
-  `dangerous_statement` (`dynamicSQL` — it is the subject of the generic
-  table browser samples in `src/00/98`) and `double_space` (`keywords` — it
-  would strip the corpus' column alignment).
+  deliberately; `prefer_corresponding` proposes a rewrite that does not
+  activate on a generic field symbol; and `smim_consistency` cannot resolve
+  a MIME folder that lives on the system.
+- Several rules run with flags off or an `exclude` rather than wholesale.
+  The ones worth knowing here: `check_subrc` (`selectSingle`, `selectTable`
+  — "no rows" is a legitimate state, and the SELECT either feeds a binding
+  or is read back with `OPTIONAL`), `dangerous_statement` (`dynamicSQL` — it
+  is the subject of the generic table browser samples in `src/00/98`),
+  `double_space` (`keywords` and `endParen` — both would strip deliberate
+  column alignment), `no_yoda_conditions` (`onlyConstants` — unrestricted it
+  demands `lines( t ) < i` instead of `i > lines( t )`) and
+  `empty_structure` (`when` — an event that only needs the round-trip is a
+  legitimate empty branch, with a comment where the code would be).
+  - An `exclude` that names another repository's files is **not** noise here:
+    it is what lets one block serve three corpora. `z2ui5_cl_smps_bp_*`
+    matches nothing under this `src/`, and removing it would break
+    samples-stack on the next copy.
 - **Write the flag set out in full when configuring a rule.** abaplint
   replaces the whole options object, so a partial one silently turns every
   flag it omits *off* — `"check_subrc": { "selectTable": false }` disables
