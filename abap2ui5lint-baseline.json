@@ -1,5 +1,5 @@
 {
-  "note": "abap2ui5-linter baseline: findings that existed when the linter was adopted. Suppressed on every run; NEW findings still fail, a STALE entry fails too. Regenerate with --update-baseline. Down from 86 to 33. What went was answered in the SOURCE or in the config, never by moving it here: defects fixed (a navigation on an event parameter that does not exist, a selection bound to a field the row type has not got, two icon-only buttons with no accessible name, a hand-rolled init flag, ten PUBLIC attributes shipped on every roundtrip for nothing), deliberate demonstrations given a directive that says what they demonstrate, five view chains rewritten one element per line, nine lifecycle IF blocks made into IF/ELSEIF chains, and src/00/98 - the TEST package - excluded from non-released-api in the config, where the reason is readable, instead of fourteen silent rows here. Of the 33 left, 31 are findings the pinned linter 0.1.1 produces and @abap2ui5/linter 0.2.0 does not: a nested or INCLUDE-built structure, a type owned by another class, a model a template:repeat declares, a WHEN OTHERS dispatcher, a branch that delegates its view_display, a button labelled by a COND, and an `else` inside a MessageStrip's prose ending an IF branch. They go stale with the pin bump - and a stale entry FAILS, so the bump clears them rather than a person remembering to. The two that remain after that are real and deliberate: app 449 feeds the PDFViewer a sample PDF hosted only on the SAPUI5 demo kit (no OpenUI5 equivalent could be confirmed), and app 448's whole subject is driving a property through control_by_id.",
+  "note": "abap2ui5-linter baseline: findings that existed when the linter was adopted. Suppressed on every run; NEW findings still fail, a STALE entry fails too. Regenerate with --update-baseline.",
   "findings": {
     "src/00/97/z2ui5_cl_smp_app_323.clas.abap|missing-view-display-on-navigated|||": 1,
     "src/00/98/z2ui5_cl_smp_app_094.clas.abap|unknown-binding-path|sap.m.Input|value|/MS_SCREEN/TY_S_02/INPUT": 1,
@@ -27,7 +27,6 @@
     "src/01/z2ui5_cl_smp_app_382.clas.abap|event-without-handler|||INFORMATION": 1,
     "src/01/z2ui5_cl_smp_app_382.clas.abap|event-without-handler|||SUCCESS": 1,
     "src/01/z2ui5_cl_smp_app_382.clas.abap|event-without-handler|||WARNING": 1,
-    "src/01/z2ui5_cl_smp_app_448.clas.abap|settable-property-via-action|sap.m.Panel|expanded|setExpanded": 1,
     "src/01/z2ui5_cl_smp_app_449.clas.abap|commercial-ui5-host|||hana.ondemand.com": 1,
     "src/01/z2ui5_cl_smp_app_452.clas.abap|missing-accessibility|sap.m.Button|tooltip|": 1,
     "src/01/z2ui5_cl_smp_app_471.clas.abap|missing-accessibility|sap.m.Button|tooltip|": 1,
