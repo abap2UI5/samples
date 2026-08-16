@@ -1,4 +1,5 @@
 " @keywords fcl three column detail detail deep navigation
+" @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views
 CLASS z2ui5_cl_smp_app_098 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

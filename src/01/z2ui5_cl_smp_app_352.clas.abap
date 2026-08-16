@@ -1,4 +1,5 @@
 " @keywords mobile numeric keypad keyboard_set_mode phone input
+" @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard
 CLASS z2ui5_cl_smp_app_352 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

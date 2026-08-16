@@ -438,20 +438,22 @@ the names.
 
 [`SAMPLES.md`](SAMPLES.md) answers it. Every app, its description, its
 `@keywords` (the app keeps them for its search box; on a page the reader *is*
-the search box, so they are rendered) and a link to the source. Written by
+the search box, so they are rendered), the `@docs` chapter that explains what
+it demonstrates, and a link to the source. Written by
 `scripts/generate-samples-md.js` from the **same scan** as the overview app —
 `scripts/lib/scan-samples.js`, which is the single place that knows what counts
 as a sample, where its title comes from and which classes are hidden helpers.
 Two copies of that would drift silently: the app and the page would simply
 disagree about what this repository contains, and nothing would fail.
 
-Three things it shows that the app does not, on purpose:
+Four things it shows that the app does not, on purpose:
 
 | | Why |
 |---|---|
 | the `src/00` packages | they have no overview app (§3); listing them nowhere is how 49 apps became invisible |
 | the `ZZZ` helper apps | they must not get a tile — but a catalogue claiming to account for the tree has to say they exist |
 | the `@keywords` | never rendered in the app (§4); here they are what `Ctrl+F` finds |
+| the `@docs` link | the chapter that explains the pattern the sample demonstrates (§4) — the app has no room for it, and a page does |
 
 The `702` branch carries its own: `npm run downport` strips `src/00/97` and
 `src/00/98` and regenerates the file afterwards, so the copy on that branch
@@ -533,6 +535,29 @@ text cannot hold: **synonyms** (`f4` for value help, `alv` for the grid table),
 and the **abap2UI5 API** it demonstrates (`nav_app_call`, `binding_call`,
 `control_by_id`). Four to eight terms, no backticks. The line is optional — a
 sample without one is simply found by its header, sub and class name.
+
+**`@docs` is the way back to the documentation**, a second optional comment
+line directly under `@keywords`, holding one or more full URLs into
+`https://abap2ui5.github.io/docs/`:
+
+```abap
+" @keywords f4 search help suggestion input dialog select
+" @docs https://abap2ui5.github.io/docs/cookbook/expert_more/value_help
+CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
+```
+
+It is rendered in `SAMPLES.md` (never in the app — the tile has no room, and a
+reader who is already inside the overview is not looking for a link out).
+Full URLs rather than paths, because the line has to be useful where somebody
+actually meets it: a search engine drops people into a class, and the code was
+all they got.
+
+**Do not add one by hand.** The pairing is declared on the documentation side —
+a cookbook page lists its samples in frontmatter, and `scripts/link-samples.mjs`
+in [abap2UI5/docs](https://github.com/abap2UI5/docs) generates the block of
+sample links on the page *and* fails when a class it links to does not point
+back. Adding a line here that no page declares makes that check red. Add the
+page's `samples:` entry first; this line follows from it.
 
 **`header` and `sub` come from the class, not from hand-written labels.** The
 source of truth is the app class's abapGit short text `<DESCRIPT>` in its

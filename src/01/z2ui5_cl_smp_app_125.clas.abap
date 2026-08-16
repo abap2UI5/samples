@@ -1,4 +1,5 @@
 " @keywords document.title tab caption headline set_title
+" @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/title
 CLASS z2ui5_cl_smp_app_125 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

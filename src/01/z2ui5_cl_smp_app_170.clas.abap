@@ -1,4 +1,5 @@
 " @keywords navcontainer dialog pages back forward
+" @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popup
 CLASS z2ui5_cl_smp_app_170 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

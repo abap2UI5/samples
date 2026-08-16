@@ -1,4 +1,5 @@
 " @keywords generic data reference create data ddic dynamic itab
+" @docs https://abap2ui5.github.io/docs/cookbook/model/binding
 CLASS z2ui5_cl_smp_app_061 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

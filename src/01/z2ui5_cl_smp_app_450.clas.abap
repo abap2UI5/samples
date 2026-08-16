@@ -1,4 +1,5 @@
 " @keywords dats tims conversion initial date 00000000 sy-datum
+" @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_450 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

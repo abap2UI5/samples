@@ -1,4 +1,5 @@
 " @keywords reload refresh restart location_reload url
+" @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling
 CLASS z2ui5_cl_smp_app_492 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

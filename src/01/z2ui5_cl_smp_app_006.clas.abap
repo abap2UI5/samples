@@ -1,4 +1,5 @@
 " @keywords growing 10000 rows sticky toolbar sort performance
+" @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_006 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

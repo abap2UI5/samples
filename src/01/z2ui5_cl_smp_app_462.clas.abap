@@ -1,4 +1,5 @@
 " @keywords popup expand state hierarchy nodes
+" @docs https://abap2ui5.github.io/docs/cookbook/model/trees
 CLASS z2ui5_cl_smp_app_462 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

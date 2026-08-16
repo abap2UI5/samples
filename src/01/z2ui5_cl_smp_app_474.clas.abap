@@ -1,4 +1,5 @@
 " @keywords url policy link security validator relative allow deny
+" @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_474 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

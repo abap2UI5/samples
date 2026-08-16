@@ -1,4 +1,5 @@
 " @keywords dialog sub app destroy rerender background view
+" @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popup
 CLASS z2ui5_cl_smp_app_012 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

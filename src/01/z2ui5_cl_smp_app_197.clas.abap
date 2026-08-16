@@ -1,4 +1,5 @@
 " @keywords facetfilter filter object marshalling selected items
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/backend
 CLASS z2ui5_cl_smp_app_197 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

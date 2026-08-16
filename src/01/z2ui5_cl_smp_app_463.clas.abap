@@ -1,4 +1,5 @@
 " @keywords customtreeitem rename input binding write back
+" @docs https://abap2ui5.github.io/docs/cookbook/model/trees
 CLASS z2ui5_cl_smp_app_463 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,4 +1,5 @@
 " @keywords type conversion sum amount number field
+" @docs https://abap2ui5.github.io/docs/cookbook/model/binding
 CLASS z2ui5_cl_smp_app_047 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

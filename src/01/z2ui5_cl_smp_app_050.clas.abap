@@ -1,4 +1,5 @@
 " @keywords style stylesheet inline html class own design
+" @docs https://abap2ui5.github.io/docs/cookbook/view/definition
 CLASS z2ui5_cl_smp_app_050 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,4 +1,5 @@
 " @keywords cell enter row index event grid alv
+" @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_160 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

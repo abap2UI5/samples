@@ -1,4 +1,5 @@
 " @keywords cursor enter tab next field form set_focus
+" @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/focus
 CLASS z2ui5_cl_smp_app_189 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

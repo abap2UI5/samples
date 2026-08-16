@@ -1,4 +1,5 @@
 " @keywords lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle https://abap2ui5.github.io/docs/cookbook/expert_more/snippets
 CLASS z2ui5_cl_smp_app_495 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

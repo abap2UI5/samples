@@ -1,4 +1,5 @@
 " @keywords export save base64 attachment xstring document
+" @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download
 CLASS z2ui5_cl_smp_app_186 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

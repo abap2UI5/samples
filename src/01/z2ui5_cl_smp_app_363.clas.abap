@@ -1,4 +1,5 @@
 " @keywords scroll_into_view control id validation jump
+" @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling
 CLASS z2ui5_cl_smp_app_363 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

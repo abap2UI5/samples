@@ -1,4 +1,5 @@
 " @keywords nest_view_display rerender model refresh sub view
+" @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views
 CLASS z2ui5_cl_smp_app_065 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

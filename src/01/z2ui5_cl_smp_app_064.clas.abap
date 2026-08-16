@@ -1,4 +1,5 @@
 " @keywords progressindicator busy wait long running backend
+" @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer
 CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

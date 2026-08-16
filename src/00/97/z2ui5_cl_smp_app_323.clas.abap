@@ -1,4 +1,5 @@
 " @keywords app state share clipboard copy link colleague send url
+" @docs https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share
 CLASS z2ui5_cl_smp_app_323 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

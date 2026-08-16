@@ -1,4 +1,5 @@
 " @keywords shortcut hotkey ctrl key combination keyboard_shortcut
+" @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/keyboard_shortcuts
 CLASS z2ui5_cl_smp_app_471 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

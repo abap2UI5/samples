@@ -1,4 +1,5 @@
 " @keywords exception dump error handling debugtool restart retry
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/exception
 CLASS z2ui5_cl_smp_app_464 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
