@@ -337,7 +337,7 @@ GitHub) still open their site directly through `open_url( )`.
 five icons with their separator on the right, the two colour states and the
 install popover. samples-controls builds it in
 `scripts/generate-overview.mjs` (its overview class is generated — never edit
-the class), samples-stack in `z2ui5_cl_smps_app_00`. All three build it with
+the class), samples-stack in `z2ui5_cl_smps_app_000`. All three build it with
 `z2ui5_cl_ui5_view_builder`, which renders an empty attribute rather than
 skipping it (`color=""` is no valid `IconColor`), so the optional ones are
 added under an `IF`. What stays local to a repository is
