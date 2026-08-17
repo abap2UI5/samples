@@ -115,6 +115,10 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
 
   METHOD get_data.
 
+    " no inline DATA(lt_data) here: an inline declaration together with
+    " INTO CORRESPONDING FIELDS is 7.55 syntax and a syntax error below that
+    DATA lt_data TYPE STANDARD TABLE OF z2ui5_t_01 WITH EMPTY KEY.
+
     " any single row will do here, but it has to be the SAME one on every
     " roundtrip - SELECT SINGLE without a full key leaves that to the database
     SELECT id,
@@ -124,7 +128,7 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
            timestampl
       FROM z2ui5_t_01
       ORDER BY PRIMARY KEY
-      INTO CORRESPONDING FIELDS OF TABLE @DATA(lt_data)
+      INTO CORRESPONDING FIELDS OF TABLE @lt_data
       UP TO 1 ROWS.
 
     ms_struc = VALUE #( lt_data[ 1 ] OPTIONAL ).
@@ -134,6 +138,8 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
 
   METHOD get_data2.
 
+    DATA lt_data2 TYPE STANDARD TABLE OF z2ui5_t_01 WITH EMPTY KEY.
+
     SELECT id,
            id_prev,
            id_prev_app,
@@ -142,7 +148,7 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
       FROM z2ui5_t_01
       WHERE id <> @ms_struc-id
       ORDER BY PRIMARY KEY
-      INTO CORRESPONDING FIELDS OF TABLE @DATA(lt_data2)
+      INTO CORRESPONDING FIELDS OF TABLE @lt_data2
       UP TO 1 ROWS.
 
     ms_struc = VALUE #( lt_data2[ 1 ] OPTIONAL ).
