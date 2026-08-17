@@ -292,7 +292,7 @@ start page (`z2ui5_cl_app_startup`) — dropped from all three overviews on
 | Icon | Target | Repository |
 |------|--------|------------|
 | `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples — *Samples* |
-| `sap-icon://palette` | `z2ui5_cl_smpc_app_overview` | abap2UI5/samples-controls — *Control Samples* |
+| `sap-icon://palette` | `z2ui5_cl_smpc_app_000` | abap2UI5/samples-controls — *Control Samples* |
 | `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack — *Stack Samples* |
 | `sap-icon://learning-assistant` | — | <https://abap2UI5.org> |
 | `sap-icon://globe` | — | the repository the app itself lives in |
@@ -365,7 +365,7 @@ Each repository is installed on its own, so every button decides for itself:
 A repository that **renames** its overview app is installed under both names in
 the wild for a while, so `header_button( )` takes an optional `class_old` and
 falls back to it when the current name is not on the system —
-`z2ui5_cl_dmo_app_overview` for samples-controls (renamed 2026-08),
+`z2ui5_cl_smpc_app_overview` for samples-controls (renamed again 2026-08),
 `z2ui5_cl_demo_app_g00` for this repository. Add the old name there when an
 overview app is renamed; drop it again once the rename is old enough.
 
