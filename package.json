@@ -15,7 +15,7 @@
     "syfixes": "find . -type f -name '*.abap' -exec sed -i -e 's/ RAISE EXCEPTION TYPE cx_sy_itab_line_not_found/ ASSERT 1 = 0/g' {} + ",
     "downport": "rm -rf src/00/97 src/00/98 && abaplint --fix .github/abaplint/abap_702.jsonc && npm run syfixes && node scripts/generate-samples-md.js",
     "check": "npm run lint && npm run check:abap2ui5 && npm run check:chains && npm run check:agents && npm run check:strip",
-    "check:rule-block": "node scripts/check-rule-block.mjs"
+    "check:app-rules": "node scripts/check-app-rules.mjs"
   },
   "repository": {
     "type": "git",
