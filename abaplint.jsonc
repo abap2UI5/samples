@@ -22,10 +22,17 @@
     "errorNamespace": "."
   },
   // ===================================================================
-  // THE RULE BLOCK BELOW IS KEPT BYTE-IDENTICAL IN THREE REPOSITORIES:
-  // abap2UI5/samples, abap2UI5/samples-controls and abap2UI5/samples-stack.
-  // Change it in one and copy it to the other two - the same rule
-  // scripts/chain-format.mjs already lives under.
+  // THE RULE BLOCK BELOW IS THE SHARED APP RULE SET, and its SOURCE is
+  // abap2UI5/abap2UI5 `.github/abaplint/app-rules.json` - where the rest of
+  // "how to write an abap2UI5 app" lives (the build-an-app and
+  // view-chain-layout skills, docs/agents/building-apps.md, abap-check,
+  // ui5-check). Change it THERE first, then copy it here; the three sample
+  // repositories are consumers of it, not peers of each other.
+  //
+  // `npm run check:app-rules` compares this block against the source, as
+  // PARSED SETTINGS. The peer checker it replaced compared rule NAMES, so
+  // switching a rule to false read as no change at all - which is precisely
+  // the drift it existed to catch.
   //
   // The ONE exception is "object_naming", the last rule in the file: it
   // encodes which repository you are in (SMP / SMPC / SMPS) and is the only
