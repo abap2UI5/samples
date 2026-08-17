@@ -347,7 +347,16 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
     IF mv_search_value IS NOT INITIAL.
 
-      LOOP AT mt_table REFERENCE INTO DATA(lr_row).
+      " Collected rather than deleted in place: DELETE ... INDEX sy-tabix
+      " inside a LOOP over the same table shifts the rows under the loop's own
+      " cursor - a system silently SKIPS the row after each deletion (so the
+      " search returns wrong rows) and the transpiled backend raises
+      " TABLE_INVALID_INDEX. The DO loop above the DELETE can leave sy-tabix
+      " pointing elsewhere as well. Found 2026-08-17.
+      DATA(lt_all) = mt_table.
+      CLEAR mt_table.
+
+      LOOP AT lt_all REFERENCE INTO DATA(lr_row).
         DATA(lv_row) = ``.
         DATA(lv_index) = 1.
         DO.
@@ -360,8 +369,8 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
           lv_index = lv_index + 1.
         ENDDO.
 
-        IF lv_row NS mv_search_value.
-          DELETE mt_table INDEX sy-tabix.
+        IF lv_row CS mv_search_value.
+          APPEND lr_row->* TO mt_table.
         ENDIF.
       ENDLOOP.
     ENDIF.

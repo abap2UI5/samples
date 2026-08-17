@@ -682,10 +682,25 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
 
   METHOD filter_itab.
 
-    DATA ref TYPE REF TO data.
+    DATA ref  TYPE REF TO data.
+    DATA keep TYPE abap_bool.
 
-    LOOP AT val REFERENCE INTO ref.
+    " Collected rather than deleted in place, and the old shape was wrong
+    " twice over: DELETE ... INDEX sy-tabix inside a LOOP shifts the rows
+    " under the loop's own cursor (a system silently SKIPS the row after each
+    " deletion; the transpiled backend raises TABLE_INVALID_INDEX), and
+    " sy-tabix here belonged to the INNER loop over `filter`, so the index
+    " deleted was the FILTER's, not the row's. Found 2026-08-17 by the same
+    " pattern search that turned up four ports in abap2UI5/samples-controls.
+    DATA rows TYPE REF TO data.
+    CREATE DATA rows LIKE val.
+    ASSIGN rows->* TO FIELD-SYMBOL(<rows>).
+    <rows> = val.
+    CLEAR val.
 
+    LOOP AT <rows> REFERENCE INTO ref.
+
+      keep = abap_true.
       LOOP AT filter INTO DATA(ls_filter).
 
         ASSIGN ref->(ls_filter-name) TO FIELD-SYMBOL(<field>).
@@ -693,11 +708,16 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
           CONTINUE.
         ENDIF.
         IF <field> NOT IN ls_filter-t_range.
-          DELETE val INDEX sy-tabix.
+          keep = abap_false.
           EXIT.
         ENDIF.
 
       ENDLOOP.
+
+      IF keep = abap_true.
+        ASSIGN ref->* TO FIELD-SYMBOL(<row>).
+        INSERT <row> INTO TABLE val.
+      ENDIF.
 
     ENDLOOP.
 
@@ -829,6 +849,7 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
     " JS equivalent: always use toLowerCase().includes(toLowerCase()).
     FIELD-SYMBOLS <row>   TYPE any.
     FIELD-SYMBOLS <field> TYPE any.
+    DATA rows TYPE REF TO data.
 
     " an empty search matches everything (and find( sub = `` ) would dump
     " with CX_SY_STRG_PAR_VAL), so leave the table untouched
@@ -840,7 +861,20 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
                                    THEN to_upper( val )
                                    ELSE val ).
 
-    LOOP AT tab ASSIGNING <row>.
+    " Collected rather than deleted in place: DELETE ... INDEX sy-tabix inside
+    " a LOOP over the same table shifts the rows under the loop's own cursor -
+    " a system silently SKIPS the row after each deletion (so the search
+    " returns wrong rows) and the transpiled backend raises
+    " TABLE_INVALID_INDEX. Worse here than elsewhere: the DO loop above the
+    " DELETE can leave sy-tabix pointing at something else entirely.
+    " Found 2026-08-17 with the same pattern search that turned up four ports
+    " in abap2UI5/samples-controls.
+    CREATE DATA rows LIKE tab.
+    ASSIGN rows->* TO FIELD-SYMBOL(<rows>).
+    <rows> = tab.
+    CLEAR tab.
+
+    LOOP AT <rows> ASSIGNING <row>.
 
       DATA(lv_check_found) = abap_false.
       DATA(lv_index) = 1.
@@ -878,8 +912,8 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
         lv_index = lv_index + 1.
       ENDDO.
 
-      IF lv_check_found = abap_false.
-        DELETE tab INDEX sy-tabix.
+      IF lv_check_found = abap_true.
+        INSERT <row> INTO TABLE tab.
       ENDIF.
 
     ENDLOOP.
