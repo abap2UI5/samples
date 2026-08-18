@@ -1,4 +1,4 @@
-# Weekly dependency updates, opened as pull requests so the abaplint and
+# Monthly dependency updates, opened as pull requests so the abaplint and
 # abap2UI5-linter gates decide whether they are safe.
 #
 # The interesting one is @abap2ui5/linter: `npm ci` reads package-lock.json,
@@ -12,21 +12,27 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
-      day: tuesday
+      interval: monthly
       time: "06:30"
     open-pull-requests-limit: 5
     groups:
       gates:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
+      gates-major:
+        patterns: ["*"]
+        update-types: ["major"]
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
-      day: tuesday
+      interval: monthly
       time: "06:30"
     open-pull-requests-limit: 5
     groups:
       actions:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
+      actions-major:
+        patterns: ["*"]
+        update-types: ["major"]
