@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Learn how to code with abap2UI5.",
   "scripts": {
+    "test": "npm run check",
     "launchpad": "node scripts/generate-launchpad.mjs && node scripts/generate-samples-md.mjs",
     "lint": "abaplint ./abaplint.jsonc",
     "check:cloud": "abaplint .github/abaplint/abap_cloud.jsonc",
