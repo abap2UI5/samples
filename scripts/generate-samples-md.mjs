@@ -29,6 +29,12 @@ import { ROOT, DOCS_SITE, scanSamples } from './lib/scan-samples.mjs';
 
 const OUT = path.join(ROOT, 'SAMPLES.md');
 
+/* `--check` renders the same page and compares it instead of writing it, so
+ * `npm run check` can hold what the publish-overview-apps workflow holds
+ * without rewriting the tree while it does so. Same code path, one branch at
+ * the end. */
+const CHECK = process.argv.includes('--check');
+
 // A table cell ends at an unescaped pipe, and a < starts raw HTML on GitHub.
 // The DESCRIPT texts are free text maintained on the classes, so neither is
 // ours to rule out - a backtick is the only character the scan refuses.
@@ -199,7 +205,15 @@ for (const tile of [...basics, ...system, ...hidden]) {
   }
 }
 
-fs.writeFileSync(OUT, page);
-console.log(
-  `SAMPLES.md: ${total} apps (${basics.length} in src/01, ${system.length} in src/00, ${hidden.length} helpers)`
-);
+const counts = `${total} apps (${basics.length} in src/01, ${system.length} in src/00, ${hidden.length} helpers)`;
+
+if (!CHECK) {
+  fs.writeFileSync(OUT, page);
+  console.log(`SAMPLES.md: ${counts}`);
+} else if (!fs.existsSync(OUT) || fs.readFileSync(OUT, 'utf8') !== page) {
+  console.error('SAMPLES.md no longer mirrors the folder tree.');
+  console.error('\nRun `npm run launchpad` and commit the result (AGENTS.md section 3).');
+  process.exit(1);
+} else {
+  console.log(`samples-md: up to date — ${counts}`);
+}

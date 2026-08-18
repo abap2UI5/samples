@@ -31,6 +31,14 @@ import { SRC, scanSamples } from './lib/scan-samples.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
+/* `--check` renders exactly the same catalog and compares it instead of
+ * writing it, so `npm run check` can hold what the publish-overview-apps
+ * workflow holds without rewriting the tree while it does so. Same code path,
+ * one branch at the end: a check that regenerated differently from the
+ * generator would be worse than none. */
+const CHECK = process.argv.includes('--check');
+const stale = [];
+
 // area (top-level package under src) -> overview app file. Every area listed
 // here must have its overview app in the tree - a missing file is an error,
 // not something to skip, because it means the catalog stops being generated.
@@ -115,8 +123,9 @@ function rewrite(file, list) {
   rows[rows.length - 1] += ' ).';
 
   const block = `result = VALUE #(\n${rows.join('\n')}`;
-  text = text.slice(0, open) + block + text.slice(close + ') ).'.length);
-  fs.writeFileSync(file, text);
+  const next = text.slice(0, open) + block + text.slice(close + ') ).'.length);
+  if (!CHECK) { fs.writeFileSync(file, next); return; }
+  if (next !== text) stale.push(path.relative(path.join(HERE, '..'), file));
 }
 
 /* A TILE without `@keywords` is a tile nobody can find.
@@ -202,5 +211,14 @@ for (const [area, list] of Object.entries(tiles)) {
   console.log(`${path.relative(path.join(HERE, '..'), file)}: ${list.length} tiles`);
   total += list.length;
 }
-console.log(`generated ${total} tiles, ${hidden.length} ZZZ helper app(s) hidden`);
-console.log('now run: npx abaplint  (expect 0 issues)');
+if (CHECK) {
+  if (stale.length) {
+    console.error(`the overview catalog no longer mirrors the folder tree:\n  ${stale.join('\n  ')}`);
+    console.error('\nRun `npm run launchpad` and commit the result (AGENTS.md section 4).');
+    process.exit(1);
+  }
+  console.log(`launchpad: up to date — ${total} tile(s), ${hidden.length} ZZZ helper app(s) hidden`);
+} else {
+  console.log(`generated ${total} tiles, ${hidden.length} ZZZ helper app(s) hidden`);
+  console.log('now run: npx abaplint  (expect 0 issues)');
+}

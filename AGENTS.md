@@ -786,29 +786,50 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 npm run check
 ```
 
-which is all five, in the order they fail fastest:
+**`npm run check` is the whole of CI**, minus the one step that cannot be run
+on a tree you want to keep (below). Every workflow that can make a pull request
+red has a step here, and every step here has a workflow — so a green run
+locally means a green run there, which is the only reason to run it at all.
+It used to be six of eleven, and the three it was missing were the three
+nobody thought to run by hand.
 
-- `npm run lint` — `abaplint` reports 0 issues (config `abaplint.jsonc`).
-- `npm run check:abap2ui5` — the abap2UI5-linter: the app class and the view
-  it builds, plus a headless render of every view. New findings fail;
-  `abap2ui5lint-baseline.json` holds the debt frozen at adoption, and an
-  entry whose finding is gone fails too.
-- `npm run check:chains` — the builder chains are in the house layout (§10).
-- `npm run check:agents` — no drift between the §1 tree and the actual
-  `package.devc.xml` CTEXTs.
-- `npm run check:strip` — no drift in the strip list (§2).
+In the order they fail fastest:
 
-**Not in `npm run check`, because it needs the network:**
-`npm run check:app-rules` — the abaplint rule block still matches its source
-in abap2UI5 (§6). CI runs it on every pull request; run it yourself after
-touching `abaplint.jsonc`.
+| step | workflow | what it holds |
+|---|---|---|
+| `npm run lint` | `abap-standard` | `abaplint` reports 0 issues (`abaplint.jsonc`, `v750`) |
+| `npm run check:cloud` | `abap-cloud` | the same tree against the ABAP Cloud API — `main` is installed there as it is (§2) |
+| `npm run check:abap2ui5` | `check-abap2UI5` | the abap2UI5-linter: the app class and the view it builds, plus a headless render of every view. New findings fail; `abap2ui5lint-baseline.json` holds the debt frozen at adoption, and an entry whose finding is gone fails too |
+| `npm run check:chains` | `check-docs` | the builder chains are in the house layout (§10) |
+| `npm run check:agents` | `check-docs` | no drift between the §1 tree and the actual `package.devc.xml` CTEXTs |
+| `npm run check:strip` | `check-docs` | no drift in the strip list (§2) |
+| `npm run check:keywords` | `check-keywords` | every sample carries `@keywords` and `@summary`, first line, lowercase (§4) |
+| `npm run check:launchpad` | `publish-overview-apps` | the overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) |
+| `npm run check:prose` | `check-docs` | every class name written in prose exists, here and in the sibling repositories |
+| `npm run check:docs-links` | `check-docs-links` | every `" @docs` URL resolves, and its page names the class back (§4) |
+| `npm run check:app-rules` | `check-app-rules` | the abaplint rule block still matches its source in abap2UI5 (§6) |
+| `npm run rename` | `check-rename` | the samples still rename out of the `z2ui5` namespace; writes to the gitignored `output/`, never to `src/` |
 
-By hand, because no script covers them:
+`check:launchpad` runs the two generators with `--check`: same render, compared
+instead of written. The generators are the source of truth either way, because
+a check that regenerated differently from the generator would be worse than
+none.
+
+The last three talk to the network — `check:app-rules` and `check:docs-links`
+prefer a sibling checkout and otherwise fetch, and both **say so and pass** when
+they can reach neither: a gate must not go red because github.com is (§6). That
+degradation is why `check:app-rules` is in the aggregate now; it was left out
+back when an unreachable source was a failure.
+
+**The one CI step that is not here: `npm run downport`** (`abap-702`,
+`publish-702`). It is not a check, it is the 702 build: it deletes the stripped
+packages and runs `abaplint --fix` over what is left, so running it leaves you
+with a downported working copy rather than an answer. Run it deliberately, on a
+clean tree, and `git checkout .` afterwards.
+
+By hand, because no script covers it:
 - abapGit file format for all file types: UTF-8, LF only, final newline,
   2-space indent (§6).
-- The overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) —
-  `npm run launchpad` regenerates both, and leaves the tree clean when they are
-  current.
 
 ---
 
