@@ -582,6 +582,25 @@ carrying one of the two lines without the other — including in `src/00/97`,
 which has no tile but whose six samples are linked from the cookbook. ZZZ
 helpers are exempt, as with `@keywords`.
 
+**The gate is `npm run check:keywords`** (`scripts/check-keywords.mjs`, and the
+`check-keywords` workflow on every pull request). The generator's refusal above
+is not one: `npm run launchpad` *rewrites* the tree, so it is not something a
+pull request or `npm run check` can call, and the one workflow that does run it
+regenerates and pushes — a missing line surfaces there as a job that failed
+after the catalogue was half rebuilt. The gate also holds three things the
+generator never sees, because it only ever looked at what becomes a tile: that
+the `@keywords` line is the **first** line of the file (one further down is one
+a reader scrolls past and a scanner reading the head of a file misses), that
+the terms are lowercase and at least three of them, and `src/00/97`, which has
+no tile at all. **104 classes carried the two lines with nothing checking
+them**; both sibling repositories gated theirs.
+
+Who is held to it is decided from the tree, never from a list: every sample in
+`src/01` and `src/00/97` plus the overview app itself; not the ZZZ helpers (a
+helper is reached BY a sample, never looked up); not `src/00/98`, whose apps
+are run by a check rather than learned from (§1). A list would need maintaining
+and would rot; this cannot.
+
 Write it, do not derive it. The sibling repositories can: `samples-controls`
 **fetches** the demo kit's own sentence (`ui5/descriptions.json`) and
 `samples-stack` derives half of its metadata from the package scheme. Here
