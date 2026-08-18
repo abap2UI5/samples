@@ -115,6 +115,22 @@ there, and it goes into the basic package (`src/01`) as an ordinary sample:
   deliberately never ported there because it measures its generator;
 - a **free-style control demo** with no single demo kit original.
 
+**These exceptions are the `Control Behaviour` category** (§4), and they are the
+whole of it: today `Z2UI5_CL_SMP_APP_448` (expand a Panel by ID), `_078`
+(MultiInput with tokens), `_449` (open the PDF viewer by ID), `_088` (switch a
+NavContainer page by ID) and `_202` (a Wizard with steps) — four of them driving
+a control from the backend rather than showing what the control is.
+
+**The category was called `Control` until 2026-08-18**, which was the wrong
+name for exactly this reason: it is the noun samples-controls owns, and a
+reader who found a five-entry "Control" section in this repository's catalogue
+had no way to tell it apart from the 300-entry control reference next door
+except by reading all five. The entries were always legitimate; the heading
+claimed a scope they never had. `Control Behaviour` says what they are and
+keeps `control` as the search term. A new entry belongs here only if it passes
+one of the three tests above — otherwise it is a demo kit rebuild and belongs
+in samples-controls, full stop.
+
 A sample with a restriction still goes to the matching `src/00` category
 (`src/00/97` experimental, `src/00/98` when it is a test app) — that model is
 unchanged.
@@ -689,7 +705,7 @@ newcomer would actually type:
 | `Basics I` … `IV` | the entry point — first app, lifecycle, the minimum loop. The only numbered series: the Roman numeral orders them as a learning path (rule 5 sorts by `header`), and `header_base( )` still renders them as one block |
 | `Binding` | `_bind( )`, binding syntax, UI5 model types, the model itself |
 | `Browser` | the browser page and tab: URL, title, favicon, reload, clipboard, storage, logout |
-| `Control` | one UI5 control is the topic, incl. calling its methods by ID |
+| `Control Behaviour` | one UI5 control is the topic — how it *behaves* and how the backend drives it, typically by calling its methods by ID. **Not** a control reference: that is [samples-controls](https://github.com/abap2UI5/samples-controls), and the header says so (§1) |
 | `CSS` | own styles shipped with the view |
 | `Device` | camera, geolocation, device model, frontend info |
 | `Event` | `_event( )`, `t_arg`, keyboard shortcuts, event defaults |
@@ -718,7 +734,7 @@ Rules for the `sub`:
   `SearchField`, `CustomTreeItem`, `setSizeLimit`, `nav_app_call`,
   `template:repeat`). This is what makes the sample findable — the search
   matches `header`, `sub` and the class name, nothing else.
-- **Do not echo the header** (`Control - Wizard Control`,
+- **Do not echo the header** (`Control Behaviour - Wizard Control`,
   `Popup - Value Help with Popups`).
 - Describe **what the sample shows**, not the mechanism it happens to use, when
   the two differ — a Menu demo is `Menu - …`, even if its point is `core:require`.

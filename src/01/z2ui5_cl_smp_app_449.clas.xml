@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_449</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Control - Open the PDF Viewer by ID (A)</DESCRIPT>
+    <DESCRIPT>Control Behaviour - Open the PDF Viewer by ID (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

@@ -26,7 +26,7 @@ New to abap2UI5? Start at [Basics](#basics), then the
 The 97 samples the overview app lists: cloud-ready, downportable,
 plain OpenUI5 1.71. Each adds one idea.
 
-[Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control](#control) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
+[Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
 ### Basics
 
@@ -64,7 +64,7 @@ plain OpenUI5 1.71. Each adds one idea.
 | Set the Tab Title (A)<br>Sets the browser tab title from the app, so a bookmarked or duplicated window says which app it holds.<br><sub>document.title tab caption headline set_title</sub><br><sub>docs: [cookbook/browser_interaction/title](https://abap2ui5.github.io/docs/cookbook/browser_interaction/title)</sub> | [`Z2UI5_CL_SMP_APP_125`](src/01/z2ui5_cl_smp_app_125.clas.abap) |
 | Soft Keyboard Mode on Mobile (A)<br>Asks a mobile device for the numeric keypad instead of the full keyboard (keyboard_set_mode) on an Input.<br><sub>mobile numeric keypad keyboard_set_mode phone input</sub><br><sub>docs: [cookbook/browser_interaction/soft_keyboard](https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard)</sub> | [`Z2UI5_CL_SMP_APP_352`](src/01/z2ui5_cl_smp_app_352.clas.abap) |
 
-### Control
+### Control Behaviour
 
 | Sample | Class |
 |---|---|
