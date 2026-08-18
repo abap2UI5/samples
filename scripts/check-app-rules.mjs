@@ -28,6 +28,14 @@
  * and passes: a repository's gates must not go red because github.com is
  * unreachable, and must not claim to have verified what they did not.
  *
+ * The SCRIPT is shared the same way the rule set it reads is: ONE SOURCE, and
+ * it is abap2UI5's `.github/shared/check-app-rules.mjs`. The three repositories
+ * that run it carry it byte-equal as `scripts/check-app-rules.mjs`; change the
+ * source first and copy it to all three, and abap2UI5's `npm run check:shared`
+ * is what notices when that did not happen. Three unowned copies of the
+ * checker would have been the same arrangement the checker was written to
+ * replace, one directory up.
+ *
  *   node scripts/check-app-rules.mjs      (npm run check:app-rules)
  */
 import fs from 'fs';
