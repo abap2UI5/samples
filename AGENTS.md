@@ -506,7 +506,7 @@ them today:
 
 | | |
 |---|---|
-| [ai-mcp](https://github.com/abap2UI5/ai-mcp) `lib/examples.mjs` | the `examples` MCP tool — an agent asking "has somebody already built X" |
+| [mcp-server](https://github.com/abap2UI5/mcp-server) `lib/examples.mjs` | the `examples` MCP tool — an agent asking "has somebody already built X" |
 | [docs](https://github.com/abap2UI5/docs) `scripts/link-samples.mjs` | the *Working Samples* block under a cookbook page |
 
 Both read this file live rather than a generated index, so what they see is

@@ -37,7 +37,7 @@
  * runs, and is listed. The only symptom is that nobody looking for it arrives,
  * and it is the same silent symptom in all three readers - the overview app's
  * search box, `Ctrl+F` over SAMPLES.md, and an agent asking through
- * abap2UI5/ai-mcp whether a sample for X already exists.
+ * abap2UI5/mcp-server whether a sample for X already exists.
  *
  * The convention is shared with abap2UI5/samples-stack, deliberately
  * unchanged, so one reader can read both repositories.

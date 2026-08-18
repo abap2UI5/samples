@@ -82,7 +82,7 @@ jobs:
         node-version: '22'
     # A runner cannot check a repository out above the workspace, so the
     # framework lands inside it and the variable says where - the same
-    # env-over-sibling resolution abap2UI5/ai-mcp uses.
+    # env-over-sibling resolution abap2UI5/mcp-server uses.
     - run: node scripts/check-prose-names.mjs
       env:
         A2UI5_HOME: ${{ github.workspace }}/.abap2UI5
