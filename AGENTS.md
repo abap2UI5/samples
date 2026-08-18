@@ -86,6 +86,24 @@ keep the two identical** (see §4).
 > between packages needs **no rename** and keeps navigation intact — but the
 > overview catalog must be updated (§4).
 
+### Sample numbers are per repository — the prefix is what qualifies them
+
+`Z2UI5_CL_SMP_APP_<no>` is the name; `<no>` alone is not. **Numbers are handed
+out inside this repository only**, and the three sample repositories reuse each
+other's freely — `493` is `Z2UI5_CL_SMP_APP_493`, Hello World, here, and
+`Z2UI5_CL_SMPS_APP_493`, a classic FilterBar with variant management, in
+[samples-stack](https://github.com/abap2UI5/samples-stack). So are `489` and
+`490`. There is no global number space and there was never going to be one:
+each repository numbers from its own sequence, and coordinating three of them
+would buy nothing a prefix does not already give.
+
+What follows, in prose anywhere — this file, the README, a commit message, a
+comment: **name a sample by its class, never by its number alone.**
+`Z2UI5_CL_SMP_APP_143` and "sample 143" read the same to somebody who already
+knows which repository they are in, and only the first one still reads
+correctly to everybody else. The tables in a generated catalogue are exempt:
+there the number is a link to the class file, which is the qualification.
+
 ### There is no Control Library package any more
 
 **`01/03` "Control Library" is gone (2026-08-12), with all 32 of its samples.**
@@ -1412,8 +1430,8 @@ model value a view references must be registered through
 hand-written path (`{/START_DATE}`, or `{ path: '/START_DATE', ... }` in a
 raw binding-info string) is NOT part of the serialized model — the frontend
 receives no data for it and typed/object properties crash on the missing
-value (human find 2026-07-18 in samples 456/457). Compose raw binding-info
-strings with the bare path from
+value (human find 2026-07-18 in `Z2UI5_CL_SMP_APP_456`/`_457`). Compose raw
+binding-info strings with the bare path from
 `client->_bind( val = x path = abap_true )`.
 
 **Always `_bind( )`, never `_bind_edit( )`.** Both bind into the same root
@@ -1458,8 +1476,8 @@ handler runs".
 > framework's obsolete package (`src/99`) and must not be used any more: never
 > reference one from a sample, and never create a sample demonstrating one
 > (human decision 2026-08-12; the last two usages — `z2ui5_cl_pop_to_confirm`
-> in sample 279, `z2ui5_cl_pop_image_editor` in sample 306 — were removed the
-> same day). A sample that needs a dialog builds it itself with
+> in `Z2UI5_CL_SMP_APP_279`, `z2ui5_cl_pop_image_editor` in
+> `Z2UI5_CL_SMP_APP_306` — were removed the same day). A sample that needs a dialog builds it itself with
 > `z2ui5_cl_ui5_view_builder=>factory( )` with a `core:FragmentDefinition`
 > root + `client->popup_display( )`.
 
@@ -1648,12 +1666,14 @@ new/edited samples stay consistent:
 
 - **`sap.m.SimpleForm` needs `editable = abap_true`** for its label/input pairs
   to line up on one row — without it the form renders in display mode and the
-  first field is mislaid (fixed in `189`; compare `133`).
+  first field is mislaid (fixed in `Z2UI5_CL_SMP_APP_189`; compare
+  `Z2UI5_CL_SMP_APP_133`).
 
 - **`StandardListItem`: `info` right-aligns to the far edge** (a status/amount
   slot). For a secondary attribute that belongs *with* the title (e.g. a
   product's category) use `description` — a left-aligned subtitle — instead; the
-  far-right float looks disconnected on wide screens (fixed in `454`/`455`).
+  far-right float looks disconnected on wide screens (fixed in
+  `Z2UI5_CL_SMP_APP_454`/`_455`).
 
 - **The page title carries the `<DESCRIPT>` text**, in the form
   `` `abap2UI5 - <DESCRIPT without the (A)/(C) marker>` `` — every sample in
@@ -1664,7 +1684,7 @@ new/edited samples stay consistent:
   to "Focus II" and "Table Filters Reset after view Update").
 
 - **Start every view from `view->shell( )->page( … )`** (not `view->page( … )`)
-  so all samples share the same outer frame (fixed in `143`).
+  so all samples share the same outer frame (fixed in `Z2UI5_CL_SMP_APP_143`).
 
 - **Give a `search_field` an explicit `placeholder`.** Without one UI5 shows its
   locale default (German "Suchen" on a DE system), which clashes with the

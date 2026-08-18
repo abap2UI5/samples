@@ -59,6 +59,14 @@ the rest. Everything in this repository grows from this pattern.
 3. Run `Z2UI5_CL_SMP_APP_000` — the overview app linking every sample of the
    portable set.
 
+Every sample is `Z2UI5_CL_SMP_APP_<no>`, and you start it with
+`?app_start=z2ui5_cl_smp_app_<no>`. **The number alone does not name a sample:
+each of the three repositories numbers from its own sequence, and the class
+prefix is what says which one you mean** — `Z2UI5_CL_SMP_APP_493` is the Hello
+World below, while `Z2UI5_CL_SMPS_APP_493` in
+[samples-stack](https://github.com/abap2UI5/samples-stack) is a FilterBar with
+variant management. So the catalogue always gives you the class, not a number.
+
 No system at hand? **[SAMPLES.md](SAMPLES.md) is the same catalogue as a
 page** — every app, what it shows, and a link to its source. It is generated
 from the tree, so it is what is actually here.
