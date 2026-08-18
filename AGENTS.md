@@ -633,6 +633,29 @@ sample links on the page *and* fails when a class it links to does not point
 back. Adding a line here that no page declares makes that check red. Add the
 page's `samples:` entry first; this line follows from it.
 
+**The gate is `npm run check:docs-links`** (`scripts/check-docs-links.mjs`, and
+the `check-docs-links` workflow on every pull request). It verifies both halves
+of a line: that the **page exists** — `docs/<path>.md` in abap2UI5/docs, and
+the `#anchor` when there is one — and that the **page names the class back** in
+its `samples:` frontmatter.
+
+That second half is the check quoted above, run from this side. It existed only
+over there, which meant a pull request HERE could add a stale or invented link
+and stay green until somebody regenerated the documentation; and the first half
+existed nowhere at all. The scan refuses a URL that is not on the documentation
+site, which catches a typo in the **host** and nothing whatsoever about the
+path — and 96 classes carry one of these lines. Nothing fails when a page is
+renamed: the class compiles, `SAMPLES.md` renders the link, and it 404s for
+every reader who follows it.
+
+It reads the documentation the way `check-app-rules` reads the shared rule set,
+and degrades the same way: an **abap2UI5/docs checkout next to this one** first
+(`$DOCS_HOME`, `.docs`, `../docs`) so a developer with the ecosystem cloned is
+checked offline and in a second; otherwise `raw.githubusercontent.com`, one
+request per page; otherwise it says so and passes. A gate must not go red
+because github.com is unreachable, and must not claim to have verified what it
+did not.
+
 **`header` and `sub` come from the class, not from hand-written labels.** The
 source of truth is the app class's abapGit short text `<DESCRIPT>` in its
 `*.clas.xml`, written in the format `header - sub` — except for demo kit
