@@ -3,8 +3,8 @@
  * The one scan of the sample tree.
  *
  * Two things are generated from the same facts - the overview app's
- * get_catalog( ) (scripts/generate-launchpad.js) and the browsable catalogue
- * SAMPLES.md (scripts/generate-samples-md.js) - and the facts are not
+ * get_catalog( ) (scripts/generate-launchpad.mjs) and the browsable catalogue
+ * SAMPLES.md (scripts/generate-samples-md.mjs) - and the facts are not
  * obvious: which classes count as samples, where their title and description
  * come from, which ones are hidden helpers, and what a demo kit rebuild
  * overrides. A second copy of that would drift, and drift here is silent: the
@@ -17,12 +17,12 @@
  *
  * The rules are AGENTS.md section 4. Edit them here, not in a generator.
  */
-'use strict';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const fs = require('fs');
-const path = require('path');
-
-const ROOT = path.join(__dirname, '..', '..');
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.join(HERE, '..', '..');
 const SRC = path.join(ROOT, 'src');
 
 // The areas (top-level packages under src) that hold samples at all. src/00/01
@@ -231,4 +231,4 @@ function scanSamples() {
   return { areas, hidden };
 }
 
-module.exports = { ROOT, SRC, AREAS, DOCS_SITE, scanSamples, headerBase };
+export { ROOT, SRC, AREAS, DOCS_SITE, scanSamples, headerBase };

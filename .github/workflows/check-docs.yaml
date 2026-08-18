@@ -26,7 +26,7 @@ jobs:
     - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: '22'
-    - run: node scripts/check-agents-structure.js
+    - run: node scripts/check-agents-structure.mjs
 
   strip_lists:
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
     - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: '22'
-    - run: node scripts/check-strip-lists.js
+    - run: node scripts/check-strip-lists.mjs
 
   # The view-chain layout. The abap2UI5-linter judges a chain's own rhythm and
   # one call per line; neither rule judges the STEP, so this is the only check

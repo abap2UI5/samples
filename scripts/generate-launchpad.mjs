@@ -7,8 +7,8 @@
  * Note: only src/01 has an overview app. Everything under src/00 - the
  * experimental (src/00/97) and testing (src/00/98) samples - is reported but
  * not listed in any app. SAMPLES.md lists it, which is what
- * scripts/generate-samples-md.js is for; both read the same scan
- * (scripts/lib/scan-samples.js), so the app and the markdown can never
+ * scripts/generate-samples-md.mjs is for; both read the same scan
+ * (scripts/lib/scan-samples.mjs), so the app and the markdown can never
  * disagree about what this repository contains.
  *
  * Job (see AGENTS.md section 4): scan every demo app class under src/, derive
@@ -20,13 +20,16 @@
  * Apps whose header is "ZZZ" are helper apps (called only by other apps) and
  * are skipped.
  *
- * No dependencies. Run:  node scripts/generate-launchpad.js   (or: npm run launchpad)
+ * No dependencies. Run:  node scripts/generate-launchpad.mjs   (or: npm run launchpad)
  * Afterwards run abaplint (must be 0 issues).
  */
 
-const fs = require('fs');
-const path = require('path');
-const { SRC, scanSamples } = require('./lib/scan-samples');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { SRC, scanSamples } from './lib/scan-samples.mjs';
+
+const HERE = path.dirname(fileURLToPath(import.meta.url));
 
 // area (top-level package under src) -> overview app file. Every area listed
 // here must have its overview app in the tree - a missing file is an error,
@@ -196,7 +199,7 @@ for (const [area, list] of Object.entries(tiles)) {
     continue;
   }
   rewrite(file, list);
-  console.log(`${path.relative(path.join(__dirname, '..'), file)}: ${list.length} tiles`);
+  console.log(`${path.relative(path.join(HERE, '..'), file)}: ${list.length} tiles`);
   total += list.length;
 }
 console.log(`generated ${total} tiles, ${hidden.length} ZZZ helper app(s) hidden`);

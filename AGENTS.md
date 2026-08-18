@@ -73,7 +73,7 @@ There is **no on-premise-only package**: `main` is installed on ABAP Cloud
 systems as it is, so every sample in the repository must be ABAP Cloud ready.
 A sample that needs on-premise-only ABAP does not belong in this repository.
 
-This tree is machine-checked: `node scripts/check-agents-structure.js` compares
+This tree is machine-checked: `node scripts/check-agents-structure.mjs` compares
 it against the actual `package.devc.xml` `<CTEXT>` values and fails on any
 drift (runs in CI). **Whenever a subpackage is added, removed, or renamed,
 update this tree in the same change.**
@@ -147,7 +147,7 @@ purpose, never by ABAP release.
 `src/00/98` are removed by the downport, so the `702` branch carries only the
 portable set. Keep the two paths together in the two places that name them —
 `package.json` `downport` and the build table above. That is machine-checked:
-`node scripts/check-strip-lists.js` compares both and fails if one names a
+`node scripts/check-strip-lists.mjs` compares both and fails if one names a
 different set, or a package that no longer exists (runs in CI). The rest of
 `src/00` — today `src/00/01` "context", the helper classes the samples share —
 survives every build and must stay free of references into any stripped package.
@@ -240,7 +240,7 @@ many tiles they would hold (§4). An extended overview app existed once
 (`z2ui5_cl_sample_app_g01`, mirroring the restricted area, cross-linked with
 this one); it was removed when the extended samples were reorganised. Should it
 ever return, it comes back as a second `TARGETS` entry in
-`scripts/generate-launchpad.js` and a second row above.
+`scripts/generate-launchpad.mjs` and a second row above.
 
 Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
 `view_display( )` that loops the catalog, emitting one link (`header` + optional
@@ -444,8 +444,8 @@ the names.
 `@keywords` (the app keeps them for its search box; on a page the reader *is*
 the search box, so they are rendered), the `@docs` chapter that explains what
 it demonstrates, and a link to the source. Written by
-`scripts/generate-samples-md.js` from the **same scan** as the overview app —
-`scripts/lib/scan-samples.js`, which is the single place that knows what counts
+`scripts/generate-samples-md.mjs` from the **same scan** as the overview app —
+`scripts/lib/scan-samples.mjs`, which is the single place that knows what counts
 as a sample, where its title comes from and which classes are hidden helpers.
 Two copies of that would drift silently: the app and the page would simply
 disagree about what this repository contains, and nothing would fail.
@@ -483,7 +483,7 @@ matched no rows at all, and the `examples` tool would have answered "no sample
 for that" to every query — no error, no log, just an agent taking it at face
 value and writing the app from scratch.
 
-So a change to `row( )` in `generate-samples-md.js` is a change to their input.
+So a change to `row( )` in `generate-samples-md.mjs` is a change to their input.
 Grep both repositories for the row regex before merging one, and give them a
 fixture with the new shape.
 
@@ -514,16 +514,16 @@ class descriptions, rewrites the `get_catalog( )` block and writes `SAMPLES.md`
 (§3) from the same scan:
 
 ```
-npm run launchpad      # → generate-launchpad.js && generate-samples-md.js
+npm run launchpad      # → generate-launchpad.mjs && generate-samples-md.mjs
 npx abaplint           # must report 0 issues
 ```
 
-Both outputs come from `scripts/lib/scan-samples.js`, which implements every
+Both outputs come from `scripts/lib/scan-samples.mjs`, which implements every
 rule below — that is the file to edit when a rule changes, never the generated
 ABAP or markdown. The two generators only *render*: how a tile is written as an
-ABAP literal (`generate-launchpad.js`, including the controls-section
+ABAP literal (`generate-launchpad.mjs`, including the controls-section
 truncation, which is about the overview not wrapping on a phone) and how it is
-written as a table row (`generate-samples-md.js`).
+written as a table row (`generate-samples-md.mjs`).
 
 ### Tile schema
 
@@ -735,7 +735,7 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 1. `git mv` the files (no rename needed — `FOLDER_LOGIC=PREFIX`).
 2. Regenerate the overview catalog and `SAMPLES.md`: `npm run launchpad` (§4).
 3. If a subpackage was added/removed/renamed: update the §1 tree and run
-   `node scripts/check-agents-structure.js`.
+   `node scripts/check-agents-structure.mjs`.
 4. `abaplint` → 0 issues → commit.
 
 **Before every commit**
@@ -900,6 +900,35 @@ By hand, because no script covers them:
   are what the last run actually checked. **A sample added or removed changes
   these files**; commit them with the change (the workflow pushes them if you
   forget, and reports it when it cannot).
+
+### The scripts under `scripts/`
+
+**Every script is an ES module and is named `.mjs`.** No CommonJS, no
+`require( )`, no `__dirname` — resolve the repository root from
+`fileURLToPath(import.meta.url)`, the way every script here already does.
+
+The repository ran two module systems side by side until 2026-08-18: five
+CommonJS `.js` files and three ESM `.mjs` ones, with no rule saying which a new
+script should be. That is not a style preference. A `.js` file cannot `import`
+the `.mjs` scan, so a check written the ESM way could not reuse
+`lib/scan-samples`, and one written the CommonJS way could not `await` a
+`fetch( )` at the top level — which is exactly what the two network-aware gates
+do. The split decided what a new check was allowed to reuse, silently, by the
+extension somebody picked. Both sibling repositories are ESM throughout;
+so is this one now.
+
+Everything else about a script follows from that:
+
+- **No dependencies.** Plain node, so a gate is a few seconds and needs no
+  `npm ci` — `check-docs`, `check-keywords`, `check-docs-links`,
+  `check-app-rules` and `check-prose-names` all run `node <script>` directly
+  in CI.
+- **One scan, two renderers.** Anything that reads the sample tree goes through
+  `scripts/lib/scan-samples.mjs` (§4). A second scan drifts silently.
+- **A gate that needs the network says so and passes** when it cannot reach it
+  (`check-app-rules`, `check-docs-links`) — see §6 below and the header of
+  `scripts/check-app-rules.mjs`. Prefer a sibling checkout over a fetch, so a
+  developer with the whole ecosystem cloned is checked offline.
 
 ### abapGit file consistency
 
