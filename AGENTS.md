@@ -1690,6 +1690,11 @@ new/edited samples stay consistent:
   locale default (German "Suchen" on a DE system), which clashes with the
   otherwise-English samples.
 
+<!-- The section below is SHARED. Its source is
+     abap2UI5/abap2UI5 .github/shared/agents-metadata.md - change it THERE
+     first, or the change is drift. abap2UI5's `npm run check:shared`
+     compares this section against the source, from the heading down to the
+     next `##`; anything above this comment is this repository's own. -->
 ## Metadata: what goes on the class, and what goes beside it
 
 Shared across `abap2UI5/samples`, `abap2UI5/samples-controls` and
