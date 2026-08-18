@@ -19,13 +19,12 @@
 // Stripped is not unchecked: abap-standard and abap-cloud lint the whole tree,
 // the stripped packages included, and they pass (AGENTS.md §2).
 //
-// Exits non-zero on any drift. Run: node scripts/check-strip-lists.js
-"use strict";
+// Exits non-zero on any drift. Run: node scripts/check-strip-lists.mjs
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const fs = require("fs");
-const path = require("path");
-
-const root = path.join(__dirname, "..");
+const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 // every `rm -r`/`rm -rf` of src paths, however the file spells it: a shell
 // command, a workflow step, or an inline code span in the markdown table.

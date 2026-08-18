@@ -4,16 +4,22 @@
 <br><br>
 [![abap-standard](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml)
 [![abap-cloud](https://github.com/abap2UI5/samples/actions/workflows/abap-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-cloud.yaml)
+[![abap-702](https://github.com/abap2UI5/samples/actions/workflows/abap-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-702.yaml)
 <br>
 [![check-abap2UI5](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fabap2UI5%2Fsamples%2Fmain%2F.github%2Fbadges%2Fcheck-abap2ui5.json)](https://github.com/abap2UI5/samples/actions/workflows/check-abap2UI5.yaml)
+[![check-app-rules](https://github.com/abap2UI5/samples/actions/workflows/check-app-rules.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-app-rules.yaml)
 [![check-rename](https://github.com/abap2UI5/samples/actions/workflows/check-rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-rename.yaml)
+<br>
+[![check-docs](https://github.com/abap2UI5/samples/actions/workflows/check-docs.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-docs.yaml)
+[![check-docs-links](https://github.com/abap2UI5/samples/actions/workflows/check-docs-links.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-docs-links.yaml)
+[![check-keywords](https://github.com/abap2UI5/samples/actions/workflows/check-keywords.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-keywords.yaml)
 <br>
 [![publish-702](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml)
 [![publish-overview](https://github.com/abap2UI5/samples/actions/workflows/publish-overview-apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-overview-apps.yaml)
 
 # abap2UI5 — samples
 
-**Learn the abap2UI5 basics — 150+ ready-to-run apps, from a two-line Hello
+**Learn the abap2UI5 basics — 104 ready-to-run apps, from a two-line Hello
 World to complete applications.**
 
 Install them, click through, read the source: every sample adds one idea — a
@@ -52,6 +58,14 @@ the rest. Everything in this repository grows from this pattern.
 
 3. Run `Z2UI5_CL_SMP_APP_000` — the overview app linking every sample of the
    portable set.
+
+Every sample is `Z2UI5_CL_SMP_APP_<no>`, and you start it with
+`?app_start=z2ui5_cl_smp_app_<no>`. **The number alone does not name a sample:
+each of the three repositories numbers from its own sequence, and the class
+prefix is what says which one you mean** — `Z2UI5_CL_SMP_APP_493` is the Hello
+World below, while `Z2UI5_CL_SMPS_APP_493` in
+[samples-stack](https://github.com/abap2UI5/samples-stack) is a FilterBar with
+variant management. So the catalogue always gives you the class, not a number.
 
 No system at hand? **[SAMPLES.md](SAMPLES.md) is the same catalogue as a
 page** — every app, what it shows, and a link to its source. It is generated

@@ -42,7 +42,7 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
 
       view           = view->ele( `Shell`
           )->ele( `Page`
-              )->a( n = `title`          v = `abap2UI5 - Control - MultiInput with Tokens`
+              )->a( n = `title`          v = `abap2UI5 - Control Behaviour - MultiInput with Tokens`
               )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
               )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
               )->a( n = `id`             v = `page_main` ).

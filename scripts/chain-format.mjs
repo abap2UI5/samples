@@ -15,10 +15,24 @@
  * the framework the start app carrying `)->ele( `Shell` )->ele( `Page` ).` on
  * one line, hiding a level — all of it green.
  *
- * THIS FILE IS KEPT BYTE-IDENTICAL IN THREE REPOSITORIES: abap2UI5
- * (.github/scripts/chain-format-gate.mjs), abap2UI5/samples and
- * abap2UI5/samples-controls (scripts/chain-format.mjs). Change it in one and
- * copy it to the other two. The rules it enforces are the `view-chain-layout`
+ * ONE SOURCE, AND IT IS abap2UI5's `.github/shared/chain-format.mjs`. The two
+ * repositories that run it — abap2UI5/samples and abap2UI5/samples-controls —
+ * carry it byte-equal as `scripts/chain-format.mjs`. Change the source first
+ * and copy it to both; abap2UI5's `npm run check:shared` is what notices when
+ * that did not happen. The paragraph this replaces named a third copy at
+ * `.github/scripts/chain-format-gate.mjs`, which has not existed since the
+ * framework moved its own chains onto the linter's `chain-house-layout` rule,
+ * and nothing was checking either claim.
+ *
+ * The framework therefore does not RUN this script, and holds it for the same
+ * reason it holds `.github/abaplint/app-rules.json`: a file two repositories
+ * share needs one owner, and peer-to-peer copies have no answer to which of
+ * them is right. It is meant to go away — `view-chain-layout` says when: both
+ * consumers pin the linter at a version that predates `chain-house-layout`,
+ * and the day that pin can move, the script is deleted and the rule replaces
+ * it in all three places at once.
+ *
+ * The rules it enforces are the `view-chain-layout`
  * skill; `formatSource` is exported so a generator that emits builder chains
  * can run its output through it rather than hand-indenting template strings —
  * that is how the layout drifted back in on samples-controls.

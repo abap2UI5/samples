@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_088</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Control - Switch NavContainer Page by ID (A)</DESCRIPT>
+    <DESCRIPT>Control Behaviour - Switch NavContainer Page by ID (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

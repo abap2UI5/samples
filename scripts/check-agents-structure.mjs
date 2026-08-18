@@ -3,12 +3,11 @@
 // package structure: every subpackage in the tree must exist with exactly the
 // documented CTEXT (package.devc.xml), and every actual subpackage must appear
 // in the tree. Exits non-zero on any drift.
-"use strict";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const fs = require("fs");
-const path = require("path");
-
-const root = path.join(__dirname, "..");
+const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 function actualPackages() {
   const map = new Map(); // "src/01/01" -> CTEXT

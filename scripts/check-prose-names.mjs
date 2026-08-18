@@ -27,6 +27,18 @@
  * because github.com is unreachable, and must not claim to have verified
  * something it did not.
  *
+ * ONE SOURCE, AND IT IS abap2UI5's `.github/shared/check-prose-names.mjs`. The
+ * three repositories that run it carry it byte-equal as
+ * `scripts/check-prose-names.mjs`; change the source first and copy it to all
+ * three, and abap2UI5's `npm run check:shared` is what notices when that did
+ * not happen. Its `scripts/prose-absent.json` is NOT shared — see below.
+ *
+ * The framework does not run this script. Its own `prose-name-gate.mjs` is a
+ * different program for a different job: it reads one repository's tree and
+ * puts every FOREIGN name on an allowlist, which is exactly the case this one
+ * exists to resolve rather than exempt. They are not two copies of one check
+ * and must not be merged.
+ *
  *   node scripts/check-prose-names.mjs
  */
 import fs from 'fs';
@@ -63,7 +75,8 @@ const HISTORY = /STATUS-history\.md$/;
  * way to make a gate stop asking.
  *
  * The SCRIPT is byte-identical in samples, samples-controls and samples-stack
- * (as check-app-rules.mjs is) - only this file differs. */
+ * (as check-app-rules.mjs is) - only this file differs, and deliberately: it
+ * is the one part of the check each repository decides for itself. */
 const ABSENT = (() => {
   const at = path.join(ROOT, 'scripts', 'prose-absent.json');
   if (!fs.existsSync(at)) return new Map();

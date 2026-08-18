@@ -1,0 +1,53 @@
+name: check-docs-links
+
+# The `" @docs` lines, against the documentation they point at.
+#
+# 96 classes here carry one, with a live URL into abap2ui5.github.io/docs. This
+# is the only one of the three sample repositories that has them, and nothing
+# checked a single one: a page that is renamed or moved fails nothing here, and
+# the link 404s for every reader who followed it - on the one line whose whole
+# job is to be the way back to the explanation.
+#
+# abap2UI5/docs checks the pairing from ITS side (scripts/link-samples.mjs: a
+# class it links to has to point back). This is the missing half, so a pull
+# request HERE cannot add a link that only the other repository will notice.
+#
+# The documentation is checked out sparsely next to the workspace - a runner
+# cannot check a repository out above it, so it lands inside as .docs and the
+# variable says where, the same env-over-sibling resolution check-prose-names
+# uses. Without it the script falls back to raw.githubusercontent.com, and if
+# that is unreachable too it SAYS SO and passes rather than turning this
+# repository red because github.com is.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-docs-links-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-docs-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        repository: abap2UI5/docs
+        ref: main
+        path: .docs
+        fetch-depth: 1
+        sparse-checkout: docs
+        sparse-checkout-cone-mode: false
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version: '22'
+    - run: node scripts/check-docs-links.mjs
+      env:
+        DOCS_HOME: ${{ github.workspace }}/.docs

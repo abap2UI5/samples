@@ -73,7 +73,7 @@ There is **no on-premise-only package**: `main` is installed on ABAP Cloud
 systems as it is, so every sample in the repository must be ABAP Cloud ready.
 A sample that needs on-premise-only ABAP does not belong in this repository.
 
-This tree is machine-checked: `node scripts/check-agents-structure.js` compares
+This tree is machine-checked: `node scripts/check-agents-structure.mjs` compares
 it against the actual `package.devc.xml` `<CTEXT>` values and fails on any
 drift (runs in CI). **Whenever a subpackage is added, removed, or renamed,
 update this tree in the same change.**
@@ -85,6 +85,24 @@ keep the two identical** (see §4).
 > Class names never encode the folder (`FOLDER_LOGIC=PREFIX`). Moving a sample
 > between packages needs **no rename** and keeps navigation intact — but the
 > overview catalog must be updated (§4).
+
+### Sample numbers are per repository — the prefix is what qualifies them
+
+`Z2UI5_CL_SMP_APP_<no>` is the name; `<no>` alone is not. **Numbers are handed
+out inside this repository only**, and the three sample repositories reuse each
+other's freely — `493` is `Z2UI5_CL_SMP_APP_493`, Hello World, here, and
+`Z2UI5_CL_SMPS_APP_493`, a classic FilterBar with variant management, in
+[samples-stack](https://github.com/abap2UI5/samples-stack). So are `489` and
+`490`. There is no global number space and there was never going to be one:
+each repository numbers from its own sequence, and coordinating three of them
+would buy nothing a prefix does not already give.
+
+What follows, in prose anywhere — this file, the README, a commit message, a
+comment: **name a sample by its class, never by its number alone.**
+`Z2UI5_CL_SMP_APP_143` and "sample 143" read the same to somebody who already
+knows which repository they are in, and only the first one still reads
+correctly to everybody else. The tables in a generated catalogue are exempt:
+there the number is a link to the class file, which is the qualification.
 
 ### There is no Control Library package any more
 
@@ -114,6 +132,22 @@ there, and it goes into the basic package (`src/01`) as an ordinary sample:
 - a sample in samples-controls' **hold-out set** (`ui5/holdout.json`), which is
   deliberately never ported there because it measures its generator;
 - a **free-style control demo** with no single demo kit original.
+
+**These exceptions are the `Control Behaviour` category** (§4), and they are the
+whole of it: today `Z2UI5_CL_SMP_APP_448` (expand a Panel by ID), `_078`
+(MultiInput with tokens), `_449` (open the PDF viewer by ID), `_088` (switch a
+NavContainer page by ID) and `_202` (a Wizard with steps) — four of them driving
+a control from the backend rather than showing what the control is.
+
+**The category was called `Control` until 2026-08-18**, which was the wrong
+name for exactly this reason: it is the noun samples-controls owns, and a
+reader who found a five-entry "Control" section in this repository's catalogue
+had no way to tell it apart from the 300-entry control reference next door
+except by reading all five. The entries were always legitimate; the heading
+claimed a scope they never had. `Control Behaviour` says what they are and
+keeps `control` as the search term. A new entry belongs here only if it passes
+one of the three tests above — otherwise it is a demo kit rebuild and belongs
+in samples-controls, full stop.
 
 A sample with a restriction still goes to the matching `src/00` category
 (`src/00/97` experimental, `src/00/98` when it is a test app) — that model is
@@ -147,7 +181,7 @@ purpose, never by ABAP release.
 `src/00/98` are removed by the downport, so the `702` branch carries only the
 portable set. Keep the two paths together in the two places that name them —
 `package.json` `downport` and the build table above. That is machine-checked:
-`node scripts/check-strip-lists.js` compares both and fails if one names a
+`node scripts/check-strip-lists.mjs` compares both and fails if one names a
 different set, or a package that no longer exists (runs in CI). The rest of
 `src/00` — today `src/00/01` "context", the helper classes the samples share —
 survives every build and must stay free of references into any stripped package.
@@ -240,7 +274,7 @@ many tiles they would hold (§4). An extended overview app existed once
 (`z2ui5_cl_sample_app_g01`, mirroring the restricted area, cross-linked with
 this one); it was removed when the extended samples were reorganised. Should it
 ever return, it comes back as a second `TARGETS` entry in
-`scripts/generate-launchpad.js` and a second row above.
+`scripts/generate-launchpad.mjs` and a second row above.
 
 Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
 `view_display( )` that loops the catalog, emitting one link (`header` + optional
@@ -444,8 +478,8 @@ the names.
 `@keywords` (the app keeps them for its search box; on a page the reader *is*
 the search box, so they are rendered), the `@docs` chapter that explains what
 it demonstrates, and a link to the source. Written by
-`scripts/generate-samples-md.js` from the **same scan** as the overview app —
-`scripts/lib/scan-samples.js`, which is the single place that knows what counts
+`scripts/generate-samples-md.mjs` from the **same scan** as the overview app —
+`scripts/lib/scan-samples.mjs`, which is the single place that knows what counts
 as a sample, where its title comes from and which classes are hidden helpers.
 Two copies of that would drift silently: the app and the page would simply
 disagree about what this repository contains, and nothing would fail.
@@ -483,7 +517,7 @@ matched no rows at all, and the `examples` tool would have answered "no sample
 for that" to every query — no error, no log, just an agent taking it at face
 value and writing the app from scratch.
 
-So a change to `row( )` in `generate-samples-md.js` is a change to their input.
+So a change to `row( )` in `generate-samples-md.mjs` is a change to their input.
 Grep both repositories for the row regex before merging one, and give them a
 fixture with the new shape.
 
@@ -514,16 +548,16 @@ class descriptions, rewrites the `get_catalog( )` block and writes `SAMPLES.md`
 (§3) from the same scan:
 
 ```
-npm run launchpad      # → generate-launchpad.js && generate-samples-md.js
+npm run launchpad      # → generate-launchpad.mjs && generate-samples-md.mjs
 npx abaplint           # must report 0 issues
 ```
 
-Both outputs come from `scripts/lib/scan-samples.js`, which implements every
+Both outputs come from `scripts/lib/scan-samples.mjs`, which implements every
 rule below — that is the file to edit when a rule changes, never the generated
 ABAP or markdown. The two generators only *render*: how a tile is written as an
-ABAP literal (`generate-launchpad.js`, including the controls-section
+ABAP literal (`generate-launchpad.mjs`, including the controls-section
 truncation, which is about the overview not wrapping on a phone) and how it is
-written as a table row (`generate-samples-md.js`).
+written as a table row (`generate-samples-md.mjs`).
 
 ### Tile schema
 
@@ -582,6 +616,25 @@ carrying one of the two lines without the other — including in `src/00/97`,
 which has no tile but whose six samples are linked from the cookbook. ZZZ
 helpers are exempt, as with `@keywords`.
 
+**The gate is `npm run check:keywords`** (`scripts/check-keywords.mjs`, and the
+`check-keywords` workflow on every pull request). The generator's refusal above
+is not one: `npm run launchpad` *rewrites* the tree, so it is not something a
+pull request or `npm run check` can call, and the one workflow that does run it
+regenerates and pushes — a missing line surfaces there as a job that failed
+after the catalogue was half rebuilt. The gate also holds three things the
+generator never sees, because it only ever looked at what becomes a tile: that
+the `@keywords` line is the **first** line of the file (one further down is one
+a reader scrolls past and a scanner reading the head of a file misses), that
+the terms are lowercase and at least three of them, and `src/00/97`, which has
+no tile at all. **104 classes carried the two lines with nothing checking
+them**; both sibling repositories gated theirs.
+
+Who is held to it is decided from the tree, never from a list: every sample in
+`src/01` and `src/00/97` plus the overview app itself; not the ZZZ helpers (a
+helper is reached BY a sample, never looked up); not `src/00/98`, whose apps
+are run by a check rather than learned from (§1). A list would need maintaining
+and would rot; this cannot.
+
 Write it, do not derive it. The sibling repositories can: `samples-controls`
 **fetches** the demo kit's own sentence (`ui5/descriptions.json`) and
 `samples-stack` derives half of its metadata from the package scheme. Here
@@ -613,6 +666,29 @@ in [abap2UI5/docs](https://github.com/abap2UI5/docs) generates the block of
 sample links on the page *and* fails when a class it links to does not point
 back. Adding a line here that no page declares makes that check red. Add the
 page's `samples:` entry first; this line follows from it.
+
+**The gate is `npm run check:docs-links`** (`scripts/check-docs-links.mjs`, and
+the `check-docs-links` workflow on every pull request). It verifies both halves
+of a line: that the **page exists** — `docs/<path>.md` in abap2UI5/docs, and
+the `#anchor` when there is one — and that the **page names the class back** in
+its `samples:` frontmatter.
+
+That second half is the check quoted above, run from this side. It existed only
+over there, which meant a pull request HERE could add a stale or invented link
+and stay green until somebody regenerated the documentation; and the first half
+existed nowhere at all. The scan refuses a URL that is not on the documentation
+site, which catches a typo in the **host** and nothing whatsoever about the
+path — and 96 classes carry one of these lines. Nothing fails when a page is
+renamed: the class compiles, `SAMPLES.md` renders the link, and it 404s for
+every reader who follows it.
+
+It reads the documentation the way `check-app-rules` reads the shared rule set,
+and degrades the same way: an **abap2UI5/docs checkout next to this one** first
+(`$DOCS_HOME`, `.docs`, `../docs`) so a developer with the ecosystem cloned is
+checked offline and in a second; otherwise `raw.githubusercontent.com`, one
+request per page; otherwise it says so and passes. A gate must not go red
+because github.com is unreachable, and must not claim to have verified what it
+did not.
 
 **`header` and `sub` come from the class, not from hand-written labels.** The
 source of truth is the app class's abapGit short text `<DESCRIPT>` in its
@@ -647,7 +723,7 @@ newcomer would actually type:
 | `Basics I` … `IV` | the entry point — first app, lifecycle, the minimum loop. The only numbered series: the Roman numeral orders them as a learning path (rule 5 sorts by `header`), and `header_base( )` still renders them as one block |
 | `Binding` | `_bind( )`, binding syntax, UI5 model types, the model itself |
 | `Browser` | the browser page and tab: URL, title, favicon, reload, clipboard, storage, logout |
-| `Control` | one UI5 control is the topic, incl. calling its methods by ID |
+| `Control Behaviour` | one UI5 control is the topic — how it *behaves* and how the backend drives it, typically by calling its methods by ID. **Not** a control reference: that is [samples-controls](https://github.com/abap2UI5/samples-controls), and the header says so (§1) |
 | `CSS` | own styles shipped with the view |
 | `Device` | camera, geolocation, device model, frontend info |
 | `Event` | `_event( )`, `t_arg`, keyboard shortcuts, event defaults |
@@ -676,7 +752,7 @@ Rules for the `sub`:
   `SearchField`, `CustomTreeItem`, `setSizeLimit`, `nav_app_call`,
   `template:repeat`). This is what makes the sample findable — the search
   matches `header`, `sub` and the class name, nothing else.
-- **Do not echo the header** (`Control - Wizard Control`,
+- **Do not echo the header** (`Control Behaviour - Wizard Control`,
   `Popup - Value Help with Popups`).
 - Describe **what the sample shows**, not the mechanism it happens to use, when
   the two differ — a Menu demo is `Menu - …`, even if its point is `core:require`.
@@ -735,7 +811,7 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 1. `git mv` the files (no rename needed — `FOLDER_LOGIC=PREFIX`).
 2. Regenerate the overview catalog and `SAMPLES.md`: `npm run launchpad` (§4).
 3. If a subpackage was added/removed/renamed: update the §1 tree and run
-   `node scripts/check-agents-structure.js`.
+   `node scripts/check-agents-structure.mjs`.
 4. `abaplint` → 0 issues → commit.
 
 **Before every commit**
@@ -744,29 +820,50 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 npm run check
 ```
 
-which is all five, in the order they fail fastest:
+**`npm run check` is the whole of CI**, minus the one step that cannot be run
+on a tree you want to keep (below). Every workflow that can make a pull request
+red has a step here, and every step here has a workflow — so a green run
+locally means a green run there, which is the only reason to run it at all.
+It used to be six of eleven, and the three it was missing were the three
+nobody thought to run by hand.
 
-- `npm run lint` — `abaplint` reports 0 issues (config `abaplint.jsonc`).
-- `npm run check:abap2ui5` — the abap2UI5-linter: the app class and the view
-  it builds, plus a headless render of every view. New findings fail;
-  `abap2ui5lint-baseline.json` holds the debt frozen at adoption, and an
-  entry whose finding is gone fails too.
-- `npm run check:chains` — the builder chains are in the house layout (§10).
-- `npm run check:agents` — no drift between the §1 tree and the actual
-  `package.devc.xml` CTEXTs.
-- `npm run check:strip` — no drift in the strip list (§2).
+In the order they fail fastest:
 
-**Not in `npm run check`, because it needs the network:**
-`npm run check:app-rules` — the abaplint rule block still matches its source
-in abap2UI5 (§6). CI runs it on every pull request; run it yourself after
-touching `abaplint.jsonc`.
+| step | workflow | what it holds |
+|---|---|---|
+| `npm run lint` | `abap-standard` | `abaplint` reports 0 issues (`abaplint.jsonc`, `v750`) |
+| `npm run check:cloud` | `abap-cloud` | the same tree against the ABAP Cloud API — `main` is installed there as it is (§2) |
+| `npm run check:abap2ui5` | `check-abap2UI5` | the abap2UI5-linter: the app class and the view it builds, plus a headless render of every view. New findings fail; `abap2ui5lint-baseline.json` holds the debt frozen at adoption, and an entry whose finding is gone fails too |
+| `npm run check:chains` | `check-docs` | the builder chains are in the house layout (§10) |
+| `npm run check:agents` | `check-docs` | no drift between the §1 tree and the actual `package.devc.xml` CTEXTs |
+| `npm run check:strip` | `check-docs` | no drift in the strip list (§2) |
+| `npm run check:keywords` | `check-keywords` | every sample carries `@keywords` and `@summary`, first line, lowercase (§4) |
+| `npm run check:launchpad` | `publish-overview-apps` | the overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) |
+| `npm run check:prose` | `check-docs` | every class name written in prose exists, here and in the sibling repositories |
+| `npm run check:docs-links` | `check-docs-links` | every `" @docs` URL resolves, and its page names the class back (§4) |
+| `npm run check:app-rules` | `check-app-rules` | the abaplint rule block still matches its source in abap2UI5 (§6) |
+| `npm run rename` | `check-rename` | the samples still rename out of the `z2ui5` namespace; writes to the gitignored `output/`, never to `src/` |
 
-By hand, because no script covers them:
+`check:launchpad` runs the two generators with `--check`: same render, compared
+instead of written. The generators are the source of truth either way, because
+a check that regenerated differently from the generator would be worse than
+none.
+
+The last three talk to the network — `check:app-rules` and `check:docs-links`
+prefer a sibling checkout and otherwise fetch, and both **say so and pass** when
+they can reach neither: a gate must not go red because github.com is (§6). That
+degradation is why `check:app-rules` is in the aggregate now; it was left out
+back when an unreachable source was a failure.
+
+**The one CI step that is not here: `npm run downport`** (`abap-702`,
+`publish-702`). It is not a check, it is the 702 build: it deletes the stripped
+packages and runs `abaplint --fix` over what is left, so running it leaves you
+with a downported working copy rather than an answer. Run it deliberately, on a
+clean tree, and `git checkout .` afterwards.
+
+By hand, because no script covers it:
 - abapGit file format for all file types: UTF-8, LF only, final newline,
   2-space indent (§6).
-- The overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) —
-  `npm run launchpad` regenerates both, and leaves the tree clean when they are
-  current.
 
 ---
 
@@ -900,6 +997,35 @@ By hand, because no script covers them:
   are what the last run actually checked. **A sample added or removed changes
   these files**; commit them with the change (the workflow pushes them if you
   forget, and reports it when it cannot).
+
+### The scripts under `scripts/`
+
+**Every script is an ES module and is named `.mjs`.** No CommonJS, no
+`require( )`, no `__dirname` — resolve the repository root from
+`fileURLToPath(import.meta.url)`, the way every script here already does.
+
+The repository ran two module systems side by side until 2026-08-18: five
+CommonJS `.js` files and three ESM `.mjs` ones, with no rule saying which a new
+script should be. That is not a style preference. A `.js` file cannot `import`
+the `.mjs` scan, so a check written the ESM way could not reuse
+`lib/scan-samples`, and one written the CommonJS way could not `await` a
+`fetch( )` at the top level — which is exactly what the two network-aware gates
+do. The split decided what a new check was allowed to reuse, silently, by the
+extension somebody picked. Both sibling repositories are ESM throughout;
+so is this one now.
+
+Everything else about a script follows from that:
+
+- **No dependencies.** Plain node, so a gate is a few seconds and needs no
+  `npm ci` — `check-docs`, `check-keywords`, `check-docs-links`,
+  `check-app-rules` and `check-prose-names` all run `node <script>` directly
+  in CI.
+- **One scan, two renderers.** Anything that reads the sample tree goes through
+  `scripts/lib/scan-samples.mjs` (§4). A second scan drifts silently.
+- **A gate that needs the network says so and passes** when it cannot reach it
+  (`check-app-rules`, `check-docs-links`) — see §6 below and the header of
+  `scripts/check-app-rules.mjs`. Prefer a sibling checkout over a fetch, so a
+  developer with the whole ecosystem cloned is checked offline.
 
 ### abapGit file consistency
 
@@ -1304,8 +1430,8 @@ model value a view references must be registered through
 hand-written path (`{/START_DATE}`, or `{ path: '/START_DATE', ... }` in a
 raw binding-info string) is NOT part of the serialized model — the frontend
 receives no data for it and typed/object properties crash on the missing
-value (human find 2026-07-18 in samples 456/457). Compose raw binding-info
-strings with the bare path from
+value (human find 2026-07-18 in `Z2UI5_CL_SMP_APP_456`/`_457`). Compose raw
+binding-info strings with the bare path from
 `client->_bind( val = x path = abap_true )`.
 
 **Always `_bind( )`, never `_bind_edit( )`.** Both bind into the same root
@@ -1350,8 +1476,8 @@ handler runs".
 > framework's obsolete package (`src/99`) and must not be used any more: never
 > reference one from a sample, and never create a sample demonstrating one
 > (human decision 2026-08-12; the last two usages — `z2ui5_cl_pop_to_confirm`
-> in sample 279, `z2ui5_cl_pop_image_editor` in sample 306 — were removed the
-> same day). A sample that needs a dialog builds it itself with
+> in `Z2UI5_CL_SMP_APP_279`, `z2ui5_cl_pop_image_editor` in
+> `Z2UI5_CL_SMP_APP_306` — were removed the same day). A sample that needs a dialog builds it itself with
 > `z2ui5_cl_ui5_view_builder=>factory( )` with a `core:FragmentDefinition`
 > root + `client->popup_display( )`.
 
@@ -1540,12 +1666,14 @@ new/edited samples stay consistent:
 
 - **`sap.m.SimpleForm` needs `editable = abap_true`** for its label/input pairs
   to line up on one row — without it the form renders in display mode and the
-  first field is mislaid (fixed in `189`; compare `133`).
+  first field is mislaid (fixed in `Z2UI5_CL_SMP_APP_189`; compare
+  `Z2UI5_CL_SMP_APP_133`).
 
 - **`StandardListItem`: `info` right-aligns to the far edge** (a status/amount
   slot). For a secondary attribute that belongs *with* the title (e.g. a
   product's category) use `description` — a left-aligned subtitle — instead; the
-  far-right float looks disconnected on wide screens (fixed in `454`/`455`).
+  far-right float looks disconnected on wide screens (fixed in
+  `Z2UI5_CL_SMP_APP_454`/`_455`).
 
 - **The page title carries the `<DESCRIPT>` text**, in the form
   `` `abap2UI5 - <DESCRIPT without the (A)/(C) marker>` `` — every sample in
@@ -1556,12 +1684,17 @@ new/edited samples stay consistent:
   to "Focus II" and "Table Filters Reset after view Update").
 
 - **Start every view from `view->shell( )->page( … )`** (not `view->page( … )`)
-  so all samples share the same outer frame (fixed in `143`).
+  so all samples share the same outer frame (fixed in `Z2UI5_CL_SMP_APP_143`).
 
 - **Give a `search_field` an explicit `placeholder`.** Without one UI5 shows its
   locale default (German "Suchen" on a DE system), which clashes with the
   otherwise-English samples.
 
+<!-- The section below is SHARED. Its source is
+     abap2UI5/abap2UI5 .github/shared/agents-metadata.md - change it THERE
+     first, or the change is drift. abap2UI5's `npm run check:shared`
+     compares this section against the source, from the heading down to the
+     next `##`; anything above this comment is this repository's own. -->
 ## Metadata: what goes on the class, and what goes beside it
 
 Shared across `abap2UI5/samples`, `abap2UI5/samples-controls` and

@@ -67,7 +67,7 @@ CLASS z2ui5_cl_smp_app_448 IMPLEMENTATION.
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Control - Expand a Panel by ID (setExpanded)`
+            )->a( n = `title`          v = `abap2UI5 - Control Behaviour - Expand a Panel by ID (setExpanded)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 

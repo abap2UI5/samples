@@ -3,8 +3,8 @@
  * The one scan of the sample tree.
  *
  * Two things are generated from the same facts - the overview app's
- * get_catalog( ) (scripts/generate-launchpad.js) and the browsable catalogue
- * SAMPLES.md (scripts/generate-samples-md.js) - and the facts are not
+ * get_catalog( ) (scripts/generate-launchpad.mjs) and the browsable catalogue
+ * SAMPLES.md (scripts/generate-samples-md.mjs) - and the facts are not
  * obvious: which classes count as samples, where their title and description
  * come from, which ones are hidden helpers, and what a demo kit rebuild
  * overrides. A second copy of that would drift, and drift here is silent: the
@@ -17,12 +17,12 @@
  *
  * The rules are AGENTS.md section 4. Edit them here, not in a generator.
  */
-'use strict';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const fs = require('fs');
-const path = require('path');
-
-const ROOT = path.join(__dirname, '..', '..');
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.join(HERE, '..', '..');
 const SRC = path.join(ROOT, 'src');
 
 // The areas (top-level packages under src) that hold samples at all. src/00/01
@@ -179,6 +179,13 @@ function scanSamples() {
 
     const entry = {
       area,
+      /* Whether the class is an APP, decided from the source: a runnable
+       * sample implements z2ui5_if_app. Three classes in src/00/98 carry the
+       * sample name and are data objects (`if_serializable_object` only), so
+       * "how many apps are in here" is not the same question as "how many
+       * classes match the naming scheme" - and the README answers the first
+       * one. */
+      isApp: /INTERFACES\s+z2ui5_if_app\s*\./i.test(source),
       subnum,
       group: groupOf(path.dirname(abap)),
       header,
@@ -231,4 +238,4 @@ function scanSamples() {
   return { areas, hidden };
 }
 
-module.exports = { ROOT, SRC, AREAS, DOCS_SITE, scanSamples, headerBase };
+export { ROOT, SRC, AREAS, DOCS_SITE, scanSamples, headerBase };

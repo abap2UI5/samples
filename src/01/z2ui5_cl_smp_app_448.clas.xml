@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_448</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Control - Expand a Panel by ID (setExpanded) (A)</DESCRIPT>
+    <DESCRIPT>Control Behaviour - Expand a Panel by ID (setExpanded) (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
