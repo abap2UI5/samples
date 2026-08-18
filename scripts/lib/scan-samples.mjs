@@ -179,6 +179,13 @@ function scanSamples() {
 
     const entry = {
       area,
+      /* Whether the class is an APP, decided from the source: a runnable
+       * sample implements z2ui5_if_app. Three classes in src/00/98 carry the
+       * sample name and are data objects (`if_serializable_object` only), so
+       * "how many apps are in here" is not the same question as "how many
+       * classes match the naming scheme" - and the README answers the first
+       * one. */
+      isApp: /INTERFACES\s+z2ui5_if_app\s*\./i.test(source),
       subnum,
       group: groupOf(path.dirname(abap)),
       header,

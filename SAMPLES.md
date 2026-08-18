@@ -3,9 +3,15 @@
 
 # The sample catalogue
 
-Every app in this repository — 152 of them — with what it shows and a link
+Every app in this repository — 150 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
+
+**104 of them ship on every branch** — the portable set the README counts:
+`src/01` plus this overview app. The other 46 are under `src/00` and are
+stripped from `702`. 3 further classes carry the sample name and are
+data objects the samples share rather than apps; they are listed too, so nothing
+in the tree is invisible.
 
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
@@ -24,7 +30,9 @@ New to abap2UI5? Start at [Basics](#basics), then the
 ## The learning path — `src/01`
 
 The 97 samples the overview app lists: cloud-ready, downportable,
-plain OpenUI5 1.71. Each adds one idea.
+plain OpenUI5 1.71. Each adds one idea. With the 6
+helper apps they call and the overview app itself, that is the **104
+ready-to-run apps** the README leads with.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
