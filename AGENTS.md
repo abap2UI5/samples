@@ -297,7 +297,7 @@ start page (`z2ui5_cl_app_startup`) — dropped from all three overviews on
 |------|--------|------------|
 | `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples — *Samples* |
 | `sap-icon://palette` | `z2ui5_cl_smpc_app_000` | abap2UI5/samples-controls — *Control Samples* |
-| `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack — *Stack Samples* |
+| `sap-icon://database` | `z2ui5_cl_smps_app_000` | abap2UI5/samples-stack — *Stack Samples* |
 | `sap-icon://learning-assistant` | — | <https://abap2UI5.org> |
 | `sap-icon://globe` | — | the repository the app itself lives in |
 

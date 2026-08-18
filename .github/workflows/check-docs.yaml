@@ -50,3 +50,39 @@ jobs:
       with:
         node-version: '22'
     - run: node scripts/chain-format.mjs
+
+  # Class names written in prose, against the repositories that own them.
+  #
+  # The three READMEs carry the same learning-path table naming each other's
+  # overview apps. When samples-controls renamed its overview, two of the three
+  # copies went on telling readers to run a class that no longer exists - which
+  # nothing here could notice, because nothing here reads that repository.
+  #
+  # Foreign sample names resolve through the owning repository's generated
+  # SAMPLES.md over raw.githubusercontent.com; framework names need the sources,
+  # so abap2UI5/src is sparse-checked-out next to this one. Without it the run
+  # SAYS which names it could not check rather than passing them silently - and
+  # the stale name that prompted this gate was a framework-shaped one, so the
+  # checkout is what makes the check real.
+  prose_names:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        repository: abap2UI5/abap2UI5
+        ref: main
+        path: .abap2UI5
+        fetch-depth: 1
+        sparse-checkout: src
+        sparse-checkout-cone-mode: false
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version: '22'
+    # A runner cannot check a repository out above the workspace, so the
+    # framework lands inside it and the variable says where - the same
+    # env-over-sibling resolution abap2UI5/ai-mcp uses.
+    - run: node scripts/check-prose-names.mjs
+      env:
+        A2UI5_HOME: ${{ github.workspace }}/.abap2UI5
