@@ -5,7 +5,7 @@ name: check-keywords
 # without them is broken - it compiles, it runs, it is listed in the overview -
 # which is exactly why the omission survives: the only symptom is that nobody
 # looking for it ever arrives, in the overview's search box, in Ctrl+F over
-# SAMPLES.md and in abap2UI5/ai-mcp's `examples` tool alike.
+# SAMPLES.md and in abap2UI5/mcp-server's `examples` tool alike.
 #
 # 104 classes carry the lines and nothing checked them. The generator refuses a
 # TILE without them, but it rewrites the tree while it does so, which is why it

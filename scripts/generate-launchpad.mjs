@@ -160,7 +160,7 @@ for (const [area, list] of Object.entries(tiles)) {
  * whether it is the one they want, and until it existed the answer was a
  * 60-character short text ("Popup - change a popup control from the backend")
  * that names the thing and stops. The same three readers are affected - the
- * overview app, SAMPLES.md, an agent through abap2UI5/ai-mcp - and here the
+ * overview app, SAMPLES.md, an agent through abap2UI5/mcp-server - and here the
  * degradation is not silence but a wrong guess, which costs more.
  *
  * Written, not generated. abap2UI5/samples-controls fetches the sentence from
