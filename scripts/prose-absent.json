@@ -1,0 +1,9 @@
+{
+  "z2ui5_cl_smpc_app_overview": "the PREVIOUS name of samples-controls' overview app, kept on purpose: header_button( )'s class_old falls back to it for systems that still carry it",
+  "z2ui5_cl_demo_app_g00": "the same, for this repository's own earlier overview app",
+  "z2ui5_cl_smp_app_000_0": "the retired \"classic\" overview app - the passage says it is gone and that it must not come back",
+  "z2ui5_cl_sample_app_g01": "the extended overview app, removed when the extended samples were reorganised - the passage is about its absence",
+  "z2ui5_cl_app_startup": "the framework start page under its PRE-RENAME name (z2ui5_cl_ui5_app_start today); the sentence records that it was dropped from the overviews",
+  "z2ui5_cl_app_parent": "a placeholder in an example CAST - the calling app, whatever it is called",
+  "z2ui5_cl_app_xxx": "the placeholder class name in the app template snippet"
+}

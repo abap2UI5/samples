@@ -63,11 +63,11 @@ ship — has **no home in this repository today**, and neither has a superseded
 one. Do not park it in `src/01`: every sample there must survive the 702
 downport (§2). Either it belongs in
 [samples-stack](https://github.com/abap2UI5/samples-stack) or
-[ai-demokit](https://github.com/abap2UI5/ai-demokit) (§2), or the category has
-to come back. Re-creating one is a deliberate, self-contained change: add the
-package, put it back into the tree above, into the §2 build table, and into the
-`downport` strip list in `package.json` — all three in the same commit, or the
-two checks below fail.
+[samples-controls](https://github.com/abap2UI5/samples-controls) (§2), or the
+category has to come back. Re-creating one is a deliberate, self-contained
+change: add the package, put it back into the tree above, into the §2 build
+table, and into the `downport` strip list in `package.json` — all three in the
+same commit, or the two checks below fail.
 
 There is **no on-premise-only package**: `main` is installed on ABAP Cloud
 systems as it is, so every sample in the repository must be ABAP Cloud ready.
@@ -90,23 +90,27 @@ keep the two identical** (see §4).
 
 **`01/03` "Control Library" is gone (2026-08-12), with all 32 of its samples.**
 1:1 rebuilds of UI5 demo kit samples are collected in
-[abap2UI5/ai-demokit](https://github.com/abap2UI5/ai-demokit) — which rebuilds
-every official sample against its original view and gates each port on that
-comparison — and keeping the same original rebuilt in both repositories was
+[abap2UI5/samples-controls](https://github.com/abap2UI5/samples-controls) —
+which rebuilds every official sample against its original view and gates each
+port on that comparison — and keeping the same original rebuilt in both was
 pure redundancy: 14 of the 32 were already ported there under the same demo kit
 sample id, and 12 of the rest carried no sample id at all, only an entity URL,
 so there was no original to be faithful to. The whole set was imported into
-ai-demokit's `todo/` for triage before the packages were removed here, so
-nothing is lost — see `todo/README.md` there for the per-sample verdict.
+samples-controls' `todo/` for triage before the packages were removed here and
+every imported class got its verdict the same day; that staging folder was
+deleted with the closed triage, so the per-sample verdicts are in
+samples-controls' **git history** (`todo/README.md` at commit `37e77b6`), not in
+its tree.
 
 **Do not re-create a Control Library package, and do not add a demo kit rebuild
 to `src/01`.** A sample that rebuilds one specific demo kit original belongs in
-ai-demokit, full stop. What legitimately stays here is what cannot live there,
-and it goes into the basic package (`src/01`) as an ordinary sample:
+samples-controls, full stop. What legitimately stays here is what cannot live
+there, and it goes into the basic package (`src/01`) as an ordinary sample:
 
-- a **1.71-safe** variant of a sample whose ai-demokit port keeps post-1.71
-  members for 1:1 fidelity (declared `POST_171` there) — this repository is
-  downported to 702, so the restriction matters here and does not there;
+- a **1.71-safe** variant of a sample whose samples-controls port keeps
+  post-1.71 members for 1:1 fidelity (declared `POST_171` there) — this
+  repository is downported to 702, so the restriction matters here and does
+  not there;
 - a sample in samples-controls' **hold-out set** (`ui5/holdout.json`), which is
   deliberately never ported there because it measures its generator;
 - a **free-style control demo** with no single demo kit original.
@@ -293,7 +297,7 @@ start page (`z2ui5_cl_app_startup`) — dropped from all three overviews on
 |------|--------|------------|
 | `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples — *Samples* |
 | `sap-icon://palette` | `z2ui5_cl_smpc_app_000` | abap2UI5/samples-controls — *Control Samples* |
-| `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack — *Stack Samples* |
+| `sap-icon://database` | `z2ui5_cl_smps_app_000` | abap2UI5/samples-stack — *Stack Samples* |
 | `sap-icon://learning-assistant` | — | <https://abap2UI5.org> |
 | `sap-icon://globe` | — | the repository the app itself lives in |
 
@@ -430,10 +434,10 @@ the only overview app, and it is generated.
 ### `SAMPLES.md` — the same catalogue, readable on GitHub
 
 Reaching the overview app costs an installed framework, an abapGit pull and an
-HTTP handler. Before that, the repository is a flat folder of 150 classes whose
+HTTP handler. Before that, the repository is a flat folder of classes whose
 names encode nothing, and the question a visitor arrives with — *is there a
 sample for X?* — has no answer here. `src/00` is worse off: it has no overview
-app at all, so its 49 apps are reachable by class name only and nothing lists
+app at all, so its apps are reachable by class name only and nothing lists
 the names.
 
 [`SAMPLES.md`](SAMPLES.md) answers it. Every app, its description, its
@@ -450,7 +454,7 @@ Four things it shows that the app does not, on purpose:
 
 | | Why |
 |---|---|
-| the `src/00` packages | they have no overview app (§3); listing them nowhere is how 49 apps became invisible |
+| the `src/00` packages | they have no overview app (§3); listing them nowhere is how its 49 apps became invisible |
 | the `ZZZ` helper apps | they must not get a tile — but a catalogue claiming to account for the tree has to say they exist |
 | the `@keywords` | never rendered in the app (§4); here they are what `Ctrl+F` finds |
 | the `@docs` link | the chapter that explains the pattern the sample demonstrates (§4) — the app has no room for it, and a page does |
@@ -752,6 +756,11 @@ which is all five, in the order they fail fastest:
   `package.devc.xml` CTEXTs.
 - `npm run check:strip` — no drift in the strip list (§2).
 
+**Not in `npm run check`, because it needs the network:**
+`npm run check:app-rules` — the abaplint rule block still matches its source
+in abap2UI5 (§6). CI runs it on every pull request; run it yourself after
+touching `abaplint.jsonc`.
+
 By hand, because no script covers them:
 - abapGit file format for all file types: UTF-8, LF only, final newline,
   2-space indent (§6).
@@ -769,26 +778,46 @@ By hand, because no script covers them:
 - Configuration: `abaplint.jsonc`
 - Install: `npm install -g @abaplint/cli`
 - Run: `abaplint`
-- **The rule block is byte-identical in three repositories** — this one,
-  [samples-controls](https://github.com/abap2UI5/samples-controls) and
-  [samples-stack](https://github.com/abap2UI5/samples-stack) — the same way
-  `scripts/chain-format.mjs` already is. **Change it in one and copy it to
-  the other two**, then re-run that repository's gates: what is checked is a
-  joint decision of the three corpora, not a local preference.
+- **The rule block below the marker is a CHECKED COPY of the shared app rule
+  set, and its source is
+  [abap2UI5/abap2UI5](https://github.com/abap2UI5/abap2UI5)
+  `.github/abaplint/app-rules.json`** — the repository where the rest of "how
+  to write an abap2UI5 app" already lives (the `build-an-app` and
+  `view-chain-layout` skills, `docs/agents/building-apps.md`, `abap-check`,
+  `ui5-check`), because a shared thing needs one owner. **Change it THERE
+  first, then copy it here**; this repository, samples-controls and
+  samples-stack are consumers of that file, not peers of each other.
+  - This replaced a three-way peer comparison, deliberately: three peers have
+    no answer to which of them is right, a repository without its own copy of
+    the checker turned the *other* repositories' CI red when it drifted, and
+    the peer checker compared rule NAMES only — so switching a rule to
+    `false` to get a pull request through, precisely the drift it existed to
+    catch, read to it as no change at all.
+  - **The gate is `scripts/check-app-rules.mjs`** (`npm run check:app-rules`,
+    and the `check-app-rules` workflow on every pull request and push to
+    `main`). It compares PARSED SETTINGS against the source, preferring an
+    `abap2UI5` checkout next to this one and falling back to
+    `raw.githubusercontent.com`. It is the one gate here that needs the
+    network: when the source is unreachable it says so and **passes**, rather
+    than going red because github.com is. abap2UI5 checks the same thing from
+    its side (`shared-file-gate.mjs`) — that is the source noticing, this is
+    the consumer noticing.
   - abaplint has no `extends`, so there is no shared file to include — the
-    copy is the mechanism, and the block carries a header saying so.
+    checked copy is the mechanism, and the block carries a header saying so.
   - Only `global`, `dependencies` and `syntax` are per repository (release
     floor, dependency set, suppressions) — plus exactly **one** rule:
     `object_naming`, which encodes the repository's token (SMP / SMPC /
-    SMPS). It sits last in the file behind a marker that says so. Everything
-    above that marker must be identical.
+    SMPS) and is the only rule `check-app-rules` excludes from the
+    comparison. It sits last in the file behind a marker that says so.
+    Everything above that marker must match the source.
 - **Every rule abaplint ships is listed in the config — all 188 of them**
   (2026-08-16; it was 17 here, 44 in samples-controls and 41 in
   samples-stack, the rest defaulting to off unnoticed). 171 are on. **A rule
-  is never left out of the file.** When an abaplint upgrade adds one, add
-  the key in all three: on if all three corpora pass, off with the reason in
-  a comment above it if they do not. An unlisted rule reads as "nobody
-  decided" rather than "decided against".
+  is never left out of the file.** When an abaplint upgrade adds one, add the
+  key to `app-rules.json` in abap2UI5 and copy the block into all three
+  consumers: on if all three corpora pass, off with the reason in a comment
+  above it if they do not. An unlisted rule reads as "nobody decided" rather
+  than "decided against".
 - The 17 that are off carry their reason in the file. In short: four rules
   want Hungarian notation and `no_public_attributes` wants the model hidden,
   both against §7 and §9; `abapdoc` treats demos as a published API; seven
@@ -852,9 +881,9 @@ By hand, because no script covers them:
   ```
   sources    148 app classes
   views      172 documents reconstructed, nested 11 deep, 7 classes produced none
-  judged     2,176 controls of 106 types, 548 bindings, 69 icons, 4,164 attributes
+  judged     2,176 controls of 106 types, 547 bindings, 69 icons, 4,164 attributes
   gates      properties 148 files, render 172 documents
-  baselined  133 findings suppressed by abap2ui5lint-baseline.json (…)
+  baselined  1 finding suppressed by abap2ui5lint-baseline.json (commercial-ui5-host 1)
   ```
 
   A `judged` line of zeroes, or `148 classes produced none`, is the earlier
@@ -863,7 +892,7 @@ By hand, because no script covers them:
 - **The two README badges** (`.github/badges/abap2ui5.json` and
   `.github/badges/check-abap2ui5.json`, shields.io endpoint files) carry the
   same statement, split along what they mean: *abap2UI5 | 148 apps · 172 views
-  · 2,176 controls* is what is here, blue, a fact; *check-abap2UI5 | 84 rules
+  · 2,176 controls* is what is here, blue, a fact; *check-abap2UI5 | 86 rules
   passed* is what the gate made of it, green (or *3 problems*, *7 errors*,
   red). A run that finds nothing checkable turns both grey and says so. Every
   run rewrites them, `check-abap2UI5` commits them onto the pull request
@@ -1519,8 +1548,8 @@ new/edited samples stay consistent:
   far-right float looks disconnected on wide screens (fixed in `454`/`455`).
 
 - **The page title carries the `<DESCRIPT>` text**, in the form
-  `` `abap2UI5 - <DESCRIPT without the (A)/(C) marker>` `` — all 93 samples in
-  `src/01` follow it since 2026-08-13. A user clicks a tile in the overview
+  `` `abap2UI5 - <DESCRIPT without the (A)/(C) marker>` `` — every sample in
+  `src/01` follows it since 2026-08-13. A user clicks a tile in the overview
   (which shows the DESCRIPT) and the opened sample must name the same thing, so
   it is recognisably the right sample. Change the two together: renaming a
   DESCRIPT without the page title puts them out of sync again (they had drifted
@@ -1532,51 +1561,6 @@ new/edited samples stay consistent:
 - **Give a `search_field` an explicit `placeholder`.** Without one UI5 shows its
   locale default (German "Suchen" on a DE system), which clashes with the
   otherwise-English samples.
-
-## Metadata: what goes on the class, and what goes beside it
-
-Shared across `abap2UI5/samples`, `abap2UI5/samples-controls` and
-`abap2UI5/samples-stack`. Decided once, so nobody has to decide it again per
-repository.
-
-**A class says what it IS. A sidecar records what HAPPENED to it.**
-
-| | where | why |
-|---|---|---|
-| `DESCRIPT` — `Titel - Kurzbeschreibung` | `.clas.xml` | 60 characters, hard. What ADT's object list shows |
-| `" @summary` — one sentence | first lines of `.clas.abap` | no limit. The line a catalogue puts under the title |
-| `" @keywords` — search terms | first lines of `.clas.abap` | what somebody would type who does not know the sample exists |
-| upstream sample, port batch, audit findings, verification date, deviations | a sidecar (`meta/<class>.json`) | not properties of the class; written by machinery; long-form; changes on a different schedule |
-
-### Why the first three are not in a sidecar
-
-**A sidecar does not travel.** abapGit pulls `src/`; a `meta/` folder never
-reaches the SAP system. Three places that costs:
-
-1. **In the system it is simply absent** — which is why an overview app that
-   needs the data has to have it *baked in* by a generator.
-2. **A search engine drops somebody into the `.clas.abap` on GitHub** and the
-   code is all they get. This is the same argument `@docs` is a full URL for.
-3. **An AI reading the class file gets no metadata** unless its tooling happens
-   to know about `meta/`.
-
-A `"` comment costs the ABAP nothing — it is not `"!`, so SLIN/ATC does not
-report an unknown tag — and it cannot desync from the class, because it is in
-the class.
-
-### Why the rest is not on the class
-
-A deviation note with three paragraphs and a verification date is not a
-property of the class; it is a log entry about a process, usually written by a
-test run rather than by an author. Putting it in a `"` comment would bloat the
-source and would still be worse structured than JSON. That belongs beside the
-class, and the sidecar is right for it.
-
-### The test, when a new field turns up
-
-Ask: *would this still be true if nobody ever ran a check again?* If yes it
-describes the sample and belongs on the class. If it only became true because
-somebody did something, it belongs in the sidecar.
 
 ## Metadata: what goes on the class, and what goes beside it
 
