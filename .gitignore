@@ -1,3 +1,8 @@
 downport
 node_modules
 output
+
+# derived: the catalogue behind the overview page in web/, written by
+# scripts/generate-overview-index.mjs on every deploy (AGENTS.md, "The overview
+# page")
+web/apps.json

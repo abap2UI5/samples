@@ -1690,6 +1690,60 @@ new/edited samples stay consistent:
   locale default (German "Suchen" on a DE system), which clashes with the
   otherwise-English samples.
 
+---
+
+## The overview page — `web/`, on GitHub Pages
+
+**https://abap2ui5.github.io/samples/** — the learning path as a page, for
+somebody who has not installed anything yet. Published by the `deploy-web`
+workflow on every push to `main` that touches `src/`, `web/` or the generator
+(*Settings → Pages → Source = GitHub Actions*).
+
+It is the **third view of one catalogue**, and the reason the three cannot
+disagree is that all three are rendered from the same scan
+(`scripts/lib/scan-samples.mjs`, §4): the overview app for a reader who has the
+repository in a system, `SAMPLES.md` for a reader on GitHub, this page for a
+reader who is still deciding whether to install it. **Do not give the page its
+own facts about a sample.** Its title, its one sentence, its search terms and
+its documentation chapters are the `DESCRIPT`, the `@summary`, the `@keywords`
+and the `@docs` of the class — change them on the class, as always, and all
+three follow.
+
+**Only `src/01` is on it.** `src/00/97` is unfinished and `src/00/98` exists to
+be run by a check rather than learned from (§2), and both are stripped from
+`702` — a page that teaches must not lead anybody into either. The ZZZ helpers
+are out for the reason they carry no tile (§4); they come back only as the
+extra files a playground link needs to actually run.
+
+### The one thing that is not derived: the order
+
+The categories are the header of a `DESCRIPT` and therefore sort
+alphabetically, which puts `Browser` between `Binding` and `CSS` — an order
+nobody learns in. So the page groups the 23 categories into **stages**, and
+that grouping is a teaching decision written in
+**`scripts/lib/learning-path.json`** and nowhere else:
+
+```json
+{ "id": "rows", "title": "Show many rows", "blurb": "…", "categories": ["Table", "Grid Table", "List", "Tree"] }
+```
+
+**Every category belongs to exactly one stage.** `npm run check:overview`
+(`scripts/generate-overview-index.mjs --check`, part of `npm run check`) fails
+when a category has no stage, when two stages claim one, or when a stage names
+a category no sample carries. A new category is therefore a decision somebody
+has to make — where in the path does this belong — rather than a section that
+silently is not on the page. Adding a sample to an existing category needs
+nothing: the page picks it up on the next deploy.
+
+### The files
+
+`web/index.html`, `web/overview.css`, `web/overview.js` — no framework, no
+build step — plus `web/apps.json`, which is **generated and not committed**
+(`node scripts/generate-overview-index.mjs`, or `npm run overview`). It is a
+build output like any bundle: the workflow writes it on every deploy, so it is
+never staler than the tree, and a sample pull request carries no diff of
+derived data. See `web/README.md` for how to run the page locally.
+
 <!-- The section below is SHARED. Its source is
      abap2UI5/abap2UI5 .github/shared/agents-metadata.md - change it THERE
      first, or the change is drift. abap2UI5's `npm run check:shared`
