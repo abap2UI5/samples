@@ -26,6 +26,15 @@
   --mark: #fff2a8;
   --shadow: 0 1px 2px rgba(16, 20, 30, .05), 0 8px 24px rgba(16, 20, 30, .05);
   --radius: 12px;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* The three measurements the shared family blocks at the end of this file
+   * read. They are the only thing about those blocks that is allowed to differ
+   * between the three sample repositories, because the three pages are built
+   * around containers of different widths. */
+  --family-width: 1180px;    /* what .masthead .inner and .layout centre in */
+  --family-gutter: 24px;     /* that container's own side padding */
+  --family-bleed: 0px;       /* <body> has none here, so there is none to undo */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -266,6 +275,23 @@ code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, mo
 
 mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 1px; }
 
+/* ----------------------------------------------------------- what's next */
+
+/* The card at the end of the path. It is the only thing on this page drawn
+ * from the reader's own progress rather than from the catalogue, so it is
+ * styled as an arrival - the done green, not the accent blue. */
+.whatsnext {
+  background: var(--done-soft); border: 1px solid var(--done); border-radius: var(--radius);
+  padding: 18px 22px; margin-bottom: 22px;
+}
+.whatsnext h2 { margin: 0 0 8px; font-size: 1.15rem; color: var(--done); }
+.whatsnext p { margin: 0 0 10px; color: var(--ink-soft); max-width: 74ch; }
+.whatsnext p b { color: var(--ink); }
+.whatsnext ul { margin: 0; padding-left: 20px; }
+.whatsnext li { margin-bottom: 8px; color: var(--ink-soft); max-width: 74ch; }
+.whatsnext a { text-decoration: none; }
+.whatsnext a:hover { text-decoration: underline; }
+
 /* ------------------------------------------------------------------ how */
 
 .how {
@@ -285,3 +311,181 @@ footer {
 }
 footer p { max-width: 1180px; margin: 0 auto 10px; }
 footer a { color: var(--ink-soft); }
+
+/* ------------------------------------------------------------ family nav */
+
+/* family-nav:start
+ *
+ * The bar that ties the three sample pages together, and the card strip at the
+ * end of the page that says why you would go next door. Both are IDENTICAL in
+ * abap2UI5/samples, abap2UI5/samples-controls and abap2UI5/samples-stack -
+ * change them in all three repositories or in none. `npm run check:family-nav`
+ * fails when a copy drifts.
+ *
+ * They read three tokens each page sets for itself in :root and nothing else
+ * of their own: --family-width (the container the rest of the page centres
+ * in), --family-gutter (that container's own side padding) and --family-bleed
+ * (the side padding on <body>, which the bar breaks out of to reach the edge).
+ * Every colour comes from the palette above, so light and dark come free.
+ *
+ * The bar is deliberately NOT sticky: two of the three pages already stick
+ * their filter panel to the top, and a second sticky strip above it would eat
+ * a phone screen twice over. */
+
+.family {
+  margin: 0 calc(var(--family-bleed) * -1);
+  padding: 0 var(--family-bleed);
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+
+.family-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .1rem;
+  max-width: var(--family-width);
+  margin: 0 auto;
+  padding: .35rem var(--family-gutter);
+}
+
+.family-brand {
+  margin-right: .7rem;
+  font: 700 .78rem/1 var(--mono);
+  letter-spacing: .04em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.family-brand:hover { color: var(--accent); }
+
+/* The verb is what a reader recognises - "samples-controls" tells a newcomer
+ * nothing, "Controls / every UI5 control, searchable" tells them everything -
+ * so the repository name is in the tooltip and the footer, not here. */
+.family-page {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .45em;
+  padding: .3em .65em;
+  border: 1px solid transparent;
+  border-radius: 99px;
+  font-size: .85rem;
+  text-decoration: none;
+}
+.family-page b { font-weight: 600; color: var(--ink); }
+.family-page span { font-size: .8rem; color: var(--ink-faint); }
+.family-page:hover { background: var(--line-soft); }
+
+/* The one thing this bar has to say without spending a word on it: which of
+ * the three you are reading. Drawn off aria-current, so the markup is the
+ * same file on all three pages and only that attribute moves.
+ *
+ * The current page is coloured with --accent and not --accent-ink: the two
+ * repositories next door use --accent-ink for text ON the accent fill, where
+ * it is white, and white on --accent-soft is nothing at all. */
+.family-page[aria-current="page"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.family-page[aria-current="page"] b { color: var(--accent); }
+.family-page[aria-current="page"] span { color: var(--ink-soft); }
+
+.family-spacer { flex: 1 1 auto; }
+
+/* The playground and the documentation are tools, not sibling pages: they sit
+ * apart from the three and carry the outward arrow. */
+.family-tool {
+  padding: .3em .5em;
+  font-size: .8rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.family-tool:hover { color: var(--accent); }
+
+.family a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-radius: 99px;
+}
+
+/* On a phone the three verbs and the two tools still fit once the subtitles
+ * go. Dropping the bar entirely would be dropping the way out. */
+@media (max-width: 47rem) {
+  .family-page span { display: none; }
+  .family-brand { margin-right: .35rem; }
+}
+
+/* --------------------------------------------------------- three pages */
+
+/* The bar at the top answers "where am I". This answers "why would I go
+ * anywhere else", and it sits at the end because that is where a reader who
+ * is done with this page arrives. */
+
+.three {
+  max-width: var(--family-width);
+  margin: 3rem auto 0;
+  /* A rule above it, because on one of the three pages this lands directly
+   * under another prose section that has one, and without it the strip reads
+   * as that section's tail rather than as its own thing. */
+  padding: 1.4rem var(--family-gutter) 0;
+  border-top: 1px solid var(--line);
+}
+.three > h2 { margin: 0 0 .3rem; font-size: 1.15rem; }
+.three-lede {
+  max-width: 46rem;
+  margin: 0 0 1rem;
+  font-size: .9rem;
+  color: var(--ink-soft);
+}
+
+.three-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: .7rem;
+}
+
+.three-card {
+  display: block;
+  padding: .85rem .95rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+.three-card:hover { border-color: var(--accent); }
+.three-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.three-verb {
+  display: block;
+  margin-bottom: .15rem;
+  font: 600 .7rem/1 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.three-repo { display: block; font-size: .95rem; font-weight: 600; color: var(--ink); }
+.three-q {
+  display: block;
+  margin: .3rem 0 .2rem;
+  font-size: .88rem;
+  font-style: italic;
+  color: var(--ink);
+}
+.three-what { display: block; font-size: .85rem; color: var(--ink-soft); }
+
+/* Same trick as the bar, same reason. */
+.three-here { display: none; }
+.three-card[aria-current="page"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.three-card[aria-current="page"] .three-here {
+  display: block;
+  margin-top: .5rem;
+  font: 600 .74rem/1 var(--mono);
+  color: var(--accent);
+}
+
+/* family-nav:end */

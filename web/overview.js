@@ -177,6 +177,10 @@ function apply() {
     : `${ALL.length} samples · ${DATA.counts.categories} topics`;
   $('empty').hidden = hits > 0;
   $('clearq').hidden = !tokens.length;
+  /* A search is a reader looking for one thing, not one finishing the path -
+   * the arrival card would be answering a question nobody asked. drawProgress
+   * puts it back when the query is cleared. */
+  $('whatsnext').hidden = tokens.length > 0 || !ALL.length || read.size !== ALL.length;
 
   paint(tokens);
   const url = new URL(location.href);
@@ -219,6 +223,10 @@ function drawProgress() {
   const next = ALL.find((s) => !read.has(s.class));
   $('continue').hidden = done === 0 || !next;
   if (next) $('continue').dataset.target = next.class;
+
+  /* The end of the path is the one moment this page knows a reader is ready
+   * for the two next door, so it is the one place that says so unprompted. */
+  $('whatsnext').hidden = !ALL.length || done !== ALL.length || $('q').value.trim() !== '';
 }
 
 function jumpTo(cls) {
@@ -268,6 +276,7 @@ async function boot() {
 
   $('total').textContent = String(DATA.counts.samples);
   $('alltotal').textContent = String(DATA.counts.samples);
+  $('nexttotal').textContent = String(DATA.counts.samples);
   $('stagecount').textContent = String(DATA.counts.stages);
   $('overviewapp').textContent = DATA.overviewApp.toUpperCase();
 
