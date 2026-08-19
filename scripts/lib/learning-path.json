@@ -1,0 +1,58 @@
+{
+  "_comment": [
+    "The learning path of the overview page (web/), and the ONE editorial file behind it.",
+    "",
+    "Everything else on that page is derived from the tree by scan-samples.mjs: a sample's",
+    "title, its one-sentence summary, its keywords, its documentation chapters. What the scan",
+    "cannot know is the ORDER somebody learns them in - the categories are the header of a",
+    "DESCRIPT and sort alphabetically, so 'Browser' lands between 'Binding' and 'CSS' and a",
+    "reader following the page top to bottom meets the browser API before they have bound a",
+    "field. That order is a teaching decision, so it is written here and nowhere else.",
+    "",
+    "Rules the generator enforces (scripts/generate-overview-index.mjs):",
+    "  - every category in src/01 belongs to EXACTLY ONE stage - a new one fails the build",
+    "    rather than being dropped silently off the page,",
+    "  - a category named here that no sample uses fails too, so a renamed DESCRIPT cannot",
+    "    leave a dead entry behind.",
+    "The category is the tile header without its trailing Roman numeral (headerBase in",
+    "scan-samples.mjs) - the same blocking the overview app and SAMPLES.md use."
+  ],
+  "stages": [
+    {
+      "id": "start",
+      "title": "Start here",
+      "blurb": "Five apps in reading order. One class, one view, one roundtrip - the shape every other sample in this repository grows from, plus the developer tools you will open when something does not render.",
+      "categories": ["Basics"]
+    },
+    {
+      "id": "data",
+      "title": "Get your data on screen",
+      "blurb": "How an ABAP field becomes something a user reads and edits: binding an attribute, the types that convert it, formatters, and views built from data rather than written out.",
+      "categories": ["Binding", "Formatter", "Templating"]
+    },
+    {
+      "id": "rows",
+      "title": "Show many rows",
+      "blurb": "Internal tables on screen - the responsive table, the grid table for large sets, lists and trees - with growing, selection, editing and everything a row can carry.",
+      "categories": ["Table", "Grid Table", "List", "Tree"]
+    },
+    {
+      "id": "talk",
+      "title": "Talk to the user",
+      "blurb": "The other direction: events arriving from the view, messages and message boxes going back, and the popups, popovers and menus that ask before something happens.",
+      "categories": ["Event", "Message", "Popup", "Popover", "Menu"]
+    },
+    {
+      "id": "move",
+      "title": "Move through the app",
+      "blurb": "More than one view and more than one app: navigation and app calls, views nested inside views, and the small things that decide where the user is looking - focus, scrolling, a timer.",
+      "categories": ["Navigation", "Nested View", "Focus", "Scroll", "Timer"]
+    },
+    {
+      "id": "beyond",
+      "title": "Reach outside the view",
+      "blurb": "Where an app stops being only a view: the browser it runs in, the device it runs on, files in and out, custom CSS, and driving a control from the backend by its id.",
+      "categories": ["Browser", "Device", "File", "CSS", "Control Behaviour"]
+    }
+  ]
+}

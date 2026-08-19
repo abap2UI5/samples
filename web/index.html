@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn abap2UI5 · the sample path</title>
+<meta name="description" content="Every abap2UI5 sample of this repository, in the order somebody learns them: six stages from the smallest app that runs to files, devices and custom CSS. Read the source, or start a sample in the playground without installing anything.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="overview.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="inner">
+    <p class="brand"><a href="https://github.com/abap2UI5/samples">abap2UI5 · samples</a></p>
+    <h1>Learn abap2UI5, one sample at a time</h1>
+    <p class="lede">
+      <strong id="total">…</strong> apps, each one a single ABAP class, each adding
+      exactly one idea. This page is the order they are meant to be read in —
+      <strong id="stagecount">…</strong> stages from the smallest app that runs to
+      files, devices and custom CSS. Start at the top, or use the search to jump
+      to the one thing you need today.
+    </p>
+    <p class="cta">
+      <a class="button" href="#stage-start" id="startlink">Start at the beginning</a>
+      <button type="button" class="button ghost" id="continue" hidden>Continue where you stopped</button>
+      <a class="button ghost" href="#how">How to run a sample</a>
+    </p>
+  </div>
+</header>
+
+<div class="layout">
+
+  <aside class="rail">
+    <div class="progress" id="progress">
+      <p class="progress-line"><b id="donecount">0</b> of <b id="alltotal">…</b> read</p>
+      <div class="bar"><span id="barfill"></span></div>
+      <button type="button" class="linkish" id="clearprogress" hidden>reset</button>
+      <p class="note">Ticking a sample stores it in this browser only — nothing is sent anywhere.</p>
+    </div>
+    <nav id="stagenav" aria-label="The stages"></nav>
+  </aside>
+
+  <main>
+    <form class="find" id="find" role="search" autocomplete="off">
+      <label class="sr-only" for="q">Search the samples</label>
+      <input type="search" id="q" name="q" placeholder="table, popup, f4, upload, nav_app_call …" spellcheck="false">
+      <kbd>/</kbd>
+      <span class="found" id="found"></span>
+      <button type="button" class="linkish" id="clearq" hidden>clear</button>
+    </form>
+
+    <p class="empty" id="empty" hidden>
+      Nothing on the path matches that. <button type="button" class="linkish" id="clearq2">Clear the search</button>
+      — or read <a href="https://github.com/abap2UI5/samples/blob/main/SAMPLES.md">SAMPLES.md</a>,
+      which also lists the experimental and testing apps this page deliberately leaves out.
+    </p>
+
+    <div id="stages"></div>
+
+    <section class="how" id="how">
+      <h2>How to run one</h2>
+      <ol>
+        <li>
+          <b>In your system.</b> Install
+          <a href="https://github.com/abap2UI5/abap2UI5">abap2UI5</a> — this
+          repository ships apps, not the framework — then pull it with
+          <a href="https://abapgit.org">abapGit</a> (<code>main</code> for
+          NW 7.50+ and ABAP Cloud, <code>702</code> for NW 7.02 – 7.4x) and open
+          <code>&lt;your endpoint&gt;?app_start=&lt;the class&gt;</code>. Every card
+          below copies that class name for you.
+        </li>
+        <li>
+          <b>Without a system.</b> <b>Playground&nbsp;↗</b> opens the same class in
+          an ABAP editor with the app running beside it, in the browser. Where a
+          sample calls a second app or a shared data class, the link carries those
+          files too, so the button in it still works.
+        </li>
+        <li>
+          <b>All of them at once.</b> Run
+          <code id="overviewapp">Z2UI5_CL_SMP_APP_000</code>, the overview app —
+          the same catalogue, inside your system.
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <p>
+    Built from the repository itself: the folder tree, each class's abapGit short
+    text, and the <code>@keywords</code>, <code>@summary</code> and
+    <code>@docs</code> lines it carries — the same scan behind the overview app
+    and <a href="https://github.com/abap2UI5/samples/blob/main/SAMPLES.md">SAMPLES.md</a>,
+    so the three cannot disagree. Only <code>src/01</code> is here: the portable
+    set that survives every build. Regenerated on every deploy.
+  </p>
+  <p>
+    <a href="https://github.com/abap2UI5/samples">Repository</a> ·
+    <a href="https://github.com/abap2UI5/samples/blob/main/SAMPLES.md">The full catalogue</a> ·
+    <a href="https://abap2ui5.github.io/docs/">Documentation</a> ·
+    <a href="https://abap2ui5.github.io/playground/">Playground</a> ·
+    <a href="https://abap2ui5.github.io/samples-controls/search/">The control reference next door</a>
+  </p>
+</footer>
+
+<script src="overview.js"></script>
+</body>
+</html>
