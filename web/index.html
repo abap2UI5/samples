@@ -10,6 +10,26 @@
 </head>
 <body>
 
+<!-- family-nav:start — IDENTICAL in abap2UI5/samples, abap2UI5/samples-controls
+     and abap2UI5/samples-stack; only aria-current moves. Change it in all three
+     repositories or in none — `npm run check:family-nav` fails when a copy
+     drifts. The styles for it are at the end of the stylesheet. -->
+<nav class="family" aria-label="The abap2UI5 sample pages">
+  <div class="family-inner">
+    <a class="family-brand" href="https://github.com/abap2UI5/abap2UI5">abap2UI5</a>
+    <a class="family-page" href="https://abap2ui5.github.io/samples/"
+       title="abap2UI5/samples" aria-current="page"><b>Learn</b> <span>start here, one idea at a time</span></a>
+    <a class="family-page" href="https://abap2ui5.github.io/samples-controls/"
+       title="abap2UI5/samples-controls"><b>Controls</b> <span>every UI5 control, searchable</span></a>
+    <a class="family-page" href="https://abap2ui5.github.io/samples-stack/"
+       title="abap2UI5/samples-stack"><b>Stack</b> <span>OData, RAP and your system</span></a>
+    <span class="family-spacer"></span>
+    <a class="family-tool" href="https://abap2ui5.github.io/playground/">Playground ↗</a>
+    <a class="family-tool" href="https://abap2ui5.github.io/docs/">Docs ↗</a>
+  </div>
+</nav>
+<!-- family-nav:end -->
+
 <header class="masthead">
   <div class="inner">
     <p class="brand"><a href="https://github.com/abap2UI5/samples">abap2UI5 · samples</a></p>
@@ -54,9 +74,37 @@
       Nothing on the path matches that. <button type="button" class="linkish" id="clearq2">Clear the search</button>
       — or read <a href="https://github.com/abap2UI5/samples/blob/main/SAMPLES.md">SAMPLES.md</a>,
       which also lists the experimental and testing apps this page deliberately leaves out.
+      <br>
+      Looking for one specific UI5 control? All of them are on
+      <a href="https://abap2ui5.github.io/samples-controls/">Controls</a>. Something that
+      needs OData, RAP, WebSockets or the launchpad? That lives on
+      <a href="https://abap2ui5.github.io/samples-stack/">Stack</a>.
     </p>
 
     <div id="stages"></div>
+
+    <!-- Shown by overview.js once every sample on the path is ticked. The end
+         of the path is the one moment this page KNOWS a reader is ready for
+         the other two, so it is the one place that says so unprompted. -->
+    <section class="whatsnext" id="whatsnext" hidden>
+      <h2>You have walked the path</h2>
+      <p>
+        All <b id="nexttotal">…</b> samples ticked. abap2UI5 itself holds no more
+        surprises for you — what is left is everything it meets:
+      </p>
+      <ul>
+        <li>
+          <a href="https://abap2ui5.github.io/samples-controls/"><b>Controls ↗</b></a>
+          when you need one specific UI5 control and the shape of its API — the demo
+          kit rebuilt in ABAP, searchable by control, library and release.
+        </li>
+        <li>
+          <a href="https://abap2ui5.github.io/samples-stack/"><b>Stack ↗</b></a>
+          when your app has to meet the rest of your system — OData, RAP, business
+          events, WebSockets, the Fiori Launchpad.
+        </li>
+      </ul>
+    </section>
 
     <section class="how" id="how">
       <h2>How to run one</h2>
@@ -86,6 +134,43 @@
   </main>
 </div>
 
+<!-- three-pages:start — IDENTICAL in the same three repositories, same rule:
+     change it in all three or in none. Only aria-current moves. -->
+<section class="three" aria-labelledby="three-h">
+  <h2 id="three-h">The three sample pages</h2>
+  <p class="three-lede">
+    Three repositories, three questions. They are not three steps to work
+    through in order — pick the one that matches what you are asking today.
+  </p>
+  <div class="three-cards">
+    <a class="three-card" href="https://abap2ui5.github.io/samples/" aria-current="page">
+      <span class="three-verb">Learn</span>
+      <span class="three-repo">abap2UI5/samples</span>
+      <span class="three-q">“Where do I start?”</span>
+      <span class="three-what">The path from the smallest app that runs to files, devices and
+        custom CSS — one idea per sample, in the order they build on each other.</span>
+      <span class="three-here">📍 you are here</span>
+    </a>
+    <a class="three-card" href="https://abap2ui5.github.io/samples-controls/">
+      <span class="three-verb">Controls</span>
+      <span class="three-repo">abap2UI5/samples-controls</span>
+      <span class="three-q">“Which control does what?”</span>
+      <span class="three-what">The UI5 demo kit rebuilt in ABAP: every control, searchable by
+        name, by library and by the release your system has to be on.</span>
+      <span class="three-here">📍 you are here</span>
+    </a>
+    <a class="three-card" href="https://abap2ui5.github.io/samples-stack/">
+      <span class="three-verb">Stack</span>
+      <span class="three-repo">abap2UI5/samples-stack</span>
+      <span class="three-q">“Will my system run it?”</span>
+      <span class="three-what">OData, RAP, business events, WebSockets, the launchpad — abap2UI5
+        together with what your system already runs, and what each one needs first.</span>
+      <span class="three-here">📍 you are here</span>
+    </a>
+  </div>
+</section>
+<!-- three-pages:end -->
+
 <footer>
   <p>
     Built from the repository itself: the folder tree, each class's abapGit short
@@ -95,12 +180,15 @@
     so the three cannot disagree. Only <code>src/01</code> is here: the portable
     set that survives every build. Regenerated on every deploy.
   </p>
+  <!-- Same links in the same order in all three sample repositories: this
+       repository, its catalogue, the two sibling pages, then the two tools. -->
   <p>
     <a href="https://github.com/abap2UI5/samples">Repository</a> ·
     <a href="https://github.com/abap2UI5/samples/blob/main/SAMPLES.md">The full catalogue</a> ·
-    <a href="https://abap2ui5.github.io/docs/">Documentation</a> ·
+    <a href="https://abap2ui5.github.io/samples-controls/">Controls</a> ·
+    <a href="https://abap2ui5.github.io/samples-stack/">Stack</a> ·
     <a href="https://abap2ui5.github.io/playground/">Playground</a> ·
-    <a href="https://abap2ui5.github.io/samples-controls/search/">The control reference next door</a>
+    <a href="https://abap2ui5.github.io/docs/">Documentation</a>
   </p>
 </footer>
 
