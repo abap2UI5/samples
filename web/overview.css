@@ -27,14 +27,6 @@
   --shadow: 0 1px 2px rgba(16, 20, 30, .05), 0 8px 24px rgba(16, 20, 30, .05);
   --radius: 12px;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-
-  /* The three measurements the shared family blocks at the end of this file
-   * read. They are the only thing about those blocks that is allowed to differ
-   * between the three sample repositories, because the three pages are built
-   * around containers of different widths. */
-  --family-width: 1180px;    /* what .masthead .inner and .layout centre in */
-  --family-gutter: 24px;     /* that container's own side padding */
-  --family-bleed: 0px;       /* <body> has none here, so there is none to undo */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -80,17 +72,9 @@ code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, mo
 
 /* ------------------------------------------------------------- masthead */
 
-.masthead {
-  background: linear-gradient(160deg, var(--accent-soft), transparent 70%), var(--panel);
-  border-bottom: 1px solid var(--line);
-}
-.masthead .inner { max-width: 1180px; margin: 0 auto; padding: 34px 24px 30px; }
-.brand { margin: 0 0 14px; font-size: .82rem; letter-spacing: .09em; text-transform: uppercase; }
-.brand a { color: var(--ink-faint); text-decoration: none; }
-.brand a:hover { color: var(--accent); }
-.masthead h1 { margin: 0 0 10px; font-size: clamp(1.7rem, 3.6vw, 2.5rem); line-height: 1.15; letter-spacing: -.02em; }
-.lede { margin: 0; max-width: 62ch; color: var(--ink-soft); font-size: 1.03rem; }
-.lede strong { color: var(--ink); }
+/* .masthead, .brand, h1 and .lede are shared with the two sibling pages and
+ * live at the end of this file. What follows is this page's own: the two
+ * buttons under the lede, which neither of the others has. */
 
 .cta { margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 10px; }
 .button {
@@ -309,32 +293,35 @@ footer {
   border-top: 1px solid var(--line); background: var(--panel);
   padding: 26px 24px 40px; color: var(--ink-faint); font-size: .86rem;
 }
-footer p { max-width: 1180px; margin: 0 auto 10px; }
+footer p { max-width: 1132px; margin: 0 auto 10px; }
 footer a { color: var(--ink-soft); }
 
 /* ------------------------------------------------------------ family nav */
 
 /* family-nav:start
  *
- * The bar that ties the three sample pages together, and the card strip at the
- * end of the page that says why you would go next door. Both are IDENTICAL in
+ * The frame the three sample pages share: the bar that ties them together, the
+ * masthead they all sit under, and the card strip at the end. IDENTICAL in
  * abap2UI5/samples, abap2UI5/samples-controls and abap2UI5/samples-stack -
- * change them in all three repositories or in none. `npm run check:family-nav`
+ * change it in all three repositories or in none. `npm run check:family-nav`
  * fails when a copy drifts.
  *
- * They read three tokens each page sets for itself in :root and nothing else
- * of their own: --family-width (the container the rest of the page centres
- * in), --family-gutter (that container's own side padding) and --family-bleed
- * (the side padding on <body>, which the bar breaks out of to reach the edge).
- * Every colour comes from the palette above, so light and dark come free.
+ * It is self-contained: two constants of its own (1180px, the container every
+ * page centres in, and its 24px gutter - so the content column is 1132px
+ * everywhere) and otherwise nothing but the palette above, so light and dark
+ * come free. Every page therefore has to leave <body> unpadded and give its own
+ * containers the same 1180px/24px, or the bar and the page under it will not
+ * line up.
+ *
+ * That alignment is the whole point. Three pages centring in three different
+ * widths made the brand, the heading and the first card jump sideways on every
+ * switch, which reads as three sites rather than one.
  *
  * The bar is deliberately NOT sticky: two of the three pages already stick
  * their filter panel to the top, and a second sticky strip above it would eat
  * a phone screen twice over. */
 
 .family {
-  margin: 0 calc(var(--family-bleed) * -1);
-  padding: 0 var(--family-bleed);
   background: var(--panel);
   border-bottom: 1px solid var(--line);
 }
@@ -344,9 +331,9 @@ footer a { color: var(--ink-soft); }
   flex-wrap: wrap;
   align-items: center;
   gap: .1rem;
-  max-width: var(--family-width);
+  max-width: 1180px;
   margin: 0 auto;
-  padding: .35rem var(--family-gutter);
+  padding: .35rem 24px;
 }
 
 .family-brand {
@@ -416,6 +403,48 @@ footer a { color: var(--ink-soft); }
   .family-brand { margin-right: .35rem; }
 }
 
+/* ------------------------------------------------------------- masthead */
+
+/* Shared for the same reason as the bar: a reader switching pages should see
+ * the words change and nothing else. Each page fills the frame with its own
+ * title, lede and actions - what sits BELOW the lede is the page's own
+ * business and is styled in its own stylesheet. */
+
+.masthead {
+  background: linear-gradient(160deg, var(--accent-soft), transparent 70%), var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+.masthead .inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 34px 24px 30px;
+}
+
+/* NOT uppercased. The product is written abap2UI5, and an eyebrow that
+ * shouts ABAP2UI5 is the one place on the page that gets its own name wrong. */
+.brand {
+  margin: 0 0 14px;
+  font: 600 .8rem/1 var(--mono);
+  letter-spacing: .04em;
+}
+.brand a { color: var(--ink-faint); text-decoration: none; }
+.brand a:hover { color: var(--accent); }
+
+.masthead h1 {
+  margin: 0 0 10px;
+  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+.lede {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1.03rem;
+}
+.lede strong { color: var(--ink); }
+
 /* --------------------------------------------------------- three pages */
 
 /* The bar at the top answers "where am I". This answers "why would I go
@@ -423,12 +452,12 @@ footer a { color: var(--ink-soft); }
  * is done with this page arrives. */
 
 .three {
-  max-width: var(--family-width);
+  max-width: 1180px;
   margin: 3rem auto 0;
   /* A rule above it, because on one of the three pages this lands directly
    * under another prose section that has one, and without it the strip reads
    * as that section's tail rather than as its own thing. */
-  padding: 1.4rem var(--family-gutter) 0;
+  padding: 1.4rem 24px 0;
   border-top: 1px solid var(--line);
 }
 .three > h2 { margin: 0 0 .3rem; font-size: 1.15rem; }
@@ -441,7 +470,7 @@ footer a { color: var(--ink-soft); }
 
 .three-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
   gap: .7rem;
 }
 
