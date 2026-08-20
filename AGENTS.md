@@ -36,8 +36,7 @@ categorised subpackage. The only class in the root package is
 
 ```
 src/
-├── 00/  "system"     not a sample category — shared code, plus the samples held back by maturity or purpose
-│   ├── 01/  "context"        helper classes the samples share (no demo apps) — survives every build
+├── 00/  "system"     not a sample category — the samples held back by maturity or purpose
 │   ├── 97/  "experimental"   work-in-progress / not finished — STRIPPED from the 702 build
 │   └── 98/  "testing"        test / scaffolding apps, not demos — STRIPPED from the 702 build
 └── 01/  "samples"     cloud-ready & downportable — the sample catalog: bindings, events, popups, framework actions, custom controls and use cases — survives every build
@@ -164,11 +163,11 @@ branch, generated from `main` by `publish-702`.
 
 The split is driven directly by the CI builds:
 
-| Build (workflow)   | What it does                                    | Sees `src/00/01` | Sees `src/00/97` | Sees `src/00/98` | Sees `src/01` |
-|--------------------|-------------------------------------------------|:---:|:---:|:---:|:---:|
-| `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ | ✅ | ✅ |
-| `abap-cloud`       | `abaplint abap_cloud.jsonc` (syntax `Cloud`)    | ✅ | ✅ | ✅ | ✅ |
-| `abap-702`         | `npm run downport` (does `rm -rf src/00/97 src/00/98`) → `abaplint abap_702.jsonc` | ✅ | ❌ | ❌ | ✅ |
+| Build (workflow)   | What it does                                    | Sees `src/00/97` | Sees `src/00/98` | Sees `src/01` |
+|--------------------|-------------------------------------------------|:---:|:---:|:---:|
+| `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ | ✅ |
+| `abap-cloud`       | `abaplint abap_cloud.jsonc` (syntax `Cloud`)    | ✅ | ✅ | ✅ |
+| `abap-702`         | `npm run downport` (does `rm -rf src/00/97 src/00/98`) → `abaplint abap_702.jsonc` | ❌ | ❌ | ✅ |
 
 **Only the 702 build strips anything.** `main` is published as it is and runs on
 both standard and ABAP Cloud systems, so `abap-standard` and `abap-cloud` lint
@@ -182,9 +181,14 @@ purpose, never by ABAP release.
 portable set. Keep the two paths together in the two places that name them —
 `package.json` `downport` and the build table above. That is machine-checked:
 `node scripts/check-strip-lists.mjs` compares both and fails if one names a
-different set, or a package that no longer exists (runs in CI). The rest of
-`src/00` — today `src/00/01` "context", the helper classes the samples share —
-survives every build and must stay free of references into any stripped package.
+different set, or a package that no longer exists (runs in CI). `src/00` holds
+nothing else today: **`src/00/01` "context" was removed on 2026-08-20** with
+the two classes it held, `z2ui5_cl_smp_context` and `z2ui5_cx_smp_error`. What
+they offered was generic RTTI, message and conversion helpers, and a sample
+that reaches for one stops being a single readable snippet — the thing a
+sample is for. Every caller now carries the few lines it actually used, so
+`src/00` is samples only, and the whole tree outside `src/01` is stripped from
+the 702 build.
 
 **Stripped is not unchecked, and nothing is suppressed.** `abaplint.jsonc` has
 no `noIssues` list: every package under `src/` is really linted, by

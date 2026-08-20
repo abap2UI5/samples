@@ -5,5 +5,7 @@
   "z2ui5_cl_sample_app_g01": "the extended overview app, removed when the extended samples were reorganised - the passage is about its absence",
   "z2ui5_cl_app_startup": "the framework start page under its PRE-RENAME name (z2ui5_cl_ui5_app_start today); the sentence records that it was dropped from the overviews",
   "z2ui5_cl_app_parent": "a placeholder in an example CAST - the calling app, whatever it is called",
-  "z2ui5_cl_app_xxx": "the placeholder class name in the app template snippet"
+  "z2ui5_cl_app_xxx": "the placeholder class name in the app template snippet",
+  "z2ui5_cl_smp_context": "the shared helper class, removed with src/00/01 on 2026-08-20 - the passage is about its absence and about why a sample must not reach for one",
+  "z2ui5_cx_smp_error": "its exception class, removed in the same change and for the same reason"
 }

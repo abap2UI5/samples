@@ -65,8 +65,8 @@ const DOCS_SITE = 'https://abap2ui5.github.io/docs/';
 /* --------------------------------------------------------- the class index */
 
 /** Every ABAP class in the tree, lowercase name -> repository-relative file.
- *  Not the scan: this has to see the ZZZ helpers and the shared context
- *  classes under src/00/01 too, because those are what a sample REFERENCES. */
+ *  Not the scan: this has to see the ZZZ helpers too, because those are what
+ *  a sample REFERENCES. */
 function classIndex() {
   const index = {};
   const walk = (dir) => {
