@@ -3,13 +3,13 @@
 
 # The sample catalogue
 
-Every app in this repository — 150 of them — with what it shows and a link
+Every app in this repository — 149 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
 **104 of them ship on every branch** — the portable set the README counts:
-`src/01` plus this overview app. The other 46 are under `src/00` and are
-stripped from `702`. 3 further classes carry the sample name and are
+`src/01` plus this overview app. The other 45 are under `src/00` and are
+stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
 in the tree is invisible.
 
@@ -252,7 +252,7 @@ ready-to-run apps** the README leads with.
 
 ## Not in any overview — `src/00`
 
-42 apps with no tile anywhere (AGENTS.md section 3) — reachable
+40 apps with no tile anywhere (AGENTS.md section 3) — reachable
 by class name only, which is what this section is for. They are held to a
 lower bar than `src/01`: an experimental sample may use something newer than
 UI5 1.71, and a testing app exists to be run by a check, not to be learned
@@ -274,13 +274,12 @@ is absent there.
 
 ### testing — `src/00/98`
 
-36 app(s).
+34 app(s).
 
 | Sample | Class |
 |---|---|
 | **Action** — Call Method of Object | [`Z2UI5_CL_SMP_APP_446`](src/00/98/z2ui5_cl_smp_app_446.clas.abap) |
 | **Action** — Call Method of Object by ID | [`Z2UI5_CL_SMP_APP_447`](src/00/98/z2ui5_cl_smp_app_447.clas.abap) |
-| **App Calling App with REF** | [`Z2UI5_CL_SMP_APP_192`](src/00/98/z2ui5_cl_smp_app_192.clas.abap) |
 | **App in App** — Main App | [`Z2UI5_CL_SMP_APP_338`](src/00/98/z2ui5_cl_smp_app_338.clas.abap) |
 | **App in App** — Popup | [`Z2UI5_CL_SMP_APP_340`](src/00/98/z2ui5_cl_smp_app_340.clas.abap) |
 | **App in App** — Subapp, 3 Rows | [`Z2UI5_CL_SMP_APP_339`](src/00/98/z2ui5_cl_smp_app_339.clas.abap) |
@@ -292,7 +291,6 @@ is absent there.
 | **Catch exceptions and display popup** | [`Z2UI5_CL_SMP_APP_324`](src/00/98/z2ui5_cl_smp_app_324.clas.abap) |
 | **Check throw error when ref used for binding** | [`Z2UI5_CL_SMP_APP_343`](src/00/98/z2ui5_cl_smp_app_343.clas.abap) |
 | **data binding tables with invalid date and time** | [`Z2UI5_CL_SMP_APP_118`](src/00/98/z2ui5_cl_smp_app_118.clas.abap) |
-| **data container** | [`Z2UI5_CL_SMP_APP_193`](src/00/98/z2ui5_cl_smp_app_193.clas.abap) |
 | **Deep Structure** — Main App Embedding Sub App 190 | [`Z2UI5_CL_SMP_APP_191`](src/00/98/z2ui5_cl_smp_app_191.clas.abap) |
 | **Deep Structure** — Main App Embedding Sub App 194 | [`Z2UI5_CL_SMP_APP_195`](src/00/98/z2ui5_cl_smp_app_195.clas.abap) |
 | **Deep Structure** — Sub App with Row Binding | [`Z2UI5_CL_SMP_APP_194`](src/00/98/z2ui5_cl_smp_app_194.clas.abap) |
