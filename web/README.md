@@ -21,11 +21,28 @@ one scan (`scripts/lib/scan-samples.mjs`) so they cannot disagree:
 | `index.html` | the page — one file, no framework |
 | `overview.css` | one stylesheet, light and dark |
 | `overview.js` | draws the path, narrows it on a search, remembers what you ticked (`localStorage`, this browser only) |
+| `favicon.ico` | the abap2UI5 logo in the tab (see below) |
 | `apps.json` | **generated, not committed** — `node scripts/generate-overview-index.mjs` |
 
 Only `src/01` is on the page: the portable set that survives every build.
 `src/00/97` is unfinished and `src/00/98` is run by a check rather than learned
 from, and a page that teaches must not lead anybody into either.
+
+## The icon in the tab
+
+`favicon.ico` is the abap2UI5 logo — the same mark
+[the documentation](https://abap2ui5.github.io/docs/) puts in the tab, so the
+four pages of the project read as one project in a row of browser tabs rather
+than as three anonymous ones beside it.
+
+It is the artwork of `docs/public/favicon.ico` in
+[abap2UI5/docs](https://github.com/abap2UI5/docs), rescaled: that file is one
+256 px frame stored uncompressed, 265 KB, which is twenty times this whole page
+for something a browser draws at 16 px. This one carries 16/32/48/64/128 px as
+PNG frames in ~16 KB, so every size the browser asks for is a frame that was
+drawn for it and none of them is squashed — the source is 256 × 251, not
+square, so a single frame is what a browser distorts. Identical in all three
+sample repositories.
 
 ## The bar at the top is shared, and so is the strip at the bottom
 
