@@ -133,7 +133,9 @@ CLASS z2ui5_cl_smp_app_199 IMPLEMENTATION.
 
         CREATE DATA mt_table TYPE STANDARD TABLE OF z2ui5_t_01.
         ASSIGN mt_table->* TO <table>.
-        mt_comp = z2ui5_cl_smp_context=>rtti_get_t_attri_by_any( <table> ).
+        mt_comp = CAST cl_abap_structdescr(
+                      CAST cl_abap_tabledescr(
+                          cl_abap_typedescr=>describe_by_data( <table> ) )->get_table_line_type( ) )->get_components( ).
 
         SELECT id, id_prev FROM z2ui5_t_01
           ORDER BY PRIMARY KEY

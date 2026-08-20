@@ -21,9 +21,7 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
       view_display( ).
     ELSE.
       on_event( ).
@@ -37,15 +35,10 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
     CASE client->get_event( ).
 
       WHEN `RAISE_EXCEPTION`.
-        RAISE EXCEPTION TYPE z2ui5_cx_smp_error
-          EXPORTING
-            val = `Intentional error to demonstrate the error popup`.
-
-      WHEN `DIVIDE_BY_ZERO`.
+        " the division dumps - nothing ever reads the result, and that is
+        " the point of the sample
         DATA(lv_zero) = 0.
-        DATA(lv_result) = 1 / lv_zero.
-        client->message_box_display( |{ lv_result }| ).
-
+        DATA(lv_result) = 1 / lv_zero ##NEEDED.
       WHEN `ASSERT`.
         ASSERT 1 = 0.
 
@@ -87,13 +80,8 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
             )->a( n = `icon`  v = `sap-icon://error`
             )->a( n = `type`  v = `Reject`
         )->tag( `Button`
-            )->a( n = `press` v = client->_event( `DIVIDE_BY_ZERO` )
-            )->a( n = `text`  v = `Trigger a runtime dump (divide by zero)`
-            )->a( n = `icon`  v = `sap-icon://alert`
-            )->a( n = `class` v = `sapUiTinyMarginTop`
-        )->tag( `Button`
             )->a( n = `press` v = client->_event( `ASSERT` )
-            )->a( n = `text`  v = `Trigger an Assert`
+            )->a( n = `text`  v = `Trigger an Assert Error / Dump`
             )->a( n = `icon`  v = `sap-icon://alert`
             )->a( n = `class` v = `sapUiTinyMarginTop` ).
 

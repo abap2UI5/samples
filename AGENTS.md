@@ -36,10 +36,9 @@ categorised subpackage. The only class in the root package is
 
 ```
 src/
-├── 00/  "system"     not a sample category — shared code, plus the samples held back by maturity or purpose
-│   ├── 01/  "context"        helper classes the samples share (no demo apps) — survives every build
-│   ├── 97/  "experimental"   work-in-progress / not finished — STRIPPED from the 702 build
-│   └── 98/  "testing"        test / scaffolding apps, not demos — STRIPPED from the 702 build
+├── 00/  "system"     not a sample category — the samples held back by maturity or purpose — STRIPPED WHOLE from the 702 build
+│   ├── 97/  "experimental"   work-in-progress / not finished
+│   └── 98/  "testing"        test / scaffolding apps, not demos
 └── 01/  "samples"     cloud-ready & downportable — the sample catalog: bindings, events, popups, framework actions, custom controls and use cases — survives every build
 ```
 
@@ -164,11 +163,11 @@ branch, generated from `main` by `publish-702`.
 
 The split is driven directly by the CI builds:
 
-| Build (workflow)   | What it does                                    | Sees `src/00/01` | Sees `src/00/97` | Sees `src/00/98` | Sees `src/01` |
-|--------------------|-------------------------------------------------|:---:|:---:|:---:|:---:|
-| `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ | ✅ | ✅ |
-| `abap-cloud`       | `abaplint abap_cloud.jsonc` (syntax `Cloud`)    | ✅ | ✅ | ✅ | ✅ |
-| `abap-702`         | `npm run downport` (does `rm -rf src/00/97 src/00/98`) → `abaplint abap_702.jsonc` | ✅ | ❌ | ❌ | ✅ |
+| Build (workflow)   | What it does                                    | Sees `src/00/97` | Sees `src/00/98` | Sees `src/01` |
+|--------------------|-------------------------------------------------|:---:|:---:|:---:|
+| `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ | ✅ |
+| `abap-cloud`       | `abaplint abap_cloud.jsonc` (syntax `Cloud`)    | ✅ | ✅ | ✅ |
+| `abap-702`         | `npm run downport` (does `rm -rf src/00`) → `abaplint abap_702.jsonc` | ❌ | ❌ | ✅ |
 
 **Only the 702 build strips anything.** `main` is published as it is and runs on
 both standard and ABAP Cloud systems, so `abap-standard` and `abap-cloud` lint
@@ -177,14 +176,23 @@ passes. The ABAP restriction that used to justify a strip for cloud is gone with
 the on-premise package (§1): what is left is restricted by maturity or by
 purpose, never by ABAP release.
 
-**Test and experimental samples never reach the 702 branch.** `src/00/97` and
-`src/00/98` are removed by the downport, so the `702` branch carries only the
-portable set. Keep the two paths together in the two places that name them —
-`package.json` `downport` and the build table above. That is machine-checked:
-`node scripts/check-strip-lists.mjs` compares both and fails if one names a
-different set, or a package that no longer exists (runs in CI). The rest of
-`src/00` — today `src/00/01` "context", the helper classes the samples share —
-survives every build and must stay free of references into any stripped package.
+**Test and experimental samples never reach the 702 branch.** The downport
+removes **`src/00` whole**, so the `702` branch carries only the portable set.
+It used to remove the two subpackages one by one and leave
+the parent behind as a package with no objects in it; once `00/01` was gone
+there was nothing left for that hull to hold, and a package that ships empty
+says the branch has a system area when it has none. Keep the path together in
+the two places that name it — `package.json` `downport` and the build table
+above. That is machine-checked: `node scripts/check-strip-lists.mjs` compares
+both and fails if one names a different set, or a package that no longer
+exists (runs in CI). `src/00` holds nothing but those two subpackages today:
+**`src/00/01` "context" was removed on 2026-08-20** with
+the two classes it held, `z2ui5_cl_smp_context` and `z2ui5_cx_smp_error`. What
+they offered was generic RTTI, message and conversion helpers, and a sample
+that reaches for one stops being a single readable snippet — the thing a
+sample is for. Every caller now carries the few lines it actually used, so
+`src/00` is samples only, and the whole tree outside `src/01` is stripped from
+the 702 build.
 
 **Stripped is not unchecked, and nothing is suppressed.** `abaplint.jsonc` has
 no `noIssues` list: every package under `src/` is really linted, by
@@ -493,8 +501,8 @@ Four things it shows that the app does not, on purpose:
 | the `@keywords` | never rendered in the app (§4); here they are what `Ctrl+F` finds |
 | the `@docs` link | the chapter that explains the pattern the sample demonstrates (§4) — the app has no room for it, and a page does |
 
-The `702` branch carries its own: `npm run downport` strips `src/00/97` and
-`src/00/98` and regenerates the file afterwards, so the copy on that branch
+The `702` branch carries its own: `npm run downport` strips `src/00` and
+regenerates the file afterwards, so the copy on that branch
 lists what that branch actually ships.
 
 **Do not hand-edit it** — it is regenerated by `npm run launchpad` along with

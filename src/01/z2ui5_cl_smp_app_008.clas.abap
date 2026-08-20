@@ -38,9 +38,11 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
 
     CASE client->get_event( ).
       WHEN `BUTTON_MESSAGE_BOX_SY`.
-        DATA(ls_msg_sy) = z2ui5_cl_smp_context=>msg_get_by_msg(
-            id = `NET`
-            no = `001` ).
+        " only the message key - message_box_display( ) reads the text from
+        " T100 itself, exactly as it does for the BAPIRET2 structure below
+        DATA(ls_msg_sy) = VALUE symsg( msgty = `I`
+                                       msgid = `NET`
+                                       msgno = `001` ).
         client->message_box_display( ls_msg_sy ).
       WHEN `BUTTON_MESSAGE_BOX_BAPIRET`.
         DATA(ls_msg_bapiret) = VALUE bapiret2(

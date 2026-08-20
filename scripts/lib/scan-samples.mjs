@@ -25,9 +25,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..', '..');
 const SRC = path.join(ROOT, 'src');
 
-// The areas (top-level packages under src) that hold samples at all. src/00/01
-// is the shared helper classes - not apps, and they carry no sample prefix, so
-// nothing there is picked up anyway.
+// The areas (top-level packages under src) that hold samples at all.
 const AREAS = ['00', '01'];
 
 // The overview app lives in the src/ root package and shares the sample-app

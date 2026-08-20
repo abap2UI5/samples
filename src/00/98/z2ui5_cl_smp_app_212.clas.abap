@@ -18,7 +18,7 @@ CLASS z2ui5_cl_smp_app_212 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA mv_table             TYPE string.
     DATA mt_comp              TYPE abap_component_tab.
-    DATA mt_dfies             TYPE z2ui5_cl_smp_context=>ty_t_dfies.
+    DATA mt_fields            TYPE string_table.
     DATA client            TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_smp_app_212 DEFINITION PUBLIC.
 
     METHODS render_popup.
 
-    METHODS get_dfies.
+    METHODS get_fields.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -87,16 +87,16 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    LOOP AT mt_dfies INTO DATA(dfies).
+    LOOP AT mt_fields INTO DATA(lv_field).
 
-      ASSIGN COMPONENT dfies-fieldname OF STRUCTURE <row> TO FIELD-SYMBOL(<value_tab>).
+      ASSIGN COMPONENT lv_field OF STRUCTURE <row> TO FIELD-SYMBOL(<value_tab>).
 
       IF sy-subrc <> 0.
         CONTINUE.
       ENDIF.
 
       ASSIGN ms_table_row->* TO <table_row>.
-      ASSIGN COMPONENT dfies-fieldname OF STRUCTURE <table_row> TO FIELD-SYMBOL(<value_struc>).
+      ASSIGN COMPONENT lv_field OF STRUCTURE <table_row> TO FIELD-SYMBOL(<value_struc>).
 
       IF sy-subrc <> 0.
         CONTINUE.
@@ -109,9 +109,28 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD get_dfies.
+  METHOD get_fields.
 
-    mt_dfies = z2ui5_cl_smp_context=>rtti_get_t_dfies_by_table_name( mv_table ).
+    " The field names of the table, and only those: the popup renders one
+    " Input per field, so the synthetic ROW_ID that get_comp( ) appends for
+    " the list stays out of it.
+    TRY.
+        cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = mv_table
+                                             RECEIVING  p_descr_ref    = DATA(typedesc)
+                                             EXCEPTIONS type_not_found = 1
+                                                        OTHERS         = 2 ).
+        IF sy-subrc <> 0.
+          RETURN.
+        ENDIF.
+
+        LOOP AT CAST cl_abap_structdescr( typedesc )->get_components( ) INTO DATA(comp).
+          IF comp-as_include = abap_false.
+            INSERT comp-name INTO TABLE mt_fields.
+          ENDIF.
+        ENDLOOP.
+
+      CATCH cx_root.
+    ENDTRY.
 
   ENDMETHOD.
 
@@ -134,10 +153,10 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
             )->ele( n = `content` ns = `form` ).
 
     " Walk through all comps - in edit mode the key fields are not editable.
-    LOOP AT mt_dfies REFERENCE INTO DATA(dfies).
+    LOOP AT mt_fields INTO DATA(lv_field).
 
       ASSIGN ms_table_row->* TO <row>.
-      ASSIGN COMPONENT dfies->fieldname OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
+      ASSIGN COMPONENT lv_field OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
 
       IF sy-subrc <> 0.
         CONTINUE.
@@ -162,7 +181,7 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
 
     get_data( ).
 
-    get_dfies( ).
+    get_fields( ).
 
     view_display( ).
 
