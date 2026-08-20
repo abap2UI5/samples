@@ -94,6 +94,9 @@ CLASS z2ui5_cl_smp_app_340 IMPLEMENTATION.
 
   METHOD factory.
 
+    DATA lo_struct TYPE REF TO cl_abap_structdescr.
+    DATA comp      TYPE cl_abap_structdescr=>component_table.
+
     " Add new empty row
 
     result = NEW #( ).
@@ -101,7 +104,14 @@ CLASS z2ui5_cl_smp_app_340 IMPLEMENTATION.
     result->mo_layout = io_layout.
 
     TRY.
-        DATA(comp) = z2ui5_cl_smp_context=>rtti_get_t_attri_by_any( io_table ).
+        " io_table references a table - the popup is built from its line type
+        DATA(lo_type) = cl_abap_typedescr=>describe_by_data_ref( io_table ).
+        IF lo_type->kind = cl_abap_typedescr=>kind_table.
+          lo_struct = CAST #( CAST cl_abap_tabledescr( lo_type )->get_table_line_type( ) ).
+        ELSE.
+          lo_struct = CAST #( lo_type ).
+        ENDIF.
+        comp = lo_struct->get_components( ).
       CATCH cx_root.
     ENDTRY.
 

@@ -124,11 +124,14 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
 
   METHOD get_data.
 
-    DATA selkz TYPE abap_bool.
+    DATA selkz  TYPE abap_bool.
+    DATA s_line TYPE z2ui5_t_01.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = z2ui5_cl_smp_context=>rtti_get_t_attri_by_table_name( `Z2UI5_T_01` ).
+    " the components of the table this app reads, plus one of its own
+    DATA(t_comp) = CAST cl_abap_structdescr(
+                       cl_abap_typedescr=>describe_by_data( s_line ) )->get_components( ).
 
     APPEND LINES OF VALUE cl_abap_structdescr=>component_table(
                               ( name = `SELKZ`
