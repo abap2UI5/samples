@@ -10,8 +10,7 @@
     "lint": "abaplint ./abaplint.jsonc",
     "check:cloud": "abaplint .github/abaplint/abap_cloud.jsonc",
     "check:abap2ui5": "abap2ui5lint",
-    "check:chains": "node scripts/chain-format.mjs",
-    "fmt:chains": "node scripts/chain-format.mjs --write",
+    "fmt:chains": "abap2ui5lint --fix",
     "check:agents": "node scripts/check-agents-structure.mjs",
     "check:strip": "node scripts/check-strip-lists.mjs",
     "check:keywords": "node scripts/check-keywords.mjs",
@@ -25,7 +24,7 @@
     "rename": "abaplint .github/abaplint/rename_test.jsonc --rename",
     "syfixes": "find . -type f -name '*.abap' -exec sed -i -e 's/ RAISE EXCEPTION TYPE cx_sy_itab_line_not_found/ ASSERT 1 = 0/g' {} + ",
     "downport": "rm -rf src/00/97 src/00/98 && abaplint --fix .github/abaplint/abap_702.jsonc && npm run syfixes && node scripts/generate-samples-md.mjs",
-    "check": "npm run check:pin && npm run lint && npm run check:cloud && npm run check:abap2ui5 && npm run check:chains && npm run check:agents && npm run check:strip && npm run check:keywords && npm run check:launchpad && npm run check:overview && npm run check:prose && npm run check:docs-links && npm run check:app-rules && npm run check:family-nav && npm run rename"
+    "check": "npm run check:pin && npm run lint && npm run check:cloud && npm run check:abap2ui5 && npm run check:agents && npm run check:strip && npm run check:keywords && npm run check:launchpad && npm run check:overview && npm run check:prose && npm run check:docs-links && npm run check:app-rules && npm run check:family-nav && npm run rename"
   },
   "repository": {
     "type": "git",

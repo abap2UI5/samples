@@ -89,19 +89,22 @@
     // z2ui5_cl_smp_app_052 with an indent that steps by 2, then by 4, then
     // stops moving, and every gate stayed green.
     //
-    // `chain-indentation` is raised here because it costs one baseline entry:
-    // it judges only that a chain keeps its OWN rhythm (a sibling in a
-    // different column than its siblings, a call written left of the element
-    // it belongs to), never the step size, so the corpus already passes it.
+    // `chain-house-layout` is the whole house style in one rule: one call per
+    // line INCLUDING attributes, four spaces per level of the tree, `shut( )`
+    // in the column of the `open( )` it closes. It replaces the pair that
+    // used to stand here - `chain-indentation`, which judged only that a chain
+    // keeps its own rhythm and never the step size, and
+    // `chain-element-per-line`, which deliberately let an attribute share the
+    // line of its control. Both are subsumed: this rule is strictly stronger
+    // on the same ground.
     //
-    // `chain-element-per-line` is raised too, since the layout unification
-    // (AGENTS.md section 10): the convention it used to contradict - a control
-    // sharing its line with the container it opens, `view->ele( `Shell`
-    // )->ele( `Page`` - is gone, every call now stands on its own line at its
-    // own tree level, and the 339 findings with it. That also emptied the
-    // baseline of both layout rules, so from here they only guard.
-    "chain-indentation": { "severity": "warning" },
-    "chain-element-per-line": { "severity": "warning" },
+    // It also replaces scripts/chain-format.mjs, which was this rule written a
+    // second time - the layout unification (AGENTS.md section 10) is what the
+    // linter's rule was built FROM, so the corpus passes it at zero findings
+    // (measured over all 148 classes / 172 views before the switch). abap2UI5
+    // and abap2UI5/samples-stack were already on it; this is the last repo of
+    // the three to stop carrying its own copy. `npm run fmt:chains` applies it.
+    "chain-house-layout": { "severity": "warning" },
 
     // src/00/98 is the TEST package (AGENTS.md section 2): apps whose purpose
     // is to exercise the framework from the outside, not to be copied. Several
