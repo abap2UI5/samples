@@ -153,15 +153,26 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
 
   METHOD set_search.
 
-    IF mv_search_value IS NOT INITIAL.
-
-      z2ui5_cl_smp_context=>itab_filter_by_val(
-        EXPORTING
-          val = mv_search_value
-        CHANGING
-          tab = mt_table ).
-
+    " a typed contains-search over the columns the table shows - the search
+    " string is compared uppercase against uppercase, so it matches whatever
+    " the user typed
+    DATA(lv_search) = to_upper( mv_search_value ).
+    IF lv_search IS INITIAL.
+      RETURN.
     ENDIF.
+
+    DATA(lt_all) = mt_table.
+    CLEAR mt_table.
+
+    LOOP AT lt_all INTO DATA(ls_row).
+      IF to_upper( ls_row-product )          CS lv_search
+      OR to_upper( ls_row-create_date )      CS lv_search
+      OR to_upper( ls_row-create_by )        CS lv_search
+      OR to_upper( ls_row-storage_location ) CS lv_search
+      OR |{ ls_row-quantity }|               CS lv_search.
+        INSERT ls_row INTO TABLE mt_table.
+      ENDIF.
+    ENDLOOP.
 
   ENDMETHOD.
 

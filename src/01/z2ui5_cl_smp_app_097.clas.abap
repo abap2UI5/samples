@@ -20,6 +20,9 @@ CLASS z2ui5_cl_smp_app_097 DEFINITION PUBLIC.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
     DATA t_tab2 TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
     DATA mv_layout TYPE string.
+    " public, so it survives the roundtrip - the detail rows need a key that
+    " stays unique after a row was deleted, and lines( t_tab2 ) would not
+    DATA mv_row_id TYPE i.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -191,7 +194,8 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
 
         IF sy-subrc = 0.
-          ls_sel-uuid = z2ui5_cl_smp_context=>uuid_get_c32( ).
+          mv_row_id = mv_row_id + 1.
+          ls_sel-uuid = |{ mv_row_id }|.
           INSERT ls_sel INTO TABLE t_tab2.
         ENDIF.
 

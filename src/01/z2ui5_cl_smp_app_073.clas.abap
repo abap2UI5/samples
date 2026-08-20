@@ -11,6 +11,10 @@ CLASS z2ui5_cl_smp_app_073 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
+    METHODS url_own_get
+      RETURNING
+        VALUE(result) TYPE string.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -65,19 +69,43 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
     ENDIF.
 
     IF client->get_event( ) = `BUTTON_OPEN_NEW_TAB`.
-      DATA(ls_config) = client->get( )-s_config.
-      DATA(result) = z2ui5_cl_smp_context=>app_get_url( classname = `z2ui5_cl_smp_app_073`
-                                                        origin    = ls_config-origin
-                                                        pathname  = ls_config-pathname
-                                                        search    = ls_config-search
-                                                        hash      = ls_config-hash ).
 
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-open_new_tab
           t_arg = VALUE #(
-              ( result )
+              ( url_own_get( ) )
               ) ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD url_own_get.
+
+    DATA lt_param TYPE string_table.
+
+    " s_config carries the browser's own location: origin, path and query
+    DATA(ls_config) = client->get( )-s_config.
+
+    " keep every query parameter the current URL already has - sap-client and
+    " sap-language among them - and swap app_start for this class, so the new
+    " tab opens this app instead of whatever the current URL points to. The
+    " hash is left out on purpose: it holds THIS app's state, and the backend
+    " would prefer it over app_start.
+    SPLIT shift_left( val = ls_config-search
+                      sub = `?` ) AT `&` INTO TABLE lt_param.
+
+    DATA(lv_query) = `app_start=z2ui5_cl_smp_app_073`.
+    LOOP AT lt_param INTO DATA(lv_param).
+      IF lv_param IS INITIAL
+      OR to_lower( substring_before( val = lv_param
+                                     sub = `=` ) ) = `app_start`.
+        CONTINUE.
+      ENDIF.
+      lv_query = |{ lv_query }&{ lv_param }|.
+    ENDLOOP.
+
+    result = |{ ls_config-origin }{ ls_config-pathname }?{ lv_query }|.
 
   ENDMETHOD.
 
