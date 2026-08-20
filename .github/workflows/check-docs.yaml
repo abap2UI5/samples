@@ -38,18 +38,11 @@ jobs:
         node-version: '22'
     - run: node scripts/check-strip-lists.mjs
 
-  # The view-chain layout. The abap2UI5-linter judges a chain's own rhythm and
-  # one call per line; neither rule judges the STEP, so this is the only check
-  # that holds the four-space level. `npm run fmt:chains` fixes what it reports.
-  chain_format:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-      with:
-        node-version: '22'
-    - run: node scripts/chain-format.mjs
+  # The view-chain layout used to be a job here, running scripts/chain-format.mjs
+  # because no linter rule judged the four-space STEP. `chain-house-layout` does,
+  # and it is stricter than the pair it replaced, so the layout is now gated
+  # where every other view rule already is - check-abap2UI5.yaml. One rule, one
+  # implementation, one place it can fail. `npm run fmt:chains` applies it.
 
   # Class names written in prose, against the repositories that own them.
   #
