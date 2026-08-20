@@ -18,9 +18,9 @@
   --ink-faint: #858b98;
   --line: #e2e5ea;
   --line-soft: #eef0f4;
-  --accent: #0a6ed1;          /* the UI5 blue this ecosystem is written in */
-  --accent-soft: #e8f1fb;
-  --accent-ink: #06508f;
+  --accent: #d03c4a;          /* the abap2UI5 red, the colour the documentation is written in */
+  --accent-soft: #fbecee;
+  --accent-ink: #a83232;
   --done: #1a7f4b;
   --done-soft: #e6f4ec;
   --mark: #fff2a8;
@@ -38,9 +38,9 @@
     --ink-faint: #7d8494;
     --line: #2c313a;
     --line-soft: #23272e;
-    --accent: #6cb1f0;
-    --accent-soft: #1b2c3e;
-    --accent-ink: #9ecbf7;
+    --accent: #ef8b93;
+    --accent-soft: #3a2126;
+    --accent-ink: #f6b6bc;
     --done: #5fc48d;
     --done-soft: #1a2c22;
     --mark: #5a4d12;
@@ -263,7 +263,7 @@ mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 1
 
 /* The card at the end of the path. It is the only thing on this page drawn
  * from the reader's own progress rather than from the catalogue, so it is
- * styled as an arrival - the done green, not the accent blue. */
+ * styled as an arrival - the done green, not the accent red. */
 .whatsnext {
   background: var(--done-soft); border: 1px solid var(--done); border-radius: var(--radius);
   padding: 18px 22px; margin-bottom: 22px;

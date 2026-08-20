@@ -89,7 +89,7 @@ function card(sample) {
       <div class="actions">
         <a href="${esc(DATA.source + sample.file)}" target="_blank" rel="noopener">Source ↗</a>
         <a href="${esc(playUrl(sample))}" target="_blank" rel="noopener"
-           title="Open this class in the browser playground${esc(extra)}">Playground ↗</a>
+           title="Open this class in the browser playground${esc(extra)}">Live Demo ↗</a>
         <button type="button" class="copy" data-copy="${esc(sample.class.toUpperCase())}"
                 title="the class to put behind ?app_start= in your own system">${esc(sample.class.toUpperCase())}</button>
         ${chapters}
