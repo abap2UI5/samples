@@ -39,6 +39,12 @@ CLASS z2ui5_cl_smp_app_327 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS on_event.
     METHODS view_display.
+    METHODS json_get_value
+      IMPORTING
+        json          TYPE string
+        name          TYPE string
+      RETURNING
+        VALUE(result) TYPE string.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -81,24 +87,43 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
       WHEN `LOCAL_STORAGE_LOADED`.
         " The z2ui5:Storage control read a value out of the browser storage
         " and reports it through its `finished` event. The payload is a whole
-        " structure, so it arrives as JSON and is parsed back into ABAP.
-        TRY.
-            " corresponding fields only: whatever sits under the key may carry
-            " more (or other) fields than this app models - an earlier shape,
-            " or a value someone else wrote
-            " abap2ui5lint-disable-next-line non-released-api -- abap2UI5 ships no RELEASED JSON parser for app code, and an event argument arrives as a JSON string. The mirror is what every app has to reach for until src/02 offers one
-            z2ui5_cl_ajson=>parse( client->get_event_arg( 4 )
-              )->to_abap_corresponding_only(
-              )->to_abap( IMPORTING ev_container = s_storage-value ).
-          " abap2ui5lint-disable-next-line non-released-api -- the exception of the parser above
-          CATCH z2ui5_cx_ajson_error INTO DATA(lx_load).
-            client->message_box_display( lx_load->get_text( ) ).
-        ENDTRY.
+        " structure, so it arrives as JSON - here it is picked apart field by
+        " field, which is also what keeps this tolerant: whatever sits under
+        " the key may carry more (or other) fields than this app models - an
+        " earlier shape, or a value someone else wrote. A field that is not
+        " there simply stays empty.
+        DATA(lv_json) = client->get_event_arg( 4 ).
+        s_storage-value = VALUE #( field1 = json_get_value( json = lv_json
+                                                            name = `FIELD1` )
+                                   field2 = json_get_value( json = lv_json
+                                                            name = `FIELD2` ) ).
 
       WHEN `GET_STORED_VALUE`.
         s_storage-value = s_stored_value.
 
     ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD json_get_value.
+
+    " A minimal reader for one string field of a flat JSON object: find
+    " `"<name>":"` and take what stands up to the next quote. The model writes
+    " the ABAP component names in upper case, hence the case-insensitive
+    " search. An app parsing arbitrary JSON wants a real parser instead.
+    DATA(lv_marker) = |"{ name }":"|.
+
+    DATA(lv_off) = find( val  = json
+                         sub  = lv_marker
+                         case = abap_false ).
+    IF lv_off < 0.
+      RETURN.
+    ENDIF.
+
+    result = substring_before( val = substring( val = json
+                                                off = lv_off + strlen( lv_marker ) )
+                               sub = `"` ).
 
   ENDMETHOD.
 

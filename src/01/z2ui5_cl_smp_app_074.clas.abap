@@ -8,13 +8,34 @@ CLASS z2ui5_cl_smp_app_074 DEFINITION PUBLIC.
 
     DATA filepath TYPE string.
     DATA file     TYPE string.
-    DATA table    TYPE REF TO data.
+
+    " what the last upload produced - public, so it survives the roundtrip
+    " and the page can still show it after the next event
+    DATA upload_name TYPE string.
+    DATA upload_size TYPE i.
+    DATA upload_text TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
     METHODS view_display.
+
+    " Both wrap a pair of classes that do the same job under different names:
+    " the first is the ABAP Cloud one, the second the classic on-premise one.
+    " Called dynamically so the class that is missing on a system is a caught
+    " runtime error instead of a syntax error at activation.
+    METHODS base64_decode
+      IMPORTING
+        val           TYPE string
+      RETURNING
+        VALUE(result) TYPE xstring.
+
+    METHODS xstring_to_string
+      IMPORTING
+        val           TYPE xstring
+      RETURNING
+        VALUE(result) TYPE string.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -51,10 +72,15 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
             SPLIT file   AT `;` INTO DATA(header) DATA(base64).
             SPLIT base64 AT `,` INTO header base64.
 
-            DATA(raw)     = z2ui5_cl_smp_context=>conv_decode_x_base64( base64 ).
-            DATA(content) = z2ui5_cl_smp_context=>conv_get_string_by_xstring( raw ).
+            DATA(raw) = base64_decode( base64 ).
 
-            client->message_box_display( content ).
+            " the proof that the file arrived: its name, its size in bytes as
+            " the backend counts them, and the decoded content itself
+            upload_name = filepath.
+            upload_size = xstrlen( raw ).
+            upload_text = xstring_to_string( raw ).
+
+            client->message_toast_display( |{ upload_name } - { upload_size } bytes received| ).
 
             file     = VALUE #( ).
             filepath = VALUE #( ).
@@ -71,9 +97,66 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD view_display.
+  METHOD base64_decode.
 
-    FIELD-SYMBOLS <table> TYPE table.
+    DATA lv_class TYPE string.
+
+    TRY.
+        lv_class = `CL_WEB_HTTP_UTILITY`.
+        CALL METHOD (lv_class)=>(`DECODE_X_BASE64`)
+          EXPORTING
+            encoded = val
+          RECEIVING
+            decoded = result.
+
+      CATCH cx_root.
+        lv_class = `CL_HTTP_UTILITY`.
+        CALL METHOD (lv_class)=>(`DECODE_X_BASE64`)
+          EXPORTING
+            encoded = val
+          RECEIVING
+            decoded = result.
+    ENDTRY.
+
+  ENDMETHOD.
+
+
+  METHOD xstring_to_string.
+
+    DATA lo_conv  TYPE REF TO object.
+    DATA lv_class TYPE string.
+
+    TRY.
+        lv_class = `CL_ABAP_CONV_CODEPAGE`.
+        CALL METHOD (lv_class)=>create_in
+          RECEIVING
+            instance = lo_conv.
+
+        CALL METHOD lo_conv->(`IF_ABAP_CONV_IN~CONVERT`)
+          EXPORTING
+            source = val
+          RECEIVING
+            result = result.
+
+      CATCH cx_root.
+        lv_class = `CL_ABAP_CONV_IN_CE`.
+        CALL METHOD (lv_class)=>create
+          EXPORTING
+            encoding = `UTF-8`
+          RECEIVING
+            conv     = lo_conv.
+
+        CALL METHOD lo_conv->(`CONVERT`)
+          EXPORTING
+            input = val
+          IMPORTING
+            data  = result.
+    ENDTRY.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -92,38 +175,32 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
     page->tag( `MessageStrip`
         )->a( n = `text` v = `The file_uploader custom control returns the picked file as a base64 data URL; the backend ` &&
-                   `strips the prefix, decodes the payload and shows the file content in a message box.`
+                   `strips the prefix, decodes the payload and reports what arrived - name, size in bytes and content.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    IF table IS NOT INITIAL.
+    IF upload_name IS NOT INITIAL.
 
-      ASSIGN table->* TO <table>.
+      DATA(box) = page->ele( `Panel`
+          )->a( n = `headerText` v = `Received in the backend`
+          )->a( n = `class`      v = `sapUiSmallMargin`
+          )->ele( `VBox`
+              )->a( n = `class` v = `sapUiSmallMargin` ).
 
-      DATA(tab) = page->ele( `Table`
-          )->a( n = `items` v = client->_bind( <table> )
-          )->ele( `headerToolbar`
-              )->ele( `OverflowToolbar`
-                  )->tag( `Title`
-                      )->a( n = `text` v = `CSV Content`
-                  )->tag( `ToolbarSpacer`
-              )->end(
-          )->end( ).
-
-      DATA(fields)  = z2ui5_cl_smp_context=>rtti_get_t_attri_by_any( <table> ).
-      DATA(columns) = tab->ele( `columns` ).
-      DATA(cells)   = tab->ele( `items`
-          )->ele( `ColumnListItem`
-              )->ele( `cells` ).
-
-      LOOP AT fields REFERENCE INTO DATA(field).
-        columns->ele( `Column`
-            )->tag( `Text`
-                )->a( n = `text` v = field->name ).
-        cells->tag( `Text`
-            )->a( n = `text` v = |\{{ field->name }\}| ).
-      ENDLOOP.
+      box->tag( `ObjectStatus`
+          )->a( n = `title` v = `File`
+          )->a( n = `text`  v = upload_name ).
+      box->tag( `ObjectStatus`
+          )->a( n = `title` v = `Size`
+          )->a( n = `text`  v = |{ upload_size } bytes|
+          )->a( n = `state` v = `Success` ).
+      box->tag( `TextArea`
+          )->a( n = `value`    v = upload_text
+          )->a( n = `editable` b = abap_false
+          )->a( n = `rows`     v = `8`
+          )->a( n = `width`    v = `100%`
+          )->a( n = `class`    v = `sapUiSmallMarginTop` ).
 
     ENDIF.
 

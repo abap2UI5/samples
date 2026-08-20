@@ -27,6 +27,12 @@ CLASS z2ui5_cl_smp_app_197 DEFINITION PUBLIC.
     METHODS on_event_filter.
     METHODS view_display.
     METHODS data_read.
+    METHODS json_get_values
+      IMPORTING
+        json          TYPE string
+        name          TYPE string
+      RETURNING
+        VALUE(result) TYPE string_table.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -67,19 +73,12 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
     " - there is no mProperties level in the payload.
     DATA t_range TYPE RANGE OF string.
 
-    TRY.
-        " abap2ui5lint-disable-next-line non-released-api -- abap2UI5 ships no RELEASED JSON parser for app code, and an event argument arrives as a JSON string. The mirror is what every app has to reach for until src/02 offers one
-        DATA(json) = z2ui5_cl_ajson=>parse( client->get_event_arg( ) ).
-        DATA(t_members) = json->members( `/` ).
-
-        LOOP AT t_members INTO DATA(member).
-          APPEND VALUE #( sign   = `I`
-                          option = `EQ`
-                          low    = json->get( |/{ member }/key| ) ) TO t_range.
-        ENDLOOP.
-
-      CATCH cx_root.
-    ENDTRY.
+    LOOP AT json_get_values( json = client->get_event_arg( )
+                             name = `key` ) INTO DATA(lv_key).
+      APPEND VALUE #( sign   = `I`
+                      option = `EQ`
+                      low    = lv_key ) TO t_range.
+    ENDLOOP.
 
     " an empty selection is no filter at all - the list closed with every
     " item unchecked, which must show all rows again, not none of them
@@ -169,6 +168,33 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
         )->a( n = `text` v = `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD json_get_values.
+
+    " A minimal reader for one string property of a JSON array of objects:
+    " walk every `"<name>":"` and take what stands up to the next quote. That
+    " is all this payload needs - a flat projection of the selected controls,
+    " written by the framework and never nested. An app parsing arbitrary JSON
+    " wants a real parser instead.
+    DATA(lv_marker) = |"{ name }":"|.
+    DATA(lv_rest)   = json.
+
+    DO.
+      DATA(lv_off) = find( val  = lv_rest
+                           sub  = lv_marker
+                           case = abap_false ).
+      IF lv_off < 0.
+        EXIT.
+      ENDIF.
+
+      lv_rest = substring( val = lv_rest
+                           off = lv_off + strlen( lv_marker ) ).
+      INSERT substring_before( val = lv_rest
+                               sub = `"` ) INTO TABLE result.
+    ENDDO.
 
   ENDMETHOD.
 
