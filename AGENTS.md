@@ -1062,6 +1062,7 @@ manually or via editor tooling that the above rules are met.
 
 - Follow the [SAP ABAP Style Guide](https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md).
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
+- An `abap_bool` is compared to `abap_true` / `abap_false` — never asked with `IS INITIAL` / `IS NOT INITIAL`, which is the question for a string that might be empty (`IF mv_flag = abap_false.`, `DELETE lt_x WHERE flag = abap_false.`). The three `check_on_*( )` methods return `abap_bool` as well, and there the corpus writes the predicative call itself: `IF client->check_on_init( ).`, `` ELSEIF client->check_on_event( `LOCK` ). ``, `IF client->check_on_init( ) OR client->check_on_navigated( ).`. Only a NEGATIVE branch is spelled out, as `= abap_false` — there is no negated predicative form here. The rule and its reasons live in abap2UI5's `build-an-app` skill.
 - Use backticks for all string literals, not single quotes.
 - Use string templates (`|...|` with `{ }` for embedded expressions) instead of `&&` for string concatenation (e.g. `|item { name }|` not `` `item ` && name ``).
 - Prefer functional to procedural language constructs — use `var = VALUE #( ).` to reset a variable, never `CLEAR var.`.
