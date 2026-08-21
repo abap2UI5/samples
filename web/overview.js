@@ -79,9 +79,19 @@ function card(sample) {
     ? ` (with the ${sample.deps.length} class${sample.deps.length === 1 ? '' : 'es'} it calls)`
     : '';
 
+  /* The render gate's photograph of the sample's first screen, written by
+   * scripts/generate-screenshots.mjs into thumbs/ on every deploy - generated
+   * like apps.json, never committed. Not every sample has one (a view the
+   * headless harness cannot render is skipped there), and a local checkout
+   * has none until the script has run, so a picture that does not load
+   * removes itself: the card is complete without it. */
+  const shot = `<img class="shot" loading="lazy" alt="" aria-hidden="true"
+      src="thumbs/${esc(sample.class)}.png" onerror="this.remove()">`;
+
   return `
     <article class="card" id="s-${esc(sample.class)}" data-class="${esc(sample.class)}">
       <button type="button" class="tick" aria-pressed="false" title="mark as read">✓</button>
+      ${shot}
       <h4>${step}<span class="t"></span></h4>
       ${sample.sub ? '<p class="what"></p>' : ''}
       <p class="says"></p>

@@ -1790,6 +1790,22 @@ files as such: `catalogue.json` at the repository root is derived from the
 same scan and **is** committed, because its reader is a clone rather than a
 deploy (§3).
 
+`web/thumbs/` follows `apps.json`, not `catalogue.json`: **one thumbnail per
+sample, generated at deploy and never committed.**
+`scripts/generate-screenshots.mjs` (`npm run screenshots`) photographs every
+`src/01` view with the abap2UI5-linter's render harness — the same headless
+reconstruction `npm run check:abap2ui5`'s render gate clears, kept standing
+long enough for a picture — so what a card shows is what the gate checks, of
+the class as it is on `main`. It is the one script under `scripts/` that
+needs the devDependencies (the linter, `@abap2ui5/render-runtime`, a
+playwright chromium): it is a deploy step, not a gate, and it is in no check
+aggregate. A view the harness cannot render — the `z2ui5.cc` custom-control
+samples, mostly — is reported and skipped, and the page treats the missing
+file as "no picture" (the `<img>` removes itself), so a sample without a
+thumbnail is normal, not broken. Only a run that photographs *nothing* fails,
+because that is a harness problem; even then the deploy publishes
+(`continue-on-error`), since a page without pictures beats no page.
+
 <!-- The section below is SHARED. Its source is
      abap2UI5/abap2UI5 .github/shared/agents-metadata.md - change it THERE
      first, or the change is drift. abap2UI5's `npm run check:shared`

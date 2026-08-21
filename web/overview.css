@@ -224,6 +224,20 @@ code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, mo
 .tick:hover { border-color: var(--done); color: var(--ink-faint); }
 .card.read .tick { background: var(--done); border-color: var(--done); color: #fff; }
 
+/* The thumbnail: the render gate's photograph of the first screen, floated so
+ * the text keeps ruling the card. Shot at 800x600 and cropped to the same 4:3
+ * from the top, so nothing is squashed. Always on a white ground - the
+ * screenshots are taken in the light theme, and a transparent edge on a dark
+ * panel would read as a rendering mistake. An <img> that fails to load has
+ * removed itself (overview.js), so there is no broken-picture state to style. */
+.card .shot {
+  float: right; width: 176px; aspect-ratio: 4 / 3; object-fit: cover; object-position: top;
+  margin: 2px 0 10px 14px; border: 1px solid var(--line); border-radius: 8px; background: #fff;
+}
+@media (max-width: 620px) { .card .shot { display: none; } }
+/* the actions row must clear the float, or a short card puts the buttons beside it */
+.card .actions { clear: both; }
+
 /* An abap2UI5 identifier does not break - `client->nav_app_call` is one word to
  * a browser - and on a phone one of them is wider than the card. */
 .card h4, .card .what, .card .says { overflow-wrap: anywhere; }

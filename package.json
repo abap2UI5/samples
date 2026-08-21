@@ -8,6 +8,7 @@
     "launchpad": "node scripts/generate-launchpad.mjs && node scripts/generate-samples-md.mjs && node scripts/generate-catalogue.mjs",
     "overview": "node scripts/generate-overview-index.mjs",
     "catalogue": "node scripts/generate-catalogue.mjs",
+    "screenshots": "node scripts/generate-screenshots.mjs",
     "lint": "abaplint ./abaplint.jsonc",
     "check:cloud": "abaplint .github/abaplint/abap_cloud.jsonc",
     "check:abap2ui5": "abap2ui5lint",
