@@ -94,8 +94,10 @@ const system = areas['00'];
 const total = basics.length + system.length + hidden.length;
 
 /* How many APPS are here, which is a different question from how many classes
- * match the sample naming scheme: three classes in src/00/98 carry the name and
- * are data objects. The `isApp` flag comes from the source (scan-samples.mjs).
+ * match the sample naming scheme: a few classes in src/00/98 carry the name and
+ * are data objects, not apps. The `isApp` flag comes from the source
+ * (lib/scan-samples.mjs), and the count is rendered as `dataObjects` below
+ * rather than written out here, where it would go stale.
  *
  * PORTABLE is the number the README leads with, and the one worth stating: the
  * apps that survive every build, so they are what a reader gets whichever
