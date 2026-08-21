@@ -1,6 +1,6 @@
 " @keywords grid alv dynamicpage column row action currency search sort filter
 " @summary The full sap.ui.table example: a DynamicPage with search, sort, filter, currency columns and row actions - the closest thing here to a finished ALV.
-" @docs https://abap2ui5.github.io/docs/get_started/full_example https://abap2ui5.github.io/docs/cookbook/model/tables
+" @docs https://abap2ui5.github.io/docs/get_started/full_example https://abap2ui5.github.io/docs/cookbook/model/tables https://abap2ui5.github.io/docs/tutorials/walkthrough/step-8
 CLASS z2ui5_cl_smp_app_070 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
