@@ -1,9 +1,9 @@
 name: publish-overview-apps
 
-# Keeps the overview app (get_catalog) and SAMPLES.md mirroring the folder
-# tree. Both are written by `npm run launchpad` out of one scan, so they are
-# checked and pushed together - a catalogue that disagrees with the app it
-# claims to mirror is worse than no catalogue.
+# Keeps the overview app (get_catalog), SAMPLES.md and catalogue.json
+# mirroring the folder tree. All three are written by `npm run launchpad` out
+# of one scan, so they are checked and pushed together - a catalogue that
+# disagrees with the app it claims to mirror is worse than no catalogue.
 #
 # The catalog is generated entirely from the folder tree and the class
 # descriptions, so the fix for a stale catalog is always the same one command.
@@ -59,17 +59,17 @@ jobs:
         PUSHABLE: ${{ github.event_name == 'pull_request'
                       && github.event.pull_request.head.repo.full_name == github.repository }}
       run: |
-        if git diff --quiet -- src SAMPLES.md; then
-          echo "The overview app and SAMPLES.md are up to date."
+        if git diff --quiet -- src SAMPLES.md catalogue.json; then
+          echo "The overview app, SAMPLES.md and catalogue.json are up to date."
           exit 0
         fi
-        git diff --stat -- src SAMPLES.md
+        git diff --stat -- src SAMPLES.md catalogue.json
         if [ "$PUSHABLE" != "true" ]; then
           echo "::error::The overview catalog is out of date and this ref cannot be pushed to. Run 'npm run launchpad', commit the result and push (see AGENTS.md §4)."
           exit 1
         fi
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
-        git commit -qm 'Regenerate the overview app' -- src SAMPLES.md
+        git commit -qm 'Regenerate the overview app' -- src SAMPLES.md catalogue.json
         git push
         echo "Overview app regenerated and pushed onto the pull request branch."
