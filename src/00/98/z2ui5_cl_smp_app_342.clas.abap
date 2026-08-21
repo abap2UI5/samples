@@ -193,8 +193,8 @@ CLASS z2ui5_cl_smp_app_342 IMPLEMENTATION.
 
     ENDIF.
 
-    IF client->check_on_navigated( )     = abap_true
-        AND client->check_on_init( )          = abap_false.
+    IF client->check_on_navigated( )
+        AND client->check_on_init( ) = abap_false.
       render_main( client ).
     ENDIF.
 
