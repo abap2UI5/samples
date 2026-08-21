@@ -190,7 +190,7 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
       WHEN `SEL_CHANGE`.
         DATA(lt_sel) = mt_tab.
-        DELETE lt_sel WHERE selected IS INITIAL.
+        DELETE lt_sel WHERE selected = abap_false.
 
       WHEN `POPOVER_LIST`.
         popover_list_display( `TEST` ).
