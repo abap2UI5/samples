@@ -1,6 +1,6 @@
 " @keywords edit input add row delete multiselect toolbar
 " @summary An editable table: input cells, adding and deleting rows, multi-select and a toolbar over them.
-" @docs https://abap2ui5.github.io/docs/get_started/full_example https://abap2ui5.github.io/docs/cookbook/model/tables
+" @docs https://abap2ui5.github.io/docs/cookbook/model/tables https://abap2ui5.github.io/docs/tutorials/walkthrough/step-8 https://abap2ui5.github.io/docs/tutorials/walkthrough/step-10
 CLASS z2ui5_cl_smp_app_011 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
