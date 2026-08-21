@@ -184,7 +184,7 @@ CLASS z2ui5_cl_smp_app_342 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF mv_init IS INITIAL.
+    IF mv_init = abap_false.
       mv_init = abap_true.
 
       get_data( ).
