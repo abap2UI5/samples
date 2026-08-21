@@ -23,7 +23,14 @@ CLASS z2ui5_cl_smp_app_070 DEFINITION PUBLIC.
         process_state    TYPE string,
       END OF ty_s_tab.
 
-    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value.
+    " the operator shorthands, name and value
+    TYPES:
+      BEGIN OF ty_s_mapping,
+        n TYPE string,
+        v TYPE string,
+      END OF ty_s_mapping.
+
+    DATA mt_mapping TYPE STANDARD TABLE OF ty_s_mapping WITH EMPTY KEY.
     DATA mv_search_value TYPE string.
     DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
     DATA lv_selkz TYPE abap_bool.

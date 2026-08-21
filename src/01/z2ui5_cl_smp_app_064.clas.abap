@@ -74,12 +74,10 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
   METHOD on_init.
 
-    DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
     DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA page1 TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA temp5 TYPE abap_bool.
     DATA layout TYPE REF TO z2ui5_cl_ui5_view_builder.
-    temp1 = VALUE #( ).
 
     mv_check_enabled = abap_true.
     view             = z2ui5_cl_ui5_view_builder=>factory(
