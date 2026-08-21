@@ -1,6 +1,6 @@
 " @keywords roundtrip restart second view uncaught error controller basics
 " @summary What one event does to a running app: a second view replaces the first, the state comes back with it, and an uncaught error surfaces where you can see it.
-" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle https://abap2ui5.github.io/docs/cookbook/expert_more/snippets
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle https://abap2ui5.github.io/docs/cookbook/expert_more/snippets https://abap2ui5.github.io/docs/tutorials/walkthrough/step-3
 CLASS z2ui5_cl_smp_app_004 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

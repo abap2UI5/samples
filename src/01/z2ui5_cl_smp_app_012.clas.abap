@@ -1,6 +1,6 @@
 " @keywords dialog sub app destroy rerender background view
 " @summary The ways to open a dialog - from this app, from a sub app, rebuilt or destroyed - and what each one does to the view behind it.
-" @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popup
+" @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popup https://abap2ui5.github.io/docs/tutorials/walkthrough/step-7
 CLASS z2ui5_cl_smp_app_012 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
