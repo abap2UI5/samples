@@ -51,10 +51,10 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
     device_orientation     = ls_get-s_device-orientation.
     device_height          = CONV string( ls_get-s_device-resize-height ).
     device_width           = CONV string( ls_get-s_device-resize-width ).
-    device_phone           = xsdbool( ls_get-s_device-system = z2ui5_if_types=>cs_device-system-phone ).
-    device_desktop         = xsdbool( ls_get-s_device-system = z2ui5_if_types=>cs_device-system-desktop ).
-    device_tablet          = xsdbool( ls_get-s_device-system = z2ui5_if_types=>cs_device-system-tablet ).
-    device_combi           = xsdbool( ls_get-s_device-system = z2ui5_if_types=>cs_device-system-combi ).
+    device_phone           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-phone ).
+    device_desktop         = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-desktop ).
+    device_tablet          = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-tablet ).
+    device_combi           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-combi ).
     device_touch           = ls_get-s_device-support-touch.
     device_pointer         = ls_get-s_device-support-pointer.
     device_retina          = ls_get-s_device-support-retina.
