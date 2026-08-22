@@ -23,6 +23,7 @@ one scan (`scripts/lib/scan-samples.mjs`) so they cannot disagree:
 | `overview.js` | draws the path, narrows it on a search, remembers what you ticked (`localStorage`, this browser only) |
 | `favicon.ico` | the abap2UI5 logo in the tab (see below) |
 | `apps.json` | **generated, not committed** — `node scripts/generate-overview-index.mjs` |
+| `thumbs/` | **generated, not committed** — one thumbnail per sample, photographed by `npm run screenshots` (the abap2UI5-linter's render harness; needs the devDependencies and a playwright chromium). A card whose picture is missing simply shows none |
 
 Only `src/01` is on the page: the portable set that survives every build.
 `src/00/97` is unfinished and `src/00/98` is run by a check rather than learned
@@ -86,10 +87,12 @@ widths.
 
 ```
 node scripts/generate-overview-index.mjs     # writes web/apps.json
+npm run screenshots                          # optional: writes web/thumbs/
 python3 -m http.server 8000 --directory web  # any static server will do
 ```
 
-`file://` does not work — the page `fetch`es `apps.json`.
+`file://` does not work — the page `fetch`es `apps.json`. The thumbnails are
+optional locally: without them every card just renders without a picture.
 
 The **order** the samples are in is the one thing not derived from the tree:
 it is a teaching decision and lives in `scripts/lib/learning-path.json`, which

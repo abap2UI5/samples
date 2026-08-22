@@ -6,3 +6,8 @@ output
 # scripts/generate-overview-index.mjs on every deploy (AGENTS.md, "The overview
 # page")
 web/apps.json
+
+# derived: one thumbnail per sample for the same page, photographed by
+# scripts/generate-screenshots.mjs (the linter's render harness) on every
+# deploy - never committed, for the same reason as apps.json
+web/thumbs/

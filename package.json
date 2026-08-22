@@ -5,8 +5,10 @@
   "description": "Learn how to code with abap2UI5.",
   "scripts": {
     "test": "npm run check",
-    "launchpad": "node scripts/generate-launchpad.mjs && node scripts/generate-samples-md.mjs",
+    "launchpad": "node scripts/generate-launchpad.mjs && node scripts/generate-samples-md.mjs && node scripts/generate-catalogue.mjs",
     "overview": "node scripts/generate-overview-index.mjs",
+    "catalogue": "node scripts/generate-catalogue.mjs",
+    "screenshots": "node scripts/generate-screenshots.mjs",
     "lint": "abaplint ./abaplint.jsonc",
     "check:cloud": "abaplint .github/abaplint/abap_cloud.jsonc",
     "check:abap2ui5": "abap2ui5lint",
@@ -15,6 +17,7 @@
     "check:strip": "node scripts/check-strip-lists.mjs",
     "check:keywords": "node scripts/check-keywords.mjs",
     "check:launchpad": "node scripts/generate-launchpad.mjs --check && node scripts/generate-samples-md.mjs --check",
+    "check:catalogue": "node scripts/generate-catalogue.mjs --check",
     "check:overview": "node scripts/generate-overview-index.mjs --check",
     "check:prose": "node scripts/check-prose-names.mjs",
     "check:docs-links": "node scripts/check-docs-links.mjs",
@@ -24,7 +27,7 @@
     "rename": "abaplint .github/abaplint/rename_test.jsonc --rename",
     "syfixes": "find . -type f -name '*.abap' -exec sed -i -e 's/ RAISE EXCEPTION TYPE cx_sy_itab_line_not_found/ ASSERT 1 = 0/g' {} + ",
     "downport": "rm -rf src/00 && abaplint --fix .github/abaplint/abap_702.jsonc && npm run syfixes && node scripts/generate-samples-md.mjs",
-    "check": "npm run check:pin && npm run lint && npm run check:cloud && npm run check:abap2ui5 && npm run check:agents && npm run check:strip && npm run check:keywords && npm run check:launchpad && npm run check:overview && npm run check:prose && npm run check:docs-links && npm run check:app-rules && npm run check:family-nav && npm run rename"
+    "check": "npm run check:pin && npm run lint && npm run check:cloud && npm run check:abap2ui5 && npm run check:agents && npm run check:strip && npm run check:keywords && npm run check:launchpad && npm run check:catalogue && npm run check:overview && npm run check:prose && npm run check:docs-links && npm run check:app-rules && npm run check:family-nav && npm run rename"
   },
   "repository": {
     "type": "git",
