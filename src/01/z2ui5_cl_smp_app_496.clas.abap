@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_496 DEFINITION PUBLIC.
 
     " a public attribute is serialized between the roundtrips - so everything
     " on this page is part of what the View Model tab of the tools shows
-    DATA t_tab      TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    DATA t_tab      TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
     DATA text       TYPE string.
     DATA roundtrips TYPE i.
 
@@ -40,21 +40,21 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       text = `change me and press Send`.
       tabs_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( cs_event-ping ).
+    ELSEIF client->check_on_event( cs_event-ping ) IS NOT INITIAL.
 
       " nothing to compute - the point is the roundtrip itself, so there is
       " something to look at in Previous Request and Response
       roundtrips = roundtrips + 1.
 
-    ELSEIF client->check_on_event( cs_event-where ).
+    ELSEIF client->check_on_event( cs_event-where ) IS NOT INITIAL.
 
       " there is no ABAP call that opens the tools: they are a control of the
       " frontend, toggled by the shortcut - the framework's own start page
@@ -71,30 +71,44 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
 
   METHOD tabs_init.
 
-    t_tab = VALUE #(
-      ( name  = `Error`
-        descr = `The last uncaught exception with its call stack - the same one the error popup shows.` )
-      ( name  = `Log`
-        descr = `What the frontend did since the app started: roundtrips, frontend actions, events.` )
-      ( name  = `Previous Request`
-        descr = `The JSON this browser sent last - your event, the changed model, the app state.` )
-      ( name  = `Response`
-        descr = `The JSON the backend sent back - the new view, the new model, the follow-up actions.` )
-      ( name  = `Source Code`
-        descr = `The ABAP class behind the running app, with an ADT jump link in the dialog footer.` )
-      ( name  = `View`
-        descr = `The XML view your ABAP built - what z2ui5_cl_ui5_view_builder stringified into the response.` )
-      ( name  = `View Model`
-        descr = `The model behind that view: every bound attribute of this class with its live value.` )
-      ( name  = `Popup, Popover, Nest1, Nest2`
-        descr = `The same two tabs - view and model - for each of the other view slots of the app.` ) ).
+    DATA temp1 LIKE t_tab.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-name = `Error`.
+    temp2-descr = `The last uncaught exception with its call stack - the same one the error popup shows.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `Log`.
+    temp2-descr = `What the frontend did since the app started: roundtrips, frontend actions, events.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `Previous Request`.
+    temp2-descr = `The JSON this browser sent last - your event, the changed model, the app state.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `Response`.
+    temp2-descr = `The JSON the backend sent back - the new view, the new model, the follow-up actions.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `Source Code`.
+    temp2-descr = `The ABAP class behind the running app, with an ADT jump link in the dialog footer.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `View`.
+    temp2-descr = `The XML view your ABAP built - what z2ui5_cl_ui5_view_builder stringified into the response.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `View Model`.
+    temp2-descr = `The model behind that view: every bound attribute of this class with its live value.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `Popup, Popover, Nest1, Nest2`.
+    temp2-descr = `The same two tabs - view and model - for each of the other view slots of the app.`.
+    INSERT temp2 INTO TABLE temp1.
+    t_tab = temp1.
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -102,7 +116,8 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Basics V - The Developer Tools (Ctrl+F12)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

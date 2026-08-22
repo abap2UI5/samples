@@ -36,12 +36,12 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `SHOW` ).
+    ELSEIF client->check_on_event( `SHOW` ) IS NOT INITIAL.
       show_toast( ).
     ENDIF.
 
@@ -81,7 +81,14 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA select_my TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA select_at TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    DATA position LIKE LINE OF temp1.
+    DATA select_animation TYPE REF TO z2ui5_cl_ui5_view_builder.
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -108,7 +115,8 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
             )->a( n = `target` v = `_blank`
             )->a( n = `href`   v = `https://sdk.openui5.org/entity/sap.m.MessageToast/sample/sap.m.sample.MessageToast` ).
 
-    DATA(form) = page->ele( `Panel`
+    
+    form = page->ele( `Panel`
         )->a( n = `headerText` v = `Message Toast Configuration`
         )->ele( n = `SimpleForm` ns = `form`
             )->a( n = `title`    v = `Settings`
@@ -129,16 +137,21 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
         )->tag( `Input`
             )->a( n = `value` v = client->_bind( width ) ).
 
-    DATA(select_my) = form->tag( `Label`
+    
+    select_my = form->tag( `Label`
         )->a( n = `text` v = `my`
         )->ele( `Select`
             )->a( n = `selectedKey` v = client->_bind( my ) ).
-    DATA(select_at) = form->tag( `Label`
+    
+    select_at = form->tag( `Label`
         )->a( n = `text` v = `at`
         )->ele( `Select`
             )->a( n = `selectedKey` v = client->_bind( at ) ).
 
-    LOOP AT get_positions( ) INTO DATA(position).
+    
+    temp1 = get_positions( ).
+    
+    LOOP AT temp1 INTO position.
       select_my->tag( n = `Item` ns = `core`
           )->a( n = `key`  v = position
           )->a( n = `text` v = position ).
@@ -152,7 +165,8 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
     form->tag( `Input`
         )->a( n = `value` v = client->_bind( offset ) ).
 
-    DATA(select_animation) = form->tag( `Label`
+    
+    select_animation = form->tag( `Label`
         )->a( n = `text` v = `animationTimingFunction`
         )->ele( `Select`
             )->a( n = `selectedKey` v = client->_bind( animation_timing ) ).
@@ -194,22 +208,24 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
 
   METHOD get_positions.
 
-    result = VALUE #(
-      ( `begin top` )
-      ( `begin center` )
-      ( `begin bottom` )
-      ( `left top` )
-      ( `left center` )
-      ( `left bottom` )
-      ( `center top` )
-      ( `center center` )
-      ( `center bottom` )
-      ( `right top` )
-      ( `right center` )
-      ( `right bottom` )
-      ( `end top` )
-      ( `end center` )
-      ( `end bottom` ) ).
+    DATA temp2 TYPE string_table.
+    CLEAR temp2.
+    INSERT `begin top` INTO TABLE temp2.
+    INSERT `begin center` INTO TABLE temp2.
+    INSERT `begin bottom` INTO TABLE temp2.
+    INSERT `left top` INTO TABLE temp2.
+    INSERT `left center` INTO TABLE temp2.
+    INSERT `left bottom` INTO TABLE temp2.
+    INSERT `center top` INTO TABLE temp2.
+    INSERT `center center` INTO TABLE temp2.
+    INSERT `center bottom` INTO TABLE temp2.
+    INSERT `right top` INTO TABLE temp2.
+    INSERT `right center` INTO TABLE temp2.
+    INSERT `right bottom` INTO TABLE temp2.
+    INSERT `end top` INTO TABLE temp2.
+    INSERT `end center` INTO TABLE temp2.
+    INSERT `end bottom` INTO TABLE temp2.
+    result = temp2.
 
   ENDMETHOD.
 

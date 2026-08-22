@@ -17,7 +17,7 @@ CLASS z2ui5_cl_smp_app_048 DEFINITION PUBLIC.
         selected  TYPE abap_bool,
         checkbox  TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -28,30 +28,82 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_tab.
+      DATA temp2 LIKE LINE OF temp1.
+        DATA lv_row_title TYPE string.
+        DATA lt_sel LIKE t_tab.
+        DATA temp3 LIKE LINE OF lt_sel.
+        DATA temp4 LIKE sy-tabix.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp5 TYPE string_table.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      t_tab = VALUE #(
-        ( title = `entry_01`  info = `Information`  descr = `this is a description1 1234567890 1234567890`  icon = `sap-icon://badge`      highlight = `Information` )
-        ( title = `entry_02`  info = `Success`      descr = `this is a description2 1234567890 1234567890`  icon = `sap-icon://favorite`   highlight = `Success` )
-        ( title = `entry_03`  info = `Warning`      descr = `this is a description3 1234567890 1234567890`  icon = `sap-icon://employee`   highlight = `Warning` )
-        ( title = `entry_04`  info = `Error`        descr = `this is a description4 1234567890 1234567890`  icon = `sap-icon://accept`     highlight = `Error` )
-        ( title = `entry_05`  info = `None`         descr = `this is a description5 1234567890 1234567890`  icon = `sap-icon://activities` highlight = `None` )
-        ( title = `entry_06`  info = `Information`  descr = `this is a description6 1234567890 1234567890`  icon = `sap-icon://account`    highlight = `Information` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-title = `entry_01`.
+      temp2-info = `Information`.
+      temp2-descr = `this is a description1 1234567890 1234567890`.
+      temp2-icon = `sap-icon://badge`.
+      temp2-highlight = `Information`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `entry_02`.
+      temp2-info = `Success`.
+      temp2-descr = `this is a description2 1234567890 1234567890`.
+      temp2-icon = `sap-icon://favorite`.
+      temp2-highlight = `Success`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `entry_03`.
+      temp2-info = `Warning`.
+      temp2-descr = `this is a description3 1234567890 1234567890`.
+      temp2-icon = `sap-icon://employee`.
+      temp2-highlight = `Warning`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `entry_04`.
+      temp2-info = `Error`.
+      temp2-descr = `this is a description4 1234567890 1234567890`.
+      temp2-icon = `sap-icon://accept`.
+      temp2-highlight = `Error`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `entry_05`.
+      temp2-info = `None`.
+      temp2-descr = `this is a description5 1234567890 1234567890`.
+      temp2-icon = `sap-icon://activities`.
+      temp2-highlight = `None`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `entry_06`.
+      temp2-info = `Information`.
+      temp2-descr = `this is a description6 1234567890 1234567890`.
+      temp2-icon = `sap-icon://account`.
+      temp2-highlight = `Information`.
+      INSERT temp2 INTO TABLE temp1.
+      t_tab = temp1.
 
     ENDIF.
 
     CASE client->get_event( ).
       WHEN `EDIT`.
-        DATA(lv_row_title) = client->get_event_arg( ).
+        
+        lv_row_title = client->get_event_arg( ).
         client->message_box_display( |EDIT - { lv_row_title }| ).
       WHEN `SELCHANGE`.
-        DATA(lt_sel) = t_tab.
+        
+        lt_sel = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
-        client->message_box_display( |SELECTION_CHANGED - { lt_sel[ 1 ]-title }| ).
+        
+        
+        temp4 = sy-tabix.
+        READ TABLE lt_sel INDEX 1 INTO temp3.
+        sy-tabix = temp4.
+        IF sy-subrc <> 0.
+          ASSERT 1 = 0.
+        ENDIF.
+        client->message_box_display( |SELECTION_CHANGED - { temp3-title }| ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -71,6 +123,14 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp5.
+    INSERT `${TITLE}` INTO TABLE temp5.
+    INSERT `${DESCR}` INTO TABLE temp5.
+    INSERT `${ICON}` INTO TABLE temp5.
+    INSERT `${HIGHLIGHT}` INTO TABLE temp5.
+    INSERT `${INFO}` INTO TABLE temp5.
+    INSERT `${SELECTED}` INTO TABLE temp5.
     page->ele( `List`
         )->a( n = `headerText`      v = `List Output`
         )->a( n = `items`           v = client->_bind( t_tab )
@@ -87,13 +147,7 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
             )->a( n = `type`        v = `Detail`
             )->a( n = `wrapping`    v = `true`
             )->a( n = `selected`    v = `{SELECTED}`
-            )->a( n = `detailPress` v = client->_event( val = `EDIT` t_arg = VALUE #( ( `${TITLE}` )
-                                                                                        ( `${DESCR}` )
-                                                                                        ( `${ICON}` )
-                                                                                        ( `${HIGHLIGHT}` )
-                                                                                        ( `${INFO}` )
-                                                                                        ( `${SELECTED}` )
-                                                                                       ) ) ).
+            )->a( n = `detailPress` v = client->_event( val = `EDIT` t_arg = temp5 ) ).
 
     client->view_display( page->stringify( ) ).
 

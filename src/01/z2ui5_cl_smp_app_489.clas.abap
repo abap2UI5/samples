@@ -29,21 +29,22 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      s_result = VALUE #( product  = `Notebook Basic 15`
-                          quantity = `2` ).
+      CLEAR s_result.
+      s_result-product = `Notebook Basic 15`.
+      s_result-quantity = `2`.
 
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( `CONFIRM` ).
+    ELSEIF client->check_on_event( `CONFIRM` ) IS NOT INITIAL.
       client->nav_app_leave( event  = `DATA_CONFIRMED`
                              r_data = s_result ).
 
-    ELSEIF client->check_on_event( `CANCEL` ).
+    ELSEIF client->check_on_event( `CANCEL` ) IS NOT INITIAL.
       client->nav_app_leave( event = `DATA_CANCELLED` ).
     ENDIF.
 
@@ -52,7 +53,10 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -61,7 +65,8 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Navigation - Data Input App`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -75,7 +80,8 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `Grid` ns = `layout`
+    
+    form = page->ele( n = `Grid` ns = `layout`
         )->a( n = `defaultSpan` v = `L6 M12 S12`
         )->ele( n = `content` ns = `layout`
             )->ele( n = `SimpleForm` ns = `form`

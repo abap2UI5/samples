@@ -24,12 +24,12 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       block_navigation = abap_true.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -60,7 +60,11 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE z2ui5_if_client=>ty_s_event_control.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -69,7 +73,8 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Event - Link with preventDefault`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -84,11 +89,15 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+    
+    form = page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Link with a cancelled default`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form` ).
 
+    
+    CLEAR temp1.
+    temp1-check_prevent_default = block_navigation.
     form->tag( `Label`
         )->a( n = `text` v = `Cancel the browser navigation`
         )->tag( `Switch`
@@ -102,7 +111,7 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
             )->a( n = `href`   v = `https://abap2ui5.org`
             )->a( n = `press`  v = client->_event(
                 val    = `LINK_PRESS`
-                s_ctrl = VALUE #( check_prevent_default = block_navigation ) )
+                s_ctrl = temp1 )
         )->tag( `Label`
             )->a( n = `text` v = `Result`
         )->tag( `Text`

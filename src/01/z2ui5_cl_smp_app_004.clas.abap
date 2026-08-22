@@ -24,9 +24,9 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
 
       " the app has two views and remembers which one is up, so returning
       " from a sub-app brings back the one the user left, not the first
@@ -36,7 +36,7 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
         view_main_display( ).
       ENDIF.
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -52,12 +52,16 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE REF TO z2ui5_cl_smp_app_004.
+        DATA dummy TYPE i.
 
     CASE client->get_event( ).
       WHEN `BUTTON_ROUNDTRIP`.
         client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
       WHEN `BUTTON_RESTART`.
-        client->nav_app_leave( NEW z2ui5_cl_smp_app_004( ) ).
+        
+        CREATE OBJECT temp1 TYPE z2ui5_cl_smp_app_004.
+        client->nav_app_leave( temp1 ).
       WHEN `BUTTON_CHANGE_VIEW`.
         CASE view_main.
           WHEN `MAIN`.
@@ -66,7 +70,8 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
             view_main_display( ).
         ENDCASE.
       WHEN `BUTTON_ERROR`.
-        DATA(dummy) = 1 / 0.
+        
+        dummy = 1 / 0.
         client->message_box_display( |{ dummy }| ).
     ENDCASE.
 
@@ -74,10 +79,13 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
 
 
   METHOD view_main_display.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     view_main = `MAIN`.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -86,7 +94,8 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Basics IV - Events, Views and Roundtrips`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -133,10 +142,13 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
 
 
   METHOD view_second_display.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     view_main = `SECOND`.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -145,7 +157,8 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Basics IV - Events, Views and Roundtrips`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

@@ -17,7 +17,7 @@ CLASS z2ui5_cl_smp_app_081 DEFINITION PUBLIC.
     DATA quantity TYPE string.
     DATA mv_placement TYPE string.
 
-    DATA mt_tab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -40,7 +40,8 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
@@ -74,7 +75,8 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
   METHOD popover_list_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
@@ -100,7 +102,9 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -109,7 +113,8 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popover - Select from a List`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -171,10 +176,10 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
     ELSE.
@@ -185,11 +190,13 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA lt_sel LIKE mt_tab.
 
     CASE client->get_event( ).
 
       WHEN `SEL_CHANGE`.
-        DATA(lt_sel) = mt_tab.
+        
+        lt_sel = mt_tab.
         DELETE lt_sel WHERE selected = abap_false.
 
       WHEN `POPOVER_LIST`.
@@ -211,16 +218,29 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
 
   METHOD on_init.
+    DATA temp1 LIKE mt_tab.
+    DATA temp2 LIKE LINE OF temp1.
 
     mv_placement = `Left`.
     product      = `tomato`.
     quantity     = `500`.
 
-    mt_tab = VALUE #(
-                      ( id = `1` name = `name1` )
-                      ( id = `2` name = `name2` )
-                      ( id = `3` name = `name3` )
-                      ( id = `4` name = `name4` ) ).
+    
+    CLEAR temp1.
+    
+    temp2-id = `1`.
+    temp2-name = `name1`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `2`.
+    temp2-name = `name2`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `3`.
+    temp2-name = `name3`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `4`.
+    temp2-name = `name4`.
+    INSERT temp2 INTO TABLE temp1.
+    mt_tab = temp1.
 
   ENDMETHOD.
 

@@ -24,25 +24,33 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+        DATA temp1 TYPE REF TO z2ui5_cl_smp_app_025.
+        DATA app_025 LIKE temp1.
+        DATA temp2 TYPE string.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
 
       IF backend_event = `CALL_PREVIOUS_APP_INPUT_RETURN`.
 
-        DATA(app_025) = CAST z2ui5_cl_smp_app_025( client->get_app_prev( ) ).
-        backend_event = VALUE #( ).
+        
+        temp1 ?= client->get_app_prev( ).
+        
+        app_025 = temp1.
+        
+        CLEAR temp2.
+        backend_event = temp2.
         client->message_box_display( |Input made in the previous app: { app_025->input }| ).
 
       ENDIF.
 
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -50,24 +58,31 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp3 TYPE REF TO z2ui5_cl_smp_app_025.
+        DATA app TYPE REF TO z2ui5_cl_smp_app_025.
+        DATA app_next TYPE REF TO z2ui5_cl_smp_app_025.
 
     CASE client->get_event( ).
 
       WHEN `CALL_NEW_APP`.
-        client->nav_app_call( NEW z2ui5_cl_smp_app_025( ) ).
+        
+        CREATE OBJECT temp3 TYPE z2ui5_cl_smp_app_025.
+        client->nav_app_call( temp3 ).
 
       WHEN `CALL_NEW_APP_VIEW`.
-        DATA(app) = NEW z2ui5_cl_smp_app_025( ).
+        
+        CREATE OBJECT app TYPE z2ui5_cl_smp_app_025.
         app->show_view = `SECOND`.
         client->nav_app_call( app ).
 
       WHEN `CALL_NEW_APP_READ`.
-        DATA(app_next) = NEW z2ui5_cl_smp_app_025( ).
+        
+        CREATE OBJECT app_next TYPE z2ui5_cl_smp_app_025.
         app_next->input_previous_set = input.
         client->nav_app_call( app_next ).
 
       WHEN `CALL_NEW_APP_EVENT`.
-        app_next = NEW z2ui5_cl_smp_app_025( ).
+        CREATE OBJECT app_next TYPE z2ui5_cl_smp_app_025.
         app_next->event_backend = `NEW_APP_EVENT`.
         client->nav_app_call( app_next ).
 
@@ -78,7 +93,9 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -87,7 +104,8 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Navigation - Call and Leave Apps (nav_app_call)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

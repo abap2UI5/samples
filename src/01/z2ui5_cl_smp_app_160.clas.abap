@@ -37,7 +37,7 @@ CLASS z2ui5_cl_smp_app_160 DEFINITION PUBLIC.
         pl_q04         TYPE i,
         per_cent_q04   TYPE p LENGTH 2 DECIMALS 1,
       END OF ty_s_output.
-    DATA mt_output TYPE STANDARD TABLE OF ty_s_output WITH EMPTY KEY.
+    DATA mt_output TYPE STANDARD TABLE OF ty_s_output WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -55,10 +55,10 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -68,18 +68,22 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
   METHOD model_init.
 
-    mt_output = VALUE #( ).
+    DATA temp1 LIKE mt_output.
+      DATA temp2 TYPE z2ui5_cl_smp_app_160=>ty_s_output.
+    CLEAR temp1.
+    mt_output = temp1.
 
     DO 10 TIMES.
 
-      INSERT VALUE #(
-        index = sy-index
-        set_sk = `Test`
-        matnr  = `1234567`
-        description = `Test`
-        pl_01 = 0
-        pl_02 = 0
-      ) INTO TABLE mt_output.
+      
+      CLEAR temp2.
+      temp2-index = sy-index.
+      temp2-set_sk = `Test`.
+      temp2-matnr = `1234567`.
+      temp2-description = `Test`.
+      temp2-pl_01 = 0.
+      temp2-pl_02 = 0.
+      INSERT temp2 INTO TABLE mt_output.
 
     ENDDO.
 
@@ -88,7 +92,7 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `PL_TOTAL_CHANGE` ).
+    IF client->check_on_event( `PL_TOTAL_CHANGE` ) IS NOT INITIAL.
       client->message_box_display(
         `Id of Input via source object: ` && client->get_event_arg( ) && |\n| &&
         `Id of Input via event.oSource.sId: ` && client->get_event_arg( 2 ) && |\n| &&
@@ -103,7 +107,12 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp3 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -112,7 +121,8 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - Events on Cell Level`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -131,14 +141,16 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
     page->tag( `Text`
         )->a( n = `text` v = `Make an input and press ENTER` ).
 
-    DATA(table) = page->ele( `FlexBox`
+    
+    table = page->ele( `FlexBox`
         )->a( n = `height` v = `85vh`
         )->ele( n = `Table` ns = `table`
             )->a( n = `rows`               v = client->_bind( mt_output )
             )->a( n = `alternateRowColors` v = `true`
             )->a( n = `selectionMode`      v = `None` ).
 
-    DATA(columns) = table->ele( n = `columns` ns = `table` ).
+    
+    columns = table->ele( n = `columns` ns = `table` ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `5.2rem`
@@ -158,6 +170,13 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{MATNR}` ).
+    
+    CLEAR temp3.
+    INSERT `${$source>/id}` INTO TABLE temp3.
+    INSERT `$event.oSource.sId` INTO TABLE temp3.
+    INSERT `${INDEX}` INTO TABLE temp3.
+    INSERT `$event.oSource.oParent.sId` INTO TABLE temp3.
+    INSERT `${$parameters>/value}` INTO TABLE temp3.
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `5rem`
         )->a( n = `sortProperty`   v = `PL_TOTAL`
@@ -169,13 +188,7 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
                 )->a( n = `type`     v = `Number`
                 )->a( n = `editable` b = abap_true
                 )->a( n = `value`    v = `{PL_TOTAL}`
-                )->a( n = `submit`   v = client->_event( val = `PL_TOTAL_CHANGE` t_arg = VALUE #(
-( `${$source>/id}` )
-( `$event.oSource.sId` )
-( `${INDEX}` )
-( `$event.oSource.oParent.sId` )
-( `${$parameters>/value}` )
-) ) ).
+                )->a( n = `submit`   v = client->_event( val = `PL_TOTAL_CHANGE` t_arg = temp3 ) ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `4rem`

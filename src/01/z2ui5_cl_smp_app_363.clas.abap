@@ -25,11 +25,11 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -38,9 +38,15 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
 
   METHOD on_event.
 
-    DATA(target) = client->get_event( ).
-    DATA(behavior) = `smooth`.
-    DATA(block) = `start`.
+    DATA target TYPE string.
+    DATA behavior TYPE string.
+    DATA block TYPE string.
+    DATA temp1 TYPE string_table.
+    target = client->get_event( ).
+    
+    behavior = `smooth`.
+    
+    block = `start`.
 
     CASE target.
       WHEN `JUMP_BOTTOM`.
@@ -63,16 +69,24 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
         RETURN.
     ENDCASE.
 
+    
+    CLEAR temp1.
+    INSERT target INTO TABLE temp1.
+    INSERT behavior INTO TABLE temp1.
+    INSERT block INTO TABLE temp1.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-scroll_into_view
-        t_arg = VALUE #( ( target ) ( behavior ) ( block ) ) ).
+        t_arg = temp1 ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -80,7 +94,8 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Scroll - Scroll a Control into View`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -90,7 +105,8 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
         )->a( n = `text` v = `Use the toolbar to scroll to a control by id, or press Validate - if the middle field is empty it scrolls to it automatically.`
         )->a( n = `type` v = `Information` ).
 
-    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+    
+    form = page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Long form`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form` ).

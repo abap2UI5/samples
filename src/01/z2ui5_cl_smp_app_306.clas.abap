@@ -23,10 +23,12 @@ CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
         key  TYPE string,
         text TYPE string,
       END OF ty_s_combo,
-      ty_t_combo TYPE STANDARD TABLE OF ty_s_combo WITH EMPTY KEY.
+      ty_t_combo TYPE STANDARD TABLE OF ty_s_combo WITH DEFAULT KEY.
 
-    DATA mt_picture       TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
-    DATA mt_picture_out   TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
+    TYPES temp1_0574ce3fcb TYPE STANDARD TABLE OF ty_s_picture WITH DEFAULT KEY.
+DATA mt_picture       TYPE temp1_0574ce3fcb.
+    TYPES temp2_0574ce3fcb TYPE STANDARD TABLE OF ty_s_picture WITH DEFAULT KEY.
+DATA mt_picture_out   TYPE temp2_0574ce3fcb.
     DATA mv_pic_display   TYPE string.
     DATA mv_picture_base  TYPE string.
     DATA mv_picture_thumb TYPE string.
@@ -51,21 +53,37 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 TYPE ty_t_combo.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      facing_modes = VALUE ty_t_combo( ( key = `` text = `` )
-                                     ( key = `environment` text = `environment` )
-                                     ( key = `user` text = `user` )
-                                     ( key = `left` text = `left` )
-                                     ( key = `right` text = `right` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-key = ``.
+      temp2-text = ``.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-key = `environment`.
+      temp2-text = `environment`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-key = `user`.
+      temp2-text = `user`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-key = `left`.
+      temp2-text = `left`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-key = `right`.
+      temp2-text = `right`.
+      INSERT temp2 INTO TABLE temp1.
+      facing_modes = temp1.
 
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -74,7 +92,13 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA cont TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_list TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_item TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_hbox TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -83,8 +107,10 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(cont) = view->ele( `Shell` ).
-    DATA(page) = cont->ele( `Page`
+    
+    cont = view->ele( `Shell` ).
+    
+    page = cont->ele( `Page`
         )->a( n = `title`          v = `abap2UI5 - Device - Camera, Take Photos`
         )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
         )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
@@ -131,16 +157,19 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
         )->a( n = `facingMode` v = client->_bind( facing_mode )
         )->a( n = `deviceId`   v = client->_bind( device ) ).
 
-    DATA(lo_list) = page->ele( `List`
+    
+    lo_list = page->ele( `List`
         )->a( n = `headerText`      v = `List Output`
         )->a( n = `items`           v = client->_bind( mt_picture_out )
         )->a( n = `mode`            v = `SingleSelectMaster`
         )->a( n = `selectionChange` v = client->_event( `DISPLAY` ) ).
 
-    DATA(lo_item) = lo_list->ele( `CustomListItem`
+    
+    lo_item = lo_list->ele( `CustomListItem`
         )->a( n = `selected` v = `{SELECTED}` ).
 
-    DATA(lo_hbox) = lo_item->ele( `HBox`
+    
+    lo_hbox = lo_item->ele( `HBox`
         )->a( n = `alignItems` v = `Center` ).
     lo_hbox->tag( `Image`
         )->a( n = `src`    v = `{THUMBNAIL}`
@@ -161,21 +190,51 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp3 TYPE z2ui5_cl_smp_app_306=>ty_s_picture.
+        DATA temp4 TYPE string.
+        DATA temp5 TYPE string.
+        DATA temp6 LIKE LINE OF mt_picture_out.
+        DATA temp7 LIKE sy-tabix.
+        DATA temp8 LIKE LINE OF mt_picture.
+        DATA temp9 LIKE sy-tabix.
 
     CASE client->get_event( ).
       WHEN `CAPTURE`.
 
-        INSERT VALUE #( data      = mv_picture_base
-                        thumbnail = mv_picture_thumb
-                        time      = sy-uzeit ) INTO TABLE mt_picture.
-        mv_picture_base  = VALUE #( ).
-        mv_picture_thumb = VALUE #( ).
+        
+        CLEAR temp3.
+        temp3-data = mv_picture_base.
+        temp3-thumbnail = mv_picture_thumb.
+        temp3-time = sy-uzeit.
+        INSERT temp3 INTO TABLE mt_picture.
+        
+        CLEAR temp4.
+        mv_picture_base  = temp4.
+        
+        CLEAR temp5.
+        mv_picture_thumb = temp5.
         rebuild_output( ).
 
       WHEN `DISPLAY`.
 
-        selected_picture = mt_picture_out[ selected = abap_true ].
-        mv_pic_display   = mt_picture[ selected_picture-id ]-data.
+        
+        
+        temp7 = sy-tabix.
+        READ TABLE mt_picture_out WITH KEY selected = abap_true INTO temp6.
+        sy-tabix = temp7.
+        IF sy-subrc <> 0.
+          ASSERT 1 = 0.
+        ENDIF.
+        selected_picture = temp6.
+        
+        
+        temp9 = sy-tabix.
+        READ TABLE mt_picture INDEX selected_picture-id INTO temp8.
+        sy-tabix = temp9.
+        IF sy-subrc <> 0.
+          ASSERT 1 = 0.
+        ENDIF.
+        mv_pic_display   = temp8-data.
         rebuild_output( ).
         view_display( ).
 
@@ -186,12 +245,23 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
 
   METHOD rebuild_output.
 
-    mt_picture_out = VALUE #( ).
-    LOOP AT mt_picture INTO DATA(ls_pic).
-      INSERT VALUE #( name      = |picture { sy-tabix }|
-                      id        = sy-tabix
-                      thumbnail = ls_pic-thumbnail
-                      selected  = xsdbool( sy-tabix = selected_picture-id ) )
+    DATA temp10 LIKE mt_picture_out.
+    DATA ls_pic LIKE LINE OF mt_picture.
+      DATA temp11 TYPE z2ui5_cl_smp_app_306=>ty_s_picture.
+      DATA temp1 TYPE xsdboolean.
+    CLEAR temp10.
+    mt_picture_out = temp10.
+    
+    LOOP AT mt_picture INTO ls_pic.
+      
+      CLEAR temp11.
+      temp11-name = |picture { sy-tabix }|.
+      temp11-id = sy-tabix.
+      temp11-thumbnail = ls_pic-thumbnail.
+      
+      temp1 = boolc( sy-tabix = selected_picture-id ).
+      temp11-selected = temp1.
+      INSERT temp11
              INTO TABLE mt_picture_out.
     ENDLOOP.
 

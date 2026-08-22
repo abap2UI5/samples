@@ -25,9 +25,9 @@ CLASS z2ui5_cl_smp_app_470 DEFINITION PUBLIC.
         name     TYPE string,
         category TYPE string,
         price    TYPE string,
-        t_item   TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY,
+        t_item   TYPE STANDARD TABLE OF ty_s_item WITH DEFAULT KEY,
       END OF ty_s_product.
-    DATA t_product TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
+    DATA t_product TYPE STANDARD TABLE OF ty_s_product WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -46,26 +46,79 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_product.
+      DATA temp2 LIKE LINE OF temp1.
+      DATA temp3 TYPE z2ui5_cl_smp_app_470=>ty_s_product-t_item.
+      DATA temp4 LIKE LINE OF temp3.
+      DATA temp5 TYPE z2ui5_cl_smp_app_470=>ty_s_product-t_item.
+      DATA temp6 LIKE LINE OF temp5.
+      DATA temp7 TYPE z2ui5_cl_smp_app_470=>ty_s_product-t_item.
+      DATA temp8 LIKE LINE OF temp7.
 
     me->client = client.
 
-    IF client->check_on_init( ).
-      t_product = VALUE #(
-        ( name = `Notebook 15"` category = `Hardware`    price = `1299`
-          t_item = VALUE #( ( name = `SSD 1 TB` qty = 1 unit = `pc` )
-                            ( name = `RAM 16 GB` qty = 2 unit = `pc` )
-                            ( name = `Charger 90W` qty = 1 unit = `pc` ) ) )
-        ( name = `Wireless Mouse` category = `Accessories` price = `39`
-          t_item = VALUE #( ( name = `AA Battery` qty = 2 unit = `pc` ) ) )
-        ( name = `USB-C Dock` category = `Accessories` price = `189`
-          t_item = VALUE #( ( name = `Power Supply` qty = 1 unit = `pc` )
-                            ( name = `Cable 1 m` qty = 1 unit = `pc` )
-                            ( name = `Quick Guide` qty = 1 unit = `pc` ) ) ) ).
+    IF client->check_on_init( ) IS NOT INITIAL.
+      
+      CLEAR temp1.
+      
+      temp2-name = `Notebook 15"`.
+      temp2-category = `Hardware`.
+      temp2-price = `1299`.
+      
+      CLEAR temp3.
+      
+      temp4-name = `SSD 1 TB`.
+      temp4-qty = 1.
+      temp4-unit = `pc`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-name = `RAM 16 GB`.
+      temp4-qty = 2.
+      temp4-unit = `pc`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-name = `Charger 90W`.
+      temp4-qty = 1.
+      temp4-unit = `pc`.
+      INSERT temp4 INTO TABLE temp3.
+      temp2-t_item = temp3.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Wireless Mouse`.
+      temp2-category = `Accessories`.
+      temp2-price = `39`.
+      
+      CLEAR temp5.
+      
+      temp6-name = `AA Battery`.
+      temp6-qty = 2.
+      temp6-unit = `pc`.
+      INSERT temp6 INTO TABLE temp5.
+      temp2-t_item = temp5.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `USB-C Dock`.
+      temp2-category = `Accessories`.
+      temp2-price = `189`.
+      
+      CLEAR temp7.
+      
+      temp8-name = `Power Supply`.
+      temp8-qty = 1.
+      temp8-unit = `pc`.
+      INSERT temp8 INTO TABLE temp7.
+      temp8-name = `Cable 1 m`.
+      temp8-qty = 1.
+      temp8-unit = `pc`.
+      INSERT temp8 INTO TABLE temp7.
+      temp8-name = `Quick Guide`.
+      temp8-qty = 1.
+      temp8-unit = `pc`.
+      INSERT temp8 INTO TABLE temp7.
+      temp2-t_item = temp7.
+      INSERT temp2 INTO TABLE temp1.
+      t_product = temp1.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -83,14 +136,19 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp3 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popup - Element Binding to the Selected Row`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -104,7 +162,8 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->ele( `Table`
+    
+    tab = page->ele( `Table`
         )->a( n = `items` v = client->_bind( t_product ) ).
 
     tab->ele( `columns`
@@ -124,6 +183,9 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
             )->tag( `Text`
                 )->a( n = `text` v = `Components` ).
 
+    
+    CLEAR temp3.
+    INSERT `$event.oSource.getBindingContext().getPath().split('/').pop()` INTO TABLE temp3.
     tab->ele( `items`
         )->ele( `ColumnListItem`
             )->ele( `cells`
@@ -136,7 +198,7 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
                 )->tag( `Button`
                     )->a( n = `press` v = client->_event(
                         val   = `SHOW`
-                        t_arg = VALUE #( ( `$event.oSource.getBindingContext().getPath().split('/').pop()` ) ) )
+                        t_arg = temp3 )
                     )->a( n = `text`  v = `components`
                     )->a( n = `icon`  v = `sap-icon://product` ).
 
@@ -147,16 +209,22 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
   METHOD popup_components.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA dialog TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA box TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp5 TYPE string_table.
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
-    DATA(dialog) = popup->ele( `Dialog`
+    
+    dialog = popup->ele( `Dialog`
         )->a( n = `title`        v = `{NAME}`
         )->a( n = `contentWidth` v = `24rem` ).
 
     " relative bindings - resolved by the element bind below
-    DATA(box) = dialog->ele( `VBox`
+    
+    box = dialog->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMarginBegin sapUiSmallMarginTop` ).
     box->ele( `ObjectStatus`
         )->a( n = `text`  v = `{CATEGORY}`
@@ -183,10 +251,14 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
     " element-bind the whole popup slot to the selected product, so every relative
     " binding in the popup (and its component list aggregation) resolves against it
+    
+    CLEAR temp5.
+    INSERT index INTO TABLE temp5.
+    INSERT client->_bind( t_product ) INTO TABLE temp5.
     client->follow_up_action(
         val   = client->cs_event-bind_element
         view  = client->cs_view-popup
-        t_arg = VALUE #( ( index ) ( client->_bind( t_product ) ) ) ).
+        t_arg = temp5 ).
 
   ENDMETHOD.
 ENDCLASS.

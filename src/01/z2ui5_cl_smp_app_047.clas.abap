@@ -23,7 +23,7 @@ CLASS z2ui5_cl_smp_app_047 DEFINITION PUBLIC.
     DATA date    TYPE d.
     DATA time    TYPE t.
 
-    DATA mt_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -34,14 +34,24 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE mt_tab.
+      DATA temp2 LIKE LINE OF temp1.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       date = sy-datum.
       time = sy-uzeit.
       dec1 = - 1 / 3.
       dec2 = 2 / 3.
 
-      mt_tab = VALUE #( ( date = sy-datum time = sy-uzeit ) ).
+      
+      CLEAR temp1.
+      
+      temp2-date = sy-datum.
+      temp2-time = sy-uzeit.
+      INSERT temp2 INTO TABLE temp1.
+      mt_tab = temp1.
       client->_bind( mt_tab ).
     ENDIF.
 
@@ -52,7 +62,8 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
         dec_sum = dec1 + dec2.
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -112,7 +123,8 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
             )->tag( `Input`
                 )->a( n = `value` v = client->_bind( time ) ).
 
-    DATA(tab) = page->ele( `ScrollContainer`
+    
+    tab = page->ele( `ScrollContainer`
         )->a( n = `height`   v = `70%`
         )->a( n = `vertical` b = abap_true
         )->ele( `Table`

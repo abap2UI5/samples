@@ -15,9 +15,9 @@ CLASS z2ui5_cl_smp_app_078 DEFINITION PUBLIC.
         editable TYPE abap_bool,
       END OF ty_s_token.
 
-    DATA mt_token          TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
-    DATA mt_tokens_added TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
-    DATA mt_tokens_removed TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
+    DATA mt_token          TYPE STANDARD TABLE OF ty_s_token WITH DEFAULT KEY.
+    DATA mt_tokens_added TYPE STANDARD TABLE OF ty_s_token WITH DEFAULT KEY.
+    DATA mt_tokens_removed TYPE STANDARD TABLE OF ty_s_token WITH DEFAULT KEY.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -28,10 +28,17 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA ls_token LIKE LINE OF mt_tokens_removed.
+        DATA temp1 TYPE z2ui5_cl_smp_app_078=>ty_s_token.
+      DATA temp2 LIKE mt_tokens_removed.
+      DATA temp3 LIKE mt_tokens_added.
 
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
 
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+      
+      view = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
               )->a( n = `displayBlock` v = `true`
               )->a( n = `height`       v = `100%`
@@ -71,7 +78,8 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
                   )->a( n = `visible`  v = `{VISIBLE}`
                   )->a( n = `editable` v = `{EDITABLE}` ).
 
-      DATA(tab) = view->ele( `Table`
+      
+      tab = view->ele( `Table`
           )->a( n = `items` v = client->_bind( mt_token )
           )->a( n = `mode`  v = `MultiSelect` ).
 
@@ -100,16 +108,27 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
     ENDIF.
 
     IF client->get_event( ) = `UPDATE_BACKEND`.
-      LOOP AT mt_tokens_removed INTO DATA(ls_token).
+      
+      LOOP AT mt_tokens_removed INTO ls_token.
         DELETE mt_token WHERE key = ls_token-key.
       ENDLOOP.
 
       LOOP AT mt_tokens_added INTO ls_token.
-        INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
+        
+        CLEAR temp1.
+        temp1-key = ls_token-key.
+        temp1-text = ls_token-text.
+        temp1-visible = abap_true.
+        temp1-editable = abap_true.
+        INSERT temp1 INTO TABLE mt_token.
       ENDLOOP.
 
-      mt_tokens_removed = VALUE #( ).
-      mt_tokens_added   = VALUE #( ).
+      
+      CLEAR temp2.
+      mt_tokens_removed = temp2.
+      
+      CLEAR temp3.
+      mt_tokens_added   = temp3.
     ENDIF.
 
   ENDMETHOD.

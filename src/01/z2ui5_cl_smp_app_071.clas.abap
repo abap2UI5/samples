@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_071 DEFINITION PUBLIC.
 
     DATA set_size_limit TYPE i VALUE 100.
     DATA combo_number   TYPE i VALUE 105.
-    DATA t_combo        TYPE STANDARD TABLE OF ty_s_combobox WITH EMPTY KEY.
+    DATA t_combo        TYPE STANDARD TABLE OF ty_s_combobox WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,24 +29,32 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 TYPE string_table.
+      DATA temp2 TYPE string.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       combo_fill( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( `UPDATE` ).
+    ELSEIF client->check_on_event( `UPDATE` ) IS NOT INITIAL.
 
+      
+      CLEAR temp1.
+      
+      temp2 = set_size_limit.
+      INSERT temp2 INTO TABLE temp1.
+      INSERT client->cs_view-main INTO TABLE temp1.
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_size_limit
-          t_arg = VALUE #( ( CONV #( set_size_limit ) ) ( client->cs_view-main ) ) ).
+          t_arg = temp1 ).
       client->message_toast_display( `SizeLimitUpdated` ).
 
-    ELSEIF client->check_on_event( `UPDATE_MODEL` ).
+    ELSEIF client->check_on_event( `UPDATE_MODEL` ) IS NOT INITIAL.
 
       combo_fill( ).
       client->message_toast_display( `update number of entries` ).
@@ -58,9 +66,16 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
 
   METHOD combo_fill.
 
-    t_combo = VALUE #( ).
+    DATA temp3 LIKE t_combo.
+      DATA temp4 TYPE z2ui5_cl_smp_app_071=>ty_s_combobox.
+    CLEAR temp3.
+    t_combo = temp3.
     DO combo_number TIMES.
-      INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
+      
+      CLEAR temp4.
+      temp4-key = sy-index.
+      temp4-text = sy-index.
+      INSERT temp4 INTO TABLE t_combo.
     ENDDO.
 
   ENDMETHOD.
@@ -68,7 +83,9 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -77,7 +94,8 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - Model setSizeLimit for Large Tables`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

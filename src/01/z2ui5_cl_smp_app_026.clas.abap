@@ -28,25 +28,25 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       placement = `Left`.
       product   = `tomato`.
       quantity  = `500`.
 
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( `POPOVER` ).
+    ELSEIF client->check_on_event( `POPOVER` ) IS NOT INITIAL.
       popover_display( `TEST` ).
 
-    ELSEIF client->check_on_event( `BUTTON_CONFIRM` ).
+    ELSEIF client->check_on_event( `BUTTON_CONFIRM` ) IS NOT INITIAL.
 
       client->message_toast_display( `confirm` ).
       client->popover_destroy( ).
 
-    ELSEIF client->check_on_event( `BUTTON_CANCEL` ).
+    ELSEIF client->check_on_event( `BUTTON_CANCEL` ) IS NOT INITIAL.
 
       client->message_toast_display( `cancel` ).
       client->popover_destroy( ).
@@ -58,7 +58,8 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
@@ -92,7 +93,9 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -100,7 +103,8 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popover - Basic Example with Placement`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

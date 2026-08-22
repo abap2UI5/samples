@@ -10,7 +10,7 @@ CLASS z2ui5_cl_smp_app_454 DEFINITION PUBLIC.
         name     TYPE string,
         category TYPE string,
       END OF ty_s_product.
-    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
+    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -26,18 +26,35 @@ CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_products.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
-    IF client->check_on_init( ).
-      t_products = VALUE #(
-          ( name = `Notebook Basic 15`  category = `Laptops` )
-          ( name = `Notebook Basic 17`  category = `Laptops` )
-          ( name = `Ergo Screen E-I`    category = `Screens` )
-          ( name = `Flat Basic`         category = `Screens` )
-          ( name = `Comfort Easy`       category = `PDAs` )
-          ( name = `ITelO Vault`        category = `PDAs` ) ).
+    IF client->check_on_init( ) IS NOT INITIAL.
+      
+      CLEAR temp1.
+      
+      temp2-name = `Notebook Basic 15`.
+      temp2-category = `Laptops`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Notebook Basic 17`.
+      temp2-category = `Laptops`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Ergo Screen E-I`.
+      temp2-category = `Screens`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Flat Basic`.
+      temp2-category = `Screens`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Comfort Easy`.
+      temp2-category = `PDAs`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `ITelO Vault`.
+      temp2-category = `PDAs`.
+      INSERT temp2 INTO TABLE temp1.
+      t_products = temp1.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -47,6 +64,9 @@ CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp3 TYPE string_table.
+        DATA temp5 TYPE string_table.
+        DATA temp1 TYPE string.
 
     CASE client->get_event( ).
 
@@ -56,23 +76,33 @@ CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
         " untouched (no table copy, no model change); an empty query
         " clears the filter again.
         " t_arg is positional: id, aggregation, method, params
+        
+        CLEAR temp3.
+        INSERT `productList` INTO TABLE temp3.
+        INSERT `items` INTO TABLE temp3.
+        INSERT `filter` INTO TABLE temp3.
+        INSERT `NAME` INTO TABLE temp3.
+        INSERT `Contains` INTO TABLE temp3.
+        INSERT client->get_event_arg( ) INTO TABLE temp3.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-binding_call
-                                  t_arg = VALUE #( ( `productList` )
-                                                   ( `items` )
-                                                   ( `filter` )
-                                                   ( `NAME` )
-                                                   ( `Contains` )
-                                                   ( client->get_event_arg( ) ) ) ).
+                                  t_arg = temp3 ).
 
       WHEN `SORT_ASC` OR `SORT_DESC`.
+        
+        CLEAR temp5.
+        INSERT `productList` INTO TABLE temp5.
+        INSERT `items` INTO TABLE temp5.
+        INSERT `sort` INTO TABLE temp5.
+        INSERT `NAME` INTO TABLE temp5.
+        
+        IF client->get_event( ) = `SORT_DESC`.
+          temp1 = `true`.
+        ELSE.
+          temp1 = `false`.
+        ENDIF.
+        INSERT temp1 INTO TABLE temp5.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-binding_call
-                                  t_arg = VALUE #( ( `productList` )
-                                                   ( `items` )
-                                                   ( `sort` )
-                                                   ( `NAME` )
-                                                   ( COND #( WHEN client->get_event( ) = `SORT_DESC`
-                                                             THEN `true`
-                                                             ELSE `false` ) ) ) ).
+                                  t_arg = temp5 ).
 
     ENDCASE.
 
@@ -81,7 +111,10 @@ CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp7 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -89,7 +122,8 @@ CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - List - Filter and Sort the Binding from ABAP`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -103,12 +137,15 @@ CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp7.
+    INSERT `${$parameters>/query}` INTO TABLE temp7.
     page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `SearchField`
             )->a( n = `width`       v = `30%`
             )->a( n = `search`      v = client->_event( val   = `SEARCH`
-                                                       t_arg = VALUE #( ( `${$parameters>/query}` ) ) )
+                                                       t_arg = temp7 )
             )->a( n = `placeholder` v = `Search products`
         )->ele( `HBox`
             )->a( n = `class` v = `sapUiTinyMarginTop`

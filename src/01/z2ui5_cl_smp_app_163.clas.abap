@@ -20,7 +20,7 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `OPEN_MENU` ).
+    IF client->check_on_event( `OPEN_MENU` ) IS NOT INITIAL.
       view_menu( ).
     ENDIF.
 
@@ -29,7 +29,8 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
 
   METHOD view_menu.
 
-    DATA(menu_view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA menu_view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    menu_view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
@@ -76,7 +77,9 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA vbox TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -98,7 +101,8 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(vbox) = view->ele( `VBox` ).
+    
+    vbox = view->ele( `VBox` ).
 
     vbox->tag( `Button`
         )->a( n = `press` v = client->_event( `OPEN_MENU` )
@@ -114,9 +118,9 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).

@@ -11,7 +11,7 @@ CLASS z2ui5_cl_smp_app_459 DEFINITION PUBLIC.
         name     TYPE string,
         category TYPE string,
       END OF ty_s_product.
-    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
+    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -26,18 +26,35 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_products.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
-    IF client->check_on_init( ).
-      t_products = VALUE #(
-          ( name = `Notebook Basic 15`  category = `Laptops` )
-          ( name = `Notebook Basic 17`  category = `Laptops` )
-          ( name = `Ergo Screen E-I`    category = `Screens` )
-          ( name = `Flat Basic`         category = `Screens` )
-          ( name = `Comfort Easy`       category = `PDAs` )
-          ( name = `ITelO Vault`        category = `PDAs` ) ).
+    IF client->check_on_init( ) IS NOT INITIAL.
+      
+      CLEAR temp1.
+      
+      temp2-name = `Notebook Basic 15`.
+      temp2-category = `Laptops`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Notebook Basic 17`.
+      temp2-category = `Laptops`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Ergo Screen E-I`.
+      temp2-category = `Screens`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Flat Basic`.
+      temp2-category = `Screens`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Comfort Easy`.
+      temp2-category = `PDAs`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `ITelO Vault`.
+      temp2-category = `PDAs`.
+      INSERT temp2 INTO TABLE temp1.
+      t_products = temp1.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -47,16 +64,40 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
 
 
   METHOD on_event.
+          DATA temp3 TYPE i.
+          DATA lv_from TYPE i.
+          DATA temp4 TYPE i.
+          DATA lv_to TYPE i.
+          DATA lv_pos TYPE string.
+          DATA ls_row LIKE LINE OF t_products.
+          DATA temp1 LIKE LINE OF t_products.
+          DATA temp2 LIKE sy-tabix.
 
     IF client->get_event( ) = `REORDER`.
       " the three event args arrive resolved client-side from the drop
       " event: dragged row index, drop target index (both 0-based) and
       " the drop position (Before/After)
       TRY.
-          DATA(lv_from) = CONV i( client->get_event_arg( ) ) + 1.
-          DATA(lv_to)   = CONV i( client->get_event_arg( 2 ) ) + 1.
-          DATA(lv_pos)  = client->get_event_arg( 3 ).
-          DATA(ls_row)  = t_products[ lv_from ].
+          
+          temp3 = client->get_event_arg( ).
+          
+          lv_from = temp3 + 1.
+          
+          temp4 = client->get_event_arg( 2 ).
+          
+          lv_to   = temp4 + 1.
+          
+          lv_pos  = client->get_event_arg( 3 ).
+          
+          
+          
+          temp2 = sy-tabix.
+          READ TABLE t_products INDEX lv_from INTO temp1.
+          sy-tabix = temp2.
+          IF sy-subrc <> 0.
+            ASSERT 1 = 0.
+          ENDIF.
+          ls_row = temp1.
         CATCH cx_root.
           RETURN.
       ENDTRY.
@@ -80,7 +121,11 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp5 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -89,7 +134,8 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:dnd`    v = `sap.ui.core.dnd` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Table - Drag and Drop Rows`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -103,13 +149,19 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->ele( `Table`
+    
+    tab = page->ele( `Table`
         )->a( n = `items` v = client->_bind( t_products )
         )->a( n = `id`    v = `reorderTable` ).
 
     " dragDropConfig is a plain sap.m aggregation here (ns = ``); the
     " DragDropInfo goes through _generic because the typed builder method
     " has no dropPosition parameter
+    
+    CLEAR temp5.
+    INSERT `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` INTO TABLE temp5.
+    INSERT `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` INTO TABLE temp5.
+    INSERT `${$parameters>/dropPosition}` INTO TABLE temp5.
     tab->ele( `dragDropConfig`
         )->ele( n = `DragDropInfo` ns = `dnd`
             )->a( n = `sourceAggregation` v = `items`
@@ -117,10 +169,7 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
             )->a( n = `dropPosition`      v = `Between`
             )->a( n = `drop`              v = client->_event(
                                   val   = `REORDER`
-                                  t_arg = VALUE #(
-                                      ( `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` )
-                                      ( `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` )
-                                      ( `${$parameters>/dropPosition}` ) ) ) ).
+                                  t_arg = temp5 ) ).
 
     tab->ele( `columns`
         )->ele( `Column`

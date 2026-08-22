@@ -22,12 +22,12 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -35,25 +35,40 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE symsg.
+        DATA ls_msg_sy LIKE temp1.
+        DATA temp2 TYPE bapiret2.
+        DATA ls_msg_bapiret LIKE temp2.
+            DATA lv_val TYPE i.
+            DATA lx TYPE REF TO cx_root.
 
     CASE client->get_event( ).
       WHEN `BUTTON_MESSAGE_BOX_SY`.
         " only the message key - message_box_display( ) reads the text from
         " T100 itself, exactly as it does for the BAPIRET2 structure below
-        DATA(ls_msg_sy) = VALUE symsg( msgty = `I`
-                                       msgid = `NET`
-                                       msgno = `001` ).
+        
+        CLEAR temp1.
+        temp1-msgty = `I`.
+        temp1-msgid = `NET`.
+        temp1-msgno = `001`.
+        
+        ls_msg_sy = temp1.
         client->message_box_display( ls_msg_sy ).
       WHEN `BUTTON_MESSAGE_BOX_BAPIRET`.
-        DATA(ls_msg_bapiret) = VALUE bapiret2(
-            id     = `NET`
-            number = `001` ).
+        
+        CLEAR temp2.
+        temp2-id = `NET`.
+        temp2-number = `001`.
+        
+        ls_msg_bapiret = temp2.
         client->message_box_display( ls_msg_bapiret ).
       WHEN `BUTTON_MESSAGE_BOX_CX_ROOT`.
         TRY.
-            DATA(lv_val) = 1 / 0.
+            
+            lv_val = 1 / 0.
             client->message_box_display( |{ lv_val }| ).
-          CATCH cx_root INTO DATA(lx).
+            
+          CATCH cx_root INTO lx.
             client->message_box_display( lx ).
         ENDTRY.
     ENDCASE.
@@ -65,7 +80,9 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -74,7 +91,8 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Message - MessageBox from SY, BAPIRET2 or Exception`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

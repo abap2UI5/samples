@@ -21,7 +21,14 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(lr_view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA lr_view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lr_wizard TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lr_wiz_step1 TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lr_wiz_step2 TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lr_wiz_step22 TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lr_wiz_step23 TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lr_wiz_step3 TYPE REF TO z2ui5_cl_ui5_view_builder.
+    lr_view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -45,17 +52,20 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(lr_wizard) = lr_view->ele( `Wizard`
+    
+    lr_wizard = lr_view->ele( `Wizard`
         )->a( n = `id`              v = `wiz`
         )->a( n = `enableBranching` b = abap_true ).
-    DATA(lr_wiz_step1) = lr_wizard->ele( `WizardStep`
+    
+    lr_wiz_step1 = lr_wizard->ele( `WizardStep`
         )->a( n = `title`     v = `STEP1`
         )->a( n = `validated` b = abap_true
         )->a( n = `nextStep`  v = `STEP2` ).
     lr_wiz_step1->tag( `MessageStrip`
         )->a( n = `text` v = `STEP1` ).
 
-    DATA(lr_wiz_step2) = lr_wizard->ele( `WizardStep`
+    
+    lr_wiz_step2 = lr_wizard->ele( `WizardStep`
         )->a( n = `id`              v = `STEP2`
         )->a( n = `title`           v = `STEP2`
         )->a( n = `validated`       b = abap_true
@@ -70,7 +80,8 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
         )->a( n = `press` v = client->_event( `STEP23` )
         )->a( n = `text`  v = `Press Step 2.3` ).
 
-    DATA(lr_wiz_step22) = lr_wizard->ele( `WizardStep`
+    
+    lr_wiz_step22 = lr_wizard->ele( `WizardStep`
         )->a( n = `id`        v = `STEP22`
         )->a( n = `title`     v = `STEP2.2`
         )->a( n = `validated` b = abap_true ).
@@ -78,7 +89,8 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
     lr_wiz_step22->tag( `MessageStrip`
         )->a( n = `text` v = `STEP22` ).
 
-    DATA(lr_wiz_step23) = lr_wizard->ele( `WizardStep`
+    
+    lr_wiz_step23 = lr_wizard->ele( `WizardStep`
         )->a( n = `id`        v = `STEP23`
         )->a( n = `title`     v = `STEP2.3`
         )->a( n = `validated` b = abap_true ).
@@ -86,7 +98,8 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
     lr_wiz_step23->tag( `MessageStrip`
         )->a( n = `text` v = `STEP23` ).
 
-    DATA(lr_wiz_step3) = lr_wizard->ele( `WizardStep`
+    
+    lr_wiz_step3 = lr_wizard->ele( `WizardStep`
         )->a( n = `title`     v = `STEP3`
         )->a( n = `validated` b = abap_true ).
 
@@ -99,12 +112,14 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+        DATA temp1 TYPE string_table.
+        DATA temp3 TYPE string_table.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       view_display( client ).
       RETURN.
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 
@@ -114,12 +129,22 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
         " generic whitelisted control calls - t_arg is positional:
         " id, method, params (the step params are control ids; the view
         " defaults to cs_view-main)
+        
+        CLEAR temp1.
+        INSERT `wiz` INTO TABLE temp1.
+        INSERT `discardProgress` INTO TABLE temp1.
+        INSERT `STEP2` INTO TABLE temp1.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-control_by_id
-            t_arg = VALUE #( ( `wiz` ) ( `discardProgress` ) ( `STEP2` ) ) ).
+            t_arg = temp1 ).
+        
+        CLEAR temp3.
+        INSERT `STEP2` INTO TABLE temp3.
+        INSERT `setNextStep` INTO TABLE temp3.
+        INSERT client->get_event( ) INTO TABLE temp3.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-control_by_id
-            t_arg = VALUE #( ( `STEP2` ) ( `setNextStep` ) ( client->get_event( ) ) ) ).
+            t_arg = temp3 ).
 
     ENDCASE.
 

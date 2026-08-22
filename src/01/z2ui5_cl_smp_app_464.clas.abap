@@ -21,7 +21,7 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_init( ) IS NOT INITIAL OR client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -31,14 +31,18 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA lv_zero TYPE i.
+        DATA lv_result TYPE i.
 
     CASE client->get_event( ).
 
       WHEN `RAISE_EXCEPTION`.
         " the division dumps - nothing ever reads the result, and that is
         " the point of the sample
-        DATA(lv_zero) = 0.
-        DATA(lv_result) = 1 / lv_zero ##NEEDED.
+        
+        lv_zero = 0.
+        
+        lv_result = 1 / lv_zero ##NEEDED.
       WHEN `ASSERT`.
         ASSERT 1 = 0.
 
@@ -49,7 +53,9 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -57,7 +63,8 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Navigation - Uncaught Error and Error Popup`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

@@ -11,7 +11,7 @@ CLASS z2ui5_cl_smp_app_495 DEFINITION PUBLIC.
         no    TYPE string,
         check TYPE string,
       END OF ty_s_step.
-    DATA t_log TYPE STANDARD TABLE OF ty_s_step WITH EMPTY KEY.
+    DATA t_log TYPE STANDARD TABLE OF ty_s_step WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -28,25 +28,28 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_495 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 TYPE REF TO z2ui5_cl_smp_app_493.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       log_step( `check_on_init( ) - the very first call, nothing exists yet` ).
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
 
       log_step( `check_on_navigated( ) - the sub-app returned, re-display the view` ).
       view_display( ).
 
-    ELSEIF client->check_on_event( `LOG` ).
+    ELSEIF client->check_on_event( `LOG` ) IS NOT INITIAL.
       log_step( `check_on_event( ) - a button was pressed, the view stays as it is` ).
 
-    ELSEIF client->check_on_event( `CALL` ).
+    ELSEIF client->check_on_event( `CALL` ) IS NOT INITIAL.
 
       log_step( `check_on_event( ) - calling Basics I as a sub-app` ).
-      client->nav_app_call( NEW z2ui5_cl_smp_app_493( ) ).
+      
+      CREATE OBJECT temp1 TYPE z2ui5_cl_smp_app_493.
+      client->nav_app_call( temp1 ).
 
     ENDIF.
 
@@ -55,23 +58,28 @@ CLASS z2ui5_cl_smp_app_495 IMPLEMENTATION.
 
   METHOD log_step.
 
-    INSERT VALUE #(
-        no    = |{ lines( t_log ) + 1 }|
-        check = val ) INTO TABLE t_log.
+    DATA temp2 TYPE z2ui5_cl_smp_app_495=>ty_s_step.
+    CLEAR temp2.
+    temp2-no = |{ lines( t_log ) + 1 }|.
+    temp2-check = val.
+    INSERT temp2 INTO TABLE t_log.
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Basics III - Lifecycle: Init, Event, Navigated`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

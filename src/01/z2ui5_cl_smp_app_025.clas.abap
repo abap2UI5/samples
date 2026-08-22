@@ -25,15 +25,15 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       IF event_backend = `NEW_APP_EVENT`.
         client->message_box_display( `new app called and event NEW_APP_EVENT raised` ).
       ENDIF.
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -43,6 +43,11 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE REF TO z2ui5_cl_smp_app_025.
+        DATA temp2 TYPE REF TO z2ui5_cl_smp_app_024.
+        DATA app_024 LIKE temp2.
+        DATA temp3 TYPE REF TO z2ui5_cl_smp_app_024.
+        DATA app_back LIKE temp3.
 
     CASE client->get_event( ).
 
@@ -50,10 +55,15 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
         client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
 
       WHEN `BUTTON_RESTART`.
-        client->nav_app_call( NEW z2ui5_cl_smp_app_025( ) ).
+        
+        CREATE OBJECT temp1 TYPE z2ui5_cl_smp_app_025.
+        client->nav_app_call( temp1 ).
 
       WHEN `BUTTON_READ_PREVIOUS`.
-        DATA(app_024) = CAST z2ui5_cl_smp_app_024( client->get_app_prev( ) ).
+        
+        temp2 ?= client->get_app_prev( ).
+        
+        app_024 = temp2.
         input_previous = app_024->input2.
         client->message_toast_display( `data of previous app read` ).
 
@@ -61,7 +71,10 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
         show_view = `MAIN`.
 
       WHEN `BACK_WITH_EVENT`.
-        DATA(app_back) = CAST z2ui5_cl_smp_app_024( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        
+        temp3 ?= client->get_app( client->get( )-s_draft-id_prev_app_stack ).
+        
+        app_back = temp3.
         app_back->backend_event = `CALL_PREVIOUS_APP_INPUT_RETURN`.
         client->nav_app_leave( app_back ).
 
@@ -72,7 +85,9 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -81,7 +96,8 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - flow logic - APP 02`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

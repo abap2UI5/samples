@@ -22,20 +22,25 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    FIELD-SYMBOLS <tab> TYPE table.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - Dynamic Table Typed at Runtime (RTTI)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    FIELD-SYMBOLS <tab> TYPE table.
+    
     ASSIGN t_tab->* TO <tab>.
 
     page->tag( `MessageStrip`
@@ -45,7 +50,8 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->ele( `Table`
+    
+    tab = page->ele( `Table`
         )->a( n = `items` v = client->_bind( <tab> )
         )->a( n = `mode`  v = `MultiSelect`
         )->ele( `headerToolbar`
@@ -93,10 +99,13 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     FIELD-SYMBOLS <tab> TYPE table.
+      DATA temp1 TYPE z2ui5_t_01.
+      DATA temp2 TYPE z2ui5_t_01.
+      DATA temp3 TYPE z2ui5_t_01.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       " The point of this sample is CREATE DATA over a DDIC name computed at
       " runtime; it needs SOME table that is present on every abap2UI5 system,
@@ -106,17 +115,32 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
       CREATE DATA t_tab TYPE STANDARD TABLE OF (`Z2UI5_T_01`).
       ASSIGN t_tab->* TO <tab>.
 
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
+      
+      CLEAR temp1.
+      temp1-id = `this is an uuid`.
+      temp1-timestampl = `2023234243`.
+      temp1-id_prev = `previous`.
+      INSERT temp1
         INTO TABLE <tab>.
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
+      
+      CLEAR temp2.
+      temp2-id = `this is an uuid`.
+      temp2-timestampl = `2023234243`.
+      temp2-id_prev = `previous`.
+      INSERT temp2
         INTO TABLE <tab>.
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
+      
+      CLEAR temp3.
+      temp3-id = `this is an uuid`.
+      temp3-timestampl = `2023234243`.
+      temp3-id_prev = `previous`.
+      INSERT temp3
         INTO TABLE <tab>.
       " abap2ui5lint-enable non-released-api
 
       set_view( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       set_view( ).
     ENDIF.
 

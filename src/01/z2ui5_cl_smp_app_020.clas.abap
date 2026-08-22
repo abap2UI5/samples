@@ -29,7 +29,7 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
 
   METHOD factory.
 
-    result = NEW #( ).
+    CREATE OBJECT result.
     result->text          = i_text.
     result->cancel_text   = i_cancel_text.
     result->cancel_event  = i_cancel_event.
@@ -40,6 +40,8 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA dialog TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     CASE client->get_event( ).
       WHEN cancel_event OR confirm_event.
@@ -49,11 +51,13 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
         RETURN.
     ENDCASE.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
-    DATA(dialog) = popup->ele( `Dialog`
+    
+    dialog = popup->ele( `Dialog`
         )->a( n = `title` v = `abap2UI5 - Popup to decide` ).
 
     dialog->tag( `MessageStrip`

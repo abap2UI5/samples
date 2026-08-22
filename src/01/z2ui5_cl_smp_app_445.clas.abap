@@ -32,11 +32,11 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `OPEN_POPUP` ).
+    IF client->check_on_event( `OPEN_POPUP` ) IS NOT INITIAL.
       popup_display( ).
     ENDIF.
 
@@ -54,7 +54,8 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
   METHOD device_form.
 
-    DATA(form) = parent->ele( n = `SimpleForm` ns = `form`
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    form = parent->ele( n = `SimpleForm` ns = `form`
         )->a( n = `layout`   v = `ResponsiveGridLayout`
         )->a( n = `editable` b = abap_false ).
 
@@ -99,7 +100,10 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tabs TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -108,7 +112,8 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Device - Device Model: Phone, Tablet, Desktop`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -135,7 +140,8 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " 3) a control whose content collapses on a phone: expanded = !phone
-    DATA(tabs) = page->ele( `Panel`
+    
+    tabs = page->ele( `Panel`
         )->a( n = `class`      v = `sapUiSmallMargin`
         )->a( n = `headerText` v = `Responsive IconTabBar (expanded only when it is not a phone)`
         )->ele( `IconTabBar`
@@ -171,14 +177,17 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA dialog TYPE REF TO z2ui5_cl_ui5_view_builder.
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
     " the dialog width itself is driven by the device model
-    DATA(dialog) = popup->ele( `Dialog`
+    
+    dialog = popup->ele( `Dialog`
         )->a( n = `title`        v = `Device model inside a popup`
         )->a( n = `contentWidth` v = `{= ${device>/system/phone} ? '95%' : '420px' }` ).
 

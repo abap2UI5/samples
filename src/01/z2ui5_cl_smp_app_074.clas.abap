@@ -47,7 +47,7 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -57,6 +57,12 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
 
   METHOD on_event.
+            DATA header TYPE string.
+            DATA base64 TYPE string.
+            DATA raw TYPE xstring.
+            DATA temp1 TYPE string.
+            DATA temp2 TYPE string.
+        DATA error TYPE REF TO cx_root.
 
     TRY.
 
@@ -69,10 +75,13 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
             " the uploader delivers a data URL (data:<mime>;base64,<payload>);
             " drop the prefix, then base64-decode the payload into a string
-            SPLIT file   AT `;` INTO DATA(header) DATA(base64).
+            
+            
+            SPLIT file   AT `;` INTO header base64.
             SPLIT base64 AT `,` INTO header base64.
 
-            DATA(raw) = base64_decode( base64 ).
+            
+            raw = base64_decode( base64 ).
 
             " the proof that the file arrived: its name, its size in bytes as
             " the backend counts them, and the decoded content itself
@@ -82,14 +91,19 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
             client->message_toast_display( |{ upload_name } - { upload_size } bytes received| ).
 
-            file     = VALUE #( ).
-            filepath = VALUE #( ).
+            
+            CLEAR temp1.
+            file     = temp1.
+            
+            CLEAR temp2.
+            filepath = temp2.
 
             view_display( ).
 
         ENDCASE.
 
-      CATCH cx_root INTO DATA(error).
+        
+      CATCH cx_root INTO error.
         client->message_box_display( text = error->get_text( )
                                      type = `error` ).
     ENDTRY.
@@ -158,7 +172,10 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA box TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -167,7 +184,8 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - File - Upload to the Backend`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -182,7 +200,8 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
     IF upload_name IS NOT INITIAL.
 
-      DATA(box) = page->ele( `Panel`
+      
+      box = page->ele( `Panel`
           )->a( n = `headerText` v = `Received in the backend`
           )->a( n = `class`      v = `sapUiSmallMargin`
           )->ele( `VBox`

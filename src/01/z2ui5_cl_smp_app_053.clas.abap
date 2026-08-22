@@ -17,7 +17,7 @@ CLASS z2ui5_cl_smp_app_053 DEFINITION PUBLIC.
       END OF ty_s_tab.
 
     DATA mv_search_value TYPE string.
-    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -37,10 +37,10 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
 
     me->client     = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       set_data( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
     ELSE.
@@ -64,7 +64,13 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA vbox TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_cells TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -72,7 +78,8 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Table - Search in the Backend (SearchField)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -86,7 +93,8 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(vbox) = page->ele( `VBox` ).
+    
+    vbox = page->ele( `VBox` ).
 
     vbox->ele( `HBox`
         )->tag( `SearchField`
@@ -100,10 +108,12 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
             )->a( n = `text`  v = `Go`
             )->a( n = `type`  v = `Emphasized` ).
 
-    DATA(tab) = vbox->ele( `Table`
+    
+    tab = vbox->ele( `Table`
         )->a( n = `items` v = client->_bind( val = mt_table ) ).
 
-    DATA(lo_columns) = tab->ele( `columns` ).
+    
+    lo_columns = tab->ele( `columns` ).
     lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Product` ).
@@ -120,7 +130,8 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
         )->tag( `Text`
             )->a( n = `text` v = `Quantity` ).
 
-    DATA(lo_cells) = tab->ele( `items`
+    
+    lo_cells = tab->ele( `items`
         )->ele( `ColumnListItem` ).
     lo_cells->tag( `Text`
         )->a( n = `text` v = `{PRODUCT}` ).
@@ -140,13 +151,47 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
 
   METHOD set_data.
 
-    mt_table = VALUE #(
-        ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair` create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa` create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer` create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
+    DATA temp1 LIKE mt_table.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-product = `table`.
+    temp2-create_date = `01.01.2023`.
+    temp2-create_by = `Peter`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 400.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `chair`.
+    temp2-create_date = `01.01.2022`.
+    temp2-create_by = `James`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 123.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `sofa`.
+    temp2-create_date = `01.05.2021`.
+    temp2-create_by = `Simone`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 700.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `computer`.
+    temp2-create_date = `27.01.2023`.
+    temp2-create_by = `Theo`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 200.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `printer`.
+    temp2-create_date = `01.01.2023`.
+    temp2-create_by = `Hannah`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 90.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `table2`.
+    temp2-create_date = `01.01.2023`.
+    temp2-create_by = `Julia`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 110.
+    INSERT temp2 INTO TABLE temp1.
+    mt_table = temp1.
 
   ENDMETHOD.
 
@@ -156,15 +201,20 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
     " a typed contains-search over the columns the table shows - the search
     " string is compared uppercase against uppercase, so it matches whatever
     " the user typed
-    DATA(lv_search) = to_upper( mv_search_value ).
+    DATA lv_search TYPE string.
+    DATA lt_all LIKE mt_table.
+    DATA ls_row LIKE LINE OF lt_all.
+    lv_search = to_upper( mv_search_value ).
     IF lv_search IS INITIAL.
       RETURN.
     ENDIF.
 
-    DATA(lt_all) = mt_table.
+    
+    lt_all = mt_table.
     CLEAR mt_table.
 
-    LOOP AT lt_all INTO DATA(ls_row).
+    
+    LOOP AT lt_all INTO ls_row.
       IF to_upper( ls_row-product )          CS lv_search
       OR to_upper( ls_row-create_date )      CS lv_search
       OR to_upper( ls_row-create_by )        CS lv_search

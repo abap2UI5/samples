@@ -17,7 +17,7 @@ CLASS z2ui5_cl_smp_app_011 DEFINITION PUBLIC.
         editable TYPE abap_bool,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab                 TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab                 TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
     DATA check_editable_active TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -34,14 +34,19 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Table - Editable Cells, Add and Delete Rows`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -55,7 +60,15 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->ele( `Table`
+    
+    CASE check_editable_active.
+      WHEN abap_true.
+        temp1 = `display`.
+      WHEN OTHERS.
+        temp1 = `edit`.
+    ENDCASE.
+    
+    tab = page->ele( `Table`
         )->a( n = `items` v = |\{path: '{ client->_bind( val = t_tab path = abap_true ) }', templateShareable: false\}|
         )->a( n = `mode`  v = `MultiSelect`
         )->ele( `headerToolbar`
@@ -77,7 +90,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
                     )->a( n = `icon`  v = `sap-icon://add`
                 )->tag( `Button`
                     )->a( n = `press` v = client->_event( `BUTTON_EDIT` )
-                    )->a( n = `text`  v = SWITCH #( check_editable_active WHEN abap_true THEN `display` ELSE `edit` )
+                    )->a( n = `text`  v = temp1
                     )->a( n = `icon`  v = `sap-icon://edit`
             )->end(
         )->end( ).
@@ -130,36 +143,76 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp2 LIKE t_tab.
+      DATA temp3 LIKE LINE OF temp2.
+      DATA temp1 TYPE xsdboolean.
+      DATA temp4 LIKE LINE OF t_tab.
+      DATA lr_tab LIKE REF TO temp4.
+      DATA temp5 TYPE z2ui5_cl_smp_app_011=>ty_s_row.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       check_editable_active = abap_false.
-      t_tab                 = VALUE #(
-          ( title = `entry 01` value = `red`    info = `completed` descr = `this is a description` checkbox = abap_true )
-          ( title = `entry 02` value = `blue`   info = `completed` descr = `this is a description` checkbox = abap_true )
-          ( title = `entry 03` value = `green`  info = `completed` descr = `this is a description` checkbox = abap_true )
-          ( title = `entry 04` value = `orange` info = `completed` descr = `` checkbox = abap_true )
-          ( title = `entry 05` value = `grey`   info = `completed` descr = `this is a description` checkbox = abap_true )
-          ( ) ).
+      
+      CLEAR temp2.
+      
+      temp3-title = `entry 01`.
+      temp3-value = `red`.
+      temp3-info = `completed`.
+      temp3-descr = `this is a description`.
+      temp3-checkbox = abap_true.
+      INSERT temp3 INTO TABLE temp2.
+      temp3-title = `entry 02`.
+      temp3-value = `blue`.
+      temp3-info = `completed`.
+      temp3-descr = `this is a description`.
+      temp3-checkbox = abap_true.
+      INSERT temp3 INTO TABLE temp2.
+      temp3-title = `entry 03`.
+      temp3-value = `green`.
+      temp3-info = `completed`.
+      temp3-descr = `this is a description`.
+      temp3-checkbox = abap_true.
+      INSERT temp3 INTO TABLE temp2.
+      temp3-title = `entry 04`.
+      temp3-value = `orange`.
+      temp3-info = `completed`.
+      temp3-descr = ``.
+      temp3-checkbox = abap_true.
+      INSERT temp3 INTO TABLE temp2.
+      temp3-title = `entry 05`.
+      temp3-value = `grey`.
+      temp3-info = `completed`.
+      temp3-descr = `this is a description`.
+      temp3-checkbox = abap_true.
+      INSERT temp3 INTO TABLE temp2.
+      INSERT temp3 INTO TABLE temp2.
+      t_tab                 = temp2.
 
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( `BUTTON_EDIT` ).
-      check_editable_active = xsdbool( check_editable_active = abap_false ).
-      LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
+    ELSEIF client->check_on_event( `BUTTON_EDIT` ) IS NOT INITIAL.
+      
+      temp1 = boolc( check_editable_active = abap_false ).
+      check_editable_active = temp1.
+      
+      
+      LOOP AT t_tab REFERENCE INTO lr_tab.
         lr_tab->editable = check_editable_active.
       ENDLOOP.
 
-    ELSEIF client->check_on_event( `BUTTON_DELETE` ).
+    ELSEIF client->check_on_event( `BUTTON_DELETE` ) IS NOT INITIAL.
       DELETE t_tab WHERE selkz = abap_true.
 
-    ELSEIF client->check_on_event( `BUTTON_ADD` ).
+    ELSEIF client->check_on_event( `BUTTON_ADD` ) IS NOT INITIAL.
 
-      INSERT VALUE #( ) INTO TABLE t_tab.
+      
+      CLEAR temp5.
+      INSERT temp5 INTO TABLE t_tab.
     ENDIF.
 
   ENDMETHOD.
