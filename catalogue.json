@@ -57,7 +57,7 @@
   }
  ],
  "counts": {
-  "samples": 97,
+  "samples": 98,
   "categories": 23,
   "stages": 6
  },
@@ -194,6 +194,33 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/troubleshooting/common_failures"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_497",
+   "file": "src/01/z2ui5_cl_smp_app_497.clas.abap",
+   "category": "Binding",
+   "stage": "data",
+   "title": "Binding",
+   "description": "A View Built From RTTI, No Field Named",
+   "summary": "The view names no field: RTTI reads the components of the internal table and derives every column and every cell binding from them, so changing the structure changes the screen with no view code touched.",
+   "keywords": [
+    "rtti",
+    "generic",
+    "view",
+    "runtime",
+    "columns",
+    "get_components",
+    "describe_by_data",
+    "no",
+    "field",
+    "name",
+    "itab",
+    "structure",
+    "column",
+    "cell",
+    "binding"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_067",

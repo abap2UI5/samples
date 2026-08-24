@@ -3,11 +3,11 @@
 
 # The sample catalogue
 
-Every app in this repository — 149 of them — with what it shows and a link
+Every app in this repository — 150 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
-**104 of them ship on every branch** — the portable set the README counts:
+**105 of them ship on every branch** — the portable set the README counts:
 `src/01` plus this overview app. The other 45 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
@@ -16,7 +16,7 @@ in the tree is invisible.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 97 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 98 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -29,9 +29,9 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path — `src/01`
 
-The 97 samples the overview app lists: cloud-ready, downportable,
+The 98 samples the overview app lists: cloud-ready, downportable,
 plain OpenUI5 1.71. Each adds one idea. With the 6
-helper apps they call and the overview app itself, that is the **104
+helper apps they call and the overview app itself, that is the **105
 ready-to-run apps** the README leads with.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
@@ -50,6 +50,7 @@ ready-to-run apps** the README leads with.
 
 | Sample | Class |
 |---|---|
+| A View Built From RTTI, No Field Named<br>The view names no field: RTTI reads the components of the internal table and derives every column and every cell binding from them, so changing the structure changes the screen with no view code touched.<br><sub>rtti generic view runtime columns get_components describe_by_data no field name itab structure column cell binding</sub> | [`Z2UI5_CL_SMP_APP_497`](src/01/z2ui5_cl_smp_app_497.clas.abap) |
 | Currency Amounts (sap.ui.model.type.Currency)<br>Formats amounts with sap.ui.model.type.Currency, so decimals and leading zeros follow the currency rather than the ABAP field.<br><sub>amount decimals leading zeros number format</sub><br><sub>docs: [cookbook/model/formatter](https://abap2ui5.github.io/docs/cookbook/model/formatter)</sub> | [`Z2UI5_CL_SMP_APP_067`](src/01/z2ui5_cl_smp_app_067.clas.abap) |
 | Dynamic Table Typed at Runtime (RTTI)<br>The row type is created at runtime from a DDIC name with CREATE DATA, and the generic data reference is bound straight into the view - editable, multi-selectable, and it survives the roundtrip back to ABAP.<br><sub>generic data reference create data ddic dynamic itab</sub><br><sub>docs: [cookbook/model/binding](https://abap2ui5.github.io/docs/cookbook/model/binding)</sub> | [`Z2UI5_CL_SMP_APP_061`](src/01/z2ui5_cl_smp_app_061.clas.abap) |
 | Expression Binding, Types and Composite Parts<br>Expression binding in the view - conditions, composite parts and a regular expression decide visible and enabled without asking the backend.<br><sub>formatter parts conditional regexp visible enabled syntax</sub><br><sub>docs: [cookbook/model/expression_binding](https://abap2ui5.github.io/docs/cookbook/model/expression_binding)</sub> | [`Z2UI5_CL_SMP_APP_027`](src/01/z2ui5_cl_smp_app_027.clas.abap) |
