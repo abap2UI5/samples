@@ -1,5 +1,5 @@
 " @keywords generic data reference create data ddic dynamic itab
-" @summary Builds a table whose columns are only known at runtime: RTTI over a DDIC name, CREATE DATA, and the generic reference bound into the view.
+" @summary The row type is created at runtime from a DDIC name with CREATE DATA, and the generic data reference is bound straight into the view - editable, multi-selectable, and it survives the roundtrip back to ABAP.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/binding
 CLASS z2ui5_cl_smp_app_061 DEFINITION PUBLIC.
 
@@ -76,7 +76,6 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
 
     tab->ele( `items`
         )->ele( `ColumnListItem`
-            )->a( n = `selected` v = `{SELKZ}`
             )->ele( `cells`
                 )->tag( `Input`
                     )->a( n = `value` v = `{ID}`
