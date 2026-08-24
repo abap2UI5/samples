@@ -694,6 +694,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         sub = `The Developer Tools (Ctrl+F12)`
         keywords = `developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export`
         path = `src/01` app = `z2ui5_cl_smp_app_496` )
+      ( group = `samples` header = `Binding`
+        sub = `A View Built From RTTI, No Field Named`
+        keywords = `rtti generic view runtime columns get_components describe_by_data no field name itab structure column cell binding`
+        path = `src/01` app = `z2ui5_cl_smp_app_497` )
       ( group = `samples` header = `Binding` sub = `Currency Amounts (sap.ui.model.type.Currency)` keywords = `amount decimals leading zeros number format` path = `src/01` app = `z2ui5_cl_smp_app_067` )
       ( group = `samples` header = `Binding` sub = `Dynamic Table Typed at Runtime (RTTI)` keywords = `generic data reference create data ddic dynamic itab` path = `src/01` app = `z2ui5_cl_smp_app_061` )
       ( group = `samples` header = `Binding` sub = `Expression Binding, Types and Composite Parts` keywords = `formatter parts conditional regexp visible enabled syntax` path = `src/01` app = `z2ui5_cl_smp_app_027` )
