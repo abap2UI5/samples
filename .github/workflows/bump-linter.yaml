@@ -1,0 +1,86 @@
+# The linter comes from npm as `@abap2ui5/linter`, and package-lock.json is
+# what actually decides which version the gate runs: `npm ci` reads the lock,
+# so a new release reaches this corpus only when the lock moves. Nothing moved
+# it here for two releases - the lock sat at 0.2.2 while the range said
+# `^0.2.2`, which cannot reach 0.3.x at all, so the corpus was frozen on a
+# linter two releases old and its green check said less every week without
+# saying so. This workflow moves it weekly and opens a PR.
+#
+# It tracks `latest` rather than staying inside the declared range, because the
+# range is the thing being maintained here: a linter release that adds rules is
+# additive for the linter and breaking for a corpus, so a range that pins the
+# corpus out of new rules is the failure, not the protection. The gate runs
+# before the PR exists, which is what makes that safe - a rule regression over
+# the corpus fails this workflow instead of landing on main.
+#
+# The render runtime rides along deliberately: the two are ONE release with one
+# version (the linter's metadata snapshot is generated from exactly the
+# @openui5 version pinned over there), so bumping one alone is the drift the
+# split was allowed on condition of avoiding.
+name: bump-linter
+
+on:
+  schedule:
+    - cron: '41 6 * * 1'   # Mondays 06:41 UTC - after samples-controls' 06:23
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump-linter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version: '22'
+
+    - name: Move @abap2ui5/linter to the latest published version
+      id: pin
+      run: |
+        set -euo pipefail
+        # Resolved first and checked, because `npm view` prints nothing and
+        # still exits 0 when a package has no `latest` dist-tag - installing
+        # `@abap2ui5/linter@` would then resolve to whatever npm felt like.
+        VERSION=$(npm view @abap2ui5/linter version)
+        test -n "$VERSION"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        # Writes the range in package.json AND the exact version in the lock.
+        # Both matter: the range is what a fresh install reads, the lock is
+        # what `npm ci` reads, and the gate below runs on the lock.
+        npm install --save-dev "@abap2ui5/linter@$VERSION" "@abap2ui5/render-runtime@$VERSION"
+        # package.json alone is not the signal: a release inside the declared
+        # range moves only package-lock.json, and that is exactly the bump this
+        # corpus needs to see.
+        if git diff --quiet package.json package-lock.json; then
+          echo "changed=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+        fi
+
+    # the gate that consumes the linter - a rule regression over the corpus
+    # surfaces here, in the PR run, not on main
+    - if: steps.pin.outputs.changed == 'true'
+      run: npx playwright install --with-deps chromium
+    - if: steps.pin.outputs.changed == 'true'
+      run: npm run check:abap2ui5
+
+    # the badges are written by the run above; they belong to the gate's own
+    # workflow, not to this one
+    - if: steps.pin.outputs.changed == 'true'
+      run: git checkout -- .github/badges/ || true
+
+    - if: steps.pin.outputs.changed == 'true'
+      uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+      with:
+        branch: bump-linter
+        title: 'chore: bump @abap2ui5/linter'
+        commit-message: 'chore: bump @abap2ui5/linter to ${{ steps.pin.outputs.version }}'
+        body: |
+          Weekly move of `@abap2ui5/linter` and `@abap2ui5/render-runtime` to
+          the latest version on npm (${{ steps.pin.outputs.version }}). The
+          linter gate ran over the full corpus in the workflow that opened
+          this PR.
