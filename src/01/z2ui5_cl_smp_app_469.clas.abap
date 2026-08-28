@@ -30,13 +30,10 @@ CLASS z2ui5_cl_smp_app_469 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
-      view_display( ).
-
-    ELSEIF client->check_on_navigated( ).
-      " browser Forward / reload / bookmark restored this app from its draft
-      " (routing mode keep) - the state survived, only the view must be
-      " rendered again
+    " also covers the first start, plus browser Forward / reload / a bookmark
+    " restoring this app from its draft (routing mode keep) - the state
+    " survived, only the view must be rendered again
+    IF client->check_on_navigated( ).
       view_display( ).
     ENDIF.
 

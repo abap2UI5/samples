@@ -26,10 +26,8 @@ CLASS z2ui5_cl_smp_app_336 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data   = REF #( ms_struc )
-                                                      vis_cols = 3 ).
-      mo_layout_obj_2 = z2ui5_cl_smp_app_333=>factory( i_data   = REF #( ms_struc )
-                                                        vis_cols = 3 ).
+      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
+      mo_layout_obj_2 = z2ui5_cl_smp_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
 
       view_display( client ).
     ELSEIF client->check_on_navigated( ).

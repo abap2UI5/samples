@@ -42,10 +42,8 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
       get_data( `Z2UI5_T_01` ).
       get_data2( `Z2UI5_T_01` ).
 
-      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data   = mt_data
-                                                      vis_cols = 5 ).
-      mo_layout_obj2 = z2ui5_cl_smp_app_333=>factory( i_data   = mt_data2
-                                                       vis_cols = 3 ).
+      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data = mt_data vis_cols = 5 ).
+      mo_layout_obj2 = z2ui5_cl_smp_app_333=>factory( i_data = mt_data2 vis_cols = 3 ).
 
       view_display( client ).
 

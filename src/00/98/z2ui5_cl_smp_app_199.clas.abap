@@ -116,8 +116,7 @@ CLASS z2ui5_cl_smp_app_199 IMPLEMENTATION.
     ASSIGN mt_table->* TO <tab>.
 
     IF lines( <tab> ) <> mv_counter AND mv_counter IS NOT INITIAL.
-      client->message_box_display( text = `Frontend Lines <> Backend!`
-                                   type = `error` ).
+      client->message_box_display( text = `Frontend Lines <> Backend!` type = `error` ).
     ENDIF.
 
     on_event( ).

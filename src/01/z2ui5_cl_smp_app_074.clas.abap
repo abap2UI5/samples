@@ -90,8 +90,7 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
         ENDCASE.
 
       CATCH cx_root INTO DATA(error).
-        client->message_box_display( text = error->get_text( )
-                                     type = `error` ).
+        client->message_box_display( text = error->get_text( ) type = `error` ).
     ENDTRY.
 
   ENDMETHOD.

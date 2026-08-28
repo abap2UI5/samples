@@ -36,8 +36,7 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
           client->message_toast_display( `Something` ).
         ENDIF.
       CATCH cx_root INTO DATA(x).
-        client->message_box_display( text = x->get_text( )
-                                     type = `error` ).
+        client->message_box_display( text = x->get_text( ) type = `error` ).
     ENDTRY.
 
   ENDMETHOD.

@@ -31,8 +31,7 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
       " enough rows that the table really scrolls - with a short list the
       " scrollToIndex demo has nothing to do
       DO 200 TIMES.
-        INSERT VALUE #( index = sy-index
-                        text  = |Row number { sy-index }| ) INTO TABLE t_rows.
+        INSERT VALUE #( index = sy-index text = |Row number { sy-index }| ) INTO TABLE t_rows.
       ENDDO.
 
       view_display( ).

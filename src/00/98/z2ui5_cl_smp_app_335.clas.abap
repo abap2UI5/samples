@@ -30,10 +30,8 @@ CLASS z2ui5_cl_smp_app_335 IMPLEMENTATION.
 
       get_data( ).
 
-      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data   = REF #( ms_struc )
-                                                      vis_cols = 3 ).
-      mo_layout_obj_2 = z2ui5_cl_smp_app_333=>factory( i_data   = REF #( ms_struc )
-                                                        vis_cols = 3 ).
+      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
+      mo_layout_obj_2 = z2ui5_cl_smp_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
 
       view_display( client ).
 
@@ -151,8 +149,7 @@ CLASS z2ui5_cl_smp_app_335 IMPLEMENTATION.
     " roundtrip - SELECT SINGLE without a full key leaves that to the database
     SELECT * FROM z2ui5_t_01
       ORDER BY PRIMARY KEY
-      INTO TABLE @DATA(lt_data)
-      UP TO 1 ROWS.
+      INTO TABLE @DATA(lt_data) UP TO 1 ROWS.
 
     ms_struc = VALUE #( lt_data[ 1 ] OPTIONAL ).
 
@@ -164,8 +161,7 @@ CLASS z2ui5_cl_smp_app_335 IMPLEMENTATION.
     SELECT * FROM z2ui5_t_01
       WHERE id <> @ms_struc-id
       ORDER BY PRIMARY KEY
-      INTO TABLE @DATA(lt_data)
-      UP TO 1 ROWS.
+      INTO TABLE @DATA(lt_data) UP TO 1 ROWS.
 
     ms_struc = VALUE #( lt_data[ 1 ] OPTIONAL ).
 

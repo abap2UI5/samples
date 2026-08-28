@@ -85,8 +85,7 @@ CLASS z2ui5_cl_smp_app_185 IMPLEMENTATION.
 
     FIELD-SYMBOLS <view_display> TYPE any.
 
-    READ TABLE mt_t002 REFERENCE INTO DATA(t002)
-         WITH KEY id = mv_selectedkey.
+    READ TABLE mt_t002 REFERENCE INTO DATA(t002) WITH KEY id = mv_selectedkey.
 
     IF sy-subrc <> 0.
       RETURN.

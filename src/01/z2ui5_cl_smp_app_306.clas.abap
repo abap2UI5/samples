@@ -57,9 +57,9 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
 
       facing_modes = VALUE ty_t_combo( ( key = `` text = `` )
                                      ( key = `environment` text = `environment` )
-                                     ( key = `user` text = `user` )
-                                     ( key = `left` text = `left` )
-                                     ( key = `right` text = `right` ) ).
+                                     ( key = `user`        text = `user` )
+                                     ( key = `left`        text = `left` )
+                                     ( key = `right`       text = `right` ) ).
 
       view_display( ).
     ELSEIF client->check_on_navigated( ).
@@ -165,9 +165,7 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
     CASE client->get_event( ).
       WHEN `CAPTURE`.
 
-        INSERT VALUE #( data      = mv_picture_base
-                        thumbnail = mv_picture_thumb
-                        time      = sy-uzeit ) INTO TABLE mt_picture.
+        INSERT VALUE #( data = mv_picture_base thumbnail = mv_picture_thumb time = sy-uzeit ) INTO TABLE mt_picture.
         mv_picture_base  = VALUE #( ).
         mv_picture_thumb = VALUE #( ).
         rebuild_output( ).

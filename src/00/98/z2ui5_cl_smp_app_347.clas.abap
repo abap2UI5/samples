@@ -30,8 +30,7 @@ CLASS z2ui5_cl_smp_app_347 IMPLEMENTATION.
 
       get_data( ).
 
-      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data   = REF #( mt_data )
-                                                      vis_cols = 5 ).
+      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data = REF #( mt_data ) vis_cols = 5 ).
 
       view_display( client ).
 
@@ -84,8 +83,7 @@ CLASS z2ui5_cl_smp_app_347 IMPLEMENTATION.
         )->a( n = `text`  v = `CALL Next App`
         )->a( n = `type`  v = `Accept` ).
 
-    xml_table( i_page   = page
-               i_client = client ).
+    xml_table( i_page = page i_client = client ).
 
     client->view_display( page->stringify( ) ).
 

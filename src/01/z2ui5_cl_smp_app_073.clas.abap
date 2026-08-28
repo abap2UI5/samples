@@ -62,9 +62,7 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       view_display( ).
     ENDIF.
 
@@ -92,14 +90,12 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
     " tab opens this app instead of whatever the current URL points to. The
     " hash is left out on purpose: it holds THIS app's state, and the backend
     " would prefer it over app_start.
-    SPLIT shift_left( val = ls_config-search
-                      sub = `?` ) AT `&` INTO TABLE lt_param.
+    SPLIT shift_left( val = ls_config-search sub = `?` ) AT `&` INTO TABLE lt_param.
 
     DATA(lv_query) = `app_start=z2ui5_cl_smp_app_073`.
     LOOP AT lt_param INTO DATA(lv_param).
       IF lv_param IS INITIAL
-      OR to_lower( substring_before( val = lv_param
-                                     sub = `=` ) ) = `app_start`.
+      OR to_lower( substring_before( val = lv_param sub = `=` ) ) = `app_start`.
         CONTINUE.
       ENDIF.
       lv_query = |{ lv_query }&{ lv_param }|.

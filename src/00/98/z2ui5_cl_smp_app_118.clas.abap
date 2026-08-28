@@ -33,11 +33,11 @@ CLASS z2ui5_cl_smp_app_118 IMPLEMENTATION.
         ( id = 6 descr = `Fifth row` adate = sy-datum atime = sy-uzeit ) ).
 
       these_are_fine_rows = VALUE #(
-        ( id = 1 descr = `First row` adate = sy-datum atime = sy-uzeit )
-        ( id = 2 descr = `Second row` adate = 0 atime = 0 )
-        ( id = 3 descr = `Third row` adate = 0 atime = 0 )
-        ( id = 4 descr = `Fourth row` adate = 0 atime = 0 )
-        ( id = 5 descr = `Fifth row` adate = sy-datum atime = sy-uzeit ) ).
+        ( id = 1 descr = `First row`  adate = sy-datum atime = sy-uzeit )
+        ( id = 2 descr = `Second row` adate = 0        atime = 0 )
+        ( id = 3 descr = `Third row`  adate = 0        atime = 0 )
+        ( id = 4 descr = `Fourth row` adate = 0        atime = 0 )
+        ( id = 5 descr = `Fifth row`  adate = sy-datum atime = sy-uzeit ) ).
 
     ENDIF.
 

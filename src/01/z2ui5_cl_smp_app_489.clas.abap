@@ -31,8 +31,7 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      s_result = VALUE #( product  = `Notebook Basic 15`
-                          quantity = `2` ).
+      s_result = VALUE #( product = `Notebook Basic 15` quantity = `2` ).
 
       view_display( ).
 
@@ -40,8 +39,7 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
       view_display( ).
 
     ELSEIF client->check_on_event( `CONFIRM` ).
-      client->nav_app_leave( event  = `DATA_CONFIRMED`
-                             r_data = s_result ).
+      client->nav_app_leave( event = `DATA_CONFIRMED` r_data = s_result ).
 
     ELSEIF client->check_on_event( `CANCEL` ).
       client->nav_app_leave( event = `DATA_CANCELLED` ).

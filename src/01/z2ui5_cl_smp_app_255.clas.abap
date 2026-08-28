@@ -186,9 +186,7 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
             )->a( n = `header`      v = `Sample information`
             )->a( n = `pageId`      v = `sampleInformationId` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
-      by_id = id ).
+    client->popover_display( xml = view->stringify( ) by_id = id ).
 
   ENDMETHOD.
 

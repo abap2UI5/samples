@@ -88,11 +88,11 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
             )->a( n = `wrapping`    v = `true`
             )->a( n = `selected`    v = `{SELECTED}`
             )->a( n = `detailPress` v = client->_event( val = `EDIT` t_arg = VALUE #( ( `${TITLE}` )
-                                                                                        ( `${DESCR}` )
-                                                                                        ( `${ICON}` )
-                                                                                        ( `${HIGHLIGHT}` )
-                                                                                        ( `${INFO}` )
-                                                                                        ( `${SELECTED}` )
+                                                                                      ( `${DESCR}` )
+                                                                                      ( `${ICON}` )
+                                                                                      ( `${HIGHLIGHT}` )
+                                                                                      ( `${INFO}` )
+                                                                                      ( `${SELECTED}` )
                                                                                        ) ) ).
 
     client->view_display( page->stringify( ) ).

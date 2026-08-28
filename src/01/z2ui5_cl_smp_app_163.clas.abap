@@ -68,8 +68,7 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
             )->a( n = `text`  v = `Other` ).
     " abap2ui5lint-enable binding-for-event
 
-    client->popover_display( xml   = menu_view->stringify( )
-                             by_id = `menuButton` ).
+    client->popover_display( xml = menu_view->stringify( ) by_id = `menuButton` ).
 
   ENDMETHOD.
 
@@ -114,9 +113,7 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       view_display( ).
     ELSE.
       on_event( ).

@@ -141,12 +141,12 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
   METHOD set_data.
 
     mt_table = VALUE #(
-        ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair` create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa` create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer` create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
+        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
+        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
+        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
+        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 ) ).
 
   ENDMETHOD.
 
@@ -168,8 +168,7 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
       IF to_upper( ls_row-product )          CS lv_search
       OR to_upper( ls_row-create_date )      CS lv_search
       OR to_upper( ls_row-create_by )        CS lv_search
-      OR to_upper( ls_row-storage_location ) CS lv_search
-      OR |{ ls_row-quantity }|               CS lv_search.
+      OR to_upper( ls_row-storage_location ) CS lv_search OR |{ ls_row-quantity }| CS lv_search.
         INSERT ls_row INTO TABLE mt_table.
       ENDIF.
     ENDLOOP.

@@ -85,8 +85,7 @@ CLASS z2ui5_cl_smp_app_339 IMPLEMENTATION.
 
       WHEN `SELECTION_CHANGE`.
 
-        client->nav_app_call( z2ui5_cl_smp_app_340=>factory( io_table  = mt_table
-                                                              io_layout = mo_layout ) ).
+        client->nav_app_call( z2ui5_cl_smp_app_340=>factory( io_table = mt_table io_layout = mo_layout ) ).
 
       WHEN `BACK`.
 
@@ -113,8 +112,7 @@ CLASS z2ui5_cl_smp_app_339 IMPLEMENTATION.
 
     ENDIF.
 
-    mo_layout = z2ui5_cl_smp_app_333=>factory( i_data   = mt_table
-                                                vis_cols = 5 ).
+    mo_layout = z2ui5_cl_smp_app_333=>factory( i_data = mt_table vis_cols = 5 ).
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
 
     DATA(table) = page->ele( `Table`

@@ -34,8 +34,7 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
 
       get_data( ).
 
-      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data   = REF #( ms_struc )
-                                                      vis_cols = 5 ).
+      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 5 ).
 
       view_display( client ).
 
@@ -100,13 +99,9 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
         )->a( n = `text`  v = `Read from DB`
         )->a( n = `type`  v = `Accept` ).
 
-    xml_form( i_data   = REF #( ms_struc )
-              i_page   = page
-              i_client = client ).
+    xml_form( i_data = REF #( ms_struc ) i_page = page i_client = client ).
 
-    xml_form( i_data   = mo_layout_obj->mr_data
-              i_page   = page
-              i_client = client ).
+    xml_form( i_data = mo_layout_obj->mr_data i_page = page i_client = client ).
 
     client->view_display( page->stringify( ) ).
 

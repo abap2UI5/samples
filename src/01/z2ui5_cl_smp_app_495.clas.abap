@@ -55,9 +55,7 @@ CLASS z2ui5_cl_smp_app_495 IMPLEMENTATION.
 
   METHOD log_step.
 
-    INSERT VALUE #(
-        no    = |{ lines( t_log ) + 1 }|
-        check = val ) INTO TABLE t_log.
+    INSERT VALUE #( no = |{ lines( t_log ) + 1 }| check = val ) INTO TABLE t_log.
 
   ENDMETHOD.
 
