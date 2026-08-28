@@ -37,10 +37,8 @@ CLASS z2ui5_cl_smp_app_349 IMPLEMENTATION.
 
       get_data( ).
 
-      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data   = REF #( mt_data )
-                                                      vis_cols = 5 ).
-      mo_layout_obj_2 = z2ui5_cl_smp_app_333=>factory( i_data   = REF #( ms_data )
-                                                        vis_cols = 3 ).
+      mo_layout_obj = z2ui5_cl_smp_app_333=>factory( i_data = REF #( mt_data ) vis_cols = 5 ).
+      mo_layout_obj_2 = z2ui5_cl_smp_app_333=>factory( i_data = REF #( ms_data ) vis_cols = 3 ).
       view_display( client ).
 
     ELSEIF client->check_on_navigated( ).
@@ -106,11 +104,9 @@ CLASS z2ui5_cl_smp_app_349 IMPLEMENTATION.
         )->a( n = `text`  v = `CALL Next App`
         )->a( n = `type`  v = `Accept` ).
 
-    xml_table( i_page   = page
-               i_client = client ).
+    xml_table( i_page = page i_client = client ).
 
-    xml_form( i_page   = page
-              i_client = client ).
+    xml_form( i_page = page i_client = client ).
 
     client->view_display( page->stringify( ) ).
 

@@ -36,8 +36,7 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
 
   METHOD view_display.
 
-    url        = VALUE #( url        = `http://www.sap.com`
-    new_window = `true` ).
+    url = VALUE #( url = `http://www.sap.com` new_window = `true` ).
     email      = VALUE #( email      = `email@email.com`
     subject    = `subject`
     body       = `body`
@@ -117,7 +116,7 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
     email_form->tag( `Button`
         )->a( n = `press` v = client->follow_up_action( val   = client->cs_event-urlhelper
                         t_arg = VALUE #( ( `TRIGGER_EMAIL` )
-                                                                        ( |${ client->_bind( email ) }| ) ) )
+                                         ( |${ client->_bind( email ) }| ) ) )
         )->a( n = `text`  v = `Trigger Email` ).
 
     DATA(telephone_form) = layout->ele( n = `SimpleForm` ns = `form`
@@ -135,7 +134,7 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
     telephone_form->tag( `Button`
         )->a( n = `press` v = client->follow_up_action( val   = client->cs_event-urlhelper
         t_arg = VALUE #( ( `TRIGGER_TEL` )
-                                                        ( |${ client->_bind( phone ) }| ) ) )
+                         ( |${ client->_bind( phone ) }| ) ) )
         )->a( n = `text`  v = `Trigger Telephone` ).
 
     DATA(mobile_form) = layout->ele( n = `SimpleForm` ns = `form`

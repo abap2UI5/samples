@@ -22,9 +22,7 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       view_display( ).
 
     ELSEIF client->check_on_event( ).
@@ -40,14 +38,10 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
       WHEN `BUTTON_MESSAGE_BOX_SY`.
         " only the message key - message_box_display( ) reads the text from
         " T100 itself, exactly as it does for the BAPIRET2 structure below
-        DATA(ls_msg_sy) = VALUE symsg( msgty = `I`
-                                       msgid = `NET`
-                                       msgno = `001` ).
+        DATA(ls_msg_sy) = VALUE symsg( msgty = `I` msgid = `NET` msgno = `001` ).
         client->message_box_display( ls_msg_sy ).
       WHEN `BUTTON_MESSAGE_BOX_BAPIRET`.
-        DATA(ls_msg_bapiret) = VALUE bapiret2(
-            id     = `NET`
-            number = `001` ).
+        DATA(ls_msg_bapiret) = VALUE bapiret2( id = `NET` number = `001` ).
         client->message_box_display( ls_msg_bapiret ).
       WHEN `BUTTON_MESSAGE_BOX_CX_ROOT`.
         TRY.

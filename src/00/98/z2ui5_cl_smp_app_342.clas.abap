@@ -87,9 +87,7 @@ CLASS z2ui5_cl_smp_app_342 IMPLEMENTATION.
 
       WHEN `SELECTION_CHANGE`.
 
-        client->nav_app_call( z2ui5_cl_smp_app_340=>factory(
-                                io_table  = mt_data
-                                io_layout = mo_lay ) ).
+        client->nav_app_call( z2ui5_cl_smp_app_340=>factory( io_table = mt_data io_layout = mo_lay ) ).
 
       WHEN `BACK`.
 
@@ -118,8 +116,7 @@ CLASS z2ui5_cl_smp_app_342 IMPLEMENTATION.
 
     ENDIF.
 
-    mo_lay = z2ui5_cl_smp_app_333=>factory( i_data   = mt_data
-                                             vis_cols = 5 ).
+    mo_lay = z2ui5_cl_smp_app_333=>factory( i_data = mt_data vis_cols = 5 ).
 
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
 
@@ -193,8 +190,7 @@ CLASS z2ui5_cl_smp_app_342 IMPLEMENTATION.
 
     ENDIF.
 
-    IF client->check_on_navigated( )
-        AND client->check_on_init( ) = abap_false.
+    IF client->check_on_navigated( ) AND client->check_on_init( ) = abap_false.
       render_main( client ).
     ENDIF.
 

@@ -1102,7 +1102,7 @@ manually or via editor tooling that the above rules are met.
 
 - Follow the [SAP ABAP Style Guide](https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md).
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
-- An `abap_bool` is compared to `abap_true` / `abap_false` — never asked with `IS INITIAL` / `IS NOT INITIAL`, which is the question for a string that might be empty (`IF mv_flag = abap_false.`, `DELETE lt_x WHERE flag = abap_false.`). The three `check_on_*( )` methods return `abap_bool` as well, and there the corpus writes the predicative call itself: `IF client->check_on_init( ).`, `` ELSEIF client->check_on_event( `LOCK` ). ``, `IF client->check_on_init( ) OR client->check_on_navigated( ).`. Only a NEGATIVE branch is spelled out, as `= abap_false` — there is no negated predicative form here. The rule and its reasons live in abap2UI5's `build-an-app` skill.
+- An `abap_bool` is compared to `abap_true` / `abap_false` — never asked with `IS INITIAL` / `IS NOT INITIAL`, which is the question for a string that might be empty (`IF mv_flag = abap_false.`, `DELETE lt_x WHERE flag = abap_false.`). The three `check_on_*( )` methods return `abap_bool` as well, and there the corpus writes the predicative call itself: `IF client->check_on_init( ).`, `` ELSEIF client->check_on_event( `LOCK` ). ``. Never `IF client->check_on_init( ) OR client->check_on_navigated( ).` — that `OR` is redundant, see the lifecycle section below. Only a NEGATIVE branch is spelled out, as `= abap_false` — there is no negated predicative form here. The rule and its reasons live in abap2UI5's `build-an-app` skill.
 - Use backticks for all string literals, not single quotes.
 - Use string templates (`|...|` with `{ }` for embedded expressions) instead of `&&` for string concatenation (e.g. `|item { name }|` not `` `item ` && name ``).
 - Prefer functional to procedural language constructs — use `var = VALUE #( ).` to reset a variable, never `CLEAR var.`.
@@ -1158,6 +1158,8 @@ manually or via editor tooling that the above rules are met.
     ```
 - **ABAP Doc (`"!`) position** — not caught by `abaplint`, but the extended check (SLIN/ATC) reports "ABAP Doc comment is in the wrong position": a `"!` block must sit directly before the one declaration it documents. Inside a chained statement (`TYPES: BEGIN OF …`) that means directly before the component, *within* the chain. It is never allowed inside a `METHODS` parameter list — document parameters in the method's own doc block above the `METHODS` keyword via `"! @parameter <name> | <text>`. A plain `"` comment (no `!`) is fine anywhere.
 - ABAP Doc is parsed as HTML: escape a literal `<`, `>` or `&` as `&lt;`, `&gt;`, `&amp;`.
+- **A mock table is a table.** In a `VALUE #( )` of three or more rows with the same field list, pad every cell to the width of its column and leave the LAST cell of a row unpadded, so no spaces pile up before the closing `)`. Rows whose field lists differ have no column to align and stay as they are; a row that would break 255 characters once padded is wrapped at the same field boundaries in every row instead.
+- **A call that fits on one line goes on one line** (budget 120 characters) — stacking parameters is for calls that do not fit, not for calls that happen to have two. The view chain is the exception: it keeps one call per line (`view-chain-layout`), and a `t_arg` list wrapped over several lines stays wrapped, hanging under its first element.
 - Always run `abaplint` after every change. It must report 0 issues before committing.
 - Before starting app development, read all active rules in `abaplint.jsonc` and follow them throughout.
 - **The rules that most often bite when writing a new sample** (all of them
@@ -1193,20 +1195,41 @@ and core classes — refer to the
 
 Every abap2UI5 app implements `z2ui5_if_app` with a single `main()` method. The framework calls `main()` on every roundtrip (HTTP POST). Use the lifecycle checks to react to different situations:
 
-- `client->check_on_init( )` — true on the very first call
-- `client->check_on_navigated( )` — true when returning from a sub-app or popup — re-display the view here (see below)
+- `client->check_on_init( )` — true on the very first call, and there **only to seed**
+- `client->check_on_navigated( )` — the DISPLAY branch: true on that first call as well, and whenever the app regains the screen (returning from a sub-app or popup, a restored bookmark)
 - `client->check_on_event( )` — true when a user triggered an event
 
 Always use `ELSEIF` to chain these checks — never separate `IF` blocks:
 ```abap
 IF client->check_on_init( ).
-  ...
+  " only what must happen ONCE - seed the model, seed a control-state flag
 ELSEIF client->check_on_navigated( ).
-  ...
+  view_display( ).
 ELSEIF client->check_on_event( ).
-  ...
+  on_event( ).
 ENDIF.
 ```
+
+**`check_on_init( )` true implies `check_on_navigated( )` true** — every path to an
+instance's first `main( )` sets that flag (`factory_first_start` for a fresh start
+and for a draft restore, `factory_system_startup`, `prepare_app_stack` for
+`nav_app_call` and `nav_app_leave`). So an init branch whose only statement is
+`view_display( )` has an `ELSEIF` twin doing exactly the same thing, and
+`IF check_on_init( ) OR check_on_navigated( ).` says the same redundancy in one
+line. An app with nothing to seed drops the init branch entirely:
+
+```abap
+me->client = client.
+IF client->check_on_navigated( ).
+  view_display( ).
+ELSEIF client->check_on_event( ).
+  on_event( ).
+ENDIF.
+```
+
+The exception is a **sub-app that never owns the screen** (apps 105 and 112): it
+renders into the parent's view reference and has no `check_on_navigated( )` branch
+at all, so there `check_on_init( )` is the only place the view is built.
 
 ### Returning from a sub-app — always re-display the view
 

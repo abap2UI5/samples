@@ -85,8 +85,7 @@ CLASS z2ui5_cl_smp_app_345 IMPLEMENTATION.
       CATCH cx_root.
     ENDTRY.
 
-    mo_layout_obj1 = z2ui5_cl_smp_app_333=>factory( i_data   = mt_data1
-                                                     vis_cols = 2 ).
+    mo_layout_obj1 = z2ui5_cl_smp_app_333=>factory( i_data = mt_data1 vis_cols = 2 ).
 
   ENDMETHOD.
 

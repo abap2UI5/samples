@@ -72,8 +72,7 @@ CLASS z2ui5_cl_smp_app_497 IMPLEMENTATION.
 
     " the renderer only ever sees TYPE STANDARD TABLE - the same shape
     " cl_salv_table=>factory( ) has taken since forever
-    render_any( parent = page
-                tab    = rows ).
+    render_any( parent = page tab = rows ).
 
     client->view_display( view->stringify( ) ).
 

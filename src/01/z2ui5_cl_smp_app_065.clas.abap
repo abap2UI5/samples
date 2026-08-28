@@ -87,17 +87,13 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
 
       WHEN `ALL`.
         client->view_display( lo_view->stringify( ) ).
-        client->nest_view_display( val           = lo_view_nested->stringify( )
-                                   id            = `test`
-                                   method_insert = `addContent` ).
+        client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` ).
 
       WHEN `MAIN`.
         client->view_display( lo_view->stringify( ) ).
 
       WHEN `NEST`.
-        client->nest_view_display( val           = lo_view_nested->stringify( )
-                                   id            = `test`
-                                   method_insert = `addContent` ).
+        client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` ).
 
       WHEN `NEST_MODEL`.
         " change only a nest-bound field, without re-rendering the nested XML.

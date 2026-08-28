@@ -105,12 +105,9 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
       CREATE DATA t_tab TYPE STANDARD TABLE OF (`Z2UI5_T_01`).
       ASSIGN t_tab->* TO <tab>.
 
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
-        INTO TABLE <tab>.
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
-        INTO TABLE <tab>.
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
-        INTO TABLE <tab>.
+      INSERT VALUE z2ui5_t_01( id = `this is an uuid` timestampl = `2023234243` id_prev = `previous` ) INTO TABLE <tab>.
+      INSERT VALUE z2ui5_t_01( id = `this is an uuid` timestampl = `2023234243` id_prev = `previous` ) INTO TABLE <tab>.
+      INSERT VALUE z2ui5_t_01( id = `this is an uuid` timestampl = `2023234243` id_prev = `previous` ) INTO TABLE <tab>.
       " abap2ui5lint-enable non-released-api
 
       set_view( ).

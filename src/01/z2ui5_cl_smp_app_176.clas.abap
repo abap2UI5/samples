@@ -114,9 +114,7 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
                                 )->ele( `ObjectIdentifier`
                                     )->a( n = `text` v = `{= '{' + ${LO2>FNAME} + '}' }` ).
 
-    i_client->nest_view_display( val           = lo_view_nested->stringify( )
-                                 id            = `test`
-                                 method_insert = `addContent` ).
+    i_client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` ).
 
   ENDMETHOD.
 

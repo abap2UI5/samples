@@ -73,9 +73,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
                     )->a( n = `value` v = `Here"`
                 )->end( ).
 
-    client->popover_display(
-      xml   = view->stringify( )
-      by_id = id ).
+    client->popover_display( xml = view->stringify( ) by_id = id ).
 
   ENDMETHOD.
 

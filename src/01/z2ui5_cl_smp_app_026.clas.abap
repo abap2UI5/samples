@@ -83,9 +83,7 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
         )->tag( `Input`
             )->a( n = `value` v = `abcd` ).
 
-    client->popover_display(
-        xml   = view->stringify( )
-        by_id = id ).
+    client->popover_display( xml = view->stringify( ) by_id = id ).
 
   ENDMETHOD.
 

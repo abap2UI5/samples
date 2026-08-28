@@ -47,8 +47,7 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
   METHOD on_init.
 
     registered = abap_true.
-    shortcuts_set( event_save   = `SAVE`
-                   event_delete = `DELETE` ).
+    shortcuts_set( event_save = `SAVE` event_delete = `DELETE` ).
     view_display( ).
 
   ENDMETHOD.
@@ -70,12 +69,10 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
         registered = xsdbool( registered = abap_false ).
 
         IF registered = abap_true.
-          shortcuts_set( event_save   = `SAVE`
-                         event_delete = `DELETE` ).
+          shortcuts_set( event_save = `SAVE` event_delete = `DELETE` ).
         ELSE.
           " an empty event name removes the binding again
-          shortcuts_set( event_save   = ``
-                         event_delete = `` ).
+          shortcuts_set( event_save = `` event_delete = `` ).
         ENDIF.
         view_display( ).
 

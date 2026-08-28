@@ -114,9 +114,7 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
     " search. An app parsing arbitrary JSON wants a real parser instead.
     DATA(lv_marker) = |"{ name }":"|.
 
-    DATA(lv_off) = find( val  = json
-                         sub  = lv_marker
-                         case = abap_false ).
+    DATA(lv_off) = find( val = json sub = lv_marker case = abap_false ).
     IF lv_off < 0.
       RETURN.
     ENDIF.

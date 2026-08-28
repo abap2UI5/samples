@@ -245,8 +245,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
                 )->a( n = `target` v = `_blank`
                 )->a( n = `href`   v = `http://sap.com` ).
 
-    client->popover_display( xml   = popup->stringify( )
-                             by_id = id ).
+    client->popover_display( xml = popup->stringify( ) by_id = id ).
 
   ENDMETHOD.
 

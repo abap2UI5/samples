@@ -31,9 +31,7 @@ CLASS z2ui5_cl_smp_app_141 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
@@ -47,8 +45,7 @@ CLASS z2ui5_cl_smp_app_141 IMPLEMENTATION.
     CASE client->get_event( ).
 
       WHEN `POPUP_OPEN`.
-        s_input = VALUE #( hint   = `this label was styled from ABAP`
-                           value1 = `value1` ).
+        s_input = VALUE #( hint = `this label was styled from ABAP` value1 = `value1` ).
         popup_display( ).
 
       WHEN `POPUP_CONFIRM`.
