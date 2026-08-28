@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "label": "check-abap2UI5",
-  "message": "86 rules passed",
+  "message": "91 rules passed",
   "color": "4c1",
   "labelColor": "555",
   "cacheSeconds": 3600
