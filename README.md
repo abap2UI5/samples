@@ -1,6 +1,6 @@
 [![ABAP NW 7.02 to ABAP Cloud](https://img.shields.io/badge/ABAP-NW%207.02%20%E2%86%92%20Cloud-blue)](#try-it-in-60-seconds)
 [![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
-[![abap2UI5](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fabap2UI5%2Fsamples%2Fmain%2F.github%2Fbadges%2Fabap2ui5.json)](#learn-abap2ui5)
+[![abap2UI5](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fabap2UI5%2Fsamples%2Fmain%2F.github%2Fbadges%2Fabap2ui5.json)](#the-learning-path)
 <br><br>
 [![abap-standard](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml)
 [![abap-cloud](https://github.com/abap2UI5/samples/actions/workflows/abap-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-cloud.yaml)
@@ -63,7 +63,7 @@ Every sample is `Z2UI5_CL_SMP_APP_<no>`, and you start it with
 `?app_start=z2ui5_cl_smp_app_<no>`. **The number alone does not name a sample:
 each of the three repositories numbers from its own sequence, and the class
 prefix is what says which one you mean** — `Z2UI5_CL_SMP_APP_493` is the Hello
-World below, while `Z2UI5_CL_SMPS_APP_493` in
+World here, while `Z2UI5_CL_SMPS_APP_493` in
 [samples-stack](https://github.com/abap2UI5/samples-stack) is a FilterBar with
 variant management. So the catalogue always gives you the class, not a number.
 
