@@ -120,6 +120,22 @@
     // pin moves, a pattern anchored on the folder is the one that holds.
     "non-released-api": { "exclude": ["/00/98/"] },
 
+    /* Same folder, same reason, added with the 0.6.0 bump that brought the
+     * rule. `frontend-action-too-new` reports a follow_up_action(
+     * control_global, … ) whose target the frontend resolves with a lazy
+     * require, so below its release the require returns undefined and the wire
+     * does nothing. That is worth knowing everywhere EXCEPT here: app 446 is a
+     * test app whose subject IS the control_global surface, and one of the
+     * five actions it exercises is THEMING.setTheme (@since 1.118). Reporting
+     * it asks the app to stop demonstrating the thing it exists to
+     * demonstrate - the same shape as `non-released-api` above, and §2's own
+     * reading of `src/00/98`: a sample held back BY ITS PURPOSE, deleted
+     * before the 702 build and never shipped as an example to copy.
+     *
+     * Scoped to the folder, not switched off: a control_global action too new
+     * for the floor in `src/01` is a real defect and still fails. */
+    "frontend-action-too-new": { "exclude": ["/00/98/"] },
+
     /* 0.2.0 brought `missing-on-navigated-branch`, and it is RIGHT: 85 apps
      * here dispatch on check_on_init( ) alone, so nothing re-displays when a
      * called app or a popup hands control back, or when a bookmarked state is
