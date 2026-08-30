@@ -1,6 +1,7 @@
 {
-  "note": "abap2ui5-linter baseline: findings that existed when the linter was adopted. Suppressed on every run; NEW findings still fail, a STALE entry fails too. Regenerate with --update-baseline.",
+  "note": "abap2ui5-linter baseline: findings that existed when the linter was adopted. Suppressed on every run; NEW findings still fail, a STALE entry fails too. Regenerate with --update-baseline. The two entries below are NOT adoption debt and NOT accepted defects - they are one linter false positive, entered by hand so that the day the linter stops producing it, this file FAILS and they come out. Nothing else is baselined on purpose: the two control-state-lost-on-rebuild hints 0.6.0 also reports are real, do not fail the gate, and are left visible in the report where somebody can act on them.",
   "findings": {
-    "src/01/z2ui5_cl_smp_app_449.clas.abap|commercial-ui5-host|||hana.ondemand.com": 1
+    "src/01/z2ui5_cl_smp_app_306.clas.abap|relative-binding-without-context|sap.ui.core.Item|key|KEY": 1,
+    "src/01/z2ui5_cl_smp_app_306.clas.abap|relative-binding-without-context|sap.ui.core.Item|text|TEXT": 1
   }
 }
