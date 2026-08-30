@@ -504,7 +504,7 @@ Four things it shows that the app does not, on purpose:
 
 | | Why |
 |---|---|
-| the `src/00` packages | they have no overview app (§3); listing them nowhere is how its 49 apps became invisible |
+| the `src/00` packages | they have no overview app (§3); listing them nowhere is how its 45 apps became invisible |
 | the `ZZZ` helper apps | they must not get a tile — but a catalogue claiming to account for the tree has to say they exist |
 | the `@keywords` | never rendered in the app (§4); here they are what `Ctrl+F` finds |
 | the `@docs` link | the chapter that explains the pattern the sample demonstrates (§4) — the app has no room for it, and a page does |
@@ -725,7 +725,7 @@ over there, which meant a pull request HERE could add a stale or invented link
 and stay green until somebody regenerated the documentation; and the first half
 existed nowhere at all. The scan refuses a URL that is not on the documentation
 site, which catches a typo in the **host** and nothing whatsoever about the
-path — and 96 classes carry one of these lines. Nothing fails when a page is
+path — and 97 classes carry one of these lines. Nothing fails when a page is
 renamed: the class compiles, `SAMPLES.md` renders the link, and it 404s for
 every reader who follows it.
 
@@ -881,7 +881,6 @@ In the order they fail fastest:
 | `npm run lint` | `abap-standard` | `abaplint` reports 0 issues (`abaplint.jsonc`, `v750`) |
 | `npm run check:cloud` | `abap-cloud` | the same tree against the ABAP Cloud API — `main` is installed there as it is (§2) |
 | `npm run check:abap2ui5` | `check-abap2UI5` | the abap2UI5-linter: the app class and the view it builds, plus a headless render of every view. New findings fail; `abap2ui5lint-baseline.json` holds the debt frozen at adoption, and an entry whose finding is gone fails too |
-| `npm run check:chains` | `check-docs` | the builder chains are in the house layout (§10) |
 | `npm run check:agents` | `check-docs` | no drift between the §1 tree and the actual `package.devc.xml` CTEXTs |
 | `npm run check:strip` | `check-docs` | no drift in the strip list (§2) |
 | `npm run check:keywords` | `check-keywords` | every sample carries `@keywords` and `@summary`, first line, lowercase (§4) |
@@ -968,7 +967,7 @@ By hand, because no script covers it:
   both against §7 and §9; `abapdoc` treats demos as a published API; seven
   rules read a view builder chain or a `VALUE #( )` data table as a
   malformed parameter list, and that layout has its own gate
-  (`npm run check:chains`, §10); `prefer_inline` /
+  (`chain-house-layout` in `npm run check:abap2ui5`, §10); `prefer_inline` /
   `no_inline_in_optional_branches` move declarations the samples place
   deliberately; `prefer_corresponding` proposes a rewrite that does not
   activate on a generic field symbol; and `smim_consistency` cannot resolve
@@ -1013,7 +1012,9 @@ By hand, because no script covers it:
 - CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
   `abap-702`, which lint ABAP itself against three target releases
 - **The gate is effective**: 148 app classes, 172 reconstructed views, and
-  the adoption-time debt frozen in `abap2ui5lint-baseline.json` (#753). It was
+  an `abap2ui5lint-baseline.json` that froze the adoption-time debt (#753)
+  until every entry was fixed — empty since 0.6.1, kept so the next adoption
+  has its shape. It was
   not always: while the linter still looked for the view builder's former name
   it found no checkable file at all, and a green `check-abap2UI5` badge then
   meant "nothing was checkable", not "the apps are clean".
@@ -1026,10 +1027,12 @@ By hand, because no script covers it:
   ```
   sources    148 app classes
   views      172 documents reconstructed, nested 11 deep, 7 classes produced none
-  judged     2,176 controls of 106 types, 547 bindings, 69 icons, 4,164 attributes
+  judged     2,178 controls of 106 types, 551 bindings, 68 icons, 4,178 attributes
   gates      properties 148 files, render 172 documents
-  baselined  1 finding suppressed by abap2ui5lint-baseline.json (commercial-ui5-host 1)
   ```
+
+  (No `baselined` line any more: `abap2ui5lint-baseline.json` has been empty
+  since 0.6.1 — the one frozen finding was fixed rather than carried.)
 
   A `judged` line of zeroes, or `148 classes produced none`, is the earlier
   failure repeating itself — and now it says so instead of printing
@@ -1037,7 +1040,7 @@ By hand, because no script covers it:
 - **The two README badges** (`.github/badges/abap2ui5.json` and
   `.github/badges/check-abap2ui5.json`, shields.io endpoint files) carry the
   same statement, split along what they mean: *abap2UI5 | 148 apps · 172 views
-  · 2,176 controls* is what is here, blue, a fact; *check-abap2UI5 | 86 rules
+  · 2,178 controls* is what is here, blue, a fact; *check-abap2UI5 | 86 rules
   passed* is what the gate made of it, green (or *3 problems*, *7 errors*,
   red). A run that finds nothing checkable turns both grey and says so. Every
   run rewrites them, `check-abap2UI5` commits them onto the pull request
@@ -1462,17 +1465,11 @@ The rules above are also the **`view-chain-layout` skill**
 (`.claude/skills/view-chain-layout/`), kept byte-identical in `abap2UI5` and
 `abap2UI5/samples-controls` — read it before writing or reformatting a chain.
 
-`node scripts/chain-format.mjs` (`npm run check:chains`, and a job in
-`check-docs.yaml`) checks all six rules and `npm run fmt:chains` applies them.
-It rewrites whitespace *between* chain segments only, and verifies that
-collapsing every run of code-whitespace leaves the file identical — a
+The linter's `chain-house-layout` rule (part of `npm run check:abap2ui5`,
+in `check-abap2UI5.yaml`) checks all six rules and `npm run fmt:chains`
+applies them. The fixer rewrites whitespace *between* chain segments only,
+and the layout survives because every fix is verified against the rule — a
 formatting change can never alter what the view builds.
-
-The abap2UI5-linter covers part of it: `chain-indentation` and
-`chain-element-per-line` are both raised to `warning` in `abap2ui5lint.jsonc`
-and the baseline holds none of either any more. Neither rule judges the *step*,
-though — a chain uniformly indented by 8 passes both — which is what
-`chain-format` is for.
 
 #### Namespaces
 
