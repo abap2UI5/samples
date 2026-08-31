@@ -686,6 +686,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
   METHOD get_catalog.
 
     result = VALUE #(
+      ( group = `samples` header = `App State`
+        sub = `Bookmark and Share`
+        keywords = `app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state`
+        path = `src/01` app = `z2ui5_cl_smp_app_498` )
       ( group = `samples` header = `Basics I` sub = `Hello World, the Smallest App` keywords = `hello world smallest first app minimal start here template` path = `src/01` app = `z2ui5_cl_smp_app_493` )
       ( group = `samples` header = `Basics II` sub = `Data Binding: Input and Button` keywords = `binding _bind model attribute value input button serialize` path = `src/01` app = `z2ui5_cl_smp_app_494` )
       ( group = `samples` header = `Basics III` sub = `Lifecycle: Init, Event, Navigated` keywords = `lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated` path = `src/01` app = `z2ui5_cl_smp_app_495` )
@@ -743,6 +747,12 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `samples` header = `Grid Table` sub = `Events on Cell Level` keywords = `cell enter row index event grid alv` path = `src/01` app = `z2ui5_cl_smp_app_160` )
       ( group = `samples` header = `Grid Table` sub = `Full Example with sap.ui.table` keywords = `grid alv dynamicpage column row action currency search sort filter` path = `src/01` app = `z2ui5_cl_smp_app_070` )
       ( group = `samples` header = `Grid Table` sub = `Keep Column Filters on Refresh (C)` keywords = `column filter reset refresh uitableext grid alv` path = `src/01` app = `z2ui5_cl_smp_app_143` )
+      ( group = `samples` header = `Hash`
+        sub = `App-Owned Routing (#/detail)`
+        keywords = `routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback`
+        path = `src/01` app = `z2ui5_cl_smp_app_499` )
+      ( group = `samples` header = `Hash` sub = `Routing mode fresh` keywords = `routing mode fresh navigation restart new instance nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_468` )
+      ( group = `samples` header = `Hash` sub = `Routing mode keep` keywords = `routing mode keep navigation state preserved back nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_480` )
       ( group = `samples` header = `List` sub = `Filter and Sort the Binding from ABAP (A)` keywords = `binding_call getbinding sorter filter follow_up_action` path = `src/01` app = `z2ui5_cl_smp_app_454` )
       ( group = `samples` header = `List` sub = `Live Filter on the Client, No Roundtrip (A)` keywords = `binding_call live search client side no roundtrip filter` path = `src/01` app = `z2ui5_cl_smp_app_455` )
       ( group = `samples` header = `List` sub = `StandardListItem, Highlight and Events` keywords = `sap.m.list standardlistitem highlight infostate press selection` path = `src/01` app = `z2ui5_cl_smp_app_048` )
@@ -754,19 +764,9 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `samples` header = `Message` sub = `MessagePopover URL Policy (A)` keywords = `url policy link security validator relative allow deny` path = `src/01` app = `z2ui5_cl_smp_app_474` )
       ( group = `samples` header = `Message` sub = `MessageToast, Text and Duration` keywords = `toast notification duration position animation` path = `src/01` app = `z2ui5_cl_smp_app_381` )
       ( group = `samples` header = `Message` sub = `MessageView and MessagePopover (A)` keywords = `messagepopover messageitem dialog grouped message list` path = `src/01` app = `z2ui5_cl_smp_app_452` )
-      ( group = `samples` header = `Navigation`
-        sub = `App State, Bookmark and Share`
-        keywords = `app state url bookmark share clipboard copy link restore deep link reload set_app_state_active clipboard_app_state sap-iapp-state sap-xapp-state`
-        path = `src/01` app = `z2ui5_cl_smp_app_498` )
-      ( group = `samples` header = `Navigation`
-        sub = `App-Owned Hash Routing (#/detail)`
-        keywords = `routing hash url page browser back forward history deep link reload set_hash_listener set_push_state history_back navcontainer router`
-        path = `src/01` app = `z2ui5_cl_smp_app_499` )
       ( group = `samples` header = `Navigation` sub = `Call and Leave Apps (nav_app_call)` keywords = `nav_app_call nav_app_leave sub app stack call back` path = `src/01` app = `z2ui5_cl_smp_app_024` )
       ( group = `samples` header = `Navigation` sub = `Data Loss Protection on Leaving (A,C)` keywords = `dirty unsaved changes leave confirmation warning` path = `src/01` app = `z2ui5_cl_smp_app_279` )
       ( group = `samples` header = `Navigation` sub = `Return Data and Events to the Caller` keywords = `r_data result get_app_prev return event payload` path = `src/01` app = `z2ui5_cl_smp_app_488` )
-      ( group = `samples` header = `Navigation` sub = `Routing mode fresh` keywords = `routing mode fresh navigation restart new instance nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_468` )
-      ( group = `samples` header = `Navigation` sub = `Routing mode keep` keywords = `routing mode keep navigation state preserved back nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_480` )
       ( group = `samples` header = `Navigation` sub = `Uncaught Error and Error Popup` keywords = `exception dump error handling debugtool restart retry` path = `src/01` app = `z2ui5_cl_smp_app_464` )
       ( group = `samples` header = `Nested View` sub = `Basic Example (nest_view_display)` keywords = `nest_view_display rerender model refresh sub view` path = `src/01` app = `z2ui5_cl_smp_app_065` )
       ( group = `samples` header = `Nested View` sub = `Embed Another App's View` keywords = `sub app class embed instantiate another app rtti` path = `src/01` app = `z2ui5_cl_smp_app_104` )

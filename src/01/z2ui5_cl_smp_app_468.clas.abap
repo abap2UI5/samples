@@ -2,7 +2,7 @@
 " @summary Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/routing
 "! Hash-based app routing (UI5 Router style), mode FRESH:
-"! follow_up_action( cs_event-set_nav_routing ) with mode FRESH makes the URL
+"! follow_up_action( cs_event-hash_routing ) with mode FRESH makes the URL
 "! mirror the running app by CLASS only ('#/app/[CLASS]'). Browser Back/Forward - and a
 "! reload or a bookmark - therefore start the app FRESH: the input and the
 "! counter are gone.
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
     " and re-sends it whenever the frontend may not hold it (page load,
     " Back/Forward restore, navigation hops)
     IF client->check_on_init( ).
-      client->follow_up_action( val   = client->cs_event-set_nav_routing
+      client->follow_up_action( val   = client->cs_event-hash_routing
                                 t_arg = VALUE #( ( client->cs_nav_mode-fresh ) ) ).
     ENDIF.
 

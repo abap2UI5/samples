@@ -34,7 +34,13 @@ plain OpenUI5 1.71. Each adds one idea. With the 6
 helper apps they call and the overview app itself, that is the **109
 ready-to-run apps** the README leads with.
 
-[Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
+[App State](#app-state) · [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
+
+### App State
+
+| Sample | Class |
+|---|---|
+| Bookmark and Share<br>The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.<br><sub>app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state</sub><br><sub>docs: [cookbook/expert_more/app_state_share](https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share)</sub> | [`Z2UI5_CL_SMP_APP_498`](src/01/z2ui5_cl_smp_app_498.clas.abap) |
 
 ### Basics
 
@@ -142,6 +148,14 @@ ready-to-run apps** the README leads with.
 | Full Example with sap.ui.table<br>The full sap.ui.table example: a DynamicPage with search, sort, filter, currency columns and row actions - the closest thing here to a finished ALV.<br><sub>grid alv dynamicpage column row action currency search sort filter</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables), [tutorials/walkthrough/step-9](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-9), [tutorials/walkthrough/step-10](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-10)</sub> | [`Z2UI5_CL_SMP_APP_070`](src/01/z2ui5_cl_smp_app_070.clas.abap) |
 | Keep Column Filters on Refresh (C)<br>Keeps the active sap.ui.table column filters across a view model update, through the abap2UI5 uitableext custom control - without it they are reset.<br><sub>column filter reset refresh uitableext grid alv</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_143`](src/01/z2ui5_cl_smp_app_143.clas.abap) |
 
+### Hash
+
+| Sample | Class |
+|---|---|
+| App-Owned Routing (#/detail)<br>The whole hash_* family in one app: hash_set pushes #/detail, hash_replace rewrites it in place, hash_back steps back like a router, a deep link restores.<br><sub>routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_499`](src/01/z2ui5_cl_smp_app_499.clas.abap) |
+| Routing mode fresh<br>Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.<br><sub>routing mode fresh navigation restart new instance nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_468`](src/01/z2ui5_cl_smp_app_468.clas.abap) |
+| Routing mode keep<br>Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.<br><sub>routing mode keep navigation state preserved back nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_480`](src/01/z2ui5_cl_smp_app_480.clas.abap) |
+
 ### List
 
 | Sample | Class |
@@ -172,13 +186,9 @@ ready-to-run apps** the README leads with.
 
 | Sample | Class |
 |---|---|
-| App State, Bookmark and Share<br>The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.<br><sub>app state url bookmark share clipboard copy link restore deep link reload set_app_state_active clipboard_app_state sap-iapp-state sap-xapp-state</sub><br><sub>docs: [cookbook/expert_more/app_state_share](https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share)</sub> | [`Z2UI5_CL_SMP_APP_498`](src/01/z2ui5_cl_smp_app_498.clas.abap) |
-| App-Owned Hash Routing (#/detail)<br>The app owns its URL hash like a UI5 router: #/detail while navigating, browser Back and Forward switch the pages, a deep link restores.<br><sub>routing hash url page browser back forward history deep link reload set_hash_listener set_push_state history_back navcontainer router</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_499`](src/01/z2ui5_cl_smp_app_499.clas.abap) |
 | Call and Leave Apps (nav_app_call)<br>Calling another app and coming back: nav_app_call puts the caller on a stack, nav_app_leave returns to it.<br><sub>nav_app_call nav_app_leave sub app stack call back</sub><br><sub>docs: [cookbook/event_navigation/navigation](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation)</sub> | [`Z2UI5_CL_SMP_APP_024`](src/01/z2ui5_cl_smp_app_024.clas.abap) |
 | Data Loss Protection on Leaving (A,C)<br>Refuses to leave an app with unsaved changes: the confirmation popup in front of nav_app_leave, and how the dirty flag gets there.<br><sub>dirty unsaved changes leave confirmation warning</sub><br><sub>docs: [cookbook/event_navigation/navigation](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation)</sub> | [`Z2UI5_CL_SMP_APP_279`](src/01/z2ui5_cl_smp_app_279.clas.abap) |
 | Return Data and Events to the Caller<br>The way back carries data: the called app returns an event name and a payload (r_data) that the caller reads from get_app_prev.<br><sub>r_data result get_app_prev return event payload</sub><br><sub>docs: [cookbook/event_navigation/navigation](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation)</sub> | [`Z2UI5_CL_SMP_APP_488`](src/01/z2ui5_cl_smp_app_488.clas.abap) |
-| Routing mode fresh<br>Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.<br><sub>routing mode fresh navigation restart new instance nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_468`](src/01/z2ui5_cl_smp_app_468.clas.abap) |
-| Routing mode keep<br>Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.<br><sub>routing mode keep navigation state preserved back nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_480`](src/01/z2ui5_cl_smp_app_480.clas.abap) |
 | Uncaught Error and Error Popup<br>What an uncaught exception looks like from the user's side - the error popup, and the way back into the app.<br><sub>exception dump error handling debugtool restart retry</sub><br><sub>docs: [cookbook/event_navigation/exception](https://abap2ui5.github.io/docs/cookbook/event_navigation/exception)</sub> | [`Z2UI5_CL_SMP_APP_464`](src/01/z2ui5_cl_smp_app_464.clas.abap) |
 
 ### Nested View
