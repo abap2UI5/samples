@@ -13,7 +13,7 @@
     },
     {
       "url": "https://github.com/abap2UI5/abap2UI5",
-      "branch": "1.143.0",
+      "branch": "1.144.0",
       "folder": "/abap2UI5",
       "files": "/src/**/*.*"
     }
@@ -72,7 +72,7 @@
     "abapdoc": false,
     // --- off: the view builder chain owns its own layout --------------
     // A view is one statement spanning up to several hundred lines, laid out
-    // by rules that "npm run check:chains" (scripts/chain-format.mjs) gates -
+    // by rules that the linter's chain-house-layout ("npm run check:abap2ui5") gates -
     // and that gate is stricter than anything here. Every one of these rules
     // reads a chain as a malformed parameter list: 5,087 findings from
     // line_break_multiple_parameters alone, all of them correct chains.
