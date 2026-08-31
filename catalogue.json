@@ -58,40 +58,10 @@
  ],
  "counts": {
   "samples": 102,
-  "categories": 25,
+  "categories": 24,
   "stages": 6
  },
  "samples": [
-  {
-   "class": "z2ui5_cl_smp_app_498",
-   "file": "src/01/z2ui5_cl_smp_app_498.clas.abap",
-   "category": "App State",
-   "stage": "move",
-   "title": "App State",
-   "description": "Bookmark and Share",
-   "summary": "The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.",
-   "keywords": [
-    "app",
-    "state",
-    "url",
-    "bookmark",
-    "share",
-    "clipboard",
-    "copy",
-    "link",
-    "restore",
-    "deep",
-    "link",
-    "reload",
-    "app_state_set_active",
-    "app_state_get_href",
-    "sap-iapp-state",
-    "sap-xapp-state"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share"
-   ]
-  },
   {
    "class": "z2ui5_cl_smp_app_493",
    "file": "src/01/z2ui5_cl_smp_app_493.clas.abap",
@@ -1170,6 +1140,36 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/tables"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_498",
+   "file": "src/01/z2ui5_cl_smp_app_498.clas.abap",
+   "category": "Hash",
+   "stage": "move",
+   "title": "Hash",
+   "description": "App State, Bookmark and Share",
+   "summary": "The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.",
+   "keywords": [
+    "app",
+    "state",
+    "url",
+    "bookmark",
+    "share",
+    "clipboard",
+    "copy",
+    "link",
+    "restore",
+    "deep",
+    "link",
+    "reload",
+    "app_state_set_active",
+    "app_state_get_href",
+    "sap-iapp-state",
+    "sap-xapp-state"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share"
    ]
   },
   {
