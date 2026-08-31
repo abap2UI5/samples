@@ -57,7 +57,7 @@
   }
  ],
  "counts": {
-  "samples": 98,
+  "samples": 102,
   "categories": 23,
   "stages": 6
  },
@@ -1362,6 +1362,66 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_498",
+   "file": "src/01/z2ui5_cl_smp_app_498.clas.abap",
+   "category": "Navigation",
+   "stage": "move",
+   "title": "Navigation",
+   "description": "App State, Bookmark and Share",
+   "summary": "The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.",
+   "keywords": [
+    "app",
+    "state",
+    "url",
+    "bookmark",
+    "share",
+    "clipboard",
+    "copy",
+    "link",
+    "restore",
+    "deep",
+    "link",
+    "reload",
+    "set_app_state_active",
+    "clipboard_app_state",
+    "sap-iapp-state",
+    "sap-xapp-state"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_499",
+   "file": "src/01/z2ui5_cl_smp_app_499.clas.abap",
+   "category": "Navigation",
+   "stage": "move",
+   "title": "Navigation",
+   "description": "App-Owned Hash Routing (#/detail)",
+   "summary": "The app owns its URL hash like a UI5 router: #/detail while navigating, browser Back and Forward switch the pages, a deep link restores.",
+   "keywords": [
+    "routing",
+    "hash",
+    "url",
+    "page",
+    "browser",
+    "back",
+    "forward",
+    "history",
+    "deep",
+    "link",
+    "reload",
+    "set_hash_listener",
+    "set_push_state",
+    "history_back",
+    "navcontainer",
+    "router"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/routing"
+   ]
+  },
+  {
    "class": "z2ui5_cl_smp_app_024",
    "file": "src/01/z2ui5_cl_smp_app_024.clas.abap",
    "category": "Navigation",
@@ -1420,6 +1480,50 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_468",
+   "file": "src/01/z2ui5_cl_smp_app_468.clas.abap",
+   "category": "Navigation",
+   "stage": "move",
+   "title": "Navigation",
+   "description": "Routing mode fresh",
+   "summary": "Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.",
+   "keywords": [
+    "routing",
+    "mode",
+    "fresh",
+    "navigation",
+    "restart",
+    "new",
+    "instance",
+    "nav_app_call"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/routing"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_480",
+   "file": "src/01/z2ui5_cl_smp_app_480.clas.abap",
+   "category": "Navigation",
+   "stage": "move",
+   "title": "Navigation",
+   "description": "Routing mode keep",
+   "summary": "Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.",
+   "keywords": [
+    "routing",
+    "mode",
+    "keep",
+    "navigation",
+    "state",
+    "preserved",
+    "back",
+    "nav_app_call"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/routing"
    ]
   },
   {

@@ -754,9 +754,19 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `samples` header = `Message` sub = `MessagePopover URL Policy (A)` keywords = `url policy link security validator relative allow deny` path = `src/01` app = `z2ui5_cl_smp_app_474` )
       ( group = `samples` header = `Message` sub = `MessageToast, Text and Duration` keywords = `toast notification duration position animation` path = `src/01` app = `z2ui5_cl_smp_app_381` )
       ( group = `samples` header = `Message` sub = `MessageView and MessagePopover (A)` keywords = `messagepopover messageitem dialog grouped message list` path = `src/01` app = `z2ui5_cl_smp_app_452` )
+      ( group = `samples` header = `Navigation`
+        sub = `App State, Bookmark and Share`
+        keywords = `app state url bookmark share clipboard copy link restore deep link reload set_app_state_active clipboard_app_state sap-iapp-state sap-xapp-state`
+        path = `src/01` app = `z2ui5_cl_smp_app_498` )
+      ( group = `samples` header = `Navigation`
+        sub = `App-Owned Hash Routing (#/detail)`
+        keywords = `routing hash url page browser back forward history deep link reload set_hash_listener set_push_state history_back navcontainer router`
+        path = `src/01` app = `z2ui5_cl_smp_app_499` )
       ( group = `samples` header = `Navigation` sub = `Call and Leave Apps (nav_app_call)` keywords = `nav_app_call nav_app_leave sub app stack call back` path = `src/01` app = `z2ui5_cl_smp_app_024` )
       ( group = `samples` header = `Navigation` sub = `Data Loss Protection on Leaving (A,C)` keywords = `dirty unsaved changes leave confirmation warning` path = `src/01` app = `z2ui5_cl_smp_app_279` )
       ( group = `samples` header = `Navigation` sub = `Return Data and Events to the Caller` keywords = `r_data result get_app_prev return event payload` path = `src/01` app = `z2ui5_cl_smp_app_488` )
+      ( group = `samples` header = `Navigation` sub = `Routing mode fresh` keywords = `routing mode fresh navigation restart new instance nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_468` )
+      ( group = `samples` header = `Navigation` sub = `Routing mode keep` keywords = `routing mode keep navigation state preserved back nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_480` )
       ( group = `samples` header = `Navigation` sub = `Uncaught Error and Error Popup` keywords = `exception dump error handling debugtool restart retry` path = `src/01` app = `z2ui5_cl_smp_app_464` )
       ( group = `samples` header = `Nested View` sub = `Basic Example (nest_view_display)` keywords = `nest_view_display rerender model refresh sub view` path = `src/01` app = `z2ui5_cl_smp_app_065` )
       ( group = `samples` header = `Nested View` sub = `Embed Another App's View` keywords = `sub app class embed instantiate another app rtti` path = `src/01` app = `z2ui5_cl_smp_app_104` )
