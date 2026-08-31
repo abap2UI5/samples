@@ -3,12 +3,12 @@
 
 # The sample catalogue
 
-Every app in this repository — 149 of them — with what it shows and a link
+Every app in this repository — 148 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
 **109 of them ship on every branch** — the portable set the README counts:
-`src/01` plus this overview app. The other 40 are under `src/00` and are
+`src/01` plus this overview app. The other 39 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
 in the tree is invisible.
@@ -257,20 +257,12 @@ ready-to-run apps** the README leads with.
 
 ## Not in any overview — `src/00`
 
-35 apps with no tile anywhere (AGENTS.md section 3) — reachable
+34 apps with no tile anywhere (AGENTS.md section 3) — reachable
 by class name only, which is what this section is for. They are held to a
 lower bar than `src/01`: an experimental sample may use something newer than
 UI5 1.71, and a testing app exists to be run by a check, not to be learned
 from. Both packages are **stripped from the `702` branch**, so this section
 is absent there.
-
-### experimental — `src/00/97`
-
-1 app(s).
-
-| Sample | Class |
-|---|---|
-| **Popup** — change a popup control from the backend<br>Changes a control INSIDE an open popup from the backend, by ID, without closing and rebuilding the dialog.<br><sub>popup dialog change control backend control_by_id update running</sub><br><sub>docs: [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup)</sub> | [`Z2UI5_CL_SMP_APP_141`](src/00/97/z2ui5_cl_smp_app_141.clas.abap) |
 
 ### testing — `src/00/98`
 
