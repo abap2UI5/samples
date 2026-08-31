@@ -1,18 +1,17 @@
-" @keywords routing mode fresh navigation restart new instance nav_app_call
-" @summary Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.
+" @keywords routing mode keep navigation state preserved back nav_app_call
+" @summary Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/routing
-"! Hash-based app routing (UI5 Router style), mode FRESH:
-"! follow_up_action( cs_event-set_nav_routing ) with mode FRESH makes the URL
-"! mirror the running app by CLASS only ('#/app/[CLASS]'). Browser Back/Forward - and a
-"! reload or a bookmark - therefore start the app FRESH: the input and the
-"! counter are gone.
+"! Hash-based app routing (UI5 Router style), mode KEEP:
+"! follow_up_action( cs_event-hash_routing ) with mode KEEP makes the URL
+"! carry the app-state draft as well ('#/app/[CLASS]/[DRAFT]'), so Back/Forward
+"! restore the EXACT state: the input and the counter come back unchanged.
 "!
 "! Put in some state (type / raise the counter), open the detail page
 "! (z2ui5_cl_smp_app_469) via client->nav_app_call( ), then press the BROWSER
-"! Back button and watch this page - it comes back empty.
+"! Back button and watch this page - it comes back exactly as you left it.
 "!
-"! z2ui5_cl_smp_app_480 is the same demo in mode KEEP, where the state survives.
-CLASS z2ui5_cl_smp_app_468 DEFINITION PUBLIC.
+"! z2ui5_cl_smp_app_468 is the same demo in mode FRESH, where the state is lost.
+CLASS z2ui5_cl_smp_app_480 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -30,7 +29,7 @@ CLASS z2ui5_cl_smp_app_468 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -68,8 +67,8 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
     " and re-sends it whenever the frontend may not hold it (page load,
     " Back/Forward restore, navigation hops)
     IF client->check_on_init( ).
-      client->follow_up_action( val   = client->cs_event-set_nav_routing
-                                t_arg = VALUE #( ( client->cs_nav_mode-fresh ) ) ).
+      client->follow_up_action( val   = client->cs_event-hash_routing
+                                t_arg = VALUE #( ( client->cs_nav_mode-keep ) ) ).
     ENDIF.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -83,7 +82,7 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Navigation - Routing Mode fresh`
+            )->a( n = `title`          v = `abap2UI5 - Navigation - Routing Mode keep`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
@@ -98,7 +97,7 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
         )->a( n = `defaultSpan` v = `L6 M12 S12`
         )->ele( n = `content` ns = `layout`
             )->ele( n = `SimpleForm` ns = `form`
-                )->a( n = `title` v = `Routing mode fresh`
+                )->a( n = `title` v = `Routing mode keep`
                 )->ele( n = `content` ns = `form` ).
 
     form->tag( `Label`
@@ -120,8 +119,8 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
         )->a( n = `type`  v = `Emphasized` ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `fresh: the URL carries the class only (#/app/<CLASS>). After the detail page, the ` &&
-                   `browser Back button starts this app FRESH - input and counter are reset.`
+        )->a( n = `text`     v = `keep: the URL carries the app-state draft (#/app/<CLASS>/<DRAFT>). After the detail ` &&
+                   `page, the browser Back button restores this page EXACTLY - input and counter come back.`
         )->a( n = `type`     v = `Success`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).

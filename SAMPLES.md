@@ -3,12 +3,12 @@
 
 # The sample catalogue
 
-Every app in this repository — 150 of them — with what it shows and a link
+Every app in this repository — 148 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
-**105 of them ship on every branch** — the portable set the README counts:
-`src/01` plus this overview app. The other 45 are under `src/00` and are
+**109 of them ship on every branch** — the portable set the README counts:
+`src/01` plus this overview app. The other 39 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
 in the tree is invisible.
@@ -16,7 +16,7 @@ in the tree is invisible.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 98 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 102 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -29,12 +29,18 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path — `src/01`
 
-The 98 samples the overview app lists: cloud-ready, downportable,
+The 102 samples the overview app lists: cloud-ready, downportable,
 plain OpenUI5 1.71. Each adds one idea. With the 6
-helper apps they call and the overview app itself, that is the **105
+helper apps they call and the overview app itself, that is the **109
 ready-to-run apps** the README leads with.
 
-[Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
+[App State](#app-state) · [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
+
+### App State
+
+| Sample | Class |
+|---|---|
+| Bookmark and Share<br>The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.<br><sub>app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state</sub><br><sub>docs: [cookbook/expert_more/app_state_share](https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share)</sub> | [`Z2UI5_CL_SMP_APP_498`](src/01/z2ui5_cl_smp_app_498.clas.abap) |
 
 ### Basics
 
@@ -141,6 +147,14 @@ ready-to-run apps** the README leads with.
 | Events on Cell Level<br>Events on cell level in a grid table: which row and which column the user was in, and what arrives in the backend.<br><sub>cell enter row index event grid alv</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_160`](src/01/z2ui5_cl_smp_app_160.clas.abap) |
 | Full Example with sap.ui.table<br>The full sap.ui.table example: a DynamicPage with search, sort, filter, currency columns and row actions - the closest thing here to a finished ALV.<br><sub>grid alv dynamicpage column row action currency search sort filter</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables), [tutorials/walkthrough/step-9](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-9), [tutorials/walkthrough/step-10](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-10)</sub> | [`Z2UI5_CL_SMP_APP_070`](src/01/z2ui5_cl_smp_app_070.clas.abap) |
 | Keep Column Filters on Refresh (C)<br>Keeps the active sap.ui.table column filters across a view model update, through the abap2UI5 uitableext custom control - without it they are reset.<br><sub>column filter reset refresh uitableext grid alv</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_143`](src/01/z2ui5_cl_smp_app_143.clas.abap) |
+
+### Hash
+
+| Sample | Class |
+|---|---|
+| App-Owned Routing (#/detail)<br>The whole hash_* family in one app: hash_set pushes #/detail, hash_replace rewrites it in place, hash_back steps back like a router, a deep link restores.<br><sub>routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_499`](src/01/z2ui5_cl_smp_app_499.clas.abap) |
+| Routing mode fresh<br>Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.<br><sub>routing mode fresh navigation restart new instance nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_468`](src/01/z2ui5_cl_smp_app_468.clas.abap) |
+| Routing mode keep<br>Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.<br><sub>routing mode keep navigation state preserved back nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_480`](src/01/z2ui5_cl_smp_app_480.clas.abap) |
 
 ### List
 
@@ -253,25 +267,12 @@ ready-to-run apps** the README leads with.
 
 ## Not in any overview — `src/00`
 
-40 apps with no tile anywhere (AGENTS.md section 3) — reachable
+34 apps with no tile anywhere (AGENTS.md section 3) — reachable
 by class name only, which is what this section is for. They are held to a
 lower bar than `src/01`: an experimental sample may use something newer than
 UI5 1.71, and a testing app exists to be run by a check, not to be learned
 from. Both packages are **stripped from the `702` branch**, so this section
 is absent there.
-
-### experimental — `src/00/97`
-
-6 app(s).
-
-| Sample | Class |
-|---|---|
-| **Navigation** — app state<br>Turns the running app into a URL somebody else can open: set_app_state_active writes the state, the link restores it.<br><sub>app state url bookmark restore set_app_state_active reload deep link</sub><br><sub>docs: [cookbook/expert_more/app_state_share](https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share)</sub> | [`Z2UI5_CL_SMP_APP_321`](src/00/97/z2ui5_cl_smp_app_321.clas.abap) |
-| **Navigation** — app state share<br>The same app state, sent to a colleague: the link goes into the clipboard, and opening it puts them where you were.<br><sub>app state share clipboard copy link colleague send url</sub><br><sub>docs: [cookbook/expert_more/app_state_share](https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share)</sub> | [`Z2UI5_CL_SMP_APP_323`](src/00/97/z2ui5_cl_smp_app_323.clas.abap) |
-| **Navigation** — push state<br>Writes the browser history from the app (set_push_state), so the Back button walks the app's own steps instead of leaving it.<br><sub>push state browser history back button hash url set_push_state</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_322`](src/00/97/z2ui5_cl_smp_app_322.clas.abap) |
-| **Navigation** — Routing mode fresh<br>Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.<br><sub>routing mode fresh navigation restart new instance nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_468`](src/00/97/z2ui5_cl_smp_app_468.clas.abap) |
-| **Navigation** — Routing mode keep<br>Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.<br><sub>routing mode keep navigation state preserved back nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing)</sub> | [`Z2UI5_CL_SMP_APP_480`](src/00/97/z2ui5_cl_smp_app_480.clas.abap) |
-| **Popup** — change a popup control from the backend<br>Changes a control INSIDE an open popup from the backend, by ID, without closing and rebuilding the dialog.<br><sub>popup dialog change control backend control_by_id update running</sub><br><sub>docs: [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup)</sub> | [`Z2UI5_CL_SMP_APP_141`](src/00/97/z2ui5_cl_smp_app_141.clas.abap) |
 
 ### testing — `src/00/98`
 
