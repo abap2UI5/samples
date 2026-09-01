@@ -88,7 +88,17 @@ CLASS z2ui5_cl_smp_app_211 IMPLEMENTATION.
 
     ENDLOOP.
 
-    mo_main_page = lo_items.
+    " the PAGE, not lo_items - this reference is what the sub-app receives as
+    " its mo_parent_page, and a sub-app builds STRAIGHT into whatever it is
+    " handed (it used to walk up to the Page itself, which is what the move to
+    " z2ui5_cl_ui5_view_builder replaced with this contract). Hand over the
+    " IconTabBar's `items` node instead and the sub-app's own content lands in
+    " that aggregation, where sap.m.IconTabHeader=>addItem calls getKey( ) on
+    " everything that is not an IconTabSeparator - so the view dies with
+    " "e.getKey is not a function" before UI5 ever type-checks the aggregation.
+    " Which reference is handed over does not change the rendered view:
+    " stringify( ) renders from the root of the tree, not from this node.
+    mo_main_page = page.
 
   ENDMETHOD.
 
@@ -131,10 +141,15 @@ CLASS z2ui5_cl_smp_app_211 IMPLEMENTATION.
 
         view_display( ).
 
-        ASSIGN mo_app->(`MO_PARENT_VIEW`) TO FIELD-SYMBOL(<view>).
+        " MO_PARENT_PAGE: the sub-apps renamed the attribute when they moved
+        " to z2ui5_cl_ui5_view_builder. This ASSIGN kept naming the old
+        " MO_PARENT_VIEW, so it found nothing, the IF below never ran and the
+        " sub-app rendered its own standalone view instead of into this one -
+        " silently, because a failed ASSIGN only sets sy-subrc
+        ASSIGN mo_app->(`MO_PARENT_PAGE`) TO FIELD-SYMBOL(<page>).
 
-        IF <view> IS ASSIGNED.
-          <view> = mo_main_page.
+        IF <page> IS ASSIGNED.
+          <page> = mo_main_page.
         ENDIF.
 
         CALL METHOD mo_app->(`Z2UI5_IF_APP~MAIN`)
