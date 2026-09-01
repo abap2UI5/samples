@@ -560,7 +560,7 @@
     "whitelisted"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
    ]
   },
   {
@@ -602,7 +602,7 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/device_capabilities/pdf",
-    "https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
    ]
   },
   {
@@ -623,7 +623,7 @@
     "whitelisted"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
    ]
   },
   {
@@ -643,7 +643,7 @@
     "control_by_id"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
    ]
   },
   {
@@ -1201,7 +1201,7 @@
     "onnavback"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/routing"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
    ]
   },
   {
@@ -1223,7 +1223,7 @@
     "nav_app_call"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/routing"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
    ]
   },
   {
@@ -1245,7 +1245,7 @@
     "nav_app_call"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/routing"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
    ]
   },
   {
@@ -1485,7 +1485,7 @@
     "back"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/inner_app"
    ]
   },
   {
@@ -1505,7 +1505,7 @@
     "warning"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/inner_app"
    ]
   },
   {
@@ -1525,7 +1525,7 @@
     "payload"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/inner_app"
    ]
   },
   {
@@ -1750,7 +1750,7 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover",
-    "https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action"
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
    ]
   },
   {
