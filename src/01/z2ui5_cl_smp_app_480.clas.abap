@@ -1,6 +1,6 @@
 " @keywords routing mode keep navigation state preserved back nav_app_call
 " @summary Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.
-" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/routing
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash
 "! Hash-based app routing (UI5 Router style), mode KEEP:
 "! follow_up_action( cs_event-hash_routing ) with mode KEEP makes the URL
 "! carry the app-state draft as well ('#/app/[CLASS]/[DRAFT]'), so Back/Forward

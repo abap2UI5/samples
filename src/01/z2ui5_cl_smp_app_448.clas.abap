@@ -1,6 +1,6 @@
 " @keywords panel collapse expand setexpanded control_by_id whitelisted
 " @summary Expands a Panel by calling setExpanded on it by ID - a whitelisted control call, no roundtrip and no model behind it.
-" @docs https://abap2ui5.github.io/docs/cookbook/expert_more/follow_up_action
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend
 CLASS z2ui5_cl_smp_app_448 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
