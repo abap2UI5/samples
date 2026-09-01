@@ -1,6 +1,6 @@
 " @keywords routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback
 " @summary The whole hash_* family in one app: hash_set pushes #/detail, hash_replace rewrites it in place, hash_back steps back like a router, a deep link restores.
-" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/routing
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash
 "! App-owned hash routing - the URL semantics of a UI5 router, 1:1, and the
 "! whole hash_* family (named after sap/ui/core/routing/HashChanger) in one
 "! place:
