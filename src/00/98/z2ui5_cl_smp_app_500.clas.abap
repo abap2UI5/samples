@@ -19,9 +19,8 @@ CLASS z2ui5_cl_smp_app_500 DEFINITION
     DATA mt_table TYPE ty_t_rows.
 
   PROTECTED SECTION.
-    DATA client            TYPE REF TO z2ui5_if_client.
-    DATA check_initialized TYPE abap_bool.
-    DATA mv_next_id        TYPE i.
+    DATA client     TYPE REF TO z2ui5_if_client.
+    DATA mv_next_id TYPE i.
 
     METHODS on_init.
     METHODS render_main.
@@ -35,16 +34,19 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF client->check_on_init( ).
       on_init( ).
       render_main( ).
+    ELSEIF client->check_on_navigated( ).
+      on_after_popup( ).
+      render_main( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
     ENDIF.
 
-    on_after_popup( ).
-    on_event( ).
   ENDMETHOD.
 
 
@@ -61,115 +63,147 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->page( title         = 'Demo Table (Simple Selection)'
-                             shownavbutton = abap_false ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(table) = page->table(
-                    growing = 'true'
-                    width   = 'auto'
-                    items   = client->_bind_edit( mt_table ) ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`         v = `abap2UI5 - Table - Simple Selection`
+            )->a( n = `showNavButton` b = abap_false ).
 
-    " columns (hardcoded instead of the layout manager)
-    DATA(columns) = table->columns( ).
-    columns->column( )->text( 'Sel' ).
-    columns->column( )->text( 'Carrier' ).
-    columns->column( )->text( 'Conn.' ).
-    columns->column( )->text( 'From' ).
-    columns->column( )->text( 'To' ).
+    DATA(table) = page->ele( `Table`
+        )->a( n = `growing` b = abap_true
+        )->a( n = `width`   v = `auto`
+        )->a( n = `items`   v = client->_bind( mt_table ) ).
 
-    " one row template; row press opens the edit popup, passing ROW_ID
-    DATA(cells) = columns->get_parent( )->items(
-        )->column_list_item(
-             type  = 'Navigation'
-             press = client->_event( val   = 'ROW_SELECT'
-                                     t_arg = VALUE #( ( `${ROW_ID}` ) ) )
-        )->cells( ).
+    " the columns, hardcoded instead of driven by a layout manager
+    DATA(columns) = table->ele( `columns` ).
 
-    cells->checkbox( '{SELKZ}' ).
-    cells->text( '{CARRID}' ).
-    cells->text( '{CONNID}' ).
-    cells->text( '{CITYFROM}' ).
-    cells->text( '{CITYTO}' ).
+    columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Sel` ).
+    columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Carrier` ).
+    columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Conn.` ).
+    columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `From` ).
+    columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `To` ).
+
+    " one row template; the row press opens the edit popup, carrying ROW_ID
+    DATA(cells) = table->ele( `items`
+        )->ele( `ColumnListItem`
+            )->a( n = `type`  v = `Navigation`
+            )->a( n = `press` v = client->_event( val   = `ROW_SELECT`
+                                                  t_arg = VALUE #( ( `${ROW_ID}` ) ) )
+            )->ele( `cells` ).
+
+    cells->tag( `CheckBox`
+        )->a( n = `selected` v = `{SELKZ}` ).
+    cells->tag( `Text`
+        )->a( n = `text` v = `{CARRID}` ).
+    cells->tag( `Text`
+        )->a( n = `text` v = `{CONNID}` ).
+    cells->tag( `Text`
+        )->a( n = `text` v = `{CITYFROM}` ).
+    cells->tag( `Text`
+        )->a( n = `text` v = `{CITYTO}` ).
 
     " footer buttons: Add / Delete / Refresh / Save
-    page->footer( )->overflow_toolbar( )->toolbar_spacer(
-        )->button( text  = 'Add'
-                   icon  = 'sap-icon://add'
-                   press = client->_event( 'BUTTON_ADD' )
-        )->button( text  = 'Delete'
-                   type  = 'Reject'
-                   icon  = 'sap-icon://delete'
-                   press = client->_event( 'BUTTON_DELETE' )
-        )->button( text  = 'Refresh'
-                   icon  = 'sap-icon://refresh'
-                   press = client->_event( 'BUTTON_REFRESH' )
-        )->button( text  = 'Save'
-                   type  = 'Success'
-                   press = client->_event( 'BUTTON_SAVE' ) ).
+    page->ele( `footer`
+        )->ele( `OverflowToolbar`
+            )->tag( `ToolbarSpacer`
 
-    client->view_display( page->stringify( ) ).
+            )->tag( `Button`
+                )->a( n = `text`  v = `Add`
+                )->a( n = `icon`  v = `sap-icon://add`
+                )->a( n = `press` v = client->_event( `BUTTON_ADD` )
+            )->tag( `Button`
+                )->a( n = `text`  v = `Delete`
+                )->a( n = `type`  v = `Reject`
+                )->a( n = `icon`  v = `sap-icon://delete`
+                )->a( n = `press` v = client->_event( `BUTTON_DELETE` )
+            )->tag( `Button`
+                )->a( n = `text`  v = `Refresh`
+                )->a( n = `icon`  v = `sap-icon://refresh`
+                )->a( n = `press` v = client->_event( `BUTTON_REFRESH` )
+            )->tag( `Button`
+                )->a( n = `text`  v = `Save`
+                )->a( n = `type`  v = `Accept`
+                )->a( n = `press` v = client->_event( `BUTTON_SAVE` ) ).
+
+    client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
 
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
-      WHEN 'ROW_SELECT'.
-        DATA(t_arg) = client->get( )-t_event_arg.
-        DATA(arg) = t_arg[ 1 ].
-
-        DATA(row_id) = arg.
+      WHEN `ROW_SELECT`.
         client->nav_app_call( z2ui5_cl_smp_app_501=>factory(
                                 it_table  = mt_table
-                                iv_row_id = CONV #( row_id )
+                                iv_row_id = CONV #( client->get_event_arg( ) )
                                 iv_edit   = abap_true ) ).
 
-      WHEN 'BUTTON_ADD'.
+      WHEN `BUTTON_ADD`.
         client->nav_app_call( z2ui5_cl_smp_app_501=>factory(
                                 it_table  = mt_table
                                 iv_row_id = mv_next_id
                                 iv_edit   = abap_false ) ).
         mv_next_id = mv_next_id + 1.
 
-      WHEN 'BUTTON_DELETE'.
-
+      WHEN `BUTTON_DELETE`.
         button_delete( ).
 
-      WHEN 'BUTTON_REFRESH'.
+      WHEN `BUTTON_REFRESH`.
         on_init( ).
 
-      WHEN 'BUTTON_SAVE'.
+      WHEN `BUTTON_SAVE`.
         button_save( ).
+
     ENDCASE.
+
   ENDMETHOD.
 
 
   METHOD button_delete.
+
     DELETE mt_table WHERE selkz = abap_true.
+
   ENDMETHOD.
 
 
   METHOD button_save.
+
     " no DB / no transport in the test version - just confirm
     client->message_toast_display( |{ lines( mt_table ) } rows "saved"| ).
+
   ENDMETHOD.
 
 
   METHOD on_after_popup.
-    " same idea as the original: read the previous app's data back
-    IF client->get( )-check_on_navigated = abap_false.
-      RETURN.
-    ENDIF.
 
+    " same idea as the original: read the edited table back out of the app
+    " that was called, which get_app_prev( ) hands over
     TRY.
-        DATA(app) = CAST z2ui5_cl_smp_app_501(
-                      client->get_app( client->get( )-s_draft-id_prev_app ) ).
+        DATA(app) = CAST z2ui5_cl_smp_app_501( client->get_app_prev( ) ).
         mt_table = app->mt_table.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
     ENDTRY.
+
   ENDMETHOD.
 
 ENDCLASS.
