@@ -22,7 +22,8 @@ CLASS z2ui5_cl_smp_app_144 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
+CLASS Z2UI5_CL_SMP_APP_144 IMPLEMENTATION.
+
 
   METHOD set_view.
 
@@ -100,16 +101,13 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DO 1 TIMES.
         t_tab = VALUE #( BASE t_tab
             ( title = `entry 01`  value = `red` )
             ( title = `entry 02`  value = `blue` ) ).
-      ENDDO.
       set_view( ).
     ELSEIF client->check_on_navigated( ).
       set_view( ).
     ENDIF.
 
   ENDMETHOD.
-
 ENDCLASS.
