@@ -1,6 +1,6 @@
 " @keywords app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state
 " @summary The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.
-" @docs https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/app_state
 "! The abap2UI5 spelling of the Fiori app state (sap-iapp-state /
 "! sap-xapp-state): the app state IS the draft the framework persists anyway,
 "! so app_state_set_active( ) only has to carry its id in the URL
