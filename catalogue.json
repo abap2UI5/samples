@@ -1169,7 +1169,8 @@
     "sap-xapp-state"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share"
+    "https://abap2ui5.github.io/docs/cookbook/expert_more/app_state_share",
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/app_state"
    ]
   },
   {
