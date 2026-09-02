@@ -105,7 +105,6 @@ CLASS Z2UI5_CL_SMP_APP_144 IMPLEMENTATION.
         t_tab = VALUE #( BASE t_tab
             ( title = `entry 01`  value = `red` )
             ( title = `entry 02`  value = `blue` ) ).
-*      ENDDO.
       set_view( ).
     ELSEIF client->check_on_navigated( ).
       set_view( ).
