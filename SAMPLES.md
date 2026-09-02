@@ -3,12 +3,12 @@
 
 # The sample catalogue
 
-Every app in this repository — 150 of them — with what it shows and a link
+Every app in this repository — 149 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
 **109 of them ship on every branch** — the portable set the README counts:
-`src/01` plus this overview app. The other 41 are under `src/00` and are
+`src/01` plus this overview app. The other 40 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
 in the tree is invisible.
@@ -316,7 +316,7 @@ is absent there.
 
 ## Helper apps
 
-13 classes that are only ever *called* by another sample — a
+12 classes that are only ever *called* by another sample — a
 sub-app, a data object, the other half of a navigation demo. Their short text
 starts with `ZZZ`, which is how the generator knows to give them no tile.
 Listed here so nothing in the tree is invisible; there is no point starting
@@ -330,7 +330,6 @@ one on its own.
 | **ZZZ** — called by Nested Views - Sub-App (104), the form | [`Z2UI5_CL_SMP_APP_105`](src/01/z2ui5_cl_smp_app_105.clas.abap) |
 | **ZZZ** — called by Nested Views - Sub-App (104), the list | [`Z2UI5_CL_SMP_APP_112`](src/01/z2ui5_cl_smp_app_112.clas.abap) |
 | **ZZZ** — called by popup | [`Z2UI5_CL_SMP_APP_020`](src/01/z2ui5_cl_smp_app_020.clas.abap) |
-| **ZZZ** — called by 085 | [`Z2UI5_CL_SMP_APP_086`](src/00/98/z2ui5_cl_smp_app_086.clas.abap) |
 | **ZZZ** — called by Nested Apps I | [`Z2UI5_CL_SMP_APP_126`](src/00/98/z2ui5_cl_smp_app_126.clas.abap) |
 | **ZZZ** — called by Nested Apps II | [`Z2UI5_CL_SMP_APP_132`](src/00/98/z2ui5_cl_smp_app_132.clas.abap) |
 | **ZZZ** — called by Nested Apps III | [`Z2UI5_CL_SMP_APP_184`](src/00/98/z2ui5_cl_smp_app_184.clas.abap) |
