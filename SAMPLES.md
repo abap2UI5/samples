@@ -3,12 +3,12 @@
 
 # The sample catalogue
 
-Every app in this repository — 148 of them — with what it shows and a link
+Every app in this repository — 150 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
 **109 of them ship on every branch** — the portable set the README counts:
-`src/01` plus this overview app. The other 39 are under `src/00` and are
+`src/01` plus this overview app. The other 41 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
 in the tree is invisible.
@@ -262,7 +262,7 @@ ready-to-run apps** the README leads with.
 
 ## Not in any overview — `src/00`
 
-34 apps with no tile anywhere (AGENTS.md section 3) — reachable
+36 apps with no tile anywhere (AGENTS.md section 3) — reachable
 by class name only, which is what this section is for. They are held to a
 lower bar than `src/01`: an experimental sample may use something newer than
 UI5 1.71, and a testing app exists to be run by a check, not to be learned
@@ -271,7 +271,7 @@ is absent there.
 
 ### testing — `src/00/98`
 
-34 app(s).
+36 app(s).
 
 | Sample | Class |
 |---|---|
@@ -307,6 +307,8 @@ is absent there.
 | **RTTI** — Table with Ref in Object | [`Z2UI5_CL_SMP_APP_347`](src/00/98/z2ui5_cl_smp_app_347.clas.abap) |
 | **RTTI** — Table, Class Data, Popup, Refs Checked | [`Z2UI5_CL_SMP_APP_349`](src/00/98/z2ui5_cl_smp_app_349.clas.abap) |
 | **RTTI** — Two Tables with many Layouts | [`Z2UI5_CL_SMP_APP_344`](src/00/98/z2ui5_cl_smp_app_344.clas.abap) |
+| **Test Binding Error 500** | [`Z2UI5_CL_SMP_APP_500`](src/00/98/z2ui5_cl_smp_app_500.clas.abap) |
+| **Test Binding Error 501** | [`Z2UI5_CL_SMP_APP_501`](src/00/98/z2ui5_cl_smp_app_501.clas.abap) |
 | **Type Ref to Data Table with refresh** | [`Z2UI5_CL_SMP_APP_199`](src/00/98/z2ui5_cl_smp_app_199.clas.abap) |
 | **unit test** — long variable | [`Z2UI5_CL_SMP_APP_138`](src/00/98/z2ui5_cl_smp_app_138.clas.abap) |
 
