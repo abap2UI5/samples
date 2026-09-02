@@ -57,10 +57,19 @@ CLASS z2ui5_cl_smp_app_474 IMPLEMENTATION.
     " backend payload can carry - the frontend therefore takes the NAME of a
     " built-in policy and installs the matching validator itself:
     " RELATIVE_ONLY (only in-app links stay clickable), ALLOW_ALL, DENY_ALL
+    "
+    " The handler is live control state a rebuild destroys, and this method is
+    " not on the display path - control-state-lost-on-rebuild is right about
+    " both. It is still not a defect HERE: every open goes through this method,
+    " so the validator is re-installed immediately before each openBy( ) below,
+    " and there is no window in which the popover is visible without it. That
+    " is the one thing the rule cannot see, so it is said here instead.
+    " abap2ui5lint-disable control-state-lost-on-rebuild -- re-issued before every openBy
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
                               t_arg = VALUE #( ( `msgPopover` )
                                                ( `setAsyncURLHandler` )
                                                ( policy ) ) ).
+    " abap2ui5lint-enable control-state-lost-on-rebuild
 
     " ... and only then open it, anchored to the button that fired the event
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id

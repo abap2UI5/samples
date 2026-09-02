@@ -6,6 +6,7 @@ CLASS z2ui5_cl_smp_app_202 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+    DATA next_step TYPE string.
 
   PROTECTED SECTION.
     METHODS view_display
@@ -95,6 +96,17 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
 
     client->view_display( lr_view->stringify( ) ).
 
+    " nextStep is an ASSOCIATION: no binding can carry it, and view_display( )
+    " has just destroyed the slot XMLView.create rebuilds - so the branch the
+    " handler picked is gone from the fresh WizardStep while NEXT_STEP still
+    " describes it. Re-issuing the same call here is what makes the choice
+    " survive a navigation back, a draft restore or any later redisplay.
+    IF next_step IS NOT INITIAL.
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-control_by_id
+          t_arg = VALUE #( ( `STEP2` ) ( `setNextStep` ) ( next_step ) ) ).
+    ENDIF.
+
   ENDMETHOD.
 
 
@@ -114,12 +126,13 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
         " generic whitelisted control calls - t_arg is positional:
         " id, method, params (the step params are control ids; the view
         " defaults to cs_view-main)
+        next_step = client->get_event( ).
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-control_by_id
             t_arg = VALUE #( ( `wiz` ) ( `discardProgress` ) ( `STEP2` ) ) ).
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-control_by_id
-            t_arg = VALUE #( ( `STEP2` ) ( `setNextStep` ) ( client->get_event( ) ) ) ).
+            t_arg = VALUE #( ( `STEP2` ) ( `setNextStep` ) ( next_step ) ) ).
 
     ENDCASE.
 
