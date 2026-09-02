@@ -6,15 +6,6 @@
    <MASTER_LANGUAGE>E</MASTER_LANGUAGE>
    <STARTING_FOLDER>/src/</STARTING_FOLDER>
    <FOLDER_LOGIC>PREFIX</FOLDER_LOGIC>
-   <IGNORE>
-    <item>/src/*/README.md</item>
-    <item>/src/00/98/z2ui5_cl_smp_app_117.clas.abap</item>
-    <item>/src/00/98/z2ui5_cl_smp_app_117.clas.xml</item>
-    <item>/src/00/98/z2ui5_cl_smp_app_131.clas.abap</item>
-    <item>/src/00/98/z2ui5_cl_smp_app_131.clas.xml</item>
-    <item>/src/00/98/z2ui5_cl_smp_app_338.clas.abap</item>
-    <item>/src/00/98/z2ui5_cl_smp_app_338.clas.xml</item>
-   </IGNORE>
   </DATA>
  </asx:values>
 </asx:abap>
