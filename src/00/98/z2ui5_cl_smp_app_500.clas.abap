@@ -1,4 +1,4 @@
-CLASS zcl_ui5_demo_table DEFINITION
+CLASS z2ui5_cl_smp_app_500 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -7,8 +7,8 @@ CLASS zcl_ui5_demo_table DEFINITION
 
     TYPES:
       BEGIN OF ty_row,
-        row_id   TYPE i,          " stable identity, like ROW_ID in the original
-        selkz    TYPE abap_bool,  " selection flag, like SELKZ
+        row_id   TYPE i,
+        selkz    TYPE abap_bool,
         carrid   TYPE c LENGTH 3,
         connid   TYPE n LENGTH 4,
         cityfrom TYPE c LENGTH 20,
@@ -32,7 +32,7 @@ CLASS zcl_ui5_demo_table DEFINITION
 ENDCLASS.
 
 
-CLASS zcl_ui5_demo_table IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
     me->client = client.
@@ -43,7 +43,7 @@ CLASS zcl_ui5_demo_table IMPLEMENTATION.
       render_main( ).
     ENDIF.
 
-    on_after_popup( ).   " read edits back from the popup app
+    on_after_popup( ).
     on_event( ).
   ENDMETHOD.
 
@@ -86,7 +86,7 @@ CLASS zcl_ui5_demo_table IMPLEMENTATION.
                                      t_arg = VALUE #( ( `${ROW_ID}` ) ) )
         )->cells( ).
 
-    cells->checkbox( selected = '{SELKZ}' ).
+    cells->checkbox( '{SELKZ}' ).
     cells->text( '{CARRID}' ).
     cells->text( '{CONNID}' ).
     cells->text( '{CITYFROM}' ).
@@ -117,23 +117,21 @@ CLASS zcl_ui5_demo_table IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'ROW_SELECT'.
-
-     DATA(t_arg) = client->get( )-t_event_arg.
-     DATA(arg) = t_arg[ 1 ].
+        DATA(t_arg) = client->get( )-t_event_arg.
+        DATA(arg) = t_arg[ 1 ].
 
         DATA(row_id) = arg.
-        client->nav_app_call( zcl_ui5_demo_table_pop=>factory(
+        client->nav_app_call( z2ui5_cl_smp_app_501=>factory(
                                 it_table  = mt_table
-                                iv_row_id = conv #( row_id )
+                                iv_row_id = CONV #( row_id )
                                 iv_edit   = abap_true ) ).
 
       WHEN 'BUTTON_ADD'.
-
-        client->nav_app_call( zcl_ui5_demo_table_pop=>factory(
+        client->nav_app_call( z2ui5_cl_smp_app_501=>factory(
                                 it_table  = mt_table
-                                iv_row_id = mv_next_id   " new, not yet in table
+                                iv_row_id = mv_next_id
                                 iv_edit   = abap_false ) ).
-        mv_next_id += 1.
+        mv_next_id = mv_next_id + 1.
 
       WHEN 'BUTTON_DELETE'.
 
@@ -166,9 +164,9 @@ CLASS zcl_ui5_demo_table IMPLEMENTATION.
     ENDIF.
 
     TRY.
-        DATA(app) = CAST zcl_ui5_demo_table_pop(
+        DATA(app) = CAST z2ui5_cl_smp_app_501(
                       client->get_app( client->get( )-s_draft-id_prev_app ) ).
-        mt_table = app->mt_table.              " wholesale copy-back (ROW_ID keeps identity)
+        mt_table = app->mt_table.
 
       CATCH cx_root.
     ENDTRY.

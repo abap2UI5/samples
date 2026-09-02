@@ -1,18 +1,18 @@
-CLASS zcl_ui5_demo_table_pop DEFINITION
+CLASS z2ui5_cl_smp_app_501 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mt_table TYPE zcl_ui5_demo_table=>ty_t_rows.
-    DATA ms_row   TYPE zcl_ui5_demo_table=>ty_row.
+    DATA mt_table TYPE z2ui5_cl_smp_app_500=>ty_t_rows.
+    DATA ms_row   TYPE z2ui5_cl_smp_app_500=>ty_row.
 
     CLASS-METHODS factory
-      IMPORTING it_table      TYPE zcl_ui5_demo_table=>ty_t_rows
+      IMPORTING it_table      TYPE z2ui5_cl_smp_app_500=>ty_t_rows
                 iv_row_id     TYPE i
                 iv_edit       TYPE abap_bool
-      RETURNING VALUE(result) TYPE REF TO zcl_ui5_demo_table_pop.
+      RETURNING VALUE(result) TYPE REF TO z2ui5_cl_smp_app_501.
 
   PROTECTED SECTION.
     DATA client   TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ CLASS zcl_ui5_demo_table_pop DEFINITION
 ENDCLASS.
 
 
-CLASS zcl_ui5_demo_table_pop IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
 
   METHOD factory.
     result = NEW #( ).
@@ -63,33 +63,33 @@ CLASS zcl_ui5_demo_table_pop IMPLEMENTATION.
                      title      = COND #( WHEN mv_edit = abap_true THEN 'Edit Row' ELSE 'Add Row' )
                      afterclose = client->_event( 'POPUP_CLOSE' )
                  )->simple_form( editable = abap_true
-                 )->content( ns = 'form' ).
+                 )->content( 'form' ).
 
     " key field disabled in edit mode, like the original
-    form->label( text = 'Carrier' ).
-    form->input( value   = client->_bind_edit( ms_row-carrid )
+    form->label( 'Carrier' ).
+    form->input( value = client->_bind_edit( ms_row-carrid )
                  enabled = xsdbool( mv_edit = abap_false ) ).
 
-    form->label( text = 'Connection' ).
-    form->input( value   = client->_bind_edit( ms_row-connid )
+    form->label( 'Connection' ).
+    form->input( value = client->_bind_edit( ms_row-connid )
                  enabled = xsdbool( mv_edit = abap_false ) ).
 
-    form->label( text = 'From' ).
-    form->input( value = client->_bind_edit( ms_row-cityfrom ) ).
+    form->label( 'From' ).
+    form->input( client->_bind_edit( ms_row-cityfrom ) ).
 
-    form->label( text = 'To' ).
-    form->input( value = client->_bind_edit( ms_row-cityto ) ).
+    form->label( 'To' ).
+    form->input( client->_bind_edit( ms_row-cityto ) ).
 
     DATA(toolbar) = form->get_root( )->get_child( )->buttons( ).
-    toolbar->button( text  = 'Cancel'
+    toolbar->button( text = 'Cancel'
                      press = client->_event( 'POPUP_CLOSE' ) ).
     IF mv_edit = abap_true.
-      toolbar->button( text  = 'Delete'
-                       type  = 'Reject'
+      toolbar->button( text = 'Delete'
+                       type = 'Reject'
                        press = client->_event( 'POPUP_DELETE' ) ).
     ENDIF.
-    toolbar->button( text  = 'OK'
-                     type  = 'Emphasized'
+    toolbar->button( text = 'OK'
+                     type = 'Emphasized'
                      press = client->_event( COND #( WHEN mv_edit = abap_true
                                                      THEN 'POPUP_EDIT' ELSE 'POPUP_ADD' ) ) ).
 
@@ -109,7 +109,7 @@ CLASS zcl_ui5_demo_table_pop IMPLEMENTATION.
         popup_delete( ).
         leave( ).
       WHEN 'POPUP_CLOSE'.
-        leave( ).                " discard: mt_table untouched
+        leave( ).
     ENDCASE.
   ENDMETHOD.
 
