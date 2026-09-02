@@ -20,12 +20,13 @@ CLASS z2ui5_cl_smp_app_343 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_smp_app_343 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_SMP_APP_343 IMPLEMENTATION.
+
 
   METHOD get_comp.
 
     TRY.
-        TRY.
 
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = `Z2UI5_T_01`
                                                  RECEIVING p_descr_ref     = DATA(typedesc)
@@ -48,8 +49,6 @@ CLASS z2ui5_cl_smp_app_343 IMPLEMENTATION.
           CATCH cx_root.
         ENDTRY.
 
-      CATCH cx_root.
-    ENDTRY.
 
   ENDMETHOD.
 
@@ -129,5 +128,4 @@ CLASS z2ui5_cl_smp_app_343 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
-
 ENDCLASS.
