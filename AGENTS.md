@@ -81,14 +81,6 @@ Each subpackage's `package.devc.xml` `<CTEXT>` is the quoted name shown above
 (e.g. `experimental`). **That CTEXT string is also the overview group name —
 keep the two identical** (see §4).
 
-`src/00` also carries a hand-written [`README.md`](src/00/README.md) —
-wayfinding for a reader browsing the tree on GitHub, who otherwise wanders
-into 47 classes of unfinished and testing code with nothing saying the
-learning path is `src/01`. It is prose, not an ABAP object: `.abapgit.xml`
-ignores `/src/*/README.md`, the same convention
-[samples-stack](https://github.com/abap2UI5/samples-stack) uses for its
-per-package READMEs, so an abapGit pull never tries to import it.
-
 > Class names never encode the folder (`FOLDER_LOGIC=PREFIX`). Moving a sample
 > between packages needs **no rename** and keeps navigation intact — but the
 > overview catalog must be updated (§4).
