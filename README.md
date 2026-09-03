@@ -67,7 +67,7 @@ World here, while `Z2UI5_CL_SMPS_APP_493` in
 [samples-stack](https://github.com/abap2UI5/samples-stack) is a FilterBar with
 variant management. So the catalogue always gives you the class, not a number.
 
-No system at hand? **[The sample path](https://abap2ui5.github.io/samples/) is
+No system at hand? **[The sample catalogue](https://abap2ui5.github.io/playground/samples/) is
 this catalogue as a page** — the samples in the order they are meant to be read
 in, six stages from the smallest app that runs to files, devices and custom
 CSS. Every card opens the source, or starts the class in the
@@ -82,7 +82,7 @@ sample repositories take you further:
 
 |      | Repository | What you learn | Where to start |
 |------|------------|----------------|----------------|
-| 1️⃣ | **samples** — 📍 *you are here* | **the abap2UI5 basics** — bindings, events, popups, navigation, complete apps | run `Z2UI5_CL_SMP_APP_000`, or follow [the sample path](https://abap2ui5.github.io/samples/) |
+| 1️⃣ | **samples** — 📍 *you are here* | **the abap2UI5 basics** — bindings, events, popups, navigation, complete apps | run `Z2UI5_CL_SMP_APP_000`, or follow [the sample catalogue](https://abap2ui5.github.io/playground/samples/) |
 | 2️⃣ | [**samples-controls**](https://github.com/abap2UI5/samples-controls) | **how to use every UI5 control** — the UI5 Demo Kit rebuilt with abap2UI5 | run `z2ui5_cl_smpc_app_000` |
 | 3️⃣ | [**samples-stack**](https://github.com/abap2UI5/samples-stack) | **how abap2UI5 plays with your stack** — OData, RAP, WebSockets, the Fiori Launchpad and more | pick your technology in its package table |
 
