@@ -1,6 +1,6 @@
 {
  "_comment": [
-  "The learning path of the overview page (web/), and the ONE editorial file behind it.",
+  "The learning path of the sample catalogue, and the ONE editorial file behind it.",
   "",
   "Everything else on that page is derived from the tree by scan-samples.mjs: a sample's",
   "title, its one-sentence summary, its keywords, its documentation chapters. What the scan",
@@ -9,9 +9,9 @@
   "reader following the page top to bottom meets the browser API before they have bound a",
   "field. That order is a teaching decision, so it is written here and nowhere else.",
   "",
-  "Rules the generator enforces (scripts/generate-overview-index.mjs):",
+  "Rules the generator enforces (scripts/generate-catalogue.mjs):",
   "  - every category in src/01 belongs to EXACTLY ONE stage - a new one fails the build",
-  "    rather than being dropped silently off the page,",
+  "    rather than being dropped silently off the path,",
   "  - a category named here that no sample uses fails too, so a renamed DESCRIPT cannot",
   "    leave a dead entry behind.",
   "The category is the tile header without its trailing Roman numeral (headerBase in",

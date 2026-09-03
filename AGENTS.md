@@ -541,18 +541,18 @@ header naming the repository, its place in the three-repository family, and
 the number-collision caveat (§1, "Sample numbers are per repository") encoded
 as data rather than prose. Written by `scripts/generate-catalogue.mjs` from
 the **same scan** as the other three views (`scripts/lib/scan-samples.mjs`)
-and the same learning-path file as the overview page
+and the learning-path file it also validates
 (`scripts/lib/learning-path.json`), so it cannot disagree with any of them.
 
-**It is committed, and `web/apps.json` is not — that is one decision, not
-two.** Both are derived, and what differs is who reads them: `apps.json` is
-the overview page's build output, and its reader always arrives through a
-deploy that has just regenerated it, so a committed copy would only add a
-derived diff to every sample pull request. `catalogue.json`'s reader is a
-clone or a raw fetch, which no deploy ever runs for — a file that only exists
-after a build step does not exist for them at all. What keeps the committed
-copy honest is the freshness gate: `npm run check:catalogue` (in
-`npm run check`) runs the generator with `--check` and fails when the file is
+**It is committed, and it carries no linter pass — that is one decision, not
+two.** Its reader is a clone or a raw fetch, which no deploy ever runs for, so
+a file that only exists after a build step does not exist for them at all; and
+staying offline and dependency-free is what lets it be generated anywhere,
+including in a plain-node CI job. The derived facts that would need the linter
+live beside it in `catalogue-derived.json` (see "The catalogue" below). What
+keeps the committed copy honest is the freshness gate:
+`npm run check:catalogue` (in `npm run check`, and in the `catalogues` job of
+`check-docs.yaml`) runs the generator with `--check` and fails when the file is
 stale, and the `publish-overview-apps` workflow regenerates and pushes it
 together with the overview app and SAMPLES.md.
 
@@ -1753,34 +1753,47 @@ new/edited samples stay consistent:
 
 ---
 
-## The overview page — `web/`, on GitHub Pages
+## The catalogue — published from the playground
 
-**https://abap2ui5.github.io/samples/** — the learning path as a page, for
-somebody who has not installed anything yet. Published by the `deploy-web`
-workflow on every push to `main` that touches `src/`, `web/` or the generator
-(*Settings → Pages → Source = GitHub Actions*).
+**https://abap2ui5.github.io/playground/samples/** — every sample of this
+repository, of `samples-controls` and of `samples-stack`, searchable, for
+somebody who has not installed anything yet. This repository used to publish
+its own page for that (`web/`, on its own GitHub Pages); it was retired
+2026-09-03 together with the two sibling pages. Three pages that each had to
+explain that the other two existed were the reason for the shared family-nav
+block, its three copies and the check policing them; one page needs none of it.
 
-It is the **third view of one catalogue**, and the reason the three cannot
-disagree is that all three are rendered from the same scan
-(`scripts/lib/scan-samples.mjs`, §4): the overview app for a reader who has the
-repository in a system, `SAMPLES.md` for a reader on GitHub, this page for a
-reader who is still deciding whether to install it. **Do not give the page its
-own facts about a sample.** Its title, its one sentence, its search terms and
-its documentation chapters are the `DESCRIPT`, the `@summary`, the `@keywords`
-and the `@docs` of the class — change them on the class, as always, and all
-three follow.
+What this repository owes that page is **data**, and it owes it twice:
 
-**Only `src/01` is on it.** `src/00/97` is unfinished and `src/00/98` exists to
-be run by a check rather than learned from (§2), and both are stripped from
-`702` — a page that teaches must not lead anybody into either. The ZZZ helpers
-are out for the reason they carry no tile (§4); they come back only as the
-extra files a playground link needs to actually run.
+| | |
+|---|---|
+| [`catalogue.json`](catalogue.json) | what the tree holds — class, folder, category, learning-path stage, title, `@summary`, `@keywords`, `@docs` (§3) |
+| [`catalogue-derived.json`](catalogue-derived.json) | what the LINTER knows — `minUi5`, the `needs` that made it that release, and every control the sample BUILDS |
+
+The second answers the question the first cannot: *"which sample shows
+`sap.m.Table` at all?"* A category is what a sample is FILED under and
+`@keywords` are what somebody thought to write down; neither is the list of
+controls the view actually builds. `scripts/generate-derived.mjs` gets both out
+of an `@abap2UI5/linter` pass — `stats.types` and the `*-too-new` findings,
+which it computes anyway — and keys them by `class` so a consumer joins them
+onto `catalogue.json`.
+
+**Two files rather than more columns**, for the reason §3 gives for
+`catalogue.json` being offline and dependency-free: that property is worth
+keeping, and the derived half needs the linter. They are generated from one
+scan of one tree, so they cannot disagree about which samples exist. Which UI5
+library a control ships in is deliberately in neither: that is one taxonomy
+question, and three sample repositories each answering it would be three
+prefix tables that drift, so the playground's catalogue owns the mapping,
+beside the library list it decides "runs here" against. The identical file
+shape and the identical reasoning are in `samples-controls` and
+`samples-stack`.
 
 ### The one thing that is not derived: the order
 
 The categories are the header of a `DESCRIPT` and therefore sort
 alphabetically, which puts `Browser` between `Binding` and `CSS` — an order
-nobody learns in. So the page groups the 23 categories into **stages**, and
+nobody learns in. So the catalogue groups the categories into **stages**, and
 that grouping is a teaching decision written in
 **`scripts/lib/learning-path.json`** and nowhere else:
 
@@ -1788,43 +1801,36 @@ that grouping is a teaching decision written in
 { "id": "rows", "title": "Show many rows", "blurb": "…", "categories": ["Table", "Grid Table", "List", "Tree"] }
 ```
 
-**Every category belongs to exactly one stage.** `npm run check:overview`
-(`scripts/generate-overview-index.mjs --check`, part of `npm run check`) fails
-when a category has no stage, when two stages claim one, or when a stage names
-a category no sample carries. A new category is therefore a decision somebody
-has to make — where in the path does this belong — rather than a section that
-silently is not on the page. Adding a sample to an existing category needs
-nothing: the page picks it up on the next deploy.
+**Every category belongs to exactly one stage.** `npm run check:catalogue`
+(`scripts/generate-catalogue.mjs --check`) fails when a category has no stage,
+when two stages claim one, or when a stage names a category no sample carries.
+A new category is therefore a decision somebody has to make — where in the path
+does this belong — rather than a section that silently nobody can reach. Adding
+a sample to an existing category needs nothing.
 
-### The files
+Those three rules used to be `npm run check:overview`, in the generator behind
+the page. They were never about a page — they are about the path staying
+attached to the tree — so they moved to the generator that publishes `stage` to
+every consumer. Moving them surfaced that `generate-catalogue.mjs` had **no CI
+job at all**: committed generated data watched only by `npm run check` on
+somebody's laptop. The `catalogues` job in `check-docs.yaml` watches both files
+now.
 
-`web/index.html`, `web/overview.css`, `web/overview.js` — no framework, no
-build step — plus `web/apps.json`, which is **generated and not committed**
-(`node scripts/generate-overview-index.mjs`, or `npm run overview`). It is a
-build output like any bundle: the workflow writes it on every deploy, so it is
-never staler than the tree, and a sample pull request carries no diff of
-derived data. See `web/README.md` for how to run the page locally.
+**Only `src/01` is catalogued.** `src/00/97` is unfinished and `src/00/98`
+exists to be run by a check rather than learned from (§2), and both are
+stripped from `702` — a catalogue that teaches must not lead anybody into
+either. The ZZZ helpers are out for the reason they carry no tile (§4); they
+come back only as the extra files a playground link needs to actually run.
 
-That non-commit decision is about the page's artefact, not about derived
-files as such: `catalogue.json` at the repository root is derived from the
-same scan and **is** committed, because its reader is a clone rather than a
-deploy (§3).
+### Thumbnails
 
-`web/thumbs/` follows `apps.json`, not `catalogue.json`: **one thumbnail per
-sample, generated at deploy and never committed.**
-`scripts/generate-screenshots.mjs` (`npm run screenshots`) photographs every
-`src/01` view with the abap2UI5-linter's render harness — the same headless
-reconstruction `npm run check:abap2ui5`'s render gate clears, kept standing
-long enough for a picture — so what a card shows is what the gate checks, of
-the class as it is on `main`. It is the one script under `scripts/` that
-needs the devDependencies (the linter, `@abap2ui5/render-runtime`, a
-playwright chromium): it is a deploy step, not a gate, and it is in no check
-aggregate. A view the harness cannot render — the `z2ui5.cc` custom-control
-samples, mostly — is reported and skipped, and the page treats the missing
-file as "no picture" (the `<img>` removes itself), so a sample without a
-thumbnail is normal, not broken. Only a run that photographs *nothing* fails,
-because that is a harness problem; even then the deploy publishes
-(`continue-on-error`), since a page without pictures beats no page.
+One picture per sample used to be photographed on every deploy by
+`scripts/generate-screenshots.mjs`, with the abap2UI5-linter's render harness.
+The script went with the page; the playground's deploy takes them now, from the
+same harness against the same `main`, so what a card shows is still what the
+render gate checks. A view the harness cannot render — the `z2ui5.cc`
+custom-control samples, mostly — has no picture, which is normal rather than
+broken.
 
 <!-- The section below is SHARED. Its source is
      abap2UI5/abap2UI5 .github/shared/agents-metadata.md - change it THERE

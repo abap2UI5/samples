@@ -4,7 +4,7 @@
  *
  * The fourth view of the one catalogue, and the first one addressed to a
  * MACHINE. The overview app needs an installed system, SAMPLES.md is markdown
- * a human scrolls, and web/apps.json exists only after a deploy build - so an
+ * a human scrolls, and the derived half needs a linter pass - so an
  * AI agent that has just cloned this repository (or fetched one raw URL) has
  * no structured answer to "what is in here": only the @keywords/@summary
  * comments spread over 100+ classes, and a markdown table it has to parse
@@ -14,7 +14,7 @@
  * this is, where it stands in the three-repository family, and why a sample
  * NUMBER alone names nothing (the class prefix does).
  *
- * COMMITTED, unlike web/apps.json - and that is not an inconsistency. Both
+ * COMMITTED, and dependency-free with it. Both
  * are generated from the same scan, but apps.json is the overview PAGE's
  * build output: its reader always arrives through a deploy that has just
  * regenerated it, so committing it would only add a derived diff to every
@@ -41,22 +41,48 @@ const CHECK = process.argv.includes('--check');
 const { areas } = scanSamples();
 const tiles = areas['01'];
 
-/* The teaching order, from the one editorial file behind the overview page
- * (see learning-path.json's own comment). check:overview already holds that
- * every category has exactly one stage; this only reads the mapping. */
+/* The teaching order, from the one editorial file behind it (see
+ * learning-path.json's own comment): the categories are DESCRIPT headers and
+ * sort alphabetically, so "Browser" lands between "Binding" and "CSS" and a
+ * reader meets the browser API before they have bound a field. The order is a
+ * teaching decision and lives in that file and nowhere else.
+ *
+ * The three rules below used to be `npm run check:overview`, in the generator
+ * behind the GitHub Pages overview page. That page is gone (the catalogue is
+ * published from the playground now), and the rules are not about a page:
+ * every one of them is about the learning path staying attached to the tree.
+ * All three failures are silent otherwise - a new category simply falls off
+ * the path, a renamed one leaves a stage pointing at nothing - so they moved
+ * here, to the generator that publishes `stage` to every consumer. */
 const { stages } = JSON.parse(
   fs.readFileSync(path.join(HERE, 'lib', 'learning-path.json'), 'utf8'),
 );
+
+const fail = (message) => {
+  console.error(`catalogue: ${message}`);
+  process.exit(1);
+};
+
+const byCategory = new Set(tiles.map((tile) => tile.base));
 const stageOf = new Map();
 for (const stage of stages) {
-  for (const name of stage.categories) stageOf.set(name, stage.id);
-}
-for (const tile of tiles) {
-  if (!stageOf.has(tile.base)) {
-    console.error(`category "${tile.base}" belongs to no stage of the learning path - `
-      + 'fix scripts/lib/learning-path.json first (npm run check:overview says the same)');
-    process.exit(1);
+  for (const name of stage.categories) {
+    if (stageOf.has(name)) {
+      fail(`category "${name}" is in two stages (${stageOf.get(name)} and ${stage.id}) - scripts/lib/learning-path.json`);
+    }
+    stageOf.set(name, stage.id);
+    if (!byCategory.has(name)) {
+      fail(`stage "${stage.id}" names category "${name}", which no sample in src/01 carries.\n`
+        + "Drop it from scripts/lib/learning-path.json, or put the category back on a sample's DESCRIPT.");
+    }
   }
+}
+const unplaced = [...byCategory].filter((name) => !stageOf.has(name));
+if (unplaced.length) {
+  fail(
+    `${unplaced.length} categor${unplaced.length === 1 ? 'y belongs' : 'ies belong'} to no stage of the learning path: ${unplaced.join(', ')}\n`
+    + `Add ${unplaced.length === 1 ? 'it' : 'them'} to scripts/lib/learning-path.json - a category with no stage is a sample nobody following the path can reach.`,
+  );
 }
 
 const data = {

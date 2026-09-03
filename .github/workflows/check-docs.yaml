@@ -80,16 +80,32 @@ jobs:
       env:
         A2UI5_HOME: ${{ github.workspace }}/.abap2UI5
 
-  # The learning path of the page in web/ covers every category of src/01. A
-  # category with no stage is a section that is simply not on the page, and
-  # nothing else notices - the samples stay listed in the app and in
-  # SAMPLES.md. Plain node, no dependencies.
-  overview_page:
+  # The two published catalogues, and the learning path behind them.
+  #
+  # This job replaces `overview_page`, which ran the learning-path rules out of
+  # the generator behind the GitHub Pages overview page. That page is gone -
+  # one catalogue over all three sample repositories is published from the
+  # playground now - but the rules were never about a page: a category with no
+  # stage is a sample nobody following the path can reach, and nothing else
+  # notices, because it stays listed in the app and in SAMPLES.md. They live in
+  # generate-catalogue.mjs now, which is what publishes `stage` to every
+  # consumer.
+  #
+  # Which uncovered something: generate-catalogue.mjs had NO CI job at all.
+  # catalogue.json is committed generated data that only `npm run check` on
+  # somebody's laptop was watching. It is watched here now, and so is
+  # catalogue-derived.json beside it - the linter's half, which the playground's
+  # deploy reads. npm ci is for that one; the other three are plain node.
+  catalogues:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: '22'
-    - run: node scripts/generate-overview-index.mjs --check
+        cache: 'npm'
+    - run: npm ci --no-audit --no-fund
+    - run: npm run check:catalogue
+    - run: npm run check:derived
+    - run: npm run check:launchpad
