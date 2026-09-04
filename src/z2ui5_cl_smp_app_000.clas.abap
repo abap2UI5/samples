@@ -694,6 +694,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         sub = `The Developer Tools (Ctrl+F12)`
         keywords = `developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export`
         path = `src/01` app = `z2ui5_cl_smp_app_496` )
+      ( group = `samples` header = `Basics VI` sub = `Unit Tests for the App Logic` keywords = `unit test abapunit testclasses assert testable logic method` path = `src/01` app = `z2ui5_cl_smp_app_503` )
       ( group = `samples` header = `Binding`
         sub = `A View Built From RTTI, No Field Named`
         keywords = `rtti generic view runtime columns get_components describe_by_data no field name itab structure column cell binding`
