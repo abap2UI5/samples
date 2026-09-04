@@ -57,7 +57,7 @@
   }
  ],
  "counts": {
-  "samples": 102,
+  "samples": 103,
   "categories": 24,
   "stages": 6
  },
@@ -1361,6 +1361,29 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_502",
+   "file": "src/01/z2ui5_cl_smp_app_502.clas.abap",
+   "category": "Message",
+   "stage": "talk",
+   "title": "Message",
+   "description": "MessageBox for Any Data",
+   "summary": "Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - plus the options of the box itself.",
+   "keywords": [
+    "messagebox",
+    "details",
+    "table",
+    "structure",
+    "tree",
+    "object",
+    "reference",
+    "escape",
+    "limit",
+    "action",
+    "onclose"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_008",

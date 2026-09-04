@@ -3,11 +3,11 @@
 
 # The sample catalogue
 
-Every app in this repository — 150 of them — with what it shows and a link
+Every app in this repository — 151 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
-**109 of them ship on every branch** — the portable set the README counts:
+**110 of them ship on every branch** — the portable set the README counts:
 `src/01` plus this overview app. The other 41 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
@@ -16,7 +16,7 @@ in the tree is invisible.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 102 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 103 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -29,9 +29,9 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path — `src/01`
 
-The 102 samples the overview app lists: cloud-ready, downportable,
+The 103 samples the overview app lists: cloud-ready, downportable,
 plain OpenUI5 1.71. Each adds one idea. With the 6
-helper apps they call and the overview app itself, that is the **109
+helper apps they call and the overview app itself, that is the **110
 ready-to-run apps** the README leads with.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
@@ -171,6 +171,7 @@ ready-to-run apps** the README leads with.
 | Sample | Class |
 |---|---|
 | Message Model and MessageManager (C)<br>The UI5 message model: validation messages carry the field they belong to, so the control shows the state and one list holds them all.<br><sub>messagemanager validation target field state central model</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_467`](src/01/z2ui5_cl_smp_app_467.clas.abap) |
+| MessageBox for Any Data<br>Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - plus the options of the box itself.<br><sub>messagebox details table structure tree object reference escape limit action onclose</sub> | [`Z2UI5_CL_SMP_APP_502`](src/01/z2ui5_cl_smp_app_502.clas.abap) |
 | MessageBox from SY, BAPIRET2 or Exception<br>Turns what ABAP already has into a MessageBox - a SY message, a BAPIRET2 table or a caught exception.<br><sub>t100 message class number exception cx_root error abend</sub><br><sub>docs: [cookbook/event_navigation/exception](https://abap2ui5.github.io/docs/cookbook/event_navigation/exception), [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_008`](src/01/z2ui5_cl_smp_app_008.clas.abap) |
 | MessageBox, Types and Custom Actions<br>Every MessageBox type - confirm, warning, error, success, information - and what a custom action button changes about the answer.<br><sub>confirm warning error success information dialog action</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_382`](src/01/z2ui5_cl_smp_app_382.clas.abap) |
 | MessagePopover URL Policy (A)<br>The URL policy of a MessagePopover: which links it will follow and which it refuses, and why the default is the strict one.<br><sub>url policy link security validator relative allow deny</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_474`](src/01/z2ui5_cl_smp_app_474.clas.abap) |
