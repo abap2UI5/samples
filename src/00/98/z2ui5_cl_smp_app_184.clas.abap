@@ -155,7 +155,7 @@ CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 2 ROWS.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
 
     ENDTRY.
 
@@ -187,7 +187,7 @@ CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
               ENDIF.
             ENDLOOP.
 
-          CATCH cx_root.
+          CATCH cx_root ##NO_HANDLER.
 
         ENDTRY.
 
@@ -197,7 +197,7 @@ CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
 
         APPEND LINES OF component TO result.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
     ENDTRY.
 
   ENDMETHOD.

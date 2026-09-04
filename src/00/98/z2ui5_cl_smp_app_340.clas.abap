@@ -112,7 +112,7 @@ CLASS z2ui5_cl_smp_app_340 IMPLEMENTATION.
           lo_struct = CAST #( lo_type ).
         ENDIF.
         comp = lo_struct->get_components( ).
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
     ENDTRY.
 
     TRY.
@@ -125,7 +125,7 @@ CLASS z2ui5_cl_smp_app_340 IMPLEMENTATION.
         CREATE DATA result->mt_data_tmp TYPE HANDLE new_table_desc.
         CREATE DATA result->ms_data_row TYPE HANDLE new_struct_desc.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
     ENDTRY.
 
     ASSIGN io_table->* TO FIELD-SYMBOL(<table>).

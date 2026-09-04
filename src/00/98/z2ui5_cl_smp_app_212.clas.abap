@@ -54,6 +54,8 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
 
     IF client->check_on_event( `ROW_SELECT` ).
       row_select( ).
+    ELSEIF client->check_on_event( `POPUP_CLOSE` ).
+      client->popup_destroy( ).
     ENDIF.
 
   ENDMETHOD.
@@ -130,7 +132,7 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
           ENDIF.
         ENDLOOP.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
     ENDTRY.
 
   ENDMETHOD.
@@ -172,6 +174,13 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
           )->a( n = `showValueHelp` b = abap_false ).
 
     ENDLOOP.
+
+    content->end(
+    )->end(
+        )->ele( `buttons`
+            )->tag( `Button`
+                )->a( n = `text`  v = `Close`
+                )->a( n = `press` v = client->_event( `POPUP_CLOSE` ) ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -283,7 +292,7 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 100 ROWS.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
 
     ENDTRY.
 
@@ -315,7 +324,7 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
               ENDIF.
             ENDLOOP.
 
-          CATCH cx_root.
+          CATCH cx_root ##NO_HANDLER.
 
         ENDTRY.
 
@@ -325,7 +334,7 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
 
         APPEND LINES OF component TO result.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
     ENDTRY.
 
   ENDMETHOD.

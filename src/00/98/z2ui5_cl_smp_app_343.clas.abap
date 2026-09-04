@@ -45,7 +45,7 @@ CLASS Z2UI5_CL_SMP_APP_343 IMPLEMENTATION.
 
             ENDLOOP.
 
-          CATCH cx_root.
+          CATCH cx_root ##NO_HANDLER.
         ENDTRY.
 
 
@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_SMP_APP_343 IMPLEMENTATION.
           INTO TABLE @<table1>
           UP TO 5 ROWS.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
     ENDTRY.
 
   ENDMETHOD.

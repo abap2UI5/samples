@@ -153,7 +153,7 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 4 ROWS.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
 
     ENDTRY.
 
