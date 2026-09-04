@@ -759,7 +759,7 @@ newcomer would actually type:
 
 | Header | What belongs in it |
 |--------|--------------------|
-| `Basics I` … `IV` | the entry point — first app, lifecycle, the minimum loop. The only numbered series: the Roman numeral orders them as a learning path (rule 5 sorts by `header`), and `header_base( )` still renders them as one block |
+| `Basics I` … `VI` | the entry point — first app, lifecycle, the minimum loop, and what you reach for around it (the developer tools, a unit test on the app's own logic). The only numbered series: the Roman numeral orders them as a learning path (rule 5 sorts by `header`), and `header_base( )` still renders them as one block |
 | `Binding` | `_bind( )`, binding syntax, UI5 model types, the model itself |
 | `Browser` | the browser page and tab: URL, title, favicon, reload, clipboard, storage, logout |
 | `Control Behaviour` | one UI5 control is the topic — how it *behaves* and how the backend drives it, typically by calling its methods by ID. **Not** a control reference: that is [samples-controls](https://github.com/abap2UI5/samples-controls), and the header says so (§1) |

@@ -3,11 +3,11 @@
 
 # The sample catalogue
 
-Every app in this repository — 151 of them — with what it shows and a link
+Every app in this repository — 152 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
-**110 of them ship on every branch** — the portable set the README counts:
+**111 of them ship on every branch** — the portable set the README counts:
 `src/01` plus this overview app. The other 41 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
@@ -16,7 +16,7 @@ in the tree is invisible.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 103 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 104 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -29,9 +29,9 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path — `src/01`
 
-The 103 samples the overview app lists: cloud-ready, downportable,
+The 104 samples the overview app lists: cloud-ready, downportable,
 plain OpenUI5 1.71. Each adds one idea. With the 6
-helper apps they call and the overview app itself, that is the **110
+helper apps they call and the overview app itself, that is the **111
 ready-to-run apps** the README leads with.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
@@ -45,6 +45,7 @@ ready-to-run apps** the README leads with.
 | **Basics III** — Lifecycle: Init, Event, Navigated<br>The three questions main( ) asks - init, event, navigated - as one dispatcher, showing what survives a roundtrip and what a navigation does to it.<br><sub>lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated</sub><br><sub>docs: [cookbook/event_navigation/life_cycle](https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle), [cookbook/expert_more/snippets](https://abap2ui5.github.io/docs/cookbook/expert_more/snippets), [tutorials/walkthrough/step-3](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-3)</sub> | [`Z2UI5_CL_SMP_APP_495`](src/01/z2ui5_cl_smp_app_495.clas.abap) |
 | **Basics IV** — Events, Views and Roundtrips<br>What one event does to a running app: a second view replaces the first, the state comes back with it, and an uncaught error surfaces where you can see it.<br><sub>roundtrip restart second view uncaught error controller basics</sub><br><sub>docs: [cookbook/event_navigation/life_cycle](https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle), [cookbook/expert_more/snippets](https://abap2ui5.github.io/docs/cookbook/expert_more/snippets), [tutorials/walkthrough/step-3](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-3)</sub> | [`Z2UI5_CL_SMP_APP_004`](src/01/z2ui5_cl_smp_app_004.clas.abap) |
 | **Basics V** — The Developer Tools (Ctrl+F12)<br>What Ctrl+F12 opens: the request and response payload, the generated XML view, the model, the source and the error log - the first place to look when something does not render.<br><sub>developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export</sub><br><sub>docs: [cookbook/troubleshooting/common_failures](https://abap2ui5.github.io/docs/cookbook/troubleshooting/common_failures)</sub> | [`Z2UI5_CL_SMP_APP_496`](src/01/z2ui5_cl_smp_app_496.clas.abap) |
+| **Basics VI** — Unit Tests for the App Logic<br>The app logic in a method of its own - no client, no attributes - so the local test class beside the class can assert it with ABAP Unit.<br><sub>unit test abapunit testclasses assert testable logic method</sub> | [`Z2UI5_CL_SMP_APP_503`](src/01/z2ui5_cl_smp_app_503.clas.abap) |
 
 ### Binding
 

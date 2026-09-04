@@ -57,7 +57,7 @@
   }
  ],
  "counts": {
-  "samples": 103,
+  "samples": 104,
   "categories": 24,
   "stages": 6
  },
@@ -194,6 +194,26 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/troubleshooting/common_failures"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_503",
+   "file": "src/01/z2ui5_cl_smp_app_503.clas.abap",
+   "category": "Basics",
+   "stage": "start",
+   "title": "Basics VI",
+   "description": "Unit Tests for the App Logic",
+   "summary": "The app logic in a method of its own - no client, no attributes - so the local test class beside the class can assert it with ABAP Unit.",
+   "keywords": [
+    "unit",
+    "test",
+    "abapunit",
+    "testclasses",
+    "assert",
+    "testable",
+    "logic",
+    "method"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_497",
