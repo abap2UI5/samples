@@ -54,7 +54,7 @@ CLASS Z2UI5_CL_SMP_APP_345 IMPLEMENTATION.
 
             ENDLOOP.
 
-          CATCH cx_root.
+          CATCH cx_root ##NO_HANDLER.
         ENDTRY.
 
 
@@ -80,7 +80,7 @@ CLASS Z2UI5_CL_SMP_APP_345 IMPLEMENTATION.
           INTO TABLE @<table1>
           UP TO 5 ROWS.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
     ENDTRY.
 
     mo_layout_obj1 = z2ui5_cl_smp_app_333=>factory( i_data = mt_data1 vis_cols = 2 ).

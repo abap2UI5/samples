@@ -184,7 +184,7 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
 
         SORT <table>.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
 
     ENDTRY.
 
@@ -215,7 +215,7 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
 
         SORT <table>.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
 
     ENDTRY.
 
@@ -247,7 +247,7 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
 
             ENDLOOP.
 
-          CATCH cx_root.
+          CATCH cx_root ##NO_HANDLER.
 
         ENDTRY.
 
@@ -257,7 +257,7 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
 
         APPEND LINES OF component TO result.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
     ENDTRY.
 
   ENDMETHOD.

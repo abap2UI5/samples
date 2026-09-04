@@ -143,7 +143,7 @@ CLASS z2ui5_cl_smp_app_199 IMPLEMENTATION.
 
         mv_counter = 2.
 
-      CATCH cx_root.
+      CATCH cx_root ##NO_HANDLER.
     ENDTRY.
 
   ENDMETHOD.
