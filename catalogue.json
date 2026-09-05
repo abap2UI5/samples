@@ -95,7 +95,7 @@
    "stage": "start",
    "title": "Basics II",
    "description": "Data Binding: Input and Button",
-   "summary": "Binds a class attribute to an Input with _bind( ), so what the user types is in the ABAP variable on the next roundtrip and a Text shows it back.",
+   "summary": "Binds a class attribute to an Input with _bind( ), so what the user types is in the ABAP variable on the next roundtrip - a Text shows it back and a MessageBox confirms the roundtrip.",
    "keywords": [
     "binding",
     "_bind",
@@ -104,6 +104,8 @@
     "value",
     "input",
     "button",
+    "roundtrip",
+    "messagebox",
     "serialize"
    ],
    "docs": [

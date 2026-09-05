@@ -1,5 +1,5 @@
-" @keywords binding _bind model attribute value input button serialize
-" @summary Binds a class attribute to an Input with _bind( ), so what the user types is in the ABAP variable on the next roundtrip and a Text shows it back.
+" @keywords binding _bind model attribute value input button roundtrip messagebox serialize
+" @summary Binds a class attribute to an Input with _bind( ), so what the user types is in the ABAP variable on the next roundtrip - a Text shows it back and a MessageBox confirms the roundtrip.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/binding https://abap2ui5.github.io/docs/tutorials/walkthrough/step-4
 CLASS z2ui5_cl_smp_app_494 DEFINITION PUBLIC.
 
@@ -30,6 +30,7 @@ CLASS z2ui5_cl_smp_app_494 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_event( `GREET` ).
       greeting = |Hello { name }!|.
+      client->message_box_display( |Roundtrip done: the backend read NAME = '{ name }' and wrote GREETING back into the view.| ).
     ENDIF.
 
   ENDMETHOD.
@@ -56,7 +57,8 @@ CLASS z2ui5_cl_smp_app_494 IMPLEMENTATION.
                    `below. Type a name and leave the field: the text ` &&
                    `next to it changes without any ABAP code, because both are bound to the ` &&
                    `same attribute. Press Greet and the backend reads NAME - already filled ` &&
-                   `in, no event argument needed - and writes GREETING back into the view.`
+                   `in, no event argument needed -, writes GREETING back into the view and ` &&
+                   `confirms the roundtrip with a MessageBox.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
