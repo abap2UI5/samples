@@ -687,7 +687,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     result = VALUE #(
       ( group = `samples` header = `Basics I` sub = `Hello World, the Smallest App` keywords = `hello world smallest first app minimal start here template` path = `src/01` app = `z2ui5_cl_smp_app_493` )
-      ( group = `samples` header = `Basics II` sub = `Data Binding: Input and Button` keywords = `binding _bind model attribute value input button serialize` path = `src/01` app = `z2ui5_cl_smp_app_494` )
+      ( group = `samples` header = `Basics II` sub = `Data Binding: Input and Button` keywords = `binding _bind model attribute value input button roundtrip messagebox serialize` path = `src/01` app = `z2ui5_cl_smp_app_494` )
       ( group = `samples` header = `Basics III` sub = `Lifecycle: Init, Event, Navigated` keywords = `lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated` path = `src/01` app = `z2ui5_cl_smp_app_495` )
       ( group = `samples` header = `Basics IV` sub = `Events, Views and Roundtrips` keywords = `roundtrip restart second view uncaught error controller basics` path = `src/01` app = `z2ui5_cl_smp_app_004` )
       ( group = `samples` header = `Basics V`
