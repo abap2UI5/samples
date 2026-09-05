@@ -21,7 +21,7 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -31,6 +31,7 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
 
 
   METHOD on_event.
+      DATA temp1 TYPE string_table.
 
     IF client->get_event( ) = `TOGGLE`.
       " toggle the popover open/closed, anchored to the pressed button's DOM
@@ -38,10 +39,13 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
       " (the controller pattern oPopover.openBy(oButton) / oPopover.close()).
       " t_arg is positional: id, method, anchor id (the view defaults to
       " cs_view-main and can be omitted for a main-view control)
+      
+      CLEAR temp1.
+      INSERT `demoPopover` INTO TABLE temp1.
+      INSERT `toggleBy` INTO TABLE temp1.
+      INSERT client->get_event_arg( ) INTO TABLE temp1.
       client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                                t_arg = VALUE #( ( `demoPopover` )
-                                                 ( `toggleBy` )
-                                                 ( client->get_event_arg( ) ) ) ).
+                                t_arg = temp1 ).
     ENDIF.
 
   ENDMETHOD.
@@ -49,7 +53,10 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp3 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -57,7 +64,8 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popover - Toggle by ID (toggleBy)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -84,11 +92,14 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp3.
+    INSERT `$event.oSource.sId` INTO TABLE temp3.
     page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `Button`
             )->a( n = `press` v = client->_event( val   = `TOGGLE`
-                                           t_arg = VALUE #( ( `$event.oSource.sId` ) ) )
+                                           t_arg = temp3 )
             )->a( n = `text`  v = `Toggle popover`
             )->a( n = `icon`  v = `sap-icon://email` ).
 

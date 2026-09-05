@@ -17,10 +17,12 @@ CLASS z2ui5_cl_smp_app_098 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_s_row.
 
-    DATA
-      t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
-    DATA
-      t_tab2 TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    TYPES temp1_cf4345e09b TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
+DATA
+      t_tab TYPE temp1_cf4345e09b.
+    TYPES temp2_cf4345e09b TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
+DATA
+      t_tab2 TYPE temp2_cf4345e09b.
 
     DATA mv_layout TYPE string.
     DATA mv_title TYPE string.
@@ -40,7 +42,12 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA lo_view_nested TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    lo_view_nested = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -50,10 +57,12 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->a( n = `xmlns:f`      v = `sap.f`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = lo_view_nested->ele( `Page`
+    
+    page = lo_view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
 
-    DATA(tab) = page->ele( n = `Table` ns = `table`
+    
+    tab = page->ele( n = `Table` ns = `table`
         )->a( n = `rows`               v = client->_bind( val = t_tab2 )
         )->a( n = `alternateRowColors` b = abap_true
         )->a( n = `fixedColumnCount`   v = `1`
@@ -69,7 +78,8 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         )->ele( `OverflowToolbar`
             )->tag( `Title`
                 )->a( n = `text` v = `Products` ).
-    DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
+    
+    lo_columns = tab->ele( n = `columns` ns = `table` ).
 
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `TITLE`
@@ -95,12 +105,15 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{INFO}` ).
+    
+    CLEAR temp1.
+    INSERT `${TITLE}` INTO TABLE temp1.
     lo_columns->end(
         )->ele( n = `rowActionTemplate` ns = `table`
             )->ele( n = `RowAction` ns = `table`
                 )->ele( n = `RowActionItem` ns = `table`
                     )->a( n = `type`  v = `Navigation`
-                    )->a( n = `press` v = client->_event( val = `ROW_NAVIGATE` t_arg = VALUE #( ( `${TITLE}` ) ) ) ).
+                    )->a( n = `press` v = client->_event( val = `ROW_NAVIGATE` t_arg = temp1 ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
@@ -113,7 +126,9 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
 
   METHOD view_display_detail_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA lo_view_nested TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    lo_view_nested = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -123,7 +138,8 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->a( n = `xmlns:f`      v = `sap.f`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = lo_view_nested->ele( `Page`
+    
+    page = lo_view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
 
     page = page->tag( `Text`
@@ -143,7 +159,13 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE xsdboolean.
+    DATA col_layout TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lr_master TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lr_list TYPE REF TO z2ui5_cl_ui5_view_builder.
+    temp1 = boolc( client->get( )-check_launchpad_active = abap_false ).
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -157,7 +179,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
                     )->a( n = `title`          v = `abap2UI5 - Nested View - Three Columns with FlexibleColumnLayout`
                     )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
                     )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-                    )->a( n = `showHeader`     b = xsdbool( client->get( )-check_launchpad_active = abap_false ) ).
+                    )->a( n = `showHeader`     b = temp1 ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A three-column FlexibleColumnLayout: select a row to open the detail column, then ` &&
@@ -166,13 +188,16 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(col_layout) = page->ele( n = `FlexibleColumnLayout` ns = `f`
+    
+    col_layout = page->ele( n = `FlexibleColumnLayout` ns = `f`
         )->a( n = `layout` v = client->_bind( mv_layout )
         )->a( n = `id`     v = `test` ).
 
-    DATA(lr_master) = col_layout->ele( n = `beginColumnPages` ns = `f` ).
+    
+    lr_master = col_layout->ele( n = `beginColumnPages` ns = `f` ).
 
-    DATA(lr_list) = lr_master->ele( `List`
+    
+    lr_list = lr_master->ele( `List`
         )->a( n = `headerText`      v = `List Output`
         )->a( n = `items`           v = client->_bind( val = t_tab )
         )->a( n = `mode`            v = `SingleSelectMaster`
@@ -192,24 +217,56 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp3 LIKE t_tab.
+      DATA temp4 LIKE LINE OF temp3.
+        DATA lt_sel LIKE t_tab.
+        DATA ls_sel TYPE z2ui5_cl_smp_app_098=>ty_s_row.
+        DATA temp5 LIKE sy-subrc.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      t_tab = VALUE #(
-        ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
+      
+      CLEAR temp3.
+      
+      temp4-title = `row_01`.
+      temp4-info = `completed`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-title = `row_02`.
+      temp4-info = `incompleted`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-title = `row_03`.
+      temp4-info = `working`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-title = `row_04`.
+      temp4-info = `working`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-title = `row_05`.
+      temp4-info = `completed`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-title = `row_06`.
+      temp4-info = `completed`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      t_tab = temp3.
 
       mv_layout = `OneColumn`.
 
       view_display_master( ).
       view_display_detail( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display_master( ).
 
     ENDIF.
@@ -229,12 +286,17 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         view_display_detail_detail( ).
 
       WHEN `SELCHANGE`.
-        DATA(lt_sel) = t_tab.
+        
+        lt_sel = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
 
-        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
+        
+        READ TABLE lt_sel INTO ls_sel INDEX 1.
 
-        IF sy-subrc = 0 AND NOT line_exists( t_tab2[ title = ls_sel-title ] ).
+        
+        READ TABLE t_tab2 WITH KEY title = ls_sel-title TRANSPORTING NO FIELDS.
+        temp5 = sy-subrc.
+        IF sy-subrc = 0 AND NOT temp5 = 0.
           INSERT ls_sel INTO TABLE t_tab2.
         ENDIF.
 

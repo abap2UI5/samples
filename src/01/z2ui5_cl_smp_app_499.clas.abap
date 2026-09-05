@@ -52,10 +52,10 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -63,13 +63,23 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
 
 
   METHOD view_display.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA nav TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA main TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    DATA detail TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA vform TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp3 TYPE string_table.
+      DATA temp5 TYPE string_table.
 
     " a deep link / reload: the live hash rides in s_config-hash on every
     " request, so a render whose hash already names the detail page starts
     " there - the routeMatched of a cold start
     hash_apply( ).
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -77,11 +87,13 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-    DATA(nav) = view->ele( `Shell`
+    
+    nav = view->ele( `Shell`
         )->ele( `NavContainer`
             )->a( n = `id` v = `nav` ).
 
-    DATA(main) = nav->ele( `Page`
+    
+    main = nav->ele( `Page`
         )->a( n = `id`             v = `page-main`
         )->a( n = `title`          v = `abap2UI5 - App-Owned Hash Routing`
         )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -95,7 +107,8 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = main->ele( n = `SimpleForm` ns = `form`
+    
+    form = main->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Some state`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form` ).
@@ -110,7 +123,11 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
         )->a( n = `text`  v = `open the detail page (#/detail)`
         )->a( n = `type`  v = `Emphasized` ).
 
-    DATA(detail) = nav->ele( `Page`
+    
+    CLEAR temp1.
+    INSERT `/` INTO TABLE temp1.
+    
+    detail = nav->ele( `Page`
         )->a( n = `id`             v = `page-detail`
         )->a( n = `title`          v = `Detail (#/detail)`
         )->a( n = `showNavButton`  b = abap_true
@@ -119,7 +136,7 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
         " link, where no step exists, a REPLACE to the '/' fallback. Either
         " way the hash change round-trips as HASH_CHANGED below
         )->a( n = `navButtonPress` v = client->follow_up_action( val   = z2ui5_if_client=>cs_event-hash_back
-                                                                 t_arg = VALUE #( ( `/` ) ) ) ).
+                                                                 t_arg = temp1 ) ).
 
     detail->tag( `MessageStrip`
         )->a( n = `text`     v = `This page is #/detail. Reload the browser or share the URL - it lands here. ` &&
@@ -129,7 +146,8 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(vform) = detail->ele( n = `SimpleForm` ns = `form`
+    
+    vform = detail->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `hash_replace - the URL follows, Back skips it`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form` ).
@@ -163,20 +181,31 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
     " hash changes the app did not write itself (browser Back/Forward, a
     " manual edit) round-trip as HASH_CHANGED - registered per render, since
     " the registration dies with an app switch
+    
+    CLEAR temp3.
+    INSERT `HASH_CHANGED` INTO TABLE temp3.
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-hash_attach_changed
-                              t_arg = VALUE #( ( `HASH_CHANGED` ) ) ).
+                              t_arg = temp3 ).
 
     " a rebuilt NavContainer is back on its first page while check_detail
     " survives as class state - re-issue the page it should show
     IF check_detail = abap_true.
+      
+      CLEAR temp5.
+      INSERT `nav` INTO TABLE temp5.
+      INSERT `to` INTO TABLE temp5.
+      INSERT `page-detail` INTO TABLE temp5.
       client->follow_up_action( val   = client->cs_event-control_by_id
-                                t_arg = VALUE #( ( `nav` ) ( `to` ) ( `page-detail` ) ) ).
+                                t_arg = temp5 ).
     ENDIF.
 
   ENDMETHOD.
 
 
   METHOD on_event.
+        DATA temp7 TYPE string_table.
+        DATA temp9 TYPE string_table.
+        DATA temp1 TYPE string.
 
     CASE client->get_event( ).
 
@@ -184,8 +213,13 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
         " the router's navTo: switch the page and PUSH the app-owned hash -
         " a real history entry, so the browser Back button has a step to take
         check_detail = abap_true.
+        
+        CLEAR temp7.
+        INSERT `nav` INTO TABLE temp7.
+        INSERT `to` INTO TABLE temp7.
+        INSERT `page-detail` INTO TABLE temp7.
         client->follow_up_action( val   = client->cs_event-control_by_id
-                                  t_arg = VALUE #( ( `nav` ) ( `to` ) ( `page-detail` ) ) ).
+                                  t_arg = temp7 ).
         client->hash_set( |/detail/{ variant }| ).
 
       WHEN `VARIANT`.
@@ -198,12 +232,19 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
       WHEN `HASH_CHANGED`.
         " the router's routeMatched: show the page the hash now names
         hash_apply( ).
+        
+        CLEAR temp9.
+        INSERT `nav` INTO TABLE temp9.
+        INSERT `to` INTO TABLE temp9.
+        
+        IF check_detail = abap_true.
+          temp1 = `page-detail`.
+        ELSE.
+          temp1 = `page-main`.
+        ENDIF.
+        INSERT temp1 INTO TABLE temp9.
         client->follow_up_action( val   = client->cs_event-control_by_id
-                                  t_arg = VALUE #( ( `nav` )
-                                                   ( `to` )
-                                                   ( COND #( WHEN check_detail = abap_true
-                                                             THEN `page-detail`
-                                                             ELSE `page-main` ) ) ) ).
+                                  t_arg = temp9 ).
 
     ENDCASE.
 
@@ -213,10 +254,16 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
   METHOD hash_apply.
 
     " '/detail' or '/detail/{variant}' - everything else is the first page
-    DATA(lv_hash) = client->get( )-s_config-hash.
-    check_detail = xsdbool( lv_hash CS `/detail` ).
+    DATA lv_hash TYPE z2ui5_if_client=>ty_s_get-s_config-hash.
+    DATA temp1 TYPE xsdboolean.
+      DATA lv_variant TYPE string.
+    lv_hash = client->get( )-s_config-hash.
+    
+    temp1 = boolc( lv_hash CS `/detail` ).
+    check_detail = temp1.
     IF check_detail = abap_true.
-      DATA(lv_variant) = substring_after( val = lv_hash sub = `/detail/` ).
+      
+      lv_variant = substring_after( val = lv_hash sub = `/detail/` ).
       IF lv_variant CO `abc` AND lv_variant IS NOT INITIAL.
         variant = lv_variant.
       ENDIF.

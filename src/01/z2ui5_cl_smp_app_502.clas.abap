@@ -15,7 +15,7 @@ CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.
         number  TYPE n LENGTH 3,
         message TYPE string,
       END OF ty_s_message.
-    TYPES ty_t_message TYPE STANDARD TABLE OF ty_s_message WITH EMPTY KEY.
+    TYPES ty_t_message TYPE STANDARD TABLE OF ty_s_message WITH DEFAULT KEY.
     TYPES:
       BEGIN OF ty_s_t100,
         msgty TYPE c LENGTH 1,
@@ -46,7 +46,7 @@ CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.
         kunnr     TYPE string,
         erdat     TYPE d,
         s_address TYPE ty_s_address,
-        t_item    TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY,
+        t_item    TYPE STANDARD TABLE OF ty_s_item WITH DEFAULT KEY,
       END OF ty_s_order.
     TYPES:
       BEGIN OF ty_s_node,
@@ -62,7 +62,7 @@ CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.
         key   TYPE string,
         descr TYPE string,
       END OF ty_s_row.
-    TYPES ty_t_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    TYPES ty_t_row TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -134,10 +134,10 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -146,7 +146,8 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
 
   METHOD on_event.
 
-    DATA(event) = client->get_event( ).
+    DATA event TYPE string.
+    event = client->get_event( ).
     IF on_event_basic( event ) = abap_true.
       RETURN.
     ENDIF.
@@ -165,6 +166,7 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
 
 
   METHOD on_event_basic.
+        DATA count TYPE i.
 
     result = abap_true.
 
@@ -177,7 +179,8 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
       WHEN `NUMBER`.
         " a number, a date, a hex value: shown the way the runtime writes it,
         " trimmed - the app formats nothing
-        DATA(count) = 42.
+        
+        count = 42.
         client->message_box_display( count ).
 
       WHEN `HTML`.
@@ -203,6 +206,12 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
   METHOD on_event_message.
 
     DATA t_empty TYPE ty_t_message.
+        DATA temp1 TYPE ty_s_message.
+        DATA s_message LIKE temp1.
+        DATA temp2 TYPE ty_s_t100.
+        DATA s_t100 LIKE temp2.
+            DATA value TYPE i.
+            DATA error TYPE REF TO cx_root.
 
     result = abap_true.
 
@@ -211,10 +220,14 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
       WHEN `MSG_ONE`.
         " one message structure: the box takes its type and its title from the
         " message, so the app passes neither
-        DATA(s_message) = VALUE ty_s_message( type    = `S`
-                                              id      = `Z2UI5`
-                                              number  = `001`
-                                              message = `Order 4711 was created` ).
+        
+        CLEAR temp1.
+        temp1-type = `S`.
+        temp1-id = `Z2UI5`.
+        temp1-number = `001`.
+        temp1-message = `Order 4711 was created`.
+        
+        s_message = temp1.
         client->message_box_display( s_message ).
 
       WHEN `MSG_TABLE`.
@@ -225,23 +238,29 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
       WHEN `MSG_T100`.
         " no text at all, an id and a number: the text is resolved out of the
         " message class of the system, placeholders substituted
-        DATA(s_t100) = VALUE ty_s_t100( msgty = `I`
-                                        msgid = `00`
-                                        msgno = `001`
-                                        msgv1 = `The text`
-                                        msgv2 = `comes from`
-                                        msgv3 = `message class`
-                                        msgv4 = `00` ).
+        
+        CLEAR temp2.
+        temp2-msgty = `I`.
+        temp2-msgid = `00`.
+        temp2-msgno = `001`.
+        temp2-msgv1 = `The text`.
+        temp2-msgv2 = `comes from`.
+        temp2-msgv3 = `message class`.
+        temp2-msgv4 = `00`.
+        
+        s_t100 = temp2.
         client->message_box_display( s_t100 ).
 
       WHEN `MSG_EXCEPTION`.
         " an exception is a message too - the box shows what get_text( )
         " renders, as an error
         TRY.
-            DATA(value) = 1 / 0.
+            
+            value = 1 / 0.
             client->message_box_display( |{ value }| ).
 
-          CATCH cx_root INTO DATA(error).
+            
+          CATCH cx_root INTO error.
             client->message_box_display( error ).
         ENDTRY.
 
@@ -265,6 +284,8 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
     DATA s_order TYPE ty_s_order.
 
     FIELD-SYMBOLS <s_tree> TYPE ty_s_node.
+        DATA address LIKE REF TO s_order-s_address.
+        DATA tree TYPE REF TO data.
 
     result = abap_true.
 
@@ -291,7 +312,8 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
       WHEN `DATA_REFERENCE`.
         " a data reference is followed and what it points at is rendered
         s_order = get_s_order( ).
-        DATA(address) = REF #( s_order-s_address ).
+        
+        GET REFERENCE OF s_order-s_address INTO address.
         client->message_box_display( address ).
 
       WHEN `LIMIT_ROWS`.
@@ -303,7 +325,8 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
         " a node that points at the next one, six levels deep. The renderer
         " stops at five and writes an ellipsis where it stopped - without the
         " limit a structure that points at itself would never end
-        DATA(tree) = get_tree( ).
+        
+        tree = get_tree( ).
         ASSIGN tree->* TO <s_tree>.
         IF sy-subrc = 0.
           client->message_box_display( <s_tree> ).
@@ -320,6 +343,8 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
   METHOD on_event_box.
 
     DATA s_order TYPE ty_s_order.
+        DATA type TYPE string.
+        DATA temp3 TYPE string_table.
 
     CASE event.
 
@@ -328,7 +353,8 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
         " default, mapped to MessageBox.show), success, warning, error. The
         " wire carries the value as the event argument, so one event and one
         " handler serve all four buttons
-        DATA(type) = client->get_event_arg( ).
+        
+        type = client->get_event_arg( ).
         client->message_box_display( text = |This box was opened with type = { type }|
                                      type = type ).
 
@@ -352,12 +378,15 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
         " the focus - and onclose, the event that carries the pressed action
         " back as the first event argument. An action is a MessageBox.Action
         " name or, like `Later`, any text the app wants on a button
+        
+        CLEAR temp3.
+        INSERT `DELETE` INTO TABLE temp3.
+        INSERT `Later` INTO TABLE temp3.
+        INSERT `CANCEL` INTO TABLE temp3.
         client->message_box_display( text             = `Delete document 4711?`
                                      type             = `warning`
                                      title            = `Delete`
-                                     actions          = VALUE #( ( `DELETE` )
-                                                                 ( `Later` )
-                                                                 ( `CANCEL` ) )
+                                     actions          = temp3
                                      emphasizedaction = `DELETE`
                                      initialfocus     = `CANCEL`
                                      onclose          = `BOX_CLOSED` ).
@@ -391,7 +420,10 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -400,7 +432,8 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Message - MessageBox for Any Data`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -415,7 +448,8 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+    
+    form = page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `editable`        b = abap_true
         )->a( n = `layout`          v = `ResponsiveGridLayout`
         )->a( n = `labelSpanXL`     v = `2`
@@ -562,6 +596,10 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
 
 
   METHOD render_box.
+    DATA row TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp5 TYPE string_table.
+    DATA t_type LIKE temp5.
+    DATA type LIKE LINE OF t_type.
 
     render_section( form  = form
                     title = `The box itself` ).
@@ -569,16 +607,22 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
     form->tag( `Label`
         )->a( n = `text` v = `Type` ).
 
-    DATA(row) = form->ele( `HBox`
+    
+    row = form->ele( `HBox`
         )->a( n = `alignItems` v = `Center`
         )->a( n = `wrap`       v = `Wrap` ).
 
-    DATA(t_type) = VALUE string_table( ( `information` )
-                                       ( `success` )
-                                       ( `warning` )
-                                       ( `error` ) ).
+    
+    CLEAR temp5.
+    INSERT `information` INTO TABLE temp5.
+    INSERT `success` INTO TABLE temp5.
+    INSERT `warning` INTO TABLE temp5.
+    INSERT `error` INTO TABLE temp5.
+    
+    t_type = temp5.
 
-    LOOP AT t_type INTO DATA(type).
+    
+    LOOP AT t_type INTO type.
       row->tag( `Button`
           )->a( n = `text`  v = type
           )->a( n = `press` v = client->_event( val = `BOX_TYPE`
@@ -635,11 +679,13 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
 
 
   METHOD render_demo.
+    DATA row TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     form->tag( `Label`
         )->a( n = `text` v = label ).
 
-    DATA(row) = form->ele( `HBox`
+    
+    row = form->ele( `HBox`
         )->a( n = `alignItems` v = `Center`
         )->a( n = `wrap`       v = `Wrap` ).
 
@@ -656,36 +702,84 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
 
   METHOD get_t_message.
 
-    result = VALUE #( ( type = `E` id = `Z2UI5` number = `010` message = `Material 4711 is not available in plant 1000` )
-                      ( type = `W` id = `Z2UI5` number = `011` message = `The delivery date was moved to 2026-10-01` )
-                      ( type = `I` id = `Z2UI5` number = `012` message = `Pricing was redetermined` )
-                      ( type = `S` id = `Z2UI5` number = `013` message = `Order 4711 was saved` ) ).
+    DATA temp7 TYPE z2ui5_cl_smp_app_502=>ty_t_message.
+    DATA temp8 LIKE LINE OF temp7.
+    CLEAR temp7.
+    
+    temp8-type = `E`.
+    temp8-id = `Z2UI5`.
+    temp8-number = `010`.
+    temp8-message = `Material 4711 is not available in plant 1000`.
+    INSERT temp8 INTO TABLE temp7.
+    temp8-type = `W`.
+    temp8-id = `Z2UI5`.
+    temp8-number = `011`.
+    temp8-message = `The delivery date was moved to 2026-10-01`.
+    INSERT temp8 INTO TABLE temp7.
+    temp8-type = `I`.
+    temp8-id = `Z2UI5`.
+    temp8-number = `012`.
+    temp8-message = `Pricing was redetermined`.
+    INSERT temp8 INTO TABLE temp7.
+    temp8-type = `S`.
+    temp8-id = `Z2UI5`.
+    temp8-number = `013`.
+    temp8-message = `Order 4711 was saved`.
+    INSERT temp8 INTO TABLE temp7.
+    result = temp7.
 
   ENDMETHOD.
 
 
   METHOD get_s_order.
+    DATA temp1 TYPE z2ui5_cl_smp_app_502=>ty_s_order-t_item.
+    DATA temp2 LIKE LINE OF temp1.
 
-    result = VALUE #( vbeln     = `0000004711`
-                      kunnr     = `0000001000`
-                      erdat     = `20260904`
-                      s_address = VALUE #( street  = `Dietmar-Hopp-Allee 16`
-                                           city    = `Walldorf`
-                                           country = `DE` )
-                      t_item    = VALUE #( ( posnr = `000010` matnr = `TG-11` menge = 5  netwr = '249.90'  waers = `EUR` )
-                                           ( posnr = `000020` matnr = `TG-12` menge = 2  netwr = '1199.00' waers = `EUR` )
-                                           ( posnr = `000030` matnr = `TG-13` menge = 12 netwr = '58.50'   waers = `EUR` ) ) ).
+    CLEAR result.
+    result-vbeln = `0000004711`.
+    result-kunnr = `0000001000`.
+    result-erdat = `20260904`.
+    CLEAR result-s_address.
+    result-s_address-street = `Dietmar-Hopp-Allee 16`.
+    result-s_address-city = `Walldorf`.
+    result-s_address-country = `DE`.
+    
+    CLEAR temp1.
+    
+    temp2-posnr = `000010`.
+    temp2-matnr = `TG-11`.
+    temp2-menge = 5.
+    temp2-netwr = '249.90'.
+    temp2-waers = `EUR`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-posnr = `000020`.
+    temp2-matnr = `TG-12`.
+    temp2-menge = 2.
+    temp2-netwr = '1199.00'.
+    temp2-waers = `EUR`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-posnr = `000030`.
+    temp2-matnr = `TG-13`.
+    temp2-menge = 12.
+    temp2-netwr = '58.50'.
+    temp2-waers = `EUR`.
+    INSERT temp2 INTO TABLE temp1.
+    result-t_item = temp1.
 
   ENDMETHOD.
 
 
   METHOD get_t_row.
+      DATA temp9 TYPE z2ui5_cl_smp_app_502=>ty_s_row.
 
     DO rows TIMES.
       " values that look like markup on purpose: this table is what the
       " escaping row shows as well
-      INSERT VALUE #( key   = |ROW-{ sy-index }|
-                      descr = |<b>Position { sy-index }</b> of a result set nobody reads in a popup & nowhere else| )
+      
+      CLEAR temp9.
+      temp9-key = |ROW-{ sy-index }|.
+      temp9-descr = |<b>Position { sy-index }</b> of a result set nobody reads in a popup & nowhere else|.
+      INSERT temp9
              INTO TABLE result.
     ENDDO.
 

@@ -41,7 +41,14 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
 
   METHOD read_frontend_info.
 
-    DATA(ls_get) = client->get( ).
+    DATA ls_get TYPE z2ui5_if_client=>ty_s_get.
+    DATA temp1 TYPE string.
+    DATA temp2 TYPE string.
+    DATA temp3 TYPE xsdboolean.
+    DATA temp4 TYPE xsdboolean.
+    DATA temp5 TYPE xsdboolean.
+    DATA temp6 TYPE xsdboolean.
+    ls_get = client->get( ).
 
     device_browser         = ls_get-s_device-browser-name.
     device_browser_version = ls_get-s_device-browser-version.
@@ -49,12 +56,24 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
     device_os_version      = ls_get-s_device-os-version.
     device_systemtype      = ls_get-s_device-system.
     device_orientation     = ls_get-s_device-orientation.
-    device_height          = CONV string( ls_get-s_device-resize-height ).
-    device_width           = CONV string( ls_get-s_device-resize-width ).
-    device_phone           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-phone ).
-    device_desktop         = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-desktop ).
-    device_tablet          = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-tablet ).
-    device_combi           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-combi ).
+    
+    temp1 = ls_get-s_device-resize-height.
+    device_height          = temp1.
+    
+    temp2 = ls_get-s_device-resize-width.
+    device_width           = temp2.
+    
+    temp3 = boolc( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-phone ).
+    device_phone           = temp3.
+    
+    temp4 = boolc( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-desktop ).
+    device_desktop         = temp4.
+    
+    temp5 = boolc( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-tablet ).
+    device_tablet          = temp5.
+    
+    temp6 = boolc( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-combi ).
+    device_combi           = temp6.
     device_touch           = ls_get-s_device-support-touch.
     device_pointer         = ls_get-s_device-support-pointer.
     device_retina          = ls_get-s_device-support-retina.
@@ -68,7 +87,9 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -77,7 +98,8 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Device - Frontend Info: UI5 Version, Theme, OS, Browser`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -197,11 +219,11 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       read_frontend_info( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
     ENDIF.

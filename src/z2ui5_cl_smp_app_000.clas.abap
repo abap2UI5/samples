@@ -22,7 +22,7 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         path     TYPE string,
         app      TYPE string,
       END OF ty_s_tile.
-    TYPES ty_t_tile TYPE STANDARD TABLE OF ty_s_tile WITH EMPTY KEY.
+    TYPES ty_t_tile TYPE STANDARD TABLE OF ty_s_tile WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     TYPES:
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         base  TYPE string,
         width TYPE i,
       END OF ty_s_block.
-    TYPES ty_t_block TYPE STANDARD TABLE OF ty_s_block WITH EMPTY KEY.
+    TYPES ty_t_block TYPE STANDARD TABLE OF ty_s_block WITH DEFAULT KEY.
 
     " sap.ui.core.IconColor knows no blue - Positive, Critical, Negative and
     " Neutral are the semantic four - so the interactive icons of the header
@@ -203,12 +203,12 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       view_display( ).
       focus_search( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
 
       " focus first, scroll second: focusing a control can scroll it into view,
       " and the restored scroll position is the one that must survive
@@ -216,7 +216,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       scroll_restore( ).
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -258,14 +258,17 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     DATA li_app TYPE REF TO z2ui5_if_app.
 
-    DATA(name) = to_upper( classname ).
+    DATA name TYPE string.
+        DATA error TYPE REF TO cx_root.
+    name = to_upper( classname ).
 
     TRY.
         CREATE OBJECT li_app TYPE (name).
-        s_scroll = CORRESPONDING #( client->get( )-s_scroll-main ).
+        MOVE-CORRESPONDING client->get( )-s_scroll-main TO s_scroll.
         client->nav_app_call( li_app ).
 
-      CATCH cx_root INTO DATA(error) ##CATCH_ALL.
+        
+      CATCH cx_root INTO error.
         " a press that does nothing at all is the worst answer this page can
         " give, and it is what the silent catch here used to produce. The class
         " name is dynamic, so only the running system knows why it did not
@@ -281,37 +284,76 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD focus_search.
 
+    DATA temp1 TYPE string_table.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA temp3 LIKE LINE OF temp1.
+    CLEAR temp1.
+    INSERT `search` INTO TABLE temp1.
+    
+    temp2 = |{ strlen( search ) }|.
+    INSERT temp2 INTO TABLE temp1.
+    
+    temp3 = |{ strlen( search ) }|.
+    INSERT temp3 INTO TABLE temp1.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-set_focus
-        t_arg = VALUE #( ( `search` )
-                         ( |{ strlen( search ) }| )
-                         ( |{ strlen( search ) }| ) ) ).
+        t_arg = temp1 ).
 
   ENDMETHOD.
 
 
   METHOD scroll_restore.
+    DATA temp3 TYPE string_table.
+    DATA temp4 LIKE LINE OF temp3.
+    DATA temp5 LIKE LINE OF temp3.
 
     IF s_scroll-id IS INITIAL.
       RETURN.
     ENDIF.
 
+    
+    CLEAR temp3.
+    INSERT s_scroll-id INTO TABLE temp3.
+    
+    temp4 = |{ s_scroll-y }|.
+    INSERT temp4 INTO TABLE temp3.
+    
+    temp5 = |{ s_scroll-x }|.
+    INSERT temp5 INTO TABLE temp3.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-scroll_to
-        t_arg = VALUE #( ( s_scroll-id )
-                         ( |{ s_scroll-y }| )
-                         ( |{ s_scroll-x }| ) ) ).
+        t_arg = temp3 ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(t_catalog_all) = get_catalog( ).
-    DATA(t_catalog) = catalog_filter( t_catalog_all ).
-    DATA(t_blocks) = block_widths( t_catalog ).
+    DATA t_catalog_all TYPE z2ui5_cl_smp_app_000=>ty_t_tile.
+    DATA t_catalog TYPE z2ui5_cl_smp_app_000=>ty_t_tile.
+    DATA t_blocks TYPE z2ui5_cl_smp_app_000=>ty_t_block.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA show_groups TYPE abap_bool.
+    DATA prev_group TYPE string.
+    DATA prev_base TYPE string.
+    DATA tile LIKE LINE OF t_catalog.
+      DATA base TYPE string.
+      DATA new_block LIKE abap_false.
+      DATA tenths TYPE i.
+      DATA temp6 LIKE LINE OF t_blocks.
+      DATA temp7 LIKE sy-tabix.
+      DATA width TYPE string.
+      DATA temp5 TYPE string.
+      DATA row TYPE REF TO z2ui5_cl_ui5_view_builder.
+    t_catalog_all = get_catalog( ).
+    
+    t_catalog = catalog_filter( t_catalog_all ).
+    
+    t_blocks = block_widths( t_catalog ).
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -321,22 +363,29 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     " title and back button come with the custom header (render_header), not
     " with the page - a Page renders either its own header or a custom one
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `id` v = `page` ).
 
     render_header( page ).
     render_sub_header( page ).
 
-    DATA(show_groups) = group_titles_needed( t_catalog ).
-    DATA(prev_group) = ``.
-    DATA(prev_base) = ``.
+    
+    show_groups = group_titles_needed( t_catalog ).
+    
+    prev_group = ``.
+    
+    prev_base = ``.
 
-    LOOP AT t_catalog INTO DATA(tile).
+    
+    LOOP AT t_catalog INTO tile.
 
-      DATA(base) = block_base( group  = tile-group
+      
+      base = block_base( group  = tile-group
                                header = tile-header ).
-      DATA(new_block) = abap_false.
+      
+      new_block = abap_false.
 
       IF tile-group <> prev_group.
 
@@ -361,12 +410,27 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       prev_base = base.
 
       " widest header of the block plus roughly one space, in 1/100 em
-      DATA(tenths) = ( t_blocks[ group = tile-group base = base ]-width + 45 ) DIV 10.
-      DATA(width) = |{ tenths DIV 10 }.{ tenths MOD 10 }em|.
-      DATA(row) = page->ele( `HBox`
-          )->a( n = `class`      v = COND #( WHEN new_block = abap_true
-                               THEN `sapUiSmallMarginBegin sapUiSmallMarginTop`
-                               ELSE `sapUiSmallMarginBegin` )
+      
+      
+      
+      temp7 = sy-tabix.
+      READ TABLE t_blocks WITH KEY group = tile-group base = base INTO temp6.
+      sy-tabix = temp7.
+      IF sy-subrc <> 0.
+        ASSERT 1 = 0.
+      ENDIF.
+      tenths = ( temp6-width + 45 ) DIV 10.
+      
+      width = |{ tenths DIV 10 }.{ tenths MOD 10 }em|.
+      
+      IF new_block = abap_true.
+        temp5 = `sapUiSmallMarginBegin sapUiSmallMarginTop`.
+      ELSE.
+        temp5 = `sapUiSmallMarginBegin`.
+      ENDIF.
+      
+      row = page->ele( `HBox`
+          )->a( n = `class`      v = temp5
           )->a( n = `alignItems` v = `Center`
           )->a( n = `wrap`       v = `Wrap` ).
 
@@ -427,11 +491,15 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     " 3rem. This row used to put a ToolbarSeparator between its two groups and
     " lost the documentation and GitHub icons on 1.71 because of it; the gap
     " now rides on the first icon of the second group (group_start).
-    DATA(bar) = page->ele( `customHeader`
+    DATA bar TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA left TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA right TYPE REF TO z2ui5_cl_ui5_view_builder.
+    bar = page->ele( `customHeader`
         )->ele( `Bar` ).
 
     " left: what the stock page header would render on its own
-    DATA(left) = bar->ele( `contentLeft` ).
+    
+    left = bar->ele( `contentLeft` ).
 
     left->tag( `Button`
         )->a( n = `press`   v = client->_event_nav_app_leave( )
@@ -445,7 +513,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         )->a( n = `level` v = `H2` ).
 
     " right: the sample repositories of the abap2UI5 family, one icon each ...
-    DATA(right) = bar->ele( `contentRight` ).
+    
+    right = bar->ele( `contentRight` ).
 
     header_button( toolbar = right
                    icon    = `sap-icon://lightbulb`
@@ -492,7 +561,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD render_sub_header.
 
-    DATA(toolbar) = page->ele( `subHeader`
+    DATA toolbar TYPE REF TO z2ui5_cl_ui5_view_builder.
+    toolbar = page->ele( `subHeader`
         )->ele( `OverflowToolbar` ).
 
     " the filter sits in the header, not above the list: it stays in place
@@ -514,7 +584,12 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     DATA color  TYPE string.
     DATA press  TYPE string.
 
-    DATA(tooltip) = |{ name } - { descr }|.
+    DATA tooltip TYPE string.
+        DATA temp6 TYPE string_table.
+        DATA temp8 TYPE string_table.
+    DATA temp10 TYPE string.
+    DATA css_class LIKE temp10.
+    tooltip = |{ name } - { descr }|.
 
     IF here = abap_true.
 
@@ -539,8 +614,11 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
         " installed on this system: jump right into it, the back button returns
         hint  = tooltip.
+        
+        CLEAR temp6.
+        INSERT target INTO TABLE temp6.
         press = client->_event( val   = cs_event-nav
-                                t_arg = VALUE #( ( target ) ) ).
+                                t_arg = temp6 ).
 
       ELSEIF class IS INITIAL.
 
@@ -555,10 +633,13 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         " the press says what is missing and where to get it (install_display),
         " instead of dropping the user on GitHub without a word
         hint  = |{ tooltip } - not installed on this system|.
+        
+        CLEAR temp8.
+        INSERT class INTO TABLE temp8.
+        INSERT href INTO TABLE temp8.
+        INSERT name INTO TABLE temp8.
         press = client->_event( val   = cs_event-install
-                                t_arg = VALUE #( ( class )
-                                                 ( href )
-                                                 ( name ) ) ).
+                                t_arg = temp8 ).
 
       ENDIF.
 
@@ -572,9 +653,14 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     " icon id, so install_display( ) can anchor its popover to the icon pressed
     " the wider begin margin is what sets the second group of the row apart -
     " a margin rather than a separator control, see render_header( )
-    DATA(css_class) = COND string( WHEN group_start = abap_true
-                                   THEN `sapUiMediumMarginBegin sapUiTinyMarginEnd`
-                                   ELSE `sapUiTinyMarginBeginEnd` ).
+    
+    IF group_start = abap_true.
+      temp10 = `sapUiMediumMarginBegin sapUiTinyMarginEnd`.
+    ELSE.
+      temp10 = `sapUiTinyMarginBeginEnd`.
+    ENDIF.
+    
+    css_class = temp10.
 
     toolbar->tag( n = `Icon` ns = `core`
         )->a( n = `src`     v = icon
@@ -604,7 +690,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD install_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
@@ -634,10 +721,16 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     " REDIRECT takes a { URL, NEW_WINDOW } object literal - NEW_WINDOW true is
     " what target="_blank" does on a Link
+    DATA temp11 TYPE string_table.
+    DATA temp8 LIKE LINE OF temp11.
+    CLEAR temp11.
+    INSERT `REDIRECT` INTO TABLE temp11.
+    
+    temp8 = |\{ URL: '{ href }', NEW_WINDOW: true \}|.
+    INSERT temp8 INTO TABLE temp11.
     result = client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-urlhelper
-        t_arg = VALUE #( ( `REDIRECT` )
-                         ( |\{ URL: '{ href }', NEW_WINDOW: true \}| ) ) ).
+        t_arg = temp11 ).
 
   ENDMETHOD.
 
@@ -667,7 +760,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     " that cannot happen says why instead of doing nothing.
     " The name has to be upper case - the repository stores it that way, and
     " the class constants above follow the repository's lower-case spelling rule.
-    DATA(name) = to_upper( val ).
+    DATA name TYPE string.
+    name = to_upper( val ).
 
     TRY.
         cl_abap_classdescr=>describe_by_name( EXPORTING  p_name         = name
@@ -685,136 +779,756 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD get_catalog.
 
-    result = VALUE #(
-      ( group = `samples` header = `Basics I` sub = `Hello World, the Smallest App` keywords = `hello world smallest first app minimal start here template` path = `src/01` app = `z2ui5_cl_smp_app_493` )
-      ( group = `samples` header = `Basics II` sub = `Data Binding: Input and Button` keywords = `binding _bind model attribute value input button roundtrip messagebox serialize` path = `src/01` app = `z2ui5_cl_smp_app_494` )
-      ( group = `samples` header = `Basics III` sub = `Lifecycle: Init, Event, Navigated` keywords = `lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated` path = `src/01` app = `z2ui5_cl_smp_app_495` )
-      ( group = `samples` header = `Basics IV` sub = `Events, Views and Roundtrips` keywords = `roundtrip restart second view uncaught error controller basics` path = `src/01` app = `z2ui5_cl_smp_app_004` )
-      ( group = `samples` header = `Basics V`
-        sub = `The Developer Tools (Ctrl+F12)`
-        keywords = `developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export`
-        path = `src/01` app = `z2ui5_cl_smp_app_496` )
-      ( group = `samples` header = `Basics VI` sub = `Unit Tests for the App Logic` keywords = `unit test abapunit testclasses assert testable logic method` path = `src/01` app = `z2ui5_cl_smp_app_503` )
-      ( group = `samples` header = `Binding`
-        sub = `A View Built From RTTI, No Field Named`
-        keywords = `rtti generic view runtime columns get_components describe_by_data no field name itab structure column cell binding`
-        path = `src/01` app = `z2ui5_cl_smp_app_497` )
-      ( group = `samples` header = `Binding` sub = `Currency Amounts (sap.ui.model.type.Currency)` keywords = `amount decimals leading zeros number format` path = `src/01` app = `z2ui5_cl_smp_app_067` )
-      ( group = `samples` header = `Binding` sub = `Dynamic Table Typed at Runtime (RTTI)` keywords = `generic data reference create data ddic dynamic itab` path = `src/01` app = `z2ui5_cl_smp_app_061` )
-      ( group = `samples` header = `Binding` sub = `Expression Binding, Types and Composite Parts` keywords = `formatter parts conditional regexp visible enabled syntax` path = `src/01` app = `z2ui5_cl_smp_app_027` )
-      ( group = `samples` header = `Binding` sub = `Model setSizeLimit for Large Tables (A)` keywords = `combobox jsonmodel size limit large itab 100 entries` path = `src/01` app = `z2ui5_cl_smp_app_071` )
-      ( group = `samples` header = `Binding` sub = `Single Table Cell (tab_index)` keywords = `cell input internal table row field level` path = `src/01` app = `z2ui5_cl_smp_app_144` )
-      ( group = `samples` header = `Binding` sub = `Structure Fields and INCLUDEs` keywords = `structure component include flat form level` path = `src/01` app = `z2ui5_cl_smp_app_166` )
-      ( group = `samples` header = `Binding` sub = `Types for Integer, Decimal, Date and Time` keywords = `type conversion sum amount number field` path = `src/01` app = `z2ui5_cl_smp_app_047` )
-      ( group = `samples` header = `Browser` sub = `Copy to Clipboard (A)` keywords = `clipboard paste copy text area` path = `src/01` app = `z2ui5_cl_smp_app_325` )
-      ( group = `samples` header = `Browser` sub = `Local and Session Storage (A,C)` keywords = `localstorage sessionstorage persist store_data offline` path = `src/01` app = `z2ui5_cl_smp_app_327` )
-      ( group = `samples` header = `Browser` sub = `Logout from the Client (A)` keywords = `logoff signout icf session end fiori launchpad` path = `src/01` app = `z2ui5_cl_smp_app_361` )
-      ( group = `samples` header = `Browser` sub = `Open a URL in a New Tab (A)` keywords = `url window open_new_tab link target` path = `src/01` app = `z2ui5_cl_smp_app_073` )
-      ( group = `samples` header = `Browser` sub = `Open Mail, Phone and SMS Links (A)` keywords = `mailto tel sms urlhelper redirect native link` path = `src/01` app = `z2ui5_cl_smp_app_316` )
-      ( group = `samples` header = `Browser` sub = `Reload the Page (A)` keywords = `reload refresh restart location_reload url` path = `src/01` app = `z2ui5_cl_smp_app_492` )
-      ( group = `samples` header = `Browser` sub = `Set the Tab Favicon (A)` keywords = `favicon icon tab image data uri` path = `src/01` app = `z2ui5_cl_smp_app_491` )
-      ( group = `samples` header = `Browser` sub = `Set the Tab Title (A)` keywords = `document.title tab caption headline set_title` path = `src/01` app = `z2ui5_cl_smp_app_125` )
-      ( group = `samples` header = `Browser` sub = `Soft Keyboard Mode on Mobile (A)` keywords = `mobile numeric keypad keyboard_set_mode phone input` path = `src/01` app = `z2ui5_cl_smp_app_352` )
-      ( group = `samples` header = `Control Behaviour` sub = `Expand a Panel by ID (setExpanded) (A)` keywords = `panel collapse expand setexpanded control_by_id whitelisted` path = `src/01` app = `z2ui5_cl_smp_app_448` )
-      ( group = `samples` header = `Control Behaviour` sub = `MultiInput with Tokens (C)` keywords = `multiinput token tokens suggestion custom control` path = `src/01` app = `z2ui5_cl_smp_app_078` )
-      ( group = `samples` header = `Control Behaviour` sub = `Open the PDF Viewer by ID (A)` keywords = `pdfviewer pdf document viewer popup control_by_id whitelisted` path = `src/01` app = `z2ui5_cl_smp_app_449` )
-      ( group = `samples` header = `Control Behaviour` sub = `Switch NavContainer Page by ID (A)` keywords = `navcontainer icontabbar icontabheader page switch control_by_id whitelisted` path = `src/01` app = `z2ui5_cl_smp_app_088` )
-      ( group = `samples` header = `Control Behaviour` sub = `Wizard with Steps (A)` keywords = `wizard step branching discardprogress setnextstep control_by_id` path = `src/01` app = `z2ui5_cl_smp_app_202` )
-      ( group = `samples` header = `CSS` sub = `Color Table Cells from the Backend` keywords = `color background conditional formatting style data attribute` path = `src/01` app = `z2ui5_cl_smp_app_305` )
-      ( group = `samples` header = `CSS` sub = `FlexBox Layouts with Custom Classes` keywords = `flexbox layout responsive navigation tile panel` path = `src/01` app = `z2ui5_cl_smp_app_255` )
-      ( group = `samples` header = `CSS` sub = `Ship Your Own CSS with the View` keywords = `style stylesheet inline html class own design` path = `src/01` app = `z2ui5_cl_smp_app_050` )
-      ( group = `samples` header = `Device` sub = `Camera, Take Photos (C)` keywords = `camera photo picture webcam capture facing mode` path = `src/01` app = `z2ui5_cl_smp_app_306` )
-      ( group = `samples` header = `Device` sub = `Device Model: Phone, Tablet, Desktop (A)` keywords = `sap.ui.device responsive orientation resize media model` path = `src/01` app = `z2ui5_cl_smp_app_445` )
-      ( group = `samples` header = `Device` sub = `Frontend Info: UI5 Version, Theme, OS, Browser` keywords = `client info ui5 version theme os user agent device` path = `src/01` app = `z2ui5_cl_smp_app_122` )
-      ( group = `samples` header = `Device` sub = `Geolocation from the Browser (C)` keywords = `gps position latitude longitude altitude location` path = `src/01` app = `z2ui5_cl_smp_app_120` )
-      ( group = `samples` header = `Event` sub = `Control Objects in t_arg (FacetFilter)` keywords = `facetfilter filter object marshalling selected items` path = `src/01` app = `z2ui5_cl_smp_app_197` )
-      ( group = `samples` header = `Event` sub = `Extra Arguments with t_arg` keywords = `argument parameter payload event data fixed value` path = `src/01` app = `z2ui5_cl_smp_app_167` )
-      ( group = `samples` header = `Event` sub = `Keyboard Shortcuts, Ctrl+S (A)` keywords = `shortcut hotkey ctrl key combination keyboard_shortcut` path = `src/01` app = `z2ui5_cl_smp_app_471` )
-      ( group = `samples` header = `Event` sub = `Link with preventDefault (A)` keywords = `link href default action check_prevent_default` path = `src/01` app = `z2ui5_cl_smp_app_472` )
-      ( group = `samples` header = `File` sub = `Download to the Browser (A)` keywords = `export save base64 attachment xstring document` path = `src/01` app = `z2ui5_cl_smp_app_186` )
-      ( group = `samples` header = `File` sub = `Upload to the Backend (C)` keywords = `fileuploader base64 attachment import picture document` path = `src/01` app = `z2ui5_cl_smp_app_074` )
-      ( group = `samples` header = `Focus` sub = `Focus a Table Cell by Column and Row (A)` keywords = `table cell column row aggregation set_focus` path = `src/01` app = `z2ui5_cl_smp_app_421` )
-      ( group = `samples` header = `Focus` sub = `Jump to the Next Input on Enter (A)` keywords = `cursor enter tab next field form set_focus` path = `src/01` app = `z2ui5_cl_smp_app_189` )
-      ( group = `samples` header = `Focus` sub = `Set Focus and Select Text in an Input (A)` keywords = `cursor set_focus selection position textfield` path = `src/01` app = `z2ui5_cl_smp_app_133` )
-      ( group = `samples` header = `Formatter` sub = `ABAP Date and Time Strings (DATS/TIMS)` keywords = `dats tims conversion initial date 00000000 sy-datum` path = `src/01` app = `z2ui5_cl_smp_app_450` )
-      ( group = `samples` header = `Formatter` sub = `Date Object for the DatePicker` keywords = `datepicker datevalue javascript date object iso` path = `src/01` app = `z2ui5_cl_smp_app_457` )
-      ( group = `samples` header = `Formatter` sub = `Date Objects for the PlanningCalendar` keywords = `planningcalendar appointment javascript date object iso` path = `src/01` app = `z2ui5_cl_smp_app_456` )
-      ( group = `samples` header = `Formatter` sub = `Inline Icons in a Text` keywords = `icon glyph placeholder text status expandinlineicons` path = `src/01` app = `z2ui5_cl_smp_app_466` )
-      ( group = `samples` header = `Formatter` sub = `When Not to Use One: Compute in ABAP` keywords = `no formatter computed backend thin frontend prepare` path = `src/01` app = `z2ui5_cl_smp_app_453` )
-      ( group = `samples` header = `Grid Table` sub = `Events on Cell Level` keywords = `cell enter row index event grid alv` path = `src/01` app = `z2ui5_cl_smp_app_160` )
-      ( group = `samples` header = `Grid Table` sub = `Full Example with sap.ui.table` keywords = `grid alv dynamicpage column row action currency search sort filter` path = `src/01` app = `z2ui5_cl_smp_app_070` )
-      ( group = `samples` header = `Grid Table` sub = `Keep Column Filters on Refresh (C)` keywords = `column filter reset refresh uitableext grid alv` path = `src/01` app = `z2ui5_cl_smp_app_143` )
-      ( group = `samples` header = `Hash`
-        sub = `App State, Bookmark and Share`
-        keywords = `app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state`
-        path = `src/01` app = `z2ui5_cl_smp_app_498` )
-      ( group = `samples` header = `Hash`
-        sub = `App-Owned Routing (#/detail)`
-        keywords = `routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback`
-        path = `src/01` app = `z2ui5_cl_smp_app_499` )
-      ( group = `samples` header = `Hash` sub = `Routing mode fresh` keywords = `routing mode fresh navigation restart new instance nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_468` )
-      ( group = `samples` header = `Hash` sub = `Routing mode keep` keywords = `routing mode keep navigation state preserved back nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_480` )
-      ( group = `samples` header = `List` sub = `Filter and Sort the Binding from ABAP (A)` keywords = `binding_call getbinding sorter filter follow_up_action` path = `src/01` app = `z2ui5_cl_smp_app_454` )
-      ( group = `samples` header = `List` sub = `Live Filter on the Client, No Roundtrip (A)` keywords = `binding_call live search client side no roundtrip filter` path = `src/01` app = `z2ui5_cl_smp_app_455` )
-      ( group = `samples` header = `List` sub = `StandardListItem, Highlight and Events` keywords = `sap.m.list standardlistitem highlight infostate press selection` path = `src/01` app = `z2ui5_cl_smp_app_048` )
-      ( group = `samples` header = `Menu` sub = `Full Path of the Selected Item (A)` keywords = `menuitem nested submenu textpath controller path` path = `src/01` app = `z2ui5_cl_smp_app_473` )
-      ( group = `samples` header = `Menu` sub = `Menu Button with core:require` keywords = `menubutton menuitem popover messagetoast require module` path = `src/01` app = `z2ui5_cl_smp_app_163` )
-      ( group = `samples` header = `Message` sub = `Message Model and MessageManager (C)` keywords = `messagemanager validation target field state central model` path = `src/01` app = `z2ui5_cl_smp_app_467` )
-      ( group = `samples` header = `Message` sub = `MessageBox for Any Data` keywords = `messagebox details table structure tree object reference escape limit action onclose` path = `src/01` app = `z2ui5_cl_smp_app_502` )
-      ( group = `samples` header = `Message` sub = `MessageBox from SY, BAPIRET2 or Exception` keywords = `t100 message class number exception cx_root error abend` path = `src/01` app = `z2ui5_cl_smp_app_008` )
-      ( group = `samples` header = `Message` sub = `MessageBox, Types and Custom Actions` keywords = `confirm warning error success information dialog action` path = `src/01` app = `z2ui5_cl_smp_app_382` )
-      ( group = `samples` header = `Message` sub = `MessagePopover URL Policy (A)` keywords = `url policy link security validator relative allow deny` path = `src/01` app = `z2ui5_cl_smp_app_474` )
-      ( group = `samples` header = `Message` sub = `MessageToast, Text and Duration` keywords = `toast notification duration position animation` path = `src/01` app = `z2ui5_cl_smp_app_381` )
-      ( group = `samples` header = `Message` sub = `MessageView and MessagePopover (A)` keywords = `messagepopover messageitem dialog grouped message list` path = `src/01` app = `z2ui5_cl_smp_app_452` )
-      ( group = `samples` header = `Navigation` sub = `Call and Leave Apps (nav_app_call)` keywords = `nav_app_call nav_app_leave sub app stack call back` path = `src/01` app = `z2ui5_cl_smp_app_024` )
-      ( group = `samples` header = `Navigation` sub = `Data Loss Protection on Leaving (A,C)` keywords = `dirty unsaved changes leave confirmation warning` path = `src/01` app = `z2ui5_cl_smp_app_279` )
-      ( group = `samples` header = `Navigation` sub = `Return Data and Events to the Caller` keywords = `r_data result get_app_prev return event payload` path = `src/01` app = `z2ui5_cl_smp_app_488` )
-      ( group = `samples` header = `Navigation` sub = `Uncaught Error and Error Popup` keywords = `exception dump error handling debugtool restart retry` path = `src/01` app = `z2ui5_cl_smp_app_464` )
-      ( group = `samples` header = `Nested View` sub = `Basic Example (nest_view_display)` keywords = `nest_view_display rerender model refresh sub view` path = `src/01` app = `z2ui5_cl_smp_app_065` )
-      ( group = `samples` header = `Nested View` sub = `Embed Another App's View` keywords = `sub app class embed instantiate another app rtti` path = `src/01` app = `z2ui5_cl_smp_app_104` )
-      ( group = `samples` header = `Nested View` sub = `Master-Detail with FlexibleColumnLayout` keywords = `fcl master detail list report two column split` path = `src/01` app = `z2ui5_cl_smp_app_097` )
-      ( group = `samples` header = `Nested View` sub = `Three Columns with FlexibleColumnLayout` keywords = `fcl three column detail detail deep navigation` path = `src/01` app = `z2ui5_cl_smp_app_098` )
-      ( group = `samples` header = `Popover` sub = `Basic Example with Placement` keywords = `placement anchor button confirm cancel popover_display` path = `src/01` app = `z2ui5_cl_smp_app_026` )
-      ( group = `samples` header = `Popover` sub = `Open from a Table Row` keywords = `list report dynamicpage row link details table` path = `src/01` app = `z2ui5_cl_smp_app_052` )
-      ( group = `samples` header = `Popover` sub = `Open Together with the View Build` keywords = `initial render one roundtrip anchor button` path = `src/01` app = `z2ui5_cl_smp_app_490` )
-      ( group = `samples` header = `Popover` sub = `QuickView Contact Card` keywords = `quickview contact card links grouped fields` path = `src/01` app = `z2ui5_cl_smp_app_109` )
-      ( group = `samples` header = `Popover` sub = `Select from a List` keywords = `list selection placement anchor` path = `src/01` app = `z2ui5_cl_smp_app_081` )
-      ( group = `samples` header = `Popover` sub = `Toggle by ID (toggleBy) (A)` keywords = `toggleby open close control_by_id whitelisted` path = `src/01` app = `z2ui5_cl_smp_app_465` )
-      ( group = `samples` header = `Popup` sub = `Dialog inside a Dialog` keywords = `nested stack popup in popup second dialog` path = `src/01` app = `z2ui5_cl_smp_app_161` )
-      ( group = `samples` header = `Popup` sub = `Element Binding to the Selected Row (A)` keywords = `element binding relative path aggregation dialog row` path = `src/01` app = `z2ui5_cl_smp_app_470` )
-      ( group = `samples` header = `Popup` sub = `Navigate between Dialogs (NavContainer) (A)` keywords = `navcontainer dialog pages back forward` path = `src/01` app = `z2ui5_cl_smp_app_170` )
-      ( group = `samples` header = `Popup` sub = `Value Help: Suggestions and F4 Dialog` keywords = `f4 search help suggestion input dialog select` path = `src/01` app = `z2ui5_cl_smp_app_009` )
-      ( group = `samples` header = `Popup` sub = `Ways to Open a Dialog (A)` keywords = `dialog sub app destroy rerender background view` path = `src/01` app = `z2ui5_cl_smp_app_012` )
-      ( group = `samples` header = `Scroll` sub = `Scroll a Control into View (A)` keywords = `scroll_into_view control id validation jump` path = `src/01` app = `z2ui5_cl_smp_app_363` )
-      ( group = `samples` header = `Scroll` sub = `Scroll to a Pixel Position (A)` keywords = `position pixel scroll_to restore refresh toolbar` path = `src/01` app = `z2ui5_cl_smp_app_362` )
-      ( group = `samples` header = `Table` sub = `Drag and Drop Rows (A)` keywords = `dnd dragdropinfo reorder rows move` path = `src/01` app = `z2ui5_cl_smp_app_459` )
-      ( group = `samples` header = `Table` sub = `Editable Cells, Add and Delete Rows` keywords = `edit input add row delete multiselect toolbar` path = `src/01` app = `z2ui5_cl_smp_app_011` )
-      ( group = `samples` header = `Table` sub = `Filter Rows in the Backend` keywords = `filter server side form growing where` path = `src/01` app = `z2ui5_cl_smp_app_045` )
-      ( group = `samples` header = `Table` sub = `Large Table with Growing and ScrollContainer` keywords = `growing 10000 rows sticky toolbar sort performance` path = `src/01` app = `z2ui5_cl_smp_app_006` )
-      ( group = `samples` header = `Table` sub = `Live Search with Parallel Requests` keywords = `live search parallel requests busy queue typing` path = `src/01` app = `z2ui5_cl_smp_app_059` )
-      ( group = `samples` header = `Table` sub = `Search in the Backend (SearchField)` keywords = `search go enter server side where` path = `src/01` app = `z2ui5_cl_smp_app_053` )
-      ( group = `samples` header = `Table` sub = `Selection Modes: Single and Multi Select` keywords = `selectionmode none single multi segmentedbutton checkbox` path = `src/01` app = `z2ui5_cl_smp_app_019` )
-      ( group = `samples` header = `Templating` sub = `Build Columns Dynamically (template:repeat)` keywords = `template repeat runtime generated columns if then else` path = `src/01` app = `z2ui5_cl_smp_app_173` )
-      ( group = `samples` header = `Templating` sub = `Dynamic Content in a Nested View` keywords = `template repeat runtime generated nested nest_view_display` path = `src/01` app = `z2ui5_cl_smp_app_176` )
-      ( group = `samples` header = `Timer` sub = `Progress Indicator during a Backend Call (A)` keywords = `progressindicator busy wait long running backend` path = `src/01` app = `z2ui5_cl_smp_app_064` )
-      ( group = `samples` header = `Timer` sub = `Refresh the View Every n Seconds (A)` keywords = `interval polling auto refresh follow_up_action seconds` path = `src/01` app = `z2ui5_cl_smp_app_028` )
-      ( group = `samples` header = `Tree` sub = `Drag and Drop Nodes (A,C)` keywords = `dnd move node hierarchy binding context` path = `src/01` app = `z2ui5_cl_smp_app_461` )
-      ( group = `samples` header = `Tree` sub = `Editable Nodes with CustomTreeItem (C)` keywords = `customtreeitem rename input binding write back` path = `src/01` app = `z2ui5_cl_smp_app_463` )
-      ( group = `samples` header = `Tree` sub = `Inside a Dialog (C)` keywords = `popup expand state hierarchy nodes` path = `src/01` app = `z2ui5_cl_smp_app_462` )
-      ( group = `samples` header = `Tree` sub = `Nested ABAP Table in a sap.m.Tree` keywords = `hierarchy nodes nested json items` path = `src/01` app = `z2ui5_cl_smp_app_460` ) ).
+    DATA temp13 TYPE z2ui5_cl_smp_app_000=>ty_t_tile.
+    DATA temp14 LIKE LINE OF temp13.
+    CLEAR temp13.
+    
+    temp14-group = `samples`.
+    temp14-header = `Basics I`.
+    temp14-sub = `Hello World, the Smallest App`.
+    temp14-keywords = `hello world smallest first app minimal start here template`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_493`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Basics II`.
+    temp14-sub = `Data Binding: Input and Button`.
+    temp14-keywords = `binding _bind model attribute value input button roundtrip messagebox serialize`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_494`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Basics III`.
+    temp14-sub = `Lifecycle: Init, Event, Navigated`.
+    temp14-keywords = `lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_495`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Basics IV`.
+    temp14-sub = `Events, Views and Roundtrips`.
+    temp14-keywords = `roundtrip restart second view uncaught error controller basics`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_004`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Basics V`.
+    temp14-sub = `The Developer Tools (Ctrl+F12)`.
+    temp14-keywords = `developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_496`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Basics VI`.
+    temp14-sub = `Unit Tests for the App Logic`.
+    temp14-keywords = `unit test abapunit testclasses assert testable logic method`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_503`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Binding`.
+    temp14-sub = `A View Built From RTTI, No Field Named`.
+    temp14-keywords = `rtti generic view runtime columns get_components describe_by_data no field name itab structure column cell binding`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_497`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Binding`.
+    temp14-sub = `Currency Amounts (sap.ui.model.type.Currency)`.
+    temp14-keywords = `amount decimals leading zeros number format`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_067`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Binding`.
+    temp14-sub = `Dynamic Table Typed at Runtime (RTTI)`.
+    temp14-keywords = `generic data reference create data ddic dynamic itab`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_061`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Binding`.
+    temp14-sub = `Expression Binding, Types and Composite Parts`.
+    temp14-keywords = `formatter parts conditional regexp visible enabled syntax`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_027`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Binding`.
+    temp14-sub = `Model setSizeLimit for Large Tables (A)`.
+    temp14-keywords = `combobox jsonmodel size limit large itab 100 entries`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_071`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Binding`.
+    temp14-sub = `Single Table Cell (tab_index)`.
+    temp14-keywords = `cell input internal table row field level`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_144`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Binding`.
+    temp14-sub = `Structure Fields and INCLUDEs`.
+    temp14-keywords = `structure component include flat form level`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_166`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Binding`.
+    temp14-sub = `Types for Integer, Decimal, Date and Time`.
+    temp14-keywords = `type conversion sum amount number field`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_047`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Browser`.
+    temp14-sub = `Copy to Clipboard (A)`.
+    temp14-keywords = `clipboard paste copy text area`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_325`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Browser`.
+    temp14-sub = `Local and Session Storage (A,C)`.
+    temp14-keywords = `localstorage sessionstorage persist store_data offline`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_327`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Browser`.
+    temp14-sub = `Logout from the Client (A)`.
+    temp14-keywords = `logoff signout icf session end fiori launchpad`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_361`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Browser`.
+    temp14-sub = `Open a URL in a New Tab (A)`.
+    temp14-keywords = `url window open_new_tab link target`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_073`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Browser`.
+    temp14-sub = `Open Mail, Phone and SMS Links (A)`.
+    temp14-keywords = `mailto tel sms urlhelper redirect native link`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_316`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Browser`.
+    temp14-sub = `Reload the Page (A)`.
+    temp14-keywords = `reload refresh restart location_reload url`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_492`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Browser`.
+    temp14-sub = `Set the Tab Favicon (A)`.
+    temp14-keywords = `favicon icon tab image data uri`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_491`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Browser`.
+    temp14-sub = `Set the Tab Title (A)`.
+    temp14-keywords = `document.title tab caption headline set_title`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_125`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Browser`.
+    temp14-sub = `Soft Keyboard Mode on Mobile (A)`.
+    temp14-keywords = `mobile numeric keypad keyboard_set_mode phone input`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_352`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Control Behaviour`.
+    temp14-sub = `Expand a Panel by ID (setExpanded) (A)`.
+    temp14-keywords = `panel collapse expand setexpanded control_by_id whitelisted`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_448`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Control Behaviour`.
+    temp14-sub = `MultiInput with Tokens (C)`.
+    temp14-keywords = `multiinput token tokens suggestion custom control`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_078`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Control Behaviour`.
+    temp14-sub = `Open the PDF Viewer by ID (A)`.
+    temp14-keywords = `pdfviewer pdf document viewer popup control_by_id whitelisted`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_449`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Control Behaviour`.
+    temp14-sub = `Switch NavContainer Page by ID (A)`.
+    temp14-keywords = `navcontainer icontabbar icontabheader page switch control_by_id whitelisted`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_088`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Control Behaviour`.
+    temp14-sub = `Wizard with Steps (A)`.
+    temp14-keywords = `wizard step branching discardprogress setnextstep control_by_id`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_202`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `CSS`.
+    temp14-sub = `Color Table Cells from the Backend`.
+    temp14-keywords = `color background conditional formatting style data attribute`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_305`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `CSS`.
+    temp14-sub = `FlexBox Layouts with Custom Classes`.
+    temp14-keywords = `flexbox layout responsive navigation tile panel`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_255`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `CSS`.
+    temp14-sub = `Ship Your Own CSS with the View`.
+    temp14-keywords = `style stylesheet inline html class own design`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_050`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Device`.
+    temp14-sub = `Camera, Take Photos (C)`.
+    temp14-keywords = `camera photo picture webcam capture facing mode`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_306`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Device`.
+    temp14-sub = `Device Model: Phone, Tablet, Desktop (A)`.
+    temp14-keywords = `sap.ui.device responsive orientation resize media model`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_445`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Device`.
+    temp14-sub = `Frontend Info: UI5 Version, Theme, OS, Browser`.
+    temp14-keywords = `client info ui5 version theme os user agent device`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_122`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Device`.
+    temp14-sub = `Geolocation from the Browser (C)`.
+    temp14-keywords = `gps position latitude longitude altitude location`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_120`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Event`.
+    temp14-sub = `Control Objects in t_arg (FacetFilter)`.
+    temp14-keywords = `facetfilter filter object marshalling selected items`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_197`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Event`.
+    temp14-sub = `Extra Arguments with t_arg`.
+    temp14-keywords = `argument parameter payload event data fixed value`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_167`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Event`.
+    temp14-sub = `Keyboard Shortcuts, Ctrl+S (A)`.
+    temp14-keywords = `shortcut hotkey ctrl key combination keyboard_shortcut`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_471`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Event`.
+    temp14-sub = `Link with preventDefault (A)`.
+    temp14-keywords = `link href default action check_prevent_default`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_472`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `File`.
+    temp14-sub = `Download to the Browser (A)`.
+    temp14-keywords = `export save base64 attachment xstring document`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_186`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `File`.
+    temp14-sub = `Upload to the Backend (C)`.
+    temp14-keywords = `fileuploader base64 attachment import picture document`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_074`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Focus`.
+    temp14-sub = `Focus a Table Cell by Column and Row (A)`.
+    temp14-keywords = `table cell column row aggregation set_focus`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_421`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Focus`.
+    temp14-sub = `Jump to the Next Input on Enter (A)`.
+    temp14-keywords = `cursor enter tab next field form set_focus`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_189`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Focus`.
+    temp14-sub = `Set Focus and Select Text in an Input (A)`.
+    temp14-keywords = `cursor set_focus selection position textfield`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_133`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Formatter`.
+    temp14-sub = `ABAP Date and Time Strings (DATS/TIMS)`.
+    temp14-keywords = `dats tims conversion initial date 00000000 sy-datum`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_450`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Formatter`.
+    temp14-sub = `Date Object for the DatePicker`.
+    temp14-keywords = `datepicker datevalue javascript date object iso`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_457`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Formatter`.
+    temp14-sub = `Date Objects for the PlanningCalendar`.
+    temp14-keywords = `planningcalendar appointment javascript date object iso`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_456`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Formatter`.
+    temp14-sub = `Inline Icons in a Text`.
+    temp14-keywords = `icon glyph placeholder text status expandinlineicons`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_466`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Formatter`.
+    temp14-sub = `When Not to Use One: Compute in ABAP`.
+    temp14-keywords = `no formatter computed backend thin frontend prepare`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_453`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Grid Table`.
+    temp14-sub = `Events on Cell Level`.
+    temp14-keywords = `cell enter row index event grid alv`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_160`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Grid Table`.
+    temp14-sub = `Full Example with sap.ui.table`.
+    temp14-keywords = `grid alv dynamicpage column row action currency search sort filter`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_070`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Grid Table`.
+    temp14-sub = `Keep Column Filters on Refresh (C)`.
+    temp14-keywords = `column filter reset refresh uitableext grid alv`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_143`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Hash`.
+    temp14-sub = `App State, Bookmark and Share`.
+    temp14-keywords = `app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_498`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Hash`.
+    temp14-sub = `App-Owned Routing (#/detail)`.
+    temp14-keywords = `routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_499`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Hash`.
+    temp14-sub = `Routing mode fresh`.
+    temp14-keywords = `routing mode fresh navigation restart new instance nav_app_call`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_468`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Hash`.
+    temp14-sub = `Routing mode keep`.
+    temp14-keywords = `routing mode keep navigation state preserved back nav_app_call`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_480`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `List`.
+    temp14-sub = `Filter and Sort the Binding from ABAP (A)`.
+    temp14-keywords = `binding_call getbinding sorter filter follow_up_action`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_454`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `List`.
+    temp14-sub = `Live Filter on the Client, No Roundtrip (A)`.
+    temp14-keywords = `binding_call live search client side no roundtrip filter`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_455`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `List`.
+    temp14-sub = `StandardListItem, Highlight and Events`.
+    temp14-keywords = `sap.m.list standardlistitem highlight infostate press selection`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_048`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Menu`.
+    temp14-sub = `Full Path of the Selected Item (A)`.
+    temp14-keywords = `menuitem nested submenu textpath controller path`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_473`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Menu`.
+    temp14-sub = `Menu Button with core:require`.
+    temp14-keywords = `menubutton menuitem popover messagetoast require module`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_163`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Message`.
+    temp14-sub = `Message Model and MessageManager (C)`.
+    temp14-keywords = `messagemanager validation target field state central model`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_467`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Message`.
+    temp14-sub = `MessageBox for Any Data`.
+    temp14-keywords = `messagebox details table structure tree object reference escape limit action onclose`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_502`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Message`.
+    temp14-sub = `MessageBox from SY, BAPIRET2 or Exception`.
+    temp14-keywords = `t100 message class number exception cx_root error abend`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_008`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Message`.
+    temp14-sub = `MessageBox, Types and Custom Actions`.
+    temp14-keywords = `confirm warning error success information dialog action`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_382`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Message`.
+    temp14-sub = `MessagePopover URL Policy (A)`.
+    temp14-keywords = `url policy link security validator relative allow deny`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_474`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Message`.
+    temp14-sub = `MessageToast, Text and Duration`.
+    temp14-keywords = `toast notification duration position animation`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_381`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Message`.
+    temp14-sub = `MessageView and MessagePopover (A)`.
+    temp14-keywords = `messagepopover messageitem dialog grouped message list`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_452`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Navigation`.
+    temp14-sub = `Call and Leave Apps (nav_app_call)`.
+    temp14-keywords = `nav_app_call nav_app_leave sub app stack call back`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_024`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Navigation`.
+    temp14-sub = `Data Loss Protection on Leaving (A,C)`.
+    temp14-keywords = `dirty unsaved changes leave confirmation warning`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_279`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Navigation`.
+    temp14-sub = `Return Data and Events to the Caller`.
+    temp14-keywords = `r_data result get_app_prev return event payload`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_488`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Navigation`.
+    temp14-sub = `Uncaught Error and Error Popup`.
+    temp14-keywords = `exception dump error handling debugtool restart retry`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_464`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Nested View`.
+    temp14-sub = `Basic Example (nest_view_display)`.
+    temp14-keywords = `nest_view_display rerender model refresh sub view`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_065`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Nested View`.
+    temp14-sub = `Embed Another App's View`.
+    temp14-keywords = `sub app class embed instantiate another app rtti`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_104`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Nested View`.
+    temp14-sub = `Master-Detail with FlexibleColumnLayout`.
+    temp14-keywords = `fcl master detail list report two column split`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_097`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Nested View`.
+    temp14-sub = `Three Columns with FlexibleColumnLayout`.
+    temp14-keywords = `fcl three column detail detail deep navigation`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_098`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popover`.
+    temp14-sub = `Basic Example with Placement`.
+    temp14-keywords = `placement anchor button confirm cancel popover_display`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_026`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popover`.
+    temp14-sub = `Open from a Table Row`.
+    temp14-keywords = `list report dynamicpage row link details table`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_052`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popover`.
+    temp14-sub = `Open Together with the View Build`.
+    temp14-keywords = `initial render one roundtrip anchor button`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_490`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popover`.
+    temp14-sub = `QuickView Contact Card`.
+    temp14-keywords = `quickview contact card links grouped fields`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_109`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popover`.
+    temp14-sub = `Select from a List`.
+    temp14-keywords = `list selection placement anchor`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_081`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popover`.
+    temp14-sub = `Toggle by ID (toggleBy) (A)`.
+    temp14-keywords = `toggleby open close control_by_id whitelisted`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_465`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popup`.
+    temp14-sub = `Dialog inside a Dialog`.
+    temp14-keywords = `nested stack popup in popup second dialog`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_161`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popup`.
+    temp14-sub = `Element Binding to the Selected Row (A)`.
+    temp14-keywords = `element binding relative path aggregation dialog row`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_470`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popup`.
+    temp14-sub = `Navigate between Dialogs (NavContainer) (A)`.
+    temp14-keywords = `navcontainer dialog pages back forward`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_170`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popup`.
+    temp14-sub = `Value Help: Suggestions and F4 Dialog`.
+    temp14-keywords = `f4 search help suggestion input dialog select`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_009`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Popup`.
+    temp14-sub = `Ways to Open a Dialog (A)`.
+    temp14-keywords = `dialog sub app destroy rerender background view`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_012`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Scroll`.
+    temp14-sub = `Scroll a Control into View (A)`.
+    temp14-keywords = `scroll_into_view control id validation jump`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_363`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Scroll`.
+    temp14-sub = `Scroll to a Pixel Position (A)`.
+    temp14-keywords = `position pixel scroll_to restore refresh toolbar`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_362`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Table`.
+    temp14-sub = `Drag and Drop Rows (A)`.
+    temp14-keywords = `dnd dragdropinfo reorder rows move`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_459`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Table`.
+    temp14-sub = `Editable Cells, Add and Delete Rows`.
+    temp14-keywords = `edit input add row delete multiselect toolbar`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_011`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Table`.
+    temp14-sub = `Filter Rows in the Backend`.
+    temp14-keywords = `filter server side form growing where`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_045`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Table`.
+    temp14-sub = `Large Table with Growing and ScrollContainer`.
+    temp14-keywords = `growing 10000 rows sticky toolbar sort performance`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_006`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Table`.
+    temp14-sub = `Live Search with Parallel Requests`.
+    temp14-keywords = `live search parallel requests busy queue typing`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_059`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Table`.
+    temp14-sub = `Search in the Backend (SearchField)`.
+    temp14-keywords = `search go enter server side where`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_053`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Table`.
+    temp14-sub = `Selection Modes: Single and Multi Select`.
+    temp14-keywords = `selectionmode none single multi segmentedbutton checkbox`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_019`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Templating`.
+    temp14-sub = `Build Columns Dynamically (template:repeat)`.
+    temp14-keywords = `template repeat runtime generated columns if then else`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_173`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Templating`.
+    temp14-sub = `Dynamic Content in a Nested View`.
+    temp14-keywords = `template repeat runtime generated nested nest_view_display`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_176`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Timer`.
+    temp14-sub = `Progress Indicator during a Backend Call (A)`.
+    temp14-keywords = `progressindicator busy wait long running backend`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_064`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Timer`.
+    temp14-sub = `Refresh the View Every n Seconds (A)`.
+    temp14-keywords = `interval polling auto refresh follow_up_action seconds`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_028`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Tree`.
+    temp14-sub = `Drag and Drop Nodes (A,C)`.
+    temp14-keywords = `dnd move node hierarchy binding context`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_461`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Tree`.
+    temp14-sub = `Editable Nodes with CustomTreeItem (C)`.
+    temp14-keywords = `customtreeitem rename input binding write back`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_463`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Tree`.
+    temp14-sub = `Inside a Dialog (C)`.
+    temp14-keywords = `popup expand state hierarchy nodes`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_462`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-group = `samples`.
+    temp14-header = `Tree`.
+    temp14-sub = `Nested ABAP Table in a sap.m.Tree`.
+    temp14-keywords = `hierarchy nodes nested json items`.
+    temp14-path = `src/01`.
+    temp14-app = `z2ui5_cl_smp_app_460`.
+    INSERT temp14 INTO TABLE temp13.
+    result = temp13.
 
   ENDMETHOD.
 
 
   METHOD catalog_filter.
+    DATA pattern TYPE string.
+    DATA tile LIKE LINE OF t_catalog.
 
     IF search IS INITIAL.
       result = t_catalog.
       RETURN.
     ENDIF.
 
-    DATA(pattern) = to_upper( search ).
-    LOOP AT t_catalog INTO DATA(tile).
+    
+    pattern = to_upper( search ).
+    
+    LOOP AT t_catalog INTO tile.
 
       IF to_upper( |{ tile-header } { tile-sub } { tile-keywords } { tile-app }| ) CS pattern.
         INSERT tile INTO TABLE result.
@@ -827,20 +1541,31 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD block_widths.
 
-    LOOP AT t_catalog INTO DATA(tile).
+    DATA tile LIKE LINE OF t_catalog.
+      DATA base TYPE string.
+      FIELD-SYMBOLS <block> TYPE z2ui5_cl_smp_app_000=>ty_s_block.
+        DATA temp15 TYPE z2ui5_cl_smp_app_000=>ty_s_block.
+      DATA width TYPE i.
+    LOOP AT t_catalog INTO tile.
 
-      DATA(base) = block_base( group  = tile-group
+      
+      base = block_base( group  = tile-group
                                header = tile-header ).
-      READ TABLE result ASSIGNING FIELD-SYMBOL(<block>)
+      
+      READ TABLE result ASSIGNING <block>
         WITH KEY group = tile-group
                  base  = base.
 
       IF sy-subrc <> 0.
-        INSERT VALUE #( group = tile-group
-                        base  = base ) INTO TABLE result ASSIGNING <block>.
+        
+        CLEAR temp15.
+        temp15-group = tile-group.
+        temp15-base = base.
+        INSERT temp15 INTO TABLE result ASSIGNING <block>.
       ENDIF.
 
-      DATA(width) = header_width( tile-header ).
+      
+      width = header_width( tile-header ).
 
       IF width > <block>-width.
         <block>-width = width.
@@ -854,17 +1579,29 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
   METHOD header_width.
 
     " estimated render width in 1/100 em, weighted per character class
-    DATA(off) = 0.
+    DATA off TYPE i.
+      DATA char TYPE string.
+      DATA temp16 TYPE i.
+    off = 0.
     WHILE strlen( header ) > off.
 
-      DATA(char) = substring( val = header
+      
+      char = substring( val = header
                               off = off
                               len = 1 ).
-      result = result + COND i( WHEN char CA `MW` THEN 95
-                                WHEN char CA `mw` THEN 80
-                                WHEN char CA `ijltfrI. -` THEN 35
-                                WHEN char CA `ABCDEFGHJKLNOPQRSTUVXYZ` THEN 75
-                                ELSE 55 ).
+      
+      IF char CA `MW`.
+        temp16 = 95.
+      ELSEIF char CA `mw`.
+        temp16 = 80.
+      ELSEIF char CA `ijltfrI. -`.
+        temp16 = 35.
+      ELSEIF char CA `ABCDEFGHJKLNOPQRSTUVXYZ`.
+        temp16 = 75.
+      ELSE.
+        temp16 = 55.
+      ENDIF.
+      result = result + temp16.
       off = off + 1.
 
     ENDWHILE.
@@ -873,12 +1610,36 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
 
   METHOD header_base.
+    DATA words TYPE STANDARD TABLE OF string WITH DEFAULT KEY.
+    DATA n TYPE i.
+    DATA temp17 LIKE LINE OF words.
+    DATA temp18 LIKE sy-tabix.
+    DATA temp9 LIKE LINE OF words.
+    DATA temp10 LIKE sy-tabix.
 
     result = header.
-    SPLIT header AT ` ` INTO TABLE DATA(words).
-    DATA(n) = lines( words ).
+    
+    SPLIT header AT ` ` INTO TABLE words.
+    
+    n = lines( words ).
 
-    IF n > 1 AND words[ n ] IS NOT INITIAL AND words[ n ] CO `IVXLCDM`.
+    
+    
+    temp18 = sy-tabix.
+    READ TABLE words INDEX n INTO temp17.
+    sy-tabix = temp18.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
+    
+    
+    temp10 = sy-tabix.
+    READ TABLE words INDEX n INTO temp9.
+    sy-tabix = temp10.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
+    IF n > 1 AND temp17 IS NOT INITIAL AND temp9 CO `IVXLCDM`.
 
       DELETE words INDEX n.
       result = concat_lines_of(
@@ -914,7 +1675,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     " one group to tell apart. With every sample in a single package it would
     " just repeat the page title, so it is left out.
     DATA first_group TYPE string.
-    LOOP AT t_catalog INTO DATA(tile).
+    DATA tile LIKE LINE OF t_catalog.
+    LOOP AT t_catalog INTO tile.
 
       IF sy-tabix = 1.
         first_group = tile-group.

@@ -27,7 +27,10 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(css) = `.navigationExamples .code \{`                    &&
+    DATA css TYPE string.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    css = `.navigationExamples .code \{`                    &&
                 `    margin: 0 5%;`                              &&
                 `    font-family: Consolas, Courier, monospace;` &&
                 `\}`                                              &&
@@ -68,7 +71,8 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
                 `    font-size: 0.875rem;`                       &&
                 `\}`.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -80,7 +84,8 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
     view->tag( n = `HTML` ns = `core`
         )->a( n = `content` v = `<style>` && css && `</style>` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - CSS - FlexBox Layouts with Custom Classes`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -165,7 +170,7 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `POPOVER` ).
+    IF client->check_on_event( `POPOVER` ) IS NOT INITIAL.
       popover_display( `hint_icon` ).
     ENDIF.
 
@@ -174,7 +179,8 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
@@ -195,9 +201,9 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

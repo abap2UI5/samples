@@ -19,7 +19,7 @@ CLASS z2ui5_cl_smp_app_473 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -28,7 +28,12 @@ CLASS z2ui5_cl_smp_app_473 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    DATA menu_selected TYPE string.
+    DATA menu TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -36,7 +41,8 @@ CLASS z2ui5_cl_smp_app_473 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Menu - Full Path of the Selected Item`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -55,14 +61,19 @@ CLASS z2ui5_cl_smp_app_473 IMPLEMENTATION.
     " the item's breadcrumb is resolved on the client and substituted into the
     " toast template ({0}); an argument starting with $ is a client-side
     " expression, everything else travels as a plain string
-    DATA(menu_selected) = client->follow_up_action(
+    
+    CLEAR temp1.
+    INSERT `MESSAGE_TOAST` INTO TABLE temp1.
+    INSERT `show` INTO TABLE temp1.
+    INSERT `Action triggered on item: {0}` INTO TABLE temp1.
+    INSERT `$controller.textPath(${$parameters>/item})` INTO TABLE temp1.
+    
+    menu_selected = client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-control_global
-        t_arg = VALUE #( ( `MESSAGE_TOAST` )
-                         ( `show` )
-                         ( `Action triggered on item: {0}` )
-                         ( `$controller.textPath(${$parameters>/item})` ) ) ).
+        t_arg = temp1 ).
 
-    DATA(menu) = page->ele( `HBox`
+    
+    menu = page->ele( `HBox`
         )->a( n = `class` v = `sapUiSmallMargin`
         )->ele( `MenuButton`
             )->a( n = `text` v = `Actions`

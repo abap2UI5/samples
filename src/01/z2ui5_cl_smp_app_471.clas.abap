@@ -10,7 +10,7 @@ CLASS z2ui5_cl_smp_app_471 DEFINITION PUBLIC.
       BEGIN OF ty_s_log,
         entry TYPE string,
       END OF ty_s_log.
-    DATA t_log TYPE STANDARD TABLE OF ty_s_log WITH EMPTY KEY.
+    DATA t_log TYPE STANDARD TABLE OF ty_s_log WITH DEFAULT KEY.
     DATA registered TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -33,11 +33,11 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -54,19 +54,31 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE z2ui5_cl_smp_app_471=>ty_s_log.
+        DATA temp2 TYPE z2ui5_cl_smp_app_471=>ty_s_log.
+        DATA temp4 TYPE xsdboolean.
+        DATA temp3 LIKE t_log.
 
     CASE client->get_event( ).
 
       WHEN `SAVE`.
-        INSERT VALUE #( entry = `Ctrl+S - save triggered` ) INTO TABLE t_log.
+        
+        CLEAR temp1.
+        temp1-entry = `Ctrl+S - save triggered`.
+        INSERT temp1 INTO TABLE t_log.
         client->message_toast_display( `Ctrl+S: save triggered` ).
 
       WHEN `DELETE`.
-        INSERT VALUE #( entry = `Ctrl+D - delete triggered` ) INTO TABLE t_log.
+        
+        CLEAR temp2.
+        temp2-entry = `Ctrl+D - delete triggered`.
+        INSERT temp2 INTO TABLE t_log.
         client->message_toast_display( `Ctrl+D: delete triggered` ).
 
       WHEN `TOGGLE_REGISTRATION`.
-        registered = xsdbool( registered = abap_false ).
+        
+        temp4 = boolc( registered = abap_false ).
+        registered = temp4.
 
         IF registered = abap_true.
           shortcuts_set( event_save = `SAVE` event_delete = `DELETE` ).
@@ -77,7 +89,9 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
         view_display( ).
 
       WHEN `CLEAR`.
-        t_log = VALUE #( ).
+        
+        CLEAR temp3.
+        t_log = temp3.
 
     ENDCASE.
 
@@ -91,20 +105,30 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
     " of the backend event it fires. Registering the same combination again
     " rebinds it, an empty event name removes it. The registry lives in the
     " frontend, so it survives every roundtrip until the app is left.
+    DATA temp4 TYPE string_table.
+    DATA temp6 TYPE string_table.
+    CLEAR temp4.
+    INSERT `Ctrl+S` INTO TABLE temp4.
+    INSERT event_save INTO TABLE temp4.
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-keyboard_shortcut
-                              t_arg = VALUE #( ( `Ctrl+S` )
-                                               ( event_save ) ) ).
+                              t_arg = temp4 ).
 
+    
+    CLEAR temp6.
+    INSERT `Ctrl+D` INTO TABLE temp6.
+    INSERT event_delete INTO TABLE temp6.
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-keyboard_shortcut
-                              t_arg = VALUE #( ( `Ctrl+D` )
-                                               ( event_delete ) ) ).
+                              t_arg = temp6 ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp8 TYPE string.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -112,7 +136,8 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Event - Keyboard Shortcuts, Ctrl+S`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -127,13 +152,17 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    
+    IF registered = abap_true.
+      temp8 = `Unregister the shortcuts`.
+    ELSE.
+      temp8 = `Register the shortcuts`.
+    ENDIF.
     page->ele( `HBox`
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `Button`
             )->a( n = `press` v = client->_event( `TOGGLE_REGISTRATION` )
-            )->a( n = `text`  v = COND #( WHEN registered = abap_true
-                            THEN `Unregister the shortcuts`
-                            ELSE `Register the shortcuts` )
+            )->a( n = `text`  v = temp8
             )->a( n = `icon`  v = `sap-icon://keyboard-and-mouse`
         )->tag( `Button`
             )->a( n = `press` v = client->_event( `SAVE` )

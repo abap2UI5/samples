@@ -17,8 +17,10 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       product  = `tomato`.
       quantity = `500`.
@@ -28,7 +30,8 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
       client->message_toast_display( |{ product } { quantity } - send to the server| ).
     ENDIF.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -36,7 +39,8 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - CSS - Ship Your Own CSS with the View`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

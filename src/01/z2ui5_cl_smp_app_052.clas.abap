@@ -15,7 +15,7 @@ CLASS z2ui5_cl_smp_app_052 DEFINITION PUBLIC.
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab.
-    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
 
     DATA mv_check_popover TYPE abap_bool.
     DATA mv_product TYPE string.
@@ -37,14 +37,17 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(lo_popover) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA lo_popover TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA popover TYPE REF TO z2ui5_cl_ui5_view_builder.
+    lo_popover = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
             )->a( n = `xmlns:f`    v = `sap.f`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    DATA(popover) = lo_popover->ele( `Popover`
+    
+    popover = lo_popover->ele( `Popover`
         )->a( n = `title`        v = |abap2UI5 - Popover - { mv_product }|
         )->a( n = `placement`    v = `Right`
         )->a( n = `contentWidth` v = `20rem` ).
@@ -83,7 +86,14 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA cont TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_cells TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -93,7 +103,8 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
             )->a( n = `xmlns:f`      v = `sap.f`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popover - Open from a Table Row`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -110,12 +121,15 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
     page = page->ele( n = `DynamicPage` ns = `f`
         )->a( n = `headerExpanded` b = abap_true ).
 
-    DATA(cont) = page->ele( n = `content` ns = `f` ).
-    DATA(tab) = cont->ele( `Table`
+    
+    cont = page->ele( n = `content` ns = `f` ).
+    
+    tab = cont->ele( `Table`
         )->a( n = `items` v = client->_bind( val = mt_table )
         )->a( n = `id`    v = `tab` ).
 
-    DATA(lo_columns) = tab->ele( `columns` ).
+    
+    lo_columns = tab->ele( `columns` ).
     lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Product` ).
@@ -132,11 +146,16 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
         )->tag( `Text`
             )->a( n = `text` v = `Quantity` ).
 
-    DATA(lo_cells) = tab->ele( `items`
+    
+    lo_cells = tab->ele( `items`
         )->ele( `ColumnListItem` ).
+    
+    CLEAR temp1.
+    INSERT `${$source>/id}` INTO TABLE temp1.
+    INSERT `${PRODUCT}` INTO TABLE temp1.
     lo_cells->tag( `Link`
         )->a( n = `text`  v = `{PRODUCT}`
-        )->a( n = `press` v = client->_event( val = `POPOVER_DETAIL` t_arg = VALUE #( ( `${$source>/id}` ) ( `${PRODUCT}` ) ) )
+        )->a( n = `press` v = client->_event( val = `POPOVER_DETAIL` t_arg = temp1 )
         )->a( n = `id`    v = `link` ).
     lo_cells->tag( `Text`
         )->a( n = `text` v = `{CREATE_DATE}` ).
@@ -156,12 +175,12 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       view_display( ).
       set_data( ).
       RETURN.
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -181,55 +200,299 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
   METHOD set_data.
 
-    mt_table = VALUE #(
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 ) ).
+    DATA temp3 LIKE mt_table.
+    DATA temp4 LIKE LINE OF temp3.
+    CLEAR temp3.
+    
+    temp4-product = `table`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Peter`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 400.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `chair`.
+    temp4-create_date = `01.01.2022`.
+    temp4-create_by = `James`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 123.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `sofa`.
+    temp4-create_date = `01.05.2021`.
+    temp4-create_by = `Simone`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 700.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `computer`.
+    temp4-create_date = `27.01.2023`.
+    temp4-create_by = `Theo`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 200.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `printer`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Hannah`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 90.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table2`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Julia`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 110.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Peter`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 400.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `chair`.
+    temp4-create_date = `01.01.2022`.
+    temp4-create_by = `James`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 123.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `sofa`.
+    temp4-create_date = `01.05.2021`.
+    temp4-create_by = `Simone`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 700.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `computer`.
+    temp4-create_date = `27.01.2023`.
+    temp4-create_by = `Theo`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 200.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `printer`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Hannah`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 90.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table2`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Julia`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 110.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Peter`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 400.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `chair`.
+    temp4-create_date = `01.01.2022`.
+    temp4-create_by = `James`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 123.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `sofa`.
+    temp4-create_date = `01.05.2021`.
+    temp4-create_by = `Simone`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 700.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `computer`.
+    temp4-create_date = `27.01.2023`.
+    temp4-create_by = `Theo`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 200.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `printer`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Hannah`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 90.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table2`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Julia`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 110.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Peter`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 400.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `chair`.
+    temp4-create_date = `01.01.2022`.
+    temp4-create_by = `James`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 123.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `sofa`.
+    temp4-create_date = `01.05.2021`.
+    temp4-create_by = `Simone`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 700.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `computer`.
+    temp4-create_date = `27.01.2023`.
+    temp4-create_by = `Theo`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 200.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `printer`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Hannah`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 90.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table2`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Julia`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 110.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Peter`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 400.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `chair`.
+    temp4-create_date = `01.01.2022`.
+    temp4-create_by = `James`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 123.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `sofa`.
+    temp4-create_date = `01.05.2021`.
+    temp4-create_by = `Simone`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 700.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `computer`.
+    temp4-create_date = `27.01.2023`.
+    temp4-create_by = `Theo`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 200.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `printer`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Hannah`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 90.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table2`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Julia`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 110.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Peter`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 400.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `chair`.
+    temp4-create_date = `01.01.2022`.
+    temp4-create_by = `James`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 123.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `sofa`.
+    temp4-create_date = `01.05.2021`.
+    temp4-create_by = `Simone`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 700.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `computer`.
+    temp4-create_date = `27.01.2023`.
+    temp4-create_by = `Theo`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 200.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `printer`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Hannah`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 90.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table2`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Julia`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 110.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Peter`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 400.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `chair`.
+    temp4-create_date = `01.01.2022`.
+    temp4-create_by = `James`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 123.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `sofa`.
+    temp4-create_date = `01.05.2021`.
+    temp4-create_by = `Simone`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 700.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `computer`.
+    temp4-create_date = `27.01.2023`.
+    temp4-create_by = `Theo`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 200.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `printer`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Hannah`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 90.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table2`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Julia`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 110.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Peter`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 400.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `chair`.
+    temp4-create_date = `01.01.2022`.
+    temp4-create_by = `James`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 123.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `sofa`.
+    temp4-create_date = `01.05.2021`.
+    temp4-create_by = `Simone`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 700.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `computer`.
+    temp4-create_date = `27.01.2023`.
+    temp4-create_by = `Theo`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 200.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `printer`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Hannah`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 90.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `table2`.
+    temp4-create_date = `01.01.2023`.
+    temp4-create_by = `Julia`.
+    temp4-storage_location = `AREA_001`.
+    temp4-quantity = 110.
+    INSERT temp4 INTO TABLE temp3.
+    mt_table = temp3.
 
   ENDMETHOD.
 

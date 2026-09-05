@@ -21,7 +21,7 @@ CLASS z2ui5_cl_smp_app_449 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -31,15 +31,19 @@ CLASS z2ui5_cl_smp_app_449 IMPLEMENTATION.
 
 
   METHOD on_event.
+      DATA temp1 TYPE string_table.
 
     IF client->get_event( ) = `OPEN`.
       " open the popup-mode PDFViewer via the whitelisted open method -
       " the viewer brings its own dialog and close button.
       " t_arg is positional: id, method (the view defaults to cs_view-main
       " and can be omitted for a main-view control)
+      
+      CLEAR temp1.
+      INSERT `demoPdf` INTO TABLE temp1.
+      INSERT `open` INTO TABLE temp1.
       client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                                t_arg = VALUE #( ( `demoPdf` )
-                                                 ( `open` ) ) ).
+                                t_arg = temp1 ).
     ENDIF.
 
   ENDMETHOD.
@@ -47,7 +51,9 @@ CLASS z2ui5_cl_smp_app_449 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -55,7 +61,8 @@ CLASS z2ui5_cl_smp_app_449 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Control Behaviour - Open the PDF Viewer by ID`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

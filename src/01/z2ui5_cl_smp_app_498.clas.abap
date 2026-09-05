@@ -41,7 +41,7 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       " keep the current app state's id in the URL from the first render on -
       " the framework re-asserts it on every response, so the address bar
       " tracks every later roundtrip too. check_on_init implies
@@ -49,10 +49,10 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
       client->app_state_set_active( ).
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -61,7 +61,10 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -69,7 +72,8 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - App State, Bookmark and Share`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -83,7 +87,8 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+    
+    form = page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `The state a link can carry`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form` ).
@@ -129,6 +134,7 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE string_table.
 
     CASE client->get_event( ).
 
@@ -142,8 +148,11 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
         " Copying is then just the generic clipboard action; the same string
         " could go into a mail or a QR code
         share_link = client->app_state_get_href( ).
+        
+        CLEAR temp1.
+        INSERT share_link INTO TABLE temp1.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-clipboard_copy
-                                  t_arg = VALUE #( ( share_link ) ) ).
+                                  t_arg = temp1 ).
         client->message_toast_display( `link copied - open it anywhere` ).
 
     ENDCASE.

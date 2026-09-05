@@ -16,7 +16,7 @@ CLASS z2ui5_cl_smp_app_497 DEFINITION PUBLIC.
 
     " the only place in this app that names a field - add one here and it
     " appears on the screen, because the view below is derived from this type
-    DATA rows TYPE STANDARD TABLE OF ty_s_flight WITH EMPTY KEY.
+    DATA rows TYPE STANDARD TABLE OF ty_s_flight WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -38,10 +38,10 @@ CLASS z2ui5_cl_smp_app_497 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       set_view( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       set_view( ).
     ENDIF.
 
@@ -49,14 +49,17 @@ CLASS z2ui5_cl_smp_app_497 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - A View Built From RTTI`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -80,18 +83,28 @@ CLASS z2ui5_cl_smp_app_497 IMPLEMENTATION.
 
   METHOD render_any.
 
-    DATA(comps) = CAST cl_abap_structdescr(
-                      CAST cl_abap_tabledescr(
-                          cl_abap_typedescr=>describe_by_data( tab )
-                        )->get_table_line_type( ) )->get_components( ).
+    DATA temp1 TYPE REF TO cl_abap_structdescr.
+    DATA temp2 TYPE REF TO cl_abap_tabledescr.
+    DATA comps TYPE abap_component_tab.
+    DATA ui_table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA comp LIKE LINE OF comps.
+    DATA cells TYPE REF TO z2ui5_cl_ui5_view_builder.
+    temp2 ?= cl_abap_typedescr=>describe_by_data( tab ).
+    temp1 ?= temp2->get_table_line_type( ).
+    
+    comps = temp1->get_components( ).
 
-    DATA(ui_table) = parent->ele( `Table`
+    
+    ui_table = parent->ele( `Table`
         )->a( n = `items`      v = client->_bind( tab )
         )->a( n = `headerText` v = |{ lines( tab ) } rows, { lines( comps ) } columns| ).
 
     " one column per component - discovered, not declared
-    DATA(columns) = ui_table->ele( `columns` ).
-    LOOP AT comps INTO DATA(comp).
+    
+    columns = ui_table->ele( `columns` ).
+    
+    LOOP AT comps INTO comp.
       columns->ele( `Column`
           )->ele( `header`
               )->tag( `Text`
@@ -99,7 +112,8 @@ CLASS z2ui5_cl_smp_app_497 IMPLEMENTATION.
     ENDLOOP.
 
     " one cell per component, bound by field name
-    DATA(cells) = ui_table->ele( `items`
+    
+    cells = ui_table->ele( `items`
         )->ele( `ColumnListItem`
             )->ele( `cells` ).
     LOOP AT comps INTO comp.
@@ -112,11 +126,35 @@ CLASS z2ui5_cl_smp_app_497 IMPLEMENTATION.
   METHOD model_init.
 
     " fill it however you like - a SELECT, a function module, an EML read
-    rows = VALUE #(
-        ( carrid = 'LH' connid = '0400' fldate = '20260825' price = '899.00' currency = 'EUR' )
-        ( carrid = 'LH' connid = '0402' fldate = '20260826' price = '915.00' currency = 'EUR' )
-        ( carrid = 'AA' connid = '0017' fldate = '20260827' price = '422.50' currency = 'USD' )
-        ( carrid = 'UA' connid = '0941' fldate = '20260828' price = '780.00' currency = 'USD' ) ).
+    DATA temp2 LIKE rows.
+    DATA temp3 LIKE LINE OF temp2.
+    CLEAR temp2.
+    
+    temp3-carrid = 'LH'.
+    temp3-connid = '0400'.
+    temp3-fldate = '20260825'.
+    temp3-price = '899.00'.
+    temp3-currency = 'EUR'.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-carrid = 'LH'.
+    temp3-connid = '0402'.
+    temp3-fldate = '20260826'.
+    temp3-price = '915.00'.
+    temp3-currency = 'EUR'.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-carrid = 'AA'.
+    temp3-connid = '0017'.
+    temp3-fldate = '20260827'.
+    temp3-price = '422.50'.
+    temp3-currency = 'USD'.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-carrid = 'UA'.
+    temp3-connid = '0941'.
+    temp3-fldate = '20260828'.
+    temp3-price = '780.00'.
+    temp3-currency = 'USD'.
+    INSERT temp3 INTO TABLE temp2.
+    rows = temp2.
 
   ENDMETHOD.
 
