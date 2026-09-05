@@ -1029,6 +1029,20 @@ By hand, because no script covers it:
   A `judged` line of zeroes, or `150 classes produced none`, is the earlier
   failure repeating itself — and now it says so instead of printing
   "Success! No findings detected."
+
+  **The seven that produce none are one shape, and they are these seven**
+  (measured 2026-09-04): `117`, `131`, `185`, `191`, `195`, `211`, `338` — all
+  in `src/00/98` ("testing"), all the same "main app calling subapps" scaffold.
+  Each builds a page, keeps the handle in an instance attribute, creates the
+  sub-app with `CREATE OBJECT mo_app TYPE (t002->class)` and hands the handle
+  over through ``CALL METHOD mo_app->(`SET_APP_DATA`)``; the sub-app builds into
+  it and a dynamic ``ASSIGN mo_app->(`MV_VIEW_DISPLAY`)`` decides when to
+  display. The linter resolves each builder statement against the handle it is
+  written on, so a handle that leaves the class through a dynamic call is
+  unfollowable — by design, not by oversight, and nothing in `src/01` does it.
+  Written out so the next run can tell **the same seven** from *seven different
+  ones*: a name appearing here that is not on this list is a sample that lost
+  its view, which is the failure the count exists to catch.
 - **The two README badges** (`.github/badges/abap2ui5.json` and
   `.github/badges/check-abap2ui5.json`, shields.io endpoint files) carry the
   same statement, split along what they mean: *abap2UI5 | 150 apps · 173 views
