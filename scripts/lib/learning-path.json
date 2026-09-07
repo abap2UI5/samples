@@ -21,7 +21,7 @@
   {
    "id": "start",
    "title": "Start here",
-   "blurb": "Five apps in reading order. One class, one view, one roundtrip - the shape every other sample in this repository grows from, plus the developer tools you will open when something does not render.",
+   "blurb": "The ones to read first, in order. One class, one view, one roundtrip - the shape every other sample in this repository grows from, plus the developer tools you will open when something does not render.",
    "categories": [
     "Basics"
    ]
