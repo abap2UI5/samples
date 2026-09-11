@@ -33,9 +33,12 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { ROOT, scanSamples } from './lib/scan-samples.mjs';
+import { loadLearningPath } from './lib/learning-path.mjs';
+import { MARKERS } from './lib/markers.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(ROOT, 'catalogue.json');
+
 const CHECK = process.argv.includes('--check');
 
 const { areas } = scanSamples();
@@ -47,43 +50,17 @@ const tiles = areas['01'];
  * reader meets the browser API before they have bound a field. The order is a
  * teaching decision and lives in that file and nowhere else.
  *
- * The three rules below used to be `npm run check:overview`, in the generator
- * behind the GitHub Pages overview page. That page is gone (the catalogue is
- * published from the playground now), and the rules are not about a page:
- * every one of them is about the learning path staying attached to the tree.
- * All three failures are silent otherwise - a new category simply falls off
- * the path, a renamed one leaves a stage pointing at nothing - so they moved
- * here, to the generator that publishes `stage` to every consumer. */
-const { stages } = JSON.parse(
-  fs.readFileSync(path.join(HERE, 'lib', 'learning-path.json'), 'utf8'),
-);
-
+ * The three rules that keep the path attached to the tree used to be
+ * `npm run check:overview`, in the generator behind the GitHub Pages overview
+ * page, then lived here. They are in lib/learning-path.mjs now, because the
+ * overview app groups its rows by the same stages (generate-launchpad.mjs)
+ * and two generators reading the file separately could have disagreed about
+ * what an unplaced category means. */
 const fail = (message) => {
   console.error(`catalogue: ${message}`);
   process.exit(1);
 };
-
-const byCategory = new Set(tiles.map((tile) => tile.base));
-const stageOf = new Map();
-for (const stage of stages) {
-  for (const name of stage.categories) {
-    if (stageOf.has(name)) {
-      fail(`category "${name}" is in two stages (${stageOf.get(name)} and ${stage.id}) - scripts/lib/learning-path.json`);
-    }
-    stageOf.set(name, stage.id);
-    if (!byCategory.has(name)) {
-      fail(`stage "${stage.id}" names category "${name}", which no sample in src/01 carries.\n`
-        + "Drop it from scripts/lib/learning-path.json, or put the category back on a sample's DESCRIPT.");
-    }
-  }
-}
-const unplaced = [...byCategory].filter((name) => !stageOf.has(name));
-if (unplaced.length) {
-  fail(
-    `${unplaced.length} categor${unplaced.length === 1 ? 'y belongs' : 'ies belong'} to no stage of the learning path: ${unplaced.join(', ')}\n`
-    + `Add ${unplaced.length === 1 ? 'it' : 'them'} to scripts/lib/learning-path.json - a category with no stage is a sample nobody following the path can reach.`,
-  );
-}
+const { stages, stageOf } = loadLearningPath(tiles, fail);
 
 const data = {
   purpose: 'Machine-readable catalogue of the abap2UI5 samples in this repository, '
@@ -108,6 +85,12 @@ const data = {
       + 'Always use the full class name.',
     example: 'z2ui5_cl_smp_app_493 (here: Hello World) and z2ui5_cl_smps_app_493 '
       + '(samples-stack: a FilterBar with variant management) share the number 493 and have nothing to do with each other.',
+    /* The capability markers some titles end in. They come from the class's
+     * DESCRIPT (AGENTS.md section 12) and travel into every view of the
+     * catalogue - the overview app, SAMPLES.md, this file - so the legend
+     * travels with them: a reader of any of the three should not have to
+     * open AGENTS.md to learn what "(A)" on a title means. */
+    markers: MARKERS,
   },
   scope: 'One entry per sample in src/01 - the portable set every branch and build ships. '
     + 'The src/00 system area (experimental and testing apps, stripped from the 702 branch) '
@@ -122,7 +105,7 @@ const data = {
     class: tile.app,
     file: `${tile.path}/${tile.app}.clas.abap`,
     category: tile.base,
-    stage: stageOf.get(tile.base),
+    stage: stageOf(tile.base).id,
     title: tile.header,
     description: tile.sub,
     summary: tile.summary,

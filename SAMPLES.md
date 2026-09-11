@@ -25,14 +25,16 @@ is the whole sample.
 New to abap2UI5? Start at [Basics](#basics), then the
 [documentation](https://abap2ui5.github.io/docs/).
 
+**Markers on a title:** `(A)` performs a frontend action (client->follow_up_action( ) or a client-side interaction such as drag and drop); `(C)` uses an abap2UI5 custom control (the z2ui5.cc namespace); `(A,C)` both.
+
 ---
 
 ## The learning path — `src/01`
 
-The 104 samples the overview app lists: cloud-ready, downportable,
-plain OpenUI5 1.71. Each adds one idea. With the 6
-helper apps they call and the overview app itself, that is the **111
-ready-to-run apps** the README leads with.
+The **104 ready-to-run samples** the README leads with, and the
+overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
+one idea. With the 6 helper apps they call and the
+overview app itself, that is 111 apps on every branch.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 

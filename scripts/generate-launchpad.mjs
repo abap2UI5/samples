@@ -12,13 +12,19 @@
  * disagree about what this repository contains.
  *
  * Job (see AGENTS.md section 4): scan every demo app class under src/, derive
- * a tile from its abapGit <DESCRIPT> and the CTEXT of its subpackage (that is
- * scan-samples.js), then rewrite the result = VALUE #( ... ) block of
+ * a tile from its abapGit <DESCRIPT> and its comment lines (that is
+ * scan-samples.mjs), then rewrite the result = VALUE #( ... ) block of
  * get_catalog( ) in the overview app of the area (src/01 -> smp_app_000):
- *   - groups in folder-number order
- *   - tiles within a group sorted by header, then sub, then app
+ *   - one group per stage of the learning path (lib/learning-path.json), in
+ *     the order somebody learns them - the same stages catalogue.json
+ *     publishes and the sample catalogue page draws, so the app in the system
+ *     reads like the page and not like a flat list of 100 rows,
+ *   - the first tile of a group carries the stage's blurb (`intro`), which
+ *     the app renders once under the group title,
+ *   - tiles within a group sorted by header, then sub, then app.
  * Apps whose header is "ZZZ" are helper apps (called only by other apps) and
- * are skipped.
+ * are skipped. The `@summary` line of the overview app is written here too,
+ * with the live count, so it cannot say "149" while the tree holds 104.
  *
  * No dependencies. Run:  node scripts/generate-launchpad.mjs   (or: npm run launchpad)
  * Afterwards run abaplint (must be 0 issues).
@@ -28,6 +34,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { SRC, scanSamples } from './lib/scan-samples.mjs';
+import { loadLearningPath } from './lib/learning-path.mjs';
+import { markersLine } from './lib/markers.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
@@ -50,34 +58,34 @@ const TARGETS = {
   '01': path.join(SRC, 'z2ui5_cl_smp_app_000.clas.abap'),
 };
 
-// Controls-section tiles (the 01/03 demo-kit rebuilds) are shown without their
-// namespace prefix - the group heading already states it (sap.m, sap.uxap, …) -
-// and with a one-line, truncated description so the overview never wraps.
-// A rendering decision, which is why it lives here and not in the scan.
-const CONTROLS_SUB_MAX = 90;
-
-// keep only the entity name after the last dot: sap.m.Switch -> Switch
-function stripNamespace(header) {
-  return header.replace(/^.*\./, '');
-}
-
-// cut to CONTROLS_SUB_MAX, backing off to the last word boundary, + " ..."
-function truncateSub(sub) {
-  if (sub.length <= CONTROLS_SUB_MAX) return sub;
-  let cut = sub.slice(0, CONTROLS_SUB_MAX);
-  const space = cut.lastIndexOf(' ');
-  if (space > CONTROLS_SUB_MAX * 0.6) cut = cut.slice(0, space);
-  return `${cut.replace(/[\s.,;:]+$/, '')} ...`;
-}
-
 // --- 1. scan --------------------------------------------------------------
 const { areas: tiles, hidden } = scanSamples();
 
-for (const list of Object.values(tiles)) {
+/* --- 1b. the learning path decides the groups ------------------------------
+ * The scan groups a tile by the CTEXT of the package it lives in, which for
+ * src/01 is one package - "samples" - so the app used to render every sample
+ * under no heading at all, while SAMPLES.md and the catalogue page had six
+ * named stages and 24 categories to read by. The stage is the group here: the
+ * title the reader sees, in the teaching order, with the stage's blurb on the
+ * first tile so the app can say what the group is for. The category stays
+ * where it was, in the header - `Basics I`, `Table III` - which is what the
+ * blocks inside a group are made of (block_base in the app). */
+const fail = (message) => {
+  console.error(`launchpad: ${message}`);
+  process.exit(1);
+};
+{
+  const list = tiles['01'] ?? [];
+  const { stages, stageOf } = loadLearningPath(list, fail);
+  const rank = new Map(stages.map((stage, i) => [stage.id, i]));
+  for (const tile of list) tile.stage = stageOf(tile.base);
+  // a stable sort by stage keeps the scan's header/sub/app order inside a stage
+  list.sort((a, b) => rank.get(a.stage.id) - rank.get(b.stage.id));
+  let previous = null;
   for (const tile of list) {
-    if (!tile.group.startsWith('controls -')) continue;
-    tile.header = stripNamespace(tile.header);
-    tile.sub = truncateSub(tile.sub);
+    tile.group = tile.stage.title;
+    tile.intro = tile.stage !== previous ? tile.stage.blurb : '';
+    previous = tile.stage;
   }
 }
 
@@ -110,12 +118,14 @@ function rewrite(file, list) {
   const rows = list.map((t) => {
     const kw = t.keywords ? ` keywords = \`${t.keywords}\`` : '';
     const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\`${kw} path = \`${t.path}\` app = \`${t.app}\` )`;
-    if (one.length <= MAX_LINE) return one;
+    // the blurb is a paragraph, never on the one-line shape
+    if (one.length <= MAX_LINE && !t.intro) return one;
     const fieldIndent = `${indent}  `;
     return [
       `${indent}( group = \`${t.group}\` header = \`${t.header}\``,
       ...chunked('sub', t.sub, fieldIndent),
       ...(t.keywords ? chunked('keywords', t.keywords, fieldIndent) : []),
+      ...(t.intro ? chunked('intro', t.intro, fieldIndent) : []),
       `${fieldIndent}path = \`${t.path}\` app = \`${t.app}\` )`,
     ].join('\n');
   });
@@ -123,7 +133,26 @@ function rewrite(file, list) {
   rows[rows.length - 1] += ' ).';
 
   const block = `result = VALUE #(\n${rows.join('\n')}`;
-  const next = text.slice(0, open) + block + text.slice(close + ') ).'.length);
+  let next = text.slice(0, open) + block + text.slice(close + ') ).'.length);
+
+  /* The app's own @summary line - the sentence SAMPLES.md, catalogue.json and
+   * the sample catalogue page put under its title - carries the count of what
+   * it lists. Written here, from the list, because a hand-written number on
+   * the one class that is generated anyway is the number that goes stale. */
+  const summary = `" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other ${list.length} are reached from.`;
+  if (!/^" @summary .*$/m.test(next)) throw new Error(`no @summary line in ${file}`);
+  next = next.replace(/^" @summary .*$/m, summary);
+
+  /* And the legend of the capability markers some titles end in, rendered by
+   * the app under its list - one source (lib/markers.mjs) for every view of
+   * the catalogue. */
+  const legend = `    CONSTANTS c_legend TYPE string VALUE \`Markers on a title: ${markersLine()}\`.`;
+  if (legend.length > MAX_LINE) throw new Error('the marker legend no longer fits one ABAP line - shorten lib/markers.mjs');
+  if (!/^ {4}CONSTANTS c_legend TYPE string VALUE `.*`\.$/m.test(next)) {
+    throw new Error(`no c_legend constant to write the marker legend into in ${file}`);
+  }
+  next = next.replace(/^ {4}CONSTANTS c_legend TYPE string VALUE `.*`\.$/m, legend);
+
   if (!CHECK) { fs.writeFileSync(file, next); return; }
   if (next !== text) stale.push(path.relative(path.join(HERE, '..'), file));
 }
