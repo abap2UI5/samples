@@ -3,11 +3,11 @@
 
 # The sample catalogue
 
-Every app in this repository — 159 of them — with what it shows and a link
+Every app in this repository — 160 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
-**104 of them ship on every branch** — the portable set the README counts:
+**105 of them ship on every branch** — the portable set the README counts:
 `src/01` plus this overview app. The other 55 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
@@ -16,7 +16,7 @@ in the tree is invisible.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 97 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 98 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -31,10 +31,10 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path — `src/01`
 
-The **97 ready-to-run samples** the README leads with, and the
+The **98 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 6 helper apps they call and the
-overview app itself, that is 104 apps on every branch.
+overview app itself, that is 105 apps on every branch.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -107,6 +107,7 @@ overview app itself, that is 104 apps on every branch.
 |---|---|
 | Control Objects in t_arg (FacetFilter)<br>Passes whole control objects to the backend in t_arg: a FacetFilter's selected items arrive as data instead of being reconstructed by hand.<br><sub>facetfilter filter object marshalling selected items</sub><br><sub>docs: [cookbook/event_navigation/backend](https://abap2ui5.github.io/docs/cookbook/event_navigation/backend)</sub> | [`Z2UI5_CL_SMP_APP_197`](src/01/z2ui5_cl_smp_app_197.clas.abap) |
 | Extra Arguments with t_arg<br>Sends extra arguments with an event (t_arg), so a handler knows which row, which value or which fixed payload it was called for.<br><sub>argument parameter payload event data fixed value</sub><br><sub>docs: [cookbook/event_navigation/backend](https://abap2ui5.github.io/docs/cookbook/event_navigation/backend), [tutorials/walkthrough/step-6](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-6)</sub> | [`Z2UI5_CL_SMP_APP_167`](src/01/z2ui5_cl_smp_app_167.clas.abap) |
+| Keep the Last Keystroke with check_queue_last<br>Two identical liveChange wires side by side: the plain one drops every keystroke typed while a round-trip runs, the one registered with check_queue_last keeps the last of them, so the backend ends on what you typed.<br><sub>livechange keystroke queue busy roundtrip dropped event check_queue_last s_ctrl</sub> | [`Z2UI5_CL_SMP_APP_511`](src/01/z2ui5_cl_smp_app_511.clas.abap) |
 | Keyboard Shortcuts, Ctrl+S (A)<br>Binds keyboard shortcuts such as Ctrl+S to backend events, so the app answers a key combination the way a desktop program would.<br><sub>shortcut hotkey ctrl key combination keyboard_shortcut</sub><br><sub>docs: [cookbook/browser_interaction/keyboard_shortcuts](https://abap2ui5.github.io/docs/cookbook/browser_interaction/keyboard_shortcuts)</sub> | [`Z2UI5_CL_SMP_APP_471`](src/01/z2ui5_cl_smp_app_471.clas.abap) |
 | Link with preventDefault (A)<br>A Link whose default browser action is suppressed (check_prevent_default), so the app handles the click instead of the href.<br><sub>link href default action check_prevent_default</sub><br><sub>docs: [cookbook/event_navigation/frontend](https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend)</sub> | [`Z2UI5_CL_SMP_APP_472`](src/01/z2ui5_cl_smp_app_472.clas.abap) |
 

@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 97,
+  "samples": 98,
   "categories": 24,
   "stages": 6
  },
@@ -812,6 +812,27 @@
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/backend",
     "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-6"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_511",
+   "file": "src/01/z2ui5_cl_smp_app_511.clas.abap",
+   "category": "Event",
+   "stage": "talk",
+   "title": "Event",
+   "description": "Keep the Last Keystroke with check_queue_last",
+   "summary": "Two identical liveChange wires side by side: the plain one drops every keystroke typed while a round-trip runs, the one registered with check_queue_last keeps the last of them, so the backend ends on what you typed.",
+   "keywords": [
+    "livechange",
+    "keystroke",
+    "queue",
+    "busy",
+    "roundtrip",
+    "dropped",
+    "event",
+    "check_queue_last",
+    "s_ctrl"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_471",
