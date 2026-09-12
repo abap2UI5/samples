@@ -189,13 +189,13 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
       box->tag( `ObjectStatus`
           )->a( n = `title` v = `File`
-          )->a( n = `text`  v = upload_name ).
+          )->a( n = `text`  t = upload_name ).
       box->tag( `ObjectStatus`
           )->a( n = `title` v = `Size`
-          )->a( n = `text`  v = |{ upload_size } bytes|
+          )->a( n = `text`  t = |{ upload_size } bytes|
           )->a( n = `state` v = `Success` ).
       box->tag( `TextArea`
-          )->a( n = `value`    v = upload_text
+          )->a( n = `value`    t = upload_text
           )->a( n = `editable` b = abap_false
           )->a( n = `rows`     v = `8`
           )->a( n = `width`    v = `100%`

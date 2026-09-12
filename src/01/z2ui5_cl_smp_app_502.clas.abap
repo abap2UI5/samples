@@ -627,7 +627,7 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
 
     form->ele( `Toolbar`
         )->tag( `Title`
-            )->a( n = `text`  v = title
+            )->a( n = `text`  t = title
             )->a( n = `level` v = `H3`
             )->a( n = `class` v = `sapUiSmallMarginBegin sapUiSmallMarginTop sapUiTinyMarginBottom`
     )->end( ).
@@ -638,18 +638,18 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
   METHOD render_demo.
 
     form->tag( `Label`
-        )->a( n = `text` v = label ).
+        )->a( n = `text` t = label ).
 
     DATA(row) = form->ele( `HBox`
         )->a( n = `alignItems` v = `Center`
         )->a( n = `wrap`       v = `Wrap` ).
 
     row->tag( `Button`
-        )->a( n = `text`  v = text
+        )->a( n = `text`  t = text
         )->a( n = `press` v = press
         )->a( n = `width` v = `15rem`
         )->tag( `Text`
-            )->a( n = `text`  v = descr
+            )->a( n = `text`  t = descr
             )->a( n = `class` v = `sapUiSmallMarginBegin` ).
 
   ENDMETHOD.

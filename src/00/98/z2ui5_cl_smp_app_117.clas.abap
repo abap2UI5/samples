@@ -68,9 +68,9 @@ CLASS z2ui5_cl_smp_app_117 IMPLEMENTATION.
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
       lo_items->ele( `IconTabFilter`
-          )->a( n = `count` v = line->count
-          )->a( n = `text`  v = line->class
-          )->a( n = `key`   v = line->id ).
+          )->a( n = `count` t = line->count
+          )->a( n = `text`  t = line->class
+          )->a( n = `key`   t = line->id ).
       lo_items->ele( `IconTabSeparator` ).
     ENDLOOP.
 

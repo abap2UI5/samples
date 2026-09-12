@@ -128,7 +128,7 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
                 )->a( n = `text`  v = `left side button`
                 )->a( n = `icon`  v = `sap-icon://account`
             )->ele( `SegmentedButton`
-                )->a( n = `selectedKey` v = key
+                )->a( n = `selectedKey` t = key
                 )->ele( `items`
                     )->tag( `SegmentedButtonItem`
                         )->a( n = `icon` v = `sap-icon://accept`

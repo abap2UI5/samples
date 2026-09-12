@@ -77,7 +77,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
                     )->a( n = `icon`  v = `sap-icon://add`
                 )->tag( `Button`
                     )->a( n = `press` v = client->_event( `BUTTON_EDIT` )
-                    )->a( n = `text`  v = SWITCH #( check_editable_active WHEN abap_true THEN `display` ELSE `edit` )
+                    )->a( n = `text`  t = SWITCH #( check_editable_active WHEN abap_true THEN `display` ELSE `edit` )
                     )->a( n = `icon`  v = `sap-icon://edit`
             )->end(
         )->end( ).

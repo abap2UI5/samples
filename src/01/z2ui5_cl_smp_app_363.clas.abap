@@ -105,7 +105,7 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
       form->tag( `Label`
           )->a( n = `text` v = `spacer` ).
       form->tag( `Text`
-          )->a( n = `text` v = | spacer line { sy-index }| ).
+          )->a( n = `text` t = | spacer line { sy-index }| ).
     ENDDO.
 
     " Middle section (required)
@@ -120,7 +120,7 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
       form->tag( `Label`
           )->a( n = `text` v = `spacer` ).
       form->tag( `Text`
-          )->a( n = `text` v = | spacer line { sy-index }| ).
+          )->a( n = `text` t = | spacer line { sy-index }| ).
     ENDDO.
 
     " Bottom section

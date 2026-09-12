@@ -47,7 +47,7 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
     view->ele( `Popover`
         )->a( n = `title`     v = `Popover Title`
-        )->a( n = `placement` v = mv_placement
+        )->a( n = `placement` t = mv_placement
         )->ele( `footer`
             )->ele( `OverflowToolbar`
                 )->tag( `ToolbarSpacer`
@@ -79,7 +79,7 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
     view->ele( `Popover`
         )->a( n = `title`     v = `Popover Title`
-        )->a( n = `placement` v = mv_placement
+        )->a( n = `placement` t = mv_placement
         )->ele( `List`
             )->a( n = `items`           v = client->_bind( mt_tab )
             )->a( n = `mode`            v = `SingleSelectMaster`

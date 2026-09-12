@@ -77,12 +77,12 @@ CLASS z2ui5_cl_smp_app_211 IMPLEMENTATION.
       DATA(with_icon) = line->icon.
 
       lo_items->ele( `IconTabFilter`
-          )->a( n = `icon`      v = line->icon
+          )->a( n = `icon`      t = line->icon
           )->a( n = `iconColor` v = `Positive`
-          )->a( n = `showAll`   v = with_icon
-          )->a( n = `count`     v = line->count
-          )->a( n = `text`      v = text
-          )->a( n = `key`       v = line->id ).
+          )->a( n = `showAll`   t = with_icon
+          )->a( n = `count`     t = line->count
+          )->a( n = `text`      t = text
+          )->a( n = `key`       t = line->id ).
 
       lo_items->ele( `IconTabSeparator` ).
 

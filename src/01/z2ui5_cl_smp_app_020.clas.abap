@@ -65,15 +65,15 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
 
     dialog->ele( `VBox`
         )->tag( `Text`
-            )->a( n = `text` v = text
+            )->a( n = `text` t = text
     )->end(
         )->ele( `buttons`
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( cancel_event )
-                )->a( n = `text`  v = cancel_text
+                )->a( n = `text`  t = cancel_text
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( confirm_event )
-                )->a( n = `text`  v = confirm_text
+                )->a( n = `text`  t = confirm_text
                 )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).

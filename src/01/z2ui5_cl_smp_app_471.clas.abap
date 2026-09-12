@@ -131,7 +131,7 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `Button`
             )->a( n = `press` v = client->_event( `TOGGLE_REGISTRATION` )
-            )->a( n = `text`  v = COND #( WHEN registered = abap_true
+            )->a( n = `text`  t = COND #( WHEN registered = abap_true
                             THEN `Unregister the shortcuts`
                             ELSE `Register the shortcuts` )
             )->a( n = `icon`  v = `sap-icon://keyboard-and-mouse`

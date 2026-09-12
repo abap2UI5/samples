@@ -193,24 +193,24 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
       items->ele( `ColumnListItem`
           )->ele( `cells`
               )->tag( `Text`
-                  )->a( n = `text` v = |{ row->index }|
+                  )->a( n = `text` t = |{ row->index }|
               )->tag( `Input`
-                  )->a( n = `id`     v = |{ cs_column-title }_{ i }|
+                  )->a( n = `id`     t = |{ cs_column-title }_{ i }|
                   )->a( n = `value`  v = |\{{ path }/{ i }/TITLE\}|
                   )->a( n = `submit` v = client->_event( `NEXT` )
               )->tag( `Input`
-                  )->a( n = `id`     v = |{ cs_column-color }_{ i }|
+                  )->a( n = `id`     t = |{ cs_column-color }_{ i }|
                   )->a( n = `value`  v = |\{{ path }/{ i }/VALUE\}|
                   )->a( n = `submit` v = client->_event( `NEXT` )
               )->tag( `Input`
-                  )->a( n = `id`     v = |{ cs_column-info }_{ i }|
+                  )->a( n = `id`     t = |{ cs_column-info }_{ i }|
                   )->a( n = `value`  v = |\{{ path }/{ i }/INFO\}|
                   )->a( n = `submit` v = client->_event( `NEXT` )
               )->tag( `CheckBox`
-                  )->a( n = `id`       v = |{ cs_column-checkbox }_{ i }|
+                  )->a( n = `id`       t = |{ cs_column-checkbox }_{ i }|
                   )->a( n = `selected` v = |\{{ path }/{ i }/CHECKBOX\}|
               )->tag( `Input`
-                  )->a( n = `id`     v = |{ cs_column-description }_{ i }|
+                  )->a( n = `id`     t = |{ cs_column-description }_{ i }|
                   )->a( n = `value`  v = |\{{ path }/{ i }/DESCRIPTION\}|
                   )->a( n = `submit` v = client->_event( `NEXT` ) ).
 

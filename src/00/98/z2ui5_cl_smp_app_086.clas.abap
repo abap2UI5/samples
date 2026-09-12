@@ -49,7 +49,7 @@ CLASS z2ui5_cl_smp_app_086 IMPLEMENTATION.
                         )->a( n = `text` v = `Value set by previous app`
                     )->tag( `Input`
                         )->a( n = `editable` v = `false`
-                        )->a( n = `value`    v = ls_detail_supplier-suppliername ).
+                        )->a( n = `value`    t = ls_detail_supplier-suppliername ).
 
     client->view_display( view->stringify( ) ).
 

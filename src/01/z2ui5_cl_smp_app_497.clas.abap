@@ -87,7 +87,7 @@ CLASS z2ui5_cl_smp_app_497 IMPLEMENTATION.
 
     DATA(ui_table) = parent->ele( `Table`
         )->a( n = `items`      v = client->_bind( tab )
-        )->a( n = `headerText` v = |{ lines( tab ) } rows, { lines( comps ) } columns| ).
+        )->a( n = `headerText` t = |{ lines( tab ) } rows, { lines( comps ) } columns| ).
 
     " one column per component - discovered, not declared
     DATA(columns) = ui_table->ele( `columns` ).
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_smp_app_497 IMPLEMENTATION.
       columns->ele( `Column`
           )->ele( `header`
               )->tag( `Text`
-                  )->a( n = `text` v = comp-name ).
+                  )->a( n = `text` t = comp-name ).
     ENDLOOP.
 
     " one cell per component, bound by field name

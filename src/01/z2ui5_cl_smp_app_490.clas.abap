@@ -110,7 +110,7 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
                      `anchored to.`
             )->ele( `ObjectStatus`
                 )->a( n = `state` v = `Information`
-                )->a( n = `text`  v = |roundtrips so far: { counter }| ).
+                )->a( n = `text`  t = |roundtrips so far: { counter }| ).
 
     client->popover_display( xml = popover->stringify( ) by_id = `btnAnchor` ).
 

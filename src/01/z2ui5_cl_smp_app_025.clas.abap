@@ -107,11 +107,11 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
                         )->tag( `Label`
                             )->a( n = `text` v = `Input set by previous app`
                         )->tag( `Input`
-                            )->a( n = `value` v = input_previous_set
+                            )->a( n = `value` t = input_previous_set
                         )->tag( `Label`
                             )->a( n = `text` v = `Data of previous app`
                         )->tag( `Input`
-                            )->a( n = `value` v = input_previous
+                            )->a( n = `value` t = input_previous
                         )->tag( `Button`
                             )->a( n = `press` v = client->_event( `BUTTON_READ_PREVIOUS` )
                             )->a( n = `text`  v = `read`

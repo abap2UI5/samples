@@ -73,7 +73,7 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
     DATA(dialog) = popup->ele( `Dialog`
-        )->a( n = `title`      v = COND #( WHEN mv_edit = abap_true THEN `Edit Row` ELSE `Add Row` )
+        )->a( n = `title`      t = COND #( WHEN mv_edit = abap_true THEN `Edit Row` ELSE `Add Row` )
         )->a( n = `afterClose` v = client->_event( `POPUP_CLOSE` ) ).
 
     DATA(form) = dialog->ele( n = `SimpleForm` ns = `form`
