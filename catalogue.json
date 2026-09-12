@@ -1410,7 +1410,10 @@
     "action",
     "onclose"
    ],
-   "docs": []
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/translation_messages/logging",
+    "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
+   ]
   },
   {
    "class": "z2ui5_cl_smp_app_008",

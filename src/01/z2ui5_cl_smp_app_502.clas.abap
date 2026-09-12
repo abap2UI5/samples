@@ -1,5 +1,6 @@
 " @keywords messagebox details table structure tree object reference escape limit action onclose
 " @summary Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - plus the options of the box itself.
+" @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/logging https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
