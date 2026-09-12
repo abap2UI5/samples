@@ -1853,9 +1853,12 @@ come back only as the extra files a playground link needs to actually run.
 
 One picture per sample used to be photographed on every deploy by
 `scripts/generate-screenshots.mjs`, with the abap2UI5-linter's render harness.
-The script went with the page; the playground's deploy takes them now, from the
-same harness against the same `main`, so what a card shows is still what the
-render gate checks. A view the harness cannot render — the `z2ui5.cc`
+The script went with the page; the playground's deploy takes them now
+(`tools/build-thumbs.mjs` over there, since 2026-09-12 — for a week the
+sentence before this one described a plan), from the same harness against the
+same `main`, so what a card shows is still what the render gate checks. They
+are served at `/playground/samples/thumbs/<class>.png`, cached by content
+between deploys, and a view the harness cannot render — the `z2ui5.cc`
 custom-control samples, mostly — has no picture, which is normal rather than
 broken.
 
