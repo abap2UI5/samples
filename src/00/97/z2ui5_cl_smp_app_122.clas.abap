@@ -1,4 +1,4 @@
-" @keywords client info ui5 version theme os user agent device
+" @keywords client info ui5 version theme os user agent device cs_device browser orientation constants
 " @summary Asks the frontend what it is: UI5 version, theme, operating system, browser and user agent, in one call.
 " @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/info
 CLASS z2ui5_cl_smp_app_122 DEFINITION PUBLIC.
@@ -25,6 +25,9 @@ CLASS z2ui5_cl_smp_app_122 DEFINITION PUBLIC.
     DATA device_retina          TYPE abap_bool.
     DATA device_height          TYPE string.
     DATA device_width           TYPE string.
+    DATA browser_label          TYPE string.
+    DATA os_label               TYPE string.
+    DATA orientation_label      TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -63,6 +66,27 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
     ui5_gav                = ls_get-s_ui5-gav.
     ui5_build_timestamp    = ls_get-s_ui5-build_timestamp.
 
+    " the raw values are short codes (cr, ff, win, mac, ...). cs_device
+    " names every one of them, so an app branches on the constant rather
+    " than on a string it would have to know - here into a label per group
+    browser_label = SWITCH #( ls_get-s_device-browser-name
+                              WHEN z2ui5_if_client=>cs_device-browser-chrome  THEN `Google Chrome (or Chromium)`
+                              WHEN z2ui5_if_client=>cs_device-browser-firefox THEN `Mozilla Firefox`
+                              WHEN z2ui5_if_client=>cs_device-browser-safari  THEN `Apple Safari`
+                              WHEN z2ui5_if_client=>cs_device-browser-edge    THEN `Microsoft Edge`
+                              ELSE `not one cs_device-browser names` ).
+    os_label      = SWITCH #( ls_get-s_device-os-name
+                              WHEN z2ui5_if_client=>cs_device-os-windows   THEN `Windows`
+                              WHEN z2ui5_if_client=>cs_device-os-macintosh THEN `macOS`
+                              WHEN z2ui5_if_client=>cs_device-os-linux     THEN `Linux`
+                              WHEN z2ui5_if_client=>cs_device-os-ios       THEN `iOS`
+                              WHEN z2ui5_if_client=>cs_device-os-android   THEN `Android`
+                              ELSE `not one cs_device-os names` ).
+    orientation_label = SWITCH #( ls_get-s_device-orientation
+                                  WHEN z2ui5_if_client=>cs_device-orientation-portrait  THEN `portrait - one column would fit best`
+                                  WHEN z2ui5_if_client=>cs_device-orientation-landscape THEN `landscape - room for two columns`
+                                  ELSE `not one cs_device-orientation names` ).
+
   ENDMETHOD.
 
 
@@ -85,7 +109,8 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Reads frontend information from the client - UI5 version and theme plus device, ` &&
-                   `OS and browser details - and shows each value in a read-only form.`
+                   `OS and browser details - and shows each value in a read-only form. The three labels ` &&
+                   `are decided with the cs_device constants, the way an app would branch on them.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -124,6 +149,21 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
             )->tag( `Input`
                 )->a( n = `enabled` b = abap_false
                 )->a( n = `value`   v = client->_bind( device_orientation )
+            )->tag( `Label`
+                )->a( n = `text` v = `browser, by cs_device-browser`
+            )->tag( `Input`
+                )->a( n = `enabled` b = abap_false
+                )->a( n = `value`   v = client->_bind( browser_label )
+            )->tag( `Label`
+                )->a( n = `text` v = `os, by cs_device-os`
+            )->tag( `Input`
+                )->a( n = `enabled` b = abap_false
+                )->a( n = `value`   v = client->_bind( os_label )
+            )->tag( `Label`
+                )->a( n = `text` v = `orientation, by cs_device-orientation`
+            )->tag( `Input`
+                )->a( n = `enabled` b = abap_false
+                )->a( n = `value`   v = client->_bind( orientation_label )
             )->tag( `Label`
                 )->a( n = `text` v = `device_height`
             )->tag( `Input`

@@ -1,5 +1,5 @@
-" @keywords list report dynamicpage row link details table
-" @summary Opens a Popover from a table row - which row was pressed, and how its record reaches the popover.
+" @keywords list report dynamicpage row link details table popover slot cs_view focus control_by_id
+" @summary Opens a Popover from a table row - which row was pressed, how its record reaches the popover, and how a frontend action is aimed at the popover slot.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover
 CLASS z2ui5_cl_smp_app_052 DEFINITION PUBLIC.
 
@@ -72,11 +72,19 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
         )->ele( `OverflowToolbar`
             )->tag( `ToolbarSpacer`
             )->tag( `Button`
+                )->a( n = `id`    v = `btn_details`
                 )->a( n = `press` v = client->_event( `BUTTON_DETAILS` )
                 )->a( n = `text`  v = `details`
                 )->a( n = `type`  v = `Emphasized` ).
 
     client->popover_display( xml = lo_popover->stringify( ) by_id = id ).
+
+    " a frontend action aimed at the popover: the view parameter scopes the
+    " id lookup to the popover slot (cs_view-popover), so the focus lands on
+    " the button INSIDE the popover and Enter confirms it straight away
+    client->follow_up_action( val   = client->cs_event-control_by_id
+                              view  = client->cs_view-popover
+                              t_arg = VALUE #( ( `btn_details` ) ( `focus` ) ) ).
 
   ENDMETHOD.
 
@@ -102,7 +110,8 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `List report layout: a dynamic page with a table whose product links open a popover ` &&
-                   `showing details for the selected row.`
+                   `showing details for the selected row. After it opens, a follow_up_action scoped to ` &&
+                   `cs_view-popover puts the focus on its details button.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).

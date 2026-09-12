@@ -1,4 +1,4 @@
-" @keywords roundtrip restart second view uncaught error controller basics
+" @keywords roundtrip restart second view uncaught error controller basics check_on_navigated get
 " @summary What one event does to a running app: a second view replaces the first, the state comes back with it, and an uncaught error surfaces where you can see it.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle https://abap2ui5.github.io/docs/cookbook/expert_more/snippets https://abap2ui5.github.io/docs/tutorials/walkthrough/step-3
 CLASS z2ui5_cl_smp_app_004 DEFINITION PUBLIC.
@@ -55,7 +55,11 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
 
     CASE client->get_event( ).
       WHEN `BUTTON_ROUNDTRIP`.
-        client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
+        " get( )-check_on_navigated is the field behind the lifecycle method
+        " of the same name: on an event roundtrip it is false, which is why
+        " this branch is reached instead of the display branch above
+        client->message_box_display( |server-client roundtrip, method on_event of the abap controller was called | &&
+                                     |(get( )-check_on_navigated = { client->get( )-check_on_navigated })| ).
       WHEN `BUTTON_RESTART`.
         client->nav_app_leave( NEW z2ui5_cl_smp_app_004( ) ).
       WHEN `BUTTON_CHANGE_VIEW`.
