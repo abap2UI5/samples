@@ -21,7 +21,12 @@
  ],
  "naming": {
   "caveat": "Sample numbers are handed out per repository, and the three repositories reuse each other's numbers freely - there is no global number space. A number alone therefore names nothing: the class prefix is what says which repository's sample you mean. Always use the full class name.",
-  "example": "z2ui5_cl_smp_app_493 (here: Hello World) and z2ui5_cl_smps_app_493 (samples-stack: a FilterBar with variant management) share the number 493 and have nothing to do with each other."
+  "example": "z2ui5_cl_smp_app_493 (here: Hello World) and z2ui5_cl_smps_app_493 (samples-stack: a FilterBar with variant management) share the number 493 and have nothing to do with each other.",
+  "markers": {
+   "(A)": "performs a frontend action (client->follow_up_action( ) or a client-side interaction such as drag and drop)",
+   "(C)": "uses an abap2UI5 custom control (the z2ui5.cc namespace)",
+   "(A,C)": "both"
+  }
  },
  "scope": "One entry per sample in src/01 - the portable set every branch and build ships. The src/00 system area (experimental and testing apps, stripped from the 702 branch) and the hidden ZZZ helper classes are listed in SAMPLES.md only.",
  "learningPath": [
@@ -1405,7 +1410,10 @@
     "action",
     "onclose"
    ],
-   "docs": []
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/translation_messages/logging",
+    "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
+   ]
   },
   {
    "class": "z2ui5_cl_smp_app_008",

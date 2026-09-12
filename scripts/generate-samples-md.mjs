@@ -26,6 +26,7 @@
 import fs from 'fs';
 import path from 'path';
 import { ROOT, DOCS_SITE, scanSamples } from './lib/scan-samples.mjs';
+import { MARKERS } from './lib/markers.mjs';
 
 const OUT = path.join(ROOT, 'SAMPLES.md');
 
@@ -173,14 +174,16 @@ is the whole sample.
 New to abap2UI5? Start at [Basics](#basics), then the
 [documentation](https://abap2ui5.github.io/docs/).
 
+**Markers on a title:** ${Object.entries(MARKERS).map(([mark, meaning]) => `\`${mark}\` ${meaning}`).join('; ')}.
+
 ---
 
 ## The learning path — \`src/01\`
 
-The ${basics.length} samples the overview app lists: cloud-ready, downportable,
-plain OpenUI5 1.71. Each adds one idea. With the ${portable - basics.length - 1}
-helper apps they call and the overview app itself, that is the **${portable}
-ready-to-run apps** the README leads with.
+The **${basics.length} ready-to-run samples** the README leads with, and the
+overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
+one idea. With the ${portable - basics.length - 1} helper apps they call and the
+overview app itself, that is ${portable} apps on every branch.
 
 ${jumpTo}
 
@@ -233,19 +236,22 @@ for (const tile of [...basics, ...system, ...hidden]) {
 /* The README leads with the same number, and it is hand-written - so it is the
  * one figure in this repository that can go stale by somebody adding a sample.
  * It said "150+ ready-to-run apps" for a long time, which was a different count
- * of a different thing than any number on this page.
+ * of a different thing than any number on this page; then "111 ready-to-run
+ * apps", which counted the helper apps a reader cannot start on their own and
+ * the overview app itself. The number the front page promises is the samples:
+ * what the catalogue lists, what a reader clicks through.
  *
  * Regenerating cannot fix a file it does not write, so it fails instead and
  * says what to put there. Cheap, and it is the front page. */
 const README = path.join(ROOT, 'README.md');
-const claim = /(\d+) ready-to-run apps/.exec(fs.readFileSync(README, 'utf8'));
+const claim = /(\d+) ready-to-run samples/.exec(fs.readFileSync(README, 'utf8'));
 if (!claim) {
-  throw new Error('README.md no longer states "<n> ready-to-run apps" — this generator counts them, keep the phrase');
+  throw new Error('README.md no longer states "<n> ready-to-run samples" — this generator counts them, keep the phrase');
 }
-if (Number(claim[1]) !== portable) {
+if (Number(claim[1]) !== basics.length) {
   throw new Error(
-    `README.md says ${claim[1]} ready-to-run apps, the tree holds ${portable} `
-    + '(src/01 plus the overview app, the set that survives every build) — fix the README',
+    `README.md says ${claim[1]} ready-to-run samples, the tree holds ${basics.length} `
+    + '(the catalogued samples of src/01) — fix the README',
   );
 }
 

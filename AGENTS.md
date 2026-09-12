@@ -284,9 +284,12 @@ this one); it was removed when the extended samples were reorganised. Should it
 ever return, it comes back as a second `TARGETS` entry in
 `scripts/generate-launchpad.mjs` and a second row above.
 
-Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
-`view_display( )` that loops the catalog, emitting one link (`header` + optional
-`sub`) per tile, followed by a `sap-icon://source-code` **`core:Icon`** that
+Its shape: a `get_catalog( )` method returning a flat table of tiles - one
+`group` per stage of the learning path (`scripts/lib/learning-path.json`, the
+same six stages `catalogue.json` publishes and the catalogue page draws), the
+stage's blurb on the first tile of each group (`intro`), rendered once under
+the group title - and a `view_display( )` that loops the catalog, emitting one
+link (`header` + optional `sub`) per tile, followed by a `sap-icon://source-code` **`core:Icon`** that
 opens **that sample's ABAP class on GitHub** (`source_url( )` over the tile's
 `path`, wired client-side through `open_url( )` like the header buttons — a
 `Button` carries no `href`). It is deliberately an icon and not a transparent
@@ -458,12 +461,14 @@ the catalog correct. `on_event` also records the scroll position, which
 Within a group, `view_display( )` also inserts a **blank line between blocks**:
 consecutive tiles whose `header` shares the same base name form one block, and a
 new block (first row gets `sapUiSmallMarginTop`) starts when the base changes.
-The base comes from `block_base( )`: in the **controls section** (groups whose
-CTEXT starts with `controls -`) it is the header's **first letter**, so a blank
-line separates letter groups only (`Button`, `ButtonGroup` render together, then
-a gap before `Carousel`); everywhere else it is the header with a trailing Roman
-numeral removed (`header_base( )`), so `Binding`, `Binding I` … `Binding VIII`
-render as one block, then a gap, then the `Event` block, and so on. All links of
+The base is the header with a trailing Roman numeral removed
+(`header_base( )`) - the category - so `Binding`, `Binding I` … `Binding VIII`
+render as one block, then a gap, then the `Event` block, and so on. (A controls
+section that blocked by first letter existed while `src/01/03` did; it went
+with that package, §1.) Under the list the app prints the legend of the
+capability markers some titles end in (`c_legend`, written by the generator
+from `scripts/lib/markers.mjs` - the same legend SAMPLES.md and `catalogue.json`
+carry, §12). All links of
 a block share the same width — the estimated render width of the widest header in
 the block plus roughly one space, precomputed by `block_widths( )` /
 `header_width( )` — so the `sub` descriptions of a block line up exactly
@@ -594,22 +599,25 @@ npx abaplint           # must report 0 issues
 Both outputs come from `scripts/lib/scan-samples.mjs`, which implements every
 rule below — that is the file to edit when a rule changes, never the generated
 ABAP or markdown. The two generators only *render*: how a tile is written as an
-ABAP literal (`generate-launchpad.mjs`, including the controls-section
-truncation, which is about the overview not wrapping on a phone) and how it is
-written as a table row (`generate-samples-md.mjs`).
+ABAP literal (`generate-launchpad.mjs`, which also decides the groups: the
+stages of `scripts/lib/learning-path.json`, through
+`scripts/lib/learning-path.mjs`, the one reader `generate-catalogue.mjs` uses
+too) and how it is written as a table row (`generate-samples-md.mjs`).
 
 ### Tile schema
 
 One row per app; `group`, `header`, `sub` and `app` are always present,
-`keywords` only when the class carries the comment line:
+`keywords` only when the class carries the comment line, `intro` on the first
+tile of a group only:
 
 ```abap
-( group = `<subpackage CTEXT>` header = `<display title>` sub = `<short description>` keywords = `<extra search terms>` path = `<folder>` app = `<class name, lowercase>` )
+( group = `<stage title>` header = `<display title>` sub = `<short description>` keywords = `<extra search terms>` intro = `<stage blurb, first tile of the group only>` path = `<folder>` app = `<class name, lowercase>` )
 ```
 
 | Field    | Meaning / rule |
 |----------|----------------|
-| `group`  | **Exactly** the CTEXT of the subpackage the app physically lives in. Becomes the H3 section title (rendered once, when the group changes). |
+| `group`  | The **title of the learning-path stage** the tile's category belongs to (`scripts/lib/learning-path.json`; the category is the header without its Roman numeral). Becomes the H3 section title (rendered once, when the group changes). Generated - a category no stage names fails the generator rather than landing in a group of its own. |
+| `intro`  | The stage's blurb, on the **first** tile of each group and empty on every other; the app renders it once under the group title. Generated from the same file. |
 | `header` | Link text shown to the user. **Derived from the class short text** (see below). |
 | `sub`    | Short description shown next to the link. **Derived from the class short text** (see below). May be empty (`` `` ``) → then only the link is rendered. |
 | `keywords` | **Never rendered — search only.** Extra terms so a sample is found by words that do not fit into the 60 characters of its DESCRIPT (see below). **Required on every tile** — `npm run launchpad` refuses an area's overview app if one of its tiles has no `@keywords` line. Three readers depend on them and all three fail the same silent way (the sample stays listed, stays correct, and never comes up): the overview app's search box, `Ctrl+F` on SAMPLES.md, and an agent asking whether a sample for X exists. ZZZ helpers are exempt — a helper is reached BY another sample, never looked up. |
@@ -807,15 +815,16 @@ Rules for the `sub`:
    whose `<DESCRIPT>` header is `ZZZ` (e.g. `ZZZ - called by SubApp I`) is only
    ever called by another app and must **not** get a tile. It stays in the
    folder (and is checked by abaplint), just not shown in the overview.
-3. **`group` == subpackage CTEXT.** If you rename a subpackage's CTEXT, update
-   every tile's `group` to match. A tile's group must equal the CTEXT of the
-   folder the class physically lives in — never a neighbouring category.
-4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   so the on-screen order mirrors the tree; a nested subpackage forms its own
-   group directly after its parent slot. The samples live directly in `src/01`
-   today, so there is a single group ("samples") — and with only one group the
-   overview leaves the heading out entirely (§3). When a nested subpackage is
-   added, place its group at its numeric position rather than appending it.
+3. **`group` == the learning-path stage of the tile's category.** The stage
+   comes from `scripts/lib/learning-path.json` through the tile's category
+   (its header without the Roman numeral); a category that no stage names
+   fails the generator, the same rule `catalogue.json` is held to. Renaming a
+   stage's title there renames the group everywhere.
+4. **Groups follow the learning path.** Emit the stages in the order the file
+   lists them - the order somebody learns them in, which is a teaching
+   decision and not the alphabet - and put the stage's blurb on the first tile
+   of each group (`intro`). With only one group the overview leaves the
+   heading out entirely (§3).
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
@@ -1717,6 +1726,10 @@ new/edited samples stay consistent:
     client-side interaction like drag-and-drop. The ubiquitous back-button
     `client->_event_nav_app_leave( )` does **not** count.
   - `(A,C)` — both. Regenerate the overviews after changing any DESCRIPT (§4).
+  The legend a reader sees - under the overview app's list, in the preamble of
+  `SAMPLES.md`, as `naming.markers` in `catalogue.json` - is written once, in
+  `scripts/lib/markers.mjs`, and rendered by all three generators; change the
+  wording there, never in a rendered copy.
 
 - **A read-only info form disables its inputs** (`enabled = abap_false`) — do not
   leave display-only values in editable inputs (see `z2ui5_cl_smp_app_122`).
@@ -1840,9 +1853,12 @@ come back only as the extra files a playground link needs to actually run.
 
 One picture per sample used to be photographed on every deploy by
 `scripts/generate-screenshots.mjs`, with the abap2UI5-linter's render harness.
-The script went with the page; the playground's deploy takes them now, from the
-same harness against the same `main`, so what a card shows is still what the
-render gate checks. A view the harness cannot render — the `z2ui5.cc`
+The script went with the page; the playground's deploy takes them now
+(`tools/build-thumbs.mjs` over there, since 2026-09-12 — for a week the
+sentence before this one described a plan), from the same harness against the
+same `main`, so what a card shows is still what the render gate checks. They
+are served at `/playground/samples/thumbs/<class>.png`, cached by content
+between deploys, and a view the harness cannot render — the `z2ui5.cc`
 custom-control samples, mostly — has no picture, which is normal rather than
 broken.
 
