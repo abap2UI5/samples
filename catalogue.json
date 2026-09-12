@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 104,
+  "samples": 97,
   "categories": 24,
   "stages": 6
  },
@@ -136,30 +136,6 @@
     "check_on_init",
     "check_on_event",
     "check_on_navigated"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle",
-    "https://abap2ui5.github.io/docs/cookbook/expert_more/snippets",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-3"
-   ]
-  },
-  {
-   "class": "z2ui5_cl_smp_app_004",
-   "file": "src/01/z2ui5_cl_smp_app_004.clas.abap",
-   "category": "Basics",
-   "stage": "start",
-   "title": "Basics IV",
-   "description": "Events, Views and Roundtrips",
-   "summary": "What one event does to a running app: a second view replaces the first, the state comes back with it, and an uncaught error surfaces where you can see it.",
-   "keywords": [
-    "roundtrip",
-    "restart",
-    "second",
-    "view",
-    "uncaught",
-    "error",
-    "controller",
-    "basics"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle",
@@ -776,29 +752,6 @@
    ]
   },
   {
-   "class": "z2ui5_cl_smp_app_122",
-   "file": "src/01/z2ui5_cl_smp_app_122.clas.abap",
-   "category": "Device",
-   "stage": "beyond",
-   "title": "Device",
-   "description": "Frontend Info: UI5 Version, Theme, OS, Browser",
-   "summary": "Asks the frontend what it is: UI5 version, theme, operating system, browser and user agent, in one call.",
-   "keywords": [
-    "client",
-    "info",
-    "ui5",
-    "version",
-    "theme",
-    "os",
-    "user",
-    "agent",
-    "device"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/device_capabilities/info"
-   ]
-  },
-  {
    "class": "z2ui5_cl_smp_app_120",
    "file": "src/01/z2ui5_cl_smp_app_120.clas.abap",
    "category": "Device",
@@ -1170,90 +1123,6 @@
    ]
   },
   {
-   "class": "z2ui5_cl_smp_app_498",
-   "file": "src/01/z2ui5_cl_smp_app_498.clas.abap",
-   "category": "Hash",
-   "stage": "move",
-   "title": "Hash",
-   "description": "App State, Bookmark and Share",
-   "summary": "The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.",
-   "keywords": [
-    "app",
-    "state",
-    "url",
-    "bookmark",
-    "share",
-    "clipboard",
-    "copy",
-    "link",
-    "restore",
-    "deep",
-    "link",
-    "reload",
-    "app_state_set_active",
-    "app_state_get_href",
-    "sap-iapp-state",
-    "sap-xapp-state"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/app_state"
-   ]
-  },
-  {
-   "class": "z2ui5_cl_smp_app_499",
-   "file": "src/01/z2ui5_cl_smp_app_499.clas.abap",
-   "category": "Hash",
-   "stage": "move",
-   "title": "Hash",
-   "description": "App-Owned Routing (#/detail)",
-   "summary": "The whole hash_* family in one app: hash_set pushes #/detail, hash_replace rewrites it in place, hash_back steps back like a router, a deep link restores.",
-   "keywords": [
-    "routing",
-    "hash",
-    "url",
-    "page",
-    "browser",
-    "back",
-    "forward",
-    "history",
-    "deep",
-    "link",
-    "reload",
-    "hash_set",
-    "hash_replace",
-    "hash_back",
-    "hash_attach_changed",
-    "navcontainer",
-    "router",
-    "onnavback"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
-   ]
-  },
-  {
-   "class": "z2ui5_cl_smp_app_468",
-   "file": "src/01/z2ui5_cl_smp_app_468.clas.abap",
-   "category": "Hash",
-   "stage": "move",
-   "title": "Hash",
-   "description": "Routing mode fresh",
-   "summary": "Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.",
-   "keywords": [
-    "routing",
-    "mode",
-    "fresh",
-    "navigation",
-    "restart",
-    "new",
-    "instance",
-    "nav_app_call"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
-   ]
-  },
-  {
    "class": "z2ui5_cl_smp_app_480",
    "file": "src/01/z2ui5_cl_smp_app_480.clas.abap",
    "category": "Hash",
@@ -1482,25 +1351,6 @@
    ]
   },
   {
-   "class": "z2ui5_cl_smp_app_381",
-   "file": "src/01/z2ui5_cl_smp_app_381.clas.abap",
-   "category": "Message",
-   "stage": "talk",
-   "title": "Message",
-   "description": "MessageToast, Text and Duration",
-   "summary": "A MessageToast and what can be said about it: text, duration, position and animation.",
-   "keywords": [
-    "toast",
-    "notification",
-    "duration",
-    "position",
-    "animation"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
-   ]
-  },
-  {
    "class": "z2ui5_cl_smp_app_452",
    "file": "src/01/z2ui5_cl_smp_app_452.clas.abap",
    "category": "Message",
@@ -1702,27 +1552,6 @@
     "confirm",
     "cancel",
     "popover_display"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover"
-   ]
-  },
-  {
-   "class": "z2ui5_cl_smp_app_052",
-   "file": "src/01/z2ui5_cl_smp_app_052.clas.abap",
-   "category": "Popover",
-   "stage": "talk",
-   "title": "Popover",
-   "description": "Open from a Table Row",
-   "summary": "Opens a Popover from a table row - which row was pressed, and how its record reaches the popover.",
-   "keywords": [
-    "list",
-    "report",
-    "dynamicpage",
-    "row",
-    "link",
-    "details",
-    "table"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover"

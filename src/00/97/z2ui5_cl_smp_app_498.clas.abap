@@ -1,4 +1,4 @@
-" @keywords app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state
+" @keywords app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state switch off event form
 " @summary The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/app_state
 "! The abap2UI5 spelling of the Fiori app state (sap-iapp-state /
@@ -14,16 +14,20 @@
 "!    and could just as well mail it or render it as a QR code
 "!
 "! The state lives until the draft expires; an expired link starts the app
-"! fresh and says so. Consolidates the former z2ui5_cl_smp_app_321 (bookmark)
+"! fresh and says so. The switch at the bottom turns the URL tracking off
+"! and on again through the EVENT form, follow_up_action with
+"! cs_event-app_state_set_active: an empty argument list switches it on, a
+"! single space is how the event form says false. Consolidates the former z2ui5_cl_smp_app_321 (bookmark)
 "! and z2ui5_cl_smp_app_323 (share) into one sample.
 CLASS z2ui5_cl_smp_app_498 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA quantity   TYPE string.
-    DATA notes      TYPE string.
-    DATA share_link TYPE string.
+    DATA quantity     TYPE string.
+    DATA notes        TYPE string.
+    DATA share_link   TYPE string.
+    DATA state_in_url TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -47,6 +51,7 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
       " tracks every later roundtrip too. check_on_init implies
       " check_on_navigated, so the first display happens right below
       client->app_state_set_active( ).
+      state_in_url = abap_true.
       view_display( ).
 
     ELSEIF client->check_on_navigated( ).
@@ -115,6 +120,12 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
         )->a( n = `value`    v = client->_bind( share_link )
         )->a( n = `editable` b = abap_false ).
 
+    form->tag( `Label`
+        )->a( n = `text` v = `keep the state id in the URL` ).
+    form->tag( `Switch`
+        )->a( n = `state`  v = client->_bind( state_in_url )
+        )->a( n = `change` v = client->_event( `TOGGLE_STATE` ) ).
+
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Share copies a link to exactly this state into the clipboard - the Fiori ` &&
                    `sap-xapp-state idea with the draft as the state container. The link lives until ` &&
@@ -135,6 +146,19 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
       WHEN `POST`.
         " any roundtrip advances the draft - and with it the id in the URL
         client->message_toast_display( `data updated - the URL now names this state` ).
+
+      WHEN `TOGGLE_STATE`.
+        " the event form of app_state_set_active( ): no argument switches
+        " the tracking on, a single space switches it off - an empty t_arg
+        " cannot say false, so that is the encoding the event form uses
+        IF state_in_url = abap_true.
+          client->follow_up_action( z2ui5_if_client=>cs_event-app_state_set_active ).
+          client->message_toast_display( `the URL names the current state again` ).
+        ELSE.
+          client->follow_up_action( val   = z2ui5_if_client=>cs_event-app_state_set_active
+                                    t_arg = VALUE #( ( ` ` ) ) ).
+          client->message_toast_display( `switched off - the URL stops following the state` ).
+        ENDIF.
 
       WHEN `SHARE`.
         " the link to exactly THIS roundtrip's state, composed backend-side -

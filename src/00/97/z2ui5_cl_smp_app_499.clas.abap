@@ -1,4 +1,4 @@
-" @keywords routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback
+" @keywords routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback follow_up_action event form
 " @summary The whole hash_* family in one app: hash_set pushes #/detail, hash_replace rewrites it in place, hash_back steps back like a router, a deep link restores.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash
 "! App-owned hash routing - the URL semantics of a UI5 router, 1:1, and the
@@ -21,6 +21,11 @@
 "!    fresh) there is no in-app step to take, so the fallback replaces to
 "!    the start page instead of falling out of the app
 "!  - a reload or a shared link with '#/detail' lands on the detail page
+"!  - hash_set( ) and hash_replace( ) have an EVENT form, follow_up_action
+"!    with cs_event-hash_set / cs_event-hash_replace: the same write, for an
+"!    app that keeps its follow-ups in one shape. The start-page button on
+"!    the detail page uses the first, the repair of an unknown variant in
+"!    the hash the second
 "!
 "! The draft-based routing modes (cs_event-hash_routing) are the siblings
 "! z2ui5_cl_smp_app_468 and z2ui5_cl_smp_app_480. Replaces the former
@@ -124,10 +129,16 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
     detail->tag( `MessageStrip`
         )->a( n = `text`     v = `This page is #/detail. Reload the browser or share the URL - it lands here. ` &&
                    `The back arrow is cs_event-hash_back with '/' as fallback: normally a real ` &&
-                   `window.history.go(-1), and on a cold deep link a replace to the start page.`
+                   `window.history.go(-1), and on a cold deep link a replace to the start page. ` &&
+                   `Edit the variant in the URL to something unknown (#/detail/z) and watch it repaired.`
         )->a( n = `type`     v = `Success`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    detail->tag( `Button`
+        )->a( n = `press` v = client->_event( `GO_MAIN` )
+        )->a( n = `text`  v = `start page, pushed as a new entry (#/)`
+        )->a( n = `class` v = `sapUiSmallMarginBegin` ).
 
     DATA(vform) = detail->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `hash_replace - the URL follows, Back skips it`
@@ -188,6 +199,16 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
                                   t_arg = VALUE #( ( `nav` ) ( `to` ) ( `page-detail` ) ) ).
         client->hash_set( |/detail/{ variant }| ).
 
+      WHEN `GO_MAIN`.
+        " the EVENT form of hash_set( ): follow_up_action with
+        " cs_event-hash_set writes the same field the typed method writes -
+        " a pushed history entry, so Back returns to the detail page
+        check_detail = abap_false.
+        client->follow_up_action( val   = client->cs_event-control_by_id
+                                  t_arg = VALUE #( ( `nav` ) ( `to` ) ( `page-main` ) ) ).
+        client->follow_up_action( val   = client->cs_event-hash_set
+                                  t_arg = VALUE #( ( `/` ) ) ).
+
       WHEN `VARIANT`.
         " the router's replace-navTo: the URL follows the variant WITHOUT a
         " new history entry - Back keeps returning to the first page, not
@@ -198,6 +219,15 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
       WHEN `HASH_CHANGED`.
         " the router's routeMatched: show the page the hash now names
         hash_apply( ).
+
+        " a hash that names a variant the app does not have (#/detail/z,
+        " typed by hand) is repaired IN PLACE - the event form of
+        " hash_replace( ), no history entry for the broken URL
+        IF check_detail = abap_true AND client->get( )-s_config-hash <> |/detail/{ variant }|.
+          client->follow_up_action( val   = client->cs_event-hash_replace
+                                    t_arg = VALUE #( ( |/detail/{ variant }| ) ) ).
+        ENDIF.
+
         client->follow_up_action( val   = client->cs_event-control_by_id
                                   t_arg = VALUE #( ( `nav` )
                                                    ( `to` )

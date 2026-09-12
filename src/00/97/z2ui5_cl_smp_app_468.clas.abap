@@ -1,4 +1,4 @@
-" @keywords routing mode fresh navigation restart new instance nav_app_call
+" @keywords routing mode fresh default off navigation restart new instance nav_app_call
 " @summary Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash
 "! Hash-based app routing (UI5 Router style), mode FRESH:
@@ -12,6 +12,9 @@
 "! Back button and watch this page - it comes back empty.
 "!
 "! z2ui5_cl_smp_app_480 is the same demo in mode KEEP, where the state survives.
+"! The third mode is DEFAULT - no routing at all, the hash left untouched, the
+"! way an app behaves before it ever calls hash_routing: the switch below
+"! turns the routing off with it and on again with FRESH.
 CLASS z2ui5_cl_smp_app_468 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -19,6 +22,7 @@ CLASS z2ui5_cl_smp_app_468 DEFINITION PUBLIC.
 
     DATA input   TYPE string.
     DATA counter TYPE i.
+    DATA routing TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -57,6 +61,18 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
       WHEN `GO_DETAIL`.
         client->nav_app_call( NEW z2ui5_cl_smp_app_469( ) ).
 
+      WHEN `ROUTING`.
+        " the mode is remembered on the app, so switching it is one action:
+        " DEFAULT leaves the hash alone from now on - Back/Forward leave the
+        " page, the framework default - and FRESH puts the class back in
+        client->follow_up_action( val   = client->cs_event-hash_routing
+                                  t_arg = VALUE #( ( COND #( WHEN routing = abap_true
+                                                             THEN client->cs_nav_mode-fresh
+                                                             ELSE client->cs_nav_mode-default ) ) ) ).
+        client->message_toast_display( COND #( WHEN routing = abap_true
+                                               THEN `routing mode fresh - the URL carries the class`
+                                               ELSE `routing mode default - the URL is left untouched` ) ).
+
     ENDCASE.
 
   ENDMETHOD.
@@ -68,6 +84,7 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
     " and re-sends it whenever the frontend may not hold it (page load,
     " Back/Forward restore, navigation hops)
     IF client->check_on_init( ).
+      routing = abap_true.
       client->follow_up_action( val   = client->cs_event-hash_routing
                                 t_arg = VALUE #( ( client->cs_nav_mode-fresh ) ) ).
     ENDIF.
@@ -118,6 +135,14 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
         )->a( n = `press` v = client->_event( `GO_DETAIL` )
         )->a( n = `text`  v = `go to the detail page (nav_app_call)`
         )->a( n = `type`  v = `Emphasized` ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `3. Or switch the routing off again (mode default)` ).
+    form->tag( `Switch`
+        )->a( n = `state`         v = client->_bind( routing )
+        )->a( n = `customTextOn`  v = `fresh`
+        )->a( n = `customTextOff` v = `off`
+        )->a( n = `change`        v = client->_event( `ROUTING` ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `fresh: the URL carries the class only (#/app/<CLASS>). After the detail page, the ` &&
