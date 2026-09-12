@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 97 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 98 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -764,6 +764,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         intro = `The other direction: events arriving from the view, messages and message boxes going back, and the popups, popovers and menus that ask before something happens.`
         path = `src/01` app = `z2ui5_cl_smp_app_197` )
       ( group = `Talk to the user` header = `Event` sub = `Extra Arguments with t_arg` keywords = `argument parameter payload event data fixed value` path = `src/01` app = `z2ui5_cl_smp_app_167` )
+      ( group = `Talk to the user` header = `Event` sub = `Keep the Last Keystroke with check_queue_last` keywords = `livechange keystroke queue busy roundtrip dropped event check_queue_last s_ctrl` path = `src/01` app = `z2ui5_cl_smp_app_511` )
       ( group = `Talk to the user` header = `Event` sub = `Keyboard Shortcuts, Ctrl+S (A)` keywords = `shortcut hotkey ctrl key combination keyboard_shortcut` path = `src/01` app = `z2ui5_cl_smp_app_471` )
       ( group = `Talk to the user` header = `Event` sub = `Link with preventDefault (A)` keywords = `link href default action check_prevent_default` path = `src/01` app = `z2ui5_cl_smp_app_472` )
       ( group = `Talk to the user` header = `Menu` sub = `Full Path of the Selected Item (A)` keywords = `menuitem nested submenu textpath controller path` path = `src/01` app = `z2ui5_cl_smp_app_473` )
