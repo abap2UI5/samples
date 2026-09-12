@@ -33,9 +33,9 @@ CLASS z2ui5_cl_smp_app_493 IMPLEMENTATION.
       page->tag( `MessageStrip`
           )->a( n = `text`     v = `The whole app is what you see below: a class implementing z2ui5_if_app, ` &&
                      `one main( ) method, a view built as XML and handed to client->view_display( ). ` &&
-                     `abap2UI5 calls main( ) on every roundtrip - here only the first one matters, ` &&
-                     `which is what check_on_init( ) asks. Copy this class as the starting point ` &&
-                     `for your own app.`
+                     `abap2UI5 calls main( ) on every roundtrip - here only the display matters, ` &&
+                     `which is what check_on_navigated( ) asks: true on the first start and whenever ` &&
+                     `the app is shown again. Copy this class as the starting point for your own app.`
           )->a( n = `type`     v = `Information`
           )->a( n = `showIcon` b = abap_true
           )->a( n = `class`    v = `sapUiSmallMargin` ).

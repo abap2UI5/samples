@@ -25,14 +25,16 @@ is the whole sample.
 New to abap2UI5? Start at [Basics](#basics), then the
 [documentation](https://abap2ui5.github.io/docs/).
 
+**Markers on a title:** `(A)` performs a frontend action (client->follow_up_action( ) or a client-side interaction such as drag and drop); `(C)` uses an abap2UI5 custom control (the z2ui5.cc namespace); `(A,C)` both.
+
 ---
 
 ## The learning path — `src/01`
 
-The 104 samples the overview app lists: cloud-ready, downportable,
-plain OpenUI5 1.71. Each adds one idea. With the 6
-helper apps they call and the overview app itself, that is the **111
-ready-to-run apps** the README leads with.
+The **104 ready-to-run samples** the README leads with, and the
+overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
+one idea. With the 6 helper apps they call and the
+overview app itself, that is 111 apps on every branch.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -172,7 +174,7 @@ ready-to-run apps** the README leads with.
 | Sample | Class |
 |---|---|
 | Message Model and MessageManager (C)<br>The UI5 message model: validation messages carry the field they belong to, so the control shows the state and one list holds them all.<br><sub>messagemanager validation target field state central model</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_467`](src/01/z2ui5_cl_smp_app_467.clas.abap) |
-| MessageBox for Any Data<br>Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - plus the options of the box itself.<br><sub>messagebox details table structure tree object reference escape limit action onclose</sub> | [`Z2UI5_CL_SMP_APP_502`](src/01/z2ui5_cl_smp_app_502.clas.abap) |
+| MessageBox for Any Data<br>Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - plus the options of the box itself.<br><sub>messagebox details table structure tree object reference escape limit action onclose</sub><br><sub>docs: [cookbook/translation_messages/logging](https://abap2ui5.github.io/docs/cookbook/translation_messages/logging), [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_502`](src/01/z2ui5_cl_smp_app_502.clas.abap) |
 | MessageBox from SY, BAPIRET2 or Exception<br>Turns what ABAP already has into a MessageBox - a SY message, a BAPIRET2 table or a caught exception.<br><sub>t100 message class number exception cx_root error abend</sub><br><sub>docs: [cookbook/event_navigation/exception](https://abap2ui5.github.io/docs/cookbook/event_navigation/exception), [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_008`](src/01/z2ui5_cl_smp_app_008.clas.abap) |
 | MessageBox, Types and Custom Actions<br>Every MessageBox type - confirm, warning, error, success, information - and what a custom action button changes about the answer.<br><sub>confirm warning error success information dialog action</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_382`](src/01/z2ui5_cl_smp_app_382.clas.abap) |
 | MessagePopover URL Policy (A)<br>The URL policy of a MessagePopover: which links it will follow and which it refuses, and why the default is the strict one.<br><sub>url policy link security validator relative allow deny</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_474`](src/01/z2ui5_cl_smp_app_474.clas.abap) |
