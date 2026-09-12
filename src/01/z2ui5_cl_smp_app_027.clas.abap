@@ -118,7 +118,7 @@ CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
             `  path:"` && bind_quantity && `" }`
         )->tag( `Input`
             )->a( n = `enabled` v = |\{= 500===${ client->_bind( quantity ) } \}|
-            )->a( n = `value`   v = product
+            )->a( n = `value`   t = product
         )->tag( `Label`
             )->a( n = `text` v = `RegExp Set to enabled if the input contains VIP, ignoring the case.`
         )->tag( `Input`

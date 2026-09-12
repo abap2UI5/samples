@@ -178,7 +178,7 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
       ENDIF.
 
       DATA(line) = form->tag( `Label`
-          )->a( n = `text`     v = <layout>-name
+          )->a( n = `text`     t = <layout>-name
           )->a( n = `wrapping` b = abap_false ).
 
       line->tag( `Input`

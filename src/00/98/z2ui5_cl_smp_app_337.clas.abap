@@ -121,7 +121,7 @@ CLASS z2ui5_cl_smp_app_337 IMPLEMENTATION.
                                                   tab       = mo_layout_obj->ms_data-t_layout
                                                   tab_index = lv_index )
           )->tag( `Text`
-              )->a( n = `text` v = layout->name ).
+              )->a( n = `text` t = layout->name ).
 
     ENDLOOP.
 
@@ -183,7 +183,7 @@ CLASS z2ui5_cl_smp_app_337 IMPLEMENTATION.
       ENDIF.
 
       DATA(line) = form->tag( `Label`
-          )->a( n = `text`     v = layout->name
+          )->a( n = `text`     t = layout->name
           )->a( n = `wrapping` b = abap_false ).
 
       line->tag( `Input`

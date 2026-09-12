@@ -140,11 +140,11 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
 
     LOOP AT get_positions( ) INTO DATA(position).
       select_my->tag( n = `Item` ns = `core`
-          )->a( n = `key`  v = position
-          )->a( n = `text` v = position ).
+          )->a( n = `key`  t = position
+          )->a( n = `text` t = position ).
       select_at->tag( n = `Item` ns = `core`
-          )->a( n = `key`  v = position
-          )->a( n = `text` v = position ).
+          )->a( n = `key`  t = position
+          )->a( n = `text` t = position ).
     ENDLOOP.
 
     form->tag( `Label`

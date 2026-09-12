@@ -74,7 +74,7 @@ CLASS z2ui5_cl_smp_app_019 IMPLEMENTATION.
     page->ele( `Table`
         )->a( n = `items`      v = client->_bind( t_tab )
         )->a( n = `headerText` v = `Table`
-        )->a( n = `mode`       v = sel_mode
+        )->a( n = `mode`       t = sel_mode
         )->ele( `columns`
             )->ele( `Column`
                 )->tag( `Text`

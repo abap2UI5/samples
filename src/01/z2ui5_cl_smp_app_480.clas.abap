@@ -109,7 +109,7 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
         )->a( n = `text` v = `and raise a counter` ).
     form->tag( `Button`
         )->a( n = `press` v = client->_event( `INC` )
-        )->a( n = `text`  v = |increment ({ counter })| ).
+        )->a( n = `text`  t = |increment ({ counter })| ).
 
     form->tag( `Label`
         )->a( n = `text` v = `2. Navigate forward` ).

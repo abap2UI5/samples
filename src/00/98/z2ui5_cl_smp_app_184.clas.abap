@@ -76,7 +76,7 @@ CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
 
       columns->ele( `Column`
           )->tag( `Text`
-              )->a( n = `text` v = comp-name ).
+              )->a( n = `text` t = comp-name ).
 
     ENDLOOP.
 

@@ -107,7 +107,7 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
                     )->a( n = `text` v = `product`
                 )->tag( `Input`
                     )->a( n = `enabled` b = abap_false
-                    )->a( n = `value`   v = product
+                    )->a( n = `value`   t = product
                 )->tag( `Button`
                     )->a( n = `press` v = client->_event( `BUTTON_POST` )
                     )->a( n = `text`  v = `post` ).

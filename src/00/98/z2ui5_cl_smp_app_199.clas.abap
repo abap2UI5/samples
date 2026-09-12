@@ -75,7 +75,7 @@ CLASS z2ui5_cl_smp_app_199 IMPLEMENTATION.
     LOOP AT mt_comp INTO DATA(comp).
       columns->ele( `Column`
           )->tag( `Text`
-              )->a( n = `text` v = comp-name ).
+              )->a( n = `text` t = comp-name ).
     ENDLOOP.
 
     DATA(cells) = columns->end(

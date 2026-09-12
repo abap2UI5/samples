@@ -45,7 +45,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
     DATA(popover) = lo_popover->ele( `Popover`
-        )->a( n = `title`        v = |abap2UI5 - Popover - { mv_product }|
+        )->a( n = `title`        t = |abap2UI5 - Popover - { mv_product }|
         )->a( n = `placement`    v = `Right`
         )->a( n = `contentWidth` v = `20rem` ).
 

@@ -146,7 +146,7 @@ CLASS z2ui5_cl_smp_app_126 IMPLEMENTATION.
     page->tag( `Label`
         )->a( n = `text` v = `ProgressIndicator`
         )->tag( `ProgressIndicator`
-            )->a( n = `percentValue` v = mv_perc
+            )->a( n = `percentValue` t = mv_perc
             )->a( n = `displayValue` v = `0,44GB of 32GB used`
             )->a( n = `showValue`    b = abap_true
             )->a( n = `state`        v = `Success` ).

@@ -342,7 +342,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
         IF show_groups = abap_true.
           page->tag( `Title`
-              )->a( n = `text`  v = tile-group
+              )->a( n = `text`  t = tile-group
               )->a( n = `class` v = `sapUiSmallMarginTop sapUiTinyMarginBottom`
               )->a( n = `level` v = `H3` ).
 
@@ -364,7 +364,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       DATA(tenths) = ( t_blocks[ group = tile-group base = base ]-width + 45 ) DIV 10.
       DATA(width) = |{ tenths DIV 10 }.{ tenths MOD 10 }em|.
       DATA(row) = page->ele( `HBox`
-          )->a( n = `class`      v = COND #( WHEN new_block = abap_true
+          )->a( n = `class`      t = COND #( WHEN new_block = abap_true
                                THEN `sapUiSmallMarginBegin sapUiSmallMarginTop`
                                ELSE `sapUiSmallMarginBegin` )
           )->a( n = `alignItems` v = `Center`
@@ -372,17 +372,17 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
       IF tile-sub IS INITIAL.
         row->tag( `Link`
-            )->a( n = `text`  v = tile-header
+            )->a( n = `text`  t = tile-header
             )->a( n = `press` v = client->_event( tile-app )
-            )->a( n = `width` v = width ).
+            )->a( n = `width` t = width ).
 
       ELSE.
         row->tag( `Link`
-            )->a( n = `text`  v = tile-header
+            )->a( n = `text`  t = tile-header
             )->a( n = `press` v = client->_event( tile-app )
-            )->a( n = `width` v = width
+            )->a( n = `width` t = width
             )->tag( `Text`
-                )->a( n = `text` v = tile-sub ).
+                )->a( n = `text` t = tile-sub ).
       ENDIF.
 
       " straight to the ABAP behind the sample - the tile shows what it does,
@@ -395,7 +395,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
           )->a( n = `src`     v = `sap-icon://source-code`
           )->a( n = `size`    v = `0.875rem`
           )->a( n = `class`   v = `sapUiTinyMarginBegin`
-          )->a( n = `tooltip` v = |{ tile-app } - show the ABAP source on GitHub|
+          )->a( n = `tooltip` t = |{ tile-app } - show the ABAP source on GitHub|
           )->a( n = `press`   v = open_url( source_url( tile ) ) ).
 
     ENDLOOP.
@@ -577,10 +577,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
                                    ELSE `sapUiTinyMarginBeginEnd` ).
 
     toolbar->tag( n = `Icon` ns = `core`
-        )->a( n = `src`     v = icon
+        )->a( n = `src`     t = icon
         )->a( n = `size`    v = `1.125rem`
-        )->a( n = `class`   v = css_class
-        )->a( n = `tooltip` v = hint ).
+        )->a( n = `class`   t = css_class
+        )->a( n = `tooltip` t = hint ).
 
     " a( ) writes on the element just added, and an EMPTY attribute would be
     " rendered as one - id="" is not a control id, color="" is not a valid
@@ -588,11 +588,11 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     " added only when they carry something. The documentation and GitHub
     " entries have no class, and the entry you are standing on has no press.
     IF class IS NOT INITIAL.
-      toolbar->a( n = `id` v = class ).
+      toolbar->a( n = `id` t = class ).
     ENDIF.
 
     IF color IS NOT INITIAL.
-      toolbar->a( n = `color` v = color ).
+      toolbar->a( n = `color` t = color ).
     ENDIF.
 
     IF press IS NOT INITIAL.
@@ -610,13 +610,13 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
 
     view->ele( `Popover`
-        )->a( n = `title`        v = |{ name } - not installed|
+        )->a( n = `title`        t = |{ name } - not installed|
         )->a( n = `placement`    v = `Bottom`
         )->a( n = `contentWidth` v = `26rem`
         )->ele( `VBox`
             )->a( n = `class` v = `sapUiSmallMargin`
             )->tag( `Text`
-                )->a( n = `text` v = |This system does not have { name } installed, so there is no app to jump to. | &&
+                )->a( n = `text` t = |This system does not have { name } installed, so there is no app to jump to. | &&
                      |Install the repository with abapGit, then this icon opens it right here.|
             )->tag( `Link`
                 )->a( n = `text`   v = href

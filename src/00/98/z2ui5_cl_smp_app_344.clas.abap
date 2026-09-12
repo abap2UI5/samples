@@ -136,7 +136,7 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
                                                   tab       = i_layout->ms_data-t_layout
                                                   tab_index = lv_index )
           )->tag( `Text`
-              )->a( n = `text` v = layout->name ).
+              )->a( n = `text` t = layout->name ).
 
     ENDLOOP.
 
