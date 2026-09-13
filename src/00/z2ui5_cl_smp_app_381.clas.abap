@@ -1,5 +1,5 @@
-" @keywords toast notification duration position animation anchor collision onclose class css closeonbrowsernavigation
-" @summary A MessageToast and everything that can be said about it: text, duration, width, where it docks and to what, collision, animation, a CSS class, and the event its closing fires.
+" @keywords toast notification global object control_global follow_up_action options duration position animation anchor collision class css template
+" @summary The MessageToast steered as the UI5 control it is: every sap.m.MessageToast option 1:1 through the global object, plus a toast composed on the client without a round-trip.
 " @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
 
@@ -29,6 +29,9 @@ CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS show_toast.
+    METHODS toast_options
+      RETURNING
+        VALUE(result) TYPE string.
     METHODS view_display.
     METHODS get_positions
       RETURNING
@@ -84,32 +87,74 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
 
   METHOD show_toast.
 
+    " Where a toast docks, how it animates, how wide it is - that is the
+    " CONTROL, not the ABAP app, so it is set the way every other UI5 control
+    " is steered from here: the whitelisted global call, whose last argument
+    " is the option object of sap.m.MessageToast.show( ) 1:1.
+    "
+    " client->message_toast_display( ) carries none of these. It carries what
+    " an ABAP app decides - the text, how long the toast stands, and the
+    " backend event its closing raises - and the class
+    " Z2UI5_CL_SMP_APP_502 shows that side for the message box
+    client->follow_up_action( val   = client->cs_event-control_global
+                              t_arg = VALUE #( ( `MESSAGE_TOAST` )
+                                               ( `show` )
+                                               ( message )
+                                               ( toast_options( ) ) ) ).
+
+  ENDMETHOD.
+
+
+  METHOD toast_options.
+
+    DATA t_opt TYPE string_table.
+
+    " The option object as JSON. A t_arg that starts with a brace is embedded
+    " as REAL JSON by the framework, so this arrives on the client as an
+    " object - not as a string that happens to look like one. Numbers stay
+    " unquoted and flags are true/false, because sap.m.MessageToast checks
+    " the type of every option it reads
+    APPEND |"duration":{ duration }| TO t_opt.
+    APPEND |"width":"{ width }"| TO t_opt.
+    APPEND |"my":"{ my }"| TO t_opt.
+    APPEND |"at":"{ at }"| TO t_opt.
+    APPEND |"offset":"{ offset }"| TO t_opt.
+    APPEND |"collision":"{ collision }"| TO t_opt.
+    APPEND |"animationTimingFunction":"{ animation_timing }"| TO t_opt.
+    APPEND |"animationDuration":{ animation_duration }| TO t_opt.
+    APPEND |"autoClose":{ COND string( WHEN autoclose = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
+    APPEND |"closeOnBrowserNavigation":{ COND string( WHEN close_on_navigation = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
+
     " `of` is the element the toast docks to - my/at are read relative to it
     " instead of to the window. It travels as a jQuery selector, so the
     " anchor is a DOM node with an id the backend can spell: the core:HTML
     " box in the view below, not a control whose id UI5 prefixes at runtime
-    DATA(anchor) = COND string( WHEN dock_to_anchor = abap_true
-                                THEN `#toastAnchor` ).
-    " an empty event name means no callback; only a toast that should
-    " report its closing carries one
-    DATA(onclose) = COND string( WHEN notify_close = abap_true
-                                 THEN `TOAST_CLOSED` ).
+    IF dock_to_anchor = abap_true.
+      APPEND |"of":"#toastAnchor"| TO t_opt.
+    ENDIF.
 
-    client->message_toast_display(
-        text                     = message
-        duration                 = duration
-        width                    = width
-        my                       = my
-        at                       = at
-        of                       = anchor
-        offset                   = offset
-        collision                = collision
-        onclose                  = onclose
-        animationtimingfunction  = animation_timing
-        animationduration        = animation_duration
-        autoclose                = autoclose
-        closeonbrowsernavigation = close_on_navigation
-        class                    = css_class ).
+    " `class` is the one entry here that is NO MessageToast option: the
+    " frontend puts the classes on the DOM node of the toast, which carries
+    " no id to address it by. It rides in the same object
+    IF css_class IS NOT INITIAL.
+      APPEND |"class":"{ css_class }"| TO t_opt.
+    ENDIF.
+
+    " onClose is a BACKEND event name here, not a JS callback: the frontend
+    " turns it into the round-trip that reaches on_event below
+    IF notify_close = abap_true.
+      APPEND |"onClose":"TOAST_CLOSED"| TO t_opt.
+    ENDIF.
+
+    LOOP AT t_opt INTO DATA(option).
+      IF result IS INITIAL.
+        result = option.
+      ELSE.
+        result = |{ result },{ option }|.
+      ENDIF.
+    ENDLOOP.
+
+    result = |\{{ result }\}|.
 
   ENDMETHOD.
 
@@ -126,14 +171,16 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->ele( `Shell`
                 )->ele( `Page`
-                    )->a( n = `title`          v = `abap2UI5 - Message - MessageToast, Position, onClose and Class`
+                    )->a( n = `title`          v = `abap2UI5 - Message - MessageToast via the Global Object`
                     )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
                     )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `This sample demonstrates MessageToast: configure the text, duration, position - ` &&
-                   `to the window or docked to the anchor box - collision, animation, a CSS class and the ` &&
-                   `onclose event, then show a short, non-blocking toast notification.`
+        )->a( n = `text`     v = `Two ways to a toast, and this is the UI5 one: follow_up_action( cs_event-control_global ) ` &&
+                   `calls sap.m.MessageToast.show( ) itself, and its last argument is the option object of that API 1:1 - ` &&
+                   `position, collision, animation, autoClose. Configure them below and watch the object travel. ` &&
+                   `The other way is client->message_toast_display( ), which carries no UI5 option at all: it carries ` &&
+                   `what an ABAP app decides, and Z2UI5_CL_SMP_APP_502 shows that side for the message box.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -269,6 +316,21 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
         )->a( n = `text` v = `the onclose event`
         )->tag( `Text`
             )->a( n = `text` v = client->_bind( closed_text ) ).
+
+    " ... and the second reason the global object exists: the same call WIRED
+    " into the view. The toast is composed on the client - the extra argument
+    " fills the {0} placeholder of the text - so a button that only wants to
+    " say what was pressed needs no round-trip to the backend at all
+    form->tag( `Label`
+        )->a( n = `text` v = `wired, no round-trip - the text is composed on the client`
+        )->tag( `Button`
+            )->a( n = `text`  v = `Compose on the client`
+            )->a( n = `press` v = client->follow_up_action(
+                                       val   = client->cs_event-control_global
+                                       t_arg = VALUE #( ( `MESSAGE_TOAST` )
+                                                        ( `show` )
+                                                        ( `{0} - composed on the client, the backend never saw this press` )
+                                                        ( `${$source>/text}` ) ) ) ).
 
     client->view_display( page->stringify( ) ).
 

@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 98 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 99 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -772,6 +772,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Talk to the user` header = `Message` sub = `Message Model and MessageManager (C)` keywords = `messagemanager validation target field state central model` path = `src/01` app = `z2ui5_cl_smp_app_467` )
       ( group = `Talk to the user` header = `Message` sub = `MessageBox for Any Data` keywords = `messagebox details table structure tree object reference escape limit action onclose` path = `src/01` app = `z2ui5_cl_smp_app_502` )
       ( group = `Talk to the user` header = `Message` sub = `MessageBox from SY, BAPIRET2 or Exception` keywords = `t100 message class number exception cx_root error abend` path = `src/01` app = `z2ui5_cl_smp_app_008` )
+      ( group = `Talk to the user` header = `Message`
+        sub = `MessageBox via the Global Object`
+        keywords = `messagebox global object control_global follow_up_action options icon contentwidth textdirection closeonnavigation dependenton actions onclose`
+        path = `src/01` app = `z2ui5_cl_smp_app_512` )
       ( group = `Talk to the user` header = `Message` sub = `MessageBox, Types and Custom Actions` keywords = `confirm warning error success information dialog action` path = `src/01` app = `z2ui5_cl_smp_app_382` )
       ( group = `Talk to the user` header = `Message` sub = `MessagePopover URL Policy (A)` keywords = `url policy link security validator relative allow deny` path = `src/01` app = `z2ui5_cl_smp_app_474` )
       ( group = `Talk to the user` header = `Message` sub = `MessageView and MessagePopover (A)` keywords = `messagepopover messageitem dialog grouped message list` path = `src/01` app = `z2ui5_cl_smp_app_452` )

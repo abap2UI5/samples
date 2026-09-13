@@ -114,7 +114,7 @@
     "sap.m.CustomTreeItem"
   ],
   "counts": {
-    "samples": 98,
+    "samples": 99,
     "controls": 104
   },
   "samples": [
@@ -215,6 +215,7 @@
     {"class":"z2ui5_cl_smp_app_497","minUi5":"1.71","needs":[],"controls":[13,14,0,1,2,15,8,4],"controlCount":9},
     {"class":"z2ui5_cl_smp_app_502","minUi5":"1.71","needs":[],"controls":[5,10,7,0,1,2,8,3,84,4,9],"controlCount":97},
     {"class":"z2ui5_cl_smp_app_503","minUi5":"1.71","needs":[],"controls":[5,6,7,0,1,2,8,4,9],"controlCount":13},
-    {"class":"z2ui5_cl_smp_app_511","minUi5":"1.71","needs":[],"controls":[6,7,0,1,2,8,3,24,4,58],"controlCount":19}
+    {"class":"z2ui5_cl_smp_app_511","minUi5":"1.71","needs":[],"controls":[6,7,0,1,2,8,3,24,4,58],"controlCount":19},
+    {"class":"z2ui5_cl_smp_app_512","minUi5":"1.71","needs":[],"controls":[5,10,7,0,1,32,2,8,4,9],"controlCount":26}
   ]
 }
