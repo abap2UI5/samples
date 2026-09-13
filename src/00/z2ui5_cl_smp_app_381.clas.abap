@@ -29,6 +29,13 @@ CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS show_toast.
+    TYPES:
+      BEGIN OF ty_s_opt,
+        name TYPE string,
+        val  TYPE string,
+      END OF ty_s_opt.
+    TYPES ty_t_opt TYPE STANDARD TABLE OF ty_s_opt WITH EMPTY KEY.
+
     METHODS toast_options
       RETURNING
         VALUE(result) TYPE string.
@@ -113,15 +120,29 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
     " as REAL JSON by the framework, so this arrives on the client as an
     " object - not as a string that happens to look like one. Numbers stay
     " unquoted and flags are true/false, because sap.m.MessageToast checks
-    " the type of every option it reads
-    APPEND |"duration":{ duration }| TO t_opt.
-    APPEND |"width":"{ width }"| TO t_opt.
-    APPEND |"my":"{ my }"| TO t_opt.
-    APPEND |"at":"{ at }"| TO t_opt.
-    APPEND |"offset":"{ offset }"| TO t_opt.
-    APPEND |"collision":"{ collision }"| TO t_opt.
-    APPEND |"animationTimingFunction":"{ animation_timing }"| TO t_opt.
-    APPEND |"animationDuration":{ animation_duration }| TO t_opt.
+    " the type of every option it reads.
+    "
+    " An option the form left EMPTY is left out rather than sent empty: a
+    " `"duration":` is no JSON, the backend would fail to parse the whole
+    " object and embed it as a plain string, and the toast would then show
+    " with no options at all - quietly, which is the one failure mode of this
+    " path worth knowing
+    IF duration IS NOT INITIAL.
+      APPEND |"duration":{ duration }| TO t_opt.
+    ENDIF.
+    IF animation_duration IS NOT INITIAL.
+      APPEND |"animationDuration":{ animation_duration }| TO t_opt.
+    ENDIF.
+    LOOP AT VALUE ty_t_opt( ( name = `width`                   val = width )
+                            ( name = `my`                      val = my )
+                            ( name = `at`                      val = at )
+                            ( name = `offset`                  val = offset )
+                            ( name = `collision`               val = collision )
+                            ( name = `animationTimingFunction` val = animation_timing ) ) INTO DATA(s_opt).
+      IF s_opt-val IS NOT INITIAL.
+        APPEND |"{ s_opt-name }":"{ s_opt-val }"| TO t_opt.
+      ENDIF.
+    ENDLOOP.
     APPEND |"autoClose":{ COND string( WHEN autoclose = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
     APPEND |"closeOnBrowserNavigation":{ COND string( WHEN close_on_navigation = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
 
