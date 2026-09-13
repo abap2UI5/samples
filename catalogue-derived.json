@@ -133,7 +133,7 @@
     {"class":"z2ui5_cl_smp_app_048","minUi5":"1.71","needs":[],"controls":[11,0,1,2,12,4],"controlCount":6},
     {"class":"z2ui5_cl_smp_app_050","minUi5":"1.71","needs":[],"controls":[5,6,7,0,1,2,3,43,4,9],"controlCount":14},
     {"class":"z2ui5_cl_smp_app_053","minUi5":"1.71","needs":[],"controls":[5,13,14,10,0,1,75,2,15,8,24,4],"controlCount":25},
-    {"class":"z2ui5_cl_smp_app_059","minUi5":"1.71","needs":[],"controls":[13,14,10,0,1,75,2,15,8,24,4],"controlCount":28},
+    {"class":"z2ui5_cl_smp_app_059","minUi5":"1.71","needs":[],"controls":[13,14,0,1,75,2,15,8,24,4],"controlCount":23},
     {"class":"z2ui5_cl_smp_app_061","minUi5":"1.71","needs":[],"controls":[5,13,14,6,0,17,1,2,15,8,3,18,4],"controlCount":19},
     {"class":"z2ui5_cl_smp_app_064","minUi5":"1.71","needs":[],"controls":[5,0,1,74,2,24,4,31],"controlCount":8},
     {"class":"z2ui5_cl_smp_app_065","minUi5":"1.71","needs":[],"controls":[5,6,16,0,1,2,4],"controlCount":14},

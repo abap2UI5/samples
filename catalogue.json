@@ -1890,15 +1890,17 @@
    "category": "Table",
    "stage": "rows",
    "title": "Table",
-   "description": "Live Search with Parallel Requests",
-   "summary": "Two SearchFields that round-trip on every keystroke on purpose - to show what that does: requests overtaking each other, the busy queue, the value lagging behind fast typing.",
+   "description": "Live Search over a Large Table",
+   "summary": "A SearchField that filters a 6000-row table on every keystroke, wired with check_queue_last so the last keystroke typed during a round-trip is not lost.",
    "keywords": [
     "live",
     "search",
-    "parallel",
-    "requests",
+    "table",
+    "filter",
+    "keystroke",
+    "roundtrip",
     "busy",
-    "queue",
+    "check_queue_last",
     "typing"
    ],
    "docs": [
