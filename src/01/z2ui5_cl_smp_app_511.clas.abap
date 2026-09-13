@@ -80,8 +80,8 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
                    `Type quickly into both fields: the left backend value stops at an earlier keystroke, the right one ` &&
                    `ends on what you typed - its wire is registered with s_ctrl-check_queue_last, so the last event ` &&
                    `fired during the flight is kept and sent once the response has landed. The flag is for ` &&
-                   `per-keystroke wires only (liveChange, liveSearch, sliderChange) and is not combined with ` &&
-                   `check_allow_multi_req, which sends every keystroke at once and lets the responses land in any order.`
+                   `per-keystroke wires only (liveChange, liveSearch, sliderChange); sample 059 puts it to work on ` &&
+                   `a live search over a large table.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
