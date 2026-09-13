@@ -1,5 +1,5 @@
 " @keywords messagebox details table structure tree object reference escape limit action onclose
-" @summary Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - plus the options of the box itself.
+" @summary Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - the ABAP side of a message box.
 " @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/logging https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.
 
@@ -334,19 +334,16 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
                                      type = type ).
 
       WHEN `BOX_OPTIONS`.
-        " everything the box itself can be given, in one call.
-        " closeonnavigation = abap_false keeps it open when the browser
-        " navigates, the one option whose effect is not visible in the box.
-        " The only parameter left out is `dependenton`, which ties the box to
-        " the lifecycle of a control and needs UI5 1.124
-        client->message_box_display( text              = `The delivery date lies in the past.`
-                                     type              = `warning`
-                                     title             = `Please check`
-                                     icon              = `WARNING`
-                                     contentwidth      = `25rem`
-                                     styleclass        = `sapUiSizeCompact`
-                                     textdirection     = `Inherit`
-                                     closeonnavigation = abap_false ).
+        " what the method itself carries: the kind of box and its title - the
+        " two decisions an ABAP app makes about a message. A PLAIN
+        " sap.m.MessageBox option ( icon, contentWidth, textDirection,
+        " closeOnNavigation, dependentOn ) has no parameter here: it belongs
+        " to the control, and Z2UI5_CL_SMP_APP_512 sets exactly these on the
+        " very same box through the global object
+        client->message_box_display( text       = `The delivery date lies in the past.`
+                                     type       = `warning`
+                                     title      = `Please check`
+                                     styleclass = `sapUiSizeCompact` ).
 
       WHEN `BOX_ACTIONS`.
         " the buttons of the box, which one is emphasized and which one has
@@ -411,7 +408,9 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
         )->a( n = `text`     v = `client->message_box_display( ) takes TYPE any: throw in what the app already holds. ` &&
                    `Messages are recognized first and bring their own severity and title; everything else - a table, ` &&
                    `a structure, a tree, an object, a number, an HTML string - is rendered instead of dropped. ` &&
-                   `One button per case, and each button is one call: the app pre-formats nothing.`
+                   `One button per case, and each button is one call: the app pre-formats nothing. That is what this ` &&
+                   `method is for; a pure sap.m.MessageBox option is set on the control instead - ` &&
+                   `Z2UI5_CL_SMP_APP_512 is the same box, steered through the global object.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -593,8 +592,8 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
 
     render_demo( form  = form
                  label = `Options`
-                 text  = `title, icon, width, class`
-                 descr = `Everything the box itself can be given, in one call`
+                 text  = `type, title, class`
+                 descr = `What an ABAP app decides - a pure UI5 option is set on the control, see Z2UI5_CL_SMP_APP_512`
                  press = client->_event( `BOX_OPTIONS` ) ).
 
     render_demo( form  = form

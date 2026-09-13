@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 98,
+  "samples": 99,
   "categories": 24,
   "stages": 6
  },
@@ -1286,7 +1286,7 @@
    "stage": "talk",
    "title": "Message",
    "description": "MessageBox for Any Data",
-   "summary": "Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - plus the options of the box itself.",
+   "summary": "Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - the ABAP side of a message box.",
    "keywords": [
     "messagebox",
     "details",
@@ -1325,6 +1325,33 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/exception",
+    "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_512",
+   "file": "src/01/z2ui5_cl_smp_app_512.clas.abap",
+   "category": "Message",
+   "stage": "talk",
+   "title": "Message",
+   "description": "MessageBox via the Global Object",
+   "summary": "The MessageBox steered as the UI5 control it is: the display method IS the box type, and every sap.m.MessageBox option travels 1:1 in the option object of the global call.",
+   "keywords": [
+    "messagebox",
+    "global",
+    "object",
+    "control_global",
+    "follow_up_action",
+    "options",
+    "icon",
+    "contentwidth",
+    "textdirection",
+    "closeonnavigation",
+    "dependenton",
+    "actions",
+    "onclose"
+   ],
+   "docs": [
     "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
    ]
   },
