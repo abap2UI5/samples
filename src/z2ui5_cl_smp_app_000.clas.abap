@@ -751,7 +751,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Show many rows` header = `Table` sub = `Editable Cells, Add and Delete Rows` keywords = `edit input add row delete multiselect toolbar` path = `src/01` app = `z2ui5_cl_smp_app_011` )
       ( group = `Show many rows` header = `Table` sub = `Filter Rows in the Backend` keywords = `filter server side form growing where` path = `src/01` app = `z2ui5_cl_smp_app_045` )
       ( group = `Show many rows` header = `Table` sub = `Large Table with Growing and ScrollContainer` keywords = `growing 10000 rows sticky toolbar sort performance` path = `src/01` app = `z2ui5_cl_smp_app_006` )
-      ( group = `Show many rows` header = `Table` sub = `Live Search with Parallel Requests` keywords = `live search parallel requests busy queue typing` path = `src/01` app = `z2ui5_cl_smp_app_059` )
+      ( group = `Show many rows` header = `Table` sub = `Live Search over a Large Table` keywords = `live search table filter keystroke roundtrip busy check_queue_last typing` path = `src/01` app = `z2ui5_cl_smp_app_059` )
       ( group = `Show many rows` header = `Table` sub = `Search in the Backend (SearchField)` keywords = `search go enter server side where` path = `src/01` app = `z2ui5_cl_smp_app_053` )
       ( group = `Show many rows` header = `Table` sub = `Selection Modes: Single and Multi Select` keywords = `selectionmode none single multi segmentedbutton checkbox` path = `src/01` app = `z2ui5_cl_smp_app_019` )
       ( group = `Show many rows` header = `Tree` sub = `Drag and Drop Nodes (A,C)` keywords = `dnd move node hierarchy binding context` path = `src/01` app = `z2ui5_cl_smp_app_461` )

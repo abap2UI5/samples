@@ -1,6 +1,9 @@
-" @keywords live search parallel requests busy queue typing
-" @summary Two SearchFields that round-trip on every keystroke on purpose - to show what that does: requests overtaking each other, the busy queue, the value lagging behind fast typing.
+" @keywords live search table filter keystroke roundtrip busy check_queue_last typing
+" @summary A SearchField that filters a 6000-row table on every keystroke, wired with check_queue_last so the last keystroke typed during a round-trip is not lost.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
+"! Needs abap2UI5 newer than 1.144.0 - check_queue_last is appended to
+"! ty_s_event_control after that release; on an older framework the class
+"! does not activate (unknown component of s_ctrl).
 CLASS z2ui5_cl_smp_app_059 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -109,9 +112,9 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
   METHOD view_display.
 
-    " Both SearchFields below round-trip on every keystroke on purpose: this
-    " sample EXISTS to show what that does - requests overtaking each other,
-    " the busy queue, the value lagging behind fast typing.
+    " The SearchField below round-trips on every keystroke on purpose: the
+    " filter runs in ABAP over the full table, which is the point of the
+    " sample. check_queue_last is what makes that wire behave.
     " abap2ui5lint-disable live-event-roundtrip
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -124,42 +127,31 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
     DATA(page1) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Table - Live Search with Parallel Requests`
+            )->a( n = `title`          v = `abap2UI5 - Table - Live Search over a Large Table`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
             )->a( n = `id`             v = `page_main` ).
 
     page1->tag( `MessageStrip`
-        )->a( n = `text`     v = `By default abap2UI5 handles only one backend request at a time - the app is set busy and further ` &&
-                   `requests are ignored until the running one is finished. A live search needs the opposite: only the ` &&
-                   `newest request matters and older ones can be dropped. Set check_allow_multi_req on the event to ` &&
-                   `allow that - type in both fields and compare.`
+        )->a( n = `text`     v = `abap2UI5 runs one backend request at a time: while one is in flight the app is busy and a ` &&
+                   `further event is dropped. A live search fires per keystroke and would lose every one typed during ` &&
+                   `the flight, the last one included - the table would keep filtering on an earlier prefix until you ` &&
+                   `paused. The wire below is registered with s_ctrl-check_queue_last, which keeps the last keystroke ` &&
+                   `of the flight and sends it once the response has landed. Type quickly: the filter lands on what ` &&
+                   `you typed. Sample 511 shows the same wire with and without the flag side by side.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(lo_box) = page1->ele( `HBox`
-        )->a( n = `class` v = `sapUiSmallMarginBegin` ).
-
-    lo_box->ele( `VBox`
-        )->tag( `Text`
-            )->a( n = `text` v = `Search disabled parallel (default)`
-        )->tag( `SearchField`
-            )->a( n = `width`       v = `17.5rem`
-            )->a( n = `value`       v = client->_bind( mv_field )
-            )->a( n = `placeholder` v = `Search products`
-            )->a( n = `liveChange`  v = client->_event( `BUTTON_SEARCH` ) ).
-
-    lo_box->ele( `VBox`
-        )->tag( `Text`
-            )->a( n = `text` v = `Search parallel`
+    page1->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMarginBegin`
         )->tag( `SearchField`
             )->a( n = `width`       v = `17.5rem`
             )->a( n = `value`       v = client->_bind( mv_field )
             )->a( n = `placeholder` v = `Search products`
             )->a( n = `liveChange`  v = client->_event(
                 val    = `BUTTON_SEARCH`
-                s_ctrl = VALUE #( check_allow_multi_req = abap_true ) ) ).
+                s_ctrl = VALUE #( check_queue_last = abap_true ) ) ).
 
     DATA(tab) = page1->ele( `Table`
         )->a( n = `items` v = client->_bind( mt_table ) ).
