@@ -1,6 +1,5 @@
 " @keywords uploadset upload drag drop multiple files base64 attachment uploadsetext companion
 " @summary Takes files from a sap.m.upload.UploadSet into the backend as base64 - the invisible UploadSetExt companion reads each one, so no upload endpoint is needed.
-" @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download
 CLASS z2ui5_cl_smp_app_517 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

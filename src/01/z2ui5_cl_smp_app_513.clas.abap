@@ -1,6 +1,5 @@
 " @keywords css inline style background color opacity control_by_id dom node no property
 " @summary Writes a whitelisted CSS declaration onto a control's own DOM node with the css control method - for a value the control has no property for.
-" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend
 CLASS z2ui5_cl_smp_app_513 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -246,9 +246,7 @@
     "multi",
     "language"
    ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/translation_messages/translation_i18n"
-   ]
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_497",
@@ -541,9 +539,7 @@
     "bound",
     "property"
    ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard"
-   ]
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_327",
@@ -720,9 +716,7 @@
     "positional",
     "control_by_id"
    ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
-   ]
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_448",
@@ -765,9 +759,7 @@
     "no",
     "property"
    ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
-   ]
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_078",
@@ -830,9 +822,7 @@
     "missing",
     "control_global"
    ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
-   ]
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_088",
@@ -876,9 +866,7 @@
     "long",
     "running"
    ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
-   ]
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_202",
@@ -1262,9 +1250,7 @@
     "uploadsetext",
     "companion"
    ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download"
-   ]
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_421",

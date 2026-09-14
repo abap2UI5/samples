@@ -1,6 +1,5 @@
 " @keywords busy indicator global control_global show hide blocking wait spinner long running
 " @summary Shows and hides the global BusyIndicator from ABAP through control_global - the singleton has no id, so a global target is the only wire that reaches it.
-" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend
 CLASS z2ui5_cl_smp_app_515 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
