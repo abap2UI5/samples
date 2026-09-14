@@ -1,5 +1,6 @@
 " @keywords carousel aggregation item index clone template setactivepage positional control_by_id
 " @summary Jumps a Carousel to a page that was cloned from a bound template - addressed positionally as id/aggregation/index, the only way to reach a clone.
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend
 CLASS z2ui5_cl_smp_app_514 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

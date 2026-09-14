@@ -1,5 +1,6 @@
 " @keywords icon font registerfont iconpool tnt collection glyph missing control_global
 " @summary Registers the sap.tnt icon collection with IconPool so a sap-icon://SAP-icons-TNT/... URI resolves - without it the icon renders no glyph and logs nothing.
+" @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend
 CLASS z2ui5_cl_smp_app_518 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
