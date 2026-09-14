@@ -16,9 +16,11 @@
  *     that does run it - publish-overview-apps - regenerates and PUSHES; a
  *     missing line surfaces there as a job that failed after the catalogue was
  *     already half rebuilt, which is a strange place to learn it.
- *  2. The generator only sees what becomes a TILE, which is src/01. The six
- *     experimental samples in src/00/97 have no tile and carry both lines
- *     anyway, because the cookbook links to them - and nothing checked that.
+ *  2. The generator only sees what becomes a TILE, which is src/01. A sample
+ *     outside it carries both lines anyway - the cookbook links to some of
+ *     them - and nothing checked that. It held for the fourteen experimental
+ *     samples of src/00/97 until that package was removed (AGENTS.md section
+ *     1), and it holds for whatever lands outside src/01 next.
  *  3. It cannot check what it does not read: that the line is the FIRST line
  *     of the file, that the terms are lowercase, that there are enough of them
  *     to separate one sample from the next.
@@ -26,7 +28,9 @@
  * WHO NEEDS A LINE is decided from the tree, not from a list somebody has to
  * maintain:
  *
- *   - every sample in `src/01` and `src/00/97`, plus the overview app itself;
+ *   - every sample under `src/` that is not exempt below, plus the overview
+ *     app itself - stated as an exemption rather than as a list of packages,
+ *     so a package that comes or goes needs no edit here;
  *   - NOT the `ZZZ` helper apps - a helper is reached BY a sample, never
  *     looked up, so search terms for it would be words nobody will type;
  *   - NOT `src/00/98`, the testing and scaffolding package. Those apps exist

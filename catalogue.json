@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 99,
+  "samples": 113,
   "categories": 24,
   "stages": 6
  },
@@ -136,6 +136,32 @@
     "check_on_init",
     "check_on_event",
     "check_on_navigated"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle",
+    "https://abap2ui5.github.io/docs/cookbook/expert_more/snippets",
+    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-3"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_004",
+   "file": "src/01/z2ui5_cl_smp_app_004.clas.abap",
+   "category": "Basics",
+   "stage": "start",
+   "title": "Basics IV",
+   "description": "Events, Views and Roundtrips",
+   "summary": "What one event does to a running app: a second view replaces the first, the state comes back with it, and an uncaught error surfaces where you can see it.",
+   "keywords": [
+    "roundtrip",
+    "restart",
+    "second",
+    "view",
+    "uncaught",
+    "error",
+    "controller",
+    "basics",
+    "check_on_navigated",
+    "get"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle",
@@ -309,6 +335,84 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/size_limit"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_507",
+   "file": "src/01/z2ui5_cl_smp_app_507.clas.abap",
+   "category": "Binding",
+   "stage": "data",
+   "title": "Binding",
+   "description": "Omit Initial Values",
+   "summary": "An ABAP field is never absent, only initial - so a bound 0 overrides the UI5 default. omit_initial leaves initial fields out of the model, omit_initial_paths only the ones you name.",
+   "keywords": [
+    "binding",
+    "omit",
+    "initial",
+    "default",
+    "property",
+    "absent",
+    "omit_initial",
+    "omit_initial_paths",
+    "ratingindicator",
+    "maxvalue",
+    "enabled",
+    "boolean"
+   ],
+   "docs": []
+  },
+  {
+   "class": "z2ui5_cl_smp_app_508",
+   "file": "src/01/z2ui5_cl_smp_app_508.clas.abap",
+   "category": "Binding",
+   "stage": "data",
+   "title": "Binding",
+   "description": "Path Only (_bind_path)",
+   "summary": "_bind_path( ) hands you the model PATH of an attribute instead of {/PATH}: the piece a composed expression binding, a sorter or a bindElement needs.",
+   "keywords": [
+    "binding",
+    "path",
+    "only",
+    "bare",
+    "path",
+    "_bind_path",
+    "expression",
+    "binding",
+    "sorter",
+    "binding",
+    "info",
+    "composed",
+    "raw",
+    "string"
+   ],
+   "docs": []
+  },
+  {
+   "class": "z2ui5_cl_smp_app_509",
+   "file": "src/01/z2ui5_cl_smp_app_509.clas.abap",
+   "category": "Binding",
+   "stage": "data",
+   "title": "Binding",
+   "description": "Pre-serialized JSON (json)",
+   "summary": "A string that already holds JSON is spliced into the model as a node instead of a quoted string - a list bound to an array nobody declared an ABAP type for.",
+   "keywords": [
+    "binding",
+    "json",
+    "string",
+    "spliced",
+    "model",
+    "node",
+    "object",
+    "array",
+    "pre-serialized",
+    "_bind",
+    "json",
+    "=",
+    "abap_true",
+    "no",
+    "abap",
+    "type"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_144",
@@ -752,6 +856,33 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_122",
+   "file": "src/01/z2ui5_cl_smp_app_122.clas.abap",
+   "category": "Device",
+   "stage": "beyond",
+   "title": "Device",
+   "description": "Frontend Info: UI5 Version, Theme, OS, Browser",
+   "summary": "Asks the frontend what it is: UI5 version, theme, operating system, browser and user agent, in one call.",
+   "keywords": [
+    "client",
+    "info",
+    "ui5",
+    "version",
+    "theme",
+    "os",
+    "user",
+    "agent",
+    "device",
+    "cs_device",
+    "browser",
+    "orientation",
+    "constants"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/device_capabilities/info"
+   ]
+  },
+  {
    "class": "z2ui5_cl_smp_app_120",
    "file": "src/01/z2ui5_cl_smp_app_120.clas.abap",
    "category": "Device",
@@ -872,6 +1003,57 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_506",
+   "file": "src/01/z2ui5_cl_smp_app_506.clas.abap",
+   "category": "Event",
+   "stage": "talk",
+   "title": "Event",
+   "description": "Literal Arguments (check_arg_literal)",
+   "summary": "An event argument that starts with $ or { is live UI5 expression syntax and gets resolved on the client - check_arg_literal sends it as the text it is.",
+   "keywords": [
+    "event",
+    "argument",
+    "literal",
+    "quoted",
+    "expression",
+    "evaluated",
+    "check_arg_literal",
+    "t_arg",
+    "data",
+    "binding",
+    "syntax",
+    "dollar",
+    "brace"
+   ],
+   "docs": []
+  },
+  {
+   "class": "z2ui5_cl_smp_app_505",
+   "file": "src/01/z2ui5_cl_smp_app_505.clas.abap",
+   "category": "Event",
+   "stage": "talk",
+   "title": "Event",
+   "description": "Prevent Default per Column",
+   "summary": "One sort wire, two behaviours: the date column is sorted in the backend because its display text cannot be sorted by the client, every other column keeps the built-in client sort.",
+   "keywords": [
+    "grid",
+    "table",
+    "sort",
+    "column",
+    "prevent",
+    "default",
+    "expression",
+    "prevent_default_expr",
+    "backend",
+    "sort",
+    "client",
+    "sort",
+    "per",
+    "column"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_186",
@@ -1144,6 +1326,99 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_498",
+   "file": "src/01/z2ui5_cl_smp_app_498.clas.abap",
+   "category": "Hash",
+   "stage": "move",
+   "title": "Hash",
+   "description": "App State, Bookmark and Share",
+   "summary": "The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.",
+   "keywords": [
+    "app",
+    "state",
+    "url",
+    "bookmark",
+    "share",
+    "clipboard",
+    "copy",
+    "link",
+    "restore",
+    "deep",
+    "link",
+    "reload",
+    "app_state_set_active",
+    "app_state_get_href",
+    "sap-iapp-state",
+    "sap-xapp-state",
+    "switch",
+    "off",
+    "event",
+    "form"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/app_state"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_499",
+   "file": "src/01/z2ui5_cl_smp_app_499.clas.abap",
+   "category": "Hash",
+   "stage": "move",
+   "title": "Hash",
+   "description": "App-Owned Routing (#/detail)",
+   "summary": "The whole hash_* family in one app: hash_set pushes #/detail, hash_replace rewrites it in place, hash_back steps back like a router, a deep link restores.",
+   "keywords": [
+    "routing",
+    "hash",
+    "url",
+    "page",
+    "browser",
+    "back",
+    "forward",
+    "history",
+    "deep",
+    "link",
+    "reload",
+    "hash_set",
+    "hash_replace",
+    "hash_back",
+    "hash_attach_changed",
+    "navcontainer",
+    "router",
+    "onnavback",
+    "follow_up_action",
+    "event",
+    "form"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_468",
+   "file": "src/01/z2ui5_cl_smp_app_468.clas.abap",
+   "category": "Hash",
+   "stage": "move",
+   "title": "Hash",
+   "description": "Routing mode fresh",
+   "summary": "Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.",
+   "keywords": [
+    "routing",
+    "mode",
+    "fresh",
+    "default",
+    "off",
+    "navigation",
+    "restart",
+    "new",
+    "instance",
+    "nav_app_call"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
+   ]
+  },
+  {
    "class": "z2ui5_cl_smp_app_480",
    "file": "src/01/z2ui5_cl_smp_app_480.clas.abap",
    "category": "Hash",
@@ -1399,6 +1674,35 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_381",
+   "file": "src/01/z2ui5_cl_smp_app_381.clas.abap",
+   "category": "Message",
+   "stage": "talk",
+   "title": "Message",
+   "description": "MessageToast via the Global Object",
+   "summary": "The MessageToast steered as the UI5 control it is: every sap.m.MessageToast option 1:1 through the global object, plus a toast composed on the client without a round-trip.",
+   "keywords": [
+    "toast",
+    "notification",
+    "global",
+    "object",
+    "control_global",
+    "follow_up_action",
+    "options",
+    "duration",
+    "position",
+    "animation",
+    "anchor",
+    "collision",
+    "class",
+    "css",
+    "template"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
+   ]
+  },
+  {
    "class": "z2ui5_cl_smp_app_452",
    "file": "src/01/z2ui5_cl_smp_app_452.clas.abap",
    "category": "Message",
@@ -1521,6 +1825,30 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_510",
+   "file": "src/01/z2ui5_cl_smp_app_510.clas.abap",
+   "category": "Nested View",
+   "stage": "move",
+   "title": "Nested View",
+   "description": "Destroy and Target a Slot (A)",
+   "summary": "Two nested views built and torn down on demand, and a frontend action aimed at one of them by its slot - the view parameter of follow_up_action.",
+   "keywords": [
+    "nested",
+    "view",
+    "destroy",
+    "nest_view_destroy",
+    "nest2_view_destroy",
+    "slot",
+    "scope",
+    "cs_view",
+    "nested",
+    "nested2",
+    "control_by_id",
+    "focus"
+   ],
+   "docs": []
+  },
+  {
    "class": "z2ui5_cl_smp_app_104",
    "file": "src/01/z2ui5_cl_smp_app_104.clas.abap",
    "category": "Nested View",
@@ -1600,6 +1928,32 @@
     "confirm",
     "cancel",
     "popover_display"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_052",
+   "file": "src/01/z2ui5_cl_smp_app_052.clas.abap",
+   "category": "Popover",
+   "stage": "talk",
+   "title": "Popover",
+   "description": "Open from a Table Row (A)",
+   "summary": "Opens a Popover from a table row - which row was pressed, how its record reaches the popover, and how a frontend action is aimed at the popover slot.",
+   "keywords": [
+    "list",
+    "report",
+    "dynamicpage",
+    "row",
+    "link",
+    "details",
+    "table",
+    "popover",
+    "slot",
+    "cs_view",
+    "focus",
+    "control_by_id"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover"
@@ -1933,6 +2287,31 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/tables"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_504",
+   "file": "src/01/z2ui5_cl_smp_app_504.clas.abap",
+   "category": "Table",
+   "stage": "rows",
+   "title": "Table",
+   "description": "Refused Cell Values (t_model_skipped)",
+   "summary": "What happens to a table cell the user fills with text that does not fit its ABAP type: the cell is skipped, t_model_skipped names it, and the app shows the user why.",
+   "keywords": [
+    "table",
+    "edit",
+    "refused",
+    "cell",
+    "conversion",
+    "error",
+    "t_model_skipped",
+    "valuestate",
+    "packed",
+    "price",
+    "integer",
+    "nested",
+    "row_parent"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_053",
