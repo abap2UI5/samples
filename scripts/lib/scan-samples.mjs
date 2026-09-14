@@ -105,11 +105,21 @@ function groupOf(dir) {
  * than dropped: the overview must not list them, and a catalogue that claims
  * to account for the tree has to be able to say they exist.
  *
- * @returns {{areas: Record<string, object[]>, hidden: object[]}}
+ * So are the classes this scan cannot place - `orphans`. A sample carries the
+ * name of a sample wherever it sits, but only a class inside an AREA becomes a
+ * tile, and the two skips that decide it (a class in the `src/` root, a class
+ * in a top-level package that is not an area) used to be silent `continue`s.
+ * Fourteen samples sat in the root package for two commits because of it:
+ * absent from the overview app and from SAMPLES.md, and every gate green,
+ * because nothing that counts tiles can miss what it never scanned. They are
+ * collected here and `check-orphan-samples.mjs` refuses them.
+ *
+ * @returns {{areas: Record<string, object[]>, hidden: object[], orphans: object[]}}
  */
 function scanSamples() {
   const areas = Object.fromEntries(AREAS.map((a) => [a, []]));
   const hidden = [];
+  const orphans = [];
 
   for (const abap of walk(SRC)) {
     if (!abap.endsWith('.clas.abap')) continue;
@@ -118,12 +128,14 @@ function scanSamples() {
     if (!cls.startsWith(SAMPLE_PREFIX)) continue;
 
     const rel = path.relative(SRC, abap).split(path.sep); // [ area, ...subfolders, file ]
-    if (rel.length < 2) continue; // a class directly in src/ root is never a tile
+    const where = path.relative(ROOT, abap).split(path.sep).join('/');
+    // a class directly in src/ root is never a tile - and never intended
+    if (rel.length < 2) { orphans.push({ app: cls, path: where, why: 'the src/ root package' }); continue; }
     const area = rel[0];
     // full subfolder path ("03" or nested "03/01") so nested subpackages form
     // their own group directly after their parent slot
     const subnum = rel.slice(1, -1).join('/');
-    if (!(area in areas)) continue;
+    if (!(area in areas)) { orphans.push({ app: cls, path: where, why: `src/${area}, which is not a sample area` }); continue; }
 
     const xmlPath = abap.replace(/\.clas\.abap$/, '.clas.xml');
     if (!fs.existsSync(xmlPath)) { console.warn(`skipping ${cls}: no .clas.xml`); continue; }
@@ -233,7 +245,7 @@ function scanSamples() {
     seenText.set(key, entry.app);
   }
 
-  return { areas, hidden };
+  return { areas, hidden, orphans };
 }
 
 export { ROOT, SRC, AREAS, DOCS_SITE, scanSamples, headerBase };
