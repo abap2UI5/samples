@@ -3,12 +3,12 @@
 
 # The sample catalogue
 
-Every app in this repository — 161 of them — with what it shows and a link
+Every app in this repository — 147 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
 **106 of them ship on every branch** — the portable set the README counts:
-`src/01` plus this overview app. The other 55 are under `src/00` and are
+`src/01` plus this overview app. The other 41 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
 in the tree is invisible.
@@ -261,33 +261,12 @@ overview app itself, that is 106 apps on every branch.
 
 ## Not in any overview — `src/00`
 
-50 apps with no tile anywhere (AGENTS.md section 3) — reachable
+36 apps with no tile anywhere (AGENTS.md section 3) — reachable
 by class name only, which is what this section is for. They are held to a
 lower bar than `src/01`: an experimental sample may use something newer than
 UI5 1.71, and a testing app exists to be run by a check, not to be learned
 from. Both packages are **stripped from the `702` branch**, so this section
 is absent there.
-
-### system — `src/00/`
-
-14 app(s).
-
-| Sample | Class |
-|---|---|
-| **Basics IV** — Events, Views and Roundtrips<br>What one event does to a running app: a second view replaces the first, the state comes back with it, and an uncaught error surfaces where you can see it.<br><sub>roundtrip restart second view uncaught error controller basics check_on_navigated get</sub><br><sub>docs: [cookbook/event_navigation/life_cycle](https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle), [cookbook/expert_more/snippets](https://abap2ui5.github.io/docs/cookbook/expert_more/snippets), [tutorials/walkthrough/step-3](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-3)</sub> | [`Z2UI5_CL_SMP_APP_004`](src/00/z2ui5_cl_smp_app_004.clas.abap) |
-| **Binding** — Omit Initial Values<br>An ABAP field is never absent, only initial - so a bound 0 overrides the UI5 default. omit_initial leaves initial fields out of the model, omit_initial_paths only the ones you name.<br><sub>binding omit initial default property absent omit_initial omit_initial_paths ratingindicator maxvalue enabled boolean</sub> | [`Z2UI5_CL_SMP_APP_507`](src/00/z2ui5_cl_smp_app_507.clas.abap) |
-| **Binding** — Path Only (_bind_path)<br>_bind_path( ) hands you the model PATH of an attribute instead of {/PATH}: the piece a composed expression binding, a sorter or a bindElement needs.<br><sub>binding path only bare path _bind_path expression binding sorter binding info composed raw string</sub> | [`Z2UI5_CL_SMP_APP_508`](src/00/z2ui5_cl_smp_app_508.clas.abap) |
-| **Binding** — Pre-serialized JSON (json)<br>A string that already holds JSON is spliced into the model as a node instead of a quoted string - a list bound to an array nobody declared an ABAP type for.<br><sub>binding json string spliced model node object array pre-serialized _bind json = abap_true no abap type</sub> | [`Z2UI5_CL_SMP_APP_509`](src/00/z2ui5_cl_smp_app_509.clas.abap) |
-| **Device** — Frontend Info: UI5 Version, Theme, OS, Browser<br>Asks the frontend what it is: UI5 version, theme, operating system, browser and user agent, in one call.<br><sub>client info ui5 version theme os user agent device cs_device browser orientation constants</sub><br><sub>docs: [cookbook/device_capabilities/info](https://abap2ui5.github.io/docs/cookbook/device_capabilities/info)</sub> | [`Z2UI5_CL_SMP_APP_122`](src/00/z2ui5_cl_smp_app_122.clas.abap) |
-| **Event** — Literal Arguments (check_arg_literal)<br>An event argument that starts with $ or { is live UI5 expression syntax and gets resolved on the client - check_arg_literal sends it as the text it is.<br><sub>event argument literal quoted expression evaluated check_arg_literal t_arg data binding syntax dollar brace</sub> | [`Z2UI5_CL_SMP_APP_506`](src/00/z2ui5_cl_smp_app_506.clas.abap) |
-| **Event** — Prevent Default per Column<br>One sort wire, two behaviours: the date column is sorted in the backend because its display text cannot be sorted by the client, every other column keeps the built-in client sort.<br><sub>grid table sort column prevent default expression prevent_default_expr backend sort client sort per column</sub> | [`Z2UI5_CL_SMP_APP_505`](src/00/z2ui5_cl_smp_app_505.clas.abap) |
-| **Hash** — App State, Bookmark and Share<br>The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.<br><sub>app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state switch off event form</sub><br><sub>docs: [cookbook/event_navigation/navigation/app_state](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/app_state)</sub> | [`Z2UI5_CL_SMP_APP_498`](src/00/z2ui5_cl_smp_app_498.clas.abap) |
-| **Hash** — App-Owned Routing (#/detail)<br>The whole hash_* family in one app: hash_set pushes #/detail, hash_replace rewrites it in place, hash_back steps back like a router, a deep link restores.<br><sub>routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback follow_up_action event form</sub><br><sub>docs: [cookbook/event_navigation/navigation/hash](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash)</sub> | [`Z2UI5_CL_SMP_APP_499`](src/00/z2ui5_cl_smp_app_499.clas.abap) |
-| **Hash** — Routing mode fresh<br>Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.<br><sub>routing mode fresh default off navigation restart new instance nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/navigation/hash](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash)</sub> | [`Z2UI5_CL_SMP_APP_468`](src/00/z2ui5_cl_smp_app_468.clas.abap) |
-| **Message** — MessageToast via the Global Object<br>The MessageToast steered as the UI5 control it is: every sap.m.MessageToast option 1:1 through the global object, plus a toast composed on the client without a round-trip.<br><sub>toast notification global object control_global follow_up_action options duration position animation anchor collision class css template</sub><br><sub>docs: [cookbook/translation_messages/message](https://abap2ui5.github.io/docs/cookbook/translation_messages/message)</sub> | [`Z2UI5_CL_SMP_APP_381`](src/00/z2ui5_cl_smp_app_381.clas.abap) |
-| **Nested View** — Destroy and Target a Slot (A)<br>Two nested views built and torn down on demand, and a frontend action aimed at one of them by its slot - the view parameter of follow_up_action.<br><sub>nested view destroy nest_view_destroy nest2_view_destroy slot scope cs_view nested nested2 control_by_id focus</sub> | [`Z2UI5_CL_SMP_APP_510`](src/00/z2ui5_cl_smp_app_510.clas.abap) |
-| **Popover** — Open from a Table Row (A)<br>Opens a Popover from a table row - which row was pressed, how its record reaches the popover, and how a frontend action is aimed at the popover slot.<br><sub>list report dynamicpage row link details table popover slot cs_view focus control_by_id</sub><br><sub>docs: [cookbook/popup_popover/popover](https://abap2ui5.github.io/docs/cookbook/popup_popover/popover)</sub> | [`Z2UI5_CL_SMP_APP_052`](src/00/z2ui5_cl_smp_app_052.clas.abap) |
-| **Table** — Refused Cell Values (t_model_skipped)<br>What happens to a table cell the user fills with text that does not fit its ABAP type: the cell is skipped, t_model_skipped names it, and the app shows the user why.<br><sub>table edit refused cell conversion error t_model_skipped valuestate packed price integer nested row_parent</sub> | [`Z2UI5_CL_SMP_APP_504`](src/00/z2ui5_cl_smp_app_504.clas.abap) |
 
 ### testing — `src/00/98`
 

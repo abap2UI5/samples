@@ -445,7 +445,16 @@ that by comparing every tile's group against the first one; with the whole
 catalog in a single package the heading would only repeat the page title, so it
 is left out — and because nothing then separates the first block from the
 header rows above it, that first block opens with the same `sapUiSmallMarginTop`
-the other blocks carry. Keep that check free of table expressions (`t_catalog[ 1 ]`): the
+the other blocks carry. The title and the stage blurb under it go into **one
+`VBox`**, and that `VBox` carries the margins
+(`sapUiSmallMarginBegin sapUiSmallMarginEnd sapUiSmallMarginTop sapUiTinyMarginBottom`)
+— not the two controls themselves. Both `sap.m.Title` and `sap.m.Text` are
+`display: inline-block`, so as siblings of the page they shared a line whenever
+the blurb happened to fit beside the heading: a long blurb wrapped below its
+title, a short one sat next to it, and no two groups looked alike. The `VBox` is
+what stacks them, and its begin margin is what puts the heading in the same
+column as the rows, the blurb and the legend instead of one rem to the left of
+all three. Keep that check free of table expressions (`t_catalog[ 1 ]`): the
 702 downport hoists them out of their guarding condition, so an `IS NOT INITIAL`
 guard around one does not survive the transformation.
 
