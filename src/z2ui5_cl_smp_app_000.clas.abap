@@ -345,18 +345,29 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       IF tile-group <> prev_group.
 
         IF show_groups = abap_true.
-          page->tag( `Title`
+          " both sap.m.Title and sap.m.Text are display: inline-block, so a
+          " title and the paragraph belonging to it share one line whenever
+          " the paragraph happens to fit beside it - which is why the long
+          " blurb of "Start here" wrapped to its own line while the three
+          " shorter ones sat next to their heading. The VBox is the block
+          " that stacks the two, and it carries the margins the two used to
+          " carry one by one - including the begin margin the Title never
+          " had, which left every heading one rem to the left of the rows,
+          " the paragraph and the legend
+          DATA(head) = page->ele( `VBox`
+              )->a( n = `class` v = `sapUiSmallMarginBegin sapUiSmallMarginEnd sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+
+          head->tag( `Title`
               )->a( n = `text`  t = tile-group
-              )->a( n = `class` v = `sapUiSmallMarginTop sapUiTinyMarginBottom`
               )->a( n = `level` v = `H3` ).
 
           " the stage's one paragraph, on the first tile of the group only -
           " a filtered list may start the group elsewhere, and then the
           " title alone has to do
           IF tile-intro IS NOT INITIAL.
-            page->tag( `Text`
-                )->a( n = `text`  v = tile-intro
-                )->a( n = `class` v = `sapUiSmallMarginBegin sapUiSmallMarginEnd sapUiTinyMarginBottom` ).
+            head->tag( `Text`
+                )->a( n = `text`  t = tile-intro
+                )->a( n = `class` v = `sapUiTinyMarginTop` ).
           ENDIF.
 
         ELSE.
