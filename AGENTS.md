@@ -90,8 +90,17 @@ They spent two commits in the `src/` **root package** on the way, which has no
 catalog at all: `scripts/lib/scan-samples.mjs` skips a class directly in
 `src/` (`rel.length < 2`), so all fourteen were missing from the overview app
 and from `SAMPLES.md` while every gate stayed green. **The root package holds
-the overview app and nothing else** — a sample parked there is invisible, and
-nothing reports it.
+the overview app and nothing else** — a sample parked there is invisible to
+every catalogue.
+
+That last part no longer goes unreported: `node scripts/check-orphan-samples.mjs`
+(`npm run check:orphans`, and the `orphan_samples` job on every pull request)
+refuses a `z2ui5_cl_smp_app_*` class that sits outside a sample area. It is the
+one gate here that does **not** count tiles — which is why it is the only one
+that could have caught this: the other thirteen all read the same scan, and the
+scan never saw these fourteen. A ZZZ helper and a `src/00/98` app get no tile
+either and are fine; being skipped by a RULE is not the same as being skipped
+by where the file happens to sit.
 
 This tree is machine-checked: `node scripts/check-agents-structure.mjs` compares
 it against the actual `package.devc.xml` `<CTEXT>` values and fails on any
@@ -795,7 +804,7 @@ newcomer would actually type:
 
 | Header | What belongs in it |
 |--------|--------------------|
-| `Basics I` … `VI` | the entry point — first app, lifecycle, the minimum loop, and what you reach for around it (the developer tools, a unit test on the app's own logic). The only numbered series: the Roman numeral orders them as a learning path (rule 5 sorts by `header`), and `header_base( )` still renders them as one block |
+| `Basics I` … `VII` | the entry point — first app, lifecycle, the minimum loop, and what you reach for around it (the developer tools, a unit test on the app's own logic, the translation of its texts). The only numbered series: the Roman numeral orders them as a learning path (rule 5 sorts by `header`), and `header_base( )` still renders them as one block |
 | `Binding` | `_bind( )`, binding syntax, UI5 model types, the model itself |
 | `Browser` | the browser page and tab: URL, title, favicon, reload, clipboard, storage, logout |
 | `Control Behaviour` | one UI5 control is the topic — how it *behaves* and how the backend drives it, typically by calling its methods by ID. **Not** a control reference: that is [samples-controls](https://github.com/abap2UI5/samples-controls), and the header says so (§1) |
@@ -888,7 +897,10 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 2. Regenerate the overview catalog and `SAMPLES.md`: `npm run launchpad` (§4).
 3. If a subpackage was added/removed/renamed: update the §1 tree and run
    `node scripts/check-agents-structure.mjs`.
-4. `abaplint` → 0 issues → commit.
+4. Check the sample did not land somewhere no catalogue reaches:
+   `npm run check:orphans` (§1). Rule 2 of §4 says every sample is listed;
+   this is what enforces it from the tree side.
+5. `abaplint` → 0 issues → commit.
 
 **Before every commit**
 
@@ -1116,6 +1128,13 @@ Everything else about a script follows from that:
   in CI.
 - **One scan, two renderers.** Anything that reads the sample tree goes through
   `scripts/lib/scan-samples.mjs` (§4). A second scan drifts silently.
+- **A scan that cannot place a class says so.** `scanSamples( )` returns
+  `orphans` next to `areas` and `hidden`, and `check-orphan-samples.mjs`
+  refuses them (§1). The two skips that produce one — a class in the `src/`
+  root, a class in a top-level package that is not an area — were bare
+  `continue`s until 2026-09-14, which is how fourteen samples went missing
+  from both catalogues at once. **Never add a silent `continue` to that
+  loop**: a class the scan drops has to come back out of it somewhere.
 - **A gate that needs the network says so and passes** when it cannot reach it
   (`check-app-rules`, `check-docs-links`) — see §6 below and the header of
   `scripts/check-app-rules.mjs`. Prefer a sibling checkout over a fetch, so a

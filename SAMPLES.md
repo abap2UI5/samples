@@ -3,11 +3,11 @@
 
 # The sample catalogue
 
-Every app in this repository — 161 of them — with what it shows and a link
+Every app in this repository — 168 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
-**120 of them ship on every branch** — the portable set the README counts:
+**127 of them ship on every branch** — the portable set the README counts:
 `src/01` plus this overview app. The other 41 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
@@ -16,7 +16,7 @@ in the tree is invisible.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 113 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 120 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -31,10 +31,10 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path — `src/01`
 
-The **113 ready-to-run samples** the README leads with, and the
+The **120 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 6 helper apps they call and the
-overview app itself, that is 120 apps on every branch.
+overview app itself, that is 127 apps on every branch.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -48,6 +48,7 @@ overview app itself, that is 120 apps on every branch.
 | **Basics IV** — Events, Views and Roundtrips<br>What one event does to a running app: a second view replaces the first, the state comes back with it, and an uncaught error surfaces where you can see it.<br><sub>roundtrip restart second view uncaught error controller basics check_on_navigated get</sub><br><sub>docs: [cookbook/event_navigation/life_cycle](https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle), [cookbook/expert_more/snippets](https://abap2ui5.github.io/docs/cookbook/expert_more/snippets), [tutorials/walkthrough/step-3](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-3)</sub> | [`Z2UI5_CL_SMP_APP_004`](src/01/z2ui5_cl_smp_app_004.clas.abap) |
 | **Basics V** — The Developer Tools (Ctrl+F12)<br>What Ctrl+F12 opens: the request and response payload, the generated XML view, the model, the source and the error log - the first place to look when something does not render.<br><sub>developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export</sub><br><sub>docs: [cookbook/troubleshooting/common_failures](https://abap2ui5.github.io/docs/cookbook/troubleshooting/common_failures)</sub> | [`Z2UI5_CL_SMP_APP_496`](src/01/z2ui5_cl_smp_app_496.clas.abap) |
 | **Basics VI** — Unit Tests for the App Logic<br>The app logic in a method of its own - no client, no attributes - so the local test class beside the class can assert it with ABAP Unit.<br><sub>unit test abapunit testclasses assert testable logic method</sub> | [`Z2UI5_CL_SMP_APP_503`](src/01/z2ui5_cl_smp_app_503.clas.abap) |
+| **Basics VII** — Translatable Texts (Text Elements)<br>Puts the screen texts in the class's own text elements instead of an i18n file, so SE63 translates them and the app shows them in the logon language.<br><sub>translation i18n text element text symbol textpool language message class multi language</sub> | [`Z2UI5_CL_SMP_APP_519`](src/01/z2ui5_cl_smp_app_519.clas.abap) |
 
 ### Binding
 
@@ -70,6 +71,7 @@ overview app itself, that is 120 apps on every branch.
 | Sample | Class |
 |---|---|
 | Copy to Clipboard (A)<br>Copies text into the browser clipboard from the backend: a follow-up action carries the string, a toast confirms what landed there.<br><sub>clipboard paste copy text area</sub><br><sub>docs: [cookbook/browser_interaction/clipboard](https://abap2ui5.github.io/docs/cookbook/browser_interaction/clipboard)</sub> | [`Z2UI5_CL_SMP_APP_325`](src/01/z2ui5_cl_smp_app_325.clas.abap) |
+| Keyboard Layout of an Input (inputmode) (C)<br>Sets the HTML inputmode of an Input through the bound inputMode property of z2ui5.cc.InputExt - the keyboard layout is model data, not an action.<br><sub>inputmode soft keyboard numeric keypad barcode scanner mobile inputext bound property</sub> | [`Z2UI5_CL_SMP_APP_516`](src/01/z2ui5_cl_smp_app_516.clas.abap) |
 | Local and Session Storage (A,C)<br>Writes to the browser's local and session storage and reads it back, so a value survives a reload without any state in the backend.<br><sub>localstorage sessionstorage persist store_data offline</sub><br><sub>docs: [cookbook/browser_interaction/clipboard](https://abap2ui5.github.io/docs/cookbook/browser_interaction/clipboard)</sub> | [`Z2UI5_CL_SMP_APP_327`](src/01/z2ui5_cl_smp_app_327.clas.abap) |
 | Logout from the Client (A)<br>Ends the session from the client - the logoff an ICF session or a Fiori launchpad needs, triggered as a follow-up action.<br><sub>logoff signout icf session end fiori launchpad</sub> | [`Z2UI5_CL_SMP_APP_361`](src/01/z2ui5_cl_smp_app_361.clas.abap) |
 | Open a URL in a New Tab (A)<br>Opens a URL in a new browser tab from an event, leaving the running app where it is.<br><sub>url window open_new_tab link target</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_073`](src/01/z2ui5_cl_smp_app_073.clas.abap) |
@@ -83,10 +85,14 @@ overview app itself, that is 120 apps on every branch.
 
 | Sample | Class |
 |---|---|
+| Aggregation Item by Index (A)<br>Jumps a Carousel to a page that was cloned from a bound template - addressed positionally as id/aggregation/index, the only way to reach a clone.<br><sub>carousel aggregation item index clone template setactivepage positional control_by_id</sub> | [`Z2UI5_CL_SMP_APP_514`](src/01/z2ui5_cl_smp_app_514.clas.abap) |
 | Expand a Panel by ID (setExpanded) (A)<br>Expands a Panel by calling setExpanded on it by ID - a whitelisted control call, no roundtrip and no model behind it.<br><sub>panel collapse expand setexpanded control_by_id whitelisted</sub><br><sub>docs: [cookbook/event_navigation/frontend](https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend)</sub> | [`Z2UI5_CL_SMP_APP_448`](src/01/z2ui5_cl_smp_app_448.clas.abap) |
+| Inline CSS on a Control (css) (A)<br>Writes a whitelisted CSS declaration onto a control's own DOM node with the css control method - for a value the control has no property for.<br><sub>css inline style background color opacity control_by_id dom node no property</sub> | [`Z2UI5_CL_SMP_APP_513`](src/01/z2ui5_cl_smp_app_513.clas.abap) |
 | MultiInput with Tokens (C)<br>A MultiInput with tokens and suggestions bound to an internal table - the value help for a field that holds many values at once.<br><sub>multiinput token tokens suggestion custom control</sub><br><sub>docs: [cookbook/expert_more/value_help](https://abap2ui5.github.io/docs/cookbook/expert_more/value_help)</sub> | [`Z2UI5_CL_SMP_APP_078`](src/01/z2ui5_cl_smp_app_078.clas.abap) |
 | Open the PDF Viewer by ID (A)<br>Opens the PDF viewer by calling it by ID, so a document can be shown from an event without rebuilding the view.<br><sub>pdfviewer pdf document viewer popup control_by_id whitelisted</sub><br><sub>docs: [cookbook/device_capabilities/pdf](https://abap2ui5.github.io/docs/cookbook/device_capabilities/pdf), [cookbook/event_navigation/frontend](https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend)</sub> | [`Z2UI5_CL_SMP_APP_449`](src/01/z2ui5_cl_smp_app_449.clas.abap) |
+| Register an Icon Font (A)<br>Registers the sap.tnt icon collection with IconPool so a sap-icon://SAP-icons-TNT/... URI resolves - without it the icon renders no glyph and logs nothing.<br><sub>icon font registerfont iconpool tnt collection glyph missing control_global</sub> | [`Z2UI5_CL_SMP_APP_518`](src/01/z2ui5_cl_smp_app_518.clas.abap) |
 | Switch NavContainer Page by ID (A)<br>Switches the page of a NavContainer and the tab of an IconTabBar by ID, so navigation inside a view costs no roundtrip.<br><sub>navcontainer icontabbar icontabheader page switch control_by_id whitelisted</sub><br><sub>docs: [cookbook/event_navigation/frontend](https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend)</sub> | [`Z2UI5_CL_SMP_APP_088`](src/01/z2ui5_cl_smp_app_088.clas.abap) |
+| The Global Busy Indicator (A)<br>Shows and hides the global BusyIndicator from ABAP through control_global - the singleton has no id, so a global target is the only wire that reaches it.<br><sub>busy indicator global control_global show hide blocking wait spinner long running</sub> | [`Z2UI5_CL_SMP_APP_515`](src/01/z2ui5_cl_smp_app_515.clas.abap) |
 | Wizard with Steps (A)<br>Drives a Wizard from the backend: setting the next step and discarding progress by ID, which is how a branching wizard is steered.<br><sub>wizard step branching discardprogress setnextstep control_by_id</sub><br><sub>docs: [cookbook/event_navigation/frontend](https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend)</sub> | [`Z2UI5_CL_SMP_APP_202`](src/01/z2ui5_cl_smp_app_202.clas.abap) |
 
 ### CSS
@@ -124,6 +130,7 @@ overview app itself, that is 120 apps on every branch.
 |---|---|
 | Download to the Browser (A)<br>Sends a file to the browser as a download - an xstring encoded as base64, handed over as an attachment.<br><sub>export save base64 attachment xstring document</sub><br><sub>docs: [cookbook/device_capabilities/upload_download](https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download)</sub> | [`Z2UI5_CL_SMP_APP_186`](src/01/z2ui5_cl_smp_app_186.clas.abap) |
 | Upload to the Backend (C)<br>Takes a file from the FileUploader into the backend as base64 - a picture or a document, arriving as an xstring.<br><sub>fileuploader base64 attachment import picture document</sub><br><sub>docs: [cookbook/device_capabilities/upload_download](https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download)</sub> | [`Z2UI5_CL_SMP_APP_074`](src/01/z2ui5_cl_smp_app_074.clas.abap) |
+| Upload with an UploadSet (C)<br>Takes files from a sap.m.upload.UploadSet into the backend as base64 - the invisible UploadSetExt companion reads each one, so no upload endpoint is needed.<br><sub>uploadset upload drag drop multiple files base64 attachment uploadsetext companion</sub> | [`Z2UI5_CL_SMP_APP_517`](src/01/z2ui5_cl_smp_app_517.clas.abap) |
 
 ### Focus
 
