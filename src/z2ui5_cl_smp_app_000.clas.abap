@@ -773,7 +773,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Show many rows` header = `Table` sub = `Editable Cells, Add and Delete Rows` keywords = `edit input add row delete multiselect toolbar` path = `src/01` app = `z2ui5_cl_smp_app_011` )
       ( group = `Show many rows` header = `Table` sub = `Filter Rows in the Backend` keywords = `filter server side form growing where` path = `src/01` app = `z2ui5_cl_smp_app_045` )
       ( group = `Show many rows` header = `Table` sub = `Large Table with Growing and ScrollContainer` keywords = `growing 10000 rows sticky toolbar sort performance` path = `src/01` app = `z2ui5_cl_smp_app_006` )
-      ( group = `Show many rows` header = `Table` sub = `Live Search over a Large Table` keywords = `live search table filter keystroke roundtrip busy check_queue_last typing` path = `src/01` app = `z2ui5_cl_smp_app_059` )
+      ( group = `Show many rows` header = `Table` sub = `Live Search over a Large Table` keywords = `live search table filter keystroke roundtrip busy indicator overlay check_queue_last check_no_busy typing` path = `src/01` app = `z2ui5_cl_smp_app_059` )
       ( group = `Show many rows` header = `Table`
         sub = `Refused Cell Values (t_model_skipped)`
         keywords = `table edit refused cell conversion error t_model_skipped valuestate packed price integer nested row_parent`
