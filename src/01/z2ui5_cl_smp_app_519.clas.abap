@@ -1,5 +1,6 @@
 " @keywords translation i18n text element text symbol textpool language message class multi language
 " @summary Puts the screen texts in the class's own text elements instead of an i18n file, so SE63 translates them and the app shows them in the logon language.
+" @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/translation_i18n
 CLASS z2ui5_cl_smp_app_519 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

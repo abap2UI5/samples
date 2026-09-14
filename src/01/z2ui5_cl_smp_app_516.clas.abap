@@ -1,5 +1,6 @@
 " @keywords inputmode soft keyboard numeric keypad barcode scanner mobile inputext bound property
 " @summary Sets the HTML inputmode of an Input through the bound inputMode property of z2ui5.cc.InputExt - the keyboard layout is model data, not an action.
+" @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard
 CLASS z2ui5_cl_smp_app_516 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
