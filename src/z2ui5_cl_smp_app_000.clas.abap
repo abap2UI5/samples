@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 113 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 120 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -730,6 +730,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         keywords = `developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export`
         path = `src/01` app = `z2ui5_cl_smp_app_496` )
       ( group = `Start here` header = `Basics VI` sub = `Unit Tests for the App Logic` keywords = `unit test abapunit testclasses assert testable logic method` path = `src/01` app = `z2ui5_cl_smp_app_503` )
+      ( group = `Start here` header = `Basics VII` sub = `Translatable Texts (Text Elements)` keywords = `translation i18n text element text symbol textpool language message class multi language` path = `src/01` app = `z2ui5_cl_smp_app_519` )
       ( group = `Get your data on screen` header = `Binding`
         sub = `A View Built From RTTI, No Field Named`
         keywords = `rtti generic view runtime columns get_components describe_by_data no field name itab structure column cell binding`
@@ -862,6 +863,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         keywords = `clipboard paste copy text area`
         intro = `Where an app stops being only a view: the browser it runs in, the device it runs on, files in and out, custom CSS, and driving a control from the backend by its id.`
         path = `src/01` app = `z2ui5_cl_smp_app_325` )
+      ( group = `Reach outside the view` header = `Browser`
+        sub = `Keyboard Layout of an Input (inputmode) (C)`
+        keywords = `inputmode soft keyboard numeric keypad barcode scanner mobile inputext bound property`
+        path = `src/01` app = `z2ui5_cl_smp_app_516` )
       ( group = `Reach outside the view` header = `Browser` sub = `Local and Session Storage (A,C)` keywords = `localstorage sessionstorage persist store_data offline` path = `src/01` app = `z2ui5_cl_smp_app_327` )
       ( group = `Reach outside the view` header = `Browser` sub = `Logout from the Client (A)` keywords = `logoff signout icf session end fiori launchpad` path = `src/01` app = `z2ui5_cl_smp_app_361` )
       ( group = `Reach outside the view` header = `Browser` sub = `Open a URL in a New Tab (A)` keywords = `url window open_new_tab link target` path = `src/01` app = `z2ui5_cl_smp_app_073` )
@@ -870,10 +875,14 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Reach outside the view` header = `Browser` sub = `Set the Tab Favicon (A)` keywords = `favicon icon tab image data uri` path = `src/01` app = `z2ui5_cl_smp_app_491` )
       ( group = `Reach outside the view` header = `Browser` sub = `Set the Tab Title (A)` keywords = `document.title tab caption headline set_title` path = `src/01` app = `z2ui5_cl_smp_app_125` )
       ( group = `Reach outside the view` header = `Browser` sub = `Soft Keyboard Mode on Mobile (A)` keywords = `mobile numeric keypad keyboard_set_mode phone input` path = `src/01` app = `z2ui5_cl_smp_app_352` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Aggregation Item by Index (A)` keywords = `carousel aggregation item index clone template setactivepage positional control_by_id` path = `src/01` app = `z2ui5_cl_smp_app_514` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `Expand a Panel by ID (setExpanded) (A)` keywords = `panel collapse expand setexpanded control_by_id whitelisted` path = `src/01` app = `z2ui5_cl_smp_app_448` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Inline CSS on a Control (css) (A)` keywords = `css inline style background color opacity control_by_id dom node no property` path = `src/01` app = `z2ui5_cl_smp_app_513` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `MultiInput with Tokens (C)` keywords = `multiinput token tokens suggestion custom control` path = `src/01` app = `z2ui5_cl_smp_app_078` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `Open the PDF Viewer by ID (A)` keywords = `pdfviewer pdf document viewer popup control_by_id whitelisted` path = `src/01` app = `z2ui5_cl_smp_app_449` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Register an Icon Font (A)` keywords = `icon font registerfont iconpool tnt collection glyph missing control_global` path = `src/01` app = `z2ui5_cl_smp_app_518` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `Switch NavContainer Page by ID (A)` keywords = `navcontainer icontabbar icontabheader page switch control_by_id whitelisted` path = `src/01` app = `z2ui5_cl_smp_app_088` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `The Global Busy Indicator (A)` keywords = `busy indicator global control_global show hide blocking wait spinner long running` path = `src/01` app = `z2ui5_cl_smp_app_515` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `Wizard with Steps (A)` keywords = `wizard step branching discardprogress setnextstep control_by_id` path = `src/01` app = `z2ui5_cl_smp_app_202` )
       ( group = `Reach outside the view` header = `CSS` sub = `Color Table Cells from the Backend` keywords = `color background conditional formatting style data attribute` path = `src/01` app = `z2ui5_cl_smp_app_305` )
       ( group = `Reach outside the view` header = `CSS` sub = `FlexBox Layouts with Custom Classes` keywords = `flexbox layout responsive navigation tile panel` path = `src/01` app = `z2ui5_cl_smp_app_255` )
@@ -886,7 +895,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         path = `src/01` app = `z2ui5_cl_smp_app_122` )
       ( group = `Reach outside the view` header = `Device` sub = `Geolocation from the Browser (C)` keywords = `gps position latitude longitude altitude location` path = `src/01` app = `z2ui5_cl_smp_app_120` )
       ( group = `Reach outside the view` header = `File` sub = `Download to the Browser (A)` keywords = `export save base64 attachment xstring document` path = `src/01` app = `z2ui5_cl_smp_app_186` )
-      ( group = `Reach outside the view` header = `File` sub = `Upload to the Backend (C)` keywords = `fileuploader base64 attachment import picture document` path = `src/01` app = `z2ui5_cl_smp_app_074` ) ).
+      ( group = `Reach outside the view` header = `File` sub = `Upload to the Backend (C)` keywords = `fileuploader base64 attachment import picture document` path = `src/01` app = `z2ui5_cl_smp_app_074` )
+      ( group = `Reach outside the view` header = `File` sub = `Upload with an UploadSet (C)` keywords = `uploadset upload drag drop multiple files base64 attachment uploadsetext companion` path = `src/01` app = `z2ui5_cl_smp_app_517` ) ).
 
   ENDMETHOD.
 

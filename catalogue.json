@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 113,
+  "samples": 120,
   "categories": 24,
   "stages": 6
  },
@@ -223,6 +223,32 @@
     "method"
    ],
    "docs": []
+  },
+  {
+   "class": "z2ui5_cl_smp_app_519",
+   "file": "src/01/z2ui5_cl_smp_app_519.clas.abap",
+   "category": "Basics",
+   "stage": "start",
+   "title": "Basics VII",
+   "description": "Translatable Texts (Text Elements)",
+   "summary": "Puts the screen texts in the class's own text elements instead of an i18n file, so SE63 translates them and the app shows them in the logon language.",
+   "keywords": [
+    "translation",
+    "i18n",
+    "text",
+    "element",
+    "text",
+    "symbol",
+    "textpool",
+    "language",
+    "message",
+    "class",
+    "multi",
+    "language"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/translation_messages/translation_i18n"
+   ]
   },
   {
    "class": "z2ui5_cl_smp_app_497",
@@ -495,6 +521,31 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_516",
+   "file": "src/01/z2ui5_cl_smp_app_516.clas.abap",
+   "category": "Browser",
+   "stage": "beyond",
+   "title": "Browser",
+   "description": "Keyboard Layout of an Input (inputmode) (C)",
+   "summary": "Sets the HTML inputmode of an Input through the bound inputMode property of z2ui5.cc.InputExt - the keyboard layout is model data, not an action.",
+   "keywords": [
+    "inputmode",
+    "soft",
+    "keyboard",
+    "numeric",
+    "keypad",
+    "barcode",
+    "scanner",
+    "mobile",
+    "inputext",
+    "bound",
+    "property"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard"
+   ]
+  },
+  {
    "class": "z2ui5_cl_smp_app_327",
    "file": "src/01/z2ui5_cl_smp_app_327.clas.abap",
    "category": "Browser",
@@ -651,6 +702,29 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_514",
+   "file": "src/01/z2ui5_cl_smp_app_514.clas.abap",
+   "category": "Control Behaviour",
+   "stage": "beyond",
+   "title": "Control Behaviour",
+   "description": "Aggregation Item by Index (A)",
+   "summary": "Jumps a Carousel to a page that was cloned from a bound template - addressed positionally as id/aggregation/index, the only way to reach a clone.",
+   "keywords": [
+    "carousel",
+    "aggregation",
+    "item",
+    "index",
+    "clone",
+    "template",
+    "setactivepage",
+    "positional",
+    "control_by_id"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
+   ]
+  },
+  {
    "class": "z2ui5_cl_smp_app_448",
    "file": "src/01/z2ui5_cl_smp_app_448.clas.abap",
    "category": "Control Behaviour",
@@ -665,6 +739,31 @@
     "setexpanded",
     "control_by_id",
     "whitelisted"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_513",
+   "file": "src/01/z2ui5_cl_smp_app_513.clas.abap",
+   "category": "Control Behaviour",
+   "stage": "beyond",
+   "title": "Control Behaviour",
+   "description": "Inline CSS on a Control (css) (A)",
+   "summary": "Writes a whitelisted CSS declaration onto a control's own DOM node with the css control method - for a value the control has no property for.",
+   "keywords": [
+    "css",
+    "inline",
+    "style",
+    "background",
+    "color",
+    "opacity",
+    "control_by_id",
+    "dom",
+    "node",
+    "no",
+    "property"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
@@ -713,6 +812,29 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_518",
+   "file": "src/01/z2ui5_cl_smp_app_518.clas.abap",
+   "category": "Control Behaviour",
+   "stage": "beyond",
+   "title": "Control Behaviour",
+   "description": "Register an Icon Font (A)",
+   "summary": "Registers the sap.tnt icon collection with IconPool so a sap-icon://SAP-icons-TNT/... URI resolves - without it the icon renders no glyph and logs nothing.",
+   "keywords": [
+    "icon",
+    "font",
+    "registerfont",
+    "iconpool",
+    "tnt",
+    "collection",
+    "glyph",
+    "missing",
+    "control_global"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
+   ]
+  },
+  {
    "class": "z2ui5_cl_smp_app_088",
    "file": "src/01/z2ui5_cl_smp_app_088.clas.abap",
    "category": "Control Behaviour",
@@ -728,6 +850,31 @@
     "switch",
     "control_by_id",
     "whitelisted"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_515",
+   "file": "src/01/z2ui5_cl_smp_app_515.clas.abap",
+   "category": "Control Behaviour",
+   "stage": "beyond",
+   "title": "Control Behaviour",
+   "description": "The Global Busy Indicator (A)",
+   "summary": "Shows and hides the global BusyIndicator from ABAP through control_global - the singleton has no id, so a global target is the only wire that reaches it.",
+   "keywords": [
+    "busy",
+    "indicator",
+    "global",
+    "control_global",
+    "show",
+    "hide",
+    "blocking",
+    "wait",
+    "spinner",
+    "long",
+    "running"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
@@ -1090,6 +1237,30 @@
     "import",
     "picture",
     "document"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_517",
+   "file": "src/01/z2ui5_cl_smp_app_517.clas.abap",
+   "category": "File",
+   "stage": "beyond",
+   "title": "File",
+   "description": "Upload with an UploadSet (C)",
+   "summary": "Takes files from a sap.m.upload.UploadSet into the backend as base64 - the invisible UploadSetExt companion reads each one, so no upload endpoint is needed.",
+   "keywords": [
+    "uploadset",
+    "upload",
+    "drag",
+    "drop",
+    "multiple",
+    "files",
+    "base64",
+    "attachment",
+    "uploadsetext",
+    "companion"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download"

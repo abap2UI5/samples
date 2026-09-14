@@ -56,6 +56,22 @@
   //     (z2ui5/cc/*.js) are delivered by the framework at runtime, and the
   //     SAPUI5 template namespace (…/core/template/1/repeat.js) is not part of
   //     OpenUI5. Nothing to fix in the app.
+  //     Only two of the companion controls are mirrored into the harness
+  //     (lib/cc-controls.mjs: MultiInputExt, MessageManager), so every OTHER
+  //     one a view names declaratively lands here - InputExt and UploadSetExt
+  //     are the two added with 516/517. Closing that properly means mirroring
+  //     them upstream in @abap2ui5/linter, not changing anything here.
+  //
+  // (a2) the same boundary one step further out: the harness reconstructs the
+  //     VIEW and never executes a frontend action, so anything a
+  //     follow_up_action sets up at runtime is missing while it renders. 518
+  //     registers the SAP-icons-TNT collection through control_global
+  //     ICON_POOL / registerFont in its init branch - the harness cannot run
+  //     that and reports the collection as unregistered. abap2UI5/samples-
+  //     controls carries the identical case as app 350, where its sidecar
+  //     states the same reason; a render error there has no line and no
+  //     stable message, so naming the file is the only instrument either
+  //     repository has.
   //
   // (b) what the RECONSTRUCTION or the sample's own intent makes unjudgeable.
   //     Neither of these is a defect — both were on this list as unresolved
@@ -161,6 +177,10 @@
         // (a) not served by the harness
         "z2ui5_cl_smp_app_(074|120|143|279|306|327|461|462|463)\\.",
         "z2ui5_cl_smp_app_(173|176)\\.",
+        // (a) an unmirrored companion control: InputExt, UploadSetExt
+        "z2ui5_cl_smp_app_(516|517)\\.",
+        // (a2) a runtime registration the harness cannot execute
+        "z2ui5_cl_smp_app_518\\.",
         // (b) UNRESOLVED — see above
         "z2ui5_cl_smp_app_(343|421)\\.",
         // (c) helper-built, not reconstructable
