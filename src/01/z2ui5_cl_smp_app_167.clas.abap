@@ -48,30 +48,25 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
         )->a( n = `href`   v = `https://sdk.openui5.org/topic/b0fb4de7364f4bcbb053a99aa645affe` ).
 
     page->tag( `Button`
-        )->a( n = `press` v = client->_event( val = `EVENT_FIX_VAL` t_arg = VALUE #(
-        ( `FIX_VAL` ) ) )
+        )->a( n = `press` v = client->_event( val = `EVENT_FIX_VAL` arg = `FIX_VAL` )
         )->a( n = `text`  v = `EVENT_FIX_VAL` ).
 
     page->tag( `Input`
         )->a( n = `value` v = client->_bind( mv_value ) ).
     page->tag( `Button`
-        )->a( n = `press` v = client->_event( val = `EVENT_MODEL_VALUE` t_arg = VALUE #(
-        ( `$` && client->_bind( mv_value ) ) ) )
+        )->a( n = `press` v = client->_event( val = `EVENT_MODEL_VALUE` arg = `$` && client->_bind( mv_value ) )
         )->a( n = `text`  v = `EVENT_MODEL_VALUE` ).
 
     page->tag( `Button`
-        )->a( n = `press` v = client->_event( val = `SOURCE_PROPERTY_TEXT` t_arg = VALUE #(
-        ( `${$source>/text}` ) ) )
+        )->a( n = `press` v = client->_event( val = `SOURCE_PROPERTY_TEXT` arg = `${$source>/text}` )
         )->a( n = `text`  v = `SOURCE_PROPERTY_TEXT` ).
 
     page->tag( `Input`
         )->a( n = `description` v = `make an input and press enter - `
-        )->a( n = `submit`      v = client->_event( val = `EVENT_PROPERTY_VALUE` t_arg = VALUE #(
-        ( `${$parameters>/value}` ) ) ) ).
+        )->a( n = `submit`      v = client->_event( val = `EVENT_PROPERTY_VALUE` arg = `${$parameters>/value}` ) ).
 
     page->tag( `Button`
-        )->a( n = `press` v = client->_event( val = `PARENT_PROPERTY_ID` t_arg = VALUE #(
-        ( `$event.oSource.oParent.sId` ) ) )
+        )->a( n = `press` v = client->_event( val = `PARENT_PROPERTY_ID` arg = `$event.oSource.oParent.sId` )
         )->a( n = `text`  v = `PARENT_PROPERTY_ID` ).
 
     client->view_display( view->stringify( ) ).

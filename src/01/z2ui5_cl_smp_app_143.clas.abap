@@ -148,7 +148,7 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
                 )->ele( n = `RowActionItem` ns = `table`
                     )->a( n = `icon`  v = `sap-icon://add`
                     )->a( n = `text`  v = `Add`
-                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_ADD` t_arg = VALUE #( ( `${MATNR}` ) ) ) ).
+                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_ADD` arg = `${MATNR}` ) ).
 
     client->view_display( view->stringify( ) ).
 

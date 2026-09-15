@@ -98,7 +98,7 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
             )->ele( n = `RowAction` ns = `table`
                 )->ele( n = `RowActionItem` ns = `table`
                     )->a( n = `icon`  v = `sap-icon://delete`
-                    )->a( n = `press` v = client->_event( val = `ROW_DELETE` t_arg = VALUE #( ( `${UUID}` ) ) ) ).
+                    )->a( n = `press` v = client->_event( val = `ROW_DELETE` arg = `${UUID}` ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )

@@ -107,8 +107,8 @@ CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `SearchField`
             )->a( n = `width`       v = `30%`
-            )->a( n = `search`      v = client->_event( val   = `SEARCH`
-                                                       t_arg = VALUE #( ( `${$parameters>/query}` ) ) )
+            )->a( n = `search`      v = client->_event( val = `SEARCH`
+                                                       arg = `${$parameters>/query}` )
             )->a( n = `placeholder` v = `Search products`
         )->ele( `HBox`
             )->a( n = `class` v = `sapUiTinyMarginTop`

@@ -87,8 +87,8 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
     page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `Button`
-            )->a( n = `press` v = client->_event( val   = `TOGGLE`
-                                           t_arg = VALUE #( ( `$event.oSource.sId` ) ) )
+            )->a( n = `press` v = client->_event( val = `TOGGLE`
+                                           arg = `$event.oSource.sId` )
             )->a( n = `text`  v = `Toggle popover`
             )->a( n = `icon`  v = `sap-icon://email` ).
 

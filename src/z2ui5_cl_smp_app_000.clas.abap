@@ -570,8 +570,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
         " installed on this system: jump right into it, the back button returns
         hint  = tooltip.
-        press = client->_event( val   = cs_event-nav
-                                t_arg = VALUE #( ( target ) ) ).
+        press = client->_event( val = cs_event-nav arg = target ).
 
       ELSEIF class IS INITIAL.
 
