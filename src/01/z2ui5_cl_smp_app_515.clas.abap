@@ -27,10 +27,10 @@ CLASS z2ui5_cl_smp_app_515 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       status = `Idle - nothing running.`.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -46,15 +46,31 @@ CLASS z2ui5_cl_smp_app_515 IMPLEMENTATION.
     " reaches a singleton like this one. t_arg is positional: the object, the
     " method, then its arguments. show( ) takes the delay in milliseconds
     " before the spinner appears; hide( ) takes none.
+    DATA temp1 TYPE string_table.
+    DATA temp2 TYPE string_table.
+    DATA temp3 TYPE string_table.
+    CLEAR temp1.
+    INSERT `BUSY_INDICATOR` INTO TABLE temp1.
+    INSERT method INTO TABLE temp1.
+    
+    CLEAR temp2.
+    INSERT `BUSY_INDICATOR` INTO TABLE temp2.
+    INSERT method INTO TABLE temp2.
+    INSERT arg INTO TABLE temp2.
+    
+    IF arg IS INITIAL.
+      temp3 = temp1.
+    ELSE.
+      temp3 = temp2.
+    ENDIF.
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global
-                              t_arg = COND #( WHEN arg IS INITIAL
-                                              THEN VALUE #( ( `BUSY_INDICATOR` ) ( method ) )
-                                              ELSE VALUE #( ( `BUSY_INDICATOR` ) ( method ) ( arg ) ) ) ).
+                              t_arg = temp3 ).
 
   ENDMETHOD.
 
 
   METHOD on_event.
+        DATA temp3 TYPE string_table.
 
     CASE client->get_event( ).
 
@@ -66,8 +82,12 @@ CLASS z2ui5_cl_smp_app_515 IMPLEMENTATION.
         status = `Running - the BusyIndicator is up, the timer takes it away.`.
         busy_call( method = `show`
                    arg    = `0` ).
+        
+        CLEAR temp3.
+        INSERT `FINISHED` INTO TABLE temp3.
+        INSERT `2500` INTO TABLE temp3.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-start_timer
-                                  t_arg = VALUE #( ( `FINISHED` ) ( `2500` ) ) ).
+                                  t_arg = temp3 ).
 
       WHEN `FINISHED`.
         status = `Done - hide( ) was called from the timer's handler.`.
@@ -80,14 +100,17 @@ CLASS z2ui5_cl_smp_app_515 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Control Behaviour - The Global Busy Indicator`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

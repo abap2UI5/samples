@@ -40,10 +40,10 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -51,6 +51,10 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE REF TO z2ui5_cl_smp_app_469.
+        DATA temp2 TYPE string_table.
+        DATA temp3 TYPE string.
+        DATA temp4 TYPE string.
 
     CASE client->get_event( ).
 
@@ -59,19 +63,32 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
         view_display( ).
 
       WHEN `GO_DETAIL`.
-        client->nav_app_call( NEW z2ui5_cl_smp_app_469( ) ).
+        
+        CREATE OBJECT temp1 TYPE z2ui5_cl_smp_app_469.
+        client->nav_app_call( temp1 ).
 
       WHEN `ROUTING`.
         " the mode is remembered on the app, so switching it is one action:
         " DEFAULT leaves the hash alone from now on - Back/Forward leave the
         " page, the framework default - and FRESH puts the class back in
+        
+        CLEAR temp2.
+        
+        IF routing = abap_true.
+          temp3 = client->cs_nav_mode-fresh.
+        ELSE.
+          temp3 = client->cs_nav_mode-default.
+        ENDIF.
+        INSERT temp3 INTO TABLE temp2.
         client->follow_up_action( val   = client->cs_event-hash_routing
-                                  t_arg = VALUE #( ( COND #( WHEN routing = abap_true
-                                                             THEN client->cs_nav_mode-fresh
-                                                             ELSE client->cs_nav_mode-default ) ) ) ).
-        client->message_toast_display( COND #( WHEN routing = abap_true
-                                               THEN `routing mode fresh - the URL carries the class`
-                                               ELSE `routing mode default - the URL is left untouched` ) ).
+                                  t_arg = temp2 ).
+        
+        IF routing = abap_true.
+          temp4 = `routing mode fresh - the URL carries the class`.
+        ELSE.
+          temp4 = `routing mode default - the URL is left untouched`.
+        ENDIF.
+        client->message_toast_display( temp4 ).
 
     ENDCASE.
 
@@ -79,17 +96,25 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
 
 
   METHOD view_display.
+      DATA temp5 TYPE string_table.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     " configure the routing mode once - the framework remembers it on the app
     " and re-sends it whenever the frontend may not hold it (page load,
     " Back/Forward restore, navigation hops)
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       routing = abap_true.
+      
+      CLEAR temp5.
+      INSERT client->cs_nav_mode-fresh INTO TABLE temp5.
       client->follow_up_action( val   = client->cs_event-hash_routing
-                                t_arg = VALUE #( ( client->cs_nav_mode-fresh ) ) ).
+                                t_arg = temp5 ).
     ENDIF.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -98,7 +123,8 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Navigation - Routing Mode fresh`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -111,7 +137,8 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `Grid` ns = `layout`
+    
+    form = page->ele( n = `Grid` ns = `layout`
         )->a( n = `defaultSpan` v = `L6 M12 S12`
         )->ele( n = `content` ns = `layout`
             )->ele( n = `SimpleForm` ns = `form`

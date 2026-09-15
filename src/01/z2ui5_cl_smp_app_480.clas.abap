@@ -35,10 +35,10 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -46,6 +46,7 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE REF TO z2ui5_cl_smp_app_469.
 
     CASE client->get_event( ).
 
@@ -54,7 +55,9 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
         view_display( ).
 
       WHEN `GO_DETAIL`.
-        client->nav_app_call( NEW z2ui5_cl_smp_app_469( ) ).
+        
+        CREATE OBJECT temp1 TYPE z2ui5_cl_smp_app_469.
+        client->nav_app_call( temp1 ).
 
     ENDCASE.
 
@@ -62,16 +65,24 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
 
 
   METHOD view_display.
+      DATA temp2 TYPE string_table.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     " configure the routing mode once - the framework remembers it on the app
     " and re-sends it whenever the frontend may not hold it (page load,
     " Back/Forward restore, navigation hops)
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
+      
+      CLEAR temp2.
+      INSERT client->cs_nav_mode-keep INTO TABLE temp2.
       client->follow_up_action( val   = client->cs_event-hash_routing
-                                t_arg = VALUE #( ( client->cs_nav_mode-keep ) ) ).
+                                t_arg = temp2 ).
     ENDIF.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -80,7 +91,8 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Navigation - Routing Mode keep`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -93,7 +105,8 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `Grid` ns = `layout`
+    
+    form = page->ele( n = `Grid` ns = `layout`
         )->a( n = `defaultSpan` v = `L6 M12 S12`
         )->ele( n = `content` ns = `layout`
             )->ele( n = `SimpleForm` ns = `form`

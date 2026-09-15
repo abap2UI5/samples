@@ -30,9 +30,9 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -40,6 +40,13 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE string_table.
+        DATA temp2 LIKE LINE OF temp1.
+        DATA temp3 TYPE string_table.
+        DATA temp4 LIKE LINE OF temp3.
+        DATA temp5 TYPE string_table.
+        DATA temp7 TYPE string_table.
+        DATA temp6 LIKE LINE OF temp7.
 
     CASE client->get_event( ).
 
@@ -48,10 +55,15 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
         " information, warning, error, success - the seven methods
         " sap.m.MessageBox carries, called by name. No mapping, no
         " translation, nothing this sample has to keep in sync with UI5
+        
+        CLEAR temp1.
+        INSERT `MESSAGE_BOX` INTO TABLE temp1.
+        INSERT client->get_event_arg( ) INTO TABLE temp1.
+        
+        temp2 = |MessageBox.{ client->get_event_arg( ) }( ) - called by its own name|.
+        INSERT temp2 INTO TABLE temp1.
         client->follow_up_action( val   = client->cs_event-control_global
-                                  t_arg = VALUE #( ( `MESSAGE_BOX` )
-                                                   ( client->get_event_arg( ) )
-                                                   ( |MessageBox.{ client->get_event_arg( ) }( ) - called by its own name| ) ) ).
+                                  t_arg = temp1 ).
 
       WHEN `OPTIONS`.
         " Everything sap.m.MessageBox takes, in the option object of the
@@ -61,38 +73,49 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
         " they belong to the control, not to the ABAP app, and this is
         " where they are set. Z2UI5_CL_SMP_APP_502 is the other half: the
         " same box, filled with whatever data the app already holds
+        
+        CLEAR temp3.
+        INSERT `MESSAGE_BOX` INTO TABLE temp3.
+        INSERT `warning` INTO TABLE temp3.
+        INSERT `The delivery date lies in the past.` INTO TABLE temp3.
+        
+        temp4 = `{"title":"Please check","icon":"WARNING","contentWidth":"25rem",` && `"textDirection":"Inherit","closeOnNavigation":false,"styleClass":"sapUiSizeCompact"}`.
+        INSERT temp4 INTO TABLE temp3.
         client->follow_up_action(
             val   = client->cs_event-control_global
-            t_arg = VALUE #( ( `MESSAGE_BOX` )
-                             ( `warning` )
-                             ( `The delivery date lies in the past.` )
-                             ( `{"title":"Please check","icon":"WARNING","contentWidth":"25rem",` &&
-                               `"textDirection":"Inherit","closeOnNavigation":false,"styleClass":"sapUiSizeCompact"}` ) ) ).
+            t_arg = temp3 ).
 
       WHEN `DEPENDENT`.
         " dependentOn ties the box to the lifecycle of a control - it is
         " destroyed with it. The backend sends the control id and the
         " frontend resolves it; an id it cannot resolve drops the option
         " rather than handing UI5 a string it would choke on. UI5 1.124 on
+        
+        CLEAR temp5.
+        INSERT `MESSAGE_BOX` INTO TABLE temp5.
+        INSERT `information` INTO TABLE temp5.
+        INSERT `This box is a dependent of the panel below - it dies with it.` INTO TABLE temp5.
+        INSERT `{"dependentOn":"demoPanel"}` INTO TABLE temp5.
         client->follow_up_action(
             val   = client->cs_event-control_global
-            t_arg = VALUE #( ( `MESSAGE_BOX` )
-                             ( `information` )
-                             ( `This box is a dependent of the panel below - it dies with it.` )
-                             ( `{"dependentOn":"demoPanel"}` ) ) ).
+            t_arg = temp5 ).
 
       WHEN `ACTIONS`.
         " onClose is a BACKEND event name even here: the frontend turns it
         " into the round-trip that reaches the ANSWERED branch below, with
         " the pressed action as the first event argument. So the raw call
         " is not a one-way street - it reaches the app again like any event
+        
+        CLEAR temp7.
+        INSERT `MESSAGE_BOX` INTO TABLE temp7.
+        INSERT `warning` INTO TABLE temp7.
+        INSERT `Delete document 4711?` INTO TABLE temp7.
+        
+        temp6 = `{"title":"Delete","actions":["DELETE","Later","CANCEL"],` && `"emphasizedAction":"DELETE","initialFocus":"CANCEL","onClose":"ANSWERED"}`.
+        INSERT temp6 INTO TABLE temp7.
         client->follow_up_action(
             val   = client->cs_event-control_global
-            t_arg = VALUE #( ( `MESSAGE_BOX` )
-                             ( `warning` )
-                             ( `Delete document 4711?` )
-                             ( `{"title":"Delete","actions":["DELETE","Later","CANCEL"],` &&
-                               `"emphasizedAction":"DELETE","initialFocus":"CANCEL","onClose":"ANSWERED"}` ) ) ).
+            t_arg = temp7 ).
 
       WHEN `ANSWERED`.
         " the answer of the box above. Nothing is rendered here: `answer` is
@@ -106,7 +129,15 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA row TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp7 TYPE string_table.
+    DATA temp9 LIKE temp7.
+    DATA type LIKE LINE OF temp9.
+    DATA temp10 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -114,7 +145,8 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Message - MessageBox via the Global Object`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -130,19 +162,27 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+    
+    form = page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `editable` b = abap_true
         )->a( n = `layout`   v = `ResponsiveGridLayout`
         )->ele( n = `content` ns = `form` ).
 
-    DATA(row) = form->tag( `Label`
+    
+    row = form->tag( `Label`
         )->a( n = `text` v = `The method is the type`
         )->ele( `HBox` ).
 
-    LOOP AT VALUE string_table( ( `information` )
-                                ( `success` )
-                                ( `warning` )
-                                ( `error` ) ) INTO DATA(type).
+    
+    CLEAR temp7.
+    INSERT `information` INTO TABLE temp7.
+    INSERT `success` INTO TABLE temp7.
+    INSERT `warning` INTO TABLE temp7.
+    INSERT `error` INTO TABLE temp7.
+    
+    temp9 = temp7.
+    
+    LOOP AT temp9 INTO type.
       row->tag( `Button`
           )->a( n = `text`  v = type
           )->a( n = `press` v = client->_event( val = `TYPE`
@@ -176,15 +216,18 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
     " ... and the call WIRED into the view: the same box, opened by the
     " press itself. The backend never sees this button - which is the second
     " reason the global object exists
+    
+    CLEAR temp10.
+    INSERT `MESSAGE_BOX` INTO TABLE temp10.
+    INSERT `show` INTO TABLE temp10.
+    INSERT `Opened by the press itself - the backend never saw it.` INTO TABLE temp10.
     form->tag( `Label`
         )->a( n = `text` v = `Wired`
         )->tag( `Button`
             )->a( n = `text`  v = `No round-trip at all`
             )->a( n = `press` v = client->follow_up_action(
                                       val   = client->cs_event-control_global
-                                      t_arg = VALUE #( ( `MESSAGE_BOX` )
-                                                       ( `show` )
-                                                       ( `Opened by the press itself - the backend never saw it.` ) ) ) ).
+                                      t_arg = temp10 ) ).
 
     page->ele( `Panel`
         )->a( n = `id`         v = `demoPanel`
@@ -199,11 +242,13 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
 
 
   METHOD render_demo.
+    DATA row TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     form->tag( `Label`
         )->a( n = `text` t = label ).
 
-    DATA(row) = form->ele( `HBox`
+    
+    row = form->ele( `HBox`
         )->a( n = `alignItems` v = `Center`
         )->a( n = `wrap`       v = `Wrap` ).
 

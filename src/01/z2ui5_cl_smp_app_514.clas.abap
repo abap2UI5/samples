@@ -12,7 +12,7 @@ CLASS z2ui5_cl_smp_app_514 DEFINITION PUBLIC.
         text  TYPE string,
       END OF ty_s_page.
 
-    DATA t_pages TYPE STANDARD TABLE OF ty_s_page WITH EMPTY KEY.
+    DATA t_pages TYPE STANDARD TABLE OF ty_s_page WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -35,10 +35,10 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -49,16 +49,31 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
 
   METHOD model_init.
 
-    t_pages = VALUE #( ( title = `Bicycle`  text = `The first page of the carousel.` )
-                       ( title = `Car`      text = `The second page - and the one the buttons below jump to.` )
-                       ( title = `Train`    text = `The third page.` )
-                       ( title = `Aircraft` text = `The fourth and last page.` ) ).
+    DATA temp1 LIKE t_pages.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-title = `Bicycle`.
+    temp2-text = `The first page of the carousel.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Car`.
+    temp2-text = `The second page - and the one the buttons below jump to.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Train`.
+    temp2-text = `The third page.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Aircraft`.
+    temp2-text = `The fourth and last page.`.
+    INSERT temp2 INTO TABLE temp1.
+    t_pages = temp1.
     current = 1.
 
   ENDMETHOD.
 
 
   METHOD page_show.
+    DATA temp3 TYPE string_table.
+    DATA temp1 LIKE LINE OF temp3.
 
     current = index.
     " A page of this carousel is a CLONE of the aggregation template, and a
@@ -68,15 +83,21 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
     " `<control id>/<aggregation>/<index>`, 0-based - which the frontend
     " resolves against the live aggregation. It is the equivalent of the UI5
     " controller idiom oCarousel.setActivePage( oCarousel.getPages()[ i ] ).
+    
+    CLEAR temp3.
+    INSERT `demoCarousel` INTO TABLE temp3.
+    INSERT `setActivePage` INTO TABLE temp3.
+    
+    temp1 = |demoCarousel/pages/{ index - 1 }|.
+    INSERT temp1 INTO TABLE temp3.
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                              t_arg = VALUE #( ( `demoCarousel` )
-                                               ( `setActivePage` )
-                                               ( |demoCarousel/pages/{ index - 1 }| ) ) ).
+                              t_arg = temp3 ).
 
   ENDMETHOD.
 
 
   METHOD on_event.
+        DATA temp5 TYPE i.
 
     CASE client->get_event( ).
 
@@ -85,7 +106,13 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
 
       WHEN `NEXT`.
         " wrap around at the end - the count is ABAP's, not the carousel's
-        page_show( COND #( WHEN current >= lines( t_pages ) THEN 1 ELSE current + 1 ) ).
+        
+        IF current >= lines( t_pages ).
+          temp5 = 1.
+        ELSE.
+          temp5 = current + 1.
+        ENDIF.
+        page_show( temp5 ).
 
       WHEN `LAST`.
         page_show( lines( t_pages ) ).
@@ -97,14 +124,17 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Control Behaviour - Address an Aggregation Item by Index`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

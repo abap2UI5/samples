@@ -15,7 +15,7 @@ CLASS z2ui5_cl_smp_app_045 DEFINITION PUBLIC.
         info     TYPE string,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
     DATA mv_info_filter TYPE string.
 
@@ -30,11 +30,26 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
 
 
   METHOD refresh_data.
+      DATA temp1 TYPE ty_s_row.
+      DATA temp2 TYPE z2ui5_cl_smp_app_045=>ty_s_row-info.
+      DATA ls_row LIKE temp1.
 
     DO 1000 TIMES.
-      DATA(ls_row) = VALUE ty_s_row( count = sy-index  value = `red`
-        info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
-        descr = `this is a description` checkbox = abap_true ).
+      
+      CLEAR temp1.
+      temp1-count = sy-index.
+      temp1-value = `red`.
+      
+      IF sy-index < 50.
+        temp2 = `completed`.
+      ELSE.
+        temp2 = `uncompleted`.
+      ENDIF.
+      temp1-info = temp2.
+      temp1-descr = `this is a description`.
+      temp1-checkbox = abap_true.
+      
+      ls_row = temp1.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 
@@ -42,8 +57,10 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       refresh_data( ).
     ENDIF.
 
@@ -59,7 +76,8 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
         client->message_box_display( `button post was pressed` ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -97,7 +115,8 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
                 )->a( n = `press` v = client->_event( `FILTER_INFO` )
                 )->a( n = `text`  v = `filter` ).
 
-    DATA(tab) = page->ele( `ScrollContainer`
+    
+    tab = page->ele( `ScrollContainer`
         )->a( n = `height`   v = `70%`
         )->a( n = `vertical` b = abap_true
         )->ele( `Table`

@@ -34,7 +34,7 @@ CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
         name TYPE string,
         val  TYPE string,
       END OF ty_s_opt.
-    TYPES ty_t_opt TYPE STANDARD TABLE OF ty_s_opt WITH EMPTY KEY.
+    TYPES ty_t_opt TYPE STANDARD TABLE OF ty_s_opt WITH DEFAULT KEY.
 
     METHODS toast_options
       RETURNING
@@ -53,14 +53,14 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `SHOW` ).
+    ELSEIF client->check_on_event( `SHOW` ) IS NOT INITIAL.
       show_toast( ).
-    ELSEIF client->check_on_event( `TOAST_CLOSED` ).
+    ELSEIF client->check_on_event( `TOAST_CLOSED` ) IS NOT INITIAL.
 
       " the onclose event: fired by the client when the toast is gone, with
       " or without the user - a plain backend event like any button press
@@ -103,11 +103,14 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
     " an ABAP app decides - the text, how long the toast stands, and the
     " backend event its closing raises - and the class
     " Z2UI5_CL_SMP_APP_502 shows that side for the message box
+    DATA temp1 TYPE string_table.
+    CLEAR temp1.
+    INSERT `MESSAGE_TOAST` INTO TABLE temp1.
+    INSERT `show` INTO TABLE temp1.
+    INSERT message INTO TABLE temp1.
+    INSERT toast_options( ) INTO TABLE temp1.
     client->follow_up_action( val   = client->cs_event-control_global
-                              t_arg = VALUE #( ( `MESSAGE_TOAST` )
-                                               ( `show` )
-                                               ( message )
-                                               ( toast_options( ) ) ) ).
+                              t_arg = temp1 ).
 
   ENDMETHOD.
 
@@ -115,6 +118,21 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
   METHOD toast_options.
 
     DATA t_opt TYPE string_table.
+      DATA temp3 LIKE LINE OF t_opt.
+      DATA temp4 LIKE LINE OF t_opt.
+    DATA temp1 TYPE ty_t_opt.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA temp5 LIKE temp1.
+    DATA s_opt LIKE LINE OF temp5.
+        DATA temp6 LIKE LINE OF t_opt.
+    DATA temp7 TYPE string.
+    DATA temp12 LIKE LINE OF t_opt.
+    DATA temp8 TYPE string.
+    DATA temp13 LIKE LINE OF t_opt.
+      DATA temp9 LIKE LINE OF t_opt.
+      DATA temp10 LIKE LINE OF t_opt.
+      DATA temp11 LIKE LINE OF t_opt.
+    DATA option LIKE LINE OF t_opt.
 
     " The option object as JSON. A t_arg that starts with a brace is embedded
     " as REAL JSON by the framework, so this arrives on the client as an
@@ -128,46 +146,94 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
     " with no options at all - quietly, which is the one failure mode of this
     " path worth knowing
     IF duration IS NOT INITIAL.
-      APPEND |"duration":{ duration }| TO t_opt.
+      
+      temp3 = |"duration":{ duration }|.
+      APPEND temp3 TO t_opt.
     ENDIF.
     IF animation_duration IS NOT INITIAL.
-      APPEND |"animationDuration":{ animation_duration }| TO t_opt.
+      
+      temp4 = |"animationDuration":{ animation_duration }|.
+      APPEND temp4 TO t_opt.
     ENDIF.
-    LOOP AT VALUE ty_t_opt( ( name = `width`                   val = width )
-                            ( name = `my`                      val = my )
-                            ( name = `at`                      val = at )
-                            ( name = `offset`                  val = offset )
-                            ( name = `collision`               val = collision )
-                            ( name = `animationTimingFunction` val = animation_timing ) ) INTO DATA(s_opt).
+    
+    CLEAR temp1.
+    
+    temp2-name = `width`.
+    temp2-val = width.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `my`.
+    temp2-val = my.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `at`.
+    temp2-val = at.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `offset`.
+    temp2-val = offset.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `collision`.
+    temp2-val = collision.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `animationTimingFunction`.
+    temp2-val = animation_timing.
+    INSERT temp2 INTO TABLE temp1.
+    
+    temp5 = temp1.
+    
+    LOOP AT temp5 INTO s_opt.
       IF s_opt-val IS NOT INITIAL.
-        APPEND |"{ s_opt-name }":"{ s_opt-val }"| TO t_opt.
+        
+        temp6 = |"{ s_opt-name }":"{ s_opt-val }"|.
+        APPEND temp6 TO t_opt.
       ENDIF.
     ENDLOOP.
-    APPEND |"autoClose":{ COND string( WHEN autoclose = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
-    APPEND |"closeOnBrowserNavigation":{ COND string( WHEN close_on_navigation = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
+    
+    IF autoclose = abap_true.
+      temp7 = `true`.
+    ELSE.
+      temp7 = `false`.
+    ENDIF.
+    
+    temp12 = |"autoClose":{ temp7 }|.
+    APPEND temp12 TO t_opt.
+    
+    IF close_on_navigation = abap_true.
+      temp8 = `true`.
+    ELSE.
+      temp8 = `false`.
+    ENDIF.
+    
+    temp13 = |"closeOnBrowserNavigation":{ temp8 }|.
+    APPEND temp13 TO t_opt.
 
     " `of` is the element the toast docks to - my/at are read relative to it
     " instead of to the window. It travels as a jQuery selector, so the
     " anchor is a DOM node with an id the backend can spell: the core:HTML
     " box in the view below, not a control whose id UI5 prefixes at runtime
     IF dock_to_anchor = abap_true.
-      APPEND |"of":"#toastAnchor"| TO t_opt.
+      
+      temp9 = |"of":"#toastAnchor"|.
+      APPEND temp9 TO t_opt.
     ENDIF.
 
     " `class` is the one entry here that is NO MessageToast option: the
     " frontend puts the classes on the DOM node of the toast, which carries
     " no id to address it by. It rides in the same object
     IF css_class IS NOT INITIAL.
-      APPEND |"class":"{ css_class }"| TO t_opt.
+      
+      temp10 = |"class":"{ css_class }"|.
+      APPEND temp10 TO t_opt.
     ENDIF.
 
     " onClose is a BACKEND event name here, not a JS callback: the frontend
     " turns it into the round-trip that reaches on_event below
     IF notify_close = abap_true.
-      APPEND |"onClose":"TOAST_CLOSED"| TO t_opt.
+      
+      temp11 = |"onClose":"TOAST_CLOSED"|.
+      APPEND temp11 TO t_opt.
     ENDIF.
 
-    LOOP AT t_opt INTO DATA(option).
+    
+    LOOP AT t_opt INTO option.
       IF result IS INITIAL.
         result = option.
       ELSE.
@@ -182,7 +248,15 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA select_my TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA select_at TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp12 TYPE string_table.
+    DATA position LIKE LINE OF temp12.
+    DATA select_animation TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp13 TYPE string_table.
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -221,7 +295,8 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
             )->a( n = `target` v = `_blank`
             )->a( n = `href`   v = `https://sdk.openui5.org/entity/sap.m.MessageToast/sample/sap.m.sample.MessageToast` ).
 
-    DATA(form) = page->ele( `Panel`
+    
+    form = page->ele( `Panel`
         )->a( n = `headerText` v = `Message Toast Configuration`
         )->ele( n = `SimpleForm` ns = `form`
             )->a( n = `title`    v = `Settings`
@@ -242,16 +317,21 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
         )->tag( `Input`
             )->a( n = `value` v = client->_bind( width ) ).
 
-    DATA(select_my) = form->tag( `Label`
+    
+    select_my = form->tag( `Label`
         )->a( n = `text` v = `my`
         )->ele( `Select`
             )->a( n = `selectedKey` v = client->_bind( my ) ).
-    DATA(select_at) = form->tag( `Label`
+    
+    select_at = form->tag( `Label`
         )->a( n = `text` v = `at`
         )->ele( `Select`
             )->a( n = `selectedKey` v = client->_bind( at ) ).
 
-    LOOP AT get_positions( ) INTO DATA(position).
+    
+    temp12 = get_positions( ).
+    
+    LOOP AT temp12 INTO position.
       select_my->tag( n = `Item` ns = `core`
           )->a( n = `key`  t = position
           )->a( n = `text` t = position ).
@@ -286,7 +366,8 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
                 )->a( n = `key`  v = `none none`
                 )->a( n = `text` v = `none none - stay where told` ).
 
-    DATA(select_animation) = form->tag( `Label`
+    
+    select_animation = form->tag( `Label`
         )->a( n = `text` v = `animationTimingFunction`
         )->ele( `Select`
             )->a( n = `selectedKey` v = client->_bind( animation_timing ) ).
@@ -342,16 +423,19 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
     " into the view. The toast is composed on the client - the extra argument
     " fills the {0} placeholder of the text - so a button that only wants to
     " say what was pressed needs no round-trip to the backend at all
+    
+    CLEAR temp13.
+    INSERT `MESSAGE_TOAST` INTO TABLE temp13.
+    INSERT `show` INTO TABLE temp13.
+    INSERT `{0} - composed on the client, the backend never saw this press` INTO TABLE temp13.
+    INSERT `${$source>/text}` INTO TABLE temp13.
     form->tag( `Label`
         )->a( n = `text` v = `wired, no round-trip - the text is composed on the client`
         )->tag( `Button`
             )->a( n = `text`  v = `Compose on the client`
             )->a( n = `press` v = client->follow_up_action(
                                        val   = client->cs_event-control_global
-                                       t_arg = VALUE #( ( `MESSAGE_TOAST` )
-                                                        ( `show` )
-                                                        ( `{0} - composed on the client, the backend never saw this press` )
-                                                        ( `${$source>/text}` ) ) ) ).
+                                       t_arg = temp13 ) ).
 
     client->view_display( page->stringify( ) ).
 
@@ -360,22 +444,24 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
 
   METHOD get_positions.
 
-    result = VALUE #(
-      ( `begin top` )
-      ( `begin center` )
-      ( `begin bottom` )
-      ( `left top` )
-      ( `left center` )
-      ( `left bottom` )
-      ( `center top` )
-      ( `center center` )
-      ( `center bottom` )
-      ( `right top` )
-      ( `right center` )
-      ( `right bottom` )
-      ( `end top` )
-      ( `end center` )
-      ( `end bottom` ) ).
+    DATA temp15 TYPE string_table.
+    CLEAR temp15.
+    INSERT `begin top` INTO TABLE temp15.
+    INSERT `begin center` INTO TABLE temp15.
+    INSERT `begin bottom` INTO TABLE temp15.
+    INSERT `left top` INTO TABLE temp15.
+    INSERT `left center` INTO TABLE temp15.
+    INSERT `left bottom` INTO TABLE temp15.
+    INSERT `center top` INTO TABLE temp15.
+    INSERT `center center` INTO TABLE temp15.
+    INSERT `center bottom` INTO TABLE temp15.
+    INSERT `right top` INTO TABLE temp15.
+    INSERT `right center` INTO TABLE temp15.
+    INSERT `right bottom` INTO TABLE temp15.
+    INSERT `end top` INTO TABLE temp15.
+    INSERT `end center` INTO TABLE temp15.
+    INSERT `end bottom` INTO TABLE temp15.
+    result = temp15.
 
   ENDMETHOD.
 

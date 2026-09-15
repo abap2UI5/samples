@@ -18,7 +18,7 @@ CLASS z2ui5_cl_smp_app_059 DEFINITION PUBLIC.
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab.
-    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
 
     DATA mt_table TYPE ty_t_table.
     DATA mv_field TYPE string.
@@ -41,14 +41,14 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       set_data( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `BUTTON_SEARCH` ).
+    IF client->check_on_event( `BUTTON_SEARCH` ) IS NOT INITIAL.
 
       set_data( ).
       set_search( ).
@@ -72,15 +72,20 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
     " a typed contains-search over the columns the table shows - the search
     " string is compared uppercase against uppercase, so it matches whatever
     " the user typed
-    DATA(lv_search) = to_upper( mv_field ).
+    DATA lv_search TYPE string.
+    DATA lt_all LIKE mt_table.
+    DATA ls_row LIKE LINE OF lt_all.
+    lv_search = to_upper( mv_field ).
     IF lv_search IS INITIAL.
       RETURN.
     ENDIF.
 
-    DATA(lt_all) = mt_table.
+    
+    lt_all = mt_table.
     CLEAR mt_table.
 
-    LOOP AT lt_all INTO DATA(ls_row).
+    
+    LOOP AT lt_all INTO ls_row.
       IF to_upper( ls_row-product )          CS lv_search
       OR to_upper( ls_row-create_date )      CS lv_search
       OR to_upper( ls_row-create_by )        CS lv_search
@@ -94,16 +99,52 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
   METHOD set_data.
 
-    mt_table = VALUE #( ).
+    DATA temp1 TYPE z2ui5_cl_smp_app_059=>ty_t_table.
+      DATA temp2 TYPE ty_t_table.
+      DATA temp3 LIKE LINE OF temp2.
+    CLEAR temp1.
+    mt_table = temp1.
     DO 1000 TIMES.
-      INSERT LINES OF VALUE ty_t_table(
-          ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-          ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-          ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-          ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-          ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-          ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-          ) INTO TABLE mt_table.
+      
+      CLEAR temp2.
+      
+      temp3-product = `table`.
+      temp3-create_date = `01.01.2023`.
+      temp3-create_by = `Peter`.
+      temp3-storage_location = `AREA_001`.
+      temp3-quantity = 400.
+      INSERT temp3 INTO TABLE temp2.
+      temp3-product = `chair`.
+      temp3-create_date = `01.01.2022`.
+      temp3-create_by = `James`.
+      temp3-storage_location = `AREA_001`.
+      temp3-quantity = 123.
+      INSERT temp3 INTO TABLE temp2.
+      temp3-product = `sofa`.
+      temp3-create_date = `01.05.2021`.
+      temp3-create_by = `Simone`.
+      temp3-storage_location = `AREA_001`.
+      temp3-quantity = 700.
+      INSERT temp3 INTO TABLE temp2.
+      temp3-product = `computer`.
+      temp3-create_date = `27.01.2023`.
+      temp3-create_by = `Theo`.
+      temp3-storage_location = `AREA_001`.
+      temp3-quantity = 200.
+      INSERT temp3 INTO TABLE temp2.
+      temp3-product = `printer`.
+      temp3-create_date = `01.01.2023`.
+      temp3-create_by = `Hannah`.
+      temp3-storage_location = `AREA_001`.
+      temp3-quantity = 90.
+      INSERT temp3 INTO TABLE temp2.
+      temp3-product = `table2`.
+      temp3-create_date = `01.01.2023`.
+      temp3-create_by = `Julia`.
+      temp3-storage_location = `AREA_001`.
+      temp3-quantity = 110.
+      INSERT temp3 INTO TABLE temp2.
+      INSERT LINES OF temp2 INTO TABLE mt_table.
 
     ENDDO.
 
@@ -119,7 +160,13 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
     " stays out of the way while they are typed.
     " abap2ui5lint-disable live-event-roundtrip
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page1 TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp4 TYPE z2ui5_if_client=>ty_s_event_control.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_cells TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -127,7 +174,8 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page1) = view->ele( `Shell`
+    
+    page1 = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Table - Live Search over a Large Table`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -148,6 +196,10 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp4.
+    temp4-check_queue_last = abap_true.
+    temp4-check_no_busy = abap_true.
     page1->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMarginBegin`
         )->tag( `SearchField`
@@ -156,12 +208,13 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
             )->a( n = `placeholder` v = `Search products`
             )->a( n = `liveChange`  v = client->_event(
                 val    = `BUTTON_SEARCH`
-                s_ctrl = VALUE #( check_queue_last = abap_true
-                                  check_no_busy    = abap_true ) ) ).
+                s_ctrl = temp4 ) ).
 
-    DATA(tab) = page1->ele( `Table`
+    
+    tab = page1->ele( `Table`
         )->a( n = `items` v = client->_bind( mt_table ) ).
-    DATA(lo_columns) = tab->ele( `columns` ).
+    
+    lo_columns = tab->ele( `columns` ).
     lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Product` ).
@@ -178,7 +231,8 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
         )->tag( `Text`
             )->a( n = `text` v = `Quantity` ).
 
-    DATA(lo_cells) = tab->ele( `items`
+    
+    lo_cells = tab->ele( `items`
         )->ele( `ColumnListItem` ).
     lo_cells->tag( `Text`
         )->a( n = `text` v = `{PRODUCT}` ).

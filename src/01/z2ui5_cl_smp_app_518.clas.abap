@@ -21,10 +21,10 @@ CLASS z2ui5_cl_smp_app_518 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       font_register( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -42,18 +42,23 @@ CLASS z2ui5_cl_smp_app_518 IMPLEMENTATION.
     "
     " Issue it from the init branch: the collection is registered once per
     " session, so a repeat call costs nothing but says the wrong thing.
+    DATA temp1 TYPE string_table.
+    CLEAR temp1.
+    INSERT `ICON_POOL` INTO TABLE temp1.
+    INSERT `registerFont` INTO TABLE temp1.
+    INSERT `SAP-icons-TNT` INTO TABLE temp1.
+    INSERT `sap/tnt/themes/base/fonts/` INTO TABLE temp1.
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global
-                              t_arg = VALUE #( ( `ICON_POOL` )
-                                               ( `registerFont` )
-                                               ( `SAP-icons-TNT` )
-                                               ( `sap/tnt/themes/base/fonts/` ) ) ).
+                              t_arg = temp1 ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -61,7 +66,8 @@ CLASS z2ui5_cl_smp_app_518 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Control Behaviour - Register an Icon Font (registerFont)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

@@ -36,14 +36,14 @@ CLASS z2ui5_cl_smp_app_510 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       status = `no nested view yet`.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -51,6 +51,8 @@ CLASS z2ui5_cl_smp_app_510 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE string_table.
+        DATA temp3 TYPE string_table.
 
     CASE client->get_event( ).
 
@@ -76,15 +78,23 @@ CLASS z2ui5_cl_smp_app_510 IMPLEMENTATION.
         " the slot decides where the lookup happens: cs_view-nested is the
         " first nested view and nothing else. Without the view parameter
         " the id would be searched across every open view
+        
+        CLEAR temp1.
+        INSERT `inp_nest` INTO TABLE temp1.
+        INSERT `focus` INTO TABLE temp1.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
                                   view  = z2ui5_if_client=>cs_view-nested
-                                  t_arg = VALUE #( ( `inp_nest` ) ( `focus` ) ) ).
+                                  t_arg = temp1 ).
         status = `focus sent to id inp_nest, scoped to cs_view-nested`.
 
       WHEN `FOCUS_NEST2`.
+        
+        CLEAR temp3.
+        INSERT `inp_nest2` INTO TABLE temp3.
+        INSERT `focus` INTO TABLE temp3.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
                                   view  = z2ui5_if_client=>cs_view-nested2
-                                  t_arg = VALUE #( ( `inp_nest2` ) ( `focus` ) ) ).
+                                  t_arg = temp3 ).
         status = `focus sent to id inp_nest2, scoped to cs_view-nested2`.
 
     ENDCASE.
@@ -94,14 +104,17 @@ CLASS z2ui5_cl_smp_app_510 IMPLEMENTATION.
 
   METHOD nest_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA panel TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(panel) = view->ele( `Panel`
+    
+    panel = view->ele( `Panel`
         )->a( n = `headerText` t = |nested view in slot { slot }|
         )->a( n = `class`      v = `sapUiSmallMarginTop` ).
 
@@ -136,7 +149,9 @@ CLASS z2ui5_cl_smp_app_510 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -144,7 +159,8 @@ CLASS z2ui5_cl_smp_app_510 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Nested View - Destroy and Target a Slot`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

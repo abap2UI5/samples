@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_467 DEFINITION PUBLIC.
         target         TYPE string,
         additionaltext TYPE string,
       END OF ty_s_message.
-    DATA t_messages TYPE STANDARD TABLE OF ty_s_message WITH EMPTY KEY.
+    DATA t_messages TYPE STANDARD TABLE OF ty_s_message WITH DEFAULT KEY.
     DATA name       TYPE string.
     DATA amount     TYPE i.
 
@@ -30,9 +30,11 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_messages.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       amount = 42.
 
@@ -41,17 +43,22 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
       " table into the central message manager: each row becomes a
       " sap.ui.core.message.Message with the view's model as processor, so a
       " row with a target sets that field's valueState too.
-      t_messages = VALUE #(
-          ( message        = `Please enter a valid name`
-            type           = `Error`
-            additionaltext = `Name`
-            target         = `/NAME` )
-          ( message        = `Draft saved automatically`
-            type           = `Information`
-            additionaltext = `Autosave` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-message = `Please enter a valid name`.
+      temp2-type = `Error`.
+      temp2-additionaltext = `Name`.
+      temp2-target = `/NAME`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-message = `Draft saved automatically`.
+      temp2-type = `Information`.
+      temp2-additionaltext = `Autosave`.
+      INSERT temp2 INTO TABLE temp1.
+      t_messages = temp1.
 
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
     ENDIF.
@@ -61,7 +68,9 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -70,7 +79,8 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Message - Message Model and MessageManager`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

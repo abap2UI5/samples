@@ -31,9 +31,9 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       on_init( ).
 
     ELSE.
@@ -44,8 +44,9 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE string_table.
 
-    IF client->check_on_event( `LOAD` ).
+    IF client->check_on_event( `LOAD` ) IS NOT INITIAL.
 
       mv_percent       = mv_percent + 25.
       mv_check_active  = abap_true.
@@ -62,9 +63,13 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
       WAIT UP TO 2 SECONDS.
 
       IF mv_check_active = abap_true.
+        
+        CLEAR temp1.
+        INSERT `LOAD` INTO TABLE temp1.
+        INSERT `0` INTO TABLE temp1.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-start_timer
-            t_arg = VALUE #( ( `LOAD` ) ( `0` ) ) ).
+            t_arg = temp1 ).
       ENDIF.
 
     ENDIF.

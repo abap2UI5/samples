@@ -19,7 +19,10 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    DATA(lo_view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA lo_view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_view_nested TYPE REF TO z2ui5_cl_ui5_view_builder.
+    lo_view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -27,7 +30,8 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = lo_view->ele( `Shell`
+    
+    page = lo_view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Nested View - Basic Example (nest_view_display)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -60,7 +64,8 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
         )->tag( `Input`
             )->a( n = `value` v = client->_bind( mv_input_main ) ).
 
-    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    lo_view_nested = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -75,7 +80,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
                 )->tag( `Input`
                     )->a( n = `value` v = client->_bind( mv_input_nest ) ).
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       client->view_display( lo_view->stringify( ) ).
 
     ENDIF.

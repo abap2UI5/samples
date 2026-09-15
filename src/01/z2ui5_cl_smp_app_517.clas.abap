@@ -20,7 +20,7 @@ CLASS z2ui5_cl_smp_app_517 DEFINITION PUBLIC.
     DATA file_type  TYPE string.
     DATA file_size  TYPE string.
     DATA removed    TYPE string.
-    DATA t_received TYPE STANDARD TABLE OF ty_s_file WITH EMPTY KEY.
+    DATA t_received TYPE STANDARD TABLE OF ty_s_file WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -37,7 +37,7 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -47,6 +47,8 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
 
 
   METHOD on_event.
+          DATA payload TYPE string.
+          DATA temp1 TYPE z2ui5_cl_smp_app_517=>ty_s_file.
 
     CASE client->get_event( ).
 
@@ -56,14 +58,16 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
         " previous response. fileData is a base64 DATA URL, so the payload
         " starts after the comma.
         IF file_name IS NOT INITIAL.
-          DATA(payload) = substring_after( val = file_data
+          
+          payload = substring_after( val = file_data
                                            sub = `,` ).
-          INSERT VALUE #( name  = file_name
-                          type  = file_type
-                          size  = file_size
-                          " the decoded length, so the sample shows the bytes
-                          " ABAP actually received rather than the base64 text
-                          bytes = strlen( payload ) * 3 / 4 ) INTO TABLE t_received.
+          
+          CLEAR temp1.
+          temp1-name = file_name.
+          temp1-type = file_type.
+          temp1-size = file_size.
+          temp1-bytes = strlen( payload ) * 3 / 4.
+          INSERT temp1 INTO TABLE t_received.
         ENDIF.
 
       WHEN `FILE_REMOVED`.
@@ -79,7 +83,10 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -88,7 +95,8 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
             )->a( n = `xmlns:upload` v = `sap.m.upload`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - File - Upload with an UploadSet`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -118,7 +126,8 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
         )->a( n = `uploadEnabled` b = abap_false
         )->a( n = `class`         v = `sapUiSmallMargin` ).
 
-    DATA(table) = page->ele( `Table`
+    
+    table = page->ele( `Table`
         )->a( n = `items`      v = client->_bind( t_received )
         )->a( n = `class`      v = `sapUiSmallMargin`
         )->a( n = `noDataText` v = `No file has reached the backend yet.` ).
