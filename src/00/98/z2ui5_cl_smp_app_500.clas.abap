@@ -104,8 +104,8 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
     DATA(cells) = table->ele( `items`
         )->ele( `ColumnListItem`
             )->a( n = `type`  v = `Navigation`
-            )->a( n = `press` v = client->_event( val   = `ROW_SELECT`
-                                                  t_arg = VALUE #( ( `${ROW_ID}` ) ) )
+            )->a( n = `press` v = client->_event( val = `ROW_SELECT`
+                                                  arg = `${ROW_ID}` )
             )->ele( `cells` ).
 
     cells->tag( `CheckBox`

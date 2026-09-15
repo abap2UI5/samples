@@ -325,12 +325,12 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
             )->ele( n = `RowAction` ns = `table`
                 )->ele( n = `RowActionItem` ns = `table`
                     )->a( n = `type`  v = `Navigation`
-                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
+                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` arg = `${ROW_ID}` )
                 )->end(
                 )->ele( n = `RowActionItem` ns = `table`
                     )->a( n = `icon`  v = `sap-icon://edit`
                     )->a( n = `text`  v = `Edit`
-                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_EDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
+                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_EDIT` arg = `${ROW_ID}` ) ).
 
     client->view_display( view->stringify( ) ).
 

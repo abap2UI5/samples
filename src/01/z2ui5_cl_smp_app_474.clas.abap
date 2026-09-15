@@ -128,18 +128,18 @@ CLASS z2ui5_cl_smp_app_474 IMPLEMENTATION.
     page->ele( `HBox`
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `Button`
-            )->a( n = `press` v = client->_event( val   = `OPEN_RELATIVE_ONLY`
-                                    t_arg = VALUE #( ( `$event.oSource.sId` ) ) )
+            )->a( n = `press` v = client->_event( val = `OPEN_RELATIVE_ONLY`
+                                    arg = `$event.oSource.sId` )
             )->a( n = `text`  v = `Open with RELATIVE_ONLY`
             )->a( n = `type`  v = `Emphasized`
         )->tag( `Button`
-            )->a( n = `press` v = client->_event( val   = `OPEN_ALLOW_ALL`
-                                    t_arg = VALUE #( ( `$event.oSource.sId` ) ) )
+            )->a( n = `press` v = client->_event( val = `OPEN_ALLOW_ALL`
+                                    arg = `$event.oSource.sId` )
             )->a( n = `text`  v = `Open with ALLOW_ALL`
             )->a( n = `class` v = `sapUiTinyMarginBegin`
         )->tag( `Button`
-            )->a( n = `press` v = client->_event( val   = `OPEN_DENY_ALL`
-                                    t_arg = VALUE #( ( `$event.oSource.sId` ) ) )
+            )->a( n = `press` v = client->_event( val = `OPEN_DENY_ALL`
+                                    arg = `$event.oSource.sId` )
             )->a( n = `text`  v = `Open with DENY_ALL`
             )->a( n = `class` v = `sapUiTinyMarginBegin` ).
 

@@ -100,7 +100,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->ele( n = `RowAction` ns = `table`
                 )->ele( n = `RowActionItem` ns = `table`
                     )->a( n = `type`  v = `Navigation`
-                    )->a( n = `press` v = client->_event( val = `ROW_NAVIGATE` t_arg = VALUE #( ( `${TITLE}` ) ) ) ).
+                    )->a( n = `press` v = client->_event( val = `ROW_NAVIGATE` arg = `${TITLE}` ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )

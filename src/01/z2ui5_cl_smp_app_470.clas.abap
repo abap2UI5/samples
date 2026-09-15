@@ -135,8 +135,8 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
                     )->a( n = `text` v = `{PRICE} EUR`
                 )->tag( `Button`
                     )->a( n = `press` v = client->_event(
-                        val   = `SHOW`
-                        t_arg = VALUE #( ( `$event.oSource.getBindingContext().getPath().split('/').pop()` ) ) )
+                        val = `SHOW`
+                        arg = `$event.oSource.getBindingContext().getPath().split('/').pop()` )
                     )->a( n = `text`  v = `components`
                     )->a( n = `icon`  v = `sap-icon://product` ).
 

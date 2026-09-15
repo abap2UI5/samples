@@ -124,8 +124,8 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
         )->ele( `FacetFilterList`
             )->a( n = `mode`      v = `MultiSelect`
             )->a( n = `title`     v = `Products`
-            )->a( n = `listClose` v = client->_event( val   = `FILTER`
-                                                          t_arg = VALUE #( ( `$event.mParameters.selectedItems` ) ) )
+            )->a( n = `listClose` v = client->_event( val = `FILTER`
+                                                          arg = `$event.mParameters.selectedItems` )
             )->a( n = `items`     v = client->_bind( mt_table_products )
             )->ele( `FacetFilterItem`
                 )->a( n = `key`  v = `{PRODUCT}`

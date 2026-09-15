@@ -102,8 +102,8 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
         )->tag( `Input`
             )->a( n = `placeholder` v = `Type quickly ...`
             )->a( n = `liveChange`  v = client->_event(
-                val   = `PLAIN`
-                t_arg = VALUE #( ( `${$parameters>/value}` ) ) )
+                val = `PLAIN`
+                arg = `${$parameters>/value}` )
         )->tag( `Label`
             )->a( n = `text` v = `Value in the backend`
         )->tag( `Text`
@@ -124,7 +124,7 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
             )->a( n = `placeholder` v = `Type quickly ...`
             )->a( n = `liveChange`  v = client->_event(
                 val    = `QUEUED`
-                t_arg  = VALUE #( ( `${$parameters>/value}` ) )
+                arg    = `${$parameters>/value}`
                 s_ctrl = VALUE #( check_queue_last = abap_true ) )
         )->tag( `Label`
             )->a( n = `text` v = `Value in the backend`
