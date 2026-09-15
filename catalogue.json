@@ -2443,7 +2443,7 @@
    "stage": "rows",
    "title": "Table",
    "description": "Live Search over a Large Table",
-   "summary": "A SearchField that filters a 6000-row table on every keystroke, wired with check_queue_last so the last keystroke typed during a round-trip is not lost.",
+   "summary": "A SearchField that filters a 6000-row table on every keystroke, wired with check_queue_last and check_no_busy so no keystroke is lost and the busy overlay never flashes over the field.",
    "keywords": [
     "live",
     "search",
@@ -2452,7 +2452,10 @@
     "keystroke",
     "roundtrip",
     "busy",
+    "indicator",
+    "overlay",
     "check_queue_last",
+    "check_no_busy",
     "typing"
    ],
    "docs": [

@@ -1,9 +1,9 @@
-" @keywords live search table filter keystroke roundtrip busy check_queue_last typing
-" @summary A SearchField that filters a 6000-row table on every keystroke, wired with check_queue_last so the last keystroke typed during a round-trip is not lost.
+" @keywords live search table filter keystroke roundtrip busy indicator overlay check_queue_last check_no_busy typing
+" @summary A SearchField that filters a 6000-row table on every keystroke, wired with check_queue_last and check_no_busy so no keystroke is lost and the busy overlay never flashes over the field.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
-"! Needs abap2UI5 newer than 1.144.0 - check_queue_last is appended to
-"! ty_s_event_control after that release; on an older framework the class
-"! does not activate (unknown component of s_ctrl).
+"! Needs abap2UI5 newer than 1.144.0 - check_queue_last and check_no_busy are
+"! appended to ty_s_event_control after that release; on an older framework
+"! the class does not activate (unknown component of s_ctrl).
 CLASS z2ui5_cl_smp_app_059 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -114,7 +114,9 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
     " The SearchField below round-trips on every keystroke on purpose: the
     " filter runs in ABAP over the full table, which is the point of the
-    " sample. check_queue_last is what makes that wire behave.
+    " sample. check_queue_last and check_no_busy are what make that wire
+    " behave - the first so no keystroke is lost, the second so the overlay
+    " stays out of the way while they are typed.
     " abap2ui5lint-disable live-event-roundtrip
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -137,8 +139,11 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
                    `further event is dropped. A live search fires per keystroke and would lose every one typed during ` &&
                    `the flight, the last one included - the table would keep filtering on an earlier prefix until you ` &&
                    `paused. The wire below is registered with s_ctrl-check_queue_last, which keeps the last keystroke ` &&
-                   `of the flight and sends it once the response has landed. Type quickly: the filter lands on what ` &&
-                   `you typed. Sample 511 shows the same wire with and without the flag side by side.`
+                   `of the flight and sends it once the response has landed. It also carries s_ctrl-check_no_busy: a ` &&
+                   `keystroke that meets a round-trip in flight raises the global busy overlay with no delay at all - ` &&
+                   `right for a dropped click, wrong over the field you are typing into - and that flag keeps it down. ` &&
+                   `The round-trip is unchanged, only the overlay is. Type quickly: the filter lands on what you typed ` &&
+                   `and nothing blinks. Sample 511 shows the same wire with and without the flags side by side.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -151,7 +156,8 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
             )->a( n = `placeholder` v = `Search products`
             )->a( n = `liveChange`  v = client->_event(
                 val    = `BUTTON_SEARCH`
-                s_ctrl = VALUE #( check_queue_last = abap_true ) ) ).
+                s_ctrl = VALUE #( check_queue_last = abap_true
+                                  check_no_busy    = abap_true ) ) ).
 
     DATA(tab) = page1->ele( `Table`
         )->a( n = `items` v = client->_bind( mt_table ) ).
