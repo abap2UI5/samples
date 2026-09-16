@@ -82,11 +82,25 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
     FIELD-SYMBOLS <tab>       TYPE STANDARD TABLE.
     FIELD-SYMBOLS <table_row> TYPE any.
 
+    " IS ASSIGNED, not sy-subrc: a SUCCESSFUL dynamic ASSIGN does not reset
+    " sy-subrc on every release (abap2UI5 #1937). Both references are also
+    " checked before they are USED: reading <tab>[ ] or a component of an
+    " UNASSIGNED field symbol is a short dump, not an exception - and the
+    " popup would take the whole roundtrip down with it
     ASSIGN mt_table->* TO <tab>.
+    IF <tab> IS NOT ASSIGNED.
+      RETURN.
+    ENDIF.
+
+    " the row structure does not change per field - read once, before the loop
+    ASSIGN ms_table_row->* TO <table_row>.
+    IF <table_row> IS NOT ASSIGNED.
+      RETURN.
+    ENDIF.
 
     ASSIGN <tab>[ index ] TO FIELD-SYMBOL(<row>).
 
-    IF sy-subrc <> 0.
+    IF <row> IS NOT ASSIGNED.
       RETURN.
     ENDIF.
 
@@ -98,7 +112,6 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
-      ASSIGN ms_table_row->* TO <table_row>.
       ASSIGN COMPONENT lv_field OF STRUCTURE <table_row> TO FIELD-SYMBOL(<value_struc>).
 
       IF sy-subrc <> 0.

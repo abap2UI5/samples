@@ -159,9 +159,11 @@ CLASS z2ui5_cl_smp_app_211 IMPLEMENTATION.
         RETURN.
     ENDTRY.
 
+    " IS ASSIGNED, not sy-subrc: a SUCCESSFUL dynamic ASSIGN does not reset
+    " sy-subrc on every release (abap2UI5 #1937)
     ASSIGN mo_app->(`MV_VIEW_DISPLAY`) TO FIELD-SYMBOL(<view_display>).
 
-    IF sy-subrc = 0 AND <view_display> = abap_true.
+    IF <view_display> IS ASSIGNED AND <view_display> = abap_true.
 
       <view_display> = abap_false.
       client->view_display( mo_main_page->stringify( ) ).

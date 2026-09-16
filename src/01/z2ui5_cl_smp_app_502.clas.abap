@@ -305,8 +305,10 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
         " stops at five and writes an ellipsis where it stopped - without the
         " limit a structure that points at itself would never end
         DATA(tree) = get_tree( ).
+        " IS ASSIGNED, not sy-subrc: a SUCCESSFUL dynamic ASSIGN does not reset
+        " sy-subrc on every release (abap2UI5 #1937)
         ASSIGN tree->* TO <s_tree>.
-        IF sy-subrc = 0.
+        IF <s_tree> IS ASSIGNED.
           client->message_box_display( <s_tree> ).
         ENDIF.
 
@@ -701,8 +703,12 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
     " built from the bottom up, so every node holds the one below it
     DO 6 TIMES.
       CREATE DATA result TYPE ty_s_node.
+      " UNASSIGN before the ASSIGN because this is a loop: a failed assign
+      " leaves the previous round's binding in place, and IS ASSIGNED would
+      " then read TRUE for the failure and build onto the WRONG node
+      UNASSIGN <s_node>.
       ASSIGN result->* TO <s_node>.
-      IF sy-subrc <> 0.
+      IF <s_node> IS NOT ASSIGNED.
         RETURN.
       ENDIF.
 

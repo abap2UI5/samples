@@ -81,12 +81,14 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
       IF lv_from_root = lv_to_root.
         RETURN.
       ENDIF.
+      " IS ASSIGNED, not sy-subrc: a SUCCESSFUL dynamic ASSIGN does not reset
+      " sy-subrc on every release (abap2UI5 #1937)
       ASSIGN t_nodes[ lv_from_root ] TO FIELD-SYMBOL(<from>).
-      IF sy-subrc <> 0.
+      IF <from> IS NOT ASSIGNED.
         RETURN.
       ENDIF.
       ASSIGN t_nodes[ lv_to_root ] TO FIELD-SYMBOL(<to>).
-      IF sy-subrc <> 0.
+      IF <to> IS NOT ASSIGNED.
         RETURN.
       ENDIF.
       DELETE <from>-nodes INDEX lv_from_child.
