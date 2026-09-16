@@ -46,6 +46,11 @@ CLASS z2ui5_cl_smp_app_519 IMPLEMENTATION.
 
   METHOD view_display.
 
+    " the three text symbols this app is about - see the block below
+    DATA lv_name_label  TYPE string.
+    DATA lv_placeholder TYPE string.
+    DATA lv_greet       TYPE string.
+
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
@@ -70,22 +75,35 @@ CLASS z2ui5_cl_smp_app_519 IMPLEMENTATION.
     " Every text below comes out of the class's text pool (Goto > Text
     " Elements in SE24/ADT). The literal in the source is the fallback and the
     " maintenance text; what renders is the entry for the logon language.
+    "
+    " Read into a VARIABLE first, and that is part of the lesson: a text
+    " symbol is a CHARACTER literal, while the builder's v is TYPE string.
+    " Handing one straight to v answers `'...'(001) is not type-compatible
+    " with formal parameter V` on a system - a SYNTAX_ERROR of the class,
+    " although abaplint, the transpiler and the unit suite are all green on
+    " it. The assignment below is a plain conversion and is allowed on every
+    " release. Inside a string template ( see on_event( ) ) the symbol needs
+    " no variable: an embedded expression is a general expression position.
+    lv_name_label  = 'Your name'(001).
+    lv_placeholder = 'Type a name here'(002).
+    lv_greet       = 'Greet'(003).
+
     page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin`
 
         )->tag( `Label`
-            )->a( n = `text`     v = 'Your name'(001)
+            )->a( n = `text`     v = lv_name_label
             )->a( n = `labelFor` v = `nameInput`
 
         )->tag( `Input`
             )->a( n = `id`          v = `nameInput`
             )->a( n = `value`       v = client->_bind( name )
-            )->a( n = `placeholder` v = 'Type a name here'(002)
+            )->a( n = `placeholder` v = lv_placeholder
             )->a( n = `width`       v = `20rem`
 
         )->tag( `Button`
             )->a( n = `press` v = client->_event( `GREET` )
-            )->a( n = `text`  v = 'Greet'(003)
+            )->a( n = `text`  v = lv_greet
             )->a( n = `type`  v = `Emphasized`
             )->a( n = `class` v = `sapUiSmallMarginTop` ).
 

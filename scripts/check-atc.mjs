@@ -33,6 +33,17 @@
  *    the documented check. Reporting it is how a cleanup turns a
  *    wrong-branch bug into a silently-taken one.
  *
+ * 3. TEXT_SYMBOL_ARG - a text symbol (`'text'(001)`) handed to a PARAMETER.
+ *
+ *    It is a CHARACTER literal, so a formal parameter typed `string` - the
+ *    view builder's `v`, for one - answers `'...'(001) is not type-compatible
+ *    with formal parameter V`, a SYNTAX_ERROR of the whole class. Three of these shipped here, in app 519 - the sample whose subject IS
+ *    translatable texts, so the one place it was certain to appear.
+ *
+ *    A PARAMETER binding only: `lv_x = 'y'(001).` is an assignment and a plain
+ *    conversion, and a symbol inside a string template sits in a general
+ *    expression position. Read it into a variable and pass that.
+ *
  * The scan reads ABAP STATEMENTS, not lines - a multi-line `ASSIGN COMPONENT`
  * looks like a plain `ASSIGN` to a line-based scan, which would report the one
  * shape that must not be reported.
@@ -98,6 +109,8 @@ function statements(source) {
 const SETS_SUBRC =
   /^(read\s+table|select|loop\s+at|find|replace|call\s+function|call\s+method|delete|insert|modify|append|split|open\s+dataset|authority-check|import|export|describe|search|get\s+parameter|set\s+parameter)\b/i;
 
+const TEXT_SYMBOL_ARG = /\b\w+\s*=\s*'[^']*'\(\d{3}\)/;
+
 const findings = [];
 
 for (const rel of abapFiles('src')) {
@@ -111,6 +124,19 @@ for (const rel of abapFiles('src')) {
         at: `${rel}:${start}`,
         message: 'SELECT without a WHERE clause - the extended check wants "#EC CI_NOWHERE on the statement',
       });
+    }
+
+    const symbolAt = c.search(TEXT_SYMBOL_ARG);
+    if (symbolAt !== -1) {
+      const head = c.slice(0, symbolAt);
+      const depth = (head.match(/\(/g) ?? []).length - (head.match(/\)/g) ?? []).length;
+      if (depth > 0) {
+        findings.push({
+          rule: 'text_symbol_arg',
+          at: `${rel}:${start}`,
+          message: "a text symbol is a CHARACTER literal - a parameter typed `string` answers \"not type-compatible with formal parameter\"; read it into a variable and pass that",
+        });
+      }
     }
 
     if (/^ASSIGN\b/i.test(c)) {
@@ -139,6 +165,8 @@ if (findings.length > 0) {
   console.error(
     '\nnowhere            - a full read on purpose says so, on the first line of the\n' +
     '                     statement; see any annotated SELECT under src/.\n' +
+    'text_symbol_arg    - read the symbol into a variable and pass the variable;\n' +
+    '                     an assignment and a string template need nothing.\n' +
     'subrc_after_assign - IS [NOT] ASSIGNED, and `UNASSIGN <fs>.` BEFORE the ASSIGN\n' +
     '                     when it sits in a loop or the symbol was assigned earlier.\n' +
     '                     ASSIGN COMPONENT is not this finding and is never reported.',
@@ -146,4 +174,4 @@ if (findings.length > 0) {
   process.exit(1);
 }
 
-console.log('check-atc: no SELECT without a WHERE, no sy-subrc after a dynamic ASSIGN - OK');
+console.log('check-atc: no SELECT without a WHERE, no sy-subrc after a dynamic ASSIGN,\n            no text symbol passed to a parameter - OK');
