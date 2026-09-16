@@ -75,7 +75,7 @@ CLASS Z2UI5_CL_SMP_APP_345 IMPLEMENTATION.
         CREATE DATA mt_data1 TYPE HANDLE new_table_desc.
         ASSIGN mt_data1->* TO <table1>.
 
-        SELECT * FROM z2ui5_t_01
+        SELECT * FROM z2ui5_t_01                        "#EC CI_NOWHERE
           ORDER BY PRIMARY KEY
           INTO TABLE @<table1>
           UP TO 5 ROWS.

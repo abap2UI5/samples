@@ -223,7 +223,7 @@ CLASS z2ui5_cl_smp_app_342 IMPLEMENTATION.
 
         ASSIGN mt_data->* TO <table>.
 
-        SELECT *
+        SELECT *                                        "#EC CI_NOWHERE
           FROM (mv_table)
           ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>

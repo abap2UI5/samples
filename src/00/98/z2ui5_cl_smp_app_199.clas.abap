@@ -136,7 +136,7 @@ CLASS z2ui5_cl_smp_app_199 IMPLEMENTATION.
                       CAST cl_abap_tabledescr(
                           cl_abap_typedescr=>describe_by_data( <table> ) )->get_table_line_type( ) )->get_components( ).
 
-        SELECT id, id_prev FROM z2ui5_t_01
+        SELECT id, id_prev FROM z2ui5_t_01              "#EC CI_NOWHERE
           ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 2 ROWS.

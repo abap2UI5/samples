@@ -44,9 +44,11 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
     IF app_sub IS BOUND.
 
+      " IS ASSIGNED, not sy-subrc: a SUCCESSFUL dynamic ASSIGN does not reset
+      " sy-subrc on every release (abap2UI5 #1937)
       ASSIGN app_sub->(`VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
 
-      IF sy-subrc <> 0.
+      IF <fs> IS NOT ASSIGNED.
         RETURN.
       ENDIF.
 
@@ -65,7 +67,7 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
     ASSIGN app_sub->(`VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
 
-    IF sy-subrc <> 0.
+    IF <fs> IS NOT ASSIGNED.
       RETURN.
     ENDIF.
 

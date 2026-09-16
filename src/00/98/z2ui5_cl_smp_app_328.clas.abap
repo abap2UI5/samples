@@ -148,7 +148,7 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
 
         ASSIGN mt_table->* TO <table>.
 
-        SELECT id FROM z2ui5_t_01
+        SELECT id FROM z2ui5_t_01                       "#EC CI_NOWHERE
           ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 4 ROWS.

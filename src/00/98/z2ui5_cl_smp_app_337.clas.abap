@@ -147,7 +147,7 @@ CLASS z2ui5_cl_smp_app_337 IMPLEMENTATION.
 
   METHOD get_data.
 
-    SELECT id,
+    SELECT id,                                          "#EC CI_NOWHERE
            id_prev,
            id_prev_app,
            id_prev_app_stack,
