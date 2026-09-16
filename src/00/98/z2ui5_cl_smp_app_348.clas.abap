@@ -116,7 +116,7 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
 
     " any single row will do here, but it has to be the SAME one on every
     " roundtrip - SELECT SINGLE without a full key leaves that to the database
-    SELECT id,
+    SELECT id,                                          "#EC CI_NOWHERE
            id_prev,
            id_prev_app,
            id_prev_app_stack,

@@ -102,7 +102,7 @@ CLASS z2ui5_cl_smp_app_332 IMPLEMENTATION.
 
     " any single row will do here, but it has to be the SAME one on every
     " roundtrip - SELECT SINGLE without a full key leaves that to the database
-    SELECT * FROM z2ui5_t_01
+    SELECT * FROM z2ui5_t_01                            "#EC CI_NOWHERE
       ORDER BY PRIMARY KEY
       INTO TABLE @DATA(lt_data) UP TO 1 ROWS.
 

@@ -176,7 +176,7 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
 
         ASSIGN mt_data->* TO <table>.
 
-        SELECT *
+        SELECT *                                        "#EC CI_NOWHERE
           FROM (iv_tabname)
           ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
@@ -207,7 +207,7 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
 
         ASSIGN mt_data2->* TO <table>.
 
-        SELECT *
+        SELECT *                                        "#EC CI_NOWHERE
           FROM (iv_tabname)
           ORDER BY PRIMARY KEY
           INTO CORRESPONDING FIELDS OF TABLE @<table>
