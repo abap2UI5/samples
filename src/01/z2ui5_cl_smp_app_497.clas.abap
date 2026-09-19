@@ -58,7 +58,7 @@ CLASS z2ui5_cl_smp_app_497 IMPLEMENTATION.
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Binding - A View Built From RTTI`
+            )->a( n = `title`          v = `abap2UI5 - Binding - A View Built From RTTI, No Field Named`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 

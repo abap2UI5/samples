@@ -82,7 +82,7 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Navigation - Routing Mode keep`
+            )->a( n = `title`          v = `abap2UI5 - Hash - Routing mode keep`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 

@@ -13,8 +13,6 @@ CLASS z2ui5_cl_smp_app_081 DEFINITION PUBLIC.
         name     TYPE string,
       END OF ty_s_tab.
 
-    DATA product  TYPE string.
-    DATA quantity TYPE string.
     DATA mv_placement TYPE string.
 
     DATA mt_tab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
@@ -25,9 +23,6 @@ CLASS z2ui5_cl_smp_app_081 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS on_event.
     METHODS view_display.
-    METHODS popover_display
-      IMPORTING
-        id TYPE string.
     METHODS popover_list_display
       IMPORTING
         id TYPE string.
@@ -37,38 +32,6 @@ ENDCLASS.
 
 
 CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
-
-  METHOD popover_display.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core`
-            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
-    view->ele( `Popover`
-        )->a( n = `title`     v = `Popover Title`
-        )->a( n = `placement` t = mv_placement
-        )->ele( `footer`
-            )->ele( `OverflowToolbar`
-                )->tag( `ToolbarSpacer`
-                )->tag( `Button`
-                    )->a( n = `press` v = client->_event( `BUTTON_CANCEL` )
-                    )->a( n = `text`  v = `Cancel`
-                )->tag( `Button`
-                    )->a( n = `press` v = client->_event( `BUTTON_CONFIRM` )
-                    )->a( n = `text`  v = `Confirm`
-                    )->a( n = `type`  v = `Emphasized`
-            )->end(
-        )->end(
-        )->tag( `Text`
-            )->a( n = `text` v = `make an input here:`
-        )->tag( `Input`
-            )->a( n = `value` v = `abcd` ).
-
-    client->popover_display( xml = view->stringify( ) by_id = id ).
-
-  ENDMETHOD.
-
 
   METHOD popover_list_display.
 
@@ -173,7 +136,7 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
     ELSEIF client->check_on_navigated( ).
       view_display( ).
 
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -187,20 +150,10 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
       WHEN `SEL_CHANGE`.
         DATA(lt_sel) = mt_tab.
         DELETE lt_sel WHERE selected = abap_false.
+        client->message_toast_display( |{ lines( lt_sel ) } selected| ).
 
       WHEN `POPOVER_LIST`.
         popover_list_display( `TEST` ).
-
-      WHEN `POPOVER`.
-        popover_display( `TEST` ).
-
-      WHEN `BUTTON_CONFIRM`.
-        client->message_toast_display( |confirm| ).
-        client->popover_destroy( ).
-
-      WHEN `BUTTON_CANCEL`.
-        client->message_toast_display( |cancel| ).
-        client->popover_destroy( ).
     ENDCASE.
 
   ENDMETHOD.
@@ -209,8 +162,6 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
   METHOD on_init.
 
     mv_placement = `Left`.
-    product      = `tomato`.
-    quantity     = `500`.
 
     mt_tab = VALUE #(
                       ( id = `1` name = `name1` )

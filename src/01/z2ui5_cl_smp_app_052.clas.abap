@@ -56,7 +56,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `Product`
             )->tag( `Text`
-                )->a( n = `text` v = mv_product
+                )->a( n = `text` t = mv_product
             )->tag( `Label`
                 )->a( n = `text` v = `info2`
             )->tag( `Text`

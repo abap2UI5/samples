@@ -88,7 +88,7 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
 
     DATA(main) = nav->ele( `Page`
         )->a( n = `id`             v = `page-main`
-        )->a( n = `title`          v = `abap2UI5 - App-Owned Hash Routing`
+        )->a( n = `title`          v = `abap2UI5 - Hash - App-Owned Routing (#/detail)`
         )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
         )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 

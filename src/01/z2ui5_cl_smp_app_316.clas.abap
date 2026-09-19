@@ -4,7 +4,6 @@
 CLASS z2ui5_cl_smp_app_316 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES if_serializable_object.
     INTERFACES z2ui5_if_app.
 
     DATA phone  TYPE string.
@@ -16,12 +15,10 @@ CLASS z2ui5_cl_smp_app_316 DEFINITION PUBLIC.
             body       TYPE string,
             cc         TYPE string,
             bcc        TYPE string,
-            new_window TYPE string,
           END OF email.
 
     DATA: BEGIN OF url,
-            url        TYPE string,
-            new_window TYPE string,
+            url TYPE string,
           END OF url.
 
   PROTECTED SECTION.
@@ -36,11 +33,10 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
 
   METHOD view_display.
 
-    url = VALUE #( url = `http://www.sap.com` new_window = `true` ).
-    email      = VALUE #( email      = `email@email.com`
-    subject    = `subject`
-    body       = `body`
-    new_window = `true` ).
+    url   = VALUE #( url = `http://www.sap.com` ).
+    email = VALUE #( email   = `email@email.com`
+                     subject = `subject`
+                     body    = `body` ).
 
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`

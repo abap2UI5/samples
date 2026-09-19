@@ -40,7 +40,7 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -106,7 +106,7 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Control Behaviour - Address an Aggregation Item by Index`
+            )->a( n = `title`          v = `abap2UI5 - Control Behaviour - Aggregation Item by Index`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 

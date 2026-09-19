@@ -6,8 +6,6 @@ CLASS z2ui5_cl_smp_app_109 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA product TYPE string.
-    DATA quantity TYPE string.
     DATA mv_placement TYPE string.
 
   PROTECTED SECTION.
@@ -70,7 +68,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
                 )->end(
                 )->ele( `QuickViewGroupElement`
                     )->a( n = `label` v = `Address`
-                    )->a( n = `value` v = `Here"`
+                    )->a( n = `value` v = `Here`
                 )->end( ).
 
     client->popover_display( xml = view->stringify( ) by_id = id ).
@@ -152,7 +150,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -161,20 +159,9 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get_event( ).
-      WHEN `CLOSE_POPOVER`.
-        client->popover_destroy( ).
-      WHEN `POPOVER`.
-        popover_display( `TEST` ).
-
-      WHEN `BUTTON_CONFIRM`.
-        client->message_toast_display( |confirm| ).
-        client->popover_destroy( ).
-
-      WHEN `BUTTON_CANCEL`.
-        client->message_toast_display( |cancel| ).
-        client->popover_destroy( ).
-    ENDCASE.
+    IF client->check_on_event( `POPOVER` ).
+      popover_display( `TEST` ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -182,8 +169,6 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
   METHOD on_init.
 
     mv_placement = `Left`.
-    product      = `tomato`.
-    quantity     = `500`.
 
   ENDMETHOD.
 

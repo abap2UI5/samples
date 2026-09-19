@@ -30,13 +30,12 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
       IF event_backend = `NEW_APP_EVENT`.
         client->message_box_display( `new app called and event NEW_APP_EVENT raised` ).
       ENDIF.
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
+    " every roundtrip - the init and the navigated one included - ends in
+    " a rebuild, since the events above switch the view that is shown
     view_display( ).
 
   ENDMETHOD.
@@ -46,12 +45,6 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
 
     CASE client->get_event( ).
 
-      WHEN `BUTTON_ROUNDTRIP`.
-        client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
-
-      WHEN `BUTTON_RESTART`.
-        client->nav_app_call( NEW z2ui5_cl_smp_app_025( ) ).
-
       WHEN `BUTTON_READ_PREVIOUS`.
         DATA(app_024) = CAST z2ui5_cl_smp_app_024( client->get_app_prev( ) ).
         input_previous = app_024->input2.
@@ -59,6 +52,9 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
 
       WHEN `SHOW_VIEW_MAIN`.
         show_view = `MAIN`.
+
+      WHEN `SHOW_VIEW_SECOND`.
+        show_view = `SECOND`.
 
       WHEN `BACK_WITH_EVENT`.
         DATA(app_back) = CAST z2ui5_cl_smp_app_024( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -121,7 +117,12 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
                             )->a( n = `value` v = client->_bind( input )
                         )->tag( `Button`
                             )->a( n = `press` v = client->_event( `BACK_WITH_EVENT` )
-                            )->a( n = `text`  v = `back` ).
+                            )->a( n = `text`  v = `back`
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Switch to the second view of this app`
+                        )->tag( `Button`
+                            )->a( n = `press` v = client->_event( `SHOW_VIEW_SECOND` )
+                            )->a( n = `text`  v = `show view second` ).
 
       WHEN `SECOND`.
         page->ele( n = `Grid` ns = `layout`
