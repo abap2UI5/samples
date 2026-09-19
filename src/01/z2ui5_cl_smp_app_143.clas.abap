@@ -12,7 +12,7 @@ CLASS z2ui5_cl_smp_app_143 DEFINITION PUBLIC.
         field2 TYPE string,
         field3 TYPE string,
       END OF ty_s_data.
-    TYPES ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH EMPTY KEY.
+    TYPES ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH DEFAULT KEY.
 
     DATA gt_data TYPE ty_t_data.
 
@@ -30,12 +30,14 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
 
   METHOD on_event.
+        DATA x TYPE REF TO cx_root.
 
     TRY.
-        IF client->check_on_event( `ROW_ACTION_ITEM_ADD` ).
+        IF client->check_on_event( `ROW_ACTION_ITEM_ADD` ) IS NOT INITIAL.
           client->message_toast_display( `Something` ).
         ENDIF.
-      CATCH cx_root INTO DATA(x).
+        
+      CATCH cx_root INTO x.
         client->message_box_display( text = x->get_text( ) type = `error` ).
     ENDTRY.
 
@@ -44,19 +46,44 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
 
   METHOD on_init.
 
-    gt_data = VALUE ty_t_data(
-      ( field1 = `21` field2 = `T1` field3 = `TEXT1` )
-      ( field1 = `22` field2 = `T1` field3 = `TEXT1` )
-      ( field1 = `23` field2 = `T2` field3 = `TEXT1` )
-      ( field1 = `24` field2 = `T2` field3 = `TEXT2` )
-      ( field1 = `25` field2 = `T3` field3 = `TEXT2` ) ).
+    DATA temp1 TYPE ty_t_data.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-field1 = `21`.
+    temp2-field2 = `T1`.
+    temp2-field3 = `TEXT1`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-field1 = `22`.
+    temp2-field2 = `T1`.
+    temp2-field3 = `TEXT1`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-field1 = `23`.
+    temp2-field2 = `T2`.
+    temp2-field3 = `TEXT1`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-field1 = `24`.
+    temp2-field2 = `T2`.
+    temp2-field3 = `TEXT2`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-field1 = `25`.
+    temp2-field2 = `T3`.
+    temp2-field3 = `TEXT2`.
+    INSERT temp2 INTO TABLE temp1.
+    gt_data = temp1.
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page1 TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA header_title TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA cont TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -67,7 +94,8 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
             )->a( n = `xmlns:table`  v = `sap.ui.table`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page1) = view->ele( `Shell`
+    
+    page1 = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - Keep Column Filters on Refresh`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -82,12 +110,14 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(page) = page1->ele( n = `DynamicPage` ns = `f`
+    
+    page = page1->ele( n = `DynamicPage` ns = `f`
         )->a( n = `headerExpanded` b = abap_true ).
     page1->tag( n = `UITableExt` ns = `z2ui5`
         )->a( n = `tableId` v = `Table1` ).
 
-    DATA(header_title) = page->ele( n = `title` ns = `f`
+    
+    header_title = page->ele( n = `title` ns = `f`
         )->ele( n = `DynamicPageTitle` ns = `f` ).
     header_title->ele( n = `heading` ns = `f`
         )->ele( `HBox`
@@ -96,9 +126,11 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
     header_title->ele( n = `expandedContent` ns = `f` ).
     header_title->ele( n = `snappedContent` ns = `f` ).
 
-    DATA(cont) = page->ele( n = `content` ns = `f` ).
+    
+    cont = page->ele( n = `content` ns = `f` ).
 
-    DATA(table) = cont->ele( `VBox`
+    
+    table = cont->ele( `VBox`
         )->ele( n = `Table` ns = `table`
             )->a( n = `rows`               v = client->_bind( gt_data )
             )->a( n = `alternateRowColors` b = abap_true
@@ -158,9 +190,9 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 

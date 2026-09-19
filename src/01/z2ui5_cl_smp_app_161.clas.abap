@@ -22,12 +22,15 @@ CLASS z2ui5_cl_smp_app_161 IMPLEMENTATION.
 
   METHOD simple_popup1.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA dialog TYPE REF TO z2ui5_cl_ui5_view_builder.
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
 
-    DATA(dialog) = popup->ele( `Dialog`
+    
+    dialog = popup->ele( `Dialog`
         )->a( n = `afterClose` v = client->_event( `BTN_OK_1ND` )
         )->ele( `content` ).
 
@@ -49,12 +52,15 @@ CLASS z2ui5_cl_smp_app_161 IMPLEMENTATION.
 
   METHOD simple_popup2.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA dialog TYPE REF TO z2ui5_cl_ui5_view_builder.
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
 
-    DATA(dialog) = popup->ele( `Dialog`
+    
+    dialog = popup->ele( `Dialog`
         )->a( n = `afterClose` v = client->_event( `BTN_OK_2ND` )
         )->ele( `content` ).
 
@@ -75,14 +81,17 @@ CLASS z2ui5_cl_smp_app_161 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popup - Dialog inside a Dialog`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -127,7 +136,7 @@ CLASS z2ui5_cl_smp_app_161 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
       RETURN.
     ENDIF.

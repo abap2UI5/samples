@@ -15,7 +15,7 @@ CLASS z2ui5_cl_smp_app_045 DEFINITION PUBLIC.
         info     TYPE string,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
     DATA mv_info_filter TYPE string.
 
@@ -33,11 +33,28 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
     " rebuilt from scratch on every call - it runs on the init AND on every
     " filter press, and without the reset each press appended another 1000
     " rows before the filter deleted the ones it did not want
-    t_tab = VALUE #( ).
+    DATA temp1 LIKE t_tab.
+      DATA temp2 TYPE ty_s_row.
+      DATA temp3 TYPE z2ui5_cl_smp_app_045=>ty_s_row-info.
+      DATA ls_row LIKE temp2.
+    CLEAR temp1.
+    t_tab = temp1.
     DO 1000 TIMES.
-      DATA(ls_row) = VALUE ty_s_row( count = sy-index  value = `red`
-        info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
-        descr = `this is a description` checkbox = abap_true ).
+      
+      CLEAR temp2.
+      temp2-count = sy-index.
+      temp2-value = `red`.
+      
+      IF sy-index < 50.
+        temp3 = `completed`.
+      ELSE.
+        temp3 = `uncompleted`.
+      ENDIF.
+      temp2-info = temp3.
+      temp2-descr = `this is a description`.
+      temp2-checkbox = abap_true.
+      
+      ls_row = temp2.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 
@@ -45,17 +62,20 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       refresh_data( ).
-    ELSEIF client->check_on_event( `FILTER_INFO` ).
+    ELSEIF client->check_on_event( `FILTER_INFO` ) IS NOT INITIAL.
       refresh_data( ).
       IF mv_info_filter IS NOT INITIAL.
         DELETE t_tab WHERE info <> mv_info_filter.
       ENDIF.
     ENDIF.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -90,7 +110,8 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
                 )->a( n = `press` v = client->_event( `FILTER_INFO` )
                 )->a( n = `text`  v = `filter` ).
 
-    DATA(tab) = page->ele( `ScrollContainer`
+    
+    tab = page->ele( `ScrollContainer`
         )->a( n = `height`   v = `70%`
         )->a( n = `vertical` b = abap_true
         )->ele( `Table`

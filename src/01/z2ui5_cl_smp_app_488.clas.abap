@@ -28,17 +28,20 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 TYPE REF TO z2ui5_cl_smp_app_489.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       on_navigation( ).
 
-    ELSEIF client->check_on_event( `CALL_APP` ).
-      client->nav_app_call( NEW z2ui5_cl_smp_app_489( ) ).
+    ELSEIF client->check_on_event( `CALL_APP` ) IS NOT INITIAL.
+      
+      CREATE OBJECT temp1 TYPE z2ui5_cl_smp_app_489.
+      client->nav_app_call( temp1 ).
     ENDIF.
 
   ENDMETHOD.
@@ -46,7 +49,10 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
 
   METHOD on_navigation.
 
-    DATA(ls_get) = client->get( ).
+    DATA ls_get TYPE z2ui5_if_client=>ty_s_get.
+        FIELD-SYMBOLS <s_result> TYPE data.
+        DATA temp2 TYPE z2ui5_cl_smp_app_489=>ty_s_result.
+    ls_get = client->get( ).
     returned_event = ls_get-event.
 
     CASE returned_event.
@@ -55,7 +61,8 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
 
         " the payload handed over by nav_app_leave( r_data = ... ) arrives as a
         " generic data reference - the receiver decides the type
-        ASSIGN ls_get-r_event_data->* TO FIELD-SYMBOL(<s_result>).
+        
+        ASSIGN ls_get-r_event_data->* TO <s_result>.
 
         IF <s_result> IS ASSIGNED.
 
@@ -67,7 +74,9 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
 
       WHEN `DATA_CANCELLED`.
 
-        s_result = VALUE #( ).
+        
+        CLEAR temp2.
+        s_result = temp2.
         client->message_toast_display( `Returned event DATA_CANCELLED, no data passed` ).
 
     ENDCASE.
@@ -79,7 +88,10 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -88,7 +100,8 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Navigation - Return Data and Events to the Caller`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -102,7 +115,8 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `Grid` ns = `layout`
+    
+    form = page->ele( n = `Grid` ns = `layout`
         )->a( n = `defaultSpan` v = `L6 M12 S12`
         )->ele( n = `content` ns = `layout`
             )->ele( n = `SimpleForm` ns = `form`

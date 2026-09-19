@@ -24,7 +24,7 @@ CLASS z2ui5_cl_smp_app_070 DEFINITION PUBLIC.
       END OF ty_s_tab.
 
     DATA mv_search_value TYPE string.
-    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
     DATA lv_selkz TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -61,11 +61,11 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
     me->client     = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -73,6 +73,8 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA lt_arg TYPE string_table.
+        DATA ls_arg TYPE string.
 
     CASE client->get_event( ).
       WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
@@ -80,7 +82,8 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         set_data( ).
         set_search( ).
       WHEN `SORT`.
-        DATA(lt_arg) = client->get( )-t_event_arg.
+        
+        lt_arg = client->get( )-t_event_arg.
         client->message_toast_display( `Event SORT` ).
       WHEN `FILTER`.
         lt_arg = client->get( )-t_event_arg.
@@ -93,7 +96,8 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         client->message_toast_display( `Event CUSTOMFILTER` ).
       WHEN `ROW_ACTION_ITEM_NAVIGATION`.
         lt_arg = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
+        
+        READ TABLE lt_arg INTO ls_arg INDEX 1.
 
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
@@ -112,7 +116,15 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
   METHOD on_init.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page1 TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA header_title TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_box TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA cont TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -123,7 +135,8 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
             )->a( n = `xmlns:table`  v = `sap.ui.table`
             )->a( n = `xmlns:u`      v = `sap.ui.unified` ).
 
-    DATA(page1) = view->ele( `Shell`
+    
+    page1 = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - Full Example with sap.ui.table`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -138,10 +151,12 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(page) = page1->ele( n = `DynamicPage` ns = `f`
+    
+    page = page1->ele( n = `DynamicPage` ns = `f`
         )->a( n = `headerExpanded` b = abap_true ).
 
-    DATA(header_title) = page->ele( n = `title` ns = `f`
+    
+    header_title = page->ele( n = `title` ns = `f`
         )->ele( n = `DynamicPageTitle` ns = `f` ).
     header_title->ele( n = `heading` ns = `f`
         )->ele( `HBox`
@@ -154,7 +169,8 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     " tag renders as <header xmlns="sap.m"/>, and UI5 looks for a DEFAULT
     " aggregation on sap.f.DynamicPage - which has none - so the view dies with
     " "Cannot add direct child without default aggregation defined"
-    DATA(lo_box) = page->ele( n = `header` ns = `f`
+    
+    lo_box = page->ele( n = `header` ns = `f`
         )->ele( n = `DynamicPageHeader` ns = `f`
             )->a( n = `pinnable` b = abap_true
             )->ele( `FlexBox`
@@ -181,9 +197,11 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
                 )->a( n = `text`  v = `Go`
                 )->a( n = `type`  v = `Emphasized` ).
 
-    DATA(cont) = page->ele( n = `content` ns = `f` ).
+    
+    cont = page->ele( n = `content` ns = `f` ).
 
-    DATA(tab) = cont->ele( n = `Table` ns = `table`
+    
+    tab = cont->ele( n = `Table` ns = `table`
         )->a( n = `rows`               v = client->_bind( val = mt_table )
         )->a( n = `alternateRowColors` b = abap_true
         )->a( n = `fixedColumnCount`   v = `1`
@@ -196,7 +214,8 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->ele( `OverflowToolbar`
             )->tag( `Title`
                 )->a( n = `text` v = `Products` ).
-    DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
+    
+    lo_columns = tab->ele( n = `columns` ns = `table` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width` v = `4rem`
         )->tag( `CheckBox`
@@ -312,24 +331,108 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
   METHOD set_data.
 
-    mt_table = VALUE #(
-        ( selkz = abap_false row_id = `1` product = `table`    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = `ST` price = `1000.50` waers = `EUR` process = `10`  process_state = `None` )
-        ( selkz = abap_false row_id = `2` product = `chair`    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = `ST` price = `2000.55` waers = `USD` process = `20` process_state = `Warning` )
-        ( selkz = abap_false row_id = `3` product = `sofa`     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = `ST` price = `3000.11` waers = `CNY` process = `30` process_state = `Success` )
-        ( selkz = abap_false row_id = `4` product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_002` quantity = 200  meins = `ST` price = `4000.88` waers = `USD` process = `40` process_state = `Information` )
-        ( selkz = abap_false row_id = `5` product = `printer`  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = `ST` price = `5000.47` waers = `EUR` process = `70` process_state = `Warning` )
-        ( selkz = abap_false row_id = `6` product = `table2`   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = `ST` price = `6000.33` waers = `GBP` process = `90`  process_state = `Error` ) ).
+    DATA temp1 LIKE mt_table.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-selkz = abap_false.
+    temp2-row_id = `1`.
+    temp2-product = `table`.
+    temp2-create_date = `01.01.2023`.
+    temp2-create_by = `Olaf`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 400.
+    temp2-meins = `ST`.
+    temp2-price = `1000.50`.
+    temp2-waers = `EUR`.
+    temp2-process = `10`.
+    temp2-process_state = `None`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-selkz = abap_false.
+    temp2-row_id = `2`.
+    temp2-product = `chair`.
+    temp2-create_date = `01.01.2022`.
+    temp2-create_by = `Karlo`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 123.
+    temp2-meins = `ST`.
+    temp2-price = `2000.55`.
+    temp2-waers = `USD`.
+    temp2-process = `20`.
+    temp2-process_state = `Warning`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-selkz = abap_false.
+    temp2-row_id = `3`.
+    temp2-product = `sofa`.
+    temp2-create_date = `01.05.2021`.
+    temp2-create_by = `Elin`.
+    temp2-storage_location = `AREA_002`.
+    temp2-quantity = 700.
+    temp2-meins = `ST`.
+    temp2-price = `3000.11`.
+    temp2-waers = `CNY`.
+    temp2-process = `30`.
+    temp2-process_state = `Success`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-selkz = abap_false.
+    temp2-row_id = `4`.
+    temp2-product = `computer`.
+    temp2-create_date = `27.01.2023`.
+    temp2-create_by = `Theo`.
+    temp2-storage_location = `AREA_002`.
+    temp2-quantity = 200.
+    temp2-meins = `ST`.
+    temp2-price = `4000.88`.
+    temp2-waers = `USD`.
+    temp2-process = `40`.
+    temp2-process_state = `Information`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-selkz = abap_false.
+    temp2-row_id = `5`.
+    temp2-product = `printer`.
+    temp2-create_date = `01.01.2023`.
+    temp2-create_by = `Renate`.
+    temp2-storage_location = `AREA_003`.
+    temp2-quantity = 90.
+    temp2-meins = `ST`.
+    temp2-price = `5000.47`.
+    temp2-waers = `EUR`.
+    temp2-process = `70`.
+    temp2-process_state = `Warning`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-selkz = abap_false.
+    temp2-row_id = `6`.
+    temp2-product = `table2`.
+    temp2-create_date = `01.01.2023`.
+    temp2-create_by = `Angela`.
+    temp2-storage_location = `AREA_003`.
+    temp2-quantity = 110.
+    temp2-meins = `ST`.
+    temp2-price = `6000.33`.
+    temp2-waers = `GBP`.
+    temp2-process = `90`.
+    temp2-process_state = `Error`.
+    INSERT temp2 INTO TABLE temp1.
+    mt_table = temp1.
 
   ENDMETHOD.
 
 
   METHOD set_search.
+      DATA lv_search TYPE string.
+      DATA lt_all LIKE mt_table.
+      DATA temp3 LIKE LINE OF lt_all.
+      DATA lr_row LIKE REF TO temp3.
+        DATA lv_row TYPE string.
+        DATA lv_index TYPE i.
+          FIELD-SYMBOLS <field> TYPE any.
 
     IF mv_search_value IS NOT INITIAL.
 
       " uppercase against uppercase, as the twins z2ui5_cl_smp_app_053 and
       " z2ui5_cl_smp_app_059 search - this copy compared case-sensitively
-      DATA(lv_search) = to_upper( mv_search_value ).
+      
+      lv_search = to_upper( mv_search_value ).
 
       " Collected rather than deleted in place: DELETE ... INDEX sy-tabix
       " inside a LOOP over the same table shifts the rows under the loop's own
@@ -337,14 +440,20 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
       " search returns wrong rows) and the transpiled backend raises
       " TABLE_INVALID_INDEX. The DO loop above the DELETE can leave sy-tabix
       " pointing elsewhere as well. Found 2026-08-17.
-      DATA(lt_all) = mt_table.
+      
+      lt_all = mt_table.
       CLEAR mt_table.
 
-      LOOP AT lt_all REFERENCE INTO DATA(lr_row).
-        DATA(lv_row) = ``.
-        DATA(lv_index) = 1.
+      
+      
+      LOOP AT lt_all REFERENCE INTO lr_row.
+        
+        lv_row = ``.
+        
+        lv_index = 1.
         DO.
-          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+          
+          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO <field>.
 
           IF sy-subrc <> 0.
             EXIT.

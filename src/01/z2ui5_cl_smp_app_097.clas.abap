@@ -17,8 +17,8 @@ CLASS z2ui5_cl_smp_app_097 DEFINITION PUBLIC.
         selected TYPE abap_bool,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
-    DATA t_tab2 TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
+    DATA t_tab2 TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
     DATA mv_layout TYPE string.
     " public, so it survives the roundtrip - the detail rows need a key that
     " stays unique after a row was deleted, and lines( t_tab2 ) would not
@@ -38,7 +38,11 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA lo_view_nested TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    lo_view_nested = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -48,10 +52,12 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
             )->a( n = `xmlns:f`      v = `sap.f`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = lo_view_nested->ele( `Page`
+    
+    page = lo_view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
 
-    DATA(tab) = page->ele( n = `Table` ns = `table`
+    
+    tab = page->ele( n = `Table` ns = `table`
         )->a( n = `rows`               v = client->_bind( val = t_tab2 )
         )->a( n = `alternateRowColors` b = abap_true
         )->a( n = `fixedColumnCount`   v = `1`
@@ -67,7 +73,8 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         )->ele( `OverflowToolbar`
             )->tag( `Title`
                 )->a( n = `text` v = `Products` ).
-    DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
+    
+    lo_columns = tab->ele( n = `columns` ns = `table` ).
 
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `TITLE`
@@ -111,7 +118,11 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA col_layout TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lr_master TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lr_list TYPE REF TO z2ui5_cl_ui5_view_builder.
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -133,13 +144,16 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(col_layout) = page->ele( n = `FlexibleColumnLayout` ns = `f`
+    
+    col_layout = page->ele( n = `FlexibleColumnLayout` ns = `f`
         )->a( n = `layout` v = client->_bind( mv_layout )
         )->a( n = `id`     v = `test` ).
 
-    DATA(lr_master) = col_layout->ele( n = `beginColumnPages` ns = `f` ).
+    
+    lr_master = col_layout->ele( n = `beginColumnPages` ns = `f` ).
 
-    DATA(lr_list) = lr_master->ele( `List`
+    
+    lr_list = lr_master->ele( `List`
         )->a( n = `headerText`      v = `List Output`
         )->a( n = `items`           v = client->_bind( val = t_tab )
         )->a( n = `mode`            v = `SingleSelectMaster`
@@ -159,24 +173,55 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_tab.
+      DATA temp2 LIKE LINE OF temp1.
+        DATA lt_sel LIKE t_tab.
+        DATA ls_sel TYPE z2ui5_cl_smp_app_097=>ty_s_row.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      t_tab = VALUE #(
-        ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-title = `row_01`.
+      temp2-info = `completed`.
+      temp2-descr = `this is a description`.
+      temp2-icon = `sap-icon://account`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `row_02`.
+      temp2-info = `incompleted`.
+      temp2-descr = `this is a description`.
+      temp2-icon = `sap-icon://account`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `row_03`.
+      temp2-info = `working`.
+      temp2-descr = `this is a description`.
+      temp2-icon = `sap-icon://account`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `row_04`.
+      temp2-info = `working`.
+      temp2-descr = `this is a description`.
+      temp2-icon = `sap-icon://account`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `row_05`.
+      temp2-info = `completed`.
+      temp2-descr = `this is a description`.
+      temp2-icon = `sap-icon://account`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `row_06`.
+      temp2-info = `completed`.
+      temp2-descr = `this is a description`.
+      temp2-icon = `sap-icon://account`.
+      INSERT temp2 INTO TABLE temp1.
+      t_tab = temp1.
 
       mv_layout = `OneColumn`.
 
       view_display_master( ).
       view_display_detail( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display_master( ).
 
     ENDIF.
@@ -188,10 +233,12 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         DELETE t_tab2 WHERE uuid = client->get_event_arg( ).
 
       WHEN `SELCHANGE`.
-        DATA(lt_sel) = t_tab.
+        
+        lt_sel = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
 
-        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
+        
+        READ TABLE lt_sel INTO ls_sel INDEX 1.
 
         IF sy-subrc = 0.
           mv_row_id = mv_row_id + 1.

@@ -34,9 +34,9 @@ CLASS z2ui5_cl_smp_app_504 DEFINITION PUBLIC.
         stock       TYPE i,
         stock_state TYPE string,
         stock_text  TYPE string,
-        t_item      TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY,
+        t_item      TYPE STANDARD TABLE OF ty_s_item WITH DEFAULT KEY,
       END OF ty_s_row.
-    DATA t_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_row TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
     DATA report      TYPE string.
     DATA report_text TYPE string.
@@ -64,11 +64,11 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
     " decides which event it is interested in, never inside the Save branch
     refused_apply( ).
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -77,14 +77,66 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
 
   METHOD on_init.
 
-    t_row = VALUE #(
-      ( product = `Notebook 15"` price = '1299.00' currency = `EUR` stock = 12 price_state = `None` stock_state = `None`
-        t_item = VALUE #( ( name = `SSD 1 TB`  qty = 1 qty_state = `None` )
-                          ( name = `RAM 16 GB` qty = 2 qty_state = `None` ) ) )
-      ( product = `Monitor 27"`  price = '349.90'  currency = `EUR` stock = 5  price_state = `None` stock_state = `None`
-        t_item = VALUE #( ( name = `HDMI cable` qty = 1 qty_state = `None` ) ) )
-      ( product = `USB-C Dock`   price = '189.00'  currency = `EUR` stock = 40 price_state = `None` stock_state = `None`
-        t_item = VALUE #( ( name = `Power supply` qty = 1 qty_state = `None` ) ) ) ).
+    DATA temp1 LIKE t_row.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA temp3 TYPE z2ui5_cl_smp_app_504=>ty_s_row-t_item.
+    DATA temp4 LIKE LINE OF temp3.
+    DATA temp5 TYPE z2ui5_cl_smp_app_504=>ty_s_row-t_item.
+    DATA temp6 LIKE LINE OF temp5.
+    DATA temp7 TYPE z2ui5_cl_smp_app_504=>ty_s_row-t_item.
+    DATA temp8 LIKE LINE OF temp7.
+    CLEAR temp1.
+    
+    temp2-product = `Notebook 15"`.
+    temp2-price = '1299.00'.
+    temp2-currency = `EUR`.
+    temp2-stock = 12.
+    temp2-price_state = `None`.
+    temp2-stock_state = `None`.
+    
+    CLEAR temp3.
+    
+    temp4-name = `SSD 1 TB`.
+    temp4-qty = 1.
+    temp4-qty_state = `None`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-name = `RAM 16 GB`.
+    temp4-qty = 2.
+    temp4-qty_state = `None`.
+    INSERT temp4 INTO TABLE temp3.
+    temp2-t_item = temp3.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `Monitor 27"`.
+    temp2-price = '349.90'.
+    temp2-currency = `EUR`.
+    temp2-stock = 5.
+    temp2-price_state = `None`.
+    temp2-stock_state = `None`.
+    
+    CLEAR temp5.
+    
+    temp6-name = `HDMI cable`.
+    temp6-qty = 1.
+    temp6-qty_state = `None`.
+    INSERT temp6 INTO TABLE temp5.
+    temp2-t_item = temp5.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `USB-C Dock`.
+    temp2-price = '189.00'.
+    temp2-currency = `EUR`.
+    temp2-stock = 40.
+    temp2-price_state = `None`.
+    temp2-stock_state = `None`.
+    
+    CLEAR temp7.
+    
+    temp8-name = `Power supply`.
+    temp8-qty = 1.
+    temp8-qty_state = `None`.
+    INSERT temp8 INTO TABLE temp7.
+    temp2-t_item = temp7.
+    INSERT temp2 INTO TABLE temp1.
+    t_row = temp1.
 
     view_display( ).
 
@@ -95,6 +147,9 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
 
     FIELD-SYMBOLS <s_row>  TYPE ty_s_row.
     FIELD-SYMBOLS <s_item> TYPE ty_s_item.
+    DATA t_skipped TYPE z2ui5_if_client=>ty_t_model_skip.
+    DATA s_skipped LIKE LINE OF t_skipped.
+    DATA temp3 TYPE string.
 
     " every roundtrip starts clean: a cell the user has corrected since is
     " not in this roundtrip's trace any more, so its state goes back to None
@@ -109,9 +164,11 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
       ENDLOOP.
     ENDLOOP.
 
-    DATA(t_skipped) = client->get( )-t_model_skipped.
+    
+    t_skipped = client->get( )-t_model_skipped.
     report = ``.
-    LOOP AT t_skipped INTO DATA(s_skipped).
+    
+    LOOP AT t_skipped INTO s_skipped.
 
       " name is the bound attribute as the class declares it - T_ROW for a
       " top-level cell, T_ROW-T_ITEM for a cell of the nested table; row is
@@ -152,9 +209,13 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
       report = |{ report }{ s_skipped-name } row { s_skipped-row } field { s_skipped-field }: '{ s_skipped-value }' refused. |.
     ENDLOOP.
 
-    report_text = COND #( WHEN report IS INITIAL
-                          THEN `Every cell of the last roundtrip converted.`
-                          ELSE report ).
+    
+    IF report IS INITIAL.
+      temp3 = `Every cell of the last roundtrip converted.`.
+    ELSE.
+      temp3 = report.
+    ENDIF.
+    report_text = temp3.
 
   ENDMETHOD.
 
@@ -186,7 +247,11 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA cells TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -194,7 +259,8 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Table - Refused Cell Values (t_model_skipped)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -209,7 +275,8 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->ele( `Table`
+    
+    tab = page->ele( `Table`
         )->a( n = `items` v = client->_bind( t_row )
         )->a( n = `class` v = `sapUiSmallMargin` ).
 
@@ -249,7 +316,8 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
                 )->a( n = `text` v = `Components (nested table)`
         )->end( ).
 
-    DATA(cells) = tab->ele( `items`
+    
+    cells = tab->ele( `items`
         )->ele( `ColumnListItem`
             )->a( n = `vAlign` v = `Top` ).
 

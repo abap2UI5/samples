@@ -19,15 +19,17 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       numeric  = `000000000012`.
       amount   = `123456789.123`.
       currency = `USD`.
 
     ENDIF.
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`

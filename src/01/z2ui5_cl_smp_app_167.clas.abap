@@ -22,14 +22,17 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Event - Extra Arguments with t_arg`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -78,10 +81,10 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       mv_value = `my value`.
       set_view( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       set_view( ).
     ENDIF.
 

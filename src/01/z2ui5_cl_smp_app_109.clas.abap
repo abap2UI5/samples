@@ -26,7 +26,8 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
@@ -78,7 +79,9 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -87,7 +90,8 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popover - QuickView Contact Card`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -145,12 +149,12 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -159,7 +163,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `POPOVER` ).
+    IF client->check_on_event( `POPOVER` ) IS NOT INITIAL.
       popover_display( `TEST` ).
     ENDIF.
 

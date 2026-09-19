@@ -20,7 +20,7 @@ CLASS z2ui5_cl_smp_app_517 DEFINITION PUBLIC.
     DATA file_type  TYPE string.
     DATA file_size  TYPE string.
     DATA removed    TYPE string.
-    DATA t_received TYPE STANDARD TABLE OF ty_s_file WITH EMPTY KEY.
+    DATA t_received TYPE STANDARD TABLE OF ty_s_file WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -37,9 +37,9 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -47,6 +47,10 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
 
 
   METHOD on_event.
+          DATA payload TYPE string.
+          DATA temp1 TYPE i.
+          DATA padding LIKE temp1.
+          DATA temp2 TYPE z2ui5_cl_smp_app_517=>ty_s_file.
 
     CASE client->get_event( ).
 
@@ -56,18 +60,29 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
         " previous response. fileData is a base64 DATA URL, so the payload
         " starts after the comma.
         IF file_name IS NOT INITIAL.
-          DATA(payload) = substring_after( val = file_data
+          
+          payload = substring_after( val = file_data
                                            sub = `,` ).
           " the decoded length, so the sample shows the bytes ABAP actually
           " received rather than the base64 text: three bytes per four
           " characters, less the one or two `=` that pad the last group
-          DATA(padding) = COND i( WHEN payload CP `*==` THEN 2
-                                  WHEN payload CP `*=`  THEN 1
-                                  ELSE 0 ).
-          INSERT VALUE #( name  = file_name
-                          type  = file_type
-                          size  = file_size
-                          bytes = strlen( payload ) * 3 / 4 - padding ) INTO TABLE t_received.
+          
+          IF payload CP `*==`.
+            temp1 = 2.
+          ELSEIF payload CP `*=`.
+            temp1 = 1.
+          ELSE.
+            temp1 = 0.
+          ENDIF.
+          
+          padding = temp1.
+          
+          CLEAR temp2.
+          temp2-name = file_name.
+          temp2-type = file_type.
+          temp2-size = file_size.
+          temp2-bytes = strlen( payload ) * 3 / 4 - padding.
+          INSERT temp2 INTO TABLE t_received.
         ENDIF.
 
       WHEN `FILE_REMOVED`.
@@ -83,7 +98,10 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -92,7 +110,8 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
             )->a( n = `xmlns:upload` v = `sap.m.upload`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - File - Upload with an UploadSet`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -125,7 +144,8 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
         )->a( n = `uploadEnabled` b = abap_false
         )->a( n = `class`         v = `sapUiSmallMargin` ).
 
-    DATA(table) = page->ele( `Table`
+    
+    table = page->ele( `Table`
         )->a( n = `items`      v = client->_bind( t_received )
         )->a( n = `class`      v = `sapUiSmallMargin`
         )->a( n = `noDataText` v = `No file has reached the backend yet.` ).

@@ -18,10 +18,18 @@ CLASS z2ui5_cl_smp_app_325 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA obj_page TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA header_title TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA sections TYPE REF TO z2ui5_cl_ui5_view_builder.
+        DATA temp1 TYPE string_table.
+        DATA temp3 TYPE string_table.
 
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
 
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+      
+      view = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
               )->a( n = `displayBlock` v = `true`
               )->a( n = `height`       v = `100%`
@@ -29,7 +37,8 @@ CLASS z2ui5_cl_smp_app_325 IMPLEMENTATION.
               )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
               )->a( n = `xmlns:core`   v = `sap.ui.core`
               )->a( n = `xmlns:uxap`   v = `sap.uxap` ).
-      DATA(page) = view->ele( `Shell`
+      
+      page = view->ele( `Shell`
           )->ele( `Page`
               )->a( n = `title`          v = `abap2UI5 - Browser - Copy to Clipboard`
               )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -41,12 +50,14 @@ CLASS z2ui5_cl_smp_app_325 IMPLEMENTATION.
           )->a( n = `showIcon` b = abap_true
           )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-      DATA(obj_page) = page->ele( n = `ObjectPageLayout` ns = `uxap`
+      
+      obj_page = page->ele( n = `ObjectPageLayout` ns = `uxap`
           )->a( n = `showTitleInHeaderContent` b = abap_true
           )->a( n = `showEditHeaderButton`     b = abap_true
           )->a( n = `upperCaseAnchorBar`       b = abap_false ).
 
-      DATA(header_title) = obj_page->ele( n = `headerTitle` ns = `uxap`
+      
+      header_title = obj_page->ele( n = `headerTitle` ns = `uxap`
           )->ele( n = `ObjectPageDynamicHeaderTitle` ns = `uxap` ).
 
       header_title->ele( n = `expandedHeading` ns = `uxap`
@@ -61,7 +72,8 @@ CLASS z2ui5_cl_smp_app_325 IMPLEMENTATION.
                   )->a( n = `text`     v = `Test`
                   )->a( n = `wrapping` b = abap_true ).
 
-      DATA(sections) = obj_page->ele( n = `sections` ns = `uxap` ).
+      
+      sections = obj_page->ele( n = `sections` ns = `uxap` ).
 
       sections->ele( n = `ObjectPageSection` ns = `uxap`
           )->a( n = `titleUppercase` b = abap_false
@@ -111,15 +123,21 @@ CLASS z2ui5_cl_smp_app_325 IMPLEMENTATION.
 
     CASE client->get_event( ).
       WHEN `COPY_INPUT`.
+        
+        CLEAR temp1.
+        INSERT input INTO TABLE temp1.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-clipboard_copy
-            t_arg = VALUE #( ( input ) ) ).
+            t_arg = temp1 ).
         client->message_toast_display( |input field copied: { input }| ).
 
       WHEN `COPY_TEXT_AREA`.
+        
+        CLEAR temp3.
+        INSERT text INTO TABLE temp3.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-clipboard_copy
-            t_arg = VALUE #( ( text ) ) ).
+            t_arg = temp3 ).
         client->message_toast_display( |text area copied: { text }| ).
 
     ENDCASE.

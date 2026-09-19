@@ -26,9 +26,9 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -37,7 +37,10 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA box TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -59,7 +62,8 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(box) = page->ele( `FlexBox`
+    
+    box = page->ele( `FlexBox`
         )->a( n = `class`      v = `sapUiTinyMargin`
         )->a( n = `alignItems` v = `Start`
         )->a( n = `direction`  v = `Row` ).
@@ -87,14 +91,21 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
 
     client->view_display( page->stringify( ) ).
 
+    
+    CLEAR temp1.
+    INSERT `input` INTO TABLE temp1.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-set_focus
-        t_arg = VALUE #( ( `input` ) ) ).
+        t_arg = temp1 ).
 
   ENDMETHOD.
 
 
   METHOD on_event.
+        DATA temp3 TYPE abap_bool.
+        DATA temp1 TYPE xsdboolean.
+        DATA temp4 TYPE abap_bool.
+        DATA temp5 TYPE string.
 
     CASE client->get_event( ).
       WHEN `BACK`.
@@ -108,17 +119,25 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
       WHEN `POPUP_LEAVE`.
 
         client->popup_destroy( ).
-        dirty = VALUE #( ).
+        
+        CLEAR temp3.
+        dirty = temp3.
         client->nav_app_leave( ).
 
       WHEN `POPUP_CANCEL`.
         client->popup_destroy( ).
       WHEN `SUBMIT`.
-        dirty = xsdbool( text_input IS NOT INITIAL ).
+        
+        temp1 = boolc( text_input IS NOT INITIAL ).
+        dirty = temp1.
       WHEN `RESET`.
 
-        dirty      = VALUE #( ).
-        text_input = VALUE #( ).
+        
+        CLEAR temp4.
+        dirty      = temp4.
+        
+        CLEAR temp5.
+        text_input = temp5.
 
     ENDCASE.
 
@@ -127,7 +146,8 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
 
   METHOD popup_confirm_display.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`

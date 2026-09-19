@@ -30,7 +30,7 @@ CLASS z2ui5_cl_smp_app_509 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       " what a service or a JSON column would hand over: an array with keys
       " no ABAP type declares, and an object with a key (`sap.app`) that no
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_smp_app_509 IMPLEMENTATION.
       products_raw  = products_json.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -52,11 +52,16 @@ CLASS z2ui5_cl_smp_app_509 IMPLEMENTATION.
   METHOD view_display.
 
     " the bare path of the spliced object, so the view can reach into it
-    DATA(config_path) = client->_bind( val  = config_json
+    DATA config_path TYPE string.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    config_path = client->_bind( val  = config_json
                                        json = abap_true
                                        path = abap_true ).
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -65,7 +70,8 @@ CLASS z2ui5_cl_smp_app_509 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - Pre-serialized JSON (json)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -80,7 +86,8 @@ CLASS z2ui5_cl_smp_app_509 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+    
+    form = page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Spliced in as JSON`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form` ).
