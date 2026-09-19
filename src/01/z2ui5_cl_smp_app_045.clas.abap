@@ -19,9 +19,8 @@ CLASS z2ui5_cl_smp_app_045 DEFINITION PUBLIC.
 
     DATA mv_info_filter TYPE string.
 
-    METHODS refresh_data.
-
   PROTECTED SECTION.
+    METHODS refresh_data.
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -31,6 +30,10 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
 
   METHOD refresh_data.
 
+    " rebuilt from scratch on every call - it runs on the init AND on every
+    " filter press, and without the reset each press appended another 1000
+    " rows before the filter deleted the ones it did not want
+    t_tab = VALUE #( ).
     DO 1000 TIMES.
       DATA(ls_row) = VALUE ty_s_row( count = sy-index  value = `red`
         info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
@@ -45,19 +48,12 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       refresh_data( ).
+    ELSEIF client->check_on_event( `FILTER_INFO` ).
+      refresh_data( ).
+      IF mv_info_filter IS NOT INITIAL.
+        DELETE t_tab WHERE info <> mv_info_filter.
+      ENDIF.
     ENDIF.
-
-    CASE client->get_event( ).
-
-      WHEN `FILTER_INFO`.
-        refresh_data( ).
-        IF mv_info_filter <> ``.
-          DELETE t_tab WHERE info <> mv_info_filter.
-        ENDIF.
-
-      WHEN `BUTTON_POST`.
-        client->message_box_display( `button post was pressed` ).
-    ENDCASE.
 
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -71,10 +67,7 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
                 )->ele( `Page`
                     )->a( n = `title`          v = `abap2UI5 - Table - Filter Rows in the Backend`
                     )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-                    )->ele( `headerContent`
-                        )->tag( `Link`
-                    )->end( ).
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A growing, scrollable table filtered on the backend: entering a value in the form and ` &&

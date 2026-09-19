@@ -76,7 +76,7 @@ CLASS z2ui5_cl_smp_app_498 IMPLEMENTATION.
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - App State, Bookmark and Share`
+            )->a( n = `title`          v = `abap2UI5 - Hash - App State, Bookmark and Share`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 

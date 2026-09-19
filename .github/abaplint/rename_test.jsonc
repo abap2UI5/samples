@@ -7,9 +7,8 @@
   // Scoped to the portable set that survives every build: src/01 plus the
   // overview app in the src/ root package. It is
   // the only namespace-clean area free of dependencies on the stripped
-  // packages (the experimental src/00/97 and the testing src/00/98 are removed
-  // from the 702 build and carry non-ABAP objects that are out of scope for
-  // renaming).
+  // package (the testing src/00/98 is removed from the 702 build and carries
+  // non-ABAP objects that are out of scope for renaming).
   // Runs standalone as well:
   //   npx abaplint .github/abaplint/rename_test.jsonc --rename
   "global": {

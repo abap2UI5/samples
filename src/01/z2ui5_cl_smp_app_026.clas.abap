@@ -6,8 +6,6 @@ CLASS z2ui5_cl_smp_app_026 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA product   TYPE string.
-    DATA quantity  TYPE string.
     DATA placement TYPE string.
 
   PROTECTED SECTION.
@@ -31,8 +29,6 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       placement = `Left`.
-      product   = `tomato`.
-      quantity  = `500`.
 
       view_display( ).
     ELSEIF client->check_on_navigated( ).

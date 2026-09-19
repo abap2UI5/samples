@@ -49,7 +49,7 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_navigated( ).
       view_display( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -60,34 +60,28 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
     TRY.
 
-        CASE client->get_event( ).
+        IF client->check_on_event( `UPLOAD` ).
 
-          WHEN `START` OR `CHANGE`.
-            view_display( ).
+          " the uploader delivers a data URL (data:<mime>;base64,<payload>);
+          " drop the prefix, then base64-decode the payload into a string
+          SPLIT file   AT `;` INTO DATA(header) DATA(base64).
+          SPLIT base64 AT `,` INTO header base64.
 
-          WHEN `UPLOAD`.
+          DATA(raw) = base64_decode( base64 ).
 
-            " the uploader delivers a data URL (data:<mime>;base64,<payload>);
-            " drop the prefix, then base64-decode the payload into a string
-            SPLIT file   AT `;` INTO DATA(header) DATA(base64).
-            SPLIT base64 AT `,` INTO header base64.
+          " the proof that the file arrived: its name, its size in bytes as
+          " the backend counts them, and the decoded content itself
+          upload_name = filepath.
+          upload_size = xstrlen( raw ).
+          upload_text = xstring_to_string( raw ).
 
-            DATA(raw) = base64_decode( base64 ).
+          client->message_toast_display( |{ upload_name } - { upload_size } bytes received| ).
 
-            " the proof that the file arrived: its name, its size in bytes as
-            " the backend counts them, and the decoded content itself
-            upload_name = filepath.
-            upload_size = xstrlen( raw ).
-            upload_text = xstring_to_string( raw ).
+          file     = VALUE #( ).
+          filepath = VALUE #( ).
 
-            client->message_toast_display( |{ upload_name } - { upload_size } bytes received| ).
-
-            file     = VALUE #( ).
-            filepath = VALUE #( ).
-
-            view_display( ).
-
-        ENDCASE.
+          view_display( ).
+        ENDIF.
 
       CATCH cx_root INTO DATA(error).
         client->message_box_display( text = error->get_text( ) type = `error` ).

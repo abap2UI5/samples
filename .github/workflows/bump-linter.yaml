@@ -24,6 +24,11 @@ on:
     - cron: '41 6 * * 1'   # Mondays 06:41 UTC - after samples-controls' 06:23
   workflow_dispatch:
 
+# one run at a time: a manual dispatch that overlaps the weekly cron would
+# open two pull requests for the same bump
+concurrency:
+  group: bump-linter
+
 permissions:
   contents: write
   pull-requests: write
@@ -37,6 +42,7 @@ jobs:
     - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: '22'
+        cache: 'npm'
 
     - name: Move @abap2ui5/linter to the latest published version
       id: pin

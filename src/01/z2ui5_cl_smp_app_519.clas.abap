@@ -25,7 +25,7 @@ CLASS z2ui5_cl_smp_app_519 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_navigated( ).
       view_display( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -47,9 +47,9 @@ CLASS z2ui5_cl_smp_app_519 IMPLEMENTATION.
   METHOD view_display.
 
     " the three text symbols this app is about - see the block below
-    DATA lv_name_label  TYPE string.
-    DATA lv_placeholder TYPE string.
-    DATA lv_greet       TYPE string.
+    DATA name_label  TYPE string.
+    DATA placeholder TYPE string.
+    DATA greet       TYPE string.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_smp_app_519 IMPLEMENTATION.
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Basics VII - Translatable Texts`
+            )->a( n = `title`          v = `abap2UI5 - Basics VII - Translatable Texts (Text Elements)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
@@ -84,26 +84,30 @@ CLASS z2ui5_cl_smp_app_519 IMPLEMENTATION.
     " it. The assignment below is a plain conversion and is allowed on every
     " release. Inside a string template ( see on_event( ) ) the symbol needs
     " no variable: an embedded expression is a general expression position.
-    lv_name_label  = 'Your name'(001).
-    lv_placeholder = 'Type a name here'(002).
-    lv_greet       = 'Greet'(003).
+    "
+    " And handed to t, not v: a translation is text somebody else types, and
+    " t escapes it, so a `{` or `\` in one language's entry is shown rather
+    " than read by UI5 as a binding.
+    name_label  = 'Your name'(001).
+    placeholder = 'Type a name here'(002).
+    greet       = 'Greet'(003).
 
     page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin`
 
         )->tag( `Label`
-            )->a( n = `text`     v = lv_name_label
+            )->a( n = `text`     t = name_label
             )->a( n = `labelFor` v = `nameInput`
 
         )->tag( `Input`
             )->a( n = `id`          v = `nameInput`
             )->a( n = `value`       v = client->_bind( name )
-            )->a( n = `placeholder` v = lv_placeholder
+            )->a( n = `placeholder` t = placeholder
             )->a( n = `width`       v = `20rem`
 
         )->tag( `Button`
             )->a( n = `press` v = client->_event( `GREET` )
-            )->a( n = `text`  v = lv_greet
+            )->a( n = `text`  t = greet
             )->a( n = `type`  v = `Emphasized`
             )->a( n = `class` v = `sapUiSmallMarginTop` ).
 

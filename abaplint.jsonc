@@ -1,8 +1,8 @@
 {
   "global": {
     // Nothing is suppressed: every package under src/ is really checked, the
-    // experimental and testing packages that the 702 build strips
-    // (AGENTS.md section 2) included - they pass.
+    // testing package that the 702 build strips (AGENTS.md section 2)
+    // included - it passes.
     "files": "/src/**/*.*"
   },
   "dependencies": [

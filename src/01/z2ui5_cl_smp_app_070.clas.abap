@@ -23,14 +23,6 @@ CLASS z2ui5_cl_smp_app_070 DEFINITION PUBLIC.
         process_state    TYPE string,
       END OF ty_s_tab.
 
-    " the operator shorthands, name and value
-    TYPES:
-      BEGIN OF ty_s_mapping,
-        n TYPE string,
-        v TYPE string,
-      END OF ty_s_mapping.
-
-    DATA mt_mapping TYPE STANDARD TABLE OF ty_s_mapping WITH EMPTY KEY.
     DATA mv_search_value TYPE string.
     DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
     DATA lv_selkz TYPE abap_bool.
@@ -73,7 +65,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
       on_init( ).
     ELSEIF client->check_on_navigated( ).
       on_init( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -99,16 +91,9 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
       WHEN `CUSTOMFILTER`.
         lt_arg = client->get( )-t_event_arg.
         client->message_toast_display( `Event CUSTOMFILTER` ).
-      WHEN `ROWEDIT`.
-        lt_arg = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
-
-        IF sy-subrc = 0.
-          client->message_toast_display( |Event ROWEDIT Row Index { ls_arg } | ).
-        ENDIF.
       WHEN `ROW_ACTION_ITEM_NAVIGATION`.
         lt_arg = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO ls_arg INDEX 1.
+        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
 
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
@@ -126,18 +111,6 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
 
   METHOD on_init.
-
-    mt_mapping = VALUE #(
-      (   n = `EQ`     v = `={LOW}` )
-      (   n = `LT`     v = `<{LOW}` )
-      (   n = `LE`     v = `<={LOW}` )
-      (   n = `GT`     v = `>{LOW}` )
-      (   n = `GE`     v = `>={LOW}` )
-      (   n = `CP`     v = `*{LOW}*` )
-      (   n = `BT`     v = `{LOW}...{HIGH}` )
-      (   n = `NE`      v = `!(={LOW})` )
-      (   n = `!<leer>` v = `!(<leer>)` )
-      (   n = `<leer>`  v = `<leer>` ) ).
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -354,6 +327,10 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
     IF mv_search_value IS NOT INITIAL.
 
+      " uppercase against uppercase, as the twins z2ui5_cl_smp_app_053 and
+      " z2ui5_cl_smp_app_059 search - this copy compared case-sensitively
+      DATA(lv_search) = to_upper( mv_search_value ).
+
       " Collected rather than deleted in place: DELETE ... INDEX sy-tabix
       " inside a LOOP over the same table shifts the rows under the loop's own
       " cursor - a system silently SKIPS the row after each deletion (so the
@@ -376,7 +353,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
           lv_index = lv_index + 1.
         ENDDO.
 
-        IF lv_row CS mv_search_value.
+        IF to_upper( lv_row ) CS lv_search.
           APPEND lr_row->* TO mt_table.
         ENDIF.
       ENDLOOP.

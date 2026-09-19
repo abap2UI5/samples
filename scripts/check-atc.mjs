@@ -52,6 +52,7 @@
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 
@@ -65,7 +66,12 @@ function abapFiles(dir, out = []) {
 }
 
 /* The code half of a line: the trailing `"` comment cut off, outside string
- * literals so a `"` in a `'…'` or `|…|` stays text. */
+ * literals so a `"` in a `'…'`, a `` `…` `` or a `|…|` stays text. The
+ * backtick is the literal this corpus writes everywhere, and it was missing
+ * here until 2026-09-19: a `"` inside one (`\`"text":\``) cut the line at the
+ * quote, the terminator went with it, and the statement merged into the next
+ * one - a merged `ASSIGN … sy-subrc` pair reads as ONE statement and is never
+ * reported. */
 function code(line) {
   let quote = null;
   for (let i = 0; i < line.length; i++) {
@@ -74,7 +80,7 @@ function code(line) {
       if (ch === quote) quote = null;
       continue;
     }
-    if (ch === "'" || ch === '|') quote = ch;
+    if (ch === "'" || ch === '`' || ch === '|') quote = ch;
     else if (ch === '"') return line.slice(0, i);
   }
   return line;
@@ -109,8 +115,66 @@ function statements(source) {
 const SETS_SUBRC =
   /^(read\s+table|select|loop\s+at|find|replace|call\s+function|call\s+method|delete|insert|modify|append|split|open\s+dataset|authority-check|import|export|describe|search|get\s+parameter|set\s+parameter)\b/i;
 
-const TEXT_SYMBOL_ARG = /\b\w+\s*=\s*'[^']*'\(\d{3}\)/;
+/* A text symbol wherever it stands - three alphanumeric characters, not
+ * three digits: 'Save'(A01) is one too. Whether it is a PARAMETER is decided
+ * by textSymbolArg( ) from the innermost parenthesis still open where the
+ * symbol stands, because the matching `\w+ = '…'(001)` alone had it both
+ * ways: `VALUE #( text = 'x'(001) )` is a component assignment and
+ * `xsdbool( a = 'x'(001) )` a comparison, neither a parameter, while the
+ * positional `meth( 'x'(001) )` is one and was never matched. */
+const TEXT_SYMBOL = /'[^']*'\([A-Za-z0-9]{3}\)/g;
 
+/* The parenthesis of a constructor expression or of a built-in that takes a
+ * logical expression opens no parameter list. */
+const NOT_A_CALL = new Set([
+  'VALUE', 'COND', 'SWITCH', 'CONV', 'NEW', 'REF', 'CAST', 'EXACT',
+  'CORRESPONDING', 'FILTER', 'REDUCE', 'XSDBOOL', 'BOOLC', 'BOOLX',
+]);
+
+/* The position of a text symbol handed to a parameter of a method call in
+ * statement `c`, or -1. A functional call attaches its `(` to the name
+ * (`meth(`, `obj->meth(`), so a parenthesis that stands free (`IF ( a = b )`)
+ * is an expression, not a call; and the symbol is a parameter when it is the
+ * FIRST thing inside the call (positional) or follows `name =` (named). In a
+ * string template or behind `&&` it sits in an expression position, which
+ * the system accepts, and is not reported. */
+function textSymbolArg(c) {
+  TEXT_SYMBOL.lastIndex = 0;
+  let m;
+  while ((m = TEXT_SYMBOL.exec(c)) !== null) {
+    const head = c.slice(0, m.index);
+    let depth = 0;
+    let open = -1;
+    for (let i = head.length - 1; i >= 0; i--) {
+      if (head[i] === ')') depth++;
+      else if (head[i] === '(') {
+        if (depth === 0) { open = i; break; }
+        depth--;
+      }
+    }
+    if (open < 0) continue;
+    const callee = /([A-Za-z0-9_]+|#)\($/.exec(head.slice(0, open + 1));
+    if (!callee) continue;
+    const name = callee[1];
+    if (name === '#' || NOT_A_CALL.has(name.toUpperCase())) continue;
+    const beforeName = head.slice(0, open - name.length).trimEnd();
+    const keyword = /([A-Za-z]+)$/.exec(beforeName);
+    if (keyword && NOT_A_CALL.has(keyword[1].toUpperCase())) continue; // VALUE ty_t(
+    const inner = head.slice(open + 1);
+    if (inner.trim() === '' || /(^|\s)\w+\s*=\s*$/.test(inner)) return m.index;
+  }
+  return -1;
+}
+
+export { code, textSymbolArg };
+
+/* The scan itself - only when run as a script, so a test can import the two
+ * decisions above without scanning the tree. */
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main();
+}
+
+function main() {
 const findings = [];
 
 for (const rel of abapFiles('src')) {
@@ -126,17 +190,12 @@ for (const rel of abapFiles('src')) {
       });
     }
 
-    const symbolAt = c.search(TEXT_SYMBOL_ARG);
-    if (symbolAt !== -1) {
-      const head = c.slice(0, symbolAt);
-      const depth = (head.match(/\(/g) ?? []).length - (head.match(/\)/g) ?? []).length;
-      if (depth > 0) {
-        findings.push({
-          rule: 'text_symbol_arg',
-          at: `${rel}:${start}`,
-          message: "a text symbol is a CHARACTER literal - a parameter typed `string` answers \"not type-compatible with formal parameter\"; read it into a variable and pass that",
-        });
-      }
+    if (textSymbolArg(c) !== -1) {
+      findings.push({
+        rule: 'text_symbol_arg',
+        at: `${rel}:${start}`,
+        message: "a text symbol is a CHARACTER literal - a parameter typed `string` answers \"not type-compatible with formal parameter\"; read it into a variable and pass that",
+      });
     }
 
     if (/^ASSIGN\b/i.test(c)) {
@@ -175,3 +234,4 @@ if (findings.length > 0) {
 }
 
 console.log('check-atc: no SELECT without a WHERE, no sy-subrc after a dynamic ASSIGN,\n            no text symbol passed to a parameter - OK');
+}

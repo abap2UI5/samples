@@ -39,7 +39,7 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_navigated( ).
       view_display( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -58,12 +58,16 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
         IF file_name IS NOT INITIAL.
           DATA(payload) = substring_after( val = file_data
                                            sub = `,` ).
+          " the decoded length, so the sample shows the bytes ABAP actually
+          " received rather than the base64 text: three bytes per four
+          " characters, less the one or two `=` that pad the last group
+          DATA(padding) = COND i( WHEN payload CP `*==` THEN 2
+                                  WHEN payload CP `*=`  THEN 1
+                                  ELSE 0 ).
           INSERT VALUE #( name  = file_name
                           type  = file_type
                           size  = file_size
-                          " the decoded length, so the sample shows the bytes
-                          " ABAP actually received rather than the base64 text
-                          bytes = strlen( payload ) * 3 / 4 ) INTO TABLE t_received.
+                          bytes = strlen( payload ) * 3 / 4 - padding ) INTO TABLE t_received.
         ENDIF.
 
       WHEN `FILE_REMOVED`.
@@ -110,7 +114,10 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
         )->a( n = `mediaType`       v = client->_bind( file_type )
         )->a( n = `fileSize`        v = client->_bind( file_size )
         )->a( n = `removedFileName` v = client->_bind( removed )
-        )->a( n = `change`          v = client->_event( `FILE_ADDED` ) ).
+        )->a( n = `change`          v = client->_event( `FILE_ADDED` )
+        " the companion fires a SEPARATE event when an item is removed - a
+        " change wire alone never reaches FILE_REMOVED below
+        )->a( n = `remove`          v = client->_event( `FILE_REMOVED` ) ).
 
     page->ele( n = `UploadSet` ns = `upload`
         )->a( n = `id`            v = `demoUploadSet`

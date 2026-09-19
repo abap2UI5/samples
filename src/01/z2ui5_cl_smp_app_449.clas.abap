@@ -23,7 +23,7 @@ CLASS z2ui5_cl_smp_app_449 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_navigated( ).
       view_display( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 

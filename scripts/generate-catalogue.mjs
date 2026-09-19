@@ -93,7 +93,7 @@ const data = {
     markers: MARKERS,
   },
   scope: 'One entry per sample in src/01 - the portable set every branch and build ships. '
-    + 'The src/00 system area (experimental and testing apps, stripped from the 702 branch) '
+    + 'The src/00 system area (testing apps, stripped from the 702 branch) '
     + 'and the hidden ZZZ helper classes are listed in SAMPLES.md only.',
   learningPath: stages.map(({ id, title, blurb }) => ({ id, title, blurb })),
   counts: {

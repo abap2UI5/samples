@@ -1342,8 +1342,8 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 | Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
 | Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
 | Messages | `message_box_display(text)`, `message_toast_display(text)` | User notifications |
-| Session | `set_session_stateful(val)`, `set_app_state_active(val)` | Session management |
-| Browser | `set_push_state(val)`, `follow_up_action(val)` | Browser interaction (`cs_event-history_back` was removed in 1.143.0 — go back by passing the raw JS `history.back()` to `follow_up_action( )`, or `nav_app_leave( )` inside the app; routing via `follow_up_action( cs_event-set_nav_routing )`) |
+| Session | `set_session_stateful(val)`, `app_state_set_active(val)` | Session management |
+| Browser | `hash_set(val)`, `follow_up_action(val)` | Browser interaction (`cs_event-history_back` was removed in 1.143.0 — go back by passing the raw JS `history.back()` to `follow_up_action( )`, or `nav_app_leave( )` inside the app; routing via `follow_up_action( cs_event-hash_routing )`) |
 | Info | `get()`, `get_event()`, `get_event_arg()`, `get_app(id)` | Request/context data |
 | Constants | `cs_event`, `cs_view` | Predefined event IDs and view names |
 

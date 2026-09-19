@@ -53,7 +53,7 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
             )->a( n = `xmlns:core`  v = `sap.ui.core`
             )->a( n = `xmlns:z2ui5` v = `z2ui5.cc` ).
     DATA(dialog) = popup->ele( `Dialog`
-        )->a( n = `title` v = `abap2UI5 - Tree in a dialog` ).
+        )->a( n = `title` v = `abap2UI5 - Tree - Inside a Dialog` ).
 
     " the popup view slot gets its own copy of the model - the nested table
     " bound here renders in the dialog exactly like in a main view
