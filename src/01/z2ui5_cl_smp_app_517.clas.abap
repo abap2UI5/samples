@@ -110,7 +110,10 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
         )->a( n = `mediaType`       v = client->_bind( file_type )
         )->a( n = `fileSize`        v = client->_bind( file_size )
         )->a( n = `removedFileName` v = client->_bind( removed )
-        )->a( n = `change`          v = client->_event( `FILE_ADDED` ) ).
+        )->a( n = `change`          v = client->_event( `FILE_ADDED` )
+        " the companion fires a SEPARATE event when an item is removed - a
+        " change wire alone never reaches FILE_REMOVED below
+        )->a( n = `remove`          v = client->_event( `FILE_REMOVED` ) ).
 
     page->ele( n = `UploadSet` ns = `upload`
         )->a( n = `id`            v = `demoUploadSet`

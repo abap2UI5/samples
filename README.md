@@ -94,10 +94,9 @@ sample repositories take you further:
   control reference lives in
   [samples-controls](https://github.com/abap2UI5/samples-controls). Present on both
   branches.
-* **`src/00` "system"** — no demo category: `00/97` is the place for
-  experimental samples (empty today) and `00/98` holds the test and scaffolding
-  apps. Both are stripped from `702`. There are no shared helper classes —
-  every sample is self-contained.
+* **`src/00` "system"** — no demo category: `00/98` holds the test and
+  scaffolding apps. It is stripped from `702`. There are no shared helper
+  classes — every sample is self-contained.
 
 Every sample runs on ABAP Cloud — that is why `main` needs no cloud-specific
 branch. `main` is the default branch and is checked against both ABAP Standard

@@ -28,7 +28,7 @@
    "(A,C)": "both"
   }
  },
- "scope": "One entry per sample in src/01 - the portable set every branch and build ships. The src/00 system area (experimental and testing apps, stripped from the 702 branch) and the hidden ZZZ helper classes are listed in SAMPLES.md only.",
+ "scope": "One entry per sample in src/01 - the portable set every branch and build ships. The src/00 system area (testing apps, stripped from the 702 branch) and the hidden ZZZ helper classes are listed in SAMPLES.md only.",
  "learningPath": [
   {
    "id": "start",

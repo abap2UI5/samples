@@ -39,6 +39,11 @@ CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
     METHODS toast_options
       RETURNING
         VALUE(result) TYPE string.
+    METHODS json_escape
+      IMPORTING
+        val           TYPE string
+      RETURNING
+        VALUE(result) TYPE string.
     METHODS view_display.
     METHODS get_positions
       RETURNING
@@ -127,10 +132,12 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
     " object and embed it as a plain string, and the toast would then show
     " with no options at all - quietly, which is the one failure mode of this
     " path worth knowing
-    IF duration IS NOT INITIAL.
+    " The two numbers travel unquoted, so anything but digits would break the
+    " object - a typo in the form then costs the OPTIONS, not the toast
+    IF duration IS NOT INITIAL AND duration CO `0123456789`.
       APPEND |"duration":{ duration }| TO t_opt.
     ENDIF.
-    IF animation_duration IS NOT INITIAL.
+    IF animation_duration IS NOT INITIAL AND animation_duration CO `0123456789`.
       APPEND |"animationDuration":{ animation_duration }| TO t_opt.
     ENDIF.
     LOOP AT VALUE ty_t_opt( ( name = `width`                   val = width )
@@ -140,7 +147,7 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
                             ( name = `collision`               val = collision )
                             ( name = `animationTimingFunction` val = animation_timing ) ) INTO DATA(s_opt).
       IF s_opt-val IS NOT INITIAL.
-        APPEND |"{ s_opt-name }":"{ s_opt-val }"| TO t_opt.
+        APPEND |"{ s_opt-name }":"{ json_escape( s_opt-val ) }"| TO t_opt.
       ENDIF.
     ENDLOOP.
     APPEND |"autoClose":{ COND string( WHEN autoclose = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
@@ -158,7 +165,7 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
     " frontend puts the classes on the DOM node of the toast, which carries
     " no id to address it by. It rides in the same object
     IF css_class IS NOT INITIAL.
-      APPEND |"class":"{ css_class }"| TO t_opt.
+      APPEND |"class":"{ json_escape( css_class ) }"| TO t_opt.
     ENDIF.
 
     " onClose is a BACKEND event name here, not a JS callback: the frontend
@@ -176,6 +183,17 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
     ENDLOOP.
 
     result = |\{{ result }\}|.
+
+  ENDMETHOD.
+
+
+  METHOD json_escape.
+
+    " The values above are typed into the form: a `"` or `\` left raw would
+    " end the string early, the object would not parse, and the toast would
+    " show with no options - quietly (see toast_options)
+    result = replace( val = val    sub = `\` with = `\\` occ = 0 ).
+    result = replace( val = result sub = `"` with = `\"` occ = 0 ).
 
   ENDMETHOD.
 

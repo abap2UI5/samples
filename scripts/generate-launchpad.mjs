@@ -5,7 +5,7 @@
  * Launchpad - those demos live in abap2UI5/samples-stack, src/09.)
  *
  * Note: only src/01 has an overview app. Everything under src/00 - the
- * experimental (src/00/97) and testing (src/00/98) samples - is reported but
+ * testing (src/00/98) samples - is reported but
  * not listed in any app. SAMPLES.md lists it, which is what
  * scripts/generate-samples-md.mjs is for; both read the same scan
  * (scripts/lib/scan-samples.mjs), so the app and the markdown can never
@@ -50,10 +50,10 @@ const stale = [];
 // area (top-level package under src) -> overview app file. Every area listed
 // here must have its overview app in the tree - a missing file is an error,
 // not something to skip, because it means the catalog stops being generated.
-// src/00 is deliberately absent: the experimental (src/00/97) and testing
-// (src/00/98) samples have no overview app since the extended samples were
-// reorganised, so their tiles are counted but listed nowhere. Add an entry back
-// here the day an extended overview returns.
+// src/00 is deliberately absent: the testing (src/00/98) samples have no
+// overview app since the extended samples were reorganised, so their tiles are
+// counted but listed nowhere. Add an entry back here the day an extended
+// overview returns.
 const TARGETS = {
   '01': path.join(SRC, 'z2ui5_cl_smp_app_000.clas.abap'),
 };
@@ -209,9 +209,9 @@ for (const [area, list] of Object.entries(tiles)) {
 }
 
 /* The two lines travel together, everywhere - including where there is no
- * tile. src/00/97 has no overview app, and its six experimental samples still
- * carry both lines because they are documented samples that people are sent
- * to from the cookbook. A class with one line and not the other is the state
+ * tile. src/00/98 has no overview app, and its testing samples still carry
+ * both lines because they are documented samples. A class with one line and
+ * not the other is the state
  * nobody chose: it means an author added a sample the way the last one looked
  * and stopped halfway. (The ZZZ helpers are out of this by construction -
  * `scanSamples` flags them, and a helper is reached BY a sample, never looked

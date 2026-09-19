@@ -9,8 +9,7 @@ name: check-keywords
 #
 # 104 classes carry the lines and nothing checked them. The generator refuses a
 # TILE without them, but it rewrites the tree while it does so, which is why it
-# cannot be a pull request check - and it never sees src/00/97, whose six
-# samples the cookbook links to.
+# cannot be a pull request check.
 #
 # Plain node, no dependencies, so it stays a few seconds.
 

@@ -284,10 +284,9 @@ overview app itself, that is 127 apps on every branch.
 
 36 apps with no tile anywhere (AGENTS.md section 3) — reachable
 by class name only, which is what this section is for. They are held to a
-lower bar than `src/01`: an experimental sample may use something newer than
-UI5 1.71, and a testing app exists to be run by a check, not to be learned
-from. Both packages are **stripped from the `702` branch**, so this section
-is absent there.
+lower bar than `src/01`: a testing app exists to be run by a check, not to be
+learned from. The package is **stripped from the `702` branch**, so this
+section is absent there.
 
 ### testing — `src/00/98`
 
