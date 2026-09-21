@@ -159,7 +159,7 @@ CLASS z2ui5_cl_smp_app_500a IMPLEMENTATION.
 
     ASSIGN mo_app->(`MV_VIEW_DISPLAY`) TO <view_display>.
 
-    IF <view_display> IS ASSIGNED and  <view_display> = abap_true.
+    IF <view_display> IS ASSIGNED AND  <view_display> = abap_true.
 
         <view_display> = abap_false.
         client->view_display( mo_main_page->stringify( ) ).
