@@ -60,7 +60,7 @@ CLASS z2ui5_cl_smp_app_530 IMPLEMENTATION.
                  navbuttonpress = client->_event_nav_app_leave( ) ).
 
     DATA(form) = page->simple_form( editable = abap_true
-                                )->content( ns = `form` ).
+                                )->content( `form` ).
 
     form->label( `Scan / input field` ).
 
