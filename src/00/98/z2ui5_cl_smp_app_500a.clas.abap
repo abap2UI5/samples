@@ -18,9 +18,9 @@ CLASS z2ui5_cl_smp_app_500a DEFINITION PUBLIC.
     DATA mo_app             TYPE REF TO object.
 
   PROTECTED SECTION.
-    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA client       TYPE REF TO z2ui5_if_client.
 
-    DATA mo_main_page      TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA mo_main_page TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     METHODS on_init.
     METHODS view_display.
@@ -31,48 +31,64 @@ CLASS z2ui5_cl_smp_app_500a DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS Z2UI5_CL_SMP_APP_500A IMPLEMENTATION.
-
+CLASS z2ui5_cl_smp_app_500a IMPLEMENTATION.
 
   METHOD on_init.
 
-    mt_t002 = VALUE #( ( id = `1` class = `Z2UI5_CL_SMP_APP_500` count = `3` )
-                       ( id = `2` class = `Z2UI5_CL_SMP_APP_500` count = `3` ) ).
+    mt_t002 = VALUE #( class = `Z2UI5_CL_SMP_APP_500`
+                       count = `3`
+                       ( id = `1` )
+                       ( id = `2` ) ).
 
     mv_selectedkey = `1`.
 
   ENDMETHOD.
 
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `displayBlock`
+                  v = `true`
+            )->a( n = `height`
+                  v = `100%`
+            )->a( n = `xmlns`
+                  v = `sap.m`
+            )->a( n = `xmlns:mvc`
+                  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`
+                  v = `sap.ui.core`
             )->ele( `Shell` ).
     DATA(page) = view->ele( `Page`
-        )->a( n = `title`          v = `Main App calling Subapps`
-        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-        )->a( n = `class`          v = `sapUiContentPadding`
-        )->a( n = `id`             v = `page_main` ).
+        )->a( n = `title`
+              v = `Main App calling Subapps`
+        )->a( n = `showNavButton`
+              b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress`
+              v = client->_event_nav_app_leave( )
+        )->a( n = `class`
+              v = `sapUiContentPadding`
+        )->a( n = `id`
+              v = `page_main` ).
 
     DATA(lo_items) = page->ele( `IconTabBar`
-        )->a( n = `class`       v = `sapUiResponsiveContentPadding`
-        " abap2ui5lint-disable-next-line event-without-handler -- the roundtrip alone is the point: selectedKey is written back by the binding, render_sub_app( ) reads it
-        )->a( n = `select`      v = client->_event( `ONSELECTICONTABBAR` )
-        )->a( n = `selectedKey` v = client->_bind( mv_selectedkey )
-        )->ele( `items` ).
+        )->a( n = `class`
+              v = `sapUiResponsiveContentPadding`
+              " abap2ui5lint-disable-next-line event-without-handler -- the roundtrip alone is the point: selectedKey is written back by the binding, render_sub_app( ) reads it
+              )->a( n = `select`
+                    v = client->_event( `ONSELECTICONTABBAR` )
+              )->a( n = `selectedKey`
+                    v = client->_bind( mv_selectedkey )
+              )->ele( `items` ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
       lo_items->ele( `IconTabFilter`
-          )->a( n = `count` v = line->count
-          )->a( n = `text`  v = line->class
-          )->a( n = `key`   v = line->id ).
+          )->a( n = `count`
+                v = line->count
+          )->a( n = `text`
+                v = line->class
+          )->a( n = `key`
+                v = line->id ).
       lo_items->ele( `IconTabSeparator` ).
     ENDLOOP.
 
@@ -90,7 +106,6 @@ CLASS Z2UI5_CL_SMP_APP_500A IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -105,7 +120,6 @@ CLASS Z2UI5_CL_SMP_APP_500A IMPLEMENTATION.
     render_sub_app( ).
 
   ENDMETHOD.
-
 
   METHOD render_sub_app.
 
@@ -137,8 +151,7 @@ CLASS Z2UI5_CL_SMP_APP_500A IMPLEMENTATION.
         ENDIF.
 
         CALL METHOD mo_app->(`Z2UI5_IF_APP~MAIN`)
-          EXPORTING
-            client = client.
+          EXPORTING client = client.
 
       CATCH cx_root.
         RETURN.
@@ -146,10 +159,12 @@ CLASS Z2UI5_CL_SMP_APP_500A IMPLEMENTATION.
 
     ASSIGN mo_app->(`MV_VIEW_DISPLAY`) TO <view_display>.
 
-    IF sy-subrc = 0 AND <view_display> = abap_true.
+    IF <view_display> IS ASSIGNED.
+      IF <view_display> = abap_true.
 
-      <view_display> = abap_false.
-      client->view_display( mo_main_page->stringify( ) ).
+        <view_display> = abap_false.
+        client->view_display( mo_main_page->stringify( ) ).
+      ENDIF.
     ENDIF.
 
     IF mv_selectedkey <> mv_selectedkey_tmp.
@@ -160,4 +175,5 @@ CLASS Z2UI5_CL_SMP_APP_500A IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.
