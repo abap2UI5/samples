@@ -3,12 +3,12 @@
 
 # The sample catalogue
 
-Every app in this repository — 168 of them — with what it shows and a link
+Every app in this repository — 169 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
 **127 of them ship on every branch** — the portable set the README counts:
-`src/01` plus this overview app. The other 41 are under `src/00` and are
+`src/01` plus this overview app. The other 42 are under `src/00` and are
 stripped from `702`. 2 further classes carry the sample name and are
 data objects the samples share rather than apps; they are listed too, so nothing
 in the tree is invisible.
@@ -282,7 +282,7 @@ overview app itself, that is 127 apps on every branch.
 
 ## Not in any overview — `src/00`
 
-36 apps with no tile anywhere (AGENTS.md section 3) — reachable
+37 apps with no tile anywhere (AGENTS.md section 3) — reachable
 by class name only, which is what this section is for. They are held to a
 lower bar than `src/01`: a testing app exists to be run by a check, not to be
 learned from. The package is **stripped from the `702` branch**, so this
@@ -290,7 +290,7 @@ section is absent there.
 
 ### testing — `src/00/98`
 
-36 app(s).
+37 app(s).
 
 | Sample | Class |
 |---|---|
@@ -328,6 +328,7 @@ section is absent there.
 | **RTTI** — Two Tables with many Layouts | [`Z2UI5_CL_SMP_APP_344`](src/00/98/z2ui5_cl_smp_app_344.clas.abap) |
 | **Test Binding Error 500** | [`Z2UI5_CL_SMP_APP_500`](src/00/98/z2ui5_cl_smp_app_500.clas.abap) |
 | **Test Binding Error 501** | [`Z2UI5_CL_SMP_APP_501`](src/00/98/z2ui5_cl_smp_app_501.clas.abap) |
+| **Test Binding Error Main View** | [`Z2UI5_CL_SMP_APP_500A`](src/00/98/z2ui5_cl_smp_app_500a.clas.abap) |
 | **Type Ref to Data Table with refresh** | [`Z2UI5_CL_SMP_APP_199`](src/00/98/z2ui5_cl_smp_app_199.clas.abap) |
 | **unit test** — long variable | [`Z2UI5_CL_SMP_APP_138`](src/00/98/z2ui5_cl_smp_app_138.clas.abap) |
 

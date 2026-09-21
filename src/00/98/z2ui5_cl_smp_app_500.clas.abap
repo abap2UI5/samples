@@ -5,6 +5,11 @@ CLASS z2ui5_cl_smp_app_500 DEFINITION
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+    "! the Page this app renders into when it is embedded in another app's
+    "! view; left empty the app builds a view of its own and displays it
+    DATA mo_parent_page  TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA mv_view_display TYPE abap_bool.
+
     TYPES:
       BEGIN OF ty_row,
         row_id   TYPE i,
@@ -28,6 +33,9 @@ CLASS z2ui5_cl_smp_app_500 DEFINITION
     METHODS on_after_popup.
     METHODS button_delete.
     METHODS button_save.
+
+  PRIVATE SECTION.
+    DATA mv_init TYPE abap_bool.
 ENDCLASS.
 
 
@@ -37,7 +45,9 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    "  IF client->check_on_init( ).  " Check_on_Init() does not work for Sub Apps!!
+    IF mv_init = abap_false.
+      mv_init = abap_true.
       on_init( ).
       render_main( ).
     ELSEIF client->check_on_navigated( ).
@@ -49,75 +59,99 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD on_init.
 
-    mt_table = VALUE #(
-      ( row_id = 1 carrid = 'LH'  connid = '0400' cityfrom = 'FRANKFURT' cityto = 'NEW YORK' )
-      ( row_id = 2 carrid = 'UA'  connid = '0941' cityfrom = 'FRANKFURT' cityto = 'SAN FRAN' )
-      ( row_id = 3 carrid = 'AA'  connid = '0017' cityfrom = 'NEW YORK'  cityto = 'SAN FRAN' ) ).
+    mt_table = VALUE #( ( row_id = 1 carrid = 'LH'  connid = '0400' cityfrom = 'FRANKFURT' cityto = 'NEW YORK' )
+                        ( row_id = 2 carrid = 'UA'  connid = '0941' cityfrom = 'FRANKFURT' cityto = 'SAN FRAN' )
+                        ( row_id = 3 carrid = 'AA'  connid = '0017' cityfrom = 'NEW YORK'  cityto = 'SAN FRAN' ) ).
     mv_next_id = 4.
 
   ENDMETHOD.
 
-
   METHOD render_main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    IF mo_parent_page IS INITIAL.
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `displayBlock`
+                  v = `true`
+            )->a( n = `height`
+                  v = `100%`
+            )->a( n = `xmlns`
+                  v = `sap.m`
+            )->a( n = `xmlns:mvc`
+                  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`
+                  v = `sap.ui.core` ).
+
+    ELSE.
+      view = mo_parent_page.
+    ENDIF.
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`         v = `abap2UI5 - Table - Simple Selection`
-            )->a( n = `showNavButton` b = abap_false ).
+            )->a( n = `title`
+                  v = `abap2UI5 - Table - Simple Selection`
+            )->a( n = `showNavButton`
+                  b = abap_false ).
 
     DATA(table) = page->ele( `Table`
-        )->a( n = `growing` b = abap_true
-        )->a( n = `width`   v = `auto`
-        )->a( n = `items`   v = client->_bind( mt_table ) ).
+        )->a( n = `growing`
+              b = abap_true
+        )->a( n = `width`
+              v = `auto`
+        )->a( n = `items`
+              v = client->_bind( mt_table ) ).
 
     " the columns, hardcoded instead of driven by a layout manager
     DATA(columns) = table->ele( `columns` ).
 
     columns->ele( `Column`
         )->tag( `Text`
-            )->a( n = `text` v = `Sel` ).
+            )->a( n = `text`
+                  v = `Sel` ).
     columns->ele( `Column`
         )->tag( `Text`
-            )->a( n = `text` v = `Carrier` ).
+            )->a( n = `text`
+                  v = `Carrier` ).
     columns->ele( `Column`
         )->tag( `Text`
-            )->a( n = `text` v = `Conn.` ).
+            )->a( n = `text`
+                  v = `Conn.` ).
     columns->ele( `Column`
         )->tag( `Text`
-            )->a( n = `text` v = `From` ).
+            )->a( n = `text`
+                  v = `From` ).
     columns->ele( `Column`
         )->tag( `Text`
-            )->a( n = `text` v = `To` ).
+            )->a( n = `text`
+                  v = `To` ).
 
     " one row template; the row press opens the edit popup, carrying ROW_ID
     DATA(cells) = table->ele( `items`
         )->ele( `ColumnListItem`
-            )->a( n = `type`  v = `Navigation`
-            )->a( n = `press` v = client->_event( val = `ROW_SELECT`
-                                                  arg = `${ROW_ID}` )
+            )->a( n = `type`
+                  v = `Navigation`
+            )->a( n = `press`
+                  v = client->_event( val   = `ROW_SELECT`
+                                      t_arg = VALUE #( ( `${ROW_ID}` ) ) )
             )->ele( `cells` ).
 
     cells->tag( `CheckBox`
-        )->a( n = `selected` v = `{SELKZ}` ).
+        )->a( n = `selected`
+              v = `{SELKZ}` ).
     cells->tag( `Text`
-        )->a( n = `text` v = `{CARRID}` ).
+        )->a( n = `text`
+              v = `{CARRID}` ).
     cells->tag( `Text`
-        )->a( n = `text` v = `{CONNID}` ).
+        )->a( n = `text`
+              v = `{CONNID}` ).
     cells->tag( `Text`
-        )->a( n = `text` v = `{CITYFROM}` ).
+        )->a( n = `text`
+              v = `{CITYFROM}` ).
     cells->tag( `Text`
-        )->a( n = `text` v = `{CITYTO}` ).
+        )->a( n = `text`
+              v = `{CITYTO}` ).
 
     " footer buttons: Add / Delete / Refresh / Save
     page->ele( `footer`
@@ -125,43 +159,60 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
             )->tag( `ToolbarSpacer`
 
             )->tag( `Button`
-                )->a( n = `text`  v = `Add`
-                )->a( n = `icon`  v = `sap-icon://add`
-                )->a( n = `press` v = client->_event( `BUTTON_ADD` )
+                )->a( n = `text`
+                      v = `Add`
+                )->a( n = `icon`
+                      v = `sap-icon://add`
+                )->a( n = `press`
+                      v = client->_event( `BUTTON_ADD` )
             )->tag( `Button`
-                )->a( n = `text`  v = `Delete`
-                )->a( n = `type`  v = `Reject`
-                )->a( n = `icon`  v = `sap-icon://delete`
-                )->a( n = `press` v = client->_event( `BUTTON_DELETE` )
+                )->a( n = `text`
+                      v = `Delete`
+                )->a( n = `type`
+                      v = `Reject`
+                )->a( n = `icon`
+                      v = `sap-icon://delete`
+                )->a( n = `press`
+                      v = client->_event( `BUTTON_DELETE` )
             )->tag( `Button`
-                )->a( n = `text`  v = `Refresh`
-                )->a( n = `icon`  v = `sap-icon://refresh`
-                )->a( n = `press` v = client->_event( `BUTTON_REFRESH` )
+                )->a( n = `text`
+                      v = `Refresh`
+                )->a( n = `icon`
+                      v = `sap-icon://refresh`
+                )->a( n = `press`
+                      v = client->_event( `BUTTON_REFRESH` )
             )->tag( `Button`
-                )->a( n = `text`  v = `Save`
-                )->a( n = `type`  v = `Accept`
-                )->a( n = `press` v = client->_event( `BUTTON_SAVE` ) ).
+                )->a( n = `text`
+                      v = `Save`
+                )->a( n = `type`
+                      v = `Accept`
+                )->a( n = `press`
+                      v = client->_event( `BUTTON_SAVE` ) ).
+
+    IF mo_parent_page IS INITIAL.
+      client->view_display( page->stringify( ) ).
+
+    ELSE.
+      mv_view_display = abap_true.
+    ENDIF.
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD on_event.
 
     CASE client->get_event( ).
 
       WHEN `ROW_SELECT`.
-        client->nav_app_call( z2ui5_cl_smp_app_501=>factory(
-                                it_table  = mt_table
-                                iv_row_id = CONV #( client->get_event_arg( ) )
-                                iv_edit   = abap_true ) ).
+        client->nav_app_call( z2ui5_cl_smp_app_501=>factory( it_table  = mt_table
+                                                             iv_row_id = CONV #( client->get_event_arg( ) )
+                                                             iv_edit   = abap_true ) ).
 
       WHEN `BUTTON_ADD`.
-        client->nav_app_call( z2ui5_cl_smp_app_501=>factory(
-                                it_table  = mt_table
-                                iv_row_id = mv_next_id
-                                iv_edit   = abap_false ) ).
+        client->nav_app_call( z2ui5_cl_smp_app_501=>factory( it_table  = mt_table
+                                                             iv_row_id = mv_next_id
+                                                             iv_edit   = abap_false ) ).
         mv_next_id = mv_next_id + 1.
 
       WHEN `BUTTON_DELETE`.
@@ -177,13 +228,11 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD button_delete.
 
     DELETE mt_table WHERE selkz = abap_true.
 
   ENDMETHOD.
-
 
   METHOD button_save.
 
@@ -191,7 +240,6 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
     client->message_toast_display( |{ lines( mt_table ) } rows "saved"| ).
 
   ENDMETHOD.
-
 
   METHOD on_after_popup.
 
