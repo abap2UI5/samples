@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_SMP_APP_500A</CLSNAME>
+    <CLSNAME>Z2UI5_CL_SMP_APP_531</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Test Binding Error Main View</DESCRIPT>
+    <DESCRIPT>Browser - Play a Sound (play_audio) (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

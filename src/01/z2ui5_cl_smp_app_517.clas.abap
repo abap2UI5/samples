@@ -74,7 +74,7 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
         DELETE t_received WHERE name = removed.
 
       WHEN `CLEAR`.
-        CLEAR t_received.
+        t_received = VALUE #( ).
 
     ENDCASE.
 

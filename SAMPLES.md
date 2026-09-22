@@ -14,7 +14,7 @@ stripped from `702`.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 123 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 122 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -29,12 +29,12 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path — `src/01`
 
-The **123 ready-to-run samples** the README leads with, and the
+The **122 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
-one idea. With the 6 helper apps they call and the
+one idea. With the 7 helper apps they call and the
 overview app itself, that is 130 apps on every branch.
 
-[Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Softkeyboard](#softkeyboard) · [Table](#table) · [Templating](#templating) · [Test Binding Error 500](#test-binding-error-500) · [Test Binding Error 501](#test-binding-error-501) · [Test Binding Error Main View](#test-binding-error-main-view) · [Timer](#timer) · [Tree](#tree)
+[Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
 ### Basics
 
@@ -74,7 +74,9 @@ overview app itself, that is 130 apps on every branch.
 | Logout from the Client (A)<br>Ends the session from the client - the logoff an ICF session or a Fiori launchpad needs, triggered as a follow-up action.<br><sub>logoff signout icf session end fiori launchpad</sub> | [`Z2UI5_CL_SMP_APP_361`](src/01/z2ui5_cl_smp_app_361.clas.abap) |
 | Open a URL in a New Tab (A)<br>Opens a URL in a new browser tab from an event, leaving the running app where it is.<br><sub>url window open_new_tab link target</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_073`](src/01/z2ui5_cl_smp_app_073.clas.abap) |
 | Open Mail, Phone and SMS Links (A)<br>Opens mailto:, tel: and sms: links through URLHelper, so the device answers with its own mail or phone app instead of the browser.<br><sub>mailto tel sms urlhelper redirect native link</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_316`](src/01/z2ui5_cl_smp_app_316.clas.abap) |
+| Play a Sound (play_audio) (A)<br>Plays a sound in the browser with the play_audio follow-up action - a short beep the app carries as a data URI, so nothing is fetched.<br><sub>audio sound beep notification play_audio alert acoustic feedback data uri</sub> | [`Z2UI5_CL_SMP_APP_531`](src/01/z2ui5_cl_smp_app_531.clas.abap) |
 | Reload the Page (A)<br>Navigates the browser to a same-domain URL with the location_reload front-end action, with a scratch input beside it to show what the reload takes with it.<br><sub>reload refresh restart location_reload url</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_492`](src/01/z2ui5_cl_smp_app_492.clas.abap) |
+| Scan Field with Submit (InputExt) (A,C)<br>A scan field: InputExt keeps the soft keyboard down, the cursor is parked in the field, and the scanner's Enter fires submit straight into the backend.<br><sub>barcode scanner scan field submit enter soft keyboard none inputext focus warehouse</sub> | [`Z2UI5_CL_SMP_APP_530`](src/01/z2ui5_cl_smp_app_530.clas.abap) |
 | Set the Tab Favicon (A)<br>Sets the browser tab's favicon at runtime, from an image the backend hands over as a data URI.<br><sub>favicon icon tab image data uri</sub><br><sub>docs: [cookbook/browser_interaction/title](https://abap2ui5.github.io/docs/cookbook/browser_interaction/title)</sub> | [`Z2UI5_CL_SMP_APP_491`](src/01/z2ui5_cl_smp_app_491.clas.abap) |
 | Set the Tab Title (A)<br>Sets the browser tab title from the app, so a bookmarked or duplicated window says which app it holds.<br><sub>document.title tab caption headline set_title</sub><br><sub>docs: [cookbook/browser_interaction/title](https://abap2ui5.github.io/docs/cookbook/browser_interaction/title)</sub> | [`Z2UI5_CL_SMP_APP_125`](src/01/z2ui5_cl_smp_app_125.clas.abap) |
 
@@ -161,8 +163,8 @@ overview app itself, that is 130 apps on every branch.
 |---|---|
 | App State, Bookmark and Share<br>The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.<br><sub>app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state switch off event form</sub><br><sub>docs: [cookbook/event_navigation/navigation/app_state](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/app_state)</sub> | [`Z2UI5_CL_SMP_APP_498`](src/01/z2ui5_cl_smp_app_498.clas.abap) |
 | App-Owned Routing (#/detail)<br>The whole hash_* family in one app: hash_set pushes #/detail, hash_replace rewrites it in place, hash_back steps back like a router, a deep link restores.<br><sub>routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback follow_up_action event form</sub><br><sub>docs: [cookbook/event_navigation/navigation/hash](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash)</sub> | [`Z2UI5_CL_SMP_APP_499`](src/01/z2ui5_cl_smp_app_499.clas.abap) |
-| Routing mode fresh<br>Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.<br><sub>routing mode fresh default off navigation restart new instance nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/navigation/hash](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash)</sub> | [`Z2UI5_CL_SMP_APP_468`](src/01/z2ui5_cl_smp_app_468.clas.abap) |
-| Routing mode keep<br>Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.<br><sub>routing mode keep navigation state preserved back nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/navigation/hash](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash)</sub> | [`Z2UI5_CL_SMP_APP_480`](src/01/z2ui5_cl_smp_app_480.clas.abap) |
+| Routing Mode FRESH (a New Instance)<br>Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.<br><sub>routing mode fresh default off navigation restart new instance nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/navigation/hash](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash)</sub> | [`Z2UI5_CL_SMP_APP_468`](src/01/z2ui5_cl_smp_app_468.clas.abap) |
+| Routing Mode KEEP (Back to the State)<br>Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.<br><sub>routing mode keep navigation state preserved back nav_app_call</sub><br><sub>docs: [cookbook/event_navigation/navigation/hash](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash)</sub> | [`Z2UI5_CL_SMP_APP_480`](src/01/z2ui5_cl_smp_app_480.clas.abap) |
 
 ### List
 
@@ -227,6 +229,7 @@ overview app itself, that is 130 apps on every branch.
 | Sample | Class |
 |---|---|
 | Dialog inside a Dialog<br>A dialog opened from inside a dialog, and what closing the inner one does to the stack.<br><sub>nested stack popup in popup second dialog</sub><br><sub>docs: [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup)</sub> | [`Z2UI5_CL_SMP_APP_161`](src/01/z2ui5_cl_smp_app_161.clas.abap) |
+| Edit a Row in a Second App<br>A table whose rows are edited by a SECOND app shown as a popup - the caller reads the edited table back out of it with get_app_prev( ) when it returns.<br><sub>table edit row popup app nav_app_call get_app_prev add delete save master detail</sub> | [`Z2UI5_CL_SMP_APP_500`](src/01/z2ui5_cl_smp_app_500.clas.abap) |
 | Element Binding to the Selected Row (A)<br>Element binding on a popup: the dialog binds RELATIVELY to the row that was pressed, so its fields need no path of their own.<br><sub>element binding relative path aggregation dialog row</sub><br><sub>docs: [cookbook/event_navigation/frontend](https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend), [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup)</sub> | [`Z2UI5_CL_SMP_APP_470`](src/01/z2ui5_cl_smp_app_470.clas.abap) |
 | Navigate between Dialogs (NavContainer) (A)<br>A NavContainer inside a dialog: several pages in one popup, with back and forward between them.<br><sub>navcontainer dialog pages back forward</sub><br><sub>docs: [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup)</sub> | [`Z2UI5_CL_SMP_APP_170`](src/01/z2ui5_cl_smp_app_170.clas.abap) |
 | Value Help: Suggestions and F4 Dialog<br>The value help, both halves: suggestions while typing and the F4 dialog behind the field, over the same data.<br><sub>f4 search help suggestion input dialog select</sub><br><sub>docs: [cookbook/popup_popover/popup](https://abap2ui5.github.io/docs/cookbook/popup_popover/popup), [cookbook/expert_more/value_help](https://abap2ui5.github.io/docs/cookbook/expert_more/value_help)</sub> | [`Z2UI5_CL_SMP_APP_009`](src/01/z2ui5_cl_smp_app_009.clas.abap) |
@@ -238,12 +241,6 @@ overview app itself, that is 130 apps on every branch.
 |---|---|
 | Scroll a Control into View (A)<br>Scrolls a control into view by ID - what a validation does when the field it complains about is off screen.<br><sub>scroll_into_view control id validation jump</sub><br><sub>docs: [cookbook/browser_interaction/scrolling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling)</sub> | [`Z2UI5_CL_SMP_APP_363`](src/01/z2ui5_cl_smp_app_363.clas.abap) |
 | Scroll to a Pixel Position (A)<br>Scrolls to a pixel position and back: reading the position before a refresh and restoring it afterwards.<br><sub>position pixel scroll_to restore refresh toolbar</sub><br><sub>docs: [cookbook/browser_interaction/scrolling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling)</sub> | [`Z2UI5_CL_SMP_APP_362`](src/01/z2ui5_cl_smp_app_362.clas.abap) |
-
-### Softkeyboard
-
-| Sample | Class |
-|---|---|
-| **Softkeyboard** | [`Z2UI5_CL_SMP_APP_530`](src/01/z2ui5_cl_smp_app_530.clas.abap) |
 
 ### Table
 
@@ -264,24 +261,6 @@ overview app itself, that is 130 apps on every branch.
 |---|---|
 | Build Columns Dynamically (template:repeat)<br>Builds the columns of a table at runtime with template:repeat, including the if/then/else the templating language brings.<br><sub>template repeat runtime generated columns if then else</sub><br><sub>docs: [cookbook/view/xml_templating](https://abap2ui5.github.io/docs/cookbook/view/xml_templating)</sub> | [`Z2UI5_CL_SMP_APP_173`](src/01/z2ui5_cl_smp_app_173.clas.abap) |
 | Dynamic Content in a Nested View<br>XML templating inside a nested view: the generated content is built where the sub view is rendered.<br><sub>template repeat runtime generated nested nest_view_display</sub><br><sub>docs: [cookbook/view/nested_views](https://abap2ui5.github.io/docs/cookbook/view/nested_views), [cookbook/view/xml_templating](https://abap2ui5.github.io/docs/cookbook/view/xml_templating)</sub> | [`Z2UI5_CL_SMP_APP_176`](src/01/z2ui5_cl_smp_app_176.clas.abap) |
-
-### Test Binding Error 500
-
-| Sample | Class |
-|---|---|
-| **Test Binding Error 500** | [`Z2UI5_CL_SMP_APP_500`](src/01/z2ui5_cl_smp_app_500.clas.abap) |
-
-### Test Binding Error 501
-
-| Sample | Class |
-|---|---|
-| **Test Binding Error 501** | [`Z2UI5_CL_SMP_APP_501`](src/01/z2ui5_cl_smp_app_501.clas.abap) |
-
-### Test Binding Error Main View
-
-| Sample | Class |
-|---|---|
-| **Test Binding Error Main View** | [`Z2UI5_CL_SMP_APP_500A`](src/01/z2ui5_cl_smp_app_500a.clas.abap) |
 
 ### Timer
 
@@ -315,13 +294,13 @@ section is absent there.
 
 | Sample | Class |
 |---|---|
-| **Catch exceptions and display popup** | [`Z2UI5_CL_SMP_APP_324`](src/00/98/z2ui5_cl_smp_app_324.clas.abap) |
+| **Testing** — Dynpro Call Ends in the Error View | [`Z2UI5_CL_SMP_APP_324`](src/00/98/z2ui5_cl_smp_app_324.clas.abap) |
 
 ---
 
 ## Helper apps
 
-6 classes that are only ever *called* by another sample — a
+7 classes that are only ever *called* by another sample — a
 sub-app, a data object, the other half of a navigation demo. Their short text
 starts with `ZZZ`, which is how the generator knows to give them no tile.
 Listed here so nothing in the tree is invisible; there is no point starting
@@ -329,12 +308,13 @@ one on its own.
 
 | Sample | Class |
 |---|---|
-| **ZZZ** — called by navigation | [`Z2UI5_CL_SMP_APP_025`](src/01/z2ui5_cl_smp_app_025.clas.abap) |
-| **ZZZ** — called by Navigation Exchange Data and Event | [`Z2UI5_CL_SMP_APP_489`](src/01/z2ui5_cl_smp_app_489.clas.abap) |
-| **ZZZ** — called by Navigation routing modes | [`Z2UI5_CL_SMP_APP_469`](src/01/z2ui5_cl_smp_app_469.clas.abap) |
-| **ZZZ** — called by Nested Views - Sub-App (104), the form | [`Z2UI5_CL_SMP_APP_105`](src/01/z2ui5_cl_smp_app_105.clas.abap) |
-| **ZZZ** — called by Nested Views - Sub-App (104), the list | [`Z2UI5_CL_SMP_APP_112`](src/01/z2ui5_cl_smp_app_112.clas.abap) |
-| **ZZZ** — called by popup | [`Z2UI5_CL_SMP_APP_020`](src/01/z2ui5_cl_smp_app_020.clas.abap) |
+| **ZZZ** — called by Hash Routing Mode FRESH and KEEP | [`Z2UI5_CL_SMP_APP_469`](src/01/z2ui5_cl_smp_app_469.clas.abap) |
+| **ZZZ** — called by Navigation Call and Leave Apps | [`Z2UI5_CL_SMP_APP_025`](src/01/z2ui5_cl_smp_app_025.clas.abap) |
+| **ZZZ** — called by Navigation Return Data and Events | [`Z2UI5_CL_SMP_APP_489`](src/01/z2ui5_cl_smp_app_489.clas.abap) |
+| **ZZZ** — called by Nested View Embed Another App, the form | [`Z2UI5_CL_SMP_APP_105`](src/01/z2ui5_cl_smp_app_105.clas.abap) |
+| **ZZZ** — called by Nested View Embed Another App, the list | [`Z2UI5_CL_SMP_APP_112`](src/01/z2ui5_cl_smp_app_112.clas.abap) |
+| **ZZZ** — called by Popup Edit a Row in a Second App<br>The app behind the dialog of Z2UI5_CL_SMP_APP_500 - it is a full app with its own state, shows a Dialog instead of a view, and leaves the edited table on itself for the caller.<br><sub>popup app dialog edit row factory nav_app_leave popup_destroy called app add delete</sub> | [`Z2UI5_CL_SMP_APP_501`](src/01/z2ui5_cl_smp_app_501.clas.abap) |
+| **ZZZ** — called by Popup Ways to Open a Dialog | [`Z2UI5_CL_SMP_APP_020`](src/01/z2ui5_cl_smp_app_020.clas.abap) |
 
 ---
 

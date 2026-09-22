@@ -338,7 +338,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
       " TABLE_INVALID_INDEX. The DO loop above the DELETE can leave sy-tabix
       " pointing elsewhere as well. Found 2026-08-17.
       DATA(lt_all) = mt_table.
-      CLEAR mt_table.
+      mt_table = VALUE #( ).
 
       LOOP AT lt_all REFERENCE INTO DATA(lr_row).
         DATA(lv_row) = ``.

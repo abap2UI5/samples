@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 120 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 122 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -820,6 +820,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Talk to the user` header = `Popover` sub = `Select from a List` keywords = `list selection placement anchor` path = `src/01` app = `z2ui5_cl_smp_app_081` )
       ( group = `Talk to the user` header = `Popover` sub = `Toggle by ID (toggleBy) (A)` keywords = `toggleby open close control_by_id whitelisted` path = `src/01` app = `z2ui5_cl_smp_app_465` )
       ( group = `Talk to the user` header = `Popup` sub = `Dialog inside a Dialog` keywords = `nested stack popup in popup second dialog` path = `src/01` app = `z2ui5_cl_smp_app_161` )
+      ( group = `Talk to the user` header = `Popup` sub = `Edit a Row in a Second App` keywords = `table edit row popup app nav_app_call get_app_prev add delete save master detail` path = `src/01` app = `z2ui5_cl_smp_app_500` )
       ( group = `Talk to the user` header = `Popup` sub = `Element Binding to the Selected Row (A)` keywords = `element binding relative path aggregation dialog row` path = `src/01` app = `z2ui5_cl_smp_app_470` )
       ( group = `Talk to the user` header = `Popup` sub = `Navigate between Dialogs (NavContainer) (A)` keywords = `navcontainer dialog pages back forward` path = `src/01` app = `z2ui5_cl_smp_app_170` )
       ( group = `Talk to the user` header = `Popup` sub = `Value Help: Suggestions and F4 Dialog` keywords = `f4 search help suggestion input dialog select` path = `src/01` app = `z2ui5_cl_smp_app_009` )
@@ -839,8 +840,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         sub = `App-Owned Routing (#/detail)`
         keywords = `routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback follow_up_action event form`
         path = `src/01` app = `z2ui5_cl_smp_app_499` )
-      ( group = `Move through the app` header = `Hash` sub = `Routing mode fresh` keywords = `routing mode fresh default off navigation restart new instance nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_468` )
-      ( group = `Move through the app` header = `Hash` sub = `Routing mode keep` keywords = `routing mode keep navigation state preserved back nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_480` )
+      ( group = `Move through the app` header = `Hash` sub = `Routing Mode FRESH (a New Instance)` keywords = `routing mode fresh default off navigation restart new instance nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_468` )
+      ( group = `Move through the app` header = `Hash` sub = `Routing Mode KEEP (Back to the State)` keywords = `routing mode keep navigation state preserved back nav_app_call` path = `src/01` app = `z2ui5_cl_smp_app_480` )
       ( group = `Move through the app` header = `Navigation` sub = `Call and Leave Apps (nav_app_call)` keywords = `nav_app_call nav_app_leave sub app stack call back` path = `src/01` app = `z2ui5_cl_smp_app_024` )
       ( group = `Move through the app` header = `Navigation` sub = `Data Loss Protection on Leaving (A,C)` keywords = `dirty unsaved changes leave confirmation warning` path = `src/01` app = `z2ui5_cl_smp_app_279` )
       ( group = `Move through the app` header = `Navigation` sub = `Return Data and Events to the Caller` keywords = `r_data result get_app_prev return event payload` path = `src/01` app = `z2ui5_cl_smp_app_488` )
@@ -870,10 +871,11 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Reach outside the view` header = `Browser` sub = `Logout from the Client (A)` keywords = `logoff signout icf session end fiori launchpad` path = `src/01` app = `z2ui5_cl_smp_app_361` )
       ( group = `Reach outside the view` header = `Browser` sub = `Open a URL in a New Tab (A)` keywords = `url window open_new_tab link target` path = `src/01` app = `z2ui5_cl_smp_app_073` )
       ( group = `Reach outside the view` header = `Browser` sub = `Open Mail, Phone and SMS Links (A)` keywords = `mailto tel sms urlhelper redirect native link` path = `src/01` app = `z2ui5_cl_smp_app_316` )
+      ( group = `Reach outside the view` header = `Browser` sub = `Play a Sound (play_audio) (A)` keywords = `audio sound beep notification play_audio alert acoustic feedback data uri` path = `src/01` app = `z2ui5_cl_smp_app_531` )
       ( group = `Reach outside the view` header = `Browser` sub = `Reload the Page (A)` keywords = `reload refresh restart location_reload url` path = `src/01` app = `z2ui5_cl_smp_app_492` )
+      ( group = `Reach outside the view` header = `Browser` sub = `Scan Field with Submit (InputExt) (A,C)` keywords = `barcode scanner scan field submit enter soft keyboard none inputext focus warehouse` path = `src/01` app = `z2ui5_cl_smp_app_530` )
       ( group = `Reach outside the view` header = `Browser` sub = `Set the Tab Favicon (A)` keywords = `favicon icon tab image data uri` path = `src/01` app = `z2ui5_cl_smp_app_491` )
       ( group = `Reach outside the view` header = `Browser` sub = `Set the Tab Title (A)` keywords = `document.title tab caption headline set_title` path = `src/01` app = `z2ui5_cl_smp_app_125` )
-      ( group = `Reach outside the view` header = `Browser` sub = `Soft Keyboard Mode on Mobile (A)` keywords = `mobile numeric keypad keyboard_set_mode phone input` path = `src/01` app = `z2ui5_cl_smp_app_352` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `Aggregation Item by Index (A)` keywords = `carousel aggregation item index clone template setactivepage positional control_by_id` path = `src/01` app = `z2ui5_cl_smp_app_514` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `Expand a Panel by ID (setExpanded) (A)` keywords = `panel collapse expand setexpanded control_by_id whitelisted` path = `src/01` app = `z2ui5_cl_smp_app_448` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `Inline CSS on a Control (css) (A)` keywords = `css inline style background color opacity control_by_id dom node no property` path = `src/01` app = `z2ui5_cl_smp_app_513` )

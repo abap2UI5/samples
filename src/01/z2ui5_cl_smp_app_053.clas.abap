@@ -162,7 +162,7 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
     ENDIF.
 
     DATA(lt_all) = mt_table.
-    CLEAR mt_table.
+    mt_table = VALUE #( ).
 
     LOOP AT lt_all INTO DATA(ls_row).
       IF to_upper( ls_row-product )          CS lv_search

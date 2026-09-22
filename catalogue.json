@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 120,
+  "samples": 122,
   "categories": 24,
   "stages": 6
  },
@@ -624,6 +624,28 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_531",
+   "file": "src/01/z2ui5_cl_smp_app_531.clas.abap",
+   "category": "Browser",
+   "stage": "beyond",
+   "title": "Browser",
+   "description": "Play a Sound (play_audio) (A)",
+   "summary": "Plays a sound in the browser with the play_audio follow-up action - a short beep the app carries as a data URI, so nothing is fetched.",
+   "keywords": [
+    "audio",
+    "sound",
+    "beep",
+    "notification",
+    "play_audio",
+    "alert",
+    "acoustic",
+    "feedback",
+    "data",
+    "uri"
+   ],
+   "docs": []
+  },
+  {
    "class": "z2ui5_cl_smp_app_492",
    "file": "src/01/z2ui5_cl_smp_app_492.clas.abap",
    "category": "Browser",
@@ -641,6 +663,30 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_530",
+   "file": "src/01/z2ui5_cl_smp_app_530.clas.abap",
+   "category": "Browser",
+   "stage": "beyond",
+   "title": "Browser",
+   "description": "Scan Field with Submit (InputExt) (A,C)",
+   "summary": "A scan field: InputExt keeps the soft keyboard down, the cursor is parked in the field, and the scanner's Enter fires submit straight into the backend.",
+   "keywords": [
+    "barcode",
+    "scanner",
+    "scan",
+    "field",
+    "submit",
+    "enter",
+    "soft",
+    "keyboard",
+    "none",
+    "inputext",
+    "focus",
+    "warehouse"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_491",
@@ -679,26 +725,6 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/title"
-   ]
-  },
-  {
-   "class": "z2ui5_cl_smp_app_352",
-   "file": "src/01/z2ui5_cl_smp_app_352.clas.abap",
-   "category": "Browser",
-   "stage": "beyond",
-   "title": "Browser",
-   "description": "Soft Keyboard Mode on Mobile (A)",
-   "summary": "Asks a mobile device for the numeric keypad instead of the full keyboard (keyboard_set_mode) on an Input.",
-   "keywords": [
-    "mobile",
-    "numeric",
-    "keypad",
-    "keyboard_set_mode",
-    "phone",
-    "input"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard"
    ]
   },
   {
@@ -1571,7 +1597,7 @@
    "category": "Hash",
    "stage": "move",
    "title": "Hash",
-   "description": "Routing mode fresh",
+   "description": "Routing Mode FRESH (a New Instance)",
    "summary": "Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.",
    "keywords": [
     "routing",
@@ -1595,7 +1621,7 @@
    "category": "Hash",
    "stage": "move",
    "title": "Hash",
-   "description": "Routing mode keep",
+   "description": "Routing Mode KEEP (Back to the State)",
    "summary": "Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.",
    "keywords": [
     "routing",
@@ -2228,6 +2254,30 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popup"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_500",
+   "file": "src/01/z2ui5_cl_smp_app_500.clas.abap",
+   "category": "Popup",
+   "stage": "talk",
+   "title": "Popup",
+   "description": "Edit a Row in a Second App",
+   "summary": "A table whose rows are edited by a SECOND app shown as a popup - the caller reads the edited table back out of it with get_app_prev( ) when it returns.",
+   "keywords": [
+    "table",
+    "edit",
+    "row",
+    "popup",
+    "app",
+    "nav_app_call",
+    "get_app_prev",
+    "add",
+    "delete",
+    "save",
+    "master",
+    "detail"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_470",

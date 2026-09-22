@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_469</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>ZZZ - called by Navigation routing modes</DESCRIPT>
+    <DESCRIPT>ZZZ - called by Hash Routing Mode FRESH and KEEP</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

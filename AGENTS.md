@@ -1118,23 +1118,28 @@ By hand, because no script covers it:
   failure repeating itself — and now it says so instead of printing
   "Success! No findings detected."
 
-  **The ones that produce none are one shape, and they are named here.** The
-  shape is the "main app calling subapps" scaffold: the class builds a page,
-  keeps the handle in an instance attribute, creates the sub-app with
-  `CREATE OBJECT mo_app TYPE (t002->class)` and hands the handle over through
-  ``CALL METHOD mo_app->(`SET_APP_DATA`)``; the sub-app builds into it and a
-  dynamic ``ASSIGN mo_app->(`MV_VIEW_DISPLAY`)`` decides when to display. The
-  linter resolves each builder statement against the handle it is written on,
-  so a handle that leaves the class through a dynamic call is unfollowable —
-  by design, not by oversight.
+  **Since 2026-09-22 the count is ZERO, and the line is absent from the
+  summary altogether.** Every class in this repository produces at least one
+  reconstructed view. That is the state to hold: a `classes produced none`
+  line reappearing in a run is a sample that lost its view, which is the
+  failure the count exists to catch — look at the named class before
+  accepting it.
 
-  It used to be **seven**, all in `src/00/98` (measured 2026-09-04): `117`,
-  `131`, `185`, `191`, `195`, `211`, `338`. All seven were deleted on
-  2026-09-22 (§2). What carries the shape today is `Z2UI5_CL_SMP_APP_500a` in
-  `src/01`, and it is the only name expected on the list.
-  Written out so the next run can tell **the same one** from *a different
-  one*: a name appearing here that is not on this list is a sample that lost
-  its view, which is the failure the count exists to catch.
+  The shape that used to produce none was the "main app calling subapps"
+  scaffold: the class builds a page, keeps the handle in an instance
+  attribute, creates the sub-app with `CREATE OBJECT mo_app TYPE (class)` and
+  hands the handle over through ``CALL METHOD mo_app->(`SET_APP_DATA`)``; the
+  sub-app builds into it and a dynamic ``ASSIGN mo_app->(`MV_VIEW_DISPLAY`)``
+  decides when to display. The linter resolves each builder statement against
+  the handle it is written on, so a handle that leaves the class through a
+  dynamic call is unfollowable — by design, not by oversight. There were
+  **eight** classes of that shape: seven in `src/00/98` (`117`, `131`, `185`,
+  `191`, `195`, `211`, `338`, measured 2026-09-04) and the `500a` of the
+  binding-error series, which had reached `src/01` shortly before. All eight
+  are gone (§2) — what each of them asserted is a unit test in abap2UI5 now,
+  the last one's in `z2ui5_cl_ui5_srv_model`'s `ltcl_07_view_host`. **Do not write
+  another one here.** A view that only exists once a second class has been
+  called by name is a view no gate in this repository can judge.
 - **The two README badges** (`.github/badges/abap2ui5.json` and
   `.github/badges/check-abap2ui5.json`, shields.io endpoint files) carry the
   same statement, split along what they mean: *abap2UI5 | 129 apps · 156 views
@@ -1207,6 +1212,30 @@ manually or via editor tooling that the above rules are met.
 ---
 
 ## 7. Code Conventions
+
+### No dictionary objects — a sample is ABAP source and nothing else
+
+**This repository ships `CLAS` and `DEVC`. Never add a `TABL`, `DTEL`, `DOMA`,
+`DDLS`, `BDEF` or any other dictionary object**, and never make a sample depend
+on one it would have to bring along. A sample a reader can run is a sample that
+is one class: they pull the repository, start the class, and it works. A
+dictionary object turns that into an activation order, a transport and a
+`SELECT` against a table nobody filled.
+
+abap2UI5 holds the same rule for itself (*No new dictionary objects* in its
+`AGENTS.md`) and acted on it: the released structure `z2ui5_t_02`, added
+purely so a sample could point a dynamic type at something, was **removed on
+2026-09-22** — nothing here ever named it.
+
+Where a sample genuinely needs a **type name computed at runtime**
+(`CREATE DATA … TYPE STANDARD TABLE OF (name)`), it names a table that is
+already on every system the sample runs on. Today that is
+`Z2UI5_CL_SMP_APP_061`, which names `Z2UI5_T_01` — abap2UI5's own draft table,
+borrowed as *a name that exists*, not used as an API: the sample only reads its
+shape, never its rows, and if the framework ever changes the table the sample
+changes the string. Say that in the sample, as 061 does. Data a sample needs
+for its own sake is built in ABAP — `VALUE #( ( … ) ( … ) )` in `on_init( )` —
+never selected from the dictionary.
 
 - Follow the [SAP ABAP Style Guide](https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md).
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
@@ -1639,8 +1668,8 @@ handler runs".
 - **There is no way back up to a named ancestor.** `end( )` climbs exactly one
   level, so a view is built the way it nests. When a helper method needs a
   container the caller owns, the caller passes that reference — see the
-  nested-view samples `Z2UI5_CL_SMP_APP_500` / `_500a`, which take the Page
-  they render into (`mo_parent_page`) rather than searching for it.
+  `nest_view_display( )` samples of the `Nested View` category, which are
+  handed the container they render into rather than searching for it.
 
 > The former standalone XML builder `z2ui5_cl_util_xml` is retired in the
 > framework (obsolete package, no new consumers) and is no longer used by any
@@ -1783,6 +1812,61 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
 
 ENDCLASS.
 ```
+
+---
+
+## 11a. What the catalogue owes the framework — the coverage audit
+
+**Every non-obsolete part of `z2ui5_if_client` that can be shown without a
+system feature this repository excludes has a sample.** Measured 2026-09-22,
+and the measurement is two greps rather than a list to maintain: the
+constants of `cs_event`, the methods of the interface, the components of
+`ty_s_event_control` and the parameters of `_bind( )`, each counted against
+the whole of `src/`.
+
+The state at that measurement:
+
+| Surface | Total | Without a sample |
+|---|---:|---:|
+| `cs_event-*` | 41 | 14 |
+| `z2ui5_if_client` methods | 40 | 8 |
+| `ty_s_event_control` components | all | **0** |
+| `_bind( )` parameters | all | 3 |
+
+**None of the 25 is a gap in this repository**, and each belongs to exactly
+one of four buckets — which is the whole point of writing the audit down,
+because a bare "25 uncovered" reads like debt:
+
+1. **It needs something the system provides**, so it lives in
+   [samples-stack](https://github.com/abap2UI5/samples-stack) by §2:
+   `set_odata_model`, `switch_default_model` and the Fiori Launchpad trio
+   (`cross_app_nav_to_ext`, `cross_app_nav_to_prev_app`,
+   `set_title_launchpad`), the smart-control pair (`smart_variant_init`,
+   `filter_bar_variant_init`) and `set_session_stateful`.
+2. **It is obsolete and a sample would teach the wrong thing.** The five
+   `*_model_update( )` methods do **nothing** — the framework pushes the model
+   by itself since `main_end` compares before and after; `_bind_edit( )` is an
+   alias of `_bind( )`; `_event_client( )` is a superseded spelling;
+   `custom_mapper` / `custom_filter` are marked obsolete at the declaration;
+   `image_editor_popup_close` belongs to a `z2ui5_cl_pop_*` popup this
+   repository may not demonstrate at all (§10). **Do not write a sample for
+   any of these** — a demonstration is a promise that the thing is the way to
+   do it.
+3. **The behaviour is covered, the spelling is not.** `nav_container_to` and
+   its four slot variants are routed through `CONTROL_BY_ID` in the frontend
+   (`core/actions/ControlCall.js`), and `Z2UI5_CL_SMP_APP_088` navigates a
+   NavContainer exactly that way. The constants are an older spelling of the
+   sample that exists, not a feature missing one — a candidate for abap2UI5's
+   removal plan rather than for a sample here.
+4. **Actually missing, and then written.** `play_audio` was the one, and
+   `Z2UI5_CL_SMP_APP_531` closed it. The only one left in this bucket is
+   `popover_close`, the roundtrip-free twin of `popup_close` (which
+   `Z2UI5_CL_SMP_APP_012` names) — small, portable, and the next thing to add
+   if somebody wants the number at zero.
+
+**Re-run the audit when the framework's API snapshot changes**, not on a
+schedule: a new `cs_event` constant either gets a sample or gets a line in
+bucket 1-3 above, and that is the decision worth recording.
 
 ---
 
