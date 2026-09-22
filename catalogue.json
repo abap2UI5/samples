@@ -28,7 +28,7 @@
    "(A,C)": "both"
   }
  },
- "scope": "One entry per sample in src/01 - the portable set every branch and build ships. The src/00 system area (testing apps, stripped from the 702 branch) and the hidden ZZZ helper classes are listed in SAMPLES.md only.",
+ "scope": "One entry per sample in src/ - every branch and build ships all of them. The hidden ZZZ helper classes are listed in SAMPLES.md only.",
  "learningPath": [
   {
    "id": "start",
@@ -62,14 +62,14 @@
   }
  ],
  "counts": {
-  "samples": 120,
+  "samples": 121,
   "categories": 24,
   "stages": 6
  },
  "samples": [
   {
    "class": "z2ui5_cl_smp_app_493",
-   "file": "src/01/z2ui5_cl_smp_app_493.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_493.clas.abap",
    "category": "Basics",
    "stage": "start",
    "title": "Basics I",
@@ -95,7 +95,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_494",
-   "file": "src/01/z2ui5_cl_smp_app_494.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_494.clas.abap",
    "category": "Basics",
    "stage": "start",
    "title": "Basics II",
@@ -120,7 +120,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_495",
-   "file": "src/01/z2ui5_cl_smp_app_495.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_495.clas.abap",
    "category": "Basics",
    "stage": "start",
    "title": "Basics III",
@@ -145,7 +145,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_004",
-   "file": "src/01/z2ui5_cl_smp_app_004.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_004.clas.abap",
    "category": "Basics",
    "stage": "start",
    "title": "Basics IV",
@@ -171,7 +171,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_496",
-   "file": "src/01/z2ui5_cl_smp_app_496.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_496.clas.abap",
    "category": "Basics",
    "stage": "start",
    "title": "Basics V",
@@ -206,7 +206,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_503",
-   "file": "src/01/z2ui5_cl_smp_app_503.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_503.clas.abap",
    "category": "Basics",
    "stage": "start",
    "title": "Basics VI",
@@ -226,7 +226,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_519",
-   "file": "src/01/z2ui5_cl_smp_app_519.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_519.clas.abap",
    "category": "Basics",
    "stage": "start",
    "title": "Basics VII",
@@ -252,7 +252,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_497",
-   "file": "src/01/z2ui5_cl_smp_app_497.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_497.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -279,7 +279,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_067",
-   "file": "src/01/z2ui5_cl_smp_app_067.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_067.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -299,7 +299,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_061",
-   "file": "src/01/z2ui5_cl_smp_app_061.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_061.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -321,7 +321,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_027",
-   "file": "src/01/z2ui5_cl_smp_app_027.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_027.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -342,7 +342,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_071",
-   "file": "src/01/z2ui5_cl_smp_app_071.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_071.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -364,7 +364,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_507",
-   "file": "src/01/z2ui5_cl_smp_app_507.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_507.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -388,7 +388,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_508",
-   "file": "src/01/z2ui5_cl_smp_app_508.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_508.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -414,7 +414,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_509",
-   "file": "src/01/z2ui5_cl_smp_app_509.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_509.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -442,7 +442,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_144",
-   "file": "src/01/z2ui5_cl_smp_app_144.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_144.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -463,7 +463,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_166",
-   "file": "src/01/z2ui5_cl_smp_app_166.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_166.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -483,7 +483,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_047",
-   "file": "src/01/z2ui5_cl_smp_app_047.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_047.clas.abap",
    "category": "Binding",
    "stage": "data",
    "title": "Binding",
@@ -503,7 +503,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_325",
-   "file": "src/01/z2ui5_cl_smp_app_325.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_325.clas.abap",
    "category": "Browser",
    "stage": "beyond",
    "title": "Browser",
@@ -522,7 +522,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_516",
-   "file": "src/01/z2ui5_cl_smp_app_516.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_516.clas.abap",
    "category": "Browser",
    "stage": "beyond",
    "title": "Browser",
@@ -547,7 +547,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_327",
-   "file": "src/01/z2ui5_cl_smp_app_327.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_327.clas.abap",
    "category": "Browser",
    "stage": "beyond",
    "title": "Browser",
@@ -566,7 +566,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_361",
-   "file": "src/01/z2ui5_cl_smp_app_361.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_361.clas.abap",
    "category": "Browser",
    "stage": "beyond",
    "title": "Browser",
@@ -585,7 +585,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_073",
-   "file": "src/01/z2ui5_cl_smp_app_073.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_073.clas.abap",
    "category": "Browser",
    "stage": "beyond",
    "title": "Browser",
@@ -604,7 +604,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_316",
-   "file": "src/01/z2ui5_cl_smp_app_316.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_316.clas.abap",
    "category": "Browser",
    "stage": "beyond",
    "title": "Browser",
@@ -625,7 +625,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_492",
-   "file": "src/01/z2ui5_cl_smp_app_492.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_492.clas.abap",
    "category": "Browser",
    "stage": "beyond",
    "title": "Browser",
@@ -643,8 +643,34 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_530",
+   "file": "src/z2ui5_cl_smp_app_530.clas.abap",
+   "category": "Browser",
+   "stage": "beyond",
+   "title": "Browser",
+   "description": "Scan Field with Submit (InputExt) (A,C)",
+   "summary": "A scan field: InputExt keeps the soft keyboard down, the cursor is parked in the field, and the scanner's Enter fires submit straight into the backend.",
+   "keywords": [
+    "barcode",
+    "scanner",
+    "scan",
+    "field",
+    "submit",
+    "enter",
+    "soft",
+    "keyboard",
+    "none",
+    "inputext",
+    "focus",
+    "warehouse"
+   ],
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard"
+   ]
+  },
+  {
    "class": "z2ui5_cl_smp_app_491",
-   "file": "src/01/z2ui5_cl_smp_app_491.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_491.clas.abap",
    "category": "Browser",
    "stage": "beyond",
    "title": "Browser",
@@ -664,7 +690,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_125",
-   "file": "src/01/z2ui5_cl_smp_app_125.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_125.clas.abap",
    "category": "Browser",
    "stage": "beyond",
    "title": "Browser",
@@ -682,28 +708,8 @@
    ]
   },
   {
-   "class": "z2ui5_cl_smp_app_352",
-   "file": "src/01/z2ui5_cl_smp_app_352.clas.abap",
-   "category": "Browser",
-   "stage": "beyond",
-   "title": "Browser",
-   "description": "Soft Keyboard Mode on Mobile (A)",
-   "summary": "Asks a mobile device for the numeric keypad instead of the full keyboard (keyboard_set_mode) on an Input.",
-   "keywords": [
-    "mobile",
-    "numeric",
-    "keypad",
-    "keyboard_set_mode",
-    "phone",
-    "input"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard"
-   ]
-  },
-  {
    "class": "z2ui5_cl_smp_app_514",
-   "file": "src/01/z2ui5_cl_smp_app_514.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_514.clas.abap",
    "category": "Control Behaviour",
    "stage": "beyond",
    "title": "Control Behaviour",
@@ -726,7 +732,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_448",
-   "file": "src/01/z2ui5_cl_smp_app_448.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_448.clas.abap",
    "category": "Control Behaviour",
    "stage": "beyond",
    "title": "Control Behaviour",
@@ -746,7 +752,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_513",
-   "file": "src/01/z2ui5_cl_smp_app_513.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_513.clas.abap",
    "category": "Control Behaviour",
    "stage": "beyond",
    "title": "Control Behaviour",
@@ -771,7 +777,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_078",
-   "file": "src/01/z2ui5_cl_smp_app_078.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_078.clas.abap",
    "category": "Control Behaviour",
    "stage": "beyond",
    "title": "Control Behaviour",
@@ -791,7 +797,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_449",
-   "file": "src/01/z2ui5_cl_smp_app_449.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_449.clas.abap",
    "category": "Control Behaviour",
    "stage": "beyond",
    "title": "Control Behaviour",
@@ -813,7 +819,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_518",
-   "file": "src/01/z2ui5_cl_smp_app_518.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_518.clas.abap",
    "category": "Control Behaviour",
    "stage": "beyond",
    "title": "Control Behaviour",
@@ -836,7 +842,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_088",
-   "file": "src/01/z2ui5_cl_smp_app_088.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_088.clas.abap",
    "category": "Control Behaviour",
    "stage": "beyond",
    "title": "Control Behaviour",
@@ -857,7 +863,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_515",
-   "file": "src/01/z2ui5_cl_smp_app_515.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_515.clas.abap",
    "category": "Control Behaviour",
    "stage": "beyond",
    "title": "Control Behaviour",
@@ -882,7 +888,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_202",
-   "file": "src/01/z2ui5_cl_smp_app_202.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_202.clas.abap",
    "category": "Control Behaviour",
    "stage": "beyond",
    "title": "Control Behaviour",
@@ -902,7 +908,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_305",
-   "file": "src/01/z2ui5_cl_smp_app_305.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_305.clas.abap",
    "category": "CSS",
    "stage": "beyond",
    "title": "CSS",
@@ -921,7 +927,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_255",
-   "file": "src/01/z2ui5_cl_smp_app_255.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_255.clas.abap",
    "category": "CSS",
    "stage": "beyond",
    "title": "CSS",
@@ -941,7 +947,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_050",
-   "file": "src/01/z2ui5_cl_smp_app_050.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_050.clas.abap",
    "category": "CSS",
    "stage": "beyond",
    "title": "CSS",
@@ -962,7 +968,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_306",
-   "file": "src/01/z2ui5_cl_smp_app_306.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_306.clas.abap",
    "category": "Device",
    "stage": "beyond",
    "title": "Device",
@@ -983,7 +989,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_445",
-   "file": "src/01/z2ui5_cl_smp_app_445.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_445.clas.abap",
    "category": "Device",
    "stage": "beyond",
    "title": "Device",
@@ -1004,7 +1010,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_122",
-   "file": "src/01/z2ui5_cl_smp_app_122.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_122.clas.abap",
    "category": "Device",
    "stage": "beyond",
    "title": "Device",
@@ -1031,7 +1037,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_120",
-   "file": "src/01/z2ui5_cl_smp_app_120.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_120.clas.abap",
    "category": "Device",
    "stage": "beyond",
    "title": "Device",
@@ -1051,7 +1057,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_197",
-   "file": "src/01/z2ui5_cl_smp_app_197.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_197.clas.abap",
    "category": "Event",
    "stage": "talk",
    "title": "Event",
@@ -1071,7 +1077,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_167",
-   "file": "src/01/z2ui5_cl_smp_app_167.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_167.clas.abap",
    "category": "Event",
    "stage": "talk",
    "title": "Event",
@@ -1093,7 +1099,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_511",
-   "file": "src/01/z2ui5_cl_smp_app_511.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_511.clas.abap",
    "category": "Event",
    "stage": "talk",
    "title": "Event",
@@ -1114,7 +1120,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_471",
-   "file": "src/01/z2ui5_cl_smp_app_471.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_471.clas.abap",
    "category": "Event",
    "stage": "talk",
    "title": "Event",
@@ -1134,7 +1140,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_472",
-   "file": "src/01/z2ui5_cl_smp_app_472.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_472.clas.abap",
    "category": "Event",
    "stage": "talk",
    "title": "Event",
@@ -1153,7 +1159,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_506",
-   "file": "src/01/z2ui5_cl_smp_app_506.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_506.clas.abap",
    "category": "Event",
    "stage": "talk",
    "title": "Event",
@@ -1178,7 +1184,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_505",
-   "file": "src/01/z2ui5_cl_smp_app_505.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_505.clas.abap",
    "category": "Event",
    "stage": "talk",
    "title": "Event",
@@ -1204,7 +1210,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_186",
-   "file": "src/01/z2ui5_cl_smp_app_186.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_186.clas.abap",
    "category": "File",
    "stage": "beyond",
    "title": "File",
@@ -1224,7 +1230,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_074",
-   "file": "src/01/z2ui5_cl_smp_app_074.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_074.clas.abap",
    "category": "File",
    "stage": "beyond",
    "title": "File",
@@ -1244,7 +1250,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_517",
-   "file": "src/01/z2ui5_cl_smp_app_517.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_517.clas.abap",
    "category": "File",
    "stage": "beyond",
    "title": "File",
@@ -1268,7 +1274,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_421",
-   "file": "src/01/z2ui5_cl_smp_app_421.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_421.clas.abap",
    "category": "Focus",
    "stage": "move",
    "title": "Focus",
@@ -1288,7 +1294,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_189",
-   "file": "src/01/z2ui5_cl_smp_app_189.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_189.clas.abap",
    "category": "Focus",
    "stage": "move",
    "title": "Focus",
@@ -1309,7 +1315,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_133",
-   "file": "src/01/z2ui5_cl_smp_app_133.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_133.clas.abap",
    "category": "Focus",
    "stage": "move",
    "title": "Focus",
@@ -1328,7 +1334,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_450",
-   "file": "src/01/z2ui5_cl_smp_app_450.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_450.clas.abap",
    "category": "Formatter",
    "stage": "data",
    "title": "Formatter",
@@ -1349,7 +1355,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_457",
-   "file": "src/01/z2ui5_cl_smp_app_457.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_457.clas.abap",
    "category": "Formatter",
    "stage": "data",
    "title": "Formatter",
@@ -1369,7 +1375,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_456",
-   "file": "src/01/z2ui5_cl_smp_app_456.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_456.clas.abap",
    "category": "Formatter",
    "stage": "data",
    "title": "Formatter",
@@ -1389,7 +1395,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_466",
-   "file": "src/01/z2ui5_cl_smp_app_466.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_466.clas.abap",
    "category": "Formatter",
    "stage": "data",
    "title": "Formatter",
@@ -1409,7 +1415,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_453",
-   "file": "src/01/z2ui5_cl_smp_app_453.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_453.clas.abap",
    "category": "Formatter",
    "stage": "data",
    "title": "Formatter",
@@ -1430,7 +1436,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_160",
-   "file": "src/01/z2ui5_cl_smp_app_160.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_160.clas.abap",
    "category": "Grid Table",
    "stage": "rows",
    "title": "Grid Table",
@@ -1451,7 +1457,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_070",
-   "file": "src/01/z2ui5_cl_smp_app_070.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_070.clas.abap",
    "category": "Grid Table",
    "stage": "rows",
    "title": "Grid Table",
@@ -1477,7 +1483,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_143",
-   "file": "src/01/z2ui5_cl_smp_app_143.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_143.clas.abap",
    "category": "Grid Table",
    "stage": "rows",
    "title": "Grid Table",
@@ -1498,7 +1504,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_498",
-   "file": "src/01/z2ui5_cl_smp_app_498.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_498.clas.abap",
    "category": "Hash",
    "stage": "move",
    "title": "Hash",
@@ -1532,7 +1538,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_499",
-   "file": "src/01/z2ui5_cl_smp_app_499.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_499.clas.abap",
    "category": "Hash",
    "stage": "move",
    "title": "Hash",
@@ -1567,11 +1573,11 @@
   },
   {
    "class": "z2ui5_cl_smp_app_468",
-   "file": "src/01/z2ui5_cl_smp_app_468.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_468.clas.abap",
    "category": "Hash",
    "stage": "move",
    "title": "Hash",
-   "description": "Routing mode fresh",
+   "description": "Routing Mode FRESH (a New Instance)",
    "summary": "Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.",
    "keywords": [
     "routing",
@@ -1591,11 +1597,11 @@
   },
   {
    "class": "z2ui5_cl_smp_app_480",
-   "file": "src/01/z2ui5_cl_smp_app_480.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_480.clas.abap",
    "category": "Hash",
    "stage": "move",
    "title": "Hash",
-   "description": "Routing mode keep",
+   "description": "Routing Mode KEEP (Back to the State)",
    "summary": "Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.",
    "keywords": [
     "routing",
@@ -1613,7 +1619,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_454",
-   "file": "src/01/z2ui5_cl_smp_app_454.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_454.clas.abap",
    "category": "List",
    "stage": "rows",
    "title": "List",
@@ -1630,7 +1636,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_455",
-   "file": "src/01/z2ui5_cl_smp_app_455.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_455.clas.abap",
    "category": "List",
    "stage": "rows",
    "title": "List",
@@ -1650,7 +1656,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_048",
-   "file": "src/01/z2ui5_cl_smp_app_048.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_048.clas.abap",
    "category": "List",
    "stage": "rows",
    "title": "List",
@@ -1670,7 +1676,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_473",
-   "file": "src/01/z2ui5_cl_smp_app_473.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_473.clas.abap",
    "category": "Menu",
    "stage": "talk",
    "title": "Menu",
@@ -1688,7 +1694,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_163",
-   "file": "src/01/z2ui5_cl_smp_app_163.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_163.clas.abap",
    "category": "Menu",
    "stage": "talk",
    "title": "Menu",
@@ -1706,7 +1712,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_467",
-   "file": "src/01/z2ui5_cl_smp_app_467.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_467.clas.abap",
    "category": "Message",
    "stage": "talk",
    "title": "Message",
@@ -1727,7 +1733,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_502",
-   "file": "src/01/z2ui5_cl_smp_app_502.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_502.clas.abap",
    "category": "Message",
    "stage": "talk",
    "title": "Message",
@@ -1753,7 +1759,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_008",
-   "file": "src/01/z2ui5_cl_smp_app_008.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_008.clas.abap",
    "category": "Message",
    "stage": "talk",
    "title": "Message",
@@ -1776,7 +1782,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_512",
-   "file": "src/01/z2ui5_cl_smp_app_512.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_512.clas.abap",
    "category": "Message",
    "stage": "talk",
    "title": "Message",
@@ -1803,7 +1809,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_382",
-   "file": "src/01/z2ui5_cl_smp_app_382.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_382.clas.abap",
    "category": "Message",
    "stage": "talk",
    "title": "Message",
@@ -1824,7 +1830,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_474",
-   "file": "src/01/z2ui5_cl_smp_app_474.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_474.clas.abap",
    "category": "Message",
    "stage": "talk",
    "title": "Message",
@@ -1846,7 +1852,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_381",
-   "file": "src/01/z2ui5_cl_smp_app_381.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_381.clas.abap",
    "category": "Message",
    "stage": "talk",
    "title": "Message",
@@ -1875,7 +1881,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_452",
-   "file": "src/01/z2ui5_cl_smp_app_452.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_452.clas.abap",
    "category": "Message",
    "stage": "talk",
    "title": "Message",
@@ -1895,7 +1901,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_024",
-   "file": "src/01/z2ui5_cl_smp_app_024.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_024.clas.abap",
    "category": "Navigation",
    "stage": "move",
    "title": "Navigation",
@@ -1916,7 +1922,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_279",
-   "file": "src/01/z2ui5_cl_smp_app_279.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_279.clas.abap",
    "category": "Navigation",
    "stage": "move",
    "title": "Navigation",
@@ -1936,7 +1942,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_488",
-   "file": "src/01/z2ui5_cl_smp_app_488.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_488.clas.abap",
    "category": "Navigation",
    "stage": "move",
    "title": "Navigation",
@@ -1956,7 +1962,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_464",
-   "file": "src/01/z2ui5_cl_smp_app_464.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_464.clas.abap",
    "category": "Navigation",
    "stage": "move",
    "title": "Navigation",
@@ -1977,7 +1983,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_065",
-   "file": "src/01/z2ui5_cl_smp_app_065.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_065.clas.abap",
    "category": "Nested View",
    "stage": "move",
    "title": "Nested View",
@@ -1997,7 +2003,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_510",
-   "file": "src/01/z2ui5_cl_smp_app_510.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_510.clas.abap",
    "category": "Nested View",
    "stage": "move",
    "title": "Nested View",
@@ -2021,7 +2027,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_104",
-   "file": "src/01/z2ui5_cl_smp_app_104.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_104.clas.abap",
    "category": "Nested View",
    "stage": "move",
    "title": "Nested View",
@@ -2043,7 +2049,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_097",
-   "file": "src/01/z2ui5_cl_smp_app_097.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_097.clas.abap",
    "category": "Nested View",
    "stage": "move",
    "title": "Nested View",
@@ -2065,7 +2071,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_098",
-   "file": "src/01/z2ui5_cl_smp_app_098.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_098.clas.abap",
    "category": "Nested View",
    "stage": "move",
    "title": "Nested View",
@@ -2086,7 +2092,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_026",
-   "file": "src/01/z2ui5_cl_smp_app_026.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_026.clas.abap",
    "category": "Popover",
    "stage": "talk",
    "title": "Popover",
@@ -2106,7 +2112,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_052",
-   "file": "src/01/z2ui5_cl_smp_app_052.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_052.clas.abap",
    "category": "Popover",
    "stage": "talk",
    "title": "Popover",
@@ -2132,7 +2138,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_490",
-   "file": "src/01/z2ui5_cl_smp_app_490.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_490.clas.abap",
    "category": "Popover",
    "stage": "talk",
    "title": "Popover",
@@ -2152,7 +2158,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_109",
-   "file": "src/01/z2ui5_cl_smp_app_109.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_109.clas.abap",
    "category": "Popover",
    "stage": "talk",
    "title": "Popover",
@@ -2172,7 +2178,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_081",
-   "file": "src/01/z2ui5_cl_smp_app_081.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_081.clas.abap",
    "category": "Popover",
    "stage": "talk",
    "title": "Popover",
@@ -2190,7 +2196,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_465",
-   "file": "src/01/z2ui5_cl_smp_app_465.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_465.clas.abap",
    "category": "Popover",
    "stage": "talk",
    "title": "Popover",
@@ -2210,7 +2216,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_161",
-   "file": "src/01/z2ui5_cl_smp_app_161.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_161.clas.abap",
    "category": "Popup",
    "stage": "talk",
    "title": "Popup",
@@ -2230,8 +2236,32 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_500",
+   "file": "src/z2ui5_cl_smp_app_500.clas.abap",
+   "category": "Popup",
+   "stage": "talk",
+   "title": "Popup",
+   "description": "Edit a Row in a Second App",
+   "summary": "A table whose rows are edited by a SECOND app shown as a popup - the caller reads the edited table back out of it with get_app_prev( ) when it returns.",
+   "keywords": [
+    "table",
+    "edit",
+    "row",
+    "popup",
+    "app",
+    "nav_app_call",
+    "get_app_prev",
+    "add",
+    "delete",
+    "save",
+    "master",
+    "detail"
+   ],
+   "docs": []
+  },
+  {
    "class": "z2ui5_cl_smp_app_470",
-   "file": "src/01/z2ui5_cl_smp_app_470.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_470.clas.abap",
    "category": "Popup",
    "stage": "talk",
    "title": "Popup",
@@ -2253,7 +2283,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_170",
-   "file": "src/01/z2ui5_cl_smp_app_170.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_170.clas.abap",
    "category": "Popup",
    "stage": "talk",
    "title": "Popup",
@@ -2272,7 +2302,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_009",
-   "file": "src/01/z2ui5_cl_smp_app_009.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_009.clas.abap",
    "category": "Popup",
    "stage": "talk",
    "title": "Popup",
@@ -2294,7 +2324,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_012",
-   "file": "src/01/z2ui5_cl_smp_app_012.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_012.clas.abap",
    "category": "Popup",
    "stage": "talk",
    "title": "Popup",
@@ -2316,7 +2346,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_363",
-   "file": "src/01/z2ui5_cl_smp_app_363.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_363.clas.abap",
    "category": "Scroll",
    "stage": "move",
    "title": "Scroll",
@@ -2335,7 +2365,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_362",
-   "file": "src/01/z2ui5_cl_smp_app_362.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_362.clas.abap",
    "category": "Scroll",
    "stage": "move",
    "title": "Scroll",
@@ -2355,7 +2385,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_459",
-   "file": "src/01/z2ui5_cl_smp_app_459.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_459.clas.abap",
    "category": "Table",
    "stage": "rows",
    "title": "Table",
@@ -2374,7 +2404,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_011",
-   "file": "src/01/z2ui5_cl_smp_app_011.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_011.clas.abap",
    "category": "Table",
    "stage": "rows",
    "title": "Table",
@@ -2397,7 +2427,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_045",
-   "file": "src/01/z2ui5_cl_smp_app_045.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_045.clas.abap",
    "category": "Table",
    "stage": "rows",
    "title": "Table",
@@ -2417,7 +2447,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_006",
-   "file": "src/01/z2ui5_cl_smp_app_006.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_006.clas.abap",
    "category": "Table",
    "stage": "rows",
    "title": "Table",
@@ -2438,7 +2468,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_059",
-   "file": "src/01/z2ui5_cl_smp_app_059.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_059.clas.abap",
    "category": "Table",
    "stage": "rows",
    "title": "Table",
@@ -2464,7 +2494,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_504",
-   "file": "src/01/z2ui5_cl_smp_app_504.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_504.clas.abap",
    "category": "Table",
    "stage": "rows",
    "title": "Table",
@@ -2489,7 +2519,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_053",
-   "file": "src/01/z2ui5_cl_smp_app_053.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_053.clas.abap",
    "category": "Table",
    "stage": "rows",
    "title": "Table",
@@ -2509,7 +2539,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_019",
-   "file": "src/01/z2ui5_cl_smp_app_019.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_019.clas.abap",
    "category": "Table",
    "stage": "rows",
    "title": "Table",
@@ -2529,7 +2559,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_173",
-   "file": "src/01/z2ui5_cl_smp_app_173.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_173.clas.abap",
    "category": "Templating",
    "stage": "data",
    "title": "Templating",
@@ -2551,7 +2581,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_176",
-   "file": "src/01/z2ui5_cl_smp_app_176.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_176.clas.abap",
    "category": "Templating",
    "stage": "data",
    "title": "Templating",
@@ -2572,7 +2602,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_064",
-   "file": "src/01/z2ui5_cl_smp_app_064.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_064.clas.abap",
    "category": "Timer",
    "stage": "move",
    "title": "Timer",
@@ -2592,7 +2622,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_028",
-   "file": "src/01/z2ui5_cl_smp_app_028.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_028.clas.abap",
    "category": "Timer",
    "stage": "move",
    "title": "Timer",
@@ -2612,7 +2642,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_461",
-   "file": "src/01/z2ui5_cl_smp_app_461.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_461.clas.abap",
    "category": "Tree",
    "stage": "rows",
    "title": "Tree",
@@ -2632,7 +2662,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_463",
-   "file": "src/01/z2ui5_cl_smp_app_463.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_463.clas.abap",
    "category": "Tree",
    "stage": "rows",
    "title": "Tree",
@@ -2652,7 +2682,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_462",
-   "file": "src/01/z2ui5_cl_smp_app_462.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_462.clas.abap",
    "category": "Tree",
    "stage": "rows",
    "title": "Tree",
@@ -2671,7 +2701,7 @@
   },
   {
    "class": "z2ui5_cl_smp_app_460",
-   "file": "src/01/z2ui5_cl_smp_app_460.clas.abap",
+   "file": "src/z2ui5_cl_smp_app_460.clas.abap",
    "category": "Tree",
    "stage": "rows",
    "title": "Tree",

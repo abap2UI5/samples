@@ -19,7 +19,7 @@
 
 # abap2UI5 — samples
 
-**Learn the abap2UI5 basics — 120 ready-to-run samples, from a one-class Hello
+**Learn the abap2UI5 basics — 121 ready-to-run samples, from a one-class Hello
 World to complete applications.**
 
 Install them, click through, read the source: every sample adds one idea — a
@@ -88,15 +88,13 @@ sample repositories take you further:
 
 #### What's inside
 
-* **`src/01` "samples"** — cloud-ready, downportable and plain OpenUI5 1.71: the
-  sample catalog (bindings, events, popups, framework actions, custom controls
-  and use cases) plus a small curated set of control demos — the complete
-  control reference lives in
-  [samples-controls](https://github.com/abap2UI5/samples-controls). Present on both
-  branches.
-* **`src/00` "system"** — no demo category: `00/98` holds the test and
-  scaffolding apps. It is stripped from `702`. There are no shared helper
-  classes — every sample is self-contained.
+* **`src/`** — one flat package, one class per sample: cloud-ready,
+  downportable and plain OpenUI5 1.71. The sample catalog (bindings, events,
+  popups, framework actions, custom controls and use cases) plus a small
+  curated set of control demos — the complete control reference lives in
+  [samples-controls](https://github.com/abap2UI5/samples-controls).
+* Everything here is on **both branches**: nothing is stripped from `702`, and
+  there are no shared helper classes — every sample is self-contained.
 
 Every sample runs on ABAP Cloud — that is why `main` needs no cloud-specific
 branch. `main` is the default branch and is checked against both ABAP Standard

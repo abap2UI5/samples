@@ -101,8 +101,8 @@ const anchors = (text) => new Set(
 
 /* ------------------------------------------------------------------ input */
 
-const { areas, hidden } = scanSamples();
-const withDocs = [...Object.values(areas).flat(), ...hidden].filter((t) => t.docs.length);
+const { tiles, hidden } = scanSamples();
+const withDocs = [...tiles, ...hidden].filter((t) => t.docs.length);
 
 /* page path (no suffix, no anchor) -> [ { cls, url, anchor } ] */
 const pages = new Map();

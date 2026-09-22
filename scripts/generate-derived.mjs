@@ -83,11 +83,9 @@ const shortVersion = (v) => String(v).split('.').slice(0, 2).join('.');
 
 /* ---------------------------------------------------------------- collect */
 
-/* src/01 only, the same set catalogue.json and the learning path carry: src/00
- * is the generated downport of it, so linting both would mean every sample
- * twice under two class names. */
-const { areas } = scanSamples();
-const tiles = areas['01'];
+/* The tiles, the same set catalogue.json and the learning path carry - the ZZZ
+ * helpers are reached BY a sample and have no entry of their own. */
+const { tiles } = scanSamples();
 
 const controlIds = new Map();          // control name -> index in `controls`
 const idOf = (name) => {
@@ -99,7 +97,7 @@ const samples = [];
 let failed = 0;
 
 for (const tile of tiles) {
-  const rel = `src/01/${tile.app}.clas.abap`;
+  const rel = `${tile.path}/${tile.app}.clas.abap`;
   const file = path.join(ROOT, rel);
   if (!fs.existsSync(file)) {
     console.error(`generate-derived: ${rel} is not on disk — the scan and the tree disagree`);

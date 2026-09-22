@@ -4,9 +4,9 @@ Check out the contribution guidelines [here.](https://abap2ui5.github.io/docs/re
 
 ## Working in this repository
 
-Everything specific to it — the folder scheme, what belongs in `src/01` and
-what in `src/00`, the header lines every sample carries, the generated
-catalogue and the gates — is in **[AGENTS.md](AGENTS.md)**. It is written for
+Everything specific to it — the flat `src/` package, what qualifies as a
+sample at all, the header lines every sample carries, the generated catalogue
+and the gates — is in **[AGENTS.md](AGENTS.md)**. It is written for
 agents and for people; read it before changing anything under `src/` or
 `scripts/`.
 
@@ -25,7 +25,7 @@ npm run launchpad    # regenerate the overview app, SAMPLES.md, catalogue.json
 
 Adding a sample, in short (AGENTS.md sections 4 and 12 have the rules):
 
-1. One class `z2ui5_cl_smp_app_<no>` under `src/01`, self-contained, with its
+1. One class `z2ui5_cl_smp_app_<no>` directly under `src/`, self-contained, with its
    abapGit short text (`<DESCRIPT>`) in the form `<Category> [<Roman numeral>] - <what it shows>`.
 2. The three comment lines at the top of the class: `" @keywords` (the words a
    reader searches by), `" @summary` (one sentence saying what it shows), and,

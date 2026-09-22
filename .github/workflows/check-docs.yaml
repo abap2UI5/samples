@@ -1,11 +1,13 @@
 name: check-docs
 
 # Machine checks for the parts of AGENTS.md that describe the repository
-# rather than advise on it, and that therefore rot silently: the §1 package
-# tree against the actual package.devc.xml CTEXTs, the §2 strip list against
-# the downport script that does the stripping, and - the other direction of
-# the same question - that every sample in the tree is somewhere a catalogue
-# can reach it.
+# rather than advise on it, and that therefore rot silently: the §1 layout
+# against the actual tree (one flat package, no subfolders) and - the other
+# direction of the same question - that every sample in it is somewhere a
+# catalogue can reach it.
+#
+# The strip-list job is gone with the strip list: `src/00` was the only
+# package a build removed, and the 702 branch now ships the tree as it is.
 
 on:
   pull_request:
@@ -30,23 +32,12 @@ jobs:
         node-version: '22'
     - run: node scripts/check-agents-structure.mjs
 
-  strip_lists:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-      with:
-        node-version: '22'
-    - run: node scripts/check-strip-lists.mjs
-
   # Every other gate in this repository counts TILES, so a sample the scan
-  # cannot place is invisible to all of them at once. Fourteen samples sat in
-  # the src/ root package for two commits - listed in no overview app and in no
-  # SAMPLES.md row, with thirteen green gates - because the scan skips a class
-  # directly in src/ (the overview app lives there). This job asks the opposite
-  # question: not whether every tile is complete, but whether every sample is a
-  # tile.
+  # cannot place is invisible to all of them at once. Fourteen samples sat one
+  # level off for two commits - listed in no overview app and in no SAMPLES.md
+  # row, with thirteen green gates - because the scan skipped them where they
+  # sat. This job asks the opposite question: not whether every tile is
+  # complete, but whether every sample is a tile.
   orphan_samples:
     runs-on: ubuntu-latest
     timeout-minutes: 5

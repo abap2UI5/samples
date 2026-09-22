@@ -1,8 +1,8 @@
 {
   "global": {
-    // Nothing is suppressed: every package under src/ is really checked, the
-    // testing package that the 702 build strips (AGENTS.md section 2)
-    // included - it passes.
+    // Nothing is suppressed: every class under src/ is really checked, and
+    // since the tree was flattened (AGENTS.md section 1) that is all of them -
+    // there is no package left that a build strips.
     "files": "/src/**/*.*"
   },
   "dependencies": [
@@ -177,7 +177,11 @@
     },
     // Every flag on except dynamicSQL: "SELECT * FROM (mv_table)" is not an
     // accident in this corpus, it is the subject of the generic table
-    // browser samples in samples/src/00/98.
+    // browser samples. Those samples were deleted on 2026-09-22 (§2) and no
+    // file under src/ carries a dynamic SELECT today, so the flag guards
+    // nothing right now - it stays off because this block is copied into
+    // samples-stack and samples-controls as one piece (§10), and because a
+    // generic table browser is a shape this corpus keeps re-growing.
     "dangerous_statement": {
       "execSQL": true,
       "kernelCall": true,

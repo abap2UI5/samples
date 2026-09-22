@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
- * generate-catalogue - the committed, machine-readable index of src/01.
+ * generate-catalogue - the committed, machine-readable index of the samples.
  *
  * The fourth view of the one catalogue, and the first one addressed to a
  * MACHINE. The overview app needs an installed system, SAMPLES.md is markdown
@@ -8,7 +8,7 @@
  * AI agent that has just cloned this repository (or fetched one raw URL) has
  * no structured answer to "what is in here": only the @keywords/@summary
  * comments spread over 100+ classes, and a markdown table it has to parse
- * with a regex. catalogue.json is that answer as data: one entry per src/01
+ * with a regex. catalogue.json is that answer as data: one entry per
  * sample with its class, folder, category, learning-path stage, keywords,
  * summary and documentation links, plus a header that says which repository
  * this is, where it stands in the three-repository family, and why a sample
@@ -41,8 +41,7 @@ const OUT = path.join(ROOT, 'catalogue.json');
 
 const CHECK = process.argv.includes('--check');
 
-const { areas } = scanSamples();
-const tiles = areas['01'];
+const { tiles } = scanSamples();
 
 /* The teaching order, from the one editorial file behind it (see
  * learning-path.json's own comment): the categories are DESCRIPT headers and
@@ -92,9 +91,8 @@ const data = {
      * open AGENTS.md to learn what "(A)" on a title means. */
     markers: MARKERS,
   },
-  scope: 'One entry per sample in src/01 - the portable set every branch and build ships. '
-    + 'The src/00 system area (testing apps, stripped from the 702 branch) '
-    + 'and the hidden ZZZ helper classes are listed in SAMPLES.md only.',
+  scope: 'One entry per sample in src/ - every branch and build ships all of them. '
+    + 'The hidden ZZZ helper classes are listed in SAMPLES.md only.',
   learningPath: stages.map(({ id, title, blurb }) => ({ id, title, blurb })),
   counts: {
     samples: tiles.length,
