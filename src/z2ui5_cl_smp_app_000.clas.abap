@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 122 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 121 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -871,7 +871,6 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Reach outside the view` header = `Browser` sub = `Logout from the Client (A)` keywords = `logoff signout icf session end fiori launchpad` path = `src/01` app = `z2ui5_cl_smp_app_361` )
       ( group = `Reach outside the view` header = `Browser` sub = `Open a URL in a New Tab (A)` keywords = `url window open_new_tab link target` path = `src/01` app = `z2ui5_cl_smp_app_073` )
       ( group = `Reach outside the view` header = `Browser` sub = `Open Mail, Phone and SMS Links (A)` keywords = `mailto tel sms urlhelper redirect native link` path = `src/01` app = `z2ui5_cl_smp_app_316` )
-      ( group = `Reach outside the view` header = `Browser` sub = `Play a Sound (play_audio) (A)` keywords = `audio sound beep notification play_audio alert acoustic feedback data uri` path = `src/01` app = `z2ui5_cl_smp_app_531` )
       ( group = `Reach outside the view` header = `Browser` sub = `Reload the Page (A)` keywords = `reload refresh restart location_reload url` path = `src/01` app = `z2ui5_cl_smp_app_492` )
       ( group = `Reach outside the view` header = `Browser` sub = `Scan Field with Submit (InputExt) (A,C)` keywords = `barcode scanner scan field submit enter soft keyboard none inputext focus warehouse` path = `src/01` app = `z2ui5_cl_smp_app_530` )
       ( group = `Reach outside the view` header = `Browser` sub = `Set the Tab Favicon (A)` keywords = `favicon icon tab image data uri` path = `src/01` app = `z2ui5_cl_smp_app_491` )

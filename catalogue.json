@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 122,
+  "samples": 121,
   "categories": 24,
   "stages": 6
  },
@@ -624,28 +624,6 @@
    ]
   },
   {
-   "class": "z2ui5_cl_smp_app_531",
-   "file": "src/01/z2ui5_cl_smp_app_531.clas.abap",
-   "category": "Browser",
-   "stage": "beyond",
-   "title": "Browser",
-   "description": "Play a Sound (play_audio) (A)",
-   "summary": "Plays a sound in the browser with the play_audio follow-up action - a short beep the app carries as a data URI, so nothing is fetched.",
-   "keywords": [
-    "audio",
-    "sound",
-    "beep",
-    "notification",
-    "play_audio",
-    "alert",
-    "acoustic",
-    "feedback",
-    "data",
-    "uri"
-   ],
-   "docs": []
-  },
-  {
    "class": "z2ui5_cl_smp_app_492",
    "file": "src/01/z2ui5_cl_smp_app_492.clas.abap",
    "category": "Browser",
@@ -686,7 +664,9 @@
     "focus",
     "warehouse"
    ],
-   "docs": []
+   "docs": [
+    "https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard"
+   ]
   },
   {
    "class": "z2ui5_cl_smp_app_491",

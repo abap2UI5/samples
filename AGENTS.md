@@ -1824,6 +1824,16 @@ constants of `cs_event`, the methods of the interface, the components of
 `ty_s_event_control` and the parameters of `_bind( )`, each counted against
 the whole of `src/`.
 
+**Count against all THREE catalogues, not only this one.** The first run of
+this audit did not, reported `play_audio` as covered nowhere, and a sample was
+written for it — while `Z2UI5_CL_SMPS_APP_487` had been playing sounds in
+samples-stack the whole time. A grep of this `src/` answers "does this
+repository show it", which is a different question from "does the ecosystem
+show it", and only the second one decides whether a sample is worth writing.
+The other two catalogues are one fetch each
+(`raw.githubusercontent.com/abap2UI5/<repo>/main/SAMPLES.md`), the same source
+`scripts/check-docs-links.mjs` already reads from.
+
 The state at that measurement:
 
 | Surface | Total | Without a sample |
@@ -1842,7 +1852,9 @@ because a bare "25 uncovered" reads like debt:
    `set_odata_model`, `switch_default_model` and the Fiori Launchpad trio
    (`cross_app_nav_to_ext`, `cross_app_nav_to_prev_app`,
    `set_title_launchpad`), the smart-control pair (`smart_variant_init`,
-   `filter_bar_variant_init`) and `set_session_stateful`.
+   `filter_bar_variant_init`), `set_session_stateful` — and `play_audio`,
+   which `Z2UI5_CL_SMPS_APP_487` shows there (`src/08`, two tones addressed by
+   their ICF path in the MIME repository).
 2. **It is obsolete and a sample would teach the wrong thing.** The five
    `*_model_update( )` methods do **nothing** — the framework pushes the model
    by itself since `main_end` compares before and after; `_bind_edit( )` is an
@@ -1858,11 +1870,17 @@ because a bare "25 uncovered" reads like debt:
    NavContainer exactly that way. The constants are an older spelling of the
    sample that exists, not a feature missing one — a candidate for abap2UI5's
    removal plan rather than for a sample here.
-4. **Actually missing, and then written.** `play_audio` was the one, and
-   `Z2UI5_CL_SMP_APP_531` closed it. The only one left in this bucket is
-   `popover_close`, the roundtrip-free twin of `popup_close` (which
-   `Z2UI5_CL_SMP_APP_012` names) — small, portable, and the next thing to add
-   if somebody wants the number at zero.
+4. **Actually missing.** One: `popover_close`, the roundtrip-free twin of
+   `popup_close` (which `Z2UI5_CL_SMP_APP_012` names) — small, portable, and
+   the thing to add if somebody wants the number at zero.
+
+   `play_audio` stood here for one commit and does not belong in this bucket:
+   it is bucket 1. A sample written for it here — the tone carried as a data
+   URI, so it needed no MIME repository — was **removed the same day**: a
+   second demonstration of an action the ecosystem already demonstrates is not
+   worth the maintenance, and *this* repository not having one is not by
+   itself a reason to write one. That is the whole point of counting against
+   three catalogues.
 
 **Re-run the audit when the framework's API snapshot changes**, not on a
 schedule: a new `cs_event` constant either gets a sample or gets a line in

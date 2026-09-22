@@ -3,18 +3,18 @@
 
 # The sample catalogue
 
-Every app in this repository — 131 of them — with what it shows and a link
+Every app in this repository — 130 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
-**130 of them ship on every branch** — the portable set the README counts:
+**129 of them ship on every branch** — the portable set the README counts:
 `src/01` plus this overview app. The other one is under `src/00` and is
 stripped from `702`.
 
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 122 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 121 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -29,10 +29,10 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path — `src/01`
 
-The **122 ready-to-run samples** the README leads with, and the
+The **121 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 7 helper apps they call and the
-overview app itself, that is 130 apps on every branch.
+overview app itself, that is 129 apps on every branch.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -74,9 +74,8 @@ overview app itself, that is 130 apps on every branch.
 | Logout from the Client (A)<br>Ends the session from the client - the logoff an ICF session or a Fiori launchpad needs, triggered as a follow-up action.<br><sub>logoff signout icf session end fiori launchpad</sub> | [`Z2UI5_CL_SMP_APP_361`](src/01/z2ui5_cl_smp_app_361.clas.abap) |
 | Open a URL in a New Tab (A)<br>Opens a URL in a new browser tab from an event, leaving the running app where it is.<br><sub>url window open_new_tab link target</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_073`](src/01/z2ui5_cl_smp_app_073.clas.abap) |
 | Open Mail, Phone and SMS Links (A)<br>Opens mailto:, tel: and sms: links through URLHelper, so the device answers with its own mail or phone app instead of the browser.<br><sub>mailto tel sms urlhelper redirect native link</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_316`](src/01/z2ui5_cl_smp_app_316.clas.abap) |
-| Play a Sound (play_audio) (A)<br>Plays a sound in the browser with the play_audio follow-up action - a short beep the app carries as a data URI, so nothing is fetched.<br><sub>audio sound beep notification play_audio alert acoustic feedback data uri</sub> | [`Z2UI5_CL_SMP_APP_531`](src/01/z2ui5_cl_smp_app_531.clas.abap) |
 | Reload the Page (A)<br>Navigates the browser to a same-domain URL with the location_reload front-end action, with a scratch input beside it to show what the reload takes with it.<br><sub>reload refresh restart location_reload url</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_492`](src/01/z2ui5_cl_smp_app_492.clas.abap) |
-| Scan Field with Submit (InputExt) (A,C)<br>A scan field: InputExt keeps the soft keyboard down, the cursor is parked in the field, and the scanner's Enter fires submit straight into the backend.<br><sub>barcode scanner scan field submit enter soft keyboard none inputext focus warehouse</sub> | [`Z2UI5_CL_SMP_APP_530`](src/01/z2ui5_cl_smp_app_530.clas.abap) |
+| Scan Field with Submit (InputExt) (A,C)<br>A scan field: InputExt keeps the soft keyboard down, the cursor is parked in the field, and the scanner's Enter fires submit straight into the backend.<br><sub>barcode scanner scan field submit enter soft keyboard none inputext focus warehouse</sub><br><sub>docs: [cookbook/browser_interaction/soft_keyboard](https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard)</sub> | [`Z2UI5_CL_SMP_APP_530`](src/01/z2ui5_cl_smp_app_530.clas.abap) |
 | Set the Tab Favicon (A)<br>Sets the browser tab's favicon at runtime, from an image the backend hands over as a data URI.<br><sub>favicon icon tab image data uri</sub><br><sub>docs: [cookbook/browser_interaction/title](https://abap2ui5.github.io/docs/cookbook/browser_interaction/title)</sub> | [`Z2UI5_CL_SMP_APP_491`](src/01/z2ui5_cl_smp_app_491.clas.abap) |
 | Set the Tab Title (A)<br>Sets the browser tab title from the app, so a bookmarked or duplicated window says which app it holds.<br><sub>document.title tab caption headline set_title</sub><br><sub>docs: [cookbook/browser_interaction/title](https://abap2ui5.github.io/docs/cookbook/browser_interaction/title)</sub> | [`Z2UI5_CL_SMP_APP_125`](src/01/z2ui5_cl_smp_app_125.clas.abap) |
 
