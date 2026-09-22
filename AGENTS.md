@@ -1817,74 +1817,64 @@ ENDCLASS.
 
 ## 11a. What the catalogue owes the framework — the coverage audit
 
-**Every non-obsolete part of `z2ui5_if_client` that can be shown without a
-system feature this repository excludes has a sample.** Measured 2026-09-22,
-and the measurement is two greps rather than a list to maintain: the
-constants of `cs_event`, the methods of the interface, the components of
-`ty_s_event_control` and the parameters of `_bind( )`, each counted against
-the whole of `src/`.
+**Every non-obsolete part of `z2ui5_if_client` is demonstrated by a sample
+somewhere in the three sample repositories.** Measured 2026-09-22 against the
+ABAP **source** of all three checkouts — this repository, `samples-stack` and
+`samples-controls` — not against a catalogue and not against this `src/`
+alone. The surfaces counted are the constants of `cs_event`, the methods of
+the interface, the components of `ty_s_event_control` and the parameters of
+`_bind( )`.
 
-**Count against all THREE catalogues, not only this one.** The first run of
-this audit did not, reported `play_audio` as covered nowhere, and a sample was
-written for it — while `Z2UI5_CL_SMPS_APP_487` had been playing sounds in
-samples-stack the whole time. A grep of this `src/` answers "does this
-repository show it", which is a different question from "does the ecosystem
-show it", and only the second one decides whether a sample is worth writing.
-The other two catalogues are one fetch each
-(`raw.githubusercontent.com/abap2UI5/<repo>/main/SAMPLES.md`), the same source
-`scripts/check-docs-links.mjs` already reads from.
-
-The state at that measurement:
-
-| Surface | Total | Without a sample |
+| Surface | Total | Without a sample anywhere |
 |---|---:|---:|
-| `cs_event-*` | 41 | 14 |
-| `z2ui5_if_client` methods | 40 | 8 |
-| `ty_s_event_control` components | all | **0** |
-| `_bind( )` parameters | all | 3 |
+| `cs_event-*` | 36 | 2 |
+| `z2ui5_if_client` methods | 40 | 7 |
+| `ty_s_event_control` components | 5 | **0** |
+| `_bind( )` parameters | 9 | 2 |
 
-**None of the 25 is a gap in this repository**, and each belongs to exactly
-one of four buckets — which is the whole point of writing the audit down,
-because a bare "25 uncovered" reads like debt:
+**All eleven are obsolete**, and that is the whole finding — there is no
+uncovered feature, only features nobody should be shown:
 
-1. **It needs something the system provides**, so it lives in
-   [samples-stack](https://github.com/abap2UI5/samples-stack) by §2:
-   `set_odata_model`, `switch_default_model` and the Fiori Launchpad trio
-   (`cross_app_nav_to_ext`, `cross_app_nav_to_prev_app`,
-   `set_title_launchpad`), the smart-control pair (`smart_variant_init`,
-   `filter_bar_variant_init`), `set_session_stateful` — and `play_audio`,
-   which `Z2UI5_CL_SMPS_APP_487` shows there (`src/08`, two tones addressed by
-   their ICF path in the MIME repository).
-2. **It is obsolete and a sample would teach the wrong thing.** The five
-   `*_model_update( )` methods do **nothing** — the framework pushes the model
-   by itself since `main_end` compares before and after; `_bind_edit( )` is an
-   alias of `_bind( )`; `_event_client( )` is a superseded spelling;
-   `custom_mapper` / `custom_filter` are marked obsolete at the declaration;
-   `image_editor_popup_close` belongs to a `z2ui5_cl_pop_*` popup this
-   repository may not demonstrate at all (§10). **Do not write a sample for
-   any of these** — a demonstration is a promise that the thing is the way to
-   do it.
-3. **The behaviour is covered, the spelling is not.** `nav_container_to` and
-   its four slot variants are routed through `CONTROL_BY_ID` in the frontend
-   (`core/actions/ControlCall.js`), and `Z2UI5_CL_SMP_APP_088` navigates a
-   NavContainer exactly that way. The constants are an older spelling of the
-   sample that exists, not a feature missing one — a candidate for abap2UI5's
-   removal plan rather than for a sample here.
-4. **Actually missing.** One: `popover_close`, the roundtrip-free twin of
-   `popup_close` (which `Z2UI5_CL_SMP_APP_012` names) — small, portable, and
-   the thing to add if somebody wants the number at zero.
+- the five `*_model_update( )` methods **do nothing** (the framework pushes
+  the model itself since `main_end` compares before and after);
+- `_bind_edit( )` is an alias of `_bind( )`, `_event_client( )` a superseded
+  spelling of `follow_up_action( )`;
+- `custom_mapper` / `custom_filter` are marked obsolete at the declaration;
+- `cs_event-image_editor_popup_close` belongs to a `z2ui5_cl_pop_*` popup this
+  repository may not demonstrate at all (§10), and `cs_event-z2ui5` is the
+  legacy escape hatch in the interface's own "obsolet" block.
 
-   `play_audio` stood here for one commit and does not belong in this bucket:
-   it is bucket 1. A sample written for it here — the tone carried as a data
-   URI, so it needed no MIME repository — was **removed the same day**: a
-   second demonstration of an action the ecosystem already demonstrates is not
-   worth the maintenance, and *this* repository not having one is not by
-   itself a reason to write one. That is the whole point of counting against
-   three catalogues.
+**Do not write a sample for any of them.** A demonstration is a promise that
+the thing is the way to do it.
+
+Not counted, because no sample repository can carry them: the two methods of
+`z2ui5_if_ui5_exit` (an exit is a class the *installation* writes — a sample
+shipping one would take the exit over for everybody who pulls the repository)
+and the ICF entry points of `z2ui5_cl_ui5_http_handler` (`run`,
+`factory_cloud`, `_http_get` / `_http_post`, …), which a customer wires into a
+handler class rather than an app.
+
+### Count against all THREE repositories, from source
+
+This section was wrong twice in one day, the same way both times, and the rule
+is what came out of it:
+
+1. the first run grepped this `src/` only and reported `play_audio` as
+   demonstrated nowhere. `Z2UI5_CL_SMPS_APP_487` had been playing sounds in
+   `samples-stack` the whole time. A sample was written for it and withdrawn.
+2. the second run fell back on the published `SAMPLES.md` of the other two —
+   keywords and summaries, not code — and reported `popover_close` as the one
+   genuinely missing constant. It is in `samples-controls`, which simply does
+   not put the constant in a keyword line.
+
+A grep of one `src/` answers *"does this repository show it"*. The question
+that decides whether a sample is worth writing is *"does the ecosystem show
+it"*, and only the source of all three answers that. Clone the other two
+(`git clone --depth 1`) rather than reading their catalogues.
 
 **Re-run the audit when the framework's API snapshot changes**, not on a
-schedule: a new `cs_event` constant either gets a sample or gets a line in
-bucket 1-3 above, and that is the decision worth recording.
+schedule: a new `cs_event` constant either gets a sample or gets a line above
+saying why not, and that decision is the thing worth recording.
 
 ---
 
