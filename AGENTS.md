@@ -1801,8 +1801,13 @@ uncovered feature, only features nobody should be shown:
 - `_bind_edit( )` is an alias of `_bind( )`, `_event_client( )` a superseded
   spelling of `follow_up_action( )`;
 - `custom_mapper` / `custom_filter` are marked obsolete at the declaration;
-- `cs_event-z2ui5` is the legacy escape hatch in the interface's own
-  "obsolet" block.
+- `cs_event-z2ui5` was the legacy escape hatch in the interface's own
+  "obsolet" block. abap2UI5 removes it together with the `z2ui5` frontend
+  global whose functions it called (2026-09-22, branch
+  `claude/fervent-hopper-kkyo84`), which takes the `cs_event-*` row above to
+  34 / 0 once that lands. A function an app defines on `window` is called as
+  a raw expression through `follow_up_action( )` instead - not something a
+  sample here demonstrates.
 
 `cs_event-image_editor_popup_close` stood here too, as *"belongs to a
 `z2ui5_cl_pop_*` popup this repository may not demonstrate"*. That reading was
