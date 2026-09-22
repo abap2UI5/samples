@@ -126,35 +126,14 @@
     // the three to stop carrying its own copy. `npm run fmt:chains` applies it.
     "chain-house-layout": { "severity": "warning" },
 
-    // src/00/98 is the TEST package (AGENTS.md section 2): apps whose purpose
-    // is to exercise the framework from the outside, not to be copied. Several
-    // read z2ui5_t_01 - the framework's own draft table - precisely because
-    // that is what they assert about. Excluding the folder rather than
-    // baselining fourteen entries says WHY they are allowed, and keeps the
-    // rule loud for src/01, where a reader would copy it: app 061 was the one
-    // real finding this hid, and it is fixed.
-    // The pattern is written to match the path in BOTH forms a runner can
-    // produce: `abap2ui5lint` reaches these files by an absolute path when
-    // `paths` comes from this file, while the report prints them relative.
-    // Linter 0.2.0 tries both, so `^src/00/98/` will work there - until the
-    // pin moves, a pattern anchored on the folder is the one that holds.
-    "non-released-api": { "exclude": ["/00/98/"] },
-
-    /* Same folder, same reason, added with the 0.6.0 bump that brought the
-     * rule. `frontend-action-too-new` reports a follow_up_action(
-     * control_global, … ) whose target the frontend resolves with a lazy
-     * require, so below its release the require returns undefined and the wire
-     * does nothing. That is worth knowing everywhere EXCEPT here: app 446 is a
-     * test app whose subject IS the control_global surface, and one of the
-     * five actions it exercises is THEMING.setTheme (@since 1.118). Reporting
-     * it asks the app to stop demonstrating the thing it exists to
-     * demonstrate - the same shape as `non-released-api` above, and §2's own
-     * reading of `src/00/98`: a sample held back BY ITS PURPOSE, deleted
-     * before the 702 build and never shipped as an example to copy.
-     *
-     * Scoped to the folder, not switched off: a control_global action too new
-     * for the floor in `src/01` is a real defect and still fails. */
-    "frontend-action-too-new": { "exclude": ["/00/98/"] },
+    /* `non-released-api` and `frontend-action-too-new` used to carry an
+     * exclude for the test package `src/00/98`: apps whose purpose was to
+     * exercise the framework from the outside rather than to be copied, so
+     * reading z2ui5_t_01 or firing THEMING.setTheme (@since 1.118) was the
+     * point of them. The package is gone (AGENTS.md section 1) and both rules
+     * are back at full strength over every class here - which is where they
+     * belong now that every class in the tree is an example somebody copies.
+     */
 
     /* 0.2.0 brought `missing-on-navigated-branch`, and it is RIGHT: 85 apps
      * here dispatch on check_on_init( ) alone, so nothing re-displays when a

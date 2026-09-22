@@ -1,8 +1,8 @@
 {
   "global": {
-    // Nothing is suppressed: every package under src/ is really checked, the
-    // testing package that the 702 build strips (AGENTS.md section 2)
-    // included - it passes.
+    // Nothing is suppressed: every class under src/ is really checked, and
+    // since the tree was flattened (AGENTS.md section 1) that is all of them -
+    // there is no package left that a build strips.
     "files": "/src/**/*.*"
   },
   "dependencies": [
