@@ -178,8 +178,11 @@ keeps `control` as the search term. A new entry belongs here only if it passes
 one of the three tests above — otherwise it is a demo kit rebuild and belongs
 in samples-controls, full stop.
 
-A sample that is a test or scaffolding app still goes to `src/00/98` — that
-model is unchanged. There is no experimental package any more (§1).
+A sample that is a test or scaffolding app still goes to `src/00/98` — but
+only if a **unit test in abap2UI5 cannot make the same statement**, which
+since the 2026-09-22 clean-out (§2) is nearly always the wrong way round: the
+package went from 41 apps to one. There is no experimental package any
+more (§1).
 
 ---
 
@@ -262,6 +265,41 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
   the maintainer decides that a sample changes package, and only by saying so
   (human decisions 2026-08-12, on the routing and app-state samples then in
   `00/97`, and 2026-09-14, promoting all fourteen of them).
+
+  **The way out of `src/00/98` is deletion, and it was taken on 2026-09-22.**
+  The package held 41 apps; 40 of them are gone. Not because they were wrong,
+  and not to make room — because the framework's own **unit tests** now assert,
+  headlessly and on every push, exactly what each of those apps asserted by
+  hand in a browser. **Every bare number below is a `Z2UI5_CL_SMP_APP_<no>` of
+  this repository** — the one place in this file where the numbers stand alone,
+  because a list of forty class names says nothing forty numbers do not (§1).
+  The framework wrote them in: `z2ui5_cl_ui5_srv_model`'s
+  test class names samples `118`, `138`, `184`, `190`, `194`, `199`, `212`,
+  `332`, `334`, `338`, `339`, `343`, `344`, `347` in its own fixture comments,
+  `z2ui5_cl_ui5_app_cont` names `335` and `338`, `z2ui5_cl_ui5_handler` names
+  `340`. The rest went with them by shape: the reference-identity family
+  (`328`/`329`, `331`, `333`, `336`, `337`, `342`, `345`, `348`, `349`) against
+  `aliases_know_owner`, `shared_one_canonical`, `both_refs_back_on_table`,
+  `alias_stays_on_struct`, `alias_repointed_survives` and the `app_cont` draft
+  roundtrips; the host/sub-app scaffolds (`117`/`126`, `131`/`132`, `185`,
+  `191`, `195`, `211`) against `refresh_finds_late_obj`, `class_swap_*` and
+  `load_by_app_after_swap`; the binding shapes (`094`) against the
+  `z2ui5_cl_ui5_srv_bind` tests `structure_levels`, `reference_deref` and
+  `helper_attribute`; the frontend actions (`353`, `443`, `446`, `447`) against
+  `test_follow_up_action_ctrl` / `test_ctrl_global_opt` on the ABAP side and
+  `node/tests/frontendAction.spec.js`, `messages.spec.js`, `timer.spec.js`,
+  `deviceModel.spec.js` on the JavaScript side. `086` went as well: it renders
+  a value an app `085` was supposed to set, and no `085` has existed here for
+  a long time.
+
+  **One app stayed: `Z2UI5_CL_SMP_APP_324`.** It calls `POPUP_TO_CONFIRM`
+  dynamically to provoke *"Sending of dynpro SAPLSPO1 0500 not possible"* — a
+  failure that needs a real dynpro runtime, which is precisely what no unit
+  test in either repository has. That is the standing test for whether an app
+  belongs here at all: **if a unit test in abap2UI5 can make the same
+  statement, the unit test is the place to make it**, and the app is not
+  written (or is deleted). What survives in `src/00/98` is what only a running
+  system can answer.
 
   A sample restricted by **UI5** — a SAPUI5-only control (`sap.suite.*`,
   `sap.ui.comp.*`, `sap.viz.*`, `sap.ui.vk`/`vbm`, `sap.ndc`,
@@ -1017,7 +1055,8 @@ By hand, because no script covers it:
   The ones worth knowing here: `check_subrc` (`selectSingle`, `selectTable`
   — "no rows" is a legitimate state, and the SELECT either feeds a binding
   or is read back with `OPTIONAL`), `dangerous_statement` (`dynamicSQL` — it
-  is the subject of the generic table browser samples in `src/00/98`),
+  was the subject of the generic table browser samples in `src/00/98`, gone
+  since 2026-09-22 (§2) — the flag stays off, see the comment on it),
   `double_space` (`keywords` and `endParen` — both would strip deliberate
   column alignment), `no_yoda_conditions` (`onlyConstants` — unrestricted it
   demands `lines( t ) < i` instead of `i > lines( t )`) and
@@ -1052,7 +1091,7 @@ By hand, because no script covers it:
 - Run: `npm run check:abap2ui5`
 - CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
   `abap-702`, which lint ABAP itself against three target releases
-- **The gate is effective**: 150 app classes, 173 reconstructed views, and
+- **The gate is effective**: 129 app classes, 156 reconstructed views, and
   an `abap2ui5lint-baseline.json` that froze the adoption-time debt (#753)
   until every entry was fixed — empty since 0.6.1, kept so the next adoption
   has its shape. It was
@@ -1066,36 +1105,40 @@ By hand, because no script covers it:
   histogram, what the baseline swallowed and per rule, the phase times:
 
   ```
-  sources    150 app classes
-  views      173 documents reconstructed, nested 11 deep, 7 classes produced none
-  judged     2,313 controls of 106 types, 563 bindings, 72 icons, 4,353 attributes
-  gates      properties 150 files, render 173 documents
+  sources    129 app classes (128 building a view)
+  views      156 documents reconstructed, nested 11 deep, 1 class produced none
+  judged     2,274 controls of 110 types, 601 bindings, 73 icons, 4,310 attributes
+  gates      properties 129 files, render 156 documents
   ```
 
   (No `baselined` line any more: `abap2ui5lint-baseline.json` has been empty
   since 0.6.1 — the one frozen finding was fixed rather than carried.)
 
-  A `judged` line of zeroes, or `150 classes produced none`, is the earlier
+  A `judged` line of zeroes, or `129 classes produced none`, is the earlier
   failure repeating itself — and now it says so instead of printing
   "Success! No findings detected."
 
-  **The seven that produce none are one shape, and they are these seven**
-  (measured 2026-09-04): `117`, `131`, `185`, `191`, `195`, `211`, `338` — all
-  in `src/00/98` ("testing"), all the same "main app calling subapps" scaffold.
-  Each builds a page, keeps the handle in an instance attribute, creates the
-  sub-app with `CREATE OBJECT mo_app TYPE (t002->class)` and hands the handle
-  over through ``CALL METHOD mo_app->(`SET_APP_DATA`)``; the sub-app builds into
-  it and a dynamic ``ASSIGN mo_app->(`MV_VIEW_DISPLAY`)`` decides when to
-  display. The linter resolves each builder statement against the handle it is
-  written on, so a handle that leaves the class through a dynamic call is
-  unfollowable — by design, not by oversight, and nothing in `src/01` does it.
-  Written out so the next run can tell **the same seven** from *seven different
-  ones*: a name appearing here that is not on this list is a sample that lost
+  **The ones that produce none are one shape, and they are named here.** The
+  shape is the "main app calling subapps" scaffold: the class builds a page,
+  keeps the handle in an instance attribute, creates the sub-app with
+  `CREATE OBJECT mo_app TYPE (t002->class)` and hands the handle over through
+  ``CALL METHOD mo_app->(`SET_APP_DATA`)``; the sub-app builds into it and a
+  dynamic ``ASSIGN mo_app->(`MV_VIEW_DISPLAY`)`` decides when to display. The
+  linter resolves each builder statement against the handle it is written on,
+  so a handle that leaves the class through a dynamic call is unfollowable —
+  by design, not by oversight.
+
+  It used to be **seven**, all in `src/00/98` (measured 2026-09-04): `117`,
+  `131`, `185`, `191`, `195`, `211`, `338`. All seven were deleted on
+  2026-09-22 (§2). What carries the shape today is `Z2UI5_CL_SMP_APP_500a` in
+  `src/01`, and it is the only name expected on the list.
+  Written out so the next run can tell **the same one** from *a different
+  one*: a name appearing here that is not on this list is a sample that lost
   its view, which is the failure the count exists to catch.
 - **The two README badges** (`.github/badges/abap2ui5.json` and
   `.github/badges/check-abap2ui5.json`, shields.io endpoint files) carry the
-  same statement, split along what they mean: *abap2UI5 | 150 apps · 173 views
-  · 2,313 controls* is what is here, blue, a fact; *check-abap2UI5 | 111 rules
+  same statement, split along what they mean: *abap2UI5 | 129 apps · 156 views
+  · 2,274 controls* is what is here, blue, a fact; *check-abap2UI5 | 111 rules
   passed* is what the gate made of it, green (or *3 problems*, *7 errors*,
   red). A run that finds nothing checkable turns both grey and says so. Every
   run rewrites them, `check-abap2UI5` commits them onto the pull request
@@ -1596,8 +1639,8 @@ handler runs".
 - **There is no way back up to a named ancestor.** `end( )` climbs exactly one
   level, so a view is built the way it nests. When a helper method needs a
   container the caller owns, the caller passes that reference — see the
-  nested-view samples in `src/00/98`, which take the Page they render into
-  (`mo_parent_page`) rather than searching for it.
+  nested-view samples `Z2UI5_CL_SMP_APP_500` / `_500a`, which take the Page
+  they render into (`mo_parent_page`) rather than searching for it.
 
 > The former standalone XML builder `z2ui5_cl_util_xml` is retired in the
 > framework (obsolete package, no new consumers) and is no longer used by any

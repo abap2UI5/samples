@@ -3,20 +3,18 @@
 
 # The sample catalogue
 
-Every app in this repository — 170 of them — with what it shows and a link
+Every app in this repository — 131 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
-**127 of them ship on every branch** — the portable set the README counts:
-`src/01` plus this overview app. The other 43 are under `src/00` and are
-stripped from `702`. 2 further classes carry the sample name and are
-data objects the samples share rather than apps; they are listed too, so nothing
-in the tree is invisible.
+**130 of them ship on every branch** — the portable set the README counts:
+`src/01` plus this overview app. The other one is under `src/00` and is
+stripped from `702`.
 
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 120 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 123 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -31,12 +29,12 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path — `src/01`
 
-The **120 ready-to-run samples** the README leads with, and the
+The **123 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 6 helper apps they call and the
-overview app itself, that is 127 apps on every branch.
+overview app itself, that is 130 apps on every branch.
 
-[Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
+[Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Softkeyboard](#softkeyboard) · [Table](#table) · [Templating](#templating) · [Test Binding Error 500](#test-binding-error-500) · [Test Binding Error 501](#test-binding-error-501) · [Test Binding Error Main View](#test-binding-error-main-view) · [Timer](#timer) · [Tree](#tree)
 
 ### Basics
 
@@ -79,7 +77,6 @@ overview app itself, that is 127 apps on every branch.
 | Reload the Page (A)<br>Navigates the browser to a same-domain URL with the location_reload front-end action, with a scratch input beside it to show what the reload takes with it.<br><sub>reload refresh restart location_reload url</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_492`](src/01/z2ui5_cl_smp_app_492.clas.abap) |
 | Set the Tab Favicon (A)<br>Sets the browser tab's favicon at runtime, from an image the backend hands over as a data URI.<br><sub>favicon icon tab image data uri</sub><br><sub>docs: [cookbook/browser_interaction/title](https://abap2ui5.github.io/docs/cookbook/browser_interaction/title)</sub> | [`Z2UI5_CL_SMP_APP_491`](src/01/z2ui5_cl_smp_app_491.clas.abap) |
 | Set the Tab Title (A)<br>Sets the browser tab title from the app, so a bookmarked or duplicated window says which app it holds.<br><sub>document.title tab caption headline set_title</sub><br><sub>docs: [cookbook/browser_interaction/title](https://abap2ui5.github.io/docs/cookbook/browser_interaction/title)</sub> | [`Z2UI5_CL_SMP_APP_125`](src/01/z2ui5_cl_smp_app_125.clas.abap) |
-| Soft Keyboard Mode on Mobile (A)<br>Asks a mobile device for the numeric keypad instead of the full keyboard (keyboard_set_mode) on an Input.<br><sub>mobile numeric keypad keyboard_set_mode phone input</sub><br><sub>docs: [cookbook/browser_interaction/soft_keyboard](https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard)</sub> | [`Z2UI5_CL_SMP_APP_352`](src/01/z2ui5_cl_smp_app_352.clas.abap) |
 
 ### Control Behaviour
 
@@ -242,6 +239,12 @@ overview app itself, that is 127 apps on every branch.
 | Scroll a Control into View (A)<br>Scrolls a control into view by ID - what a validation does when the field it complains about is off screen.<br><sub>scroll_into_view control id validation jump</sub><br><sub>docs: [cookbook/browser_interaction/scrolling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling)</sub> | [`Z2UI5_CL_SMP_APP_363`](src/01/z2ui5_cl_smp_app_363.clas.abap) |
 | Scroll to a Pixel Position (A)<br>Scrolls to a pixel position and back: reading the position before a refresh and restoring it afterwards.<br><sub>position pixel scroll_to restore refresh toolbar</sub><br><sub>docs: [cookbook/browser_interaction/scrolling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling)</sub> | [`Z2UI5_CL_SMP_APP_362`](src/01/z2ui5_cl_smp_app_362.clas.abap) |
 
+### Softkeyboard
+
+| Sample | Class |
+|---|---|
+| **Softkeyboard** | [`Z2UI5_CL_SMP_APP_530`](src/01/z2ui5_cl_smp_app_530.clas.abap) |
+
 ### Table
 
 | Sample | Class |
@@ -261,6 +264,24 @@ overview app itself, that is 127 apps on every branch.
 |---|---|
 | Build Columns Dynamically (template:repeat)<br>Builds the columns of a table at runtime with template:repeat, including the if/then/else the templating language brings.<br><sub>template repeat runtime generated columns if then else</sub><br><sub>docs: [cookbook/view/xml_templating](https://abap2ui5.github.io/docs/cookbook/view/xml_templating)</sub> | [`Z2UI5_CL_SMP_APP_173`](src/01/z2ui5_cl_smp_app_173.clas.abap) |
 | Dynamic Content in a Nested View<br>XML templating inside a nested view: the generated content is built where the sub view is rendered.<br><sub>template repeat runtime generated nested nest_view_display</sub><br><sub>docs: [cookbook/view/nested_views](https://abap2ui5.github.io/docs/cookbook/view/nested_views), [cookbook/view/xml_templating](https://abap2ui5.github.io/docs/cookbook/view/xml_templating)</sub> | [`Z2UI5_CL_SMP_APP_176`](src/01/z2ui5_cl_smp_app_176.clas.abap) |
+
+### Test Binding Error 500
+
+| Sample | Class |
+|---|---|
+| **Test Binding Error 500** | [`Z2UI5_CL_SMP_APP_500`](src/01/z2ui5_cl_smp_app_500.clas.abap) |
+
+### Test Binding Error 501
+
+| Sample | Class |
+|---|---|
+| **Test Binding Error 501** | [`Z2UI5_CL_SMP_APP_501`](src/01/z2ui5_cl_smp_app_501.clas.abap) |
+
+### Test Binding Error Main View
+
+| Sample | Class |
+|---|---|
+| **Test Binding Error Main View** | [`Z2UI5_CL_SMP_APP_500A`](src/01/z2ui5_cl_smp_app_500a.clas.abap) |
 
 ### Timer
 
@@ -282,62 +303,25 @@ overview app itself, that is 127 apps on every branch.
 
 ## Not in any overview — `src/00`
 
-38 apps with no tile anywhere (AGENTS.md section 3) — reachable
-by class name only, which is what this section is for. They are held to a
+One app with no tile anywhere (AGENTS.md section 3) — reachable
+by class name only, which is what this section is for. It is held to a
 lower bar than `src/01`: a testing app exists to be run by a check, not to be
 learned from. The package is **stripped from the `702` branch**, so this
 section is absent there.
 
 ### testing — `src/00/98`
 
-38 app(s).
+1 app(s).
 
 | Sample | Class |
 |---|---|
-| **Action** — Call Method of Object | [`Z2UI5_CL_SMP_APP_446`](src/00/98/z2ui5_cl_smp_app_446.clas.abap) |
-| **Action** — Call Method of Object by ID | [`Z2UI5_CL_SMP_APP_447`](src/00/98/z2ui5_cl_smp_app_447.clas.abap) |
-| **App in App** — Main App | [`Z2UI5_CL_SMP_APP_338`](src/00/98/z2ui5_cl_smp_app_338.clas.abap) |
-| **App in App** — Popup | [`Z2UI5_CL_SMP_APP_340`](src/00/98/z2ui5_cl_smp_app_340.clas.abap) |
-| **App in App** — Subapp, 3 Rows | [`Z2UI5_CL_SMP_APP_339`](src/00/98/z2ui5_cl_smp_app_339.clas.abap) |
-| **App in App** — Subapp, 5 Rows | [`Z2UI5_CL_SMP_APP_342`](src/00/98/z2ui5_cl_smp_app_342.clas.abap) |
-| **App in App I** | [`Z2UI5_CL_SMP_APP_211`](src/00/98/z2ui5_cl_smp_app_211.clas.abap) |
-| **App in App II** | [`Z2UI5_CL_SMP_APP_212`](src/00/98/z2ui5_cl_smp_app_212.clas.abap) |
-| **basic** — popups with ref from prev App | [`Z2UI5_CL_SMP_APP_328`](src/00/98/z2ui5_cl_smp_app_328.clas.abap) |
-| **binding** — normal, deep, refs | [`Z2UI5_CL_SMP_APP_094`](src/00/98/z2ui5_cl_smp_app_094.clas.abap) |
 | **Catch exceptions and display popup** | [`Z2UI5_CL_SMP_APP_324`](src/00/98/z2ui5_cl_smp_app_324.clas.abap) |
-| **Check throw error when ref used for binding** | [`Z2UI5_CL_SMP_APP_343`](src/00/98/z2ui5_cl_smp_app_343.clas.abap) |
-| **data binding tables with invalid date and time** | [`Z2UI5_CL_SMP_APP_118`](src/00/98/z2ui5_cl_smp_app_118.clas.abap) |
-| **Deep Structure** — Main App Embedding Sub App 190 | [`Z2UI5_CL_SMP_APP_191`](src/00/98/z2ui5_cl_smp_app_191.clas.abap) |
-| **Deep Structure** — Main App Embedding Sub App 194 | [`Z2UI5_CL_SMP_APP_195`](src/00/98/z2ui5_cl_smp_app_195.clas.abap) |
-| **Deep Structure** — Sub App with Row Binding | [`Z2UI5_CL_SMP_APP_194`](src/00/98/z2ui5_cl_smp_app_194.clas.abap) |
-| **Deep Structure** — Sub App, Table Only | [`Z2UI5_CL_SMP_APP_190`](src/00/98/z2ui5_cl_smp_app_190.clas.abap) |
-| **model update input editable with focus** | [`Z2UI5_CL_SMP_APP_443`](src/00/98/z2ui5_cl_smp_app_443.clas.abap) |
-| **Multiple Timers** | [`Z2UI5_CL_SMP_APP_353`](src/00/98/z2ui5_cl_smp_app_353.clas.abap) |
-| **Nested Apps I** — Calling another app for rendering | [`Z2UI5_CL_SMP_APP_117`](src/00/98/z2ui5_cl_smp_app_117.clas.abap) |
-| **Nested Apps II** — Use RTTI to render different Subapps | [`Z2UI5_CL_SMP_APP_131`](src/00/98/z2ui5_cl_smp_app_131.clas.abap) |
-| **Nested Apps III** — User Generic Data Refs in Subapps | [`Z2UI5_CL_SMP_APP_185`](src/00/98/z2ui5_cl_smp_app_185.clas.abap) |
-| **RTTI** — One Table with many Layouts | [`Z2UI5_CL_SMP_APP_345`](src/00/98/z2ui5_cl_smp_app_345.clas.abap) |
-| **RTTI** — Struc | [`Z2UI5_CL_SMP_APP_331`](src/00/98/z2ui5_cl_smp_app_331.clas.abap) |
-| **RTTI** — Struc with Cell Binding | [`Z2UI5_CL_SMP_APP_332`](src/00/98/z2ui5_cl_smp_app_332.clas.abap) |
-| **RTTI** — Struc with Class Data | [`Z2UI5_CL_SMP_APP_334`](src/00/98/z2ui5_cl_smp_app_334.clas.abap) |
-| **RTTI** — Struc with Class Data and Popup | [`Z2UI5_CL_SMP_APP_335`](src/00/98/z2ui5_cl_smp_app_335.clas.abap) |
-| **RTTI** — Struc with Ref in Object | [`Z2UI5_CL_SMP_APP_348`](src/00/98/z2ui5_cl_smp_app_348.clas.abap) |
-| **RTTI** — Table with Class Data and Popup | [`Z2UI5_CL_SMP_APP_337`](src/00/98/z2ui5_cl_smp_app_337.clas.abap) |
-| **RTTI** — Table with Ref in Object | [`Z2UI5_CL_SMP_APP_347`](src/00/98/z2ui5_cl_smp_app_347.clas.abap) |
-| **RTTI** — Table, Class Data, Popup, Refs Checked | [`Z2UI5_CL_SMP_APP_349`](src/00/98/z2ui5_cl_smp_app_349.clas.abap) |
-| **RTTI** — Two Tables with many Layouts | [`Z2UI5_CL_SMP_APP_344`](src/00/98/z2ui5_cl_smp_app_344.clas.abap) |
-| **Softkeyboard** | [`Z2UI5_CL_SMP_APP_530`](src/00/98/z2ui5_cl_smp_app_530.clas.abap) |
-| **Test Binding Error 500** | [`Z2UI5_CL_SMP_APP_500`](src/00/98/z2ui5_cl_smp_app_500.clas.abap) |
-| **Test Binding Error 501** | [`Z2UI5_CL_SMP_APP_501`](src/00/98/z2ui5_cl_smp_app_501.clas.abap) |
-| **Test Binding Error Main View** | [`Z2UI5_CL_SMP_APP_500A`](src/00/98/z2ui5_cl_smp_app_500a.clas.abap) |
-| **Type Ref to Data Table with refresh** | [`Z2UI5_CL_SMP_APP_199`](src/00/98/z2ui5_cl_smp_app_199.clas.abap) |
-| **unit test** — long variable | [`Z2UI5_CL_SMP_APP_138`](src/00/98/z2ui5_cl_smp_app_138.clas.abap) |
 
 ---
 
 ## Helper apps
 
-13 classes that are only ever *called* by another sample — a
+6 classes that are only ever *called* by another sample — a
 sub-app, a data object, the other half of a navigation demo. Their short text
 starts with `ZZZ`, which is how the generator knows to give them no tile.
 Listed here so nothing in the tree is invisible; there is no point starting
@@ -351,13 +335,6 @@ one on its own.
 | **ZZZ** — called by Nested Views - Sub-App (104), the form | [`Z2UI5_CL_SMP_APP_105`](src/01/z2ui5_cl_smp_app_105.clas.abap) |
 | **ZZZ** — called by Nested Views - Sub-App (104), the list | [`Z2UI5_CL_SMP_APP_112`](src/01/z2ui5_cl_smp_app_112.clas.abap) |
 | **ZZZ** — called by popup | [`Z2UI5_CL_SMP_APP_020`](src/01/z2ui5_cl_smp_app_020.clas.abap) |
-| **ZZZ** — called by 085 | [`Z2UI5_CL_SMP_APP_086`](src/00/98/z2ui5_cl_smp_app_086.clas.abap) |
-| **ZZZ** — called by Nested Apps I | [`Z2UI5_CL_SMP_APP_126`](src/00/98/z2ui5_cl_smp_app_126.clas.abap) |
-| **ZZZ** — called by Nested Apps II | [`Z2UI5_CL_SMP_APP_132`](src/00/98/z2ui5_cl_smp_app_132.clas.abap) |
-| **ZZZ** — called by Nested Apps III | [`Z2UI5_CL_SMP_APP_184`](src/00/98/z2ui5_cl_smp_app_184.clas.abap) |
-| **ZZZ** — Data Object for Samples 328 and 331 | [`Z2UI5_CL_SMP_APP_329`](src/00/98/z2ui5_cl_smp_app_329.clas.abap) |
-| **ZZZ** — Data Object with Data Ref for multiple samples | [`Z2UI5_CL_SMP_APP_333`](src/00/98/z2ui5_cl_smp_app_333.clas.abap) |
-| **ZZZ** — RTTI With Data Refs for multiple apps | [`Z2UI5_CL_SMP_APP_336`](src/00/98/z2ui5_cl_smp_app_336.clas.abap) |
 
 ---
 
