@@ -1827,12 +1827,12 @@ the interface, the components of `ty_s_event_control` and the parameters of
 
 | Surface | Total | Without a sample anywhere |
 |---|---:|---:|
-| `cs_event-*` | 36 | 2 |
+| `cs_event-*` | 35 | 1 |
 | `z2ui5_if_client` methods | 40 | 7 |
 | `ty_s_event_control` components | 5 | **0** |
 | `_bind( )` parameters | 9 | 2 |
 
-**All eleven are obsolete**, and that is the whole finding — there is no
+**All ten are obsolete**, and that is the whole finding — there is no
 uncovered feature, only features nobody should be shown:
 
 - the five `*_model_update( )` methods **do nothing** (the framework pushes
@@ -1840,9 +1840,18 @@ uncovered feature, only features nobody should be shown:
 - `_bind_edit( )` is an alias of `_bind( )`, `_event_client( )` a superseded
   spelling of `follow_up_action( )`;
 - `custom_mapper` / `custom_filter` are marked obsolete at the declaration;
-- `cs_event-image_editor_popup_close` belongs to a `z2ui5_cl_pop_*` popup this
-  repository may not demonstrate at all (§10), and `cs_event-z2ui5` is the
-  legacy escape hatch in the interface's own "obsolet" block.
+- `cs_event-z2ui5` is the legacy escape hatch in the interface's own
+  "obsolet" block.
+
+`cs_event-image_editor_popup_close` stood here too, as *"belongs to a
+`z2ui5_cl_pop_*` popup this repository may not demonstrate"*. That reading was
+wrong and the audit is the reason it surfaced: the constant was not waiting on
+the frozen package, it was waiting on a capability the framework did not have
+— reading a value off a control in another view slot into an event argument.
+abap2UI5 added `$controller.slotValue( )` and removed the constant on
+2026-09-22. **A symbol that has no sample because nothing can express it is a
+gap in the framework, not in this catalogue** — worth saying which of the two
+it is before filing it under "obsolete".
 
 **Do not write a sample for any of them.** A demonstration is a promise that
 the thing is the way to do it.
