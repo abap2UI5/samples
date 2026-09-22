@@ -25,10 +25,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..', '..');
 const SRC = path.join(ROOT, 'src');
 
-// The areas (top-level packages under src) that hold samples at all.
-const AREAS = ['00', '01'];
-
-// The overview app lives in the src/ root package and shares the sample-app
+// The overview app sits beside the samples in `src/` and shares the sample-app
 // class-name prefix. Skip it so an overview never lists itself as a tile.
 const OVERVIEW_APPS = new Set(['z2ui5_cl_smp_app_000']);
 
@@ -98,26 +95,26 @@ function groupOf(dir) {
 }
 
 /**
- * Every sample class in the tree, grouped by area and sorted the way
- * AGENTS.md section 4 rule 5 orders them.
+ * Every sample class in the tree, sorted the way AGENTS.md section 4 rule 5
+ * orders them.
  *
  * Hidden helper apps (DESCRIPT header `ZZZ`) are returned too, flagged rather
  * than dropped: the overview must not list them, and a catalogue that claims
  * to account for the tree has to be able to say they exist.
  *
- * So are the classes this scan cannot place - `orphans`. A sample carries the
- * name of a sample wherever it sits, but only a class inside an AREA becomes a
- * tile, and the two skips that decide it (a class in the `src/` root, a class
- * in a top-level package that is not an area) used to be silent `continue`s.
- * Fourteen samples sat in the root package for two commits because of it:
- * absent from the overview app and from SAMPLES.md, and every gate green,
- * because nothing that counts tiles can miss what it never scanned. They are
- * collected here and `check-orphan-samples.mjs` refuses them.
+ * So are the classes this scan cannot place - `orphans`. `src/` is FLAT since
+ * 2026-09-22: a sample is a class directly in it, and a subfolder is not a
+ * package any more but something nobody catalogues. That skip used to be a
+ * silent `continue` and the inverse of it cost fourteen samples two commits of
+ * invisibility - absent from the overview app and from SAMPLES.md with every
+ * gate green, because nothing that counts tiles can miss what it never
+ * scanned. They are collected here and `check-orphan-samples.mjs` refuses
+ * them.
  *
- * @returns {{areas: Record<string, object[]>, hidden: object[], orphans: object[]}}
+ * @returns {{tiles: object[], hidden: object[], orphans: object[]}}
  */
 function scanSamples() {
-  const areas = Object.fromEntries(AREAS.map((a) => [a, []]));
+  const tiles = [];
   const hidden = [];
   const orphans = [];
 
@@ -127,15 +124,14 @@ function scanSamples() {
     if (OVERVIEW_APPS.has(cls)) continue; // an overview app is never a tile
     if (!cls.startsWith(SAMPLE_PREFIX)) continue;
 
-    const rel = path.relative(SRC, abap).split(path.sep); // [ area, ...subfolders, file ]
+    const rel = path.relative(SRC, abap).split(path.sep); // [ ...subfolders, file ]
     const where = path.relative(ROOT, abap).split(path.sep).join('/');
-    // a class directly in src/ root is never a tile - and never intended
-    if (rel.length < 2) { orphans.push({ app: cls, path: where, why: 'the src/ root package' }); continue; }
-    const area = rel[0];
-    // full subfolder path ("03" or nested "03/01") so nested subpackages form
-    // their own group directly after their parent slot
-    const subnum = rel.slice(1, -1).join('/');
-    if (!(area in areas)) { orphans.push({ app: cls, path: where, why: `src/${area}, which is not a sample area` }); continue; }
+    // src/ is flat - one package, every sample directly in it. A class in a
+    // subfolder is in no catalogue, so it is reported rather than skipped.
+    if (rel.length > 1) {
+      orphans.push({ app: cls, path: where, why: `src/${rel.slice(0, -1).join('/')}, which is not the sample package` });
+      continue;
+    }
 
     const xmlPath = abap.replace(/\.clas\.abap$/, '.clas.xml');
     if (!fs.existsSync(xmlPath)) { console.warn(`skipping ${cls}: no .clas.xml`); continue; }
@@ -188,15 +184,13 @@ function scanSamples() {
     if (summary.includes('`')) throw new Error(`backtick in @summary of ${cls}`);
 
     const entry = {
-      area,
       /* Whether the class is an APP, decided from the source: a runnable
-       * sample implements z2ui5_if_app. Three classes in src/00/98 carry the
-       * sample name and are data objects (`if_serializable_object` only), so
-       * "how many apps are in here" is not the same question as "how many
-       * classes match the naming scheme" - and the README answers the first
-       * one. */
+       * sample implements z2ui5_if_app. The testing package used to hold
+       * classes that carry the sample name and are data objects
+       * (`if_serializable_object` only), so "how many apps are in here" is not
+       * the same question as "how many classes match the naming scheme" - and
+       * the README answers the first one. */
       isApp: /INTERFACES\s+z2ui5_if_app\s*\./i.test(source),
-      subnum,
       group: groupOf(path.dirname(abap)),
       header,
       base: headerBase(header),
@@ -205,35 +199,35 @@ function scanSamples() {
       summary,
       docs,
       // repository-relative folder of the class, so a link to the source can
-      // be built - the class name does not encode the folder
-      // (FOLDER_LOGIC=PREFIX), so only the scan knows where a sample lives
-      path: ['src', area, ...rel.slice(1, -1)].join('/'),
+      // be built. One folder for every sample today, and still carried per
+      // entry: the generators render a link from it, and a tree that grows a
+      // second one would otherwise silently link them all into `src/`
+      path: 'src',
       app: cls,
     };
 
     if (header.trim().toUpperCase() === 'ZZZ') hidden.push(entry);
-    else areas[area].push(entry);
+    else tiles.push(entry);
   }
 
   const ci = (x) => x.toLowerCase();
   const order = (a, b) =>
-    a.subnum.localeCompare(b.subnum) ||         // groups in folder-number order
-    ci(a.header).localeCompare(ci(b.header)) || // then by header (keeps I/II/III together)
+    ci(a.header).localeCompare(ci(b.header)) || // by header (keeps I/II/III together)
     ci(a.sub).localeCompare(ci(b.sub)) ||
     ci(a.app).localeCompare(ci(b.app));
-  for (const list of Object.values(areas)) list.sort(order);
+  tiles.sort(order);
   hidden.sort(order);
 
   /* Two samples with the same short text are two catalogue entries the reader
    * cannot tell apart - and the short text is the only thing either catalogue
-   * has to offer about a sample. src/00/98 carried four such pairs (two
-   * `Deep Structure Sub App`, two `App in App - Subapp`, two
+   * has to offer about a sample. The testing package carried four such pairs
+   * (two `Deep Structure Sub App`, two `App in App - Subapp`, two
    * `RTTI - with many Layouts`, two `RTTI - Table with Class Data and Popup`)
    * plus a `Deep Structure Sub App` on the app that EMBEDS the sub app. Nobody
    * had a reason to notice while the classes were listed nowhere; SAMPLES.md
    * lists them, so this is refused at the source. */
   const seenText = new Map();
-  for (const entry of [...Object.values(areas).flat(), ...hidden]) {
+  for (const entry of [...tiles, ...hidden]) {
     const key = `${entry.header} - ${entry.sub}`.toLowerCase();
     const first = seenText.get(key);
     if (first) {
@@ -245,7 +239,7 @@ function scanSamples() {
     seenText.set(key, entry.app);
   }
 
-  return { areas, hidden, orphans };
+  return { tiles, hidden, orphans };
 }
 
-export { ROOT, SRC, AREAS, DOCS_SITE, scanSamples, headerBase };
+export { ROOT, SRC, DOCS_SITE, scanSamples, headerBase };

@@ -26,30 +26,38 @@ titles, PR descriptions, and any other text must be written in English.
 
 ## 1. Repository layout
 
-Everything lives under `src/`, split into two top-level packages
-(abapGit `FOLDER_LOGIC=PREFIX`, `STARTING_FOLDER=/src/`). `01` "samples" holds
-the portable samples directly; `00` is the system package — shared code plus
-every sample that carries a restriction. There
-are **no demo apps directly in `src/` root** — every sample sits in a
-categorised subpackage. The only class in the root package is
-`z2ui5_cl_smp_app_000`, the overview app (§3), which is an index, not a sample.
+Everything lives in **one flat package** (abapGit `FOLDER_LOGIC=PREFIX`,
+`STARTING_FOLDER=/src/`): every sample is a class directly in `src/`, beside
+`z2ui5_cl_smp_app_000`, the overview app (§3), which is an index and not a
+sample. There are no subpackages, and no folders under `src/` at all.
 
 ```
-src/
-├── 00/  "system"     not a sample category — the samples held back by purpose — STRIPPED WHOLE from the 702 build
-│   └── 98/  "testing"        test / scaffolding apps, not demos
-└── 01/  "samples"     cloud-ready & downportable — the sample catalog: bindings, events, popups, framework actions, custom controls and use cases — survives every build
+src/   "abap2UI5 - samples"   every sample, flat — one class per sample, nothing else
 ```
 
-The former wrapper level (`01` "basic" holding a single subpackage `01/01`
-"Basic") was flattened on 2026-08-12: the samples now live directly in
-`src/01`, and the overview app moved from `src/01` into the `src/` root
-package.
+`node scripts/check-agents-structure.mjs` (`npm run check:agents`, and the
+`agents_structure` job on every pull request) holds the tree to that: it
+refuses a folder under `src/`, and compares the quoted name above against the
+`<CTEXT>` of `src/package.devc.xml`. **A new package needs this section,
+`scripts/lib/scan-samples.mjs` and that gate changed in the same commit** —
+otherwise the classes in it are in no catalogue and thirteen gates stay green
+(see `check-orphan-samples.mjs`, which is the other half of that lesson).
 
-### The restricted and obsolete packages are gone
+### The subpackages are gone
 
-**`src/00/02` ("restricted - release/version") and `src/00/99` ("obsolet") were
-removed on 2026-08-12**, `00/99` together with the samples it still held. Two
+**`src/01` ("samples") and `src/00` ("system") were flattened away on
+2026-09-22.** `src/01` held the portable samples and `src/00/98` ("testing")
+the apps held back by their purpose; the samples moved up into `src/` and the
+testing package went with its last app (§2). Two packages carrying one rule
+each — *is this portable* and *is this a demo* — and after the clean-out of
+2026-09-22 the answer to both is yes for everything in the tree, so the split
+had nothing left to sort.
+
+Nothing about a sample moved with it: class names never encoded the folder
+(`FOLDER_LOGIC=PREFIX`), so this was a move and not a rename.
+
+**`src/00/02` ("restricted - release/version") and `src/00/99` ("obsolet") had
+gone on 2026-08-12**, `00/99` together with the samples it still held. Two
 categories, not two policies: what made a sample restricted or obsolete is
 unchanged, there is simply no package standing empty in the tree waiting for
 the next one.
@@ -58,14 +66,13 @@ So a sample that plain OpenUI5 1.71 cannot run — a SAPUI5-only control
 (`sap.suite.*`, `sap.ui.comp.*`, `sap.viz.*`, …), a control or property
 introduced after UI5 1.71, or native JavaScript / CSS the sample would have to
 ship — has **no home in this repository today**, and neither has a superseded
-one. Do not park it in `src/01`: every sample there must survive the 702
+one. Do not park it in `src/`: every sample there must survive the 702
 downport (§2). Either it belongs in
 [samples-stack](https://github.com/abap2UI5/samples-stack) or
 [samples-controls](https://github.com/abap2UI5/samples-controls) (§2), or the
 category has to come back. Re-creating one is a deliberate, self-contained
-change: add the package, put it back into the tree above, into the §2 build
-table, and into the `downport` strip list in `package.json` — all three in the
-same commit, or the two checks below fail.
+change: add the package, put it into the tree above and into the §2 build
+table in the same commit, or the checks below fail.
 
 There is **no on-premise-only package**: `main` is installed on ABAP Cloud
 systems as it is, so every sample in the repository must be ABAP Cloud ready.
@@ -74,7 +81,8 @@ A sample that needs on-premise-only ABAP does not belong in this repository.
 ### The experimental package is gone too
 
 **`src/00/97` ("experimental") was removed on 2026-09-14**, and the fourteen
-samples it held were promoted into `src/01`: `Z2UI5_CL_SMP_APP_004`, `_052`,
+samples it held were promoted into what was then `src/01`:
+`Z2UI5_CL_SMP_APP_004`, `_052`,
 `_122`, `_381`, `_468`, `_498`, `_499` and `_504` … `_510`. That is the
 maintainer decision §2 reserves for itself, taken by hand and recorded here —
 not a sample graduating because it lints clean.
@@ -82,38 +90,21 @@ not a sample graduating because it lints clean.
 The package emptied itself in the process, and an empty one does not stay:
 what it said — *not finished yet* — has no sample left to say it about. So
 "experimental" is a **verdict, not a folder** today. A work-in-progress sample
-has no package to park in: finish it and it goes into `src/01`, or it stays
-out of the repository until it is finished. `src/00` holds `00/98`
-("testing") and nothing else.
+has no package to park in: finish it and it goes into `src/`, or it stays out
+of the repository until it is finished.
 
-They spent two commits in the `src/` **root package** on the way, which has no
-catalog at all: `scripts/lib/scan-samples.mjs` skips a class directly in
-`src/` (`rel.length < 2`), so all fourteen were missing from the overview app
-and from `SAMPLES.md` while every gate stayed green. **The root package holds
-the overview app and nothing else** — a sample parked there is invisible to
-every catalogue.
+They spent two commits one level too high on the way, in a folder that has no
+catalog at all — all fourteen were missing from the overview app and from
+`SAMPLES.md` while every gate stayed green.
 
-That last part no longer goes unreported: `node scripts/check-orphan-samples.mjs`
+That no longer goes unreported: `node scripts/check-orphan-samples.mjs`
 (`npm run check:orphans`, and the `orphan_samples` job on every pull request)
-refuses a `z2ui5_cl_smp_app_*` class that sits outside a sample area. It is the
-one gate here that does **not** count tiles — which is why it is the only one
-that could have caught this: the other thirteen all read the same scan, and the
-scan never saw these fourteen. A ZZZ helper and a `src/00/98` app get no tile
-either and are fine; being skipped by a RULE is not the same as being skipped
-by where the file happens to sit.
-
-This tree is machine-checked: `node scripts/check-agents-structure.mjs` compares
-it against the actual `package.devc.xml` `<CTEXT>` values and fails on any
-drift (runs in CI). **Whenever a subpackage is added, removed, or renamed,
-update this tree in the same change.**
-
-Each subpackage's `package.devc.xml` `<CTEXT>` is the quoted name shown above
-(e.g. `experimental`). **That CTEXT string is also the overview group name —
-keep the two identical** (see §4).
-
-> Class names never encode the folder (`FOLDER_LOGIC=PREFIX`). Moving a sample
-> between packages needs **no rename** and keeps navigation intact — but the
-> overview catalog must be updated (§4).
+refuses a `z2ui5_cl_smp_app_*` class that does not sit directly in `src/`. It
+is the one gate here that does **not** count tiles — which is why it is the
+only one that could have caught this: the other thirteen all read the same
+scan, and the scan never saw these fourteen. A ZZZ helper gets no tile either
+and is fine; being skipped by a RULE is not the same as being skipped by where
+the file happens to sit.
 
 ### Sample numbers are per repository — the prefix is what qualifies them
 
@@ -150,9 +141,9 @@ samples-controls' **git history** (`todo/README.md` at commit `37e77b6`), not in
 its tree.
 
 **Do not re-create a Control Library package, and do not add a demo kit rebuild
-to `src/01`.** A sample that rebuilds one specific demo kit original belongs in
-samples-controls, full stop. What legitimately stays here is what cannot live
-there, and it goes into the basic package (`src/01`) as an ordinary sample:
+to this repository.** A sample that rebuilds one specific demo kit original
+belongs in samples-controls, full stop. What legitimately stays here is what
+cannot live there, and it goes into `src/` as an ordinary sample:
 
 - a **1.71-safe** variant of a sample whose samples-controls port keeps
   post-1.71 members for 1:1 fidelity (declared `POST_171` there) — this
@@ -178,55 +169,47 @@ keeps `control` as the search term. A new entry belongs here only if it passes
 one of the three tests above — otherwise it is a demo kit rebuild and belongs
 in samples-controls, full stop.
 
-A sample that is a test or scaffolding app still goes to `src/00/98` — that
-model is unchanged. There is no experimental package any more (§1).
+A test or scaffolding app is **not written at all** unless a **unit test in
+abap2UI5 cannot make the same statement** — which since the 2026-09-22
+clean-out (§2) is nearly always the wrong way round: the testing package went
+from 41 apps to none. There is no experimental package any more either (§1).
 
 ---
 
-## 2. Compatibility model — what belongs in `src/01` vs `src/00/98`
+## 2. Compatibility model — what belongs in this repository
 
 `main` is the default branch and the only branch anyone commits to. It is
 installed **both** on standard on-premise systems and on ABAP Cloud, so it is
 checked against both releases on every pull request. `702` is the one derived
 branch, generated from `main` by `publish-702`.
 
-The split is driven directly by the CI builds:
+Every build sees the same tree:
 
-| Build (workflow)   | What it does                                    | Sees `src/00/98` | Sees `src/01` |
-|--------------------|-------------------------------------------------|:---:|:---:|
-| `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ |
-| `abap-cloud`       | `abaplint abap_cloud.jsonc` (syntax `Cloud`)    | ✅ | ✅ |
-| `abap-702`         | `npm run downport` (does `rm -rf src/00`) → `abaplint abap_702.jsonc` | ❌ | ✅ |
+| Build (workflow)   | What it does                                    | Sees `src/` |
+|--------------------|-------------------------------------------------|:---:|
+| `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ |
+| `abap-cloud`       | `abaplint abap_cloud.jsonc` (syntax `Cloud`)    | ✅ |
+| `abap-702`         | `npm run downport` → `abaplint abap_702.jsonc`  | ✅ |
 
-**Only the 702 build strips anything.** `main` is published as it is and runs on
-both standard and ABAP Cloud systems, so `abap-standard` and `abap-cloud` lint
-the *whole* tree — experimental and testing samples included — and all of it
-passes. The ABAP restriction that used to justify a strip for cloud is gone with
-the on-premise package (§1): what is left is restricted by maturity or by
-purpose, never by ABAP release.
+**Nothing is stripped any more.** The 702 build used to delete `src/00` before
+downporting, because the samples held back by their purpose had no business on
+a branch published for old systems. That package is gone (§1) and the downport
+is a pure transformation now: the `702` branch carries every class `main`
+carries. With it went `scripts/check-strip-lists.mjs` and its CI job, which
+existed to keep the removal spelled identically in `package.json` and in the
+table above — there is no list left for the two to disagree about.
 
-**Test and experimental samples never reach the 702 branch.** The downport
-removes **`src/00` whole**, so the `702` branch carries only the portable set.
-It used to remove the two subpackages one by one and leave
-the parent behind as a package with no objects in it; once `00/01` was gone
-there was nothing left for that hull to hold, and a package that ships empty
-says the branch has a system area when it has none. Keep the path together in
-the two places that name it — `package.json` `downport` and the build table
-above. That is machine-checked: `node scripts/check-strip-lists.mjs` compares
-both and fails if one names a different set, or a package that no longer
-exists (runs in CI). `src/00` holds nothing but those two subpackages today:
-**`src/00/01` "context" was removed on 2026-08-20** with
-the two classes it held, `z2ui5_cl_smp_context` and `z2ui5_cx_smp_error`. What
-they offered was generic RTTI, message and conversion helpers, and a sample
-that reaches for one stops being a single readable snippet — the thing a
-sample is for. Every caller now carries the few lines it actually used, so
-`src/00` is samples only, and the whole tree outside `src/01` is stripped from
-the 702 build.
+The clean-out that made this possible is recorded below: `src/00/98` went from
+41 apps to none, and **`src/00/01` "context" had gone on 2026-08-20** with the
+two classes it held, `z2ui5_cl_smp_context` and `z2ui5_cx_smp_error`. What they
+offered was generic RTTI, message and conversion helpers, and a sample that
+reaches for one stops being a single readable snippet — the thing a sample is
+for. Every caller carries the few lines it actually used.
 
-**Stripped is not unchecked, and nothing is suppressed.** `abaplint.jsonc` has
-no `noIssues` list: every package under `src/` is really linted, by
-`abap-standard` and by `abap-cloud` alike. Do not introduce one to make a
-sample pass — a path listed there stops being checked at all, silently.
+**Nothing is suppressed either.** `abaplint.jsonc` has no `noIssues` list:
+every class under `src/` is really linted, by `abap-standard`, `abap-cloud` and
+`abap-702` alike. Do not introduce one to make a sample pass — a path listed
+there stops being checked at all, silently.
 
 The `abap-702` transformation also produces the derived branch `702`
 (`publish-702`, on every push to `main`). There is no `cloud` branch: ABAP Cloud
@@ -242,34 +225,58 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
 `WITH EMPTY KEY` as unknown. The 7.02 check itself is not lost — it runs in
 `abap-702` on every pull request, and again in `publish-702` before the push.
 
-**Consequence of the rule:**
+**Consequence of the rule:** a class may only live in `src/` if it is **ABAP
+Cloud ready AND downportable to 7.02** and runs on plain OpenUI5 1.71 without
+any restriction. There is no second package to fall back on: a sample held
+back by its **maturity** lost its home on 2026-09-14 (`src/00/97`
+"experimental", §1) and one held back by its **purpose** on 2026-09-22
+(`src/00/98` "testing", below).
 
-- **`src/01` ("samples")** — a sample may only live here if it is **ABAP Cloud
-  ready AND downportable to 7.02** and runs on plain OpenUI5 1.71 without any
-  restriction. These survive all three builds.
-- **`src/00/98` ("testing")** — a sample held back by its purpose: a test or
-  scaffolding app, not a demo. It is deleted before the 702 build, so it is
-  only ever checked by `abap-standard` and `abap-cloud`. A sample held back by
-  its **maturity** has no package any more: `src/00/97` ("experimental") was
-  removed on 2026-09-14 with its samples promoted into `src/01` (§1), so an
-  unfinished sample is finished before it lands or it stays out.
+  **The way out of `src/00/98` was deletion, and it was taken on 2026-09-22.**
+  The package held 41 apps; all of them are gone. Not because they were wrong,
+  and not to make room — because the framework's own **unit tests** now assert,
+  headlessly and on every push, exactly what each of those apps asserted by
+  hand in a browser. **Every bare number below is a `Z2UI5_CL_SMP_APP_<no>` of
+  this repository** — the one place in this file where the numbers stand alone,
+  because a list of forty class names says nothing forty numbers do not (§1).
+  The framework wrote them in: `z2ui5_cl_ui5_srv_model`'s
+  test class names samples `118`, `138`, `184`, `190`, `194`, `199`, `212`,
+  `332`, `334`, `338`, `339`, `343`, `344`, `347` in its own fixture comments,
+  `z2ui5_cl_ui5_app_cont` names `335` and `338`, `z2ui5_cl_ui5_handler` names
+  `340`. The rest went with them by shape: the reference-identity family
+  (`328`/`329`, `331`, `333`, `336`, `337`, `342`, `345`, `348`, `349`) against
+  `aliases_know_owner`, `shared_one_canonical`, `both_refs_back_on_table`,
+  `alias_stays_on_struct`, `alias_repointed_survives` and the `app_cont` draft
+  roundtrips; the host/sub-app scaffolds (`117`/`126`, `131`/`132`, `185`,
+  `191`, `195`, `211`) against `refresh_finds_late_obj`, `class_swap_*` and
+  `load_by_app_after_swap`; the binding shapes (`094`) against the
+  `z2ui5_cl_ui5_srv_bind` tests `structure_levels`, `reference_deref` and
+  `helper_attribute`; the frontend actions (`353`, `443`, `446`, `447`) against
+  `test_follow_up_action_ctrl` / `test_ctrl_global_opt` on the ABAP side and
+  `node/tests/frontendAction.spec.js`, `messages.spec.js`, `timer.spec.js`,
+  `deviceModel.spec.js` on the JavaScript side. `086` went as well: it renders
+  a value an app `085` was supposed to set, and no `085` has existed here for
+  a long time.
 
-  **What is in `src/00/98` stays in `src/00/98`.** It is not a waiting room
-  that samples graduate from: do not move a sample out of it into `src/01`,
-  and do not propose it because the sample happens to lint clean against all
-  three releases. Passing the builds is a precondition for living in this
-  repository at all (§1), never on its own a reason to promote a sample. Only
-  the maintainer decides that a sample changes package, and only by saying so
-  (human decisions 2026-08-12, on the routing and app-state samples then in
-  `00/97`, and 2026-09-14, promoting all fourteen of them).
+  **The last one went with the package: `Z2UI5_CL_SMP_APP_324`.** It called
+  `POPUP_TO_CONFIRM` dynamically to provoke *"Sending of dynpro SAPLSPO1 0500
+  not possible"* — a failure that needs a real dynpro runtime, which no unit
+  test in either repository has. It was the one app the 2026-09-22 clean-out
+  left standing, and it was deleted with `src/00` on the same day the tree was
+  flattened (§1): one app is not a package, and a testing app in the middle of
+  the catalogue is a sample a reader would copy.
+
+  The rule it stood for is unchanged and is now the whole of it: **if a unit
+  test in abap2UI5 can make the statement, the unit test is the place to make
+  it** — and if it cannot, that is an argument for a unit test the framework
+  does not have yet, not for an app here. This repository is demos.
 
   A sample restricted by **UI5** — a SAPUI5-only control (`sap.suite.*`,
   `sap.ui.comp.*`, `sap.viz.*`, `sap.ui.vk`/`vbm`, `sap.ndc`,
   `sap.ui.richtexteditor`, …), a control or property introduced after UI5 1.71,
   or a runtime it cannot ship (native JavaScript / CSS / HTML) — and one that is
-  **superseded or deprecated** have no package here any more (§1). Neither may
-  be filed under `00/98` to get it in: that one says *not a demo*, not
-  *does not run*.
+  **superseded or deprecated** have no package here any more (§1), and there is
+  no longer any folder to file one under to get it in.
 
 **A sample that needs something the system provides does not belong here at
 all.** Those live in
@@ -279,12 +286,13 @@ session, an APC channel, the MIME repository, and the **Fiori Launchpad**
 (`src/09` there — the demos that read startup parameters, set the shell title and
 navigate cross-app, moved out of the restricted package on 2026-08-12).
 
-A sample qualifies for `src/01` **only if none** of the above restrictions
+A sample qualifies for `src/` **only if none** of the above restrictions
 apply: OpenUI5-compatible, ABAP-Cloud-ready, standalone, every control **and**
 property available since UI5 1.71 (16 Jan 2020) **and** not deprecated, no native
 JS, not a test, finished and clean. "Old" is not enough and "non-deprecated" is
 not enough either — a deprecated control and a post-1.71 one both disqualify a
-sample from `src/01`, and neither has a package to fall back on any more (§1).
+sample from this repository, and neither has a package to fall back on any
+more (§1).
 ABAP Cloud readiness is not a sorting criterion at all — it is a precondition
 for every sample in the repository (§1).
 
@@ -293,23 +301,22 @@ for every sample in the repository (§1).
 ## 3. The overview app
 
 `z2ui5_cl_smp_app_000` is the **overview app** — a generated index page that
-lists every sample of the basic area. It is *not* a Fiori Launchpad app, despite
+lists every sample in the repository. It is *not* a Fiori Launchpad app, despite
 the name of the generator that writes it (`npm run launchpad`, §4). The demos
 that run inside a real Fiori Launchpad are not in this repository at all — they
 live in [abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack) under
 `src/09` (§2).
 
-| App class              | Lives in     | Title                | Mirrors     |
-|------------------------|--------------|----------------------|-------------|
-| `z2ui5_cl_smp_app_000` | `src/` root  | `abap2UI5 - Samples` | `src/01/**` |
+| App class              | Lives in | Title                | Mirrors  |
+|------------------------|----------|----------------------|----------|
+| `z2ui5_cl_smp_app_000` | `src/`   | `abap2UI5 - Samples` | `src/**` |
 
-**It is the only one.** `src/00` (the system package) has no overview app: its
-samples are reachable by class name only, and the generator merely reports how
-many tiles they would hold (§4). An extended overview app existed once
-(`z2ui5_cl_sample_app_g01`, mirroring the restricted area, cross-linked with
-this one); it was removed when the extended samples were reorganised. Should it
-ever return, it comes back as a second `TARGETS` entry in
-`scripts/generate-launchpad.mjs` and a second row above.
+**It is the only one**, and since the tree was flattened (§1) it mirrors all of
+it — there is no package left whose samples are reachable by class name only.
+An extended overview app existed once (`z2ui5_cl_sample_app_g01`, mirroring the
+restricted area, cross-linked with this one); it was removed when the extended
+samples were reorganised. Should a second one ever be needed, it comes back as
+a second target in `scripts/generate-launchpad.mjs` and a second row above.
 
 Its shape: a `get_catalog( )` method returning a flat table of tiles - one
 `group` per stage of the learning path (`scripts/lib/learning-path.json`, the
@@ -500,8 +507,8 @@ new block (first row gets `sapUiSmallMarginTop`) starts when the base changes.
 The base is the header with a trailing Roman numeral removed
 (`header_base( )`) - the category - so `Binding`, `Binding I` … `Binding VIII`
 render as one block, then a gap, then the `Event` block, and so on. (A controls
-section that blocked by first letter existed while `src/01/03` did; it went
-with that package, §1.) Under the list the app prints the legend of the
+section that blocked by first letter existed while the Control Library package
+did; it went with that package, §1.) Under the list the app prints the legend of the
 capability markers some titles end in (`c_legend`, written by the generator
 from `scripts/lib/markers.mjs` - the same legend SAMPLES.md and `catalogue.json`
 carry, §12). All links of
@@ -519,9 +526,7 @@ the only overview app, and it is generated.
 Reaching the overview app costs an installed framework, an abapGit pull and an
 HTTP handler. Before that, the repository is a flat folder of classes whose
 names encode nothing, and the question a visitor arrives with — *is there a
-sample for X?* — has no answer here. `src/00` is worse off: it has no overview
-app at all, so its apps are reachable by class name only and nothing lists
-the names.
+sample for X?* — has no answer here.
 
 [`SAMPLES.md`](SAMPLES.md) answers it. Every app, its description, its
 `@keywords` (the app keeps them for its search box; on a page the reader *is*
@@ -533,18 +538,17 @@ as a sample, where its title comes from and which classes are hidden helpers.
 Two copies of that would drift silently: the app and the page would simply
 disagree about what this repository contains, and nothing would fail.
 
-Four things it shows that the app does not, on purpose:
+Three things it shows that the app does not, on purpose:
 
 | | Why |
 |---|---|
-| the `src/00` packages | they have no overview app (§3); listing them nowhere is how its 45 apps became invisible |
 | the `ZZZ` helper apps | they must not get a tile — but a catalogue claiming to account for the tree has to say they exist |
 | the `@keywords` | never rendered in the app (§4); here they are what `Ctrl+F` finds |
 | the `@docs` link | the chapter that explains the pattern the sample demonstrates (§4) — the app has no room for it, and a page does |
 
-The `702` branch carries its own: `npm run downport` strips `src/00` and
-regenerates the file afterwards, so the copy on that branch
-lists what that branch actually ships.
+The `702` branch carries its own: `npm run downport` regenerates the file after
+the transformation, so the copy on that branch lists what that branch actually
+ships — which since the strip list went (§2) is everything.
 
 **Do not hand-edit it** — it is regenerated by `npm run launchpad` along with
 the overview app and `catalogue.json` (below), and `publish-overview-apps`
@@ -576,7 +580,7 @@ The fourth view of the one catalogue, and the first one addressed to a
 machine. The two readers above parse SAMPLES.md rows with a regex because
 nothing better existed; an AI agent that has just cloned this repository was
 in the same position. [`catalogue.json`](catalogue.json) at the repository
-root is the structured answer: one entry per `src/01` sample — class, folder,
+root is the structured answer: one entry per sample — class, folder,
 category, learning-path stage, keywords, `@summary`, `@docs` links — plus a
 header naming the repository, its place in the three-repository family, and
 the number-collision caveat (§1, "Sample numbers are per repository") encoded
@@ -607,8 +611,7 @@ always (§4).
 
 **Treat the `get_catalog( )` table as a generated mirror of the folder
 tree, never as free-form data.** Whenever you add, remove, or move a sample —
-or move a whole subpackage between `src/00` and `src/01`, or change a class's
-description — regenerate the catalog in the same change.
+or change a class's description — regenerate the catalog in the same change.
 
 The `publish-overview-apps` workflow regenerates the catalog on every pull
 request. On a **same-repository** pull request it commits the result onto the
@@ -657,7 +660,7 @@ tile of a group only:
 | `header` | Link text shown to the user. **Derived from the class short text** (see below). |
 | `sub`    | Short description shown next to the link. **Derived from the class short text** (see below). May be empty (`` `` ``) → then only the link is rendered. |
 | `keywords` | **Never rendered — search only.** Extra terms so a sample is found by words that do not fit into the 60 characters of its DESCRIPT (see below). **Required on every tile** — `npm run launchpad` refuses an area's overview app if one of its tiles has no `@keywords` line. Three readers depend on them and all three fail the same silent way (the sample stays listed, stays correct, and never comes up): the overview app's search box, `Ctrl+F` on SAMPLES.md, and an agent asking whether a sample for X exists. ZZZ helpers are exempt — a helper is reached BY another sample, never looked up. |
-| `path`   | The class's folder relative to the repository root (`src/01`). Generated, because the class name does **not** encode the folder — `source_url( )` builds the GitHub link of the sample from it. |
+| `path`   | The class's folder relative to the repository root (`src`, for every sample since §1 flattened the tree). Generated, because the class name does **not** encode the folder — `source_url( )` builds the GitHub link of the sample from it. |
 | `app`    | The app's class name in **lowercase** (folder-independent). Drives navigation. |
 
 **`keywords` comes from a plain comment line on the class**, the first line of
@@ -712,11 +715,10 @@ two lines with nothing checking them**; both sibling repositories gated
 theirs.
 
 Who is held to it is decided from the tree, never from a list: every sample
-under `src/` except the exempt ones, plus the overview app itself; not the ZZZ
-helpers (a helper is reached BY a sample, never looked up); not `src/00/98`,
-whose apps are run by a check rather than learned from (§1). The gate names
-only what it exempts, so a package that comes or goes needs no edit there — it
-survived `src/00/97` being removed (§1) untouched. A list would need
+under `src/`, plus the overview app itself; not the ZZZ helpers (a helper is
+reached BY a sample, never looked up). The gate names only what it exempts, so
+a package that came or went needed no edit there — it survived `src/00/97`
+being removed and the flattening of the tree (§1) untouched. A list would need
 maintaining and would rot; this cannot.
 
 Write it, do not derive it. The sibling repositories can: `samples-controls`
@@ -843,12 +845,11 @@ Rules for the `sub`:
 
 ### Generation rules
 
-1. **One catalog per area — and only `src/01` has one.** Apps in `src/01/**`
-   belong in `smp_app_000`. `src/00/**` has no overview app (§3): an app moved
-   to `src/00/98` ("testing") gets **no** tile —
-   the generator only reports how many those packages hold.
-2. **Each app appears exactly once**, and every demo app physically present in an
-   area is listed (no missing tiles) — **except hidden helper apps**: a class
+1. **One catalog, and everything is in it.** `src/` is one flat package (§1),
+   so every app in the tree belongs in `smp_app_000` — there is no second
+   overview and no package whose apps are counted and listed nowhere.
+2. **Each app appears exactly once**, and every demo app physically present is
+   listed (no missing tiles) — **except hidden helper apps**: a class
    whose `<DESCRIPT>` header is `ZZZ` (e.g. `ZZZ - called by SubApp I`) is only
    ever called by another app and must **not** get a tile. It stays in the
    folder (and is checked by abaplint), just not shown in the overview.
@@ -867,15 +868,13 @@ Rules for the `sub`:
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
    likewise `Popover I…IV`, `Popup I…III`). The group order from rule 4 is
    untouched; only the tiles inside each group are ordered.
-6. **Moving a subpackage out of `src/01` drops its whole tile group** — there
-   is no catalog on the other side of it — `src/00/98` has none.
-   Moving one *into* `src/01` adds its group at the matching numeric slot
-   (rule 4).
-7. After every change, verify: `get_catalog( )` and the folder tree agree —
-   same apps, same group names (== CTEXT), same grouping, no app in the wrong
-   overview, none missing. The safest way to regenerate is to rebuild the
-   catalog straight from the physical tree (one tile per class, group = its
-   folder CTEXT) and carry over the existing `header`/`sub` metadata.
+6. **Deleting a sample drops its tile, and nothing else moves** — the groups
+   come from the learning path (rule 3), not from the tree, so a category
+   loses its heading only when its last sample goes.
+7. After every change, verify: `get_catalog( )` and the tree agree — same
+   apps, same grouping, none missing. The safest way to regenerate is to
+   rebuild the catalog straight from the physical tree (one tile per class)
+   and carry over the existing `header`/`sub` metadata.
 
 ### Formatting
 
@@ -922,8 +921,8 @@ In the order they fail fastest:
 | `npm run lint` | `abap-standard` | `abaplint` reports 0 issues (`abaplint.jsonc`, `v750`) |
 | `npm run check:cloud` | `abap-cloud` | the same tree against the ABAP Cloud API — `main` is installed there as it is (§2) |
 | `npm run check:abap2ui5` | `check-abap2UI5` | the abap2UI5-linter: the app class and the view it builds, plus a headless render of every view. New findings fail; `abap2ui5lint-baseline.json` holds the debt frozen at adoption, and an entry whose finding is gone fails too |
-| `npm run check:agents` | `check-docs` | no drift between the §1 tree and the actual `package.devc.xml` CTEXTs |
-| `npm run check:strip` | `check-docs` | no drift in the strip list (§2) |
+| `npm run check:agents` | `check-docs` | no drift between the §1 layout and the tree: one flat package, no subfolders, the documented CTEXT |
+| `npm run check:orphans` | `check-docs` | every `z2ui5_cl_smp_app_*` class sits where a catalogue reads it (§1) |
 | `npm run check:keywords` | `check-keywords` | every sample carries `@keywords` and `@summary`, first line, lowercase (§4) |
 | `npm run check:launchpad` | `publish-overview-apps` | the overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) |
 | `npm run check:catalogue` | `publish-overview-apps` | the committed `catalogue.json` still mirrors the folder tree (§3) |
@@ -944,9 +943,9 @@ degradation is why `check:app-rules` is in the aggregate now; it was left out
 back when an unreachable source was a failure.
 
 **The one CI step that is not here: `npm run downport`** (`abap-702`,
-`publish-702`). It is not a check, it is the 702 build: it deletes the stripped
-packages and runs `abaplint --fix` over what is left, so running it leaves you
-with a downported working copy rather than an answer. Run it deliberately, on a
+`publish-702`). It is not a check, it is the 702 build: it runs
+`abaplint --fix` over the whole tree, so running it leaves you with a
+downported working copy rather than an answer. Run it deliberately, on a
 clean tree, and `git checkout .` afterwards.
 
 By hand, because no script covers it:
@@ -1017,7 +1016,8 @@ By hand, because no script covers it:
   The ones worth knowing here: `check_subrc` (`selectSingle`, `selectTable`
   — "no rows" is a legitimate state, and the SELECT either feeds a binding
   or is read back with `OPTIONAL`), `dangerous_statement` (`dynamicSQL` — it
-  is the subject of the generic table browser samples in `src/00/98`),
+  was the subject of the generic table browser samples in the testing package, gone
+  since 2026-09-22 (§2) — the flag stays off, see the comment on it),
   `double_space` (`keywords` and `endParen` — both would strip deliberate
   column alignment), `no_yoda_conditions` (`onlyConstants` — unrestricted it
   demands `lines( t ) < i` instead of `i > lines( t )`) and
@@ -1052,7 +1052,7 @@ By hand, because no script covers it:
 - Run: `npm run check:abap2ui5`
 - CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
   `abap-702`, which lint ABAP itself against three target releases
-- **The gate is effective**: 150 app classes, 173 reconstructed views, and
+- **The gate is effective**: 129 app classes, 156 reconstructed views, and
   an `abap2ui5lint-baseline.json` that froze the adoption-time debt (#753)
   until every entry was fixed — empty since 0.6.1, kept so the next adoption
   has its shape. It was
@@ -1066,36 +1066,45 @@ By hand, because no script covers it:
   histogram, what the baseline swallowed and per rule, the phase times:
 
   ```
-  sources    150 app classes
-  views      173 documents reconstructed, nested 11 deep, 7 classes produced none
-  judged     2,313 controls of 106 types, 563 bindings, 72 icons, 4,353 attributes
-  gates      properties 150 files, render 173 documents
+  sources    129 app classes (128 building a view)
+  views      156 documents reconstructed, nested 11 deep, 1 class produced none
+  judged     2,274 controls of 110 types, 601 bindings, 73 icons, 4,310 attributes
+  gates      properties 129 files, render 156 documents
   ```
 
   (No `baselined` line any more: `abap2ui5lint-baseline.json` has been empty
   since 0.6.1 — the one frozen finding was fixed rather than carried.)
 
-  A `judged` line of zeroes, or `150 classes produced none`, is the earlier
+  A `judged` line of zeroes, or `129 classes produced none`, is the earlier
   failure repeating itself — and now it says so instead of printing
   "Success! No findings detected."
 
-  **The seven that produce none are one shape, and they are these seven**
-  (measured 2026-09-04): `117`, `131`, `185`, `191`, `195`, `211`, `338` — all
-  in `src/00/98` ("testing"), all the same "main app calling subapps" scaffold.
-  Each builds a page, keeps the handle in an instance attribute, creates the
-  sub-app with `CREATE OBJECT mo_app TYPE (t002->class)` and hands the handle
-  over through ``CALL METHOD mo_app->(`SET_APP_DATA`)``; the sub-app builds into
-  it and a dynamic ``ASSIGN mo_app->(`MV_VIEW_DISPLAY`)`` decides when to
-  display. The linter resolves each builder statement against the handle it is
-  written on, so a handle that leaves the class through a dynamic call is
-  unfollowable — by design, not by oversight, and nothing in `src/01` does it.
-  Written out so the next run can tell **the same seven** from *seven different
-  ones*: a name appearing here that is not on this list is a sample that lost
-  its view, which is the failure the count exists to catch.
+  **Since 2026-09-22 the count is ZERO, and the line is absent from the
+  summary altogether.** Every class in this repository produces at least one
+  reconstructed view. That is the state to hold: a `classes produced none`
+  line reappearing in a run is a sample that lost its view, which is the
+  failure the count exists to catch — look at the named class before
+  accepting it.
+
+  The shape that used to produce none was the "main app calling subapps"
+  scaffold: the class builds a page, keeps the handle in an instance
+  attribute, creates the sub-app with `CREATE OBJECT mo_app TYPE (class)` and
+  hands the handle over through ``CALL METHOD mo_app->(`SET_APP_DATA`)``; the
+  sub-app builds into it and a dynamic ``ASSIGN mo_app->(`MV_VIEW_DISPLAY`)``
+  decides when to display. The linter resolves each builder statement against
+  the handle it is written on, so a handle that leaves the class through a
+  dynamic call is unfollowable — by design, not by oversight. There were
+  **eight** classes of that shape: seven in the testing package (`117`, `131`,
+  `185`, `191`, `195`, `211`, `338`, measured 2026-09-04) and the `500a` of the
+  binding-error series, which had reached the catalogue shortly before. All eight
+  are gone (§2) — what each of them asserted is a unit test in abap2UI5 now,
+  the last one's in `z2ui5_cl_ui5_srv_model`'s `ltcl_07_view_host`. **Do not write
+  another one here.** A view that only exists once a second class has been
+  called by name is a view no gate in this repository can judge.
 - **The two README badges** (`.github/badges/abap2ui5.json` and
   `.github/badges/check-abap2ui5.json`, shields.io endpoint files) carry the
-  same statement, split along what they mean: *abap2UI5 | 150 apps · 173 views
-  · 2,313 controls* is what is here, blue, a fact; *check-abap2UI5 | 111 rules
+  same statement, split along what they mean: *abap2UI5 | 129 apps · 156 views
+  · 2,274 controls* is what is here, blue, a fact; *check-abap2UI5 | 111 rules
   passed* is what the gate made of it, green (or *3 problems*, *7 errors*,
   red). A run that finds nothing checkable turns both grey and says so. Every
   run rewrites them, `check-abap2UI5` commits them onto the pull request
@@ -1164,6 +1173,30 @@ manually or via editor tooling that the above rules are met.
 ---
 
 ## 7. Code Conventions
+
+### No dictionary objects — a sample is ABAP source and nothing else
+
+**This repository ships `CLAS` and `DEVC`. Never add a `TABL`, `DTEL`, `DOMA`,
+`DDLS`, `BDEF` or any other dictionary object**, and never make a sample depend
+on one it would have to bring along. A sample a reader can run is a sample that
+is one class: they pull the repository, start the class, and it works. A
+dictionary object turns that into an activation order, a transport and a
+`SELECT` against a table nobody filled.
+
+abap2UI5 holds the same rule for itself (*No new dictionary objects* in its
+`AGENTS.md`) and acted on it: the released structure `z2ui5_t_02`, added
+purely so a sample could point a dynamic type at something, was **removed on
+2026-09-22** — nothing here ever named it.
+
+Where a sample genuinely needs a **type name computed at runtime**
+(`CREATE DATA … TYPE STANDARD TABLE OF (name)`), it names a table that is
+already on every system the sample runs on. Today that is
+`Z2UI5_CL_SMP_APP_061`, which names `Z2UI5_T_01` — abap2UI5's own draft table,
+borrowed as *a name that exists*, not used as an API: the sample only reads its
+shape, never its rows, and if the framework ever changes the table the sample
+changes the string. Say that in the sample, as 061 does. Data a sample needs
+for its own sake is built in ABAP — `VALUE #( ( … ) ( … ) )` in `on_init( )` —
+never selected from the dictionary.
 
 - Follow the [SAP ABAP Style Guide](https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md).
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
@@ -1596,8 +1629,8 @@ handler runs".
 - **There is no way back up to a named ancestor.** `end( )` climbs exactly one
   level, so a view is built the way it nests. When a helper method needs a
   container the caller owns, the caller passes that reference — see the
-  nested-view samples in `src/00/98`, which take the Page they render into
-  (`mo_parent_page`) rather than searching for it.
+  `nest_view_display( )` samples of the `Nested View` category, which are
+  handed the container they render into rather than searching for it.
 
 > The former standalone XML builder `z2ui5_cl_util_xml` is retired in the
 > framework (obsolete package, no new consumers) and is no longer used by any
@@ -1743,9 +1776,81 @@ ENDCLASS.
 
 ---
 
+## 11a. What the catalogue owes the framework — the coverage audit
+
+**Every non-obsolete part of `z2ui5_if_client` is demonstrated by a sample
+somewhere in the three sample repositories.** Measured 2026-09-22 against the
+ABAP **source** of all three checkouts — this repository, `samples-stack` and
+`samples-controls` — not against a catalogue and not against this `src/`
+alone. The surfaces counted are the constants of `cs_event`, the methods of
+the interface, the components of `ty_s_event_control` and the parameters of
+`_bind( )`.
+
+| Surface | Total | Without a sample anywhere |
+|---|---:|---:|
+| `cs_event-*` | 35 | 1 |
+| `z2ui5_if_client` methods | 40 | 7 |
+| `ty_s_event_control` components | 5 | **0** |
+| `_bind( )` parameters | 9 | 2 |
+
+**All ten are obsolete**, and that is the whole finding — there is no
+uncovered feature, only features nobody should be shown:
+
+- the five `*_model_update( )` methods **do nothing** (the framework pushes
+  the model itself since `main_end` compares before and after);
+- `_bind_edit( )` is an alias of `_bind( )`, `_event_client( )` a superseded
+  spelling of `follow_up_action( )`;
+- `custom_mapper` / `custom_filter` are marked obsolete at the declaration;
+- `cs_event-z2ui5` is the legacy escape hatch in the interface's own
+  "obsolet" block.
+
+`cs_event-image_editor_popup_close` stood here too, as *"belongs to a
+`z2ui5_cl_pop_*` popup this repository may not demonstrate"*. That reading was
+wrong and the audit is the reason it surfaced: the constant was not waiting on
+the frozen package, it was waiting on a capability the framework did not have
+— reading a value off a control in another view slot into an event argument.
+abap2UI5 added `$controller.slotValue( )` and removed the constant on
+2026-09-22. **A symbol that has no sample because nothing can express it is a
+gap in the framework, not in this catalogue** — worth saying which of the two
+it is before filing it under "obsolete".
+
+**Do not write a sample for any of them.** A demonstration is a promise that
+the thing is the way to do it.
+
+Not counted, because no sample repository can carry them: the two methods of
+`z2ui5_if_ui5_exit` (an exit is a class the *installation* writes — a sample
+shipping one would take the exit over for everybody who pulls the repository)
+and the ICF entry points of `z2ui5_cl_ui5_http_handler` (`run`,
+`factory_cloud`, `_http_get` / `_http_post`, …), which a customer wires into a
+handler class rather than an app.
+
+### Count against all THREE repositories, from source
+
+This section was wrong twice in one day, the same way both times, and the rule
+is what came out of it:
+
+1. the first run grepped this `src/` only and reported `play_audio` as
+   demonstrated nowhere. `Z2UI5_CL_SMPS_APP_487` had been playing sounds in
+   `samples-stack` the whole time. A sample was written for it and withdrawn.
+2. the second run fell back on the published `SAMPLES.md` of the other two —
+   keywords and summaries, not code — and reported `popover_close` as the one
+   genuinely missing constant. It is in `samples-controls`, which simply does
+   not put the constant in a keyword line.
+
+A grep of one `src/` answers *"does this repository show it"*. The question
+that decides whether a sample is worth writing is *"does the ecosystem show
+it"*, and only the source of all three answers that. Clone the other two
+(`git clone --depth 1`) rather than reading their catalogues.
+
+**Re-run the audit when the framework's API snapshot changes**, not on a
+schedule: a new `cs_event` constant either gets a sample or gets a line above
+saying why not, and that decision is the thing worth recording.
+
+---
+
 ## 12. Sample content conventions
 
-Learned while curating the `src/01` (Basic) package — follow these so
+Learned while curating the sample catalogue — follow these so
 new/edited samples stay consistent:
 
 - **Every sample opens with an intro `MessageStrip`.** As the **first control in
@@ -1796,7 +1901,7 @@ new/edited samples stay consistent:
     `dynamic_page_title( )` — sap.f `DynamicPageTitle` has that aggregation.)
   - `<footer>` on a popup `Dialog` — `sap.m.Dialog` only got a public `footer`
     aggregation ~1.110; a `page( )->footer( )` is fine (sap.m.Page always had
-    one). Every control/property in `src/01` must exist since 1.71 (§2); when in
+    one). Every control/property here must exist since 1.71 (§2); when in
     doubt check "available since" in the demo kit.
 
 - **`sap.m.SimpleForm` needs `editable = abap_true`** for its label/input pairs
@@ -1811,8 +1916,8 @@ new/edited samples stay consistent:
   `Z2UI5_CL_SMP_APP_454`/`_455`).
 
 - **The page title carries the `<DESCRIPT>` text**, in the form
-  `` `abap2UI5 - <DESCRIPT without the (A)/(C) marker>` `` — every sample in
-  `src/01` follows it since 2026-08-13. A user clicks a tile in the overview
+  `` `abap2UI5 - <DESCRIPT without the (A)/(C) marker>` `` — every sample
+  follows it since 2026-08-13. A user clicks a tile in the overview
   (which shows the DESCRIPT) and the opened sample must name the same thing, so
   it is recognisably the right sample. Change the two together: renaming a
   DESCRIPT without the page title puts them out of sync again (they had drifted
@@ -1890,10 +1995,12 @@ job at all**: committed generated data watched only by `npm run check` on
 somebody's laptop. The `catalogues` job in `check-docs.yaml` watches both files
 now.
 
-**Only `src/01` is catalogued.** `src/00/98` exists to be run by a check
-rather than learned from (§2) and is stripped from `702` — a catalogue that
-teaches must not lead anybody into it. The ZZZ helpers are out for the reason they carry no tile (§4); they
-come back only as the extra files a playground link needs to actually run.
+**Everything in `src/` is catalogued**, which since the tree was flattened
+(§1) is every class in the repository: the testing package, which existed to be
+run by a check rather than learned from, is gone, so there is nothing left a
+catalogue that teaches would have to lead readers around. The ZZZ helpers are
+out for the reason they carry no tile (§4); they come back only as the extra
+files a playground link needs to actually run.
 
 ### Thumbnails
 

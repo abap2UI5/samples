@@ -16,11 +16,11 @@
  *     that does run it - publish-overview-apps - regenerates and PUSHES; a
  *     missing line surfaces there as a job that failed after the catalogue was
  *     already half rebuilt, which is a strange place to learn it.
- *  2. The generator only sees what becomes a TILE, which is src/01. A sample
- *     outside it carries both lines anyway - the cookbook links to some of
+ *  2. The generator only sees what becomes a TILE. A sample outside the
+ *     catalogue carries both lines anyway - the cookbook links to some of
  *     them - and nothing checked that. It held for the fourteen experimental
- *     samples of src/00/97 until that package was removed (AGENTS.md section
- *     1), and it holds for whatever lands outside src/01 next.
+ *     samples of the package that was removed in 2026-08 (AGENTS.md section
+ *     1), and it holds for whatever lands outside the catalogue next.
  *  3. It cannot check what it does not read: that the line is the FIRST line
  *     of the file, that the terms are lowercase, that there are enough of them
  *     to separate one sample from the next.
@@ -28,14 +28,12 @@
  * WHO NEEDS A LINE is decided from the tree, not from a list somebody has to
  * maintain:
  *
- *   - every sample under `src/` that is not exempt below, plus the overview
- *     app itself - stated as an exemption rather than as a list of packages,
- *     so a package that comes or goes needs no edit here;
+ *   - every sample under `src/`, plus the overview app itself;
  *   - NOT the `ZZZ` helper apps - a helper is reached BY a sample, never
- *     looked up, so search terms for it would be words nobody will type;
- *   - NOT `src/00/98`, the testing and scaffolding package. Those apps exist
- *     to be run by a check, not to be learned from (AGENTS.md section 1), and
- *     none of the three readers below is looking for them.
+ *     looked up, so search terms for it would be words nobody will type.
+ *
+ * There is no exempt package left to name: `src/` is one flat package since
+ * 2026-09-22 (AGENTS.md section 1), and everything in it is a demo.
  *
  * WHY IT MATTERS: nothing about a missing line is broken. The sample compiles,
  * runs, and is listed. The only symptom is that nobody looking for it arrives,
@@ -57,9 +55,6 @@ import { ROOT, scanSamples } from './lib/scan-samples.mjs';
  * the same two lines. */
 const OVERVIEW = { path: 'src', app: 'z2ui5_cl_smp_app_000' };
 
-/* The package whose apps are not demos: they are run by a check. */
-const EXEMPT_SUBNUM = new Set(['98']);
-
 /* Loose enough to survive reformatting, strict enough to mean it: the line has
  * to be FIRST. A keyword line further down is one a reader scrolls past and
  * one a scanner reading the head of a file would miss. */
@@ -71,14 +66,10 @@ const SUMMARY = /^" @summary (\S.*?)\r?$/;
  * point. */
 const MIN_TERMS = 3;
 
-const { areas, hidden } = scanSamples();
+const { tiles, hidden } = scanSamples();
 
 const exemptHelpers = new Set(hidden.map((h) => h.app));
-const required = [
-  ...areas['01'],
-  ...areas['00'].filter((t) => !EXEMPT_SUBNUM.has(t.subnum)),
-]
-  .filter((t) => !exemptHelpers.has(t.app));
+const required = tiles.filter((t) => !exemptHelpers.has(t.app));
 
 const problems = [];
 const terms = new Set();
@@ -119,7 +110,7 @@ for (const tile of [OVERVIEW, ...required]) {
 /* The two lines travel together, everywhere - including where there is no
  * tile. A class with one and not the other is the state nobody chose: an
  * author added a sample the way the last one looked and stopped halfway. */
-for (const tile of [...Object.values(areas).flat(), ...hidden]) {
+for (const tile of [...tiles, ...hidden]) {
   if (Boolean(tile.keywords) === Boolean(tile.summary)) continue;
   problems.push(
     `${tile.path}/${tile.app}.clas.abap: has ${tile.keywords ? '@keywords and no @summary' : '@summary and no @keywords'}`
@@ -129,8 +120,7 @@ for (const tile of [...Object.values(areas).flat(), ...hidden]) {
 
 console.log(
   `check-keywords: ${required.length + 1} sample(s) hold to it, `
-  + `${exemptHelpers.size} ZZZ helper(s) and `
-  + `${areas['00'].filter((t) => EXEMPT_SUBNUM.has(t.subnum)).length} testing app(s) exempt; `
+  + `${exemptHelpers.size} ZZZ helper(s) exempt; `
   + `${terms.size} distinct search terms`,
 );
 

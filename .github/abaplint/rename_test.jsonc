@@ -4,15 +4,14 @@
   // the placeholder zabap2ui5 and syntax-checks the result. This proves the
   // basic samples stay renameable for a parallel installation alongside a
   // renamed abap2UI5 (see https://abap2ui5.github.io/docs/advanced/renaming.html).
-  // Scoped to the portable set that survives every build: src/01 plus the
-  // overview app in the src/ root package. It is
-  // the only namespace-clean area free of dependencies on the stripped
-  // package (the testing src/00/98 is removed from the 702 build and carries
-  // non-ABAP objects that are out of scope for renaming).
+  // Scoped to src/, which since the tree was flattened (AGENTS.md section 1)
+  // is every sample plus the overview app - one namespace-clean package with
+  // no non-ABAP objects in it, so nothing is out of scope for renaming any
+  // more and nothing has to be spelled out here.
   // Runs standalone as well:
   //   npx abaplint .github/abaplint/rename_test.jsonc --rename
   "global": {
-    "files": "/../../src/{01/**/*.*,*.*}"
+    "files": "/../../src/*.*"
   },
   "dependencies": [
     {
