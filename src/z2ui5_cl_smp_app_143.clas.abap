@@ -16,12 +16,12 @@ CLASS z2ui5_cl_smp_app_143 DEFINITION PUBLIC.
 
     DATA gt_data TYPE ty_t_data.
 
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS on_init.
     METHODS on_event.
     METHODS view_display.
-
-  PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -29,15 +29,16 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
 
-  METHOD on_event.
+  METHOD z2ui5_if_app~main.
 
-    TRY.
-        IF client->check_on_event( `ROW_ACTION_ITEM_ADD` ).
-          client->message_toast_display( `Something` ).
-        ENDIF.
-      CATCH cx_root INTO DATA(x).
-        client->message_box_display( text = x->get_text( ) type = `error` ).
-    ENDTRY.
+    me->client = client.
+    IF client->check_on_init( ).
+      on_init( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -50,6 +51,20 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
       ( field1 = `23` field2 = `T2` field3 = `TEXT1` )
       ( field1 = `24` field2 = `T2` field3 = `TEXT2` )
       ( field1 = `25` field2 = `T3` field3 = `TEXT2` ) ).
+
+    view_display( ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    " the roundtrip re-renders the view on purpose: that is the model update
+    " the column filters have to survive
+    IF client->check_on_event( `ROW_ACTION_ITEM_ADD` ).
+      client->message_toast_display( |row { client->get_event_arg( ) } pressed| ).
+      view_display( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -148,24 +163,9 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
                 )->ele( n = `RowActionItem` ns = `table`
                     )->a( n = `icon`  v = `sap-icon://add`
                     )->a( n = `text`  v = `Add`
-                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_ADD` arg = `${MATNR}` ) ).
+                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_ADD` arg = `${FIELD1}` ) ).
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_init( ).
-      on_init( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-    ENDIF.
-
-    view_display( ).
-    on_event( ).
 
   ENDMETHOD.
 

@@ -4,7 +4,7 @@
  *
  * Why it exists: the overview app (z2ui5_cl_smp_app_000) is the catalogue, and
  * reaching it costs an installed framework, an abapGit pull and an HTTP
- * handler. Until then this repository is a flat folder of 150 classes whose
+ * handler. Until then this repository is a flat folder of classes whose
  * names encode nothing, so the one question a visitor arrives with - "is there
  * a sample for X?" - has no answer on GitHub.
  *
@@ -25,14 +25,14 @@ import fs from 'fs';
 import path from 'path';
 import { ROOT, DOCS_SITE, scanSamples } from './lib/scan-samples.mjs';
 import { MARKERS } from './lib/markers.mjs';
+import { writeOrCheck } from './lib/emit.mjs';
 
 const OUT = path.join(ROOT, 'SAMPLES.md');
 
 /* `--check` renders the same page and compares it instead of writing it, so
  * `npm run check` can hold what the publish-overview-apps workflow holds
  * without rewriting the tree while it does so. Same code path, one branch at
- * the end. */
-const CHECK = process.argv.includes('--check');
+ * the end (lib/emit.mjs). */
 
 // A table cell ends at an unescaped pipe, and a < starts raw HTML on GitHub.
 // The DESCRIPT texts are free text maintained on the classes, so neither is
@@ -62,7 +62,7 @@ function row(tile, underHeading) {
   // What the sample SHOWS, in the author's one sentence (AGENTS.md section 4).
   // It goes directly under the title, in normal type: the title says which
   // sample this is and the keywords say how to find it, but only this line
-  // answers the question a reader scanning 97 rows actually has - is this the
+  // answers the question a reader scanning the rows actually has - is this the
   // one I want. Everything below it is metadata; this is the row's content.
   const says = tile.summary ? `<br>${cell(tile.summary)}` : '';
   // The keywords are the app's search terms (AGENTS.md section 4). The app
@@ -224,13 +224,11 @@ if (Number(claim[1]) !== basics.length) {
 
 const counts = `${apps} apps (${basics.length} samples, ${hidden.length} helpers, 1 overview)`;
 
-if (!CHECK) {
-  fs.writeFileSync(OUT, page);
-  console.log(`SAMPLES.md: ${counts}`);
-} else if (!fs.existsSync(OUT) || fs.readFileSync(OUT, 'utf8') !== page) {
-  console.error('SAMPLES.md no longer mirrors the folder tree.');
-  console.error('\nRun `npm run launchpad` and commit the result (AGENTS.md section 3).');
-  process.exit(1);
-} else {
-  console.log(`samples-md: up to date — ${counts}`);
-}
+writeOrCheck(OUT, page, 'SAMPLES.md', {
+  stale: [
+    'SAMPLES.md no longer mirrors the folder tree.',
+    '\nRun `npm run launchpad` and commit the result (AGENTS.md section 3).',
+  ],
+  fresh: `samples-md: up to date — ${counts}`,
+  wrote: `SAMPLES.md: ${counts}`,
+});

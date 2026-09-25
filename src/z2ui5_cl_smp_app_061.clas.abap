@@ -11,7 +11,7 @@ CLASS z2ui5_cl_smp_app_061 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS set_view.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -20,7 +20,7 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
 
 
-  METHOD set_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -110,10 +110,10 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
       INSERT VALUE z2ui5_t_01( id = `this is an uuid` timestampl = `20230823124303.1234567` id_prev = `previous` ) INTO TABLE <tab>.
       " abap2ui5lint-enable non-released-api
 
-      set_view( ).
+      view_display( ).
 
     ELSEIF client->check_on_navigated( ).
-      set_view( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.

@@ -30,10 +30,12 @@ CLASS z2ui5_cl_smp_app_070 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
     METHODS on_event.
+    METHODS view_display.
     METHODS set_search.
     METHODS set_data.
+    METHODS set_sort.
+    METHODS set_filter.
 
     METHODS set_selkz
       IMPORTING
@@ -45,26 +47,16 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
-
-  METHOD set_selkz.
-
-    FIELD-SYMBOLS <ls_table> TYPE ty_s_tab.
-
-    LOOP AT mt_table ASSIGNING <ls_table>.
-      <ls_table>-selkz = iv_selkz.
-    ENDLOOP.
-
-  ENDMETHOD.
-
-
   METHOD z2ui5_if_app~main.
 
     me->client     = client.
-
     IF client->check_on_init( ).
-      on_init( ).
+
+      set_data( ).
+      view_display( ).
+
     ELSEIF client->check_on_navigated( ).
-      on_init( ).
+      view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
@@ -80,37 +72,83 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         set_data( ).
         set_search( ).
       WHEN `SORT`.
-        DATA(lt_arg) = client->get( )-t_event_arg.
-        client->message_toast_display( `Event SORT` ).
+        set_sort( ).
       WHEN `FILTER`.
-        lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( `Event FILTER` ).
+        set_filter( ).
       WHEN `SELKZ`.
         client->message_toast_display( |'Event SELKZ' { lv_selkz } | ).
         set_selkz( lv_selkz ).
-      WHEN `CUSTOMFILTER`.
-        lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( `Event CUSTOMFILTER` ).
       WHEN `ROW_ACTION_ITEM_NAVIGATION`.
-        lt_arg = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
-
-        IF sy-subrc = 0.
-          client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
-        ENDIF.
+        client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { client->get_event_arg( ) } | ).
       WHEN `ROW_ACTION_ITEM_EDIT`.
-        lt_arg = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO ls_arg INDEX 1.
-
-        IF sy-subrc = 0.
-          client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { ls_arg } | ).
-        ENDIF.
+        client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { client->get_event_arg( ) } | ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD on_init.
+  METHOD set_selkz.
+
+    LOOP AT mt_table REFERENCE INTO DATA(lr_row).
+      lr_row->selkz = iv_selkz.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD set_sort.
+
+    " the sort event carries the column's sortProperty and the requested
+    " order - the client sorts its binding too, so both agree, and the
+    " backend order is the one the next model push would restore
+    DATA(property)   = client->get_event_arg( 1 ).
+    DATA(sort_order) = client->get_event_arg( 2 ).
+
+    IF sort_order = `Descending`.
+      SORT mt_table BY (property) DESCENDING.
+    ELSE.
+      SORT mt_table BY (property) ASCENDING.
+    ENDIF.
+    client->message_toast_display( |Event SORT { property } { sort_order }| ).
+
+  ENDMETHOD.
+
+
+  METHOD set_filter.
+
+    " the filter event carries the column's filterProperty and the typed
+    " value: a contains-filter over that one component, on the full data
+    DATA(property) = client->get_event_arg( 1 ).
+    DATA(value)    = to_upper( client->get_event_arg( 2 ) ).
+
+    set_data( ).
+    set_search( ).
+
+    IF value IS INITIAL.
+      client->message_toast_display( |Event FILTER { property } cleared| ).
+      RETURN.
+    ENDIF.
+
+    DATA(lt_all) = mt_table.
+    mt_table = VALUE #( ).
+
+    LOOP AT lt_all REFERENCE INTO DATA(lr_row).
+      ASSIGN COMPONENT property OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+
+      IF sy-subrc <> 0.
+        CONTINUE.
+      ENDIF.
+
+      IF to_upper( |{ <field> }| ) CS value.
+        INSERT lr_row->* INTO TABLE mt_table.
+      ENDIF.
+    ENDLOOP.
+    client->message_toast_display( |Event FILTER { property } { value }| ).
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -133,7 +171,9 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
     page1->tag( `MessageStrip`
         )->a( n = `text`     v = `A full sap.ui.table.Table inside a DynamicPage: fixed column, row-action buttons, ` &&
-                   `progress-indicator and currency cells, plus backend-driven search, sort and filter events.`
+                   `progress-indicator and currency cells, plus search, sort and filter events that are answered ` &&
+                   `in the backend: the search rebuilds the rows, the column sort and the column filter sort and ` &&
+                   `filter the internal table with the property the event carries.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -184,14 +224,17 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     DATA(cont) = page->ele( n = `content` ns = `f` ).
 
     DATA(tab) = cont->ele( n = `Table` ns = `table`
-        )->a( n = `rows`               v = client->_bind( val = mt_table )
+        )->a( n = `rows`               v = client->_bind( mt_table )
         )->a( n = `alternateRowColors` b = abap_true
         )->a( n = `fixedColumnCount`   v = `1`
         )->a( n = `rowActionCount`     v = `2`
         )->a( n = `selectionMode`      v = `None`
-        )->a( n = `filter`             v = client->_event( `FILTER` )
-        )->a( n = `sort`               v = client->_event( `SORT` )
-        )->a( n = `customFilter`       v = client->_event( `CUSTOMFILTER` ) ).
+        )->a( n = `filter`             v = client->_event( val   = `FILTER`
+                                                            t_arg = VALUE #( ( `${$parameters>/column}.getFilterProperty()` )
+                                                                             ( `${$parameters>/value}` ) ) )
+        )->a( n = `sort`               v = client->_event( val = `SORT`
+                                                            t_arg = VALUE #( ( `${$parameters>/column}.getSortProperty()` )
+                                                                             ( `${$parameters>/sortOrder}` ) ) ) ).
     tab->ele( n = `extension` ns = `table`
         )->ele( `OverflowToolbar`
             )->tag( `Title`
@@ -360,4 +403,5 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -45,6 +45,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
         client->view_destroy( ).
       WHEN `POPUP_DECIDE_CONTINUE`.
         client->popup_destroy( ).
+        view_display( ).
         client->message_toast_display( `continue pressed` ).
       WHEN `POPUP_DECIDE_CANCEL`.
         client->popup_destroy( ).
@@ -210,9 +211,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       on_navigation( ).
     ELSEIF client->check_on_event( ).
       on_event( ).

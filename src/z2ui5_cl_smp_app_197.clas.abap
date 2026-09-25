@@ -196,55 +196,19 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
 
   METHOD data_read.
 
-    mt_table = VALUE #(
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 ) ).
+    " the six rows eight times - enough for the facet filter to have
+    " something to count
+    mt_table = VALUE #( ).
+    DO 8 TIMES.
+      INSERT LINES OF VALUE ty_t_table(
+          ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
+          ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
+          ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+          ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
+          ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+          ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
+          ) INTO TABLE mt_table.
+    ENDDO.
 
     SORT mt_table BY product.
     mt_table_full = mt_table.

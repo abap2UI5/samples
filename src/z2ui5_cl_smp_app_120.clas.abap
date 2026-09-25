@@ -6,12 +6,12 @@ CLASS z2ui5_cl_smp_app_120 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA longitude TYPE string.
-    DATA latitude TYPE string.
-    DATA altitude TYPE string.
-    DATA speed TYPE string.
+    DATA longitude        TYPE string.
+    DATA latitude         TYPE string.
+    DATA altitude         TYPE string.
+    DATA speed            TYPE string.
     DATA altitudeaccuracy TYPE string.
-    DATA accuracy TYPE string.
+    DATA accuracy         TYPE string.
 
 
   PROTECTED SECTION.
@@ -28,15 +28,9 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
-    IF client->check_on_init( ).
+    IF client->check_on_navigated( ).
       view_display( ).
-      RETURN.
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-    ENDIF.
-
-    IF client->get_event( ) = `GEOLOCATION_ERROR`.
+    ELSEIF client->check_on_event( `GEOLOCATION_ERROR` ).
       " the Geolocation control fires `error` when the position cannot be
       " read; the code (1 = permission denied, 2 = position unavailable,
       " 3 = timeout) and message are passed as event arguments.

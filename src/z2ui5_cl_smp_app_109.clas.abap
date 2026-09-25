@@ -11,7 +11,6 @@ CLASS z2ui5_cl_smp_app_109 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
     METHODS on_event.
     METHODS view_display.
     METHODS popover_display
@@ -146,7 +145,8 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+
+      mv_placement = `Left`.
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
@@ -162,13 +162,6 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
     IF client->check_on_event( `POPOVER` ).
       popover_display( `TEST` ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    mv_placement = `Left`.
 
   ENDMETHOD.
 

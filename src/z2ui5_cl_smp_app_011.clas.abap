@@ -78,6 +78,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
                 )->tag( `Button`
                     )->a( n = `press` v = client->_event( `BUTTON_EDIT` )
                     )->a( n = `text`  t = SWITCH #( check_editable_active WHEN abap_true THEN `display` ELSE `edit` )
+                    )->a( n = `tooltip` v = `Switch the cells between display and edit mode`
                     )->a( n = `icon`  v = `sap-icon://edit`
             )->end(
         )->end( ).
@@ -159,7 +160,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
 
     ELSEIF client->check_on_event( `BUTTON_ADD` ).
 
-      INSERT VALUE #( ) INTO TABLE t_tab.
+      INSERT VALUE #( editable = check_editable_active ) INTO TABLE t_tab.
     ENDIF.
 
   ENDMETHOD.

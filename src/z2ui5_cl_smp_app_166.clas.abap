@@ -27,10 +27,10 @@ CLASS z2ui5_cl_smp_app_166 DEFINITION PUBLIC.
         INCLUDE TYPE ty_s_struc_incl.
     DATA END OF ms_struc2.
 
-    METHODS set_view.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -38,7 +38,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_166 IMPLEMENTATION.
 
-  METHOD set_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -103,9 +103,9 @@ CLASS z2ui5_cl_smp_app_166 IMPLEMENTATION.
       ms_struc2-incl_value = `val01_incl`.
       ms_struc2-incl_value2 = `val02_incl`.
 
-      set_view( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
-      set_view( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.

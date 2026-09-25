@@ -1,5 +1,5 @@
 " @keywords growing 10000 rows sticky toolbar sort performance
-" @summary 10.000 rows in one table: growing, a sticky toolbar and sorting - and what that costs on the way to the browser.
+" @summary 10.000 rows in one table: growing with scroll-to-load, a sticky header toolbar and sorting in the backend.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables
 CLASS z2ui5_cl_smp_app_006 DEFINITION PUBLIC.
 
@@ -8,14 +8,10 @@ CLASS z2ui5_cl_smp_app_006 DEFINITION PUBLIC.
 
     TYPES:
       BEGIN OF ty_s_row,
-        count      TYPE i,
-        value      TYPE string,
-        descr      TYPE string,
-        icon       TYPE string,
-        info       TYPE string,
-        checkbox   TYPE abap_bool,
-        percentage TYPE p LENGTH 5 DECIMALS 2,
-        valuecolor TYPE string,
+        count    TYPE i,
+        value    TYPE string,
+        descr    TYPE string,
+        checkbox TYPE abap_bool,
       END OF ty_s_row.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
@@ -34,7 +30,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -42,7 +37,6 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
       on_init( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
@@ -60,6 +54,8 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
 
   METHOD on_event.
 
+    " the sorted table reaches the view with the model push - no re-render
+    " of the 10,000 rows is needed
     CASE client->get_event( ).
       WHEN `SORT_ASCENDING`.
         SORT t_tab BY count ASCENDING.
@@ -69,19 +65,16 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
         client->message_toast_display( `sort descending` ).
     ENDCASE.
 
-    view_display( ).
-
   ENDMETHOD.
 
 
   METHOD refresh_data.
 
-    t_tab      = VALUE #( FOR i = 1 UNTIL i > 10000 (
-    count      = i
-    value      = `red`
-    descr      = `this is a description`
-    checkbox   = abap_true
-    valuecolor = `Good` ) ).
+    t_tab = VALUE #( FOR i = 1 UNTIL i > 10000 (
+      count    = i
+      value    = `red`
+      descr    = `this is a description`
+      checkbox = abap_true ) ).
 
   ENDMETHOD.
 
@@ -103,7 +96,8 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A large table (10,000 rows) is rendered inside a ScrollContainer using growing / ` &&
-                   `scroll-to-load, with a sticky header toolbar offering sort buttons and a segmented button.`
+                   `scroll-to-load, with a sticky header toolbar: a segmented button and two sort buttons that ` &&
+                   `sort the table in the backend and push the new order to the client.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -122,11 +116,6 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
         )->ele( `Toolbar`
             )->tag( `Title`
                 )->a( n = `text` v = `title of the table`
-            )->tag( `Button`
-                " abap2ui5lint-disable-next-line event-without-handler -- toolbar layout demo; the sort buttons on the right are the working pair
-                )->a( n = `press` v = client->_event( `BUTTON_SORT` )
-                )->a( n = `text`  v = `left side button`
-                )->a( n = `icon`  v = `sap-icon://account`
             )->ele( `SegmentedButton`
                 )->a( n = `selectedKey` t = key
                 )->ele( `items`
@@ -157,10 +146,6 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
         )->end(
         )->ele( `Column`
             )->tag( `Text`
-                )->a( n = `text` v = `Info`
-        )->end(
-        )->ele( `Column`
-            )->tag( `Text`
                 )->a( n = `text` v = `Description`
         )->end(
         )->ele( `Column`
@@ -169,19 +154,13 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
         )->end(
         )->ele( `Column`
             )->tag( `Text`
-                )->a( n = `text` v = `Counter`
-        )->end(
-        )->ele( `Column`
-            )->tag( `Text`
-                )->a( n = `text` v = `Radial Micro Chart` ).
+                )->a( n = `text` v = `Counter` ).
 
     tab->ele( `items`
         )->ele( `ColumnListItem`
             )->ele( `cells`
                 )->tag( `Text`
                     )->a( n = `text` v = `{VALUE}`
-                )->tag( `Text`
-                    )->a( n = `text` v = `{INFO}`
                 )->tag( `Text`
                     )->a( n = `text` v = `{DESCR}`
                 )->tag( `CheckBox`
@@ -193,4 +172,5 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -6,29 +6,24 @@ CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-    DATA message TYPE string.
-    DATA duration TYPE string.
-    DATA width TYPE string.
-    DATA my TYPE string.
-    DATA at TYPE string.
-    DATA dock_to_anchor TYPE abap_bool.
-    DATA offset TYPE string.
-    DATA collision TYPE string.
-    DATA animation_timing TYPE string.
-    DATA animation_duration TYPE string.
-    DATA autoclose TYPE abap_bool.
+    DATA message             TYPE string.
+    DATA duration            TYPE string.
+    DATA width               TYPE string.
+    DATA my                  TYPE string.
+    DATA at                  TYPE string.
+    DATA dock_to_anchor      TYPE abap_bool.
+    DATA offset              TYPE string.
+    DATA collision           TYPE string.
+    DATA animation_timing    TYPE string.
+    DATA animation_duration  TYPE string.
+    DATA autoclose           TYPE abap_bool.
     DATA close_on_navigation TYPE abap_bool.
-    DATA notify_close TYPE abap_bool.
-    DATA css_class TYPE string.
-    DATA closed_count TYPE i.
-    DATA closed_text TYPE string.
+    DATA notify_close        TYPE abap_bool.
+    DATA css_class           TYPE string.
+    DATA closed_count        TYPE i.
+    DATA closed_text         TYPE string.
 
   PROTECTED SECTION.
-
-
-    METHODS on_init.
-    METHODS show_toast.
     TYPES:
       BEGIN OF ty_s_opt,
         name TYPE string,
@@ -36,6 +31,10 @@ CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
       END OF ty_s_opt.
     TYPES ty_t_opt TYPE STANDARD TABLE OF ty_s_opt WITH EMPTY KEY.
 
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS on_init.
+    METHODS show_toast.
     METHODS toast_options
       RETURNING
         VALUE(result) TYPE string.

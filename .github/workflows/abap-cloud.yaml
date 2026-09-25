@@ -25,4 +25,4 @@ jobs:
         node-version: '22'
         cache: 'npm'
     - run: npm ci
-    - run: npx abaplint .github/abaplint/abap_cloud.jsonc
+    - run: npm run check:cloud

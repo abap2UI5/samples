@@ -50,14 +50,11 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { checkAbapSource } from '@abap2ui5/linter';
-import { scanSamples } from './lib/scan-samples.mjs';
+import { ROOT, scanSamples } from './lib/scan-samples.mjs';
+import { writeOrCheck } from './lib/emit.mjs';
 
-const HERE = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.join(HERE, '..');
 const OUT = path.join(ROOT, 'catalogue-derived.json');
-const CHECK = process.argv.includes('--check');
 
 /** The floor this repository holds every sample to — and the answer for a
  *  sample that needs nothing newer. */
@@ -179,19 +176,13 @@ const body = samples
   .join(',\n');
 const page = `${head.slice(0, -2)},\n  "samples": [\n${body}\n  ]\n}\n`;
 
-if (CHECK) {
-  const current = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
-  if (current !== page) {
-    console.error('catalogue-derived.json is stale — run `npm run derived` and commit the result.');
-    process.exit(1);
-  }
-  console.log(`catalogue-derived.json: current (${samples.length} samples)`);
-} else {
-  fs.writeFileSync(OUT, page);
-  const size = (fs.statSync(OUT).size / 1024).toFixed(0);
-  console.log(
-    `catalogue-derived.json: ${samples.length} samples, ${controls.length} controls, `
-    + `releases ${releases[0]}–${releases[releases.length - 1]} (${size} KB)`,
-  );
-}
+writeOrCheck(OUT, page, 'catalogue-derived.json', {
+  stale: ['catalogue-derived.json is stale — run `npm run derived` and commit the result.'],
+  fresh: `catalogue-derived.json: current (${samples.length} samples)`,
+  wrote: () => {
+    const size = (fs.statSync(OUT).size / 1024).toFixed(0);
+    return `catalogue-derived.json: ${samples.length} samples, ${controls.length} controls, `
+      + `releases ${releases[0]}–${releases[releases.length - 1]} (${size} KB)`;
+  },
+});
 if (failed) console.error(`generate-derived: ${failed} sample(s) the linter could not reconstruct — see \`note\``);

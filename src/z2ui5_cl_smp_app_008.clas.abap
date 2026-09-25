@@ -18,13 +18,11 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
     IF client->check_on_navigated( ).
       view_display( ).
-
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
@@ -47,12 +45,10 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
         TRY.
             DATA(lv_val) = 1 / 0.
             client->message_box_display( |{ lv_val }| ).
-          CATCH cx_root INTO DATA(lx).
-            client->message_box_display( lx ).
+          CATCH cx_root INTO DATA(x).
+            client->message_box_display( x ).
         ENDTRY.
     ENDCASE.
-
-    view_display( ).
 
   ENDMETHOD.
 
@@ -72,10 +68,7 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Message - MessageBox from SY, BAPIRET2 or Exception`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-            )->ele( `headerContent`
-                )->tag( `Link`
-            )->end( ).
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `The three buttons feed a MessageBox with the message objects ABAP ` &&
@@ -105,4 +98,5 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

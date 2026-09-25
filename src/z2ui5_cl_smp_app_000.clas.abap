@@ -795,7 +795,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         path = `src` app = `z2ui5_cl_smp_app_506` )
       ( group = `Talk to the user` header = `Event` sub = `Prevent Default per Column` keywords = `grid table sort column prevent default expression prevent_default_expr backend sort client sort per column` path = `src` app = `z2ui5_cl_smp_app_505` )
       ( group = `Talk to the user` header = `Menu` sub = `Full Path of the Selected Item (A)` keywords = `menuitem nested submenu textpath controller path` path = `src` app = `z2ui5_cl_smp_app_473` )
-      ( group = `Talk to the user` header = `Menu` sub = `Menu Button with core:require` keywords = `menubutton menuitem popover messagetoast require module` path = `src` app = `z2ui5_cl_smp_app_163` )
+      ( group = `Talk to the user` header = `Menu` sub = `Menu as Popover with core:require` keywords = `menu menuitem popover button messagetoast require module` path = `src` app = `z2ui5_cl_smp_app_163` )
       ( group = `Talk to the user` header = `Message` sub = `Message Model and MessageManager (C)` keywords = `messagemanager validation target field state central model` path = `src` app = `z2ui5_cl_smp_app_467` )
       ( group = `Talk to the user` header = `Message` sub = `MessageBox for Any Data` keywords = `messagebox details table structure tree object reference escape limit action onclose` path = `src` app = `z2ui5_cl_smp_app_502` )
       ( group = `Talk to the user` header = `Message` sub = `MessageBox from SY, BAPIRET2 or Exception` keywords = `t100 message class number exception cx_root error abend` path = `src` app = `z2ui5_cl_smp_app_008` )

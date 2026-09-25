@@ -26,10 +26,10 @@ CLASS z2ui5_cl_smp_app_173 DEFINITION PUBLIC.
     DATA mt_layout TYPE ty_t_layout.
     DATA mt_data   TYPE ty_t_data.
 
-    METHODS view_display.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -39,6 +39,12 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
 
 
   METHOD view_display.
+
+    " the template model is the view model, so what the repeat and the if
+    " read are bound attributes - their paths are composed from the bind
+    " call, never written by hand
+    DATA(layout_path) = |\{template>{ client->_bind( val = mt_layout path = abap_true ) }\}|.
+    DATA(flag_path)   = |\{template>{ client->_bind( val = mv_flag path = abap_true ) }\}|.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -68,7 +74,7 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
         )->a( n = `items` v = client->_bind( mt_data )
         )->ele( `columns`
             )->ele( n = `repeat` ns = `template`
-                )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                )->a( n = `list` v = layout_path
                 )->a( n = `var`  v = `L0`
                 )->ele( `Column`
                     )->a( n = `mergeDuplicates` v = `{L0>MERGE}`
@@ -82,7 +88,7 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
             )->ele( `ColumnListItem`
                 )->ele( `cells`
                     )->ele( n = `repeat` ns = `template`
-                        )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                        )->a( n = `list` v = layout_path
                         )->a( n = `var`  v = `L1`
                         )->ele( `ObjectIdentifier`
                             )->a( n = `text` v = `{= '{' + ${L1>FNAME} + '}' }` ).
@@ -95,7 +101,7 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
                   view   = view->ele( `VBox` ).
 
     view->ele( n = `if` ns = `template`
-        )->a( n = `test` v = `{template>/MV_FLAG}`
+        )->a( n = `test` v = flag_path
         )->ele( n = `then` ns = `template`
             )->tag( n = `Icon` ns = `core`
                 )->a( n = `color` v = `green`
@@ -117,22 +123,18 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      client->_bind( mt_layout ).
-
       mt_data = VALUE #( ( name = `Theo` date = `01.01.2000` age = `5` )
-                         ( name = `Lore` date = `01.01.2000` age = `1` ) ).
+                        ( name = `Lore` date = `01.01.2000` age = `1` ) ).
 
       mt_layout = VALUE #( ( fname = `NAME` merge = `false` visible = `true` )
-                           ( fname = `DATE` merge = `false` visible = `true` )
-                           ( fname = `AGE`  merge = `false` visible = `false` ) ).
+                          ( fname = `DATE` merge = `false` visible = `true` )
+                          ( fname = `AGE`  merge = `false` visible = `false` ) ).
 
       view_display( ).
+
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-
-    ENDIF.
-
-    IF client->get_event( ) = `CHANGE_FLAG`.
+    ELSEIF client->check_on_event( `CHANGE_FLAG` ).
       view_display( ).
     ENDIF.
 

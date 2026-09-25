@@ -10,7 +10,7 @@
   "field. That order is a teaching decision, so it is written here and nowhere else.",
   "",
   "Rules the generator enforces (scripts/generate-catalogue.mjs):",
-  "  - every category in src/01 belongs to EXACTLY ONE stage - a new one fails the build",
+  "  - every category in src/ belongs to EXACTLY ONE stage - a new one fails the build",
   "    rather than being dropped silently off the path,",
   "  - a category named here that no sample uses fails too, so a renamed DESCRIPT cannot",
   "    leave a dead entry behind.",

@@ -11,10 +11,7 @@ CLASS z2ui5_cl_smp_app_088 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    DATA mv_page TYPE string.
-
     METHODS view_display.
-    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -25,24 +22,11 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client     = client.
-
-    IF client->check_on_init( ).
-      mv_page = `page1`.
+    " no event branch: the tab switch is answered on the client by the
+    " follow-up action below, nothing reaches the backend
+    IF client->check_on_navigated( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-
-    ELSEIF client->check_on_event( ).
-      on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    mv_page = client->get_event( ).
-    view_display( ).
 
   ENDMETHOD.
 

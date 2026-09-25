@@ -170,9 +170,10 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
     page->ele( `footer`
         )->ele( `OverflowToolbar`
             )->tag( `Button`
-                )->a( n = `press` v = client->_event( `POPUP` )
-                )->a( n = `text`  t = |{ error_count }|
-                )->a( n = `icon`  v = `sap-icon://message-error`
+                )->a( n = `press`   v = client->_event( `POPUP` )
+                )->a( n = `text`    t = |{ error_count }|
+                )->a( n = `icon`    v = `sap-icon://message-error`
+                )->a( n = `tooltip` v = `Show the messages`
             )->tag( `ToolbarSpacer`
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( `POPOVER` )

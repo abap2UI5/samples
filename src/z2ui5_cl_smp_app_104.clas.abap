@@ -1,6 +1,13 @@
 " @keywords sub app class embed instantiate another app rtti
 " @summary Embeds ANOTHER app's view into this one - the class is instantiated over RTTI and renders inside the page it is given.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views
+"! This is the recorded exception to the "main app calling sub-apps" rule of
+"! AGENTS.md (section 6): it creates the sub-app with CREATE OBJECT ... TYPE
+"! (classname) and hands its view reference over through a dynamic ASSIGN, so
+"! the sub-app's view is unfollowable for the abap2UI5-linter. It stays because
+"! the dynamic instantiation IS the lesson, and the sub-apps
+"! z2ui5_cl_smp_app_105 and z2ui5_cl_smp_app_112 are ordinary samples that are
+"! judged on their own. Do not write another sample of this shape.
 CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -32,6 +39,7 @@ CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
     METHODS view_display_master.
     METHODS view_display_detail.
     METHODS on_event_sub.
+    METHODS on_event_selchange.
     METHODS on_init_sub.
 
   PRIVATE SECTION.
@@ -145,8 +153,6 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
             )->a( n = `description` v = `{DESCR}`
             )->a( n = `icon`        v = `{ICON}`
             )->a( n = `info`        v = `{INFO}`
-            " abap2ui5lint-disable-next-line event-without-handler -- item press; SELCHANGE below carries the selection this sample is about
-            )->a( n = `press`       v = client->_event( `TEST` )
             )->a( n = `selected`    v = `{SELECTED}` ).
 
     client->view_display( list->stringify( ) ).
@@ -154,50 +160,54 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD on_event_selchange.
+
+    DATA(t_sel) = t_tab.
+    DELETE t_sel WHERE selected = abap_false.
+    READ TABLE t_sel INTO DATA(s_sel) INDEX 1.
+
+    IF sy-subrc <> 0.
+      RETURN.
+    ENDIF.
+
+    IF classname IS NOT INITIAL.
+      view_display_master( ).
+    ENDIF.
+    classname = s_sel-info.
+
+    layout = `TwoColumnsMidExpanded`.
+    view_display_detail( ).
+    on_init_sub( ).
+
+    client->nest_view_display(
+      val            = view_nested->stringify( )
+      id             = `test`
+      method_insert  = `addMidColumnPage`
+      method_destroy = `removeAllMidColumnPages` ).
+
+  ENDMETHOD.
+
+
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
-        ( title = `Class 1`  info = `z2ui5_cl_smp_app_105`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Class 1`  info = `z2ui5_cl_smp_app_105` descr = `this is a description` icon = `sap-icon://account` )
         ( title = `Class 2`  info = `z2ui5_cl_smp_app_112` descr = `this is a description` icon = `sap-icon://account` ) ).
 
       layout = `OneColumn`.
       view_display_master( ).
-      view_display_detail( ).
+
     ELSEIF client->check_on_navigated( ).
       view_display_master( ).
-
     ELSEIF client->check_on_event( `SELCHANGE` ).
-
-      DATA(t_sel) = t_tab.
-      DELETE t_sel WHERE selected = abap_false.
-      READ TABLE t_sel INTO DATA(s_sel) INDEX 1.
-
-      IF sy-subrc <> 0.
-        RETURN.
-      ENDIF.
-
-      IF classname IS NOT INITIAL.
-        view_display_master( ).
-      ENDIF.
-      classname = s_sel-info.
-
-      layout = `TwoColumnsMidExpanded`.
-      view_display_detail( ).
-      on_init_sub( ).
-
-      client->nest_view_display(
-        val            = view_nested->stringify( )
-        id             = `test`
-        method_insert  = `addMidColumnPage`
-        method_destroy = `removeAllMidColumnPages` ).
-
+      on_event_selchange( ).
+    ELSEIF client->check_on_event( ).
+      " every other event was raised inside the embedded app - it handles it
+      on_event_sub( ).
     ENDIF.
-
-    on_event_sub( ).
 
   ENDMETHOD.
 

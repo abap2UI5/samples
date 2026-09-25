@@ -143,7 +143,7 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
                    `keystroke that meets a round-trip in flight raises the global busy overlay with no delay at all - ` &&
                    `right for a dropped click, wrong over the field you are typing into - and that flag keeps it down. ` &&
                    `The round-trip is unchanged, only the overlay is. Type quickly: the filter lands on what you typed ` &&
-                   `and nothing blinks. Sample 511 shows the same wire with and without the flags side by side.`
+                   `and nothing blinks. Z2UI5_CL_SMP_APP_511 shows the same wire with and without the flags side by side.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).

@@ -20,13 +20,16 @@ CLASS z2ui5_cl_smp_app_045 DEFINITION PUBLIC.
     DATA mv_info_filter TYPE string.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS refresh_data.
+    METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
 CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
-
 
   METHOD refresh_data.
 
@@ -46,14 +49,25 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
     IF client->check_on_init( ).
       refresh_data( ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSEIF client->check_on_event( `FILTER_INFO` ).
+
       refresh_data( ).
+
       IF mv_info_filter IS NOT INITIAL.
         DELETE t_tab WHERE info <> mv_info_filter.
       ENDIF.
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -143,4 +157,5 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

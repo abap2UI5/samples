@@ -1698,12 +1698,13 @@
    "category": "Menu",
    "stage": "talk",
    "title": "Menu",
-   "description": "Menu Button with core:require",
-   "summary": "A MenuButton whose items call a UI5 module loaded with core:require, so the click is answered in the frontend.",
+   "description": "Menu as Popover with core:require",
+   "summary": "A Menu opened as a popover from a Button, whose items call a UI5 module loaded with core:require, so the click is answered in the frontend.",
    "keywords": [
-    "menubutton",
+    "menu",
     "menuitem",
     "popover",
+    "button",
     "messagetoast",
     "require",
     "module"
@@ -2452,7 +2453,7 @@
    "stage": "rows",
    "title": "Table",
    "description": "Large Table with Growing and ScrollContainer",
-   "summary": "10.000 rows in one table: growing, a sticky toolbar and sorting - and what that costs on the way to the browser.",
+   "summary": "10.000 rows in one table: growing with scroll-to-load, a sticky header toolbar and sorting in the backend.",
    "keywords": [
     "growing",
     "10000",

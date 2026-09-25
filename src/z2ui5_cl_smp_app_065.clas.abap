@@ -11,6 +11,12 @@ CLASS z2ui5_cl_smp_app_065 DEFINITION PUBLIC.
     DATA mv_count       TYPE i.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS on_event.
+    METHODS view_display.
+    METHODS nest_view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -18,6 +24,42 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `TEST`.
+        client->message_box_display( |input { mv_input_nest }| ).
+      WHEN `ALL`.
+        view_display( ).
+        nest_view_display( ).
+      WHEN `MAIN`.
+        view_display( ).
+      WHEN `NEST`.
+        nest_view_display( ).
+      WHEN `NEST_MODEL`.
+        " change only a nest-bound field, without re-rendering the nested XML.
+        " The main and nested views share one model and that model is pushed
+        " with every response, so the nested view picks the change up too.
+        " Press "Rerender only nested view" first so the nested view exists.
+        mv_count      = mv_count + 1.
+        mv_input_nest = |nest model updated #{ mv_count }|.
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(lo_view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -32,10 +74,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
             )->a( n = `title`          v = `abap2UI5 - Nested View - Basic Example (nest_view_display)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-            )->a( n = `id`             v = `test`
-            )->ele( `headerContent`
-                )->tag( `Link`
-            )->end( ).
+            )->a( n = `id`             v = `test` ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A main view with a nested view inside: the buttons re-render everything, only the ` &&
@@ -60,6 +99,13 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
         )->tag( `Input`
             )->a( n = `value` v = client->_bind( mv_input_main ) ).
 
+    client->view_display( lo_view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD nest_view_display.
+
     DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
@@ -75,34 +121,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
                 )->tag( `Input`
                     )->a( n = `value` v = client->_bind( mv_input_nest ) ).
 
-    IF client->check_on_init( ).
-      client->view_display( lo_view->stringify( ) ).
-
-    ENDIF.
-
-    CASE client->get_event( ).
-
-      WHEN `TEST`.
-        client->message_box_display( |input { mv_input_nest }| ).
-
-      WHEN `ALL`.
-        client->view_display( lo_view->stringify( ) ).
-        client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` ).
-
-      WHEN `MAIN`.
-        client->view_display( lo_view->stringify( ) ).
-
-      WHEN `NEST`.
-        client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` ).
-
-      WHEN `NEST_MODEL`.
-        " change only a nest-bound field, without re-rendering the nested XML.
-        " The main and nested views share one model and that model is pushed
-        " with every response, so the nested view picks the change up too.
-        " Press "Rerender only nested view" first so the nested view exists.
-        mv_count      = mv_count + 1.
-        mv_input_nest = |nest model updated #{ mv_count }|.
-    ENDCASE.
+    client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` ).
 
   ENDMETHOD.
 

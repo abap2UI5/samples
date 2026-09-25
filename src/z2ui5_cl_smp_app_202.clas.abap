@@ -112,29 +112,22 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_navigated( ).
+      view_display( client ).
+    ELSEIF client->check_on_event( `STEP22` ) OR client->check_on_event( `STEP23` ).
 
-      view_display( client ).
-      RETURN.
-    ELSEIF client->check_on_navigated( ).
-      view_display( client ).
+      " the original wizard flow (discardProgress + setNextStep) as two
+      " generic whitelisted control calls - t_arg is positional:
+      " id, method, params (the step params are control ids; the view
+      " defaults to cs_view-main)
+      next_step = client->get_event( ).
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-control_by_id
+          t_arg = VALUE #( ( `wiz` ) ( `discardProgress` ) ( `STEP2` ) ) ).
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-control_by_id
+          t_arg = VALUE #( ( `STEP2` ) ( `setNextStep` ) ( next_step ) ) ).
     ENDIF.
-
-    CASE client->get_event( ).
-      WHEN `STEP22` OR `STEP23`.
-        " the original wizard flow (discardProgress + setNextStep) as two
-        " generic whitelisted control calls - t_arg is positional:
-        " id, method, params (the step params are control ids; the view
-        " defaults to cs_view-main)
-        next_step = client->get_event( ).
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-control_by_id
-            t_arg = VALUE #( ( `wiz` ) ( `discardProgress` ) ( `STEP2` ) ) ).
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-control_by_id
-            t_arg = VALUE #( ( `STEP2` ) ( `setNextStep` ) ( next_step ) ) ).
-
-    ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.

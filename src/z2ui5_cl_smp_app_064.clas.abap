@@ -7,20 +7,14 @@ CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_check_active TYPE abap_bool.
-    DATA:
-      BEGIN OF screen,
-        progress_value TYPE string VALUE `0`,
-        display_value  TYPE string VALUE ``,
-      END OF screen.
-
-    DATA mv_percent TYPE i.
     DATA mv_check_enabled TYPE abap_bool.
+    DATA mv_percent TYPE i.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
     METHODS on_event.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -32,10 +26,12 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
-    ELSEIF client->check_on_navigated( ).
-      on_init( ).
 
+      mv_check_enabled = abap_true.
+      view_display( ).
+
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
@@ -72,15 +68,9 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_init.
+  METHOD view_display.
 
-    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
-    DATA page1 TYPE REF TO z2ui5_cl_ui5_view_builder.
-    DATA temp5 TYPE abap_bool.
-    DATA layout TYPE REF TO z2ui5_cl_ui5_view_builder.
-
-    mv_check_enabled = abap_true.
-    view             = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(view)             = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -89,29 +79,28 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
 
-    temp5          = client->check_app_prev_stack( ).
-    page1          = view->ele( `Shell`
+    DATA(page)          = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Timer - Progress Indicator during a Backend Call`
-            )->a( n = `showNavButton`  b = temp5
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
             )->a( n = `class`          v = `sapUiContentPadding`
             )->a( n = `id`             v = `page_main` ).
 
-    page1->tag( `MessageStrip`
+    page->tag( `MessageStrip`
         )->a( n = `text`     v = `A ProgressIndicator driven from the backend: pressing Load runs a WAIT-delayed server ` &&
                    `step and re-arms a client timer (follow_up_action), advancing the bar in 25% steps until it completes.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    layout = page1->ele( n = `VerticalLayout` ns = `layout`
+    DATA(layout) = page->ele( n = `VerticalLayout` ns = `layout`
         )->a( n = `class` v = `sapuicontentpadding`
         )->a( n = `width` v = `100%` ).
     layout->ele( `VBox`
         )->tag( `ProgressIndicator`
             )->a( n = `percentValue` v = client->_bind( mv_percent )
-            )->a( n = `displayValue` v = client->_bind( screen-display_value )
+            )->a( n = `displayValue` v = |\{{ client->_bind( val = mv_percent path = abap_true ) }\} %|
             )->a( n = `showValue`    b = abap_true
             )->a( n = `state`        v = `Success` ).
 

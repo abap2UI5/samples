@@ -27,6 +27,7 @@ CLASS z2ui5_cl_smp_app_097 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
+    METHODS on_event.
     METHODS view_display_master.
     METHODS view_display_detail.
 
@@ -56,13 +57,7 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         )->a( n = `alternateRowColors` b = abap_true
         )->a( n = `fixedColumnCount`   v = `1`
         )->a( n = `rowActionCount`     v = `1`
-        )->a( n = `selectionMode`      v = `None`
-        " abap2ui5lint-disable-next-line event-without-handler -- sap.ui.table fires it; the roundtrip re-renders and that is the point
-        )->a( n = `filter`             v = client->_event( `FILTER` )
-        " abap2ui5lint-disable-next-line event-without-handler -- sap.ui.table fires it; the roundtrip re-renders and that is the point
-        )->a( n = `sort`               v = client->_event( `SORT` )
-        " abap2ui5lint-disable-next-line event-without-handler -- sap.ui.table fires it; the roundtrip re-renders and that is the point
-        )->a( n = `customFilter`       v = client->_event( `CUSTOMFILTER` ) ).
+        )->a( n = `selectionMode`      v = `None` ).
     tab->ele( n = `extension` ns = `table`
         )->ele( `OverflowToolbar`
             )->tag( `Title`
@@ -149,8 +144,6 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
             )->a( n = `description` v = `{DESCR}`
             )->a( n = `icon`        v = `{ICON}`
             )->a( n = `info`        v = `{INFO}`
-            " abap2ui5lint-disable-next-line event-without-handler -- item press; the master-detail wiring below is what this sample shows
-            )->a( n = `press`       v = client->_event( `TEST` )
             )->a( n = `selected`    v = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).
@@ -161,7 +154,6 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
@@ -173,34 +165,40 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
       mv_layout = `OneColumn`.
-
       view_display_master( ).
       view_display_detail( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display_master( ).
 
+    ELSEIF client->check_on_navigated( ).
+
+      " both views again: the detail is a nested view inside the master, so
+      " a re-displayed master without it would leave the mid column empty
+      view_display_master( ).
+      view_display_detail( ).
+
+    ELSEIF client->check_on_event( ).
+      on_event( ).
     ENDIF.
 
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
     CASE client->get_event( ).
-
       WHEN `ROW_DELETE`.
-
         DELETE t_tab2 WHERE uuid = client->get_event_arg( ).
-
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
-
         READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
 
         IF sy-subrc = 0.
+
           mv_row_id = mv_row_id + 1.
           ls_sel-uuid = |{ mv_row_id }|.
           INSERT ls_sel INTO TABLE t_tab2.
         ENDIF.
-
         mv_layout = `TwoColumnsMidExpanded`.
-
     ENDCASE.
 
   ENDMETHOD.

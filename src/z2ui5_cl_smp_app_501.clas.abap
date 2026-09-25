@@ -48,13 +48,15 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
     IF client->check_on_init( ).
       on_init( ).
       popup_display( ).
+    ELSEIF client->check_on_navigated( ).
+      " this app owns a POPUP, not the main view slot, and calls no other app:
+      " after the first call the branch is reached by a restored bookmark
+      " only, where the dialog is gone and has to be shown again. The
+      " framework pushes the model into a still-standing dialog by itself.
+      popup_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-    " No check_on_navigated( ) branch: this app owns a POPUP, not the main
-    " view slot. The framework pushes the model back into the still-standing
-    " dialog by itself - only an app that owns the main slot re-displays.
 
   ENDMETHOD.
 

@@ -10,7 +10,7 @@ CLASS z2ui5_cl_smp_app_471 DEFINITION PUBLIC.
       BEGIN OF ty_s_log,
         entry TYPE string,
       END OF ty_s_log.
-    DATA t_log TYPE STANDARD TABLE OF ty_s_log WITH EMPTY KEY.
+    DATA t_log      TYPE STANDARD TABLE OF ty_s_log WITH EMPTY KEY.
     DATA registered TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -130,10 +130,11 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
     page->ele( `HBox`
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `Button`
-            )->a( n = `press` v = client->_event( `TOGGLE_REGISTRATION` )
-            )->a( n = `text`  t = COND #( WHEN registered = abap_true
-                            THEN `Unregister the shortcuts`
-                            ELSE `Register the shortcuts` )
+            )->a( n = `press`   v = client->_event( `TOGGLE_REGISTRATION` )
+            )->a( n = `tooltip` v = `Register or unregister the keyboard shortcuts`
+            )->a( n = `text`    t = COND #( WHEN registered = abap_true
+                              THEN `Unregister the shortcuts`
+                              ELSE `Register the shortcuts` )
             )->a( n = `icon`  v = `sap-icon://keyboard-and-mouse`
         )->tag( `Button`
             )->a( n = `press` v = client->_event( `SAVE` )

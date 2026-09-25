@@ -10,6 +10,10 @@ CLASS z2ui5_cl_smp_app_050 DEFINITION PUBLIC.
     DATA quantity TYPE string.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -18,15 +22,23 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
     IF client->check_on_init( ).
 
       product  = `tomato`.
       quantity = `500`.
-    ENDIF.
+      view_display( ).
 
-    IF client->get_event( ) = `BUTTON_POST`.
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `BUTTON_POST` ).
       client->message_toast_display( |{ product } { quantity } - send to the server| ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -50,7 +62,9 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " raw markup travels in the content attribute of a core:HTML leaf - the
-    " builder re-escapes it on stringify, so the literal markup is written here
+    " builder re-escapes it on stringify, so the literal markup is written here.
+    " The first rules restyle UI5's own classes, the last one is an own class
+    " that the button below carries in its class attribute
     page->tag( n = `HTML` ns = `core`
         )->a( n = `content` v = `<style>` && |\n| &&
                          `.sapMInput \{` && |\n| &&
@@ -58,41 +72,24 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
                          `    font-size: 2.5rem !important;` && |\n| &&
                          `\}` && |\n| &&
                          |\n| &&
-                         `input \{` && |\n| &&
-                         `    height: 80% !important;` && |\n| &&
-                         `    font-size: 2.5rem !important;` && |\n| &&
-                         `\}` && |\n| &&
-                         |\n| &&
-                         `input[role="textbox"] \{` && |\n| &&
+                         `.sapMInputBaseInner \{` && |\n| &&
                          `    height: 80px !important;` && |\n| &&
-                         `    font-size: 2.5rem !important;` && |\n| &&
-                         `\}` && |\n| &&
-                         |\n| &&
-                         `input[role="text"] \{` && |\n| &&
-                         `    height: 80px !important;` && |\n| &&
-                         `    font-size: 2.5rem !important;` && |\n| &&
-                         `\}` && |\n| &&
-                         |\n| &&
-                         `.sapUiSearchField \{` && |\n| &&
-                         `    height: 35px;` && |\n| &&
-                         `    font-size: 2.5rem !important;` && |\n| &&
-                         `\}` && |\n| &&
-                         |\n| &&
-                         `.sapUiTfCombo:hover \{` && |\n| &&
-                         `    height: 2rem;` && |\n| &&
                          `    font-size: 2.5rem !important;` && |\n| &&
                          `\}` && |\n| &&
                          |\n| &&
                          `.sapMInputBaseInner::placeholder \{` && |\n| &&
                          `    font-size: 1.4rem !important;` && |\n| &&
                          `\}` && |\n| &&
+                         |\n| &&
+                         `.mySuperRedButton .sapMBtnInner \{` && |\n| &&
+                         `    background-color: #c00 !important;` && |\n| &&
+                         `    border-color: #c00 !important;` && |\n| &&
+                         `\}` && |\n| &&
+                         |\n| &&
+                         `.mySuperRedButton .sapMBtnContent \{` && |\n| &&
+                         `    color: #fff !important;` && |\n| &&
+                         `\}` && |\n| &&
                          `</style>`
-        )->tag( `Button`
-            )->a( n = `press` v = client->_event( `BUTTON_POST` )
-            )->a( n = `text`  v = `post`
-            )->a( n = `class` v = `mySuperRedButton`
-        )->tag( `Input`
-            )->a( n = `value` v = client->_bind( quantity )
         )->ele( n = `SimpleForm` ns = `form`
             )->a( n = `title`    v = `Form Title`
             )->a( n = `editable` b = abap_true
@@ -110,7 +107,8 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
                     )->a( n = `value`   t = product
                 )->tag( `Button`
                     )->a( n = `press` v = client->_event( `BUTTON_POST` )
-                    )->a( n = `text`  v = `post` ).
+                    )->a( n = `text`  v = `post`
+                    )->a( n = `class` v = `mySuperRedButton` ).
 
     client->view_display( view->stringify( ) ).
 

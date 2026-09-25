@@ -6,10 +6,10 @@ CLASS z2ui5_cl_smp_app_073 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    METHODS view_display.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
 
     METHODS url_own_get
       RETURNING

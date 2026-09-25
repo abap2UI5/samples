@@ -8,13 +8,13 @@ CLASS z2ui5_cl_smp_app_170 DEFINITION PUBLIC.
 
     DATA mv_selected_key TYPE string.
 
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS view_display.
     METHODS on_event.
     METHODS simple_popup1.
     METHODS simple_popup2.
-
-  PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -68,6 +68,9 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
                         )->ele( `Page`
                             )->a( n = `title` v = `first page`
                             )->a( n = `id`    v = `page1`
+                            )->tag( `Button`
+                                )->a( n = `press` v = client->_event( `GOTO_2ND` )
+                                )->a( n = `text`  v = `Open 2nd popup`
                         )->end(
                         )->ele( `Page`
                             )->a( n = `title` v = `second page`

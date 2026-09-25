@@ -8,10 +8,10 @@ CLASS z2ui5_cl_smp_app_167 DEFINITION PUBLIC.
 
     DATA mv_value TYPE string.
 
-    METHODS set_view.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -20,7 +20,7 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
 
 
-  METHOD set_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -80,9 +80,9 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       mv_value = `my value`.
-      set_view( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
-      set_view( ).
+      view_display( ).
     ENDIF.
 
     CASE client->get_event( ).

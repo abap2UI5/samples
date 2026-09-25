@@ -20,15 +20,19 @@ CLASS z2ui5_cl_smp_app_048 DEFINITION PUBLIC.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
 CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
 
-
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
@@ -38,18 +42,23 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
         ( title = `entry_04`  info = `Error`        descr = `this is a description4 1234567890 1234567890`  icon = `sap-icon://accept`     highlight = `Error` )
         ( title = `entry_05`  info = `None`         descr = `this is a description5 1234567890 1234567890`  icon = `sap-icon://activities` highlight = `None` )
         ( title = `entry_06`  info = `Information`  descr = `this is a description6 1234567890 1234567890`  icon = `sap-icon://account`    highlight = `Information` ) ).
+      view_display( ).
 
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `EDIT` ).
+      client->message_box_display( |EDIT - { client->get_event_arg( ) }| ).
+    ELSEIF client->check_on_event( `SELCHANGE` ).
+
+      DATA(lt_sel) = t_tab.
+      DELETE lt_sel WHERE selected = abap_false.
+      client->message_box_display( |SELECTION_CHANGED - { lt_sel[ 1 ]-title }| ).
     ENDIF.
 
-    CASE client->get_event( ).
-      WHEN `EDIT`.
-        DATA(lv_row_title) = client->get_event_arg( ).
-        client->message_box_display( |EDIT - { lv_row_title }| ).
-      WHEN `SELCHANGE`.
-        DATA(lt_sel) = t_tab.
-        DELETE lt_sel WHERE selected = abap_false.
-        client->message_box_display( |SELECTION_CHANGED - { lt_sel[ 1 ]-title }| ).
-    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -98,4 +107,5 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

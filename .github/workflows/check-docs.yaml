@@ -30,7 +30,7 @@ jobs:
     - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: '22'
-    - run: node scripts/check-agents-structure.mjs
+    - run: npm run check:agents
 
   # Every other gate in this repository counts TILES, so a sample the scan
   # cannot place is invisible to all of them at once. Fourteen samples sat one
@@ -46,7 +46,7 @@ jobs:
     - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: '22'
-    - run: node scripts/check-orphan-samples.mjs
+    - run: npm run check:orphans
 
   # The view-chain layout used to be a job here, running scripts/chain-format.mjs
   # because no linter rule judged the four-space STEP. `chain-house-layout` does,
@@ -86,7 +86,7 @@ jobs:
     # A runner cannot check a repository out above the workspace, so the
     # framework lands inside it and the variable says where - the same
     # env-over-sibling resolution abap2UI5/mcp-server uses.
-    - run: node scripts/check-prose-names.mjs
+    - run: npm run check:prose
       env:
         A2UI5_HOME: ${{ github.workspace }}/.abap2UI5
 
@@ -105,7 +105,9 @@ jobs:
   # catalogue.json is committed generated data that only `npm run check` on
   # somebody's laptop was watching. It is watched here now, and so is
   # catalogue-derived.json beside it - the linter's half, which the playground's
-  # deploy reads. npm ci is for that one; the other three are plain node.
+  # deploy reads. npm ci is for that one; the other three are plain node -
+  # `npm run` needs no install, and package.json is the one spelling of every
+  # gate, so a step here cannot diverge from what `npm run check` runs.
   catalogues:
     runs-on: ubuntu-latest
     timeout-minutes: 10
