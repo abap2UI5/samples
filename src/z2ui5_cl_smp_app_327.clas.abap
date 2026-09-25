@@ -29,9 +29,9 @@ CLASS z2ui5_cl_smp_app_327 DEFINITION PUBLIC.
       BEGIN OF ty_s_type,
         type TYPE string,
       END OF ty_s_type.
-    DATA s_storage      TYPE ty_s_storage.
+    DATA s_storage TYPE ty_s_storage.
     DATA s_stored_value TYPE ty_s_value.
-    DATA t_types        TYPE STANDARD TABLE OF ty_s_type WITH EMPTY KEY.
+    DATA t_types TYPE STANDARD TABLE OF ty_s_type WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -92,10 +92,10 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
         " the key may carry more (or other) fields than this app models - an
         " earlier shape, or a value someone else wrote. A field that is not
         " there simply stays empty.
-        DATA(json_arg) = client->get_event_arg( 4 ).
-        s_storage-value = VALUE #( field1 = json_get_value( json = json_arg
+        DATA(lv_json) = client->get_event_arg( 4 ).
+        s_storage-value = VALUE #( field1 = json_get_value( json = lv_json
                                                             name = `FIELD1` )
-                                   field2 = json_get_value( json = json_arg
+                                   field2 = json_get_value( json = lv_json
                                                             name = `FIELD2` ) ).
 
       WHEN `GET_STORED_VALUE`.
@@ -112,15 +112,15 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
     " `"<name>":"` and take what stands up to the next quote. The model writes
     " the ABAP component names in upper case, hence the case-insensitive
     " search. An app parsing arbitrary JSON wants a real parser instead.
-    DATA(marker) = |"{ name }":"|.
+    DATA(lv_marker) = |"{ name }":"|.
 
-    DATA(offset) = find( val = json sub = marker case = abap_false ).
-    IF offset < 0.
+    DATA(lv_off) = find( val = json sub = lv_marker case = abap_false ).
+    IF lv_off < 0.
       RETURN.
     ENDIF.
 
     result = substring_before( val = substring( val = json
-                                                off = offset + strlen( marker ) )
+                                                off = lv_off + strlen( lv_marker ) )
                                sub = `"` ).
 
   ENDMETHOD.

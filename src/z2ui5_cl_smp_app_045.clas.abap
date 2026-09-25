@@ -17,7 +17,7 @@ CLASS z2ui5_cl_smp_app_045 DEFINITION PUBLIC.
       END OF ty_s_row.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA info_filter TYPE string.
+    DATA mv_info_filter TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -38,10 +38,10 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
     " rows before the filter deleted the ones it did not want
     t_tab = VALUE #( ).
     DO 1000 TIMES.
-      DATA(s_row) = VALUE ty_s_row( count = sy-index  value = `red`
+      DATA(ls_row) = VALUE ty_s_row( count = sy-index  value = `red`
         info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
         descr = `this is a description` checkbox = abap_true ).
-      INSERT s_row INTO TABLE t_tab.
+      INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 
   ENDMETHOD.
@@ -59,8 +59,8 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
 
       refresh_data( ).
 
-      IF info_filter IS NOT INITIAL.
-        DELETE t_tab WHERE info <> info_filter.
+      IF mv_info_filter IS NOT INITIAL.
+        DELETE t_tab WHERE info <> mv_info_filter.
       ENDIF.
     ENDIF.
 
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `info`
             )->tag( `Input`
-                )->a( n = `value` v = client->_bind( info_filter )
+                )->a( n = `value` v = client->_bind( mv_info_filter )
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( `FILTER_INFO` )
                 )->a( n = `text`  v = `filter` ).

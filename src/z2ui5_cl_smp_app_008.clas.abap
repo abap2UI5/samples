@@ -36,15 +36,15 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
       WHEN `BUTTON_MESSAGE_BOX_SY`.
         " only the message key - message_box_display( ) reads the text from
         " T100 itself, exactly as it does for the BAPIRET2 structure below
-        DATA(s_msg_sy) = VALUE symsg( msgty = `I` msgid = `NET` msgno = `001` ).
-        client->message_box_display( s_msg_sy ).
+        DATA(ls_msg_sy) = VALUE symsg( msgty = `I` msgid = `NET` msgno = `001` ).
+        client->message_box_display( ls_msg_sy ).
       WHEN `BUTTON_MESSAGE_BOX_BAPIRET`.
-        DATA(s_msg_bapiret) = VALUE bapiret2( id = `NET` number = `001` ).
-        client->message_box_display( s_msg_bapiret ).
+        DATA(ls_msg_bapiret) = VALUE bapiret2( id = `NET` number = `001` ).
+        client->message_box_display( ls_msg_bapiret ).
       WHEN `BUTTON_MESSAGE_BOX_CX_ROOT`.
         TRY.
-            DATA(val) = 1 / 0.
-            client->message_box_display( |{ val }| ).
+            DATA(lv_val) = 1 / 0.
+            client->message_box_display( |{ lv_val }| ).
           CATCH cx_root INTO DATA(x).
             client->message_box_display( x ).
         ENDTRY.

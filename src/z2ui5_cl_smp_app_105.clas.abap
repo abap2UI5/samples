@@ -4,7 +4,7 @@ CLASS z2ui5_cl_smp_app_105 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA view_parent TYPE REF TO z2ui5_cl_ui5_view_builder.
-    DATA class_1     TYPE string.
+    DATA mv_class_1 TYPE string.
 
     METHODS on_event.
     METHODS view_display.
@@ -46,7 +46,7 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
         )->a( n = `text` v = `Input from class 1`
         )->tag( `Input`
             )->a( n = `placeholder` v = `type here - the value lives in sub-app 1`
-            )->a( n = `value`       v = client->_bind( class_1 ) ).
+            )->a( n = `value`       v = client->_bind( mv_class_1 ) ).
 
     form->tag( `Label`
         )->a( n = `text` v = `Event`

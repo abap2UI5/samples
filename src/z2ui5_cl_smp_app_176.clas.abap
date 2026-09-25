@@ -24,8 +24,8 @@ CLASS z2ui5_cl_smp_app_176 DEFINITION PUBLIC.
       END OF ty_s_layout,
       ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH EMPTY KEY.
 
-    DATA t_layout TYPE ty_t_layout.
-    DATA t_data   TYPE ty_t_data.
+    DATA mt_layout TYPE ty_t_layout.
+    DATA mt_data   TYPE ty_t_data.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -44,10 +44,10 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
 
-      t_data = VALUE #( ( name = `Theo` date = `01.01.2000` age = `5` )
+      mt_data = VALUE #( ( name = `Theo` date = `01.01.2000` age = `5` )
                         ( name = `Lore` date = `01.01.2000` age = `1` ) ).
 
-      t_layout = VALUE #( ( fname = `NAME` title = `Name` merge = `false` visible = `true`  binding = `{NAME}` )
+      mt_layout = VALUE #( ( fname = `NAME` title = `Name` merge = `false` visible = `true`  binding = `{NAME}` )
                           ( fname = `DATE` title = `Date` merge = `false` visible = `true`  binding = `{DATE}` )
                           ( fname = `AGE`  title = `Age`  merge = `false` visible = `false` binding = `{AGE}` ) ).
 
@@ -66,15 +66,15 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(lo_view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `displayBlock`   v = `true`
+            )->a( n = `height`         v = `100%`
+            )->a( n = `xmlns`          v = `sap.m`
+            )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`     v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    DATA(page) = lo_view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Templating - Dynamic Content in a Nested View`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -99,9 +99,9 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
     " the template model is the view model, so the list the repeat runs over
     " is a bound attribute - its path is composed from the bind call, never
     " written by hand
-    DATA(layout_path) = |\{template>{ client->_bind( val = t_layout path = abap_true ) }\}|.
+    DATA(layout_path) = |\{template>{ client->_bind( val = mt_layout path = abap_true ) }\}|.
 
-    DATA(view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock`   v = `true`
             )->a( n = `height`         v = `100%`
@@ -110,11 +110,11 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
             )->a( n = `xmlns:core`     v = `sap.ui.core`
             )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1` ).
 
-    view_nested->ele( `Shell`
+    lo_view_nested->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title` v = `Nested View`
             )->ele( `Table`
-                )->a( n = `items` v = client->_bind( t_data )
+                )->a( n = `items` v = client->_bind( mt_data )
                 )->ele( `columns`
                     )->ele( n = `repeat` ns = `template`
                         )->a( n = `list` v = layout_path
@@ -136,7 +136,7 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
                                 )->ele( `ObjectIdentifier`
                                     )->a( n = `text` v = `{= '{' + ${LO2>FNAME} + '}' }` ).
 
-    client->nest_view_display( val = view_nested->stringify( ) id = `test` method_insert = `addContent` ).
+    client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` ).
 
   ENDMETHOD.
 

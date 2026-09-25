@@ -6,9 +6,9 @@ CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA check_active  TYPE abap_bool.
-    DATA check_enabled TYPE abap_bool.
-    DATA percent       TYPE i.
+    DATA mv_check_active TYPE abap_bool.
+    DATA mv_check_enabled TYPE abap_bool.
+    DATA mv_percent TYPE i.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
 
-      check_enabled = abap_true.
+      mv_check_enabled = abap_true.
       view_display( ).
 
     ELSEIF client->check_on_navigated( ).
@@ -43,21 +43,21 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
     IF client->check_on_event( `LOAD` ).
 
-      percent       = percent + 25.
-      check_active  = abap_true.
-      check_enabled = abap_false.
+      mv_percent       = mv_percent + 25.
+      mv_check_active  = abap_true.
+      mv_check_enabled = abap_false.
 
-      IF percent > 100.
+      IF mv_percent > 100.
 
-        percent       = 0.
-        check_active  = abap_false.
-        check_enabled = abap_true.
+        mv_percent       = 0.
+        mv_check_active  = abap_false.
+        mv_check_enabled = abap_true.
       ENDIF.
 
       client->message_toast_display( `loaded` ).
       WAIT UP TO 2 SECONDS.
 
-      IF check_active = abap_true.
+      IF mv_check_active = abap_true.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-start_timer
             t_arg = VALUE #( ( `LOAD` ) ( `0` ) ) ).
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(view)             = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -79,7 +79,7 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
 
-    DATA(page) = view->ele( `Shell`
+    DATA(page)          = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Timer - Progress Indicator during a Backend Call`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -95,19 +95,19 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     DATA(layout) = page->ele( n = `VerticalLayout` ns = `layout`
-        )->a( n = `class` v = `sapUiContentPadding`
+        )->a( n = `class` v = `sapuicontentpadding`
         )->a( n = `width` v = `100%` ).
     layout->ele( `VBox`
         )->tag( `ProgressIndicator`
-            )->a( n = `percentValue` v = client->_bind( percent )
-            )->a( n = `displayValue` v = |\{{ client->_bind( val = percent path = abap_true ) }\} %|
+            )->a( n = `percentValue` v = client->_bind( mv_percent )
+            )->a( n = `displayValue` v = |\{{ client->_bind( val = mv_percent path = abap_true ) }\} %|
             )->a( n = `showValue`    b = abap_true
             )->a( n = `state`        v = `Success` ).
 
     layout->tag( `Button`
         )->a( n = `press`   v = client->_event( `LOAD` )
         )->a( n = `text`    v = `Load`
-        )->a( n = `enabled` v = client->_bind( check_enabled ) ).
+        )->a( n = `enabled` v = client->_bind( mv_check_enabled ) ).
 
     client->view_display( view->stringify( ) ).
 

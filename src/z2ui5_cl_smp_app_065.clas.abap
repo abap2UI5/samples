@@ -6,9 +6,9 @@ CLASS z2ui5_cl_smp_app_065 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA input_main TYPE string.
-    DATA input_nest TYPE string.
-    DATA count      TYPE i.
+    DATA mv_input_main  TYPE string.
+    DATA mv_input_nest  TYPE string.
+    DATA mv_count       TYPE i.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -39,7 +39,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
 
     CASE client->get_event( ).
       WHEN `TEST`.
-        client->message_box_display( |input { input_nest }| ).
+        client->message_box_display( |input { mv_input_nest }| ).
       WHEN `ALL`.
         view_display( ).
         nest_view_display( ).
@@ -52,8 +52,8 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
         " The main and nested views share one model and that model is pushed
         " with every response, so the nested view picks the change up too.
         " Press "Rerender only nested view" first so the nested view exists.
-        count      = count + 1.
-        input_nest = |nest model updated #{ count }|.
+        mv_count      = mv_count + 1.
+        mv_input_nest = |nest model updated #{ mv_count }|.
     ENDCASE.
 
   ENDMETHOD.
@@ -61,7 +61,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(lo_view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    DATA(page) = lo_view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Nested View - Basic Example (nest_view_display)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -97,16 +97,16 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
             )->a( n = `press` v = client->_event( `NEST_MODEL` )
             )->a( n = `text`  v = `Update only nested MODEL (no re-render)`
         )->tag( `Input`
-            )->a( n = `value` v = client->_bind( input_main ) ).
+            )->a( n = `value` v = client->_bind( mv_input_main ) ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD nest_view_display.
 
-    DATA(view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -119,9 +119,9 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
                     )->a( n = `press` v = client->_event( `TEST` )
                     )->a( n = `text`  v = `event`
                 )->tag( `Input`
-                    )->a( n = `value` v = client->_bind( input_nest ) ).
+                    )->a( n = `value` v = client->_bind( mv_input_nest ) ).
 
-    client->nest_view_display( val = view_nested->stringify( ) id = `test` method_insert = `addContent` ).
+    client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` ).
 
   ENDMETHOD.
 

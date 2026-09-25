@@ -64,11 +64,11 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
       " the bound inputs have already written the edits back into
       " t_nodes before on_event runs - read the (possibly renamed) roots
       " back and echo them, proving the round-trip
-      DATA(roots) = ``.
-      LOOP AT t_nodes INTO DATA(s_node).
-        roots = |{ roots }{ COND #( WHEN sy-tabix > 1 THEN `, ` ) }{ s_node-text }|.
+      DATA(lv_roots) = ``.
+      LOOP AT t_nodes INTO DATA(ls_node).
+        lv_roots = |{ lv_roots }{ COND #( WHEN sy-tabix > 1 THEN `, ` ) }{ ls_node-text }|.
       ENDLOOP.
-      client->message_toast_display( |Root nodes now: { roots }| ).
+      client->message_toast_display( |Root nodes now: { lv_roots }| ).
     ENDIF.
 
   ENDMETHOD.

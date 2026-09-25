@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_160 DEFINITION PUBLIC.
         pl_total       TYPE i,
         per_cent_total TYPE p LENGTH 2 DECIMALS 1,
       END OF ty_s_output.
-    DATA t_output TYPE STANDARD TABLE OF ty_s_output WITH EMPTY KEY.
+    DATA mt_output TYPE STANDARD TABLE OF ty_s_output WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -46,14 +46,14 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
   METHOD model_init.
 
-    t_output = VALUE #( ).
+    mt_output = VALUE #( ).
 
     DO 10 TIMES.
-      INSERT VALUE #( index          = sy-index
-                      set_sk         = `Test`
-                      matnr          = `1234567`
-                      pl_total       = sy-index * 10
-                      per_cent_total = sy-index ) INTO TABLE t_output.
+      INSERT VALUE #( index = sy-index
+                      set_sk = `Test`
+                      matnr  = `1234567`
+                      pl_total = sy-index * 10
+                      per_cent_total = sy-index ) INTO TABLE mt_output.
     ENDDO.
 
   ENDMETHOD.
@@ -103,7 +103,7 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
     DATA(table) = page->ele( `FlexBox`
         )->a( n = `height` v = `85vh`
         )->ele( n = `Table` ns = `table`
-            )->a( n = `rows`               v = client->_bind( t_output )
+            )->a( n = `rows`               v = client->_bind( mt_output )
             )->a( n = `alternateRowColors` v = `true`
             )->a( n = `selectionMode`      v = `None` ).
 
@@ -138,7 +138,7 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
                 )->a( n = `type`     v = `Number`
                 )->a( n = `editable` b = abap_true
                 )->a( n = `value`    v = `{PL_TOTAL}`
-                )->a( n = `submit`   v = client->_event( val   = `PL_TOTAL_CHANGE`
+                )->a( n = `submit`   v = client->_event( val = `PL_TOTAL_CHANGE`
                                                           t_arg = VALUE #( ( `${$source>/id}` )
                                                                            ( `$event.oSource.sId` )
                                                                            ( `${INDEX}` )
@@ -147,8 +147,8 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `4rem`
-        )->a( n = `sortProperty`   v = `PER_CENT_TOTAL`
-        )->a( n = `filterProperty` v = `PER_CENT_TOTAL`
+        )->a( n = `sortProperty`   v = `per_cent_total`
+        )->a( n = `filterProperty` v = `per_cent_total`
         )->tag( `Text`
             )->a( n = `text` v = `Column 6`
         )->ele( n = `template` ns = `table`

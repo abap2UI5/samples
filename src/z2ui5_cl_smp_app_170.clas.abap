@@ -6,7 +6,7 @@ CLASS z2ui5_cl_smp_app_170 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA selected_key TYPE string.
+    DATA mv_selected_key TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
         )->a( n = `expandable`  b = abap_false
         )->a( n = `expanded`    b = abap_true
         )->a( n = `headerMode`  v = `Inline`
-        )->a( n = `selectedKey` v = client->_bind( selected_key )
+        )->a( n = `selectedKey` v = client->_bind( mv_selected_key )
         )->ele( `items`
             )->ele( `IconTabFilter`
                 )->a( n = `text` v = `Home`

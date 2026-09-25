@@ -22,7 +22,7 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(lr_view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -30,14 +30,14 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    view        = view->ele( `Shell`
+    lr_view        = lr_view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Control Behaviour - Wizard with Steps`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
             )->a( n = `id`             v = `page_main` ).
 
-    view->tag( `MessageStrip`
+    lr_view->tag( `MessageStrip`
         )->a( n = `text`     v = `A sap.m.Wizard guides through numbered steps. Branching is enabled: ` &&
                    `step 2 offers two follow-up steps, and the button pressed there picks ` &&
                    `the branch - the backend calls discardProgress and setNextStep by id ` &&
@@ -46,55 +46,55 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(wizard) = view->ele( `Wizard`
+    DATA(lr_wizard) = lr_view->ele( `Wizard`
         )->a( n = `id`              v = `wiz`
         )->a( n = `enableBranching` b = abap_true ).
-    DATA(wiz_step1) = wizard->ele( `WizardStep`
+    DATA(lr_wiz_step1) = lr_wizard->ele( `WizardStep`
         )->a( n = `title`     v = `STEP1`
         )->a( n = `validated` b = abap_true
         )->a( n = `nextStep`  v = `STEP2` ).
-    wiz_step1->tag( `MessageStrip`
+    lr_wiz_step1->tag( `MessageStrip`
         )->a( n = `text` v = `STEP1` ).
 
-    DATA(wiz_step2) = wizard->ele( `WizardStep`
+    DATA(lr_wiz_step2) = lr_wizard->ele( `WizardStep`
         )->a( n = `id`              v = `STEP2`
         )->a( n = `title`           v = `STEP2`
         )->a( n = `validated`       b = abap_true
         )->a( n = `subsequentSteps` v = `STEP22, STEP23` ).
 
-    wiz_step2->tag( `MessageStrip`
+    lr_wiz_step2->tag( `MessageStrip`
         )->a( n = `text` v = `STEP2` ).
-    wiz_step2->tag( `Button`
+    lr_wiz_step2->tag( `Button`
         )->a( n = `press` v = client->_event( `STEP22` )
         )->a( n = `text`  v = `Press Step 2.2` ).
-    wiz_step2->tag( `Button`
+    lr_wiz_step2->tag( `Button`
         )->a( n = `press` v = client->_event( `STEP23` )
         )->a( n = `text`  v = `Press Step 2.3` ).
 
-    DATA(wiz_step22) = wizard->ele( `WizardStep`
+    DATA(lr_wiz_step22) = lr_wizard->ele( `WizardStep`
         )->a( n = `id`        v = `STEP22`
         )->a( n = `title`     v = `STEP2.2`
         )->a( n = `validated` b = abap_true ).
 
-    wiz_step22->tag( `MessageStrip`
+    lr_wiz_step22->tag( `MessageStrip`
         )->a( n = `text` v = `STEP22` ).
 
-    DATA(wiz_step23) = wizard->ele( `WizardStep`
+    DATA(lr_wiz_step23) = lr_wizard->ele( `WizardStep`
         )->a( n = `id`        v = `STEP23`
         )->a( n = `title`     v = `STEP2.3`
         )->a( n = `validated` b = abap_true ).
 
-    wiz_step23->tag( `MessageStrip`
+    lr_wiz_step23->tag( `MessageStrip`
         )->a( n = `text` v = `STEP23` ).
 
-    DATA(wiz_step3) = wizard->ele( `WizardStep`
+    DATA(lr_wiz_step3) = lr_wizard->ele( `WizardStep`
         )->a( n = `title`     v = `STEP3`
         )->a( n = `validated` b = abap_true ).
 
-    wiz_step3->tag( `MessageStrip`
+    lr_wiz_step3->tag( `MessageStrip`
         )->a( n = `text` v = `STEP3` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lr_view->stringify( ) ).
 
     " nextStep is an ASSOCIATION: no binding can carry it, and view_display( )
     " has just destroyed the slot XMLView.create rebuilds - so the branch the

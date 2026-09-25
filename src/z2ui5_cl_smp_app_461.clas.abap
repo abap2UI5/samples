@@ -58,41 +58,41 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
       " paths of the dragged and the drop target item, e.g.
       " /T_NODES/0/NODES/1 (a file) and /T_NODES/2 (a folder) - so parse
       " from the END of the path
-      SPLIT client->get_event_arg( ) AT `/` INTO TABLE DATA(t_drag).
-      SPLIT client->get_event_arg( 2 ) AT `/` INTO TABLE DATA(t_drop).
-      DATA(drag_lines) = lines( t_drag ).
-      DATA(drop_lines) = lines( t_drop ).
-      IF drag_lines < 4 OR drop_lines < 2
-          OR VALUE #( t_drag[ drag_lines - 1 ] OPTIONAL ) <> `NODES`
-          OR VALUE #( t_drag[ drag_lines - 3 ] OPTIONAL ) <> `T_NODES`
-          OR VALUE #( t_drop[ drop_lines - 1 ] OPTIONAL ) <> `T_NODES`.
+      SPLIT client->get_event_arg( ) AT `/` INTO TABLE DATA(lt_drag).
+      SPLIT client->get_event_arg( 2 ) AT `/` INTO TABLE DATA(lt_drop).
+      DATA(lv_drag_lines) = lines( lt_drag ).
+      DATA(lv_drop_lines) = lines( lt_drop ).
+      IF lv_drag_lines < 4 OR lv_drop_lines < 2
+          OR VALUE #( lt_drag[ lv_drag_lines - 1 ] OPTIONAL ) <> `NODES`
+          OR VALUE #( lt_drag[ lv_drag_lines - 3 ] OPTIONAL ) <> `T_NODES`
+          OR VALUE #( lt_drop[ lv_drop_lines - 1 ] OPTIONAL ) <> `T_NODES`.
         client->message_toast_display( `drop a file onto a folder` ).
         RETURN.
       ENDIF.
       TRY.
-          DATA(from_root)  = CONV i( t_drag[ drag_lines - 2 ] ) + 1.
-          DATA(from_child) = CONV i( t_drag[ drag_lines ] ) + 1.
-          DATA(to_root)    = CONV i( t_drop[ drop_lines ] ) + 1.
-          DATA(s_child)      = t_nodes[ from_root ]-nodes[ from_child ].
+          DATA(lv_from_root)  = CONV i( lt_drag[ lv_drag_lines - 2 ] ) + 1.
+          DATA(lv_from_child) = CONV i( lt_drag[ lv_drag_lines ] ) + 1.
+          DATA(lv_to_root)    = CONV i( lt_drop[ lv_drop_lines ] ) + 1.
+          DATA(ls_child)      = t_nodes[ lv_from_root ]-nodes[ lv_from_child ].
         CATCH cx_root.
           RETURN.
       ENDTRY.
       " dropping a file onto its own parent folder is a no-op
-      IF from_root = to_root.
+      IF lv_from_root = lv_to_root.
         RETURN.
       ENDIF.
       " IS ASSIGNED, not sy-subrc: a SUCCESSFUL dynamic ASSIGN does not reset
       " sy-subrc on every release (abap2UI5 #1937)
-      ASSIGN t_nodes[ from_root ] TO FIELD-SYMBOL(<from>).
+      ASSIGN t_nodes[ lv_from_root ] TO FIELD-SYMBOL(<from>).
       IF <from> IS NOT ASSIGNED.
         RETURN.
       ENDIF.
-      ASSIGN t_nodes[ to_root ] TO FIELD-SYMBOL(<to>).
+      ASSIGN t_nodes[ lv_to_root ] TO FIELD-SYMBOL(<to>).
       IF <to> IS NOT ASSIGNED.
         RETURN.
       ENDIF.
-      DELETE <from>-nodes INDEX from_child.
-      APPEND s_child TO <to>-nodes.
+      DELETE <from>-nodes INDEX lv_from_child.
+      APPEND ls_child TO <to>-nodes.
       " full view rebuild instead of relying on the automatic model push:
       " the z2ui5.cc.Tree companion re-applies the expand state (snapshotted
       " before this roundtrip) only when it renders - a pure model refresh

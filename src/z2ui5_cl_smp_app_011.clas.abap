@@ -76,10 +76,10 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
                     )->a( n = `text`  v = `add`
                     )->a( n = `icon`  v = `sap-icon://add`
                 )->tag( `Button`
-                    )->a( n = `press`   v = client->_event( `BUTTON_EDIT` )
-                    )->a( n = `text`    t = SWITCH #( check_editable_active WHEN abap_true THEN `display` ELSE `edit` )
+                    )->a( n = `press` v = client->_event( `BUTTON_EDIT` )
+                    )->a( n = `text`  t = SWITCH #( check_editable_active WHEN abap_true THEN `display` ELSE `edit` )
                     )->a( n = `tooltip` v = `Switch the cells between display and edit mode`
-                    )->a( n = `icon`    v = `sap-icon://edit`
+                    )->a( n = `icon`  v = `sap-icon://edit`
             )->end(
         )->end( ).
 
@@ -151,8 +151,8 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
 
     ELSEIF client->check_on_event( `BUTTON_EDIT` ).
       check_editable_active = xsdbool( check_editable_active = abap_false ).
-      LOOP AT t_tab REFERENCE INTO DATA(row).
-        row->editable = check_editable_active.
+      LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
+        lr_tab->editable = check_editable_active.
       ENDLOOP.
 
     ELSEIF client->check_on_event( `BUTTON_DELETE` ).

@@ -46,8 +46,8 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
 
   METHOD on_navigation.
 
-    DATA(s_get) = client->get( ).
-    returned_event = s_get-event.
+    DATA(ls_get) = client->get( ).
+    returned_event = ls_get-event.
 
     CASE returned_event.
 
@@ -55,7 +55,7 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
 
         " the payload handed over by nav_app_leave( r_data = ... ) arrives as a
         " generic data reference - the receiver decides the type
-        ASSIGN s_get-r_event_data->* TO FIELD-SYMBOL(<s_result>).
+        ASSIGN ls_get-r_event_data->* TO FIELD-SYMBOL(<s_result>).
 
         IF <s_result> IS ASSIGNED.
 

@@ -6,7 +6,7 @@ CLASS z2ui5_cl_smp_app_109 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA placement TYPE string.
+    DATA mv_placement TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
             )->a( n = `xmlns:core` v = `sap.ui.core`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
     view->ele( `QuickView`
-        )->a( n = `placement` t = placement
+        )->a( n = `placement` t = mv_placement
         )->ele( `QuickViewPage`
             )->a( n = `description` v = `Enjoy`
             )->a( n = `header`      v = `Employee Info`
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `placement`
             )->ele( `SegmentedButton`
-                )->a( n = `selectedKey` v = client->_bind( placement )
+                )->a( n = `selectedKey` v = client->_bind( mv_placement )
                 )->ele( `items`
                     )->tag( `SegmentedButtonItem`
                         )->a( n = `icon` v = `sap-icon://add-favorite`
@@ -146,7 +146,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
 
-      placement = `Left`.
+      mv_placement = `Left`.
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).

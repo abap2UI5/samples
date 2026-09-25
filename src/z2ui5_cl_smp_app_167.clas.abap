@@ -6,7 +6,7 @@ CLASS z2ui5_cl_smp_app_167 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA value TYPE string.
+    DATA mv_value TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -52,9 +52,9 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
         )->a( n = `text`  v = `EVENT_FIX_VAL` ).
 
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( value ) ).
+        )->a( n = `value` v = client->_bind( mv_value ) ).
     page->tag( `Button`
-        )->a( n = `press` v = client->_event( val = `EVENT_MODEL_VALUE` arg = `$` && client->_bind( value ) )
+        )->a( n = `press` v = client->_event( val = `EVENT_MODEL_VALUE` arg = `$` && client->_bind( mv_value ) )
         )->a( n = `text`  v = `EVENT_MODEL_VALUE` ).
 
     page->tag( `Button`
@@ -79,7 +79,7 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      value = `my value`.
+      mv_value = `my value`.
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).

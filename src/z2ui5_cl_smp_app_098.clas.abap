@@ -22,8 +22,8 @@ CLASS z2ui5_cl_smp_app_098 DEFINITION PUBLIC.
     DATA
       t_tab2 TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA layout TYPE string.
-    DATA title  TYPE string.
+    DATA mv_layout TYPE string.
+    DATA mv_title TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -51,7 +51,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->a( n = `xmlns:f`      v = `sap.f`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = view_nested->ele( `Page`
+    DATA(page) = lo_view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
 
     DATA(tab) = page->ele( n = `Table` ns = `table`
@@ -64,9 +64,9 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         )->ele( `OverflowToolbar`
             )->tag( `Title`
                 )->a( n = `text` v = `Products` ).
-    DATA(columns) = tab->ele( n = `columns` ns = `table` ).
+    DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
 
-    columns->ele( n = `Column` ns = `table`
+    lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `TITLE`
         )->a( n = `filterProperty` v = `TITLE`
         )->tag( `Text`
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{TITLE}` ).
-    columns->ele( n = `Column` ns = `table`
+    lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `DESCR`
         )->a( n = `filterProperty` v = `DESCR`
         )->tag( `Text`
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{DESCR}` ).
-    columns->ele( n = `Column` ns = `table`
+    lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `INFO`
         )->a( n = `filterProperty` v = `INFO`
         )->tag( `Text`
@@ -90,7 +90,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{INFO}` ).
-    columns->end(
+    lo_columns->end(
         )->ele( n = `rowActionTemplate` ns = `table`
             )->ele( n = `RowAction` ns = `table`
                 )->ele( n = `RowActionItem` ns = `table`
@@ -98,7 +98,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
                     )->a( n = `press` v = client->_event( val = `ROW_NAVIGATE` arg = `${TITLE}` ) ).
 
     client->nest_view_display(
-      val            = view_nested->stringify( )
+      val            = lo_view_nested->stringify( )
       id             = `test`
       method_insert  = `addMidColumnPage`
       method_destroy = `removeAllMidColumnPages` ).
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
 
   METHOD view_display_detail_detail.
 
-    DATA(view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -118,17 +118,17 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->a( n = `xmlns:f`      v = `sap.f`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = view_nested->ele( `Page`
+    DATA(page) = lo_view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
 
     page = page->tag( `Text`
-        )->a( n = `text` v = client->_bind( title )
+        )->a( n = `text` v = client->_bind( mv_title )
         )->tag( `Button`
             )->a( n = `press` v = client->_event( `NN_VIEW` )
             )->a( n = `text`  v = `frontend event` ).
 
     client->nest2_view_display(
-      val            = view_nested->stringify( )
+      val            = lo_view_nested->stringify( )
       id             = `test`
       method_insert  = `addEndColumnPage`
       method_destroy = `removeAllEndColumnPages` ).
@@ -162,12 +162,12 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     DATA(col_layout) = page->ele( n = `FlexibleColumnLayout` ns = `f`
-        )->a( n = `layout` v = client->_bind( layout )
+        )->a( n = `layout` v = client->_bind( mv_layout )
         )->a( n = `id`     v = `test` ).
 
-    DATA(master) = col_layout->ele( n = `beginColumnPages` ns = `f` ).
+    DATA(lr_master) = col_layout->ele( n = `beginColumnPages` ns = `f` ).
 
-    DATA(list) = master->ele( `List`
+    DATA(lr_list) = lr_master->ele( `List`
         )->a( n = `headerText`      v = `List Output`
         )->a( n = `items`           v = client->_bind( val = t_tab )
         )->a( n = `mode`            v = `SingleSelectMaster`
@@ -179,7 +179,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->a( n = `info`        v = `{INFO}`
             )->a( n = `selected`    v = `{SELECTED}` ).
 
-    client->view_display( list->stringify( ) ).
+    client->view_display( lr_list->stringify( ) ).
 
   ENDMETHOD.
 
@@ -197,7 +197,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
         ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
-      layout = `OneColumn`.
+      mv_layout = `OneColumn`.
       view_display_master( ).
       view_display_detail( ).
 
@@ -208,7 +208,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
       view_display_master( ).
       view_display_detail( ).
 
-      IF layout = `ThreeColumnsEndExpanded`.
+      IF mv_layout = `ThreeColumnsEndExpanded`.
         view_display_detail_detail( ).
       ENDIF.
 
@@ -227,20 +227,20 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
       WHEN `ROW_NAVIGATE`.
 
         IF client->get_event_arg( ) IS NOT INITIAL.
-          layout = `ThreeColumnsEndExpanded`.
-          title  = client->get_event_arg( ).
+          mv_layout = `ThreeColumnsEndExpanded`.
+          mv_title  = client->get_event_arg( ).
         ENDIF.
         view_display_detail_detail( ).
 
       WHEN `SELCHANGE`.
-        DATA(t_sel) = t_tab.
-        DELETE t_sel WHERE selected = abap_false.
-        READ TABLE t_sel INTO DATA(s_sel) INDEX 1.
+        DATA(lt_sel) = t_tab.
+        DELETE lt_sel WHERE selected = abap_false.
+        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
 
-        IF sy-subrc = 0 AND NOT line_exists( t_tab2[ title = s_sel-title ] ).
-          INSERT s_sel INTO TABLE t_tab2.
+        IF sy-subrc = 0 AND NOT line_exists( t_tab2[ title = ls_sel-title ] ).
+          INSERT ls_sel INTO TABLE t_tab2.
         ENDIF.
-        layout = `TwoColumnsMidExpanded`.
+        mv_layout = `TwoColumnsMidExpanded`.
         view_display_detail( ).
     ENDCASE.
 

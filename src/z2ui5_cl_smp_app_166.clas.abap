@@ -19,13 +19,13 @@ CLASS z2ui5_cl_smp_app_166 DEFINITION PUBLIC.
         value  TYPE string,
         value2 TYPE string,
       END OF ty_s_struc.
-    DATA s_struc TYPE ty_s_struc.
+    DATA ms_struc TYPE ty_s_struc.
 
     DATA
-      BEGIN OF s_struc2.
+      BEGIN OF ms_struc2.
         INCLUDE TYPE ty_s_struc.
         INCLUDE TYPE ty_s_struc_incl.
-    DATA END OF s_struc2.
+    DATA END OF ms_struc2.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -61,25 +61,25 @@ CLASS z2ui5_cl_smp_app_166 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = s_struc-title ) ).
+        )->a( n = `value` v = client->_bind( val = ms_struc-title ) ).
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = s_struc-value ) ).
+        )->a( n = `value` v = client->_bind( val = ms_struc-value ) ).
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = s_struc-value2 ) ).
+        )->a( n = `value` v = client->_bind( val = ms_struc-value2 ) ).
 
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = s_struc2-title ) ).
+        )->a( n = `value` v = client->_bind( val = ms_struc2-title ) ).
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = s_struc2-value ) ).
+        )->a( n = `value` v = client->_bind( val = ms_struc2-value ) ).
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = s_struc2-value2 ) ).
+        )->a( n = `value` v = client->_bind( val = ms_struc2-value2 ) ).
 
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = s_struc2-incl_title ) ).
+        )->a( n = `value` v = client->_bind( val = ms_struc2-incl_title ) ).
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = s_struc2-incl_value ) ).
+        )->a( n = `value` v = client->_bind( val = ms_struc2-incl_value ) ).
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = s_struc2-incl_value2 ) ).
+        )->a( n = `value` v = client->_bind( val = ms_struc2-incl_value2 ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -92,16 +92,16 @@ CLASS z2ui5_cl_smp_app_166 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      s_struc-title  = `title`.
-      s_struc-value  = `val01`.
-      s_struc-value2 = `val02`.
+      ms_struc-title  = `title`.
+      ms_struc-value  = `val01`.
+      ms_struc-value2 = `val02`.
 
-      s_struc2-title  = `title`.
-      s_struc2-value  = `val01`.
-      s_struc2-value2 = `val02`.
-      s_struc2-incl_title = `title_incl`.
-      s_struc2-incl_value = `val01_incl`.
-      s_struc2-incl_value2 = `val02_incl`.
+      ms_struc2-title  = `title`.
+      ms_struc2-value  = `val01`.
+      ms_struc2-value2 = `val02`.
+      ms_struc2-incl_title = `title_incl`.
+      ms_struc2-incl_value = `val01_incl`.
+      ms_struc2-incl_value2 = `val02_incl`.
 
       view_display( ).
     ELSEIF client->check_on_navigated( ).

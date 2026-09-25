@@ -50,9 +50,9 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
       client->message_box_display( |EDIT - { client->get_event_arg( ) }| ).
     ELSEIF client->check_on_event( `SELCHANGE` ).
 
-      DATA(t_sel) = t_tab.
-      DELETE t_sel WHERE selected = abap_false.
-      client->message_box_display( |SELECTION_CHANGED - { t_sel[ 1 ]-title }| ).
+      DATA(lt_sel) = t_tab.
+      DELETE lt_sel WHERE selected = abap_false.
+      client->message_box_display( |SELECTION_CHANGED - { lt_sel[ 1 ]-title }| ).
     ENDIF.
 
   ENDMETHOD.

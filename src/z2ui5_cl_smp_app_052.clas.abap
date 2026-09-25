@@ -17,14 +17,14 @@ CLASS z2ui5_cl_smp_app_052 DEFINITION PUBLIC.
       END OF ty_s_tab.
     TYPES ty_t_tab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA t_table          TYPE ty_t_tab.
-    DATA check_popover    TYPE abap_bool.
-    DATA product_selected TYPE string.
+    DATA mt_table         TYPE ty_t_tab.
+    DATA mv_check_popover TYPE abap_bool.
+    DATA mv_product TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS set_data.
+    METHODS  set_data.
     METHODS view_display.
     METHODS popover_display
       IMPORTING
@@ -38,15 +38,15 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(fragment) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(lo_popover) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
             )->a( n = `xmlns:f`    v = `sap.f`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    DATA(popover) = fragment->ele( `Popover`
-        )->a( n = `title`        t = |abap2UI5 - Popover - { product_selected }|
+    DATA(popover) = lo_popover->ele( `Popover`
+        )->a( n = `title`        t = |abap2UI5 - Popover - { mv_product }|
         )->a( n = `placement`    v = `Right`
         )->a( n = `contentWidth` v = `20rem` ).
 
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `Product`
             )->tag( `Text`
-                )->a( n = `text` t = product_selected
+                )->a( n = `text` t = mv_product
             )->tag( `Label`
                 )->a( n = `text` v = `info2`
             )->tag( `Text`
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
                 )->a( n = `text`  v = `details`
                 )->a( n = `type`  v = `Emphasized` ).
 
-    client->popover_display( xml = fragment->stringify( ) by_id = id ).
+    client->popover_display( xml = lo_popover->stringify( ) by_id = id ).
 
     " a frontend action aimed at the popover: the view parameter scopes the
     " id lookup to the popover slot (cs_view-popover), so the focus lands on
@@ -122,39 +122,39 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
     DATA(cont) = page->ele( n = `content` ns = `f` ).
     DATA(tab) = cont->ele( `Table`
-        )->a( n = `items` v = client->_bind( val = t_table )
+        )->a( n = `items` v = client->_bind( val = mt_table )
         )->a( n = `id`    v = `tab` ).
 
-    DATA(columns) = tab->ele( `columns` ).
-    columns->ele( `Column`
+    DATA(lo_columns) = tab->ele( `columns` ).
+    lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Product` ).
-    columns->ele( `Column`
+    lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Date` ).
-    columns->ele( `Column`
+    lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Name` ).
-    columns->ele( `Column`
+    lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Location` ).
-    columns->ele( `Column`
+    lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Quantity` ).
 
-    DATA(cells) = tab->ele( `items`
+    DATA(lo_cells) = tab->ele( `items`
         )->ele( `ColumnListItem` ).
-    cells->tag( `Link`
+    lo_cells->tag( `Link`
         )->a( n = `text`  v = `{PRODUCT}`
         )->a( n = `press` v = client->_event( val = `POPOVER_DETAIL` t_arg = VALUE #( ( `${$source>/id}` ) ( `${PRODUCT}` ) ) )
         )->a( n = `id`    v = `link` ).
-    cells->tag( `Text`
+    lo_cells->tag( `Text`
         )->a( n = `text` v = `{CREATE_DATE}` ).
-    cells->tag( `Text`
+    lo_cells->tag( `Text`
         )->a( n = `text` v = `{CREATE_BY}` ).
-    cells->tag( `Text`
+    lo_cells->tag( `Text`
         )->a( n = `text` v = `{STORAGE_LOCATION}` ).
-    cells->tag( `Text`
+    lo_cells->tag( `Text`
         )->a( n = `text` v = `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
@@ -181,8 +181,8 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
         client->popover_destroy( ).
 
       WHEN `POPOVER_DETAIL`.
-        check_popover = abap_true.
-        product_selected = client->get_event_arg( 2 ).
+        mv_check_popover = abap_true.
+        mv_product       = client->get_event_arg( 2 ).
         popover_display( client->get_event_arg( ) ).
     ENDCASE.
 
@@ -192,7 +192,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
   METHOD set_data.
 
     " the six rows eight times - a table long enough to scroll
-    t_table = VALUE #( ).
+    mt_table = VALUE #( ).
     DO 8 TIMES.
       INSERT LINES OF VALUE ty_t_tab(
           ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
@@ -201,7 +201,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
           ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
           ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
           ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-          ) INTO TABLE t_table.
+          ) INTO TABLE mt_table.
     ENDDO.
 
   ENDMETHOD.

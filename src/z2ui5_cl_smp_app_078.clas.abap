@@ -15,9 +15,9 @@ CLASS z2ui5_cl_smp_app_078 DEFINITION PUBLIC.
         editable TYPE abap_bool,
       END OF ty_s_token.
 
-    DATA t_token          TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
-    DATA t_tokens_added   TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
-    DATA t_tokens_removed TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
+    DATA mt_token          TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
+    DATA mt_tokens_added TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
+    DATA mt_tokens_removed TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -37,16 +37,16 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_event( `UPDATE_BACKEND` ).
 
-      LOOP AT t_tokens_removed INTO DATA(s_token).
-        DELETE t_token WHERE key = s_token-key.
+      LOOP AT mt_tokens_removed INTO DATA(ls_token).
+        DELETE mt_token WHERE key = ls_token-key.
       ENDLOOP.
 
-      LOOP AT t_tokens_added INTO s_token.
-        INSERT VALUE #( key = s_token-key text = s_token-text visible = abap_true editable = abap_true ) INTO TABLE t_token.
+      LOOP AT mt_tokens_added INTO ls_token.
+        INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
       ENDLOOP.
 
-      t_tokens_removed = VALUE #( ).
-      t_tokens_added   = VALUE #( ).
+      mt_tokens_removed = VALUE #( ).
+      mt_tokens_added   = VALUE #( ).
     ENDIF.
 
   ENDMETHOD.
@@ -80,11 +80,11 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
     view->tag( n = `MultiInputExt` ns = `z2ui5`
         )->a( n = `MultiInputId`  v = `test`
         )->a( n = `change`        v = client->_event( `UPDATE_BACKEND` )
-        )->a( n = `addedTokens`   v = client->_bind( t_tokens_added )
-        )->a( n = `removedTokens` v = client->_bind( t_tokens_removed ) ).
+        )->a( n = `addedTokens`   v = client->_bind( mt_tokens_added )
+        )->a( n = `removedTokens` v = client->_bind( mt_tokens_removed ) ).
 
     view->ele( `MultiInput`
-        )->a( n = `tokens` v = client->_bind( t_token )
+        )->a( n = `tokens` v = client->_bind( mt_token )
         )->a( n = `id`     v = `test`
         )->ele( `tokens`
             )->tag( `Token`
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
                 )->a( n = `editable` v = `{EDITABLE}` ).
 
     DATA(tab) = view->ele( `Table`
-        )->a( n = `items` v = client->_bind( t_token )
+        )->a( n = `items` v = client->_bind( mt_token )
         )->a( n = `mode`  v = `MultiSelect` ).
 
     tab->ele( `columns`

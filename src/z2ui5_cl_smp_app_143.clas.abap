@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_143 DEFINITION PUBLIC.
       END OF ty_s_data.
     TYPES ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH EMPTY KEY.
 
-    DATA t_data TYPE ty_t_data.
+    DATA gt_data TYPE ty_t_data.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
 
   METHOD on_init.
 
-    t_data = VALUE ty_t_data(
+    gt_data = VALUE ty_t_data(
       ( field1 = `21` field2 = `T1` field3 = `TEXT1` )
       ( field1 = `22` field2 = `T1` field3 = `TEXT1` )
       ( field1 = `23` field2 = `T2` field3 = `TEXT1` )
@@ -115,7 +115,7 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
 
     DATA(table) = cont->ele( `VBox`
         )->ele( n = `Table` ns = `table`
-            )->a( n = `rows`               v = client->_bind( t_data )
+            )->a( n = `rows`               v = client->_bind( gt_data )
             )->a( n = `alternateRowColors` b = abap_true
             )->a( n = `enableCellFilter`   b = abap_true
             )->a( n = `fixedColumnCount`   v = `1`

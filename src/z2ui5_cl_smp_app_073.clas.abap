@@ -80,28 +80,28 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
 
   METHOD url_own_get.
 
-    DATA t_param TYPE string_table.
+    DATA lt_param TYPE string_table.
 
     " s_config carries the browser's own location: origin, path and query
-    DATA(s_config) = client->get( )-s_config.
+    DATA(ls_config) = client->get( )-s_config.
 
     " keep every query parameter the current URL already has - sap-client and
     " sap-language among them - and swap app_start for this class, so the new
     " tab opens this app instead of whatever the current URL points to. The
     " hash is left out on purpose: it holds THIS app's state, and the backend
     " would prefer it over app_start.
-    SPLIT shift_left( val = s_config-search sub = `?` ) AT `&` INTO TABLE t_param.
+    SPLIT shift_left( val = ls_config-search sub = `?` ) AT `&` INTO TABLE lt_param.
 
-    DATA(query) = `app_start=z2ui5_cl_smp_app_073`.
-    LOOP AT t_param INTO DATA(param).
-      IF param IS INITIAL
-      OR to_lower( substring_before( val = param sub = `=` ) ) = `app_start`.
+    DATA(lv_query) = `app_start=z2ui5_cl_smp_app_073`.
+    LOOP AT lt_param INTO DATA(lv_param).
+      IF lv_param IS INITIAL
+      OR to_lower( substring_before( val = lv_param sub = `=` ) ) = `app_start`.
         CONTINUE.
       ENDIF.
-      query = |{ query }&{ param }|.
+      lv_query = |{ lv_query }&{ lv_param }|.
     ENDLOOP.
 
-    result = |{ s_config-origin }{ s_config-pathname }?{ query }|.
+    result = |{ ls_config-origin }{ ls_config-pathname }?{ lv_query }|.
 
   ENDMETHOD.
 

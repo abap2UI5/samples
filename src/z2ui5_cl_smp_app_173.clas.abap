@@ -22,9 +22,9 @@ CLASS z2ui5_cl_smp_app_173 DEFINITION PUBLIC.
       END OF ty_s_layout,
       ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH EMPTY KEY.
 
-    DATA flag     TYPE abap_bool.
-    DATA t_layout TYPE ty_t_layout.
-    DATA t_data   TYPE ty_t_data.
+    DATA mv_flag TYPE abap_bool.
+    DATA mt_layout TYPE ty_t_layout.
+    DATA mt_data   TYPE ty_t_data.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -43,8 +43,8 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
     " the template model is the view model, so what the repeat and the if
     " read are bound attributes - their paths are composed from the bind
     " call, never written by hand
-    DATA(layout_path) = |\{template>{ client->_bind( val = t_layout path = abap_true ) }\}|.
-    DATA(flag_path)   = |\{template>{ client->_bind( val = flag path = abap_true ) }\}|.
+    DATA(layout_path) = |\{template>{ client->_bind( val = mt_layout path = abap_true ) }\}|.
+    DATA(flag_path)   = |\{template>{ client->_bind( val = mv_flag path = abap_true ) }\}|.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -71,7 +71,7 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     view->ele( `Table`
-        )->a( n = `items` v = client->_bind( t_data )
+        )->a( n = `items` v = client->_bind( mt_data )
         )->ele( `columns`
             )->ele( n = `repeat` ns = `template`
                 )->a( n = `list` v = layout_path
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
     view->tag( `Label`
         )->a( n = `text` v = `IF Template (with re-rendering)` ).
     view->tag( `Switch`
-        )->a( n = `state`  v = client->_bind( flag )
+        )->a( n = `state`  v = client->_bind( mv_flag )
         )->a( n = `change` v = client->_event( `CHANGE_FLAG` ) ).
                   view   = view->ele( `VBox` ).
 
@@ -123,10 +123,10 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      t_data = VALUE #( ( name = `Theo` date = `01.01.2000` age = `5` )
+      mt_data = VALUE #( ( name = `Theo` date = `01.01.2000` age = `5` )
                         ( name = `Lore` date = `01.01.2000` age = `1` ) ).
 
-      t_layout = VALUE #( ( fname = `NAME` merge = `false` visible = `true` )
+      mt_layout = VALUE #( ( fname = `NAME` merge = `false` visible = `true` )
                           ( fname = `DATE` merge = `false` visible = `true` )
                           ( fname = `AGE`  merge = `false` visible = `false` ) ).
 

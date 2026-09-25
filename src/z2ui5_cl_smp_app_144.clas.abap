@@ -47,12 +47,12 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    LOOP AT t_tab REFERENCE INTO DATA(row).
-      DATA(index) = sy-tabix.
+    LOOP AT t_tab REFERENCE INTO DATA(lr_row).
+      DATA(lv_tabix) = sy-tabix.
       page->tag( `Input`
-          )->a( n = `value` v = client->_bind( val = row->title tab = t_tab tab_index = index ) ).
+          )->a( n = `value` v = client->_bind( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).
       page->tag( `Input`
-          )->a( n = `value` v = client->_bind( val = row->value tab = t_tab tab_index = index ) ).
+          )->a( n = `value` v = client->_bind( val = lr_row->value tab = t_tab tab_index = lv_tabix ) ).
     ENDLOOP.
 
     page->ele( `Table`

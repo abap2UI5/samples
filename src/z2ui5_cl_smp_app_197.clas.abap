@@ -16,9 +16,9 @@ CLASS z2ui5_cl_smp_app_197 DEFINITION PUBLIC.
       END OF ty_s_tab.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA t_table          TYPE ty_t_table.
-    DATA t_table_full     TYPE ty_t_table.
-    DATA t_table_products TYPE ty_t_table.
+    DATA mt_table TYPE ty_t_table.
+    DATA mt_table_full TYPE ty_t_table.
+    DATA mt_table_products TYPE ty_t_table.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `RESET` ).
-      t_table = t_table_full.
+      mt_table = mt_table_full.
     ELSEIF client->check_on_event( `FILTER` ).
       on_event_filter( ).
     ENDIF.
@@ -74,16 +74,16 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
     DATA t_range TYPE RANGE OF string.
 
     LOOP AT json_get_values( json = client->get_event_arg( )
-                             name = `key` ) INTO DATA(key).
-      APPEND VALUE #( sign = `I` option = `EQ` low = key ) TO t_range.
+                             name = `key` ) INTO DATA(lv_key).
+      APPEND VALUE #( sign = `I` option = `EQ` low = lv_key ) TO t_range.
     ENDLOOP.
 
     " an empty selection is no filter at all - the list closed with every
     " item unchecked, which must show all rows again, not none of them
-    t_table = t_table_full.
+    mt_table = mt_table_full.
 
     IF t_range IS NOT INITIAL.
-      DELETE t_table WHERE product NOT IN t_range.
+      DELETE mt_table WHERE product NOT IN t_range.
     ENDIF.
 
   ENDMETHOD.
@@ -126,43 +126,43 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
             )->a( n = `title`     v = `Products`
             )->a( n = `listClose` v = client->_event( val = `FILTER`
                                                           arg = `$event.mParameters.selectedItems` )
-            )->a( n = `items`     v = client->_bind( t_table_products )
+            )->a( n = `items`     v = client->_bind( mt_table_products )
             )->ele( `FacetFilterItem`
                 )->a( n = `key`  v = `{PRODUCT}`
                 )->a( n = `text` v = `{PRODUCT}` ).
 
     DATA(tab) = page->ele( `Table`
-        )->a( n = `items` v = client->_bind( val = t_table )
+        )->a( n = `items` v = client->_bind( val = mt_table )
         )->a( n = `id`    v = `tab` ).
 
-    DATA(columns) = tab->ele( `columns` ).
-    columns->ele( `Column`
+    DATA(lo_columns) = tab->ele( `columns` ).
+    lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Product` ).
-    columns->ele( `Column`
+    lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Date` ).
-    columns->ele( `Column`
+    lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Name` ).
-    columns->ele( `Column`
+    lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Location` ).
-    columns->ele( `Column`
+    lo_columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Quantity` ).
 
-    DATA(cells) = tab->ele( `items`
+    DATA(lo_cells) = tab->ele( `items`
         )->ele( `ColumnListItem` ).
-    cells->tag( `Text`
+    lo_cells->tag( `Text`
         )->a( n = `text` v = `{PRODUCT}` ).
-    cells->tag( `Text`
+    lo_cells->tag( `Text`
         )->a( n = `text` v = `{CREATE_DATE}` ).
-    cells->tag( `Text`
+    lo_cells->tag( `Text`
         )->a( n = `text` v = `{CREATE_BY}` ).
-    cells->tag( `Text`
+    lo_cells->tag( `Text`
         )->a( n = `text` v = `{STORAGE_LOCATION}` ).
-    cells->tag( `Text`
+    lo_cells->tag( `Text`
         )->a( n = `text` v = `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
@@ -177,17 +177,17 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
     " is all this payload needs - a flat projection of the selected controls,
     " written by the framework and never nested. An app parsing arbitrary JSON
     " wants a real parser instead.
-    DATA(marker) = |"{ name }":"|.
-    DATA(rest)   = json.
+    DATA(lv_marker) = |"{ name }":"|.
+    DATA(lv_rest)   = json.
 
     DO.
-      DATA(offset) = find( val = rest sub = marker case = abap_false ).
-      IF offset < 0.
+      DATA(lv_off) = find( val = lv_rest sub = lv_marker case = abap_false ).
+      IF lv_off < 0.
         EXIT.
       ENDIF.
 
-      rest = substring( val = rest off = offset + strlen( marker ) ).
-      INSERT substring_before( val = rest
+      lv_rest = substring( val = lv_rest off = lv_off + strlen( lv_marker ) ).
+      INSERT substring_before( val = lv_rest
                                sub = `"` ) INTO TABLE result.
     ENDDO.
 
@@ -198,7 +198,7 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
 
     " the six rows eight times - enough for the facet filter to have
     " something to count
-    t_table = VALUE #( ).
+    mt_table = VALUE #( ).
     DO 8 TIMES.
       INSERT LINES OF VALUE ty_t_table(
           ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
@@ -207,14 +207,14 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
           ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
           ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
           ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-          ) INTO TABLE t_table.
+          ) INTO TABLE mt_table.
     ENDDO.
 
-    SORT t_table BY product.
-    t_table_full = t_table.
+    SORT mt_table BY product.
+    mt_table_full = mt_table.
 
-    t_table_products = t_table.
-    DELETE ADJACENT DUPLICATES FROM t_table_products COMPARING product.
+    mt_table_products = mt_table.
+    DELETE ADJACENT DUPLICATES FROM mt_table_products COMPARING product.
 
   ENDMETHOD.
 

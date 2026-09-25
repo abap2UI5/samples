@@ -25,15 +25,15 @@ CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
       END OF ty_s_combo,
       ty_t_combo TYPE STANDARD TABLE OF ty_s_combo WITH EMPTY KEY.
 
-    DATA t_picture     TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
-    DATA t_picture_out TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
-    DATA pic_display   TYPE string.
-    DATA picture_base  TYPE string.
-    DATA picture_thumb TYPE string.
-    DATA facing_mode   TYPE string.
-    DATA facing_modes  TYPE ty_t_combo.
-    DATA device        TYPE string.
-    DATA devices       TYPE ty_t_combo.
+    DATA mt_picture       TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
+    DATA mt_picture_out   TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
+    DATA mv_pic_display   TYPE string.
+    DATA mv_picture_base  TYPE string.
+    DATA mv_picture_thumb TYPE string.
+    DATA facing_mode      TYPE string.
+    DATA facing_modes     TYPE ty_t_combo.
+    DATA device           TYPE string.
+    DATA devices          TYPE ty_t_combo.
 
   PROTECTED SECTION.
     DATA selected_picture TYPE ty_s_picture.
@@ -125,32 +125,32 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
                 )->a( n = `text` v = `{TEXT}` ).
 
     page->tag( n = `CameraPicture` ns = `z2ui5`
-        )->a( n = `value`      v = client->_bind( picture_base )
-        )->a( n = `thumbnail`  v = client->_bind( picture_thumb )
+        )->a( n = `value`      v = client->_bind( mv_picture_base )
+        )->a( n = `thumbnail`  v = client->_bind( mv_picture_thumb )
         )->a( n = `OnPhoto`    v = client->_event( `CAPTURE` )
         )->a( n = `facingMode` v = client->_bind( facing_mode )
         )->a( n = `deviceId`   v = client->_bind( device ) ).
 
-    DATA(list) = page->ele( `List`
+    DATA(lo_list) = page->ele( `List`
         )->a( n = `headerText`      v = `List Output`
-        )->a( n = `items`           v = client->_bind( t_picture_out )
+        )->a( n = `items`           v = client->_bind( mt_picture_out )
         )->a( n = `mode`            v = `SingleSelectMaster`
         )->a( n = `selectionChange` v = client->_event( `DISPLAY` ) ).
 
-    DATA(item) = list->ele( `CustomListItem`
+    DATA(lo_item) = lo_list->ele( `CustomListItem`
         )->a( n = `selected` v = `{SELECTED}` ).
 
-    DATA(hbox) = item->ele( `HBox`
+    DATA(lo_hbox) = lo_item->ele( `HBox`
         )->a( n = `alignItems` v = `Center` ).
-    hbox->tag( `Image`
+    lo_hbox->tag( `Image`
         )->a( n = `src`    v = `{THUMBNAIL}`
         )->a( n = `height` v = `80px` ).
-    hbox->tag( `Text`
+    lo_hbox->tag( `Text`
         )->a( n = `text` v = `{NAME}` ).
 
-    IF pic_display IS NOT INITIAL.
+    IF mv_pic_display IS NOT INITIAL.
       page->tag( `Image`
-          )->a( n = `src`    v = client->_bind( pic_display )
+          )->a( n = `src`    v = client->_bind( mv_pic_display )
           )->a( n = `class`  v = `sapUiSmallMargin`
           )->a( n = `height` v = `200px` ).
     ENDIF.
@@ -165,15 +165,15 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
     CASE client->get_event( ).
       WHEN `CAPTURE`.
 
-        INSERT VALUE #( data = picture_base thumbnail = picture_thumb time = sy-uzeit ) INTO TABLE t_picture.
-        picture_base  = VALUE #( ).
-        picture_thumb = VALUE #( ).
+        INSERT VALUE #( data = mv_picture_base thumbnail = mv_picture_thumb time = sy-uzeit ) INTO TABLE mt_picture.
+        mv_picture_base  = VALUE #( ).
+        mv_picture_thumb = VALUE #( ).
         rebuild_output( ).
 
       WHEN `DISPLAY`.
 
-        selected_picture = t_picture_out[ selected = abap_true ].
-        pic_display   = t_picture[ selected_picture-id ]-data.
+        selected_picture = mt_picture_out[ selected = abap_true ].
+        mv_pic_display   = mt_picture[ selected_picture-id ]-data.
         rebuild_output( ).
         view_display( ).
 
@@ -184,13 +184,13 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
 
   METHOD rebuild_output.
 
-    t_picture_out = VALUE #( ).
-    LOOP AT t_picture INTO DATA(s_pic).
+    mt_picture_out = VALUE #( ).
+    LOOP AT mt_picture INTO DATA(ls_pic).
       INSERT VALUE #( name      = |picture { sy-tabix }|
                       id        = sy-tabix
-                      thumbnail = s_pic-thumbnail
+                      thumbnail = ls_pic-thumbnail
                       selected  = xsdbool( sy-tabix = selected_picture-id ) )
-             INTO TABLE t_picture_out.
+             INTO TABLE mt_picture_out.
     ENDLOOP.
 
   ENDMETHOD.

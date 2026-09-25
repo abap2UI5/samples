@@ -13,9 +13,9 @@ CLASS z2ui5_cl_smp_app_081 DEFINITION PUBLIC.
         name     TYPE string,
       END OF ty_s_tab.
 
-    DATA placement TYPE string.
+    DATA mv_placement TYPE string.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -42,9 +42,9 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
     view->ele( `Popover`
         )->a( n = `title`     v = `Popover Title`
-        )->a( n = `placement` t = placement
+        )->a( n = `placement` t = mv_placement
         )->ele( `List`
-            )->a( n = `items`           v = client->_bind( t_tab )
+            )->a( n = `items`           v = client->_bind( mt_tab )
             )->a( n = `mode`            v = `SingleSelectMaster`
             )->a( n = `selectionChange` v = client->_event( val = `SEL_CHANGE` )
             )->tag( `StandardListItem`
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `placement`
             )->ele( `SegmentedButton`
-                )->a( n = `selectedKey` v = client->_bind( placement )
+                )->a( n = `selectedKey` v = client->_bind( mv_placement )
                 )->ele( `items`
                     )->tag( `SegmentedButtonItem`
                         )->a( n = `icon` v = `sap-icon://add-favorite`
@@ -148,9 +148,9 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
     CASE client->get_event( ).
 
       WHEN `SEL_CHANGE`.
-        DATA(t_sel) = t_tab.
-        DELETE t_sel WHERE selected = abap_false.
-        client->message_toast_display( |{ lines( t_sel ) } selected| ).
+        DATA(lt_sel) = mt_tab.
+        DELETE lt_sel WHERE selected = abap_false.
+        client->message_toast_display( |{ lines( lt_sel ) } selected| ).
 
       WHEN `POPOVER_LIST`.
         popover_list_display( `TEST` ).
@@ -161,9 +161,9 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
   METHOD on_init.
 
-    placement = `Left`.
+    mv_placement = `Left`.
 
-    t_tab = VALUE #(
+    mt_tab = VALUE #(
                       ( id = `1` name = `name1` )
                       ( id = `2` name = `name2` )
                       ( id = `3` name = `name3` )
