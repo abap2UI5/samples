@@ -30,20 +30,20 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       " the initial response already carries BOTH: the view build and the
       " popover anchored to a control of that very view
       view_display( ).
       popover_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `REBUILD_AND_OPEN` ).
+    ELSEIF client->check_on_event( `REBUILD_AND_OPEN` ) IS NOT INITIAL.
       " same pair on an event roundtrip: the view is REPLACED and the
       " popover opens on the freshly built anchor
       counter = counter + 1.
       view_display( ).
       popover_display( ).
-    ELSEIF client->check_on_event( `OPEN_ONLY` ).
+    ELSEIF client->check_on_event( `OPEN_ONLY` ) IS NOT INITIAL.
       " popover alone - the view stays as it is
       counter = counter + 1.
       popover_display( ).
@@ -54,7 +54,9 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -62,7 +64,8 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popover - Open Together with the View Build`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -95,7 +98,8 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(popover) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popover TYPE REF TO z2ui5_cl_ui5_view_builder.
+    popover = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).

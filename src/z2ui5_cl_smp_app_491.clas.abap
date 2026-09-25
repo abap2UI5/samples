@@ -16,10 +16,14 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_491 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA temp1 TYPE string_table.
 
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
 
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+      
+      view = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
               )->a( n = `displayBlock` v = `true`
               )->a( n = `height`       v = `100%`
@@ -27,7 +31,8 @@ CLASS z2ui5_cl_smp_app_491 IMPLEMENTATION.
               )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
               )->a( n = `xmlns:core`   v = `sap.ui.core`
               )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-      DATA(page) = view->ele( `Shell`
+      
+      page = view->ele( `Shell`
           )->ele( `Page`
               )->a( n = `title`          v = `abap2UI5 - Browser - Set the Tab Favicon`
               )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -53,11 +58,14 @@ CLASS z2ui5_cl_smp_app_491 IMPLEMENTATION.
                   )->a( n = `text`  v = `Set Favicon` ).
       client->view_display( view->stringify( ) ).
 
-    ELSEIF client->check_on_event( `SET_FAVICON` ).
+    ELSEIF client->check_on_event( `SET_FAVICON` ) IS NOT INITIAL.
 
+      
+      CLEAR temp1.
+      INSERT favicon INTO TABLE temp1.
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_favicon
-          t_arg = VALUE #( ( favicon ) ) ).
+          t_arg = temp1 ).
 
     ENDIF.
 

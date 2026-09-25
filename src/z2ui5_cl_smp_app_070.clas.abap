@@ -24,7 +24,7 @@ CLASS z2ui5_cl_smp_app_070 DEFINITION PUBLIC.
       END OF ty_s_tab.
 
     DATA mv_search_value TYPE string.
-    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
     DATA lv_selkz TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -50,14 +50,14 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client     = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       set_data( ).
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -89,7 +89,9 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
   METHOD set_selkz.
 
-    LOOP AT mt_table REFERENCE INTO DATA(lr_row).
+    DATA temp1 LIKE LINE OF mt_table.
+    DATA lr_row LIKE REF TO temp1.
+    LOOP AT mt_table REFERENCE INTO lr_row.
       lr_row->selkz = iv_selkz.
     ENDLOOP.
 
@@ -101,8 +103,11 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     " the sort event carries the column's sortProperty and the requested
     " order - the client sorts its binding too, so both agree, and the
     " backend order is the one the next model push would restore
-    DATA(property)   = client->get_event_arg( 1 ).
-    DATA(sort_order) = client->get_event_arg( 2 ).
+    DATA property TYPE string.
+    DATA sort_order TYPE string.
+    property   = client->get_event_arg( 1 ).
+    
+    sort_order = client->get_event_arg( 2 ).
 
     IF sort_order = `Descending`.
       SORT mt_table BY (property) DESCENDING.
@@ -118,8 +123,16 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
     " the filter event carries the column's filterProperty and the typed
     " value: a contains-filter over that one component, on the full data
-    DATA(property) = client->get_event_arg( 1 ).
-    DATA(value)    = to_upper( client->get_event_arg( 2 ) ).
+    DATA property TYPE string.
+    DATA value TYPE string.
+    DATA lt_all LIKE mt_table.
+    DATA temp2 LIKE mt_table.
+    DATA temp3 LIKE LINE OF lt_all.
+    DATA lr_row LIKE REF TO temp3.
+      FIELD-SYMBOLS <field> TYPE any.
+    property = client->get_event_arg( 1 ).
+    
+    value    = to_upper( client->get_event_arg( 2 ) ).
 
     set_data( ).
     set_search( ).
@@ -129,11 +142,17 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    DATA(lt_all) = mt_table.
-    mt_table = VALUE #( ).
+    
+    lt_all = mt_table.
+    
+    CLEAR temp2.
+    mt_table = temp2.
 
-    LOOP AT lt_all REFERENCE INTO DATA(lr_row).
-      ASSIGN COMPONENT property OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+    
+    
+    LOOP AT lt_all REFERENCE INTO lr_row.
+      
+      ASSIGN COMPONENT property OF STRUCTURE lr_row->* TO <field>.
 
       IF sy-subrc <> 0.
         CONTINUE.
@@ -150,7 +169,17 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page1 TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA header_title TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_box TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA cont TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp4 TYPE string_table.
+    DATA temp1 TYPE string_table.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA lo_columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -161,7 +190,8 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
             )->a( n = `xmlns:table`  v = `sap.ui.table`
             )->a( n = `xmlns:u`      v = `sap.ui.unified` ).
 
-    DATA(page1) = view->ele( `Shell`
+    
+    page1 = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - Full Example with sap.ui.table`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -178,10 +208,12 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(page) = page1->ele( n = `DynamicPage` ns = `f`
+    
+    page = page1->ele( n = `DynamicPage` ns = `f`
         )->a( n = `headerExpanded` b = abap_true ).
 
-    DATA(header_title) = page->ele( n = `title` ns = `f`
+    
+    header_title = page->ele( n = `title` ns = `f`
         )->ele( n = `DynamicPageTitle` ns = `f` ).
     header_title->ele( n = `heading` ns = `f`
         )->ele( `HBox`
@@ -194,7 +226,8 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     " tag renders as <header xmlns="sap.m"/>, and UI5 looks for a DEFAULT
     " aggregation on sap.f.DynamicPage - which has none - so the view dies with
     " "Cannot add direct child without default aggregation defined"
-    DATA(lo_box) = page->ele( n = `header` ns = `f`
+    
+    lo_box = page->ele( n = `header` ns = `f`
         )->ele( n = `DynamicPageHeader` ns = `f`
             )->a( n = `pinnable` b = abap_true
             )->ele( `FlexBox`
@@ -221,25 +254,34 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
                 )->a( n = `text`  v = `Go`
                 )->a( n = `type`  v = `Emphasized` ).
 
-    DATA(cont) = page->ele( n = `content` ns = `f` ).
+    
+    cont = page->ele( n = `content` ns = `f` ).
 
-    DATA(tab) = cont->ele( n = `Table` ns = `table`
+    
+    CLEAR temp4.
+    INSERT `${$parameters>/column}.getFilterProperty()` INTO TABLE temp4.
+    INSERT `${$parameters>/value}` INTO TABLE temp4.
+    
+    CLEAR temp1.
+    INSERT `${$parameters>/column}.getSortProperty()` INTO TABLE temp1.
+    INSERT `${$parameters>/sortOrder}` INTO TABLE temp1.
+    
+    tab = cont->ele( n = `Table` ns = `table`
         )->a( n = `rows`               v = client->_bind( mt_table )
         )->a( n = `alternateRowColors` b = abap_true
         )->a( n = `fixedColumnCount`   v = `1`
         )->a( n = `rowActionCount`     v = `2`
         )->a( n = `selectionMode`      v = `None`
         )->a( n = `filter`             v = client->_event( val   = `FILTER`
-                                                            t_arg = VALUE #( ( `${$parameters>/column}.getFilterProperty()` )
-                                                                             ( `${$parameters>/value}` ) ) )
+                                                            t_arg = temp4 )
         )->a( n = `sort`               v = client->_event( val = `SORT`
-                                                            t_arg = VALUE #( ( `${$parameters>/column}.getSortProperty()` )
-                                                                             ( `${$parameters>/sortOrder}` ) ) ) ).
+                                                            t_arg = temp1 ) ).
     tab->ele( n = `extension` ns = `table`
         )->ele( `OverflowToolbar`
             )->tag( `Title`
                 )->a( n = `text` v = `Products` ).
-    DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
+    
+    lo_columns = tab->ele( n = `columns` ns = `table` ).
     lo_columns->ele( n = `Column` ns = `table`
         )->a( n = `width` v = `4rem`
         )->tag( `CheckBox`
@@ -355,24 +397,109 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
   METHOD set_data.
 
-    mt_table = VALUE #(
-        ( selkz = abap_false row_id = `1` product = `table`    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = `ST` price = `1000.50` waers = `EUR` process = `10`  process_state = `None` )
-        ( selkz = abap_false row_id = `2` product = `chair`    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = `ST` price = `2000.55` waers = `USD` process = `20` process_state = `Warning` )
-        ( selkz = abap_false row_id = `3` product = `sofa`     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = `ST` price = `3000.11` waers = `CNY` process = `30` process_state = `Success` )
-        ( selkz = abap_false row_id = `4` product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_002` quantity = 200  meins = `ST` price = `4000.88` waers = `USD` process = `40` process_state = `Information` )
-        ( selkz = abap_false row_id = `5` product = `printer`  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = `ST` price = `5000.47` waers = `EUR` process = `70` process_state = `Warning` )
-        ( selkz = abap_false row_id = `6` product = `table2`   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = `ST` price = `6000.33` waers = `GBP` process = `90`  process_state = `Error` ) ).
+    DATA temp6 LIKE mt_table.
+    DATA temp7 LIKE LINE OF temp6.
+    CLEAR temp6.
+    
+    temp7-selkz = abap_false.
+    temp7-row_id = `1`.
+    temp7-product = `table`.
+    temp7-create_date = `01.01.2023`.
+    temp7-create_by = `Olaf`.
+    temp7-storage_location = `AREA_001`.
+    temp7-quantity = 400.
+    temp7-meins = `ST`.
+    temp7-price = `1000.50`.
+    temp7-waers = `EUR`.
+    temp7-process = `10`.
+    temp7-process_state = `None`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-selkz = abap_false.
+    temp7-row_id = `2`.
+    temp7-product = `chair`.
+    temp7-create_date = `01.01.2022`.
+    temp7-create_by = `Karlo`.
+    temp7-storage_location = `AREA_001`.
+    temp7-quantity = 123.
+    temp7-meins = `ST`.
+    temp7-price = `2000.55`.
+    temp7-waers = `USD`.
+    temp7-process = `20`.
+    temp7-process_state = `Warning`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-selkz = abap_false.
+    temp7-row_id = `3`.
+    temp7-product = `sofa`.
+    temp7-create_date = `01.05.2021`.
+    temp7-create_by = `Elin`.
+    temp7-storage_location = `AREA_002`.
+    temp7-quantity = 700.
+    temp7-meins = `ST`.
+    temp7-price = `3000.11`.
+    temp7-waers = `CNY`.
+    temp7-process = `30`.
+    temp7-process_state = `Success`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-selkz = abap_false.
+    temp7-row_id = `4`.
+    temp7-product = `computer`.
+    temp7-create_date = `27.01.2023`.
+    temp7-create_by = `Theo`.
+    temp7-storage_location = `AREA_002`.
+    temp7-quantity = 200.
+    temp7-meins = `ST`.
+    temp7-price = `4000.88`.
+    temp7-waers = `USD`.
+    temp7-process = `40`.
+    temp7-process_state = `Information`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-selkz = abap_false.
+    temp7-row_id = `5`.
+    temp7-product = `printer`.
+    temp7-create_date = `01.01.2023`.
+    temp7-create_by = `Renate`.
+    temp7-storage_location = `AREA_003`.
+    temp7-quantity = 90.
+    temp7-meins = `ST`.
+    temp7-price = `5000.47`.
+    temp7-waers = `EUR`.
+    temp7-process = `70`.
+    temp7-process_state = `Warning`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-selkz = abap_false.
+    temp7-row_id = `6`.
+    temp7-product = `table2`.
+    temp7-create_date = `01.01.2023`.
+    temp7-create_by = `Angela`.
+    temp7-storage_location = `AREA_003`.
+    temp7-quantity = 110.
+    temp7-meins = `ST`.
+    temp7-price = `6000.33`.
+    temp7-waers = `GBP`.
+    temp7-process = `90`.
+    temp7-process_state = `Error`.
+    INSERT temp7 INTO TABLE temp6.
+    mt_table = temp6.
 
   ENDMETHOD.
 
 
   METHOD set_search.
+      DATA lv_search TYPE string.
+      DATA lt_all LIKE mt_table.
+      DATA temp8 LIKE mt_table.
+      DATA temp9 LIKE LINE OF lt_all.
+      DATA lr_row LIKE REF TO temp9.
+        DATA lv_row TYPE string.
+        DATA lv_index TYPE i.
+          FIELD-SYMBOLS <field> TYPE any.
 
     IF mv_search_value IS NOT INITIAL.
 
       " uppercase against uppercase, as the twins z2ui5_cl_smp_app_053 and
       " z2ui5_cl_smp_app_059 search - this copy compared case-sensitively
-      DATA(lv_search) = to_upper( mv_search_value ).
+      
+      lv_search = to_upper( mv_search_value ).
 
       " Collected rather than deleted in place: DELETE ... INDEX sy-tabix
       " inside a LOOP over the same table shifts the rows under the loop's own
@@ -380,14 +507,22 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
       " search returns wrong rows) and the transpiled backend raises
       " TABLE_INVALID_INDEX. The DO loop above the DELETE can leave sy-tabix
       " pointing elsewhere as well. Found 2026-08-17.
-      DATA(lt_all) = mt_table.
-      mt_table = VALUE #( ).
+      
+      lt_all = mt_table.
+      
+      CLEAR temp8.
+      mt_table = temp8.
 
-      LOOP AT lt_all REFERENCE INTO DATA(lr_row).
-        DATA(lv_row) = ``.
-        DATA(lv_index) = 1.
+      
+      
+      LOOP AT lt_all REFERENCE INTO lr_row.
+        
+        lv_row = ``.
+        
+        lv_index = 1.
         DO.
-          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+          
+          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO <field>.
 
           IF sy-subrc <> 0.
             EXIT.

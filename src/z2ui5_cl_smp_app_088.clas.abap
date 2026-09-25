@@ -24,7 +24,7 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
     me->client     = client.
     " no event branch: the tab switch is answered on the client by the
     " follow-up action below, nothing reaches the backend
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -33,7 +33,9 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -54,10 +56,15 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp1.
+    INSERT `NavCon` INTO TABLE temp1.
+    INSERT `to` INTO TABLE temp1.
+    INSERT `${$parameters>/key}` INTO TABLE temp1.
     page->ele( `IconTabHeader`
         )->a( n = `selectedKey` v = client->_bind( mv_selected_key )
         )->a( n = `select`      v = client->follow_up_action( val   = client->cs_event-control_by_id
-                                                                                     t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/key}` ) ) )
+                                                                                     t_arg = temp1 )
         )->a( n = `mode`        v = `Inline`
         )->ele( `items`
             )->ele( `IconTabFilter`

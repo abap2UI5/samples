@@ -25,7 +25,9 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -34,7 +36,8 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Focus - Set Focus and Select Text in an Input`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -84,9 +87,10 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 TYPE string_table.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       field_01 = `this is a text`.
       field_02 = `this is another text`.
@@ -94,13 +98,18 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
       selend   = `7`.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `BUTTON01` ) OR client->check_on_event( `BUTTON02` ).
+    ELSEIF client->check_on_event( `BUTTON01` ) IS NOT INITIAL OR client->check_on_event( `BUTTON02` ) IS NOT INITIAL.
 
+      
+      CLEAR temp1.
+      INSERT client->get_event( ) INTO TABLE temp1.
+      INSERT selstart INTO TABLE temp1.
+      INSERT selend INTO TABLE temp1.
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_focus
-          t_arg = VALUE #( ( client->get_event( ) ) ( selstart ) ( selend ) ) ).
+          t_arg = temp1 ).
       client->message_toast_display( |focus changed| ).
     ENDIF.
 

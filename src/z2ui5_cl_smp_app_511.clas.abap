@@ -36,15 +36,15 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( `PLAIN` ).
+    ELSEIF client->check_on_event( `PLAIN` ) IS NOT INITIAL.
 
       plain_backend = client->get_event_arg( ).
       plain_count   = plain_count + 1.
 
-    ELSEIF client->check_on_event( `QUEUED` ).
+    ELSEIF client->check_on_event( `QUEUED` ) IS NOT INITIAL.
 
       queued_backend = client->get_event_arg( ).
       queued_count   = queued_count + 1.
@@ -61,7 +61,11 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
     " check_queue_last flag changes about it.
     " abap2ui5lint-disable live-event-roundtrip
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA grid TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE z2ui5_if_client=>ty_s_event_control.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock`  v = `true`
             )->a( n = `height`        v = `100%`
@@ -69,7 +73,8 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`     v = `sap.ui.core.mvc`
             )->a( n = `xmlns:layout`  v = `sap.ui.layout` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Event - Keep the Last Keystroke with check_queue_last`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -89,7 +94,8 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
     " The Inputs are deliberately NOT bound: the keystroke travels as the
     " event argument ${$parameters>/value} and nowhere else, so what the
     " backend Text shows is exactly what the wire delivered.
-    DATA(grid) = page->ele( n = `Grid` ns = `layout`
+    
+    grid = page->ele( n = `Grid` ns = `layout`
         )->a( n = `defaultSpan` v = `XL6 L6 M6 S12`
         )->ele( n = `content` ns = `layout` ).
 
@@ -115,6 +121,9 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
 
     " right: the same wire with check_queue_last - the last keystroke of the
     " flight is kept and dispatched after the response
+    
+    CLEAR temp1.
+    temp1-check_queue_last = abap_true.
     grid->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `Title`
@@ -125,7 +134,7 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
             )->a( n = `liveChange`  v = client->_event(
                 val    = `QUEUED`
                 arg    = `${$parameters>/value}`
-                s_ctrl = VALUE #( check_queue_last = abap_true ) )
+                s_ctrl = temp1 )
         )->tag( `Label`
             )->a( n = `text` v = `Value in the backend`
         )->tag( `Text`

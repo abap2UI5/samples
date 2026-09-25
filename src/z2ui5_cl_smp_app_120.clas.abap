@@ -28,9 +28,9 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `GEOLOCATION_ERROR` ).
+    ELSEIF client->check_on_event( `GEOLOCATION_ERROR` ) IS NOT INITIAL.
       " the Geolocation control fires `error` when the position cannot be
       " read; the code (1 = permission denied, 2 = position unavailable,
       " 3 = timeout) and message are passed as event arguments.
@@ -44,7 +44,10 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -54,7 +57,8 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Device - Geolocation from the Browser`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -67,12 +71,15 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp1.
+    INSERT `${$parameters>/code}` INTO TABLE temp1.
+    INSERT `${$parameters>/message}` INTO TABLE temp1.
     page->tag( n = `Geolocation` ns = `z2ui5`
         " abap2ui5lint-disable-next-line event-without-handler -- the position arrives with the roundtrip and the view re-renders with it
         )->a( n = `finished` v = client->_event( `GEOLOCATION_LOADED` )
         )->a( n = `error`    v = client->_event( val   = `GEOLOCATION_ERROR`
-                                                                           t_arg = VALUE #( ( `${$parameters>/code}` )
-                                                                                            ( `${$parameters>/message}` ) ) )
+                                                                           t_arg = temp1 )
         )->a( n = `longitude`        v = client->_bind( longitude )
         )->a( n = `latitude`         v = client->_bind( latitude )
         )->a( n = `altitude`         v = client->_bind( altitude )

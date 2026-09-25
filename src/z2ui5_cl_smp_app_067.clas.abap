@@ -24,16 +24,16 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       numeric  = `000000000012`.
       amount   = `123456789.123`.
       currency = `USD`.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `BUTTON` ).
+    ELSEIF client->check_on_event( `BUTTON` ) IS NOT INITIAL.
       " the roundtrip IS the demo: the edited amounts travel back and re-render
       view_display( ).
     ENDIF.
@@ -43,7 +43,8 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`

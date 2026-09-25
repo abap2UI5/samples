@@ -24,9 +24,9 @@ CLASS z2ui5_cl_smp_app_474 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -65,24 +65,33 @@ CLASS z2ui5_cl_smp_app_474 IMPLEMENTATION.
     " and there is no window in which the popover is visible without it. That
     " is the one thing the rule cannot see, so it is said here instead.
     " abap2ui5lint-disable control-state-lost-on-rebuild -- re-issued before every openBy
+    DATA temp1 TYPE string_table.
+    DATA temp3 TYPE string_table.
+    CLEAR temp1.
+    INSERT `msgPopover` INTO TABLE temp1.
+    INSERT `setAsyncURLHandler` INTO TABLE temp1.
+    INSERT policy INTO TABLE temp1.
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                              t_arg = VALUE #( ( `msgPopover` )
-                                               ( `setAsyncURLHandler` )
-                                               ( policy ) ) ).
+                              t_arg = temp1 ).
     " abap2ui5lint-enable control-state-lost-on-rebuild
 
     " ... and only then open it, anchored to the button that fired the event
+    
+    CLEAR temp3.
+    INSERT `msgPopover` INTO TABLE temp3.
+    INSERT `openBy` INTO TABLE temp3.
+    INSERT client->get_event_arg( ) INTO TABLE temp3.
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                              t_arg = VALUE #( ( `msgPopover` )
-                                               ( `openBy` )
-                                               ( client->get_event_arg( ) ) ) ).
+                              t_arg = temp3 ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -90,7 +99,8 @@ CLASS z2ui5_cl_smp_app_474 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Message - MessagePopover URL Policy`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

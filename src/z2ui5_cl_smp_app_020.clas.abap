@@ -29,7 +29,7 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
 
   METHOD factory.
 
-    result = NEW #( ).
+    CREATE OBJECT result.
     result->text          = i_text.
     result->cancel_text   = i_cancel_text.
     result->cancel_event  = i_cancel_event.
@@ -40,16 +40,20 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA dialog TYPE REF TO z2ui5_cl_ui5_view_builder.
 
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
 
       " a popup sub-app: the dialog is shown on the first call and again
       " whenever the app regains the screen
-      DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+      
+      popup = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `FragmentDefinition` ns = `core`
               )->a( n = `xmlns`      v = `sap.m`
               )->a( n = `xmlns:core` v = `sap.ui.core` ).
-      DATA(dialog) = popup->ele( `Dialog`
+      
+      dialog = popup->ele( `Dialog`
           )->a( n = `title` v = `abap2UI5 - Popup to decide` ).
 
       dialog->tag( `MessageStrip`
@@ -74,7 +78,7 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
 
       client->popup_display( popup->stringify( ) ).
 
-    ELSEIF client->check_on_event( cancel_event ) OR client->check_on_event( confirm_event ).
+    ELSEIF client->check_on_event( cancel_event ) IS NOT INITIAL OR client->check_on_event( confirm_event ) IS NOT INITIAL.
 
       event = client->get_event( ).
       client->popup_destroy( ).

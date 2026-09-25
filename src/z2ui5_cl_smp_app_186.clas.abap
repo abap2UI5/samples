@@ -41,11 +41,16 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
 
 
   METHOD on_event.
+      DATA temp1 TYPE string_table.
 
-    IF client->check_on_event( `BUTTON_DOWNLOAD` ).
+    IF client->check_on_event( `BUTTON_DOWNLOAD` ) IS NOT INITIAL.
+      
+      CLEAR temp1.
+      INSERT file_content_64 INTO TABLE temp1.
+      INSERT file_name INTO TABLE temp1.
       client->follow_up_action(
           val   = client->cs_event-download_b64_file
-          t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ).
+          t_arg = temp1 ).
     ENDIF.
 
   ENDMETHOD.
@@ -53,7 +58,9 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -61,7 +68,8 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - File - Download to the Browser`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -110,11 +118,11 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 

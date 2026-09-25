@@ -12,7 +12,7 @@ CLASS z2ui5_cl_smp_app_176 DEFINITION PUBLIC.
         date TYPE string,
         age  TYPE string,
       END OF ty_s_data,
-      ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH EMPTY KEY.
+      ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH DEFAULT KEY.
 
     TYPES:
       BEGIN OF ty_s_layout,
@@ -22,7 +22,7 @@ CLASS z2ui5_cl_smp_app_176 DEFINITION PUBLIC.
         visible TYPE string,
         binding TYPE string,
       END OF ty_s_layout,
-      ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH EMPTY KEY.
+      ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH DEFAULT KEY.
 
     DATA mt_layout TYPE ty_t_layout.
     DATA mt_data   TYPE ty_t_data.
@@ -40,21 +40,54 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 TYPE z2ui5_cl_smp_app_176=>ty_t_data.
+      DATA temp2 LIKE LINE OF temp1.
+      DATA temp3 TYPE z2ui5_cl_smp_app_176=>ty_t_layout.
+      DATA temp4 LIKE LINE OF temp3.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      mt_data = VALUE #( ( name = `Theo` date = `01.01.2000` age = `5` )
-                        ( name = `Lore` date = `01.01.2000` age = `1` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-name = `Theo`.
+      temp2-date = `01.01.2000`.
+      temp2-age = `5`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Lore`.
+      temp2-date = `01.01.2000`.
+      temp2-age = `1`.
+      INSERT temp2 INTO TABLE temp1.
+      mt_data = temp1.
 
-      mt_layout = VALUE #( ( fname = `NAME` title = `Name` merge = `false` visible = `true`  binding = `{NAME}` )
-                          ( fname = `DATE` title = `Date` merge = `false` visible = `true`  binding = `{DATE}` )
-                          ( fname = `AGE`  title = `Age`  merge = `false` visible = `false` binding = `{AGE}` ) ).
+      
+      CLEAR temp3.
+      
+      temp4-fname = `NAME`.
+      temp4-title = `Name`.
+      temp4-merge = `false`.
+      temp4-visible = `true`.
+      temp4-binding = `{NAME}`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-fname = `DATE`.
+      temp4-title = `Date`.
+      temp4-merge = `false`.
+      temp4-visible = `true`.
+      temp4-binding = `{DATE}`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-fname = `AGE`.
+      temp4-title = `Age`.
+      temp4-merge = `false`.
+      temp4-visible = `false`.
+      temp4-binding = `{AGE}`.
+      INSERT temp4 INTO TABLE temp3.
+      mt_layout = temp3.
 
       view_display( ).
       nest_view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
 
       view_display( ).
       nest_view_display( ).
@@ -66,7 +99,9 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(lo_view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA lo_view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    lo_view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock`   v = `true`
             )->a( n = `height`         v = `100%`
@@ -74,7 +109,8 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`     v = `sap.ui.core` ).
 
-    DATA(page) = lo_view->ele( `Shell`
+    
+    page = lo_view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Templating - Dynamic Content in a Nested View`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -99,9 +135,12 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
     " the template model is the view model, so the list the repeat runs over
     " is a bound attribute - its path is composed from the bind call, never
     " written by hand
-    DATA(layout_path) = |\{template>{ client->_bind( val = mt_layout path = abap_true ) }\}|.
+    DATA layout_path TYPE string.
+    DATA lo_view_nested TYPE REF TO z2ui5_cl_ui5_view_builder.
+    layout_path = |\{template>{ client->_bind( val = mt_layout path = abap_true ) }\}|.
 
-    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    lo_view_nested = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock`   v = `true`
             )->a( n = `height`         v = `100%`

@@ -23,16 +23,24 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
 
   METHOD on_event.
+        DATA temp1 TYPE string_table.
+        DATA temp3 TYPE string_table.
 
     CASE client->get_event( ).
       WHEN `one_enter`.
+        
+        CLEAR temp1.
+        INSERT `IdTwo` INTO TABLE temp1.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-set_focus
-            t_arg = VALUE #( ( `IdTwo` ) ) ).
+            t_arg = temp1 ).
       WHEN `two_enter`.
+        
+        CLEAR temp3.
+        INSERT `IdThree` INTO TABLE temp3.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-set_focus
-            t_arg = VALUE #( ( `IdThree` ) ) ).
+            t_arg = temp3 ).
     ENDCASE.
 
   ENDMETHOD.
@@ -40,7 +48,8 @@ CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -87,18 +96,22 @@ CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp5 TYPE string_table.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       view_display( ).
+      
+      CLEAR temp5.
+      INSERT `IdOne` INTO TABLE temp5.
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_focus
-          t_arg = VALUE #( ( `IdOne` ) ) ).
+          t_arg = temp5 ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 

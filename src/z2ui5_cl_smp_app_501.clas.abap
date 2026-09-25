@@ -34,7 +34,7 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
 
   METHOD factory.
 
-    result         = NEW #( ).
+    CREATE OBJECT result.
     result->t_table = t_table.
     result->row_id  = row_id.
     result->edit    = edit.
@@ -45,16 +45,16 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
       popup_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       " this app owns a POPUP, not the main view slot, and calls no other app:
       " after the first call the branch is reached by a restored bookmark
       " only, where the dialog is gone and has to be shown again. The
       " framework pushes the model into a still-standing dialog by itself.
       popup_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -65,17 +65,27 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
 
     " the one row the dialog edits; an add starts from an empty row that
     " already carries the id the caller handed over
-    s_row = VALUE #( t_table[ row_id = row_id ] DEFAULT VALUE #( row_id = row_id ) ).
+    DATA temp1 TYPE z2ui5_cl_smp_app_500=>ty_s_row.
+    CLEAR temp1.
+    s_row = temp1.
 
   ENDMETHOD.
 
 
   METHOD on_event.
+        FIELD-SYMBOLS <temp2> TYPE z2ui5_cl_smp_app_500=>ty_s_row.
+DATA row LIKE REF TO <temp2>.
 
     CASE client->get_event( ).
 
       WHEN `POPUP_EDIT`.
-        DATA(row) = REF #( t_table[ row_id = row_id ] OPTIONAL ).
+        
+        READ TABLE t_table WITH KEY row_id = row_id ASSIGNING <temp2>.
+IF sy-subrc <> 0.
+  ASSERT 1 = 0.
+ENDIF.
+
+GET REFERENCE OF <temp2> INTO row.
         IF row IS BOUND.
           row->* = s_row.
         ENDIF.
@@ -107,18 +117,36 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp3 TYPE string.
+    DATA dialog TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE xsdboolean.
+    DATA temp2 TYPE xsdboolean.
+    DATA buttons TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp4 TYPE string.
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    DATA(dialog) = popup->ele( `Dialog`
-        )->a( n = `title`      t = COND #( WHEN edit = abap_true THEN `Edit Row` ELSE `Add Row` )
+    
+    IF edit = abap_true.
+      temp3 = `Edit Row`.
+    ELSE.
+      temp3 = `Add Row`.
+    ENDIF.
+    
+    dialog = popup->ele( `Dialog`
+        )->a( n = `title`      t = temp3
         )->a( n = `afterClose` v = client->_event( `POPUP_CLOSE` ) ).
 
     " the key fields are locked once the row exists - an edit may not turn a
     " row into a different one
+    
+    temp1 = boolc( edit = abap_false ).
+    
+    temp2 = boolc( edit = abap_false ).
     dialog->ele( n = `SimpleForm` ns = `form`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form`
@@ -126,12 +154,12 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
                 )->a( n = `text` v = `Carrier`
             )->tag( `Input`
                 )->a( n = `value`   v = client->_bind( s_row-carrid )
-                )->a( n = `enabled` b = xsdbool( edit = abap_false )
+                )->a( n = `enabled` b = temp1
             )->tag( `Label`
                 )->a( n = `text` v = `Connection`
             )->tag( `Input`
                 )->a( n = `value`   v = client->_bind( s_row-connid )
-                )->a( n = `enabled` b = xsdbool( edit = abap_false )
+                )->a( n = `enabled` b = temp2
             )->tag( `Label`
                 )->a( n = `text` v = `From`
             )->tag( `Input`
@@ -143,7 +171,8 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
 
     " the buttons are the Dialog's own aggregation, not the form's - held in
     " a variable and started as a new statement rather than climbed back to
-    DATA(buttons) = dialog->ele( `buttons`
+    
+    buttons = dialog->ele( `buttons`
         )->tag( `Button`
             )->a( n = `text`  v = `Cancel`
             )->a( n = `press` v = client->_event( `POPUP_CLOSE` ) ).
@@ -155,12 +184,16 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
           )->a( n = `press` v = client->_event( `POPUP_DELETE` ) ).
     ENDIF.
 
+    
+    IF edit = abap_true.
+      temp4 = `POPUP_EDIT`.
+    ELSE.
+      temp4 = `POPUP_ADD`.
+    ENDIF.
     buttons->tag( `Button`
         )->a( n = `text`  v = `OK`
         )->a( n = `type`  v = `Emphasized`
-        )->a( n = `press` v = client->_event( COND #( WHEN edit = abap_true
-                                                      THEN `POPUP_EDIT`
-                                                      ELSE `POPUP_ADD` ) ) ).
+        )->a( n = `press` v = client->_event( temp4 ) ).
 
     client->popup_display( popup->stringify( ) ).
 

@@ -19,6 +19,7 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
 
   METHOD view_display.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     " Deliberately styled DIFFERENTLY from sub-app class 2 (a table), so the
     " parent demo 104 shows at a glance WHICH class is embedded right now.
@@ -30,7 +31,8 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = view_parent->ele( `Panel`
+    
+    form = view_parent->ele( `Panel`
         )->a( n = `headerText` v = `Class 1 - Form`
         )->ele( n = `SimpleForm` ns = `form`
             )->a( n = `editable` b = abap_true
@@ -60,7 +62,7 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `MESSAGE_SUB` ).
+    IF client->check_on_event( `MESSAGE_SUB` ) IS NOT INITIAL.
       client->message_box_display( `event raised in SUB-APP CLASS 1 (the form)` ).
     ENDIF.
 
@@ -73,9 +75,9 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
     " client->view_display( ) - it renders into the parent's view reference
     " (view_parent), and the parent app owns the screen and re-displays it.
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 

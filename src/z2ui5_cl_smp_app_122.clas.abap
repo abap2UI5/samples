@@ -44,7 +44,17 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
 
   METHOD read_frontend_info.
 
-    DATA(ls_get) = client->get( ).
+    DATA ls_get TYPE z2ui5_if_client=>ty_s_get.
+    DATA temp1 TYPE string.
+    DATA temp2 TYPE string.
+    DATA temp6 TYPE xsdboolean.
+    DATA temp7 TYPE xsdboolean.
+    DATA temp8 TYPE xsdboolean.
+    DATA temp9 TYPE xsdboolean.
+    DATA temp3 TYPE string.
+    DATA temp4 TYPE string.
+    DATA temp5 TYPE string.
+    ls_get = client->get( ).
 
     device_browser         = ls_get-s_device-browser-name.
     device_browser_version = ls_get-s_device-browser-version.
@@ -52,12 +62,24 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
     device_os_version      = ls_get-s_device-os-version.
     device_systemtype      = ls_get-s_device-system.
     device_orientation     = ls_get-s_device-orientation.
-    device_height          = CONV string( ls_get-s_device-resize-height ).
-    device_width           = CONV string( ls_get-s_device-resize-width ).
-    device_phone           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-phone ).
-    device_desktop         = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-desktop ).
-    device_tablet          = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-tablet ).
-    device_combi           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-combi ).
+    
+    temp1 = ls_get-s_device-resize-height.
+    device_height          = temp1.
+    
+    temp2 = ls_get-s_device-resize-width.
+    device_width           = temp2.
+    
+    temp6 = boolc( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-phone ).
+    device_phone           = temp6.
+    
+    temp7 = boolc( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-desktop ).
+    device_desktop         = temp7.
+    
+    temp8 = boolc( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-tablet ).
+    device_tablet          = temp8.
+    
+    temp9 = boolc( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-combi ).
+    device_combi           = temp9.
     device_touch           = ls_get-s_device-support-touch.
     device_pointer         = ls_get-s_device-support-pointer.
     device_retina          = ls_get-s_device-support-retina.
@@ -69,30 +91,55 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
     " the raw values are short codes (cr, ff, win, mac, ...). cs_device
     " names every one of them, so an app branches on the constant rather
     " than on a string it would have to know - here into a label per group
-    browser_label = SWITCH #( ls_get-s_device-browser-name
-                              WHEN z2ui5_if_client=>cs_device-browser-chrome  THEN `Google Chrome (or Chromium)`
-                              WHEN z2ui5_if_client=>cs_device-browser-firefox THEN `Mozilla Firefox`
-                              WHEN z2ui5_if_client=>cs_device-browser-safari  THEN `Apple Safari`
-                              WHEN z2ui5_if_client=>cs_device-browser-edge    THEN `Microsoft Edge`
-                              ELSE `not one cs_device-browser names` ).
-    os_label      = SWITCH #( ls_get-s_device-os-name
-                              WHEN z2ui5_if_client=>cs_device-os-windows   THEN `Windows`
-                              WHEN z2ui5_if_client=>cs_device-os-macintosh THEN `macOS`
-                              WHEN z2ui5_if_client=>cs_device-os-linux     THEN `Linux`
-                              WHEN z2ui5_if_client=>cs_device-os-ios       THEN `iOS`
-                              WHEN z2ui5_if_client=>cs_device-os-android   THEN `Android`
-                              ELSE `not one cs_device-os names` ).
-    orientation_label = SWITCH #( ls_get-s_device-orientation
-                                  WHEN z2ui5_if_client=>cs_device-orientation-portrait  THEN `portrait - one column would fit best`
-                                  WHEN z2ui5_if_client=>cs_device-orientation-landscape THEN `landscape - room for two columns`
-                                  ELSE `not one cs_device-orientation names` ).
+    
+    CASE ls_get-s_device-browser-name.
+      WHEN z2ui5_if_client=>cs_device-browser-chrome.
+        temp3 = `Google Chrome (or Chromium)`.
+      WHEN z2ui5_if_client=>cs_device-browser-firefox.
+        temp3 = `Mozilla Firefox`.
+      WHEN z2ui5_if_client=>cs_device-browser-safari.
+        temp3 = `Apple Safari`.
+      WHEN z2ui5_if_client=>cs_device-browser-edge.
+        temp3 = `Microsoft Edge`.
+      WHEN OTHERS.
+        temp3 = `not one cs_device-browser names`.
+    ENDCASE.
+    browser_label = temp3.
+    
+    CASE ls_get-s_device-os-name.
+      WHEN z2ui5_if_client=>cs_device-os-windows.
+        temp4 = `Windows`.
+      WHEN z2ui5_if_client=>cs_device-os-macintosh.
+        temp4 = `macOS`.
+      WHEN z2ui5_if_client=>cs_device-os-linux.
+        temp4 = `Linux`.
+      WHEN z2ui5_if_client=>cs_device-os-ios.
+        temp4 = `iOS`.
+      WHEN z2ui5_if_client=>cs_device-os-android.
+        temp4 = `Android`.
+      WHEN OTHERS.
+        temp4 = `not one cs_device-os names`.
+    ENDCASE.
+    os_label      = temp4.
+    
+    CASE ls_get-s_device-orientation.
+      WHEN z2ui5_if_client=>cs_device-orientation-portrait.
+        temp5 = `portrait - one column would fit best`.
+      WHEN z2ui5_if_client=>cs_device-orientation-landscape.
+        temp5 = `landscape - room for two columns`.
+      WHEN OTHERS.
+        temp5 = `not one cs_device-orientation names`.
+    ENDCASE.
+    orientation_label = temp5.
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -101,7 +148,8 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Device - Frontend Info: UI5 Version, Theme, OS, Browser`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -237,11 +285,11 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       read_frontend_info( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
     ENDIF.
