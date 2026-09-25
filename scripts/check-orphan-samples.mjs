@@ -22,7 +22,9 @@
  * This is the gate for the other direction: not "is every tile complete" but
  * "is every sample a tile". `src/` is flat since 2026-09-22, so the rule is as
  * short as the tree: a class whose name says sample (`z2ui5_cl_smp_app_*`) has
- * to sit directly in `src/`, or it is refused here.
+ * to sit directly in `src/`, with its `.clas.xml` sidecar beside it - the
+ * DESCRIPT in there is where every catalogue takes the title from, so a class
+ * without one has no tile either - or it is refused here.
  *
  * WHAT IS DELIBERATELY NOT AN ORPHAN:
  *
@@ -47,13 +49,15 @@ if (orphans.length > 0) {
   console.error(
     `${n} sample class${n === 1 ? '' : 'es'} in the tree that no catalogue can reach:\n`,
   );
-  for (const o of orphans) console.error(`  ${o.path}\n    sits in ${o.why}`);
+  for (const o of orphans) console.error(`  ${o.path}\n    ${o.why}`);
   console.error(
     '\nA class named z2ui5_cl_smp_app_* has to live directly in src/, the one '
-    + 'flat\nsample package (AGENTS.md section 1). Where it sits now it is in no '
-    + 'overview app\nand in no SAMPLES.md row, and every other gate here passes '
-    + 'it without looking:\nthey all count tiles, and it is not one.'
-    + '\n\nMove it into src/, then run `npm run launchpad` and commit the result.',
+    + 'flat\nsample package (AGENTS.md section 1), with its .clas.xml sidecar '
+    + 'beside it.\nAs it is now it is in no overview app and in no SAMPLES.md '
+    + 'row, and every\nother gate here passes it without looking: they all count '
+    + 'tiles, and it is not one.'
+    + '\n\nMove it into src/ (or add the sidecar), then run `npm run launchpad` '
+    + 'and commit the result.',
   );
   process.exit(1);
 }

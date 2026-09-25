@@ -59,13 +59,15 @@ jobs:
     - run: npm ci
     # the render gate drives a headless browser
     - run: npx playwright install chromium --with-deps
-    - run: npx abap2ui5lint
+    - run: npm run check:abap2ui5
 
     # The same corpus once more as markdown, into the job summary - findings
     # and run summary on the run's own page, without expanding a log. A second
     # pass, costing the property gate only (--no-render: whether the views
     # load was decided by the step above), and --no-badge because a pass that
-    # skipped a gate must not overwrite the badge the real run wrote.
+    # skipped a gate must not overwrite the badge the real run wrote. Called
+    # directly rather than as `npm run check:abap2ui5`, deliberately: these
+    # flags are what make it a report and not the gate.
     - name: Job summary
       if: always()
       run: npx abap2ui5lint --no-render --advisory --no-progress --no-badge --format markdown >> "$GITHUB_STEP_SUMMARY"

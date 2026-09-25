@@ -10,8 +10,8 @@ CLASS z2ui5_cl_smp_app_112 DEFINITION PUBLIC.
       END OF ty_s_item.
 
     DATA view_parent TYPE REF TO z2ui5_cl_ui5_view_builder.
-    DATA mv_class_2 TYPE string.
-    DATA t_items TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
+    DATA class_2     TYPE string.
+    DATA t_items     TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
 
     METHODS on_event.
     METHODS view_display.
@@ -52,7 +52,7 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `Input`
             )->a( n = `placeholder` v = `type here - the value lives in sub-app 2`
-            )->a( n = `value`       v = client->_bind( mv_class_2 )
+            )->a( n = `value`       v = client->_bind( class_2 )
         )->tag( `Button`
             )->a( n = `press` v = client->_event( `MESSAGE_SUB` )
             )->a( n = `text`  v = `raise event in sub-app 2`

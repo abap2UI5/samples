@@ -1,5 +1,5 @@
-" @keywords menubutton menuitem popover messagetoast require module
-" @summary A MenuButton whose items call a UI5 module loaded with core:require, so the click is answered in the frontend.
+" @keywords menu menuitem popover button messagetoast require module
+" @summary A Menu opened as a popover from a Button, whose items call a UI5 module loaded with core:require, so the click is answered in the frontend.
 CLASS z2ui5_cl_smp_app_163 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
 
     view           = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Menu - Menu Button with core:require`
+            )->a( n = `title`          v = `abap2UI5 - Menu - Menu as Popover with core:require`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
             )->a( n = `id`             v = `page_main` ).

@@ -13,8 +13,8 @@ CLASS z2ui5_cl_smp_app_189 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS render.
-    METHODS dispatch.
+    METHODS on_event.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -22,8 +22,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
 
-
-  METHOD dispatch.
+  METHOD on_event.
 
     CASE client->get_event( ).
       WHEN `one_enter`.
@@ -39,7 +38,7 @@ CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD render.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -90,17 +89,19 @@ CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
-      render( ).
+
+      view_display( ).
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_focus
           t_arg = VALUE #( ( `IdOne` ) ) ).
+
     ELSEIF client->check_on_navigated( ).
-      render( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
     ENDIF.
 
-    dispatch( ).
-
   ENDMETHOD.
+
 ENDCLASS.

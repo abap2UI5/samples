@@ -154,19 +154,21 @@ CLASS z2ui5_cl_smp_app_019 IMPLEMENTATION.
           ( title = `title_03` value = `value_03` )
           ( title = `title_04` value = `value_04` )
           ( title = `title_05` value = `value_05` ) ).
-    ELSEIF client->check_on_navigated( ).
       view_display( ).
 
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSEIF client->check_on_event( `BUTTON_SEGMENT_CHANGE` ).
+
       client->message_toast_display( `Selection Mode changed` ).
+      view_display( ).
 
     ELSEIF client->check_on_event( `BUTTON_READ_SEL` ).
 
       t_tab_sel = t_tab.
       DELETE t_tab_sel WHERE selkz <> abap_true.
+      view_display( ).
     ENDIF.
-
-    view_display( ).
 
   ENDMETHOD.
 

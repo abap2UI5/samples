@@ -20,37 +20,46 @@ CLASS z2ui5_cl_smp_app_047 DEFINITION PUBLIC.
     DATA dec2    TYPE p LENGTH 10 DECIMALS 4.
     DATA dec_sum TYPE p LENGTH 10 DECIMALS 4.
 
-    DATA date    TYPE d.
-    DATA time    TYPE t.
+    DATA date TYPE d.
+    DATA time TYPE t.
 
-    DATA mt_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
 CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
 
-
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
     IF client->check_on_init( ).
-      date = sy-datum.
-      time = sy-uzeit.
-      dec1 = - 1 / 3.
-      dec2 = 2 / 3.
 
-      mt_tab = VALUE #( ( date = sy-datum time = sy-uzeit ) ).
-      client->_bind( mt_tab ).
+      date  = sy-datum.
+      time  = sy-uzeit.
+      dec1  = - 1 / 3.
+      dec2  = 2 / 3.
+      t_tab = VALUE #( ( date = sy-datum time = sy-uzeit ) ).
+      view_display( ).
+
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `BUTTON_INT` ).
+      int_sum = int1 + int2.
+    ELSEIF client->check_on_event( `BUTTON_DEC` ).
+      dec_sum = dec1 + dec2.
     ENDIF.
 
-    CASE client->get_event( ).
-      WHEN `BUTTON_INT`.
-        int_sum = int1 + int2.
-      WHEN `BUTTON_DEC`.
-        dec_sum = dec1 + dec2.
-    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -116,7 +125,7 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
         )->a( n = `height`   v = `70%`
         )->a( n = `vertical` b = abap_true
         )->ele( `Table`
-            )->a( n = `items`               v = client->_bind( mt_tab )
+            )->a( n = `items`               v = client->_bind( t_tab )
             )->a( n = `growing`             b = abap_true
             )->a( n = `growingThreshold`    v = `20`
             )->a( n = `growingScrollToLoad` b = abap_true
@@ -143,4 +152,5 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -15,19 +15,20 @@ CLASS z2ui5_cl_smp_app_052 DEFINITION PUBLIC.
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab.
-    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    TYPES ty_t_tab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mv_check_popover TYPE abap_bool.
-    DATA mv_product TYPE string.
+    DATA t_table          TYPE ty_t_tab.
+    DATA check_popover    TYPE abap_bool.
+    DATA product_selected TYPE string.
 
-    METHODS  set_data.
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS set_data.
     METHODS view_display.
     METHODS popover_display
       IMPORTING
         id TYPE string.
-
-  PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -37,15 +38,15 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(lo_popover) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(fragment) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
             )->a( n = `xmlns:f`    v = `sap.f`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    DATA(popover) = lo_popover->ele( `Popover`
-        )->a( n = `title`        t = |abap2UI5 - Popover - { mv_product }|
+    DATA(popover) = fragment->ele( `Popover`
+        )->a( n = `title`        t = |abap2UI5 - Popover - { product_selected }|
         )->a( n = `placement`    v = `Right`
         )->a( n = `contentWidth` v = `20rem` ).
 
@@ -56,7 +57,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `Product`
             )->tag( `Text`
-                )->a( n = `text` t = mv_product
+                )->a( n = `text` t = product_selected
             )->tag( `Label`
                 )->a( n = `text` v = `info2`
             )->tag( `Text`
@@ -77,7 +78,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
                 )->a( n = `text`  v = `details`
                 )->a( n = `type`  v = `Emphasized` ).
 
-    client->popover_display( xml = lo_popover->stringify( ) by_id = id ).
+    client->popover_display( xml = fragment->stringify( ) by_id = id ).
 
     " a frontend action aimed at the popover: the view parameter scopes the
     " id lookup to the popover slot (cs_view-popover), so the focus lands on
@@ -121,39 +122,39 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
     DATA(cont) = page->ele( n = `content` ns = `f` ).
     DATA(tab) = cont->ele( `Table`
-        )->a( n = `items` v = client->_bind( val = mt_table )
+        )->a( n = `items` v = client->_bind( val = t_table )
         )->a( n = `id`    v = `tab` ).
 
-    DATA(lo_columns) = tab->ele( `columns` ).
-    lo_columns->ele( `Column`
+    DATA(columns) = tab->ele( `columns` ).
+    columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Product` ).
-    lo_columns->ele( `Column`
+    columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Date` ).
-    lo_columns->ele( `Column`
+    columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Name` ).
-    lo_columns->ele( `Column`
+    columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Location` ).
-    lo_columns->ele( `Column`
+    columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Quantity` ).
 
-    DATA(lo_cells) = tab->ele( `items`
+    DATA(cells) = tab->ele( `items`
         )->ele( `ColumnListItem` ).
-    lo_cells->tag( `Link`
+    cells->tag( `Link`
         )->a( n = `text`  v = `{PRODUCT}`
         )->a( n = `press` v = client->_event( val = `POPOVER_DETAIL` t_arg = VALUE #( ( `${$source>/id}` ) ( `${PRODUCT}` ) ) )
         )->a( n = `id`    v = `link` ).
-    lo_cells->tag( `Text`
+    cells->tag( `Text`
         )->a( n = `text` v = `{CREATE_DATE}` ).
-    lo_cells->tag( `Text`
+    cells->tag( `Text`
         )->a( n = `text` v = `{CREATE_BY}` ).
-    lo_cells->tag( `Text`
+    cells->tag( `Text`
         )->a( n = `text` v = `{STORAGE_LOCATION}` ).
-    lo_cells->tag( `Text`
+    cells->tag( `Text`
         )->a( n = `text` v = `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
@@ -180,8 +181,8 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
         client->popover_destroy( ).
 
       WHEN `POPOVER_DETAIL`.
-        mv_check_popover = abap_true.
-        mv_product       = client->get_event_arg( 2 ).
+        check_popover = abap_true.
+        product_selected = client->get_event_arg( 2 ).
         popover_display( client->get_event_arg( ) ).
     ENDCASE.
 
@@ -190,55 +191,18 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
   METHOD set_data.
 
-    mt_table = VALUE #(
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-        ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 ) ).
+    " the six rows eight times - a table long enough to scroll
+    t_table = VALUE #( ).
+    DO 8 TIMES.
+      INSERT LINES OF VALUE ty_t_tab(
+          ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
+          ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
+          ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+          ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
+          ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+          ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
+          ) INTO TABLE t_table.
+    ENDDO.
 
   ENDMETHOD.
 

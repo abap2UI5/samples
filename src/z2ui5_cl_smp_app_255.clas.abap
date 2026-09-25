@@ -9,12 +9,7 @@ CLASS z2ui5_cl_smp_app_255 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS view_display
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS on_event
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+    METHODS view_display.
     METHODS popover_display
       IMPORTING
         id TYPE string.
@@ -27,11 +22,10 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(css) = `.navigationExamples .code \{`                    &&
-                `    margin: 0 5%;`                              &&
-                `    font-family: Consolas, Courier, monospace;` &&
-                `\}`                                              &&
-                `.navigationExamples .ne-flexbox1,`              &&
+    " the classes below exist nowhere in UI5 - they are shipped with the view
+    " in the core:HTML style element and referenced by the class attribute of
+    " the controls, so a page can carry its own design
+    DATA(css) = `.navigationExamples .ne-flexbox1,`              &&
                 `.navigationExamples .ne-flexbox2 \{`             &&
                 `    padding: 0;`                                &&
                 `\}`                                              &&
@@ -43,10 +37,10 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
                 `    background-color: #193441;`                 &&
                 `    cursor: pointer;`                           &&
                 `\}`                                              &&
-      `.navigationExamples .ne-flexbox1 li:hover \{`    &&
+                `.navigationExamples .ne-flexbox1 li:hover \{`    &&
                 `    background-color: orange;`                  &&
                 `\}`                                              &&
-      `.navigationExamples .ne-flexbox2 li \{`          &&
+                `.navigationExamples .ne-flexbox2 li \{`          &&
                 `    margin: 0.5em;`                             &&
                 `    width: 25%;`                                &&
                 `    min-width: 15%;`                            &&
@@ -57,11 +51,11 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
                 `    transition: width 0.5s ease-out, background-color 0.5s ease-out, flex-basis 0.5s ease-out;` &&
                 `    cursor: pointer;`                           &&
                 `\}`                                              &&
-      `.navigationExamples .ne-flexbox2 li:hover \{`    &&
+                `.navigationExamples .ne-flexbox2 li:hover \{`    &&
                 `    flex-basis: 35% !important;`                &&
                 `    background-color: orange;`                  &&
                 `\}`                                              &&
-      `.navigationExamples .ne-flexbox1 li a,`         &&
+                `.navigationExamples .ne-flexbox1 li a,`         &&
                 `.navigationExamples .ne-flexbox2 li a \{`        &&
                 `    color: #fff;`                               &&
                 `    text-decoration: none;`                     &&
@@ -87,25 +81,19 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Navigation layouts built with sap.m.FlexBox and own CSS classes: variable width, equal width with ` &&
-                   `a transition effect and a wrapping row. The hint button in the header explains each panel.`
+        )->a( n = `text`     v = `Navigation layouts built with sap.m.FlexBox and CSS classes of this app's own: the ` &&
+                   `stylesheet travels with the view, the controls name the classes. Variable width, equal width ` &&
+                   `with a transition effect - the hint button in the header explains the panels.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    " ONE headerContent with both children: an aggregation opened twice is not
-    " merged, the second tag REPLACES the first - written as two blocks the
-    " hint Button silently disappeared and only the Link ever rendered
     page->ele( `headerContent`
         )->tag( `Button`
             )->a( n = `press`   v = client->_event( `POPOVER` )
             )->a( n = `icon`    v = `sap-icon://hint`
             )->a( n = `id`      v = `hint_icon`
-            )->a( n = `tooltip` v = `Sample information`
-        )->tag( `Link`
-            )->a( n = `text`   v = `UI5 Demo Kit`
-            )->a( n = `target` v = `_blank`
-            )->a( n = `href`   v = `https://sdk.openui5.org/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxNav` ).
+            )->a( n = `tooltip` v = `Sample information` ).
 
     page->ele( `VBox`
         )->a( n = `class` v = `navigationExamples`
@@ -158,16 +146,7 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
                         )->end(
                     )->end( ).
 
-    client->view_display( page->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    IF client->check_on_event( `POPOVER` ).
-      popover_display( `hint_icon` ).
-    ENDIF.
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -182,7 +161,8 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
         )->a( n = `placement` v = `Bottom`
         )->a( n = `width`     v = `auto`
         )->ele( `QuickViewPage`
-            )->a( n = `description` v = `Here is an example of how you can use navigation items as unordered list items in a Flex Box.`
+            )->a( n = `description` v = `The items are list entries in a FlexBox; the classes that shape and colour them ` &&
+                                        `are defined in the style element this view ships, not in the UI5 theme.`
             )->a( n = `header`      v = `Sample information`
             )->a( n = `pageId`      v = `sampleInformationId` ).
 
@@ -194,14 +174,11 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
-    IF client->check_on_init( ).
-      view_display( client ).
-    ELSEIF client->check_on_navigated( ).
-      view_display( client ).
+    IF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `POPOVER` ).
+      popover_display( `hint_icon` ).
     ENDIF.
-
-    on_event( client ).
 
   ENDMETHOD.
 

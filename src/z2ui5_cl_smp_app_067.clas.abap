@@ -6,27 +6,43 @@ CLASS z2ui5_cl_smp_app_067 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA amount            TYPE p LENGTH 14 DECIMALS 3.
-    DATA currency          TYPE string.
-    DATA numeric           TYPE n LENGTH 12.
+    DATA amount   TYPE p LENGTH 14 DECIMALS 3.
+    DATA currency TYPE string.
+    DATA numeric  TYPE n LENGTH 12.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
 CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
 
-
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
     IF client->check_on_init( ).
 
       numeric  = `000000000012`.
       amount   = `123456789.123`.
       currency = `USD`.
+      view_display( ).
 
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `BUTTON` ).
+      " the roundtrip IS the demo: the edited amounts travel back and re-render
+      view_display( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
@@ -118,7 +134,6 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `event`
             )->tag( `Button`
-                " abap2ui5lint-disable-next-line event-without-handler -- the roundtrip IS the demo: the edited amounts travel back and re-render
                 )->a( n = `press` v = client->_event( `BUTTON` )
                 )->a( n = `text`  v = `send` ).
 
@@ -147,4 +162,5 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

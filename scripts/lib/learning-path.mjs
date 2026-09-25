@@ -1,5 +1,5 @@
 /*
- * learning-path — the teaching order of src/01, read from the one editorial
+ * learning-path — the teaching order of the samples, read from the one editorial
  * file behind it (lib/learning-path.json), plus the three rules that keep that
  * order attached to the tree.
  *
@@ -13,7 +13,7 @@
  * are silent without them - a new category simply falls off the path, a
  * renamed one leaves a stage pointing at nothing - so whichever generator runs
  * first has to refuse:
- *   - every category in src/01 belongs to EXACTLY ONE stage,
+ *   - every category in src/ belongs to EXACTLY ONE stage,
  *   - a category a stage names exists on at least one sample,
  *   - a category no stage names fails rather than being dropped.
  *
@@ -27,7 +27,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const LEARNING_PATH = path.join(HERE, 'learning-path.json');
 
 /**
- * @param {Array<{base: string}>} tiles  the src/01 tiles of scanSamples( )
+ * @param {Array<{base: string}>} tiles  the tiles of scanSamples( )
  * @param {(message: string) => never} fail
  * @returns {{ stages: Array<{id: string, title: string, blurb: string, categories: string[]}>,
  *             stageOf: (base: string) => {id: string, title: string, blurb: string} }}
@@ -44,7 +44,7 @@ export function loadLearningPath(tiles, fail) {
       }
       stageOf.set(name, stage);
       if (!byCategory.has(name)) {
-        fail(`stage "${stage.id}" names category "${name}", which no sample in src/01 carries.\n`
+        fail(`stage "${stage.id}" names category "${name}", which no sample in src/ carries.\n`
           + "Drop it from scripts/lib/learning-path.json, or put the category back on a sample's DESCRIPT.");
       }
     }

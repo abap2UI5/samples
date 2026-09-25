@@ -23,21 +23,23 @@ CLASS z2ui5_cl_smp_app_070 DEFINITION PUBLIC.
         process_state    TYPE string,
       END OF ty_s_tab.
 
-    DATA mv_search_value TYPE string.
-    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
-    DATA lv_selkz TYPE abap_bool.
+    DATA search_value TYPE string.
+    DATA t_table      TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    DATA selkz_all    TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
     METHODS on_event.
+    METHODS view_display.
     METHODS set_search.
     METHODS set_data.
+    METHODS set_sort.
+    METHODS set_filter.
 
     METHODS set_selkz
       IMPORTING
-        iv_selkz TYPE abap_bool.
+        val TYPE abap_bool.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -45,26 +47,16 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
-
-  METHOD set_selkz.
-
-    FIELD-SYMBOLS <ls_table> TYPE ty_s_tab.
-
-    LOOP AT mt_table ASSIGNING <ls_table>.
-      <ls_table>-selkz = iv_selkz.
-    ENDLOOP.
-
-  ENDMETHOD.
-
-
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
-
+    me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+
+      set_data( ).
+      view_display( ).
+
     ELSEIF client->check_on_navigated( ).
-      on_init( ).
+      view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
@@ -80,37 +72,83 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         set_data( ).
         set_search( ).
       WHEN `SORT`.
-        DATA(lt_arg) = client->get( )-t_event_arg.
-        client->message_toast_display( `Event SORT` ).
+        set_sort( ).
       WHEN `FILTER`.
-        lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( `Event FILTER` ).
+        set_filter( ).
       WHEN `SELKZ`.
-        client->message_toast_display( |'Event SELKZ' { lv_selkz } | ).
-        set_selkz( lv_selkz ).
-      WHEN `CUSTOMFILTER`.
-        lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( `Event CUSTOMFILTER` ).
+        client->message_toast_display( |'Event SELKZ' { selkz_all } | ).
+        set_selkz( selkz_all ).
       WHEN `ROW_ACTION_ITEM_NAVIGATION`.
-        lt_arg = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
-
-        IF sy-subrc = 0.
-          client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
-        ENDIF.
+        client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { client->get_event_arg( ) } | ).
       WHEN `ROW_ACTION_ITEM_EDIT`.
-        lt_arg = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO ls_arg INDEX 1.
-
-        IF sy-subrc = 0.
-          client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { ls_arg } | ).
-        ENDIF.
+        client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { client->get_event_arg( ) } | ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD on_init.
+  METHOD set_selkz.
+
+    LOOP AT t_table REFERENCE INTO DATA(row).
+      row->selkz = val.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD set_sort.
+
+    " the sort event carries the column's sortProperty and the requested
+    " order - the client sorts its binding too, so both agree, and the
+    " backend order is the one the next model push would restore
+    DATA(property)   = client->get_event_arg( 1 ).
+    DATA(sort_order) = client->get_event_arg( 2 ).
+
+    IF sort_order = `Descending`.
+      SORT t_table BY (property) DESCENDING.
+    ELSE.
+      SORT t_table BY (property) ASCENDING.
+    ENDIF.
+    client->message_toast_display( |Event SORT { property } { sort_order }| ).
+
+  ENDMETHOD.
+
+
+  METHOD set_filter.
+
+    " the filter event carries the column's filterProperty and the typed
+    " value: a contains-filter over that one component, on the full data
+    DATA(property) = client->get_event_arg( 1 ).
+    DATA(value)    = to_upper( client->get_event_arg( 2 ) ).
+
+    set_data( ).
+    set_search( ).
+
+    IF value IS INITIAL.
+      client->message_toast_display( |Event FILTER { property } cleared| ).
+      RETURN.
+    ENDIF.
+
+    DATA(t_all) = t_table.
+    t_table = VALUE #( ).
+
+    LOOP AT t_all REFERENCE INTO DATA(row).
+      ASSIGN COMPONENT property OF STRUCTURE row->* TO FIELD-SYMBOL(<field>).
+
+      IF sy-subrc <> 0.
+        CONTINUE.
+      ENDIF.
+
+      IF to_upper( |{ <field> }| ) CS value.
+        INSERT row->* INTO TABLE t_table.
+      ENDIF.
+    ENDLOOP.
+    client->message_toast_display( |Event FILTER { property } { value }| ).
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -133,7 +171,9 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
     page1->tag( `MessageStrip`
         )->a( n = `text`     v = `A full sap.ui.table.Table inside a DynamicPage: fixed column, row-action buttons, ` &&
-                   `progress-indicator and currency cells, plus backend-driven search, sort and filter events.`
+                   `progress-indicator and currency cells, plus search, sort and filter events that are answered ` &&
+                   `in the backend: the search rebuilds the rows, the column sort and the column filter sort and ` &&
+                   `filter the internal table with the property the event carries.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -154,7 +194,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     " tag renders as <header xmlns="sap.m"/>, and UI5 looks for a DEFAULT
     " aggregation on sap.f.DynamicPage - which has none - so the view dies with
     " "Cannot add direct child without default aggregation defined"
-    DATA(lo_box) = page->ele( n = `header` ns = `f`
+    DATA(box) = page->ele( n = `header` ns = `f`
         )->ele( n = `DynamicPageHeader` ns = `f`
             )->a( n = `pinnable` b = abap_true
             )->ele( `FlexBox`
@@ -163,17 +203,17 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
                 )->ele( `FlexBox`
                     )->a( n = `alignItems` v = `Start` ).
 
-    lo_box->ele( `VBox`
+    box->ele( `VBox`
         )->tag( `Text`
             )->a( n = `text` v = `Search`
         )->tag( `SearchField`
             )->a( n = `width`       v = `17.5rem`
             )->a( n = `search`      v = client->_event( `BUTTON_SEARCH` )
-            )->a( n = `value`       v = client->_bind( mv_search_value )
+            )->a( n = `value`       v = client->_bind( search_value )
             )->a( n = `id`          v = `SEARCH`
             )->a( n = `placeholder` v = `Search products` ).
 
-    lo_box->end(
+    box->end(
         )->ele( `HBox`
             )->a( n = `justifyContent` v = `End`
             )->tag( `Button`
@@ -184,29 +224,32 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     DATA(cont) = page->ele( n = `content` ns = `f` ).
 
     DATA(tab) = cont->ele( n = `Table` ns = `table`
-        )->a( n = `rows`               v = client->_bind( val = mt_table )
+        )->a( n = `rows`               v = client->_bind( t_table )
         )->a( n = `alternateRowColors` b = abap_true
         )->a( n = `fixedColumnCount`   v = `1`
         )->a( n = `rowActionCount`     v = `2`
         )->a( n = `selectionMode`      v = `None`
-        )->a( n = `filter`             v = client->_event( `FILTER` )
-        )->a( n = `sort`               v = client->_event( `SORT` )
-        )->a( n = `customFilter`       v = client->_event( `CUSTOMFILTER` ) ).
+        )->a( n = `filter`             v = client->_event( val   = `FILTER`
+                                                            t_arg = VALUE #( ( `${$parameters>/column}.getFilterProperty()` )
+                                                                             ( `${$parameters>/value}` ) ) )
+        )->a( n = `sort`               v = client->_event( val   = `SORT`
+                                                            t_arg = VALUE #( ( `${$parameters>/column}.getSortProperty()` )
+                                                                             ( `${$parameters>/sortOrder}` ) ) ) ).
     tab->ele( n = `extension` ns = `table`
         )->ele( `OverflowToolbar`
             )->tag( `Title`
                 )->a( n = `text` v = `Products` ).
-    DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    DATA(columns) = tab->ele( n = `columns` ns = `table` ).
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `width` v = `4rem`
         )->tag( `CheckBox`
-            )->a( n = `selected` v = client->_bind( lv_selkz )
+            )->a( n = `selected` v = client->_bind( selkz_all )
             )->a( n = `enabled`  b = abap_true
             )->a( n = `select`   v = client->_event( `SELKZ` )
         )->ele( n = `template` ns = `table`
             )->tag( `CheckBox`
                 )->a( n = `selected` v = `{SELKZ}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `5rem`
         )->a( n = `sortProperty`   v = `ROW_ID`
         )->a( n = `filterProperty` v = `ROW_ID`
@@ -215,7 +258,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{ROW_ID}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `PROCESS`
         )->a( n = `filterProperty` v = `PROCESS`
@@ -228,7 +271,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
                 )->a( n = `displayValue` v = `{PROCESS} %`
                 )->a( n = `showValue`    v = `true`
                 )->a( n = `state`        v = `{PROCESS_STATE}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `PRODUCT`
         )->a( n = `filterProperty` v = `PRODUCT`
@@ -238,7 +281,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
             )->tag( `Input`
                 )->a( n = `editable` b = abap_false
                 )->a( n = `value`    v = `{PRODUCT}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `CREATE_DATE`
         )->a( n = `filterProperty` v = `CREATE_DATE`
@@ -247,7 +290,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{CREATE_DATE}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `CREATE_BY`
         )->a( n = `filterProperty` v = `CREATE_BY`
@@ -256,7 +299,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{CREATE_BY}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `STORAGE_LOCATION`
         )->a( n = `filterProperty` v = `STORAGE_LOCATION`
@@ -265,7 +308,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{STORAGE_LOCATION}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `QUANTITY`
         )->a( n = `filterProperty` v = `QUANTITY`
@@ -274,7 +317,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{QUANTITY}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `6rem`
         )->a( n = `sortProperty`   v = `MEINS`
         )->a( n = `filterProperty` v = `MEINS`
@@ -283,7 +326,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{MEINS}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `11rem`
         )->a( n = `sortProperty`   v = `PRICE`
         )->a( n = `filterProperty` v = `PRICE`
@@ -293,7 +336,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
             )->ele( n = `Currency` ns = `u`
                 )->a( n = `value`    v = `{PRICE}`
                 )->a( n = `currency` v = `{WAERS}` ).
-    lo_columns->end(
+    columns->end(
         )->ele( n = `rowActionTemplate` ns = `table`
             )->ele( n = `RowAction` ns = `table`
                 )->ele( n = `RowActionItem` ns = `table`
@@ -312,7 +355,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
   METHOD set_data.
 
-    mt_table = VALUE #(
+    t_table = VALUE #(
         ( selkz = abap_false row_id = `1` product = `table`    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = `ST` price = `1000.50` waers = `EUR` process = `10`  process_state = `None` )
         ( selkz = abap_false row_id = `2` product = `chair`    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = `ST` price = `2000.55` waers = `USD` process = `20` process_state = `Warning` )
         ( selkz = abap_false row_id = `3` product = `sofa`     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = `ST` price = `3000.11` waers = `CNY` process = `30` process_state = `Success` )
@@ -325,11 +368,11 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
   METHOD set_search.
 
-    IF mv_search_value IS NOT INITIAL.
+    IF search_value IS NOT INITIAL.
 
       " uppercase against uppercase, as the twins z2ui5_cl_smp_app_053 and
       " z2ui5_cl_smp_app_059 search - this copy compared case-sensitively
-      DATA(lv_search) = to_upper( mv_search_value ).
+      DATA(search) = to_upper( search_value ).
 
       " Collected rather than deleted in place: DELETE ... INDEX sy-tabix
       " inside a LOOP over the same table shifts the rows under the loop's own
@@ -337,27 +380,28 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
       " search returns wrong rows) and the transpiled backend raises
       " TABLE_INVALID_INDEX. The DO loop above the DELETE can leave sy-tabix
       " pointing elsewhere as well. Found 2026-08-17.
-      DATA(lt_all) = mt_table.
-      mt_table = VALUE #( ).
+      DATA(t_all) = t_table.
+      t_table = VALUE #( ).
 
-      LOOP AT lt_all REFERENCE INTO DATA(lr_row).
-        DATA(lv_row) = ``.
-        DATA(lv_index) = 1.
+      LOOP AT t_all REFERENCE INTO DATA(row).
+        DATA(row_text) = ``.
+        DATA(index)    = 1.
         DO.
-          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+          ASSIGN COMPONENT index OF STRUCTURE row->* TO FIELD-SYMBOL(<field>).
 
           IF sy-subrc <> 0.
             EXIT.
           ENDIF.
-          lv_row   = lv_row && <field>.
-          lv_index = lv_index + 1.
+          row_text = row_text && <field>.
+          index    = index + 1.
         ENDDO.
 
-        IF to_upper( lv_row ) CS lv_search.
-          APPEND lr_row->* TO mt_table.
+        IF to_upper( row_text ) CS search.
+          APPEND row->* TO t_table.
         ENDIF.
       ENDLOOP.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -41,42 +41,45 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    CASE client->get_event( ).
-      WHEN cancel_event OR confirm_event.
-        event = client->get_event( ).
-        client->popup_destroy( ).
-        client->nav_app_leave( ).
-        RETURN.
-    ENDCASE.
+    IF client->check_on_navigated( ).
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core` ).
-    DATA(dialog) = popup->ele( `Dialog`
-        )->a( n = `title` v = `abap2UI5 - Popup to decide` ).
+      " a popup sub-app: the dialog is shown on the first call and again
+      " whenever the app regains the screen
+      DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `FragmentDefinition` ns = `core`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:core` v = `sap.ui.core` ).
+      DATA(dialog) = popup->ele( `Dialog`
+          )->a( n = `title` v = `abap2UI5 - Popup to decide` ).
 
-    dialog->tag( `MessageStrip`
-        )->a( n = `text`     v = `A reusable decision popup opened as a sub-app: its text, button labels and events ` &&
-                   `are passed in by the caller, and the pressed event is sent back.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
+      dialog->tag( `MessageStrip`
+          )->a( n = `text`     v = `A reusable decision popup opened as a sub-app: its text, button labels and events ` &&
+                     `are passed in by the caller, and the pressed event is sent back.`
+          )->a( n = `type`     v = `Information`
+          )->a( n = `showIcon` b = abap_true
+          )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    dialog->ele( `VBox`
-        )->tag( `Text`
-            )->a( n = `text` t = text
-    )->end(
-        )->ele( `buttons`
-            )->tag( `Button`
-                )->a( n = `press` v = client->_event( cancel_event )
-                )->a( n = `text`  t = cancel_text
-            )->tag( `Button`
-                )->a( n = `press` v = client->_event( confirm_event )
-                )->a( n = `text`  t = confirm_text
-                )->a( n = `type`  v = `Emphasized` ).
+      dialog->ele( `VBox`
+          )->tag( `Text`
+              )->a( n = `text` t = text
+      )->end(
+          )->ele( `buttons`
+              )->tag( `Button`
+                  )->a( n = `press` v = client->_event( cancel_event )
+                  )->a( n = `text`  t = cancel_text
+              )->tag( `Button`
+                  )->a( n = `press` v = client->_event( confirm_event )
+                  )->a( n = `text`  t = confirm_text
+                  )->a( n = `type`  v = `Emphasized` ).
 
-    client->popup_display( popup->stringify( ) ).
+      client->popup_display( popup->stringify( ) ).
+
+    ELSEIF client->check_on_event( cancel_event ) OR client->check_on_event( confirm_event ).
+
+      event = client->get_event( ).
+      client->popup_destroy( ).
+      client->nav_app_leave( ).
+    ENDIF.
 
   ENDMETHOD.
 

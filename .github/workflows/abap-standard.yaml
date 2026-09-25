@@ -21,4 +21,4 @@ jobs:
         node-version: '22'
         cache: 'npm'
     - run: npm ci
-    - run: npx abaplint ./abaplint.jsonc
+    - run: npm run lint

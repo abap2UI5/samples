@@ -31,20 +31,17 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { SRC, scanSamples } from './lib/scan-samples.mjs';
+import { ROOT, SRC, scanSamples } from './lib/scan-samples.mjs';
 import { loadLearningPath } from './lib/learning-path.mjs';
 import { markersLine } from './lib/markers.mjs';
-
-const HERE = path.dirname(fileURLToPath(import.meta.url));
+import { unsearchable, unrecognisable, halfDone } from './lib/search-lines.mjs';
+import { CHECK, writeOrCheck } from './lib/emit.mjs';
 
 /* `--check` renders exactly the same catalog and compares it instead of
  * writing it, so `npm run check` can hold what the publish-overview-apps
  * workflow holds without rewriting the tree while it does so. Same code path,
- * one branch at the end: a check that regenerated differently from the
- * generator would be worse than none. */
-const CHECK = process.argv.includes('--check');
-const stale = [];
+ * one branch at the end (lib/emit.mjs): a check that regenerated differently
+ * from the generator would be worse than none. */
 
 // The one overview app, beside the samples it lists. A missing file is an
 // error, not something to skip, because it means the catalog stops being
@@ -83,8 +80,10 @@ const fail = (message) => {
 }
 
 // --- 2. rewrite get_catalog( ) -------------------------------------------
+/** The class with its catalogue block, @summary and legend rewritten - not
+ *  yet written back: that is the one branch at the end. */
 function rewrite(file, list) {
-  let text = fs.readFileSync(file, 'utf8');
+  const text = fs.readFileSync(file, 'utf8');
 
   const open = text.indexOf('result = VALUE #(');
   const close = text.indexOf(') ).', open);
@@ -146,8 +145,7 @@ function rewrite(file, list) {
   }
   next = next.replace(/^ {4}CONSTANTS c_legend TYPE string VALUE `.*`\.$/m, legend);
 
-  if (!CHECK) { fs.writeFileSync(file, next); return; }
-  if (next !== text) stale.push(path.relative(path.join(HERE, '..'), file));
+  return next;
 }
 
 /* A TILE without `@keywords` is a tile nobody can find.
@@ -163,10 +161,10 @@ function rewrite(file, list) {
  * reached BY another sample, never looked up, so search terms for it would be
  * words nobody will type. */
 {
-  const unsearchable = tiles.filter((t) => !t.keywords);
-  if (unsearchable.length) {
-    console.error(`${unsearchable.length} tile(s) carry no \` @keywords\` line, so nothing can find them:`);
-    for (const t of unsearchable) console.error(`  ${t.app}  (${t.header})`);
+  const missing = unsearchable(tiles);
+  if (missing.length) {
+    console.error(`${missing.length} tile(s) carry no \` @keywords\` line, so nothing can find them:`);
+    for (const t of missing) console.error(`  ${t.app}  (${t.header})`);
     console.error('\nAdd it as the FIRST line of the class (AGENTS.md section 4, tile schema):');
     console.error('  " @keywords <words a newcomer would type, lowercase, space separated>');
     process.exit(1);
@@ -188,10 +186,10 @@ function rewrite(file, list) {
  * no upstream to quote, so the line is the author's. That is exactly why it
  * needs a gate: nothing else fails when it is missing. */
 {
-  const unrecognisable = tiles.filter((t) => !t.summary);
-  if (unrecognisable.length) {
-    console.error(`${unrecognisable.length} tile(s) carry no \` @summary\` line, so nothing says what they show:`);
-    for (const t of unrecognisable) console.error(`  ${t.app}  (${t.header})`);
+  const missing = unrecognisable(tiles);
+  if (missing.length) {
+    console.error(`${missing.length} tile(s) carry no \` @summary\` line, so nothing says what they show:`);
+    for (const t of missing) console.error(`  ${t.app}  (${t.header})`);
     console.error('\nAdd it under the @keywords line (AGENTS.md section 4, tile schema):');
     console.error('  " @summary <one sentence: what this sample SHOWS, not which controls it uses>');
     process.exit(1);
@@ -203,27 +201,26 @@ function rewrite(file, list) {
  * one looked and stopped halfway. (The ZZZ helpers are out of this by
  * construction - `scanSamples` flags them, and a helper is reached BY a
  * sample, never looked up.) */
-const halfDone = tiles.filter((t) => Boolean(t.keywords) !== Boolean(t.summary));
-if (halfDone.length) {
-  console.error(`${halfDone.length} sample(s) carry one search line but not the other:`);
-  for (const t of halfDone) {
+const half = halfDone(tiles);
+if (half.length) {
+  console.error(`${half.length} sample(s) carry one search line but not the other:`);
+  for (const t of half) {
     console.error(`  ${t.app}  (${t.header}) — has ${t.keywords ? '@keywords, no @summary' : '@summary, no @keywords'}`);
   }
   console.error('\nBoth or neither: they answer the two halves of one question.');
   process.exit(1);
 }
 
-rewrite(TARGET, tiles);
-console.log(`${path.relative(path.join(HERE, '..'), TARGET)}: ${tiles.length} tiles`);
+const next = rewrite(TARGET, tiles);
+const rel = path.relative(ROOT, TARGET);
+console.log(`${rel}: ${tiles.length} tiles`);
 const total = tiles.length;
-if (CHECK) {
-  if (stale.length) {
-    console.error(`the overview catalog no longer mirrors the folder tree:\n  ${stale.join('\n  ')}`);
-    console.error('\nRun `npm run launchpad` and commit the result (AGENTS.md section 4).');
-    process.exit(1);
-  }
-  console.log(`launchpad: up to date — ${total} tile(s), ${hidden.length} ZZZ helper app(s) hidden`);
-} else {
-  console.log(`generated ${total} tiles, ${hidden.length} ZZZ helper app(s) hidden`);
-  console.log('now run: npx abaplint  (expect 0 issues)');
-}
+writeOrCheck(TARGET, next, 'the overview catalog', {
+  stale: [
+    `the overview catalog no longer mirrors the folder tree:\n  ${rel}`,
+    '\nRun `npm run launchpad` and commit the result (AGENTS.md section 4).',
+  ],
+  fresh: `launchpad: up to date — ${total} tile(s), ${hidden.length} ZZZ helper app(s) hidden`,
+  wrote: `generated ${total} tiles, ${hidden.length} ZZZ helper app(s) hidden`,
+});
+if (!CHECK) console.log('now run: npx abaplint  (expect 0 issues)');

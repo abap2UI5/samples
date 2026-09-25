@@ -7,6 +7,7 @@ CLASS z2ui5_cl_smp_app_026 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA placement TYPE string.
+    DATA input     TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,17 +30,17 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       placement = `Left`.
-
+      input     = `abcd`.
       view_display( ).
+
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-
     ELSEIF client->check_on_event( `POPOVER` ).
       popover_display( `TEST` ).
 
     ELSEIF client->check_on_event( `BUTTON_CONFIRM` ).
 
-      client->message_toast_display( `confirm` ).
+      client->message_toast_display( |confirm - input: { input }| ).
       client->popover_destroy( ).
 
     ELSEIF client->check_on_event( `BUTTON_CANCEL` ).
@@ -77,7 +78,7 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
         )->tag( `Text`
             )->a( n = `text` v = `make an input here:`
         )->tag( `Input`
-            )->a( n = `value` v = `abcd` ).
+            )->a( n = `value` v = client->_bind( input ) ).
 
     client->popover_display( xml = view->stringify( ) by_id = id ).
 
@@ -146,13 +147,7 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( `POPOVER` )
                 )->a( n = `text`  v = `show`
-                )->a( n = `id`    v = `TEST`
-            )->tag( `Button`
-                )->a( n = `press` v = client->_event( `POPOVER` )
-                )->a( n = `text`  v = `cancel`
-            )->tag( `Button`
-                )->a( n = `press` v = client->_event( `POPOVER` )
-                )->a( n = `text`  v = `post` ).
+                )->a( n = `id`    v = `TEST` ).
 
     client->view_display( view->stringify( ) ).
 

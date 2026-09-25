@@ -24,19 +24,18 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
 
       IF event_backend = `NEW_APP_EVENT`.
         client->message_box_display( `new app called and event NEW_APP_EVENT raised` ).
       ENDIF.
+      view_display( ).
+
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-    " every roundtrip - the init and the navigated one included - ends in
-    " a rebuild, since the events above switch the view that is shown
-    view_display( ).
 
   ENDMETHOD.
 
@@ -49,12 +48,15 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
         DATA(app_024) = CAST z2ui5_cl_smp_app_024( client->get_app_prev( ) ).
         input_previous = app_024->input2.
         client->message_toast_display( `data of previous app read` ).
+        view_display( ).
 
       WHEN `SHOW_VIEW_MAIN`.
         show_view = `MAIN`.
+        view_display( ).
 
       WHEN `SHOW_VIEW_SECOND`.
         show_view = `SECOND`.
+        view_display( ).
 
       WHEN `BACK_WITH_EVENT`.
         DATA(app_back) = CAST z2ui5_cl_smp_app_024( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).

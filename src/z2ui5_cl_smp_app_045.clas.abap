@@ -17,16 +17,19 @@ CLASS z2ui5_cl_smp_app_045 DEFINITION PUBLIC.
       END OF ty_s_row.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA mv_info_filter TYPE string.
+    DATA info_filter TYPE string.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS refresh_data.
+    METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
 CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
-
 
   METHOD refresh_data.
 
@@ -35,10 +38,10 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
     " rows before the filter deleted the ones it did not want
     t_tab = VALUE #( ).
     DO 1000 TIMES.
-      DATA(ls_row) = VALUE ty_s_row( count = sy-index  value = `red`
+      DATA(s_row) = VALUE ty_s_row( count = sy-index  value = `red`
         info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
         descr = `this is a description` checkbox = abap_true ).
-      INSERT ls_row INTO TABLE t_tab.
+      INSERT s_row INTO TABLE t_tab.
     ENDDO.
 
   ENDMETHOD.
@@ -46,14 +49,25 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
     IF client->check_on_init( ).
       refresh_data( ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ELSEIF client->check_on_event( `FILTER_INFO` ).
+
       refresh_data( ).
-      IF mv_info_filter IS NOT INITIAL.
-        DELETE t_tab WHERE info <> mv_info_filter.
+
+      IF info_filter IS NOT INITIAL.
+        DELETE t_tab WHERE info <> info_filter.
       ENDIF.
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -85,7 +99,7 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `info`
             )->tag( `Input`
-                )->a( n = `value` v = client->_bind( mv_info_filter )
+                )->a( n = `value` v = client->_bind( info_filter )
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( `FILTER_INFO` )
                 )->a( n = `text`  v = `filter` ).
@@ -143,4 +157,5 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

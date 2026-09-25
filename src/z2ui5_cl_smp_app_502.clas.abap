@@ -18,16 +18,6 @@ CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.
       END OF ty_s_message.
     TYPES ty_t_message TYPE STANDARD TABLE OF ty_s_message WITH EMPTY KEY.
     TYPES:
-      BEGIN OF ty_s_t100,
-        msgty TYPE c LENGTH 1,
-        msgid TYPE string,
-        msgno TYPE n LENGTH 3,
-        msgv1 TYPE string,
-        msgv2 TYPE string,
-        msgv3 TYPE string,
-        msgv4 TYPE string,
-      END OF ty_s_t100.
-    TYPES:
       BEGIN OF ty_s_address,
         street  TYPE string,
         city    TYPE string,
@@ -110,9 +100,6 @@ CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.
         descr TYPE string
         press TYPE string.
 
-    METHODS get_t_message
-      RETURNING
-        VALUE(result) TYPE ty_t_message.
     METHODS get_s_order
       RETURNING
         VALUE(result) TYPE ty_s_order.
@@ -207,44 +194,10 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
 
     result = abap_true.
 
+    " the message shapes themselves - one SY message, a BAPIRET2 structure, a
+    " caught exception - are Z2UI5_CL_SMP_APP_008; a message TABLE is the
+    " DATA_TABLE case of this app, so only the one silent case is left here
     CASE event.
-
-      WHEN `MSG_ONE`.
-        " one message structure: the box takes its type and its title from the
-        " message, so the app passes neither
-        DATA(s_message) = VALUE ty_s_message( type    = `S`
-                                              id      = `Z2UI5`
-                                              number  = `001`
-                                              message = `Order 4711 was created` ).
-        client->message_box_display( s_message ).
-
-      WHEN `MSG_TABLE`.
-        " several messages collapse into ONE box: a counting headline, every
-        " text as a bullet, type and title from the first
-        client->message_box_display( get_t_message( ) ).
-
-      WHEN `MSG_T100`.
-        " no text at all, an id and a number: the text is resolved out of the
-        " message class of the system, placeholders substituted
-        DATA(s_t100) = VALUE ty_s_t100( msgty = `I`
-                                        msgid = `00`
-                                        msgno = `001`
-                                        msgv1 = `The text`
-                                        msgv2 = `comes from`
-                                        msgv3 = `message class`
-                                        msgv4 = `00` ).
-        client->message_box_display( s_t100 ).
-
-      WHEN `MSG_EXCEPTION`.
-        " an exception is a message too - the box shows what get_text( )
-        " renders, as an error
-        TRY.
-            DATA(value) = 1 / 0.
-            client->message_box_display( |{ value }| ).
-
-          CATCH cx_root INTO DATA(error).
-            client->message_box_display( error ).
-        ENDTRY.
 
       WHEN `MSG_EMPTY`.
         " the one case that shows NOTHING at all: complex data that is
@@ -476,31 +429,7 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
   METHOD render_message.
 
     render_section( form  = form
-                    title = `Messages - recognized first, and they bring their own severity` ).
-
-    render_demo( form  = form
-                 label = `One message`
-                 text  = `A message structure`
-                 descr = `The BAPIRET2 shape - type and title come from the message, not from the call`
-                 press = client->_event( `MSG_ONE` ) ).
-
-    render_demo( form  = form
-                 label = `Several messages`
-                 text  = `A message table`
-                 descr = `One box: a counting headline, every text as a bullet, severity from the first`
-                 press = client->_event( `MSG_TABLE` ) ).
-
-    render_demo( form  = form
-                 label = `T100`
-                 text  = `id, number, placeholders`
-                 descr = `No text in the structure - it is resolved from the message class of the system`
-                 press = client->_event( `MSG_T100` ) ).
-
-    render_demo( form  = form
-                 label = `Exception`
-                 text  = `A caught exception`
-                 descr = `The box shows what get_text( ) renders, as an error`
-                 press = client->_event( `MSG_EXCEPTION` ) ).
+                    title = `Messages - recognized first, and they bring their own severity (SY, BAPIRET2 and exception: Z2UI5_CL_SMP_APP_008)` ).
 
     render_demo( form  = form
                  label = `Nothing`
@@ -652,16 +581,6 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
         )->tag( `Text`
             )->a( n = `text`  t = descr
             )->a( n = `class` v = `sapUiSmallMarginBegin` ).
-
-  ENDMETHOD.
-
-
-  METHOD get_t_message.
-
-    result = VALUE #( ( type = `E` id = `Z2UI5` number = `010` message = `Material 4711 is not available in plant 1000` )
-                      ( type = `W` id = `Z2UI5` number = `011` message = `The delivery date was moved to 2026-10-01` )
-                      ( type = `I` id = `Z2UI5` number = `012` message = `Pricing was redetermined` )
-                      ( type = `S` id = `Z2UI5` number = `013` message = `Order 4711 was saved` ) ).
 
   ENDMETHOD.
 

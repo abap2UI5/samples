@@ -6,12 +6,12 @@ CLASS z2ui5_cl_smp_app_167 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_value TYPE string.
-
-    METHODS set_view.
+    DATA value TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -20,7 +20,7 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
 
 
-  METHOD set_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -52,9 +52,9 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
         )->a( n = `text`  v = `EVENT_FIX_VAL` ).
 
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( mv_value ) ).
+        )->a( n = `value` v = client->_bind( value ) ).
     page->tag( `Button`
-        )->a( n = `press` v = client->_event( val = `EVENT_MODEL_VALUE` arg = `$` && client->_bind( mv_value ) )
+        )->a( n = `press` v = client->_event( val = `EVENT_MODEL_VALUE` arg = `$` && client->_bind( value ) )
         )->a( n = `text`  v = `EVENT_MODEL_VALUE` ).
 
     page->tag( `Button`
@@ -79,10 +79,10 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      mv_value = `my value`.
-      set_view( ).
+      value = `my value`.
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
-      set_view( ).
+      view_display( ).
     ENDIF.
 
     CASE client->get_event( ).

@@ -34,12 +34,10 @@ CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
       BEGIN OF s_screen,
         color_01 TYPE string,
         color_02 TYPE string,
-        color_03 TYPE string,
         city     TYPE string,
         name     TYPE string,
         lastname TYPE string,
         quantity TYPE string,
-        unit     TYPE string,
       END OF s_screen.
 
     DATA t_suggestion     TYPE ty_t_suggestion.
@@ -70,7 +68,6 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
       on_init( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
@@ -158,8 +155,6 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
         s_screen = VALUE #( ).
         client->message_box_display( `View initialized` ).
     ENDCASE.
-
-    view_display( ).
 
   ENDMETHOD.
 

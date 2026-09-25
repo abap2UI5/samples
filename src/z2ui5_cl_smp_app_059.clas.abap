@@ -20,8 +20,8 @@ CLASS z2ui5_cl_smp_app_059 DEFINITION PUBLIC.
       END OF ty_s_tab.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mt_table TYPE ty_t_table.
-    DATA mv_field TYPE string.
+    DATA t_table TYPE ty_t_table.
+    DATA field   TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -72,20 +72,20 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
     " a typed contains-search over the columns the table shows - the search
     " string is compared uppercase against uppercase, so it matches whatever
     " the user typed
-    DATA(lv_search) = to_upper( mv_field ).
-    IF lv_search IS INITIAL.
+    DATA(search) = to_upper( field ).
+    IF search IS INITIAL.
       RETURN.
     ENDIF.
 
-    DATA(lt_all) = mt_table.
-    mt_table = VALUE #( ).
+    DATA(t_all) = t_table.
+    t_table = VALUE #( ).
 
-    LOOP AT lt_all INTO DATA(ls_row).
-      IF to_upper( ls_row-product )          CS lv_search
-      OR to_upper( ls_row-create_date )      CS lv_search
-      OR to_upper( ls_row-create_by )        CS lv_search
-      OR to_upper( ls_row-storage_location ) CS lv_search OR |{ ls_row-quantity }| CS lv_search.
-        INSERT ls_row INTO TABLE mt_table.
+    LOOP AT t_all INTO DATA(s_row).
+      IF to_upper( s_row-product )          CS search
+      OR to_upper( s_row-create_date )      CS search
+      OR to_upper( s_row-create_by )        CS search
+      OR to_upper( s_row-storage_location ) CS search OR |{ s_row-quantity }| CS search.
+        INSERT s_row INTO TABLE t_table.
       ENDIF.
     ENDLOOP.
 
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
   METHOD set_data.
 
-    mt_table = VALUE #( ).
+    t_table = VALUE #( ).
     DO 1000 TIMES.
       INSERT LINES OF VALUE ty_t_table(
           ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
@@ -103,7 +103,7 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
           ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
           ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
           ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-          ) INTO TABLE mt_table.
+          ) INTO TABLE t_table.
 
     ENDDO.
 
@@ -143,7 +143,7 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
                    `keystroke that meets a round-trip in flight raises the global busy overlay with no delay at all - ` &&
                    `right for a dropped click, wrong over the field you are typing into - and that flag keeps it down. ` &&
                    `The round-trip is unchanged, only the overlay is. Type quickly: the filter lands on what you typed ` &&
-                   `and nothing blinks. Sample 511 shows the same wire with and without the flags side by side.`
+                   `and nothing blinks. Z2UI5_CL_SMP_APP_511 shows the same wire with and without the flags side by side.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -152,7 +152,7 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
         )->a( n = `class` v = `sapUiSmallMarginBegin`
         )->tag( `SearchField`
             )->a( n = `width`       v = `17.5rem`
-            )->a( n = `value`       v = client->_bind( mv_field )
+            )->a( n = `value`       v = client->_bind( field )
             )->a( n = `placeholder` v = `Search products`
             )->a( n = `liveChange`  v = client->_event(
                 val    = `BUTTON_SEARCH`
@@ -160,35 +160,35 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
                                   check_no_busy    = abap_true ) ) ).
 
     DATA(tab) = page1->ele( `Table`
-        )->a( n = `items` v = client->_bind( mt_table ) ).
-    DATA(lo_columns) = tab->ele( `columns` ).
-    lo_columns->ele( `Column`
+        )->a( n = `items` v = client->_bind( t_table ) ).
+    DATA(columns) = tab->ele( `columns` ).
+    columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Product` ).
-    lo_columns->ele( `Column`
+    columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Date` ).
-    lo_columns->ele( `Column`
+    columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Name` ).
-    lo_columns->ele( `Column`
+    columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Location` ).
-    lo_columns->ele( `Column`
+    columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Quantity` ).
 
-    DATA(lo_cells) = tab->ele( `items`
+    DATA(cells) = tab->ele( `items`
         )->ele( `ColumnListItem` ).
-    lo_cells->tag( `Text`
+    cells->tag( `Text`
         )->a( n = `text` v = `{PRODUCT}` ).
-    lo_cells->tag( `Text`
+    cells->tag( `Text`
         )->a( n = `text` v = `{CREATE_DATE}` ).
-    lo_cells->tag( `Text`
+    cells->tag( `Text`
         )->a( n = `text` v = `{CREATE_BY}` ).
-    lo_cells->tag( `Text`
+    cells->tag( `Text`
         )->a( n = `text` v = `{STORAGE_LOCATION}` ).
-    lo_cells->tag( `Text`
+    cells->tag( `Text`
         )->a( n = `text` v = `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).

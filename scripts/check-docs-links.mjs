@@ -2,7 +2,7 @@
 /*
  * check-docs-links — the `" @docs` lines point at documentation that exists.
  *
- * 96 classes here carry a `" @docs` line with a live URL into
+ * Most classes here carry a `" @docs` line with a live URL into
  * https://abap2ui5.github.io/docs/ (AGENTS.md section 4). It is a full URL on
  * purpose: a search engine drops somebody into a class file, and the code was
  * all they got. This repository is the only one of the three that has these
@@ -43,7 +43,9 @@
  *   2. otherwise raw.githubusercontent.com, one request per distinct page;
  *   3. otherwise it SAYS SO and passes. A repository's gates must not go red
  *      because github.com is unreachable, and must not claim to have verified
- *      what they did not.
+ *      what they did not. That cuts both ways: a problem found on the pages
+ *      that WERE read before the network went away is reported and fails the
+ *      run - only a run that verified nothing at all passes on its word.
  *
  *   node scripts/check-docs-links.mjs      (npm run check:docs-links)
  */
@@ -138,6 +140,9 @@ if (home) {
 
 const problems = [];
 let checked = 0;
+/* The error that stopped the reading, if one did. Nothing after it was
+ * verified; everything before it was, and stays reported. */
+let unreachable = null;
 
 try {
   for (const [page, uses] of [...pages].sort()) {
@@ -168,7 +173,11 @@ try {
     }
   }
 } catch (err) {
-  console.log(`check-docs-links: documentation not reachable (${err.message}) — nothing verified, not a failure`);
+  unreachable = err;
+}
+
+if (unreachable && checked === 0 && problems.length === 0) {
+  console.log(`check-docs-links: documentation not reachable (${unreachable.message}) — nothing verified, not a failure`);
   process.exit(0);
 }
 
@@ -176,6 +185,12 @@ console.log(
   `check-docs-links: ${withDocs.length} class(es) link to ${pages.size} page(s), `
   + `read from ${from}`,
 );
+if (unreachable) {
+  console.log(
+    `  documentation stopped being reachable after ${checked} page(s) (${unreachable.message}) `
+    + '— the rest was not verified',
+  );
+}
 
 if (problems.length) {
   console.error(`\n${problems.length} problem(s):`);
@@ -186,5 +201,9 @@ if (problems.length) {
     + '\n  404s for every one of them, and nothing else here notices.',
   );
   process.exit(1);
+}
+if (unreachable) {
+  console.log(`no problem on the ${checked} of ${pages.size} page(s) that could be read - not a failure, not a verdict on the rest`);
+  process.exit(0);
 }
 console.log(`every @docs link resolves and points at a page that names it back - OK (${checked} page(s))`);

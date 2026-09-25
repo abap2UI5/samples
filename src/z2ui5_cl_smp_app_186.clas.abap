@@ -7,13 +7,12 @@ CLASS z2ui5_cl_smp_app_186 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA file_content_64 TYPE string.
-    DATA file_name TYPE string.
-    DATA mime_type TYPE string.
+    DATA file_name       TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS initialize.
+    METHODS on_init.
     METHODS on_event.
     METHODS view_display.
 
@@ -23,10 +22,9 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
 
-  METHOD initialize.
+  METHOD on_init.
 
-    file_name = `Default_File_Name.jpg`.
-    mime_type = `text/plain`.
+    file_name       = `Default_File_Name.png`.
     file_content_64 = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAA` &&
       `KYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIp` &&
       `QBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW` &&
@@ -101,7 +99,7 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
                 )->a( n = `width` v = `15rem`
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( `BUTTON_DOWNLOAD` )
-                )->a( n = `text`  v = `Open Download Popup`
+                )->a( n = `text`  v = `Download the file`
                 )->a( n = `type`  v = `Emphasized` ).
 
     client->view_display( page->stringify( ) ).
@@ -113,15 +111,12 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-
-      initialize( ).
-      view_display( ).
+      on_init( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-
+    ELSEIF client->check_on_event( ).
+      on_event( ).
     ENDIF.
-
-    on_event( ).
 
   ENDMETHOD.
 

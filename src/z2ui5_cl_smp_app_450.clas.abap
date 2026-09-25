@@ -28,7 +28,7 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
       " the 8/6-character forms an ABAP DATS/TIMS value has when it travels
       " as a string (a CHAR(8) key, a legacy structure field). A field typed
       " d or t is serialized as ISO by the framework and needs
-      " Formatter.DateCreateObject instead - see sample 457
+      " Formatter.DateCreateObject instead - see z2ui5_cl_smp_app_457
       dats         = `20260720`.
       tims         = `134501`.
       dats_initial = `00000000`.

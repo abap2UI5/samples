@@ -17,16 +17,17 @@ CLASS z2ui5_cl_smp_app_097 DEFINITION PUBLIC.
         selected TYPE abap_bool,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab  TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
     DATA t_tab2 TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
-    DATA mv_layout TYPE string.
+    DATA layout TYPE string.
     " public, so it survives the roundtrip - the detail rows need a key that
     " stays unique after a row was deleted, and lines( t_tab2 ) would not
-    DATA mv_row_id TYPE i.
+    DATA row_id TYPE i.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
+    METHODS on_event.
     METHODS view_display_master.
     METHODS view_display_detail.
 
@@ -38,7 +39,7 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA(view_nested) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -48,7 +49,7 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
             )->a( n = `xmlns:f`      v = `sap.f`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = lo_view_nested->ele( `Page`
+    DATA(page) = view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
 
     DATA(tab) = page->ele( n = `Table` ns = `table`
@@ -56,20 +57,14 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         )->a( n = `alternateRowColors` b = abap_true
         )->a( n = `fixedColumnCount`   v = `1`
         )->a( n = `rowActionCount`     v = `1`
-        )->a( n = `selectionMode`      v = `None`
-        " abap2ui5lint-disable-next-line event-without-handler -- sap.ui.table fires it; the roundtrip re-renders and that is the point
-        )->a( n = `filter`             v = client->_event( `FILTER` )
-        " abap2ui5lint-disable-next-line event-without-handler -- sap.ui.table fires it; the roundtrip re-renders and that is the point
-        )->a( n = `sort`               v = client->_event( `SORT` )
-        " abap2ui5lint-disable-next-line event-without-handler -- sap.ui.table fires it; the roundtrip re-renders and that is the point
-        )->a( n = `customFilter`       v = client->_event( `CUSTOMFILTER` ) ).
+        )->a( n = `selectionMode`      v = `None` ).
     tab->ele( n = `extension` ns = `table`
         )->ele( `OverflowToolbar`
             )->tag( `Title`
                 )->a( n = `text` v = `Products` ).
-    DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
+    DATA(columns) = tab->ele( n = `columns` ns = `table` ).
 
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `TITLE`
         )->a( n = `filterProperty` v = `TITLE`
         )->tag( `Text`
@@ -77,7 +72,7 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{TITLE}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `DESCR`
         )->a( n = `filterProperty` v = `DESCR`
         )->tag( `Text`
@@ -85,7 +80,7 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{DESCR}` ).
-    lo_columns->ele( n = `Column` ns = `table`
+    columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `INFO`
         )->a( n = `filterProperty` v = `INFO`
         )->tag( `Text`
@@ -93,7 +88,7 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{INFO}` ).
-    lo_columns->end(
+    columns->end(
         )->ele( n = `rowActionTemplate` ns = `table`
             )->ele( n = `RowAction` ns = `table`
                 )->ele( n = `RowActionItem` ns = `table`
@@ -101,7 +96,7 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
                     )->a( n = `press` v = client->_event( val = `ROW_DELETE` arg = `${UUID}` ) ).
 
     client->nest_view_display(
-      val            = lo_view_nested->stringify( )
+      val            = view_nested->stringify( )
       id             = `test`
       method_insert  = `addMidColumnPage`
       method_destroy = `removeAllMidColumnPages` ).
@@ -134,12 +129,12 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     DATA(col_layout) = page->ele( n = `FlexibleColumnLayout` ns = `f`
-        )->a( n = `layout` v = client->_bind( mv_layout )
+        )->a( n = `layout` v = client->_bind( layout )
         )->a( n = `id`     v = `test` ).
 
-    DATA(lr_master) = col_layout->ele( n = `beginColumnPages` ns = `f` ).
+    DATA(master) = col_layout->ele( n = `beginColumnPages` ns = `f` ).
 
-    DATA(lr_list) = lr_master->ele( `List`
+    DATA(list) = master->ele( `List`
         )->a( n = `headerText`      v = `List Output`
         )->a( n = `items`           v = client->_bind( val = t_tab )
         )->a( n = `mode`            v = `SingleSelectMaster`
@@ -149,11 +144,9 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
             )->a( n = `description` v = `{DESCR}`
             )->a( n = `icon`        v = `{ICON}`
             )->a( n = `info`        v = `{INFO}`
-            " abap2ui5lint-disable-next-line event-without-handler -- item press; the master-detail wiring below is what this sample shows
-            )->a( n = `press`       v = client->_event( `TEST` )
             )->a( n = `selected`    v = `{SELECTED}` ).
 
-    client->view_display( lr_list->stringify( ) ).
+    client->view_display( list->stringify( ) ).
 
   ENDMETHOD.
 
@@ -161,7 +154,6 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
@@ -172,35 +164,41 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
         ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
         ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
-      mv_layout = `OneColumn`.
-
+      layout = `OneColumn`.
       view_display_master( ).
       view_display_detail( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display_master( ).
 
+    ELSEIF client->check_on_navigated( ).
+
+      " both views again: the detail is a nested view inside the master, so
+      " a re-displayed master without it would leave the mid column empty
+      view_display_master( ).
+      view_display_detail( ).
+
+    ELSEIF client->check_on_event( ).
+      on_event( ).
     ENDIF.
 
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
     CASE client->get_event( ).
-
       WHEN `ROW_DELETE`.
-
         DELETE t_tab2 WHERE uuid = client->get_event_arg( ).
-
       WHEN `SELCHANGE`.
-        DATA(lt_sel) = t_tab.
-        DELETE lt_sel WHERE selected = abap_false.
-
-        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
+        DATA(t_sel) = t_tab.
+        DELETE t_sel WHERE selected = abap_false.
+        READ TABLE t_sel INTO DATA(s_sel) INDEX 1.
 
         IF sy-subrc = 0.
-          mv_row_id = mv_row_id + 1.
-          ls_sel-uuid = |{ mv_row_id }|.
-          INSERT ls_sel INTO TABLE t_tab2.
+
+          row_id     = row_id + 1.
+          s_sel-uuid = |{ row_id }|.
+          INSERT s_sel INTO TABLE t_tab2.
         ENDIF.
-
-        mv_layout = `TwoColumnsMidExpanded`.
-
+        layout = `TwoColumnsMidExpanded`.
     ENDCASE.
 
   ENDMETHOD.

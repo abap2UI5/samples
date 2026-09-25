@@ -92,19 +92,19 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
   METHOD base64_decode.
 
-    DATA lv_class TYPE string.
+    DATA class_name TYPE string.
 
     TRY.
-        lv_class = `CL_WEB_HTTP_UTILITY`.
-        CALL METHOD (lv_class)=>(`DECODE_X_BASE64`)
+        class_name = `CL_WEB_HTTP_UTILITY`.
+        CALL METHOD (class_name)=>(`DECODE_X_BASE64`)
           EXPORTING
             encoded = val
           RECEIVING
             decoded = result.
 
       CATCH cx_root.
-        lv_class = `CL_HTTP_UTILITY`.
-        CALL METHOD (lv_class)=>(`DECODE_X_BASE64`)
+        class_name = `CL_HTTP_UTILITY`.
+        CALL METHOD (class_name)=>(`DECODE_X_BASE64`)
           EXPORTING
             encoded = val
           RECEIVING
@@ -116,30 +116,30 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
   METHOD xstring_to_string.
 
-    DATA lo_conv  TYPE REF TO object.
-    DATA lv_class TYPE string.
+    DATA converter  TYPE REF TO object.
+    DATA class_name TYPE string.
 
     TRY.
-        lv_class = `CL_ABAP_CONV_CODEPAGE`.
-        CALL METHOD (lv_class)=>create_in
+        class_name = `CL_ABAP_CONV_CODEPAGE`.
+        CALL METHOD (class_name)=>create_in
           RECEIVING
-            instance = lo_conv.
+            instance = converter.
 
-        CALL METHOD lo_conv->(`IF_ABAP_CONV_IN~CONVERT`)
+        CALL METHOD converter->(`IF_ABAP_CONV_IN~CONVERT`)
           EXPORTING
             source = val
           RECEIVING
             result = result.
 
       CATCH cx_root.
-        lv_class = `CL_ABAP_CONV_IN_CE`.
-        CALL METHOD (lv_class)=>create
+        class_name = `CL_ABAP_CONV_IN_CE`.
+        CALL METHOD (class_name)=>create
           EXPORTING
             encoding = `UTF-8`
           RECEIVING
-            conv     = lo_conv.
+            conv     = converter.
 
-        CALL METHOD lo_conv->(`CONVERT`)
+        CALL METHOD converter->(`CONVERT`)
           EXPORTING
             input = val
           IMPORTING

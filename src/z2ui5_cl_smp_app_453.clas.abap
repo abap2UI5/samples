@@ -131,7 +131,7 @@ CLASS z2ui5_cl_smp_app_453 IMPLEMENTATION.
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Every column is bound to a plain model field. The state, the icon, the rounded ` &&
                    `price and the dimension string are computed in ABAP (products_prepare) - the ` &&
-                   `frontend only renders. Sample 450 shows what does belong in a formatter: the ` &&
+                   `frontend only renders. Z2UI5_CL_SMP_APP_450 shows what does belong in a formatter: the ` &&
                    `date conversion the backend physically cannot do.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true

@@ -5,7 +5,7 @@
  * Two plain `"` comments above the CLASS statement (AGENTS.md section 4):
  * `@keywords`, the words somebody would type who does not know the sample
  * exists, and `@summary`, the one sentence that tells them whether it is the
- * one they want. 104 classes here carry them.
+ * one they want.
  *
  * WHY A SEPARATE GATE, when generate-launchpad.mjs already refuses a tile
  * without the two lines. Three reasons, and they are the difference between a
@@ -49,32 +49,21 @@
 import fs from 'fs';
 import path from 'path';
 import { ROOT, scanSamples } from './lib/scan-samples.mjs';
+import { KEYWORDS, SUMMARY, MIN_TERMS, halfDone } from './lib/search-lines.mjs';
 
 /* The overview app is not a tile and therefore not in the scan - but it is a
  * sample somebody starts, and the first thing anyone runs, so it is held to
  * the same two lines. */
 const OVERVIEW = { path: 'src', app: 'z2ui5_cl_smp_app_000' };
 
-/* Loose enough to survive reformatting, strict enough to mean it: the line has
- * to be FIRST. A keyword line further down is one a reader scrolls past and
- * one a scanner reading the head of a file would miss. */
-const KEYWORDS = /^" @keywords (.+?)\r?$/;
-const SUMMARY = /^" @summary (\S.*?)\r?$/;
-
-/* Below three terms the line is not doing its job: two words are the class
- * header again, and the header is already searched. Four to eight is the
- * point. */
-const MIN_TERMS = 3;
-
+/* `tiles` and `hidden` are disjoint by construction (scanSamples puts a class
+ * in one or the other), so every tile is held to it and every helper exempt. */
 const { tiles, hidden } = scanSamples();
-
-const exemptHelpers = new Set(hidden.map((h) => h.app));
-const required = tiles.filter((t) => !exemptHelpers.has(t.app));
 
 const problems = [];
 const terms = new Set();
 
-for (const tile of [OVERVIEW, ...required]) {
+for (const tile of [OVERVIEW, ...tiles]) {
   const rel = `${tile.path}/${tile.app}.clas.abap`;
   const lines = fs.readFileSync(path.join(ROOT, rel), 'utf8').split('\n');
 
@@ -108,10 +97,8 @@ for (const tile of [OVERVIEW, ...required]) {
 }
 
 /* The two lines travel together, everywhere - including where there is no
- * tile. A class with one and not the other is the state nobody chose: an
- * author added a sample the way the last one looked and stopped halfway. */
-for (const tile of [...tiles, ...hidden]) {
-  if (Boolean(tile.keywords) === Boolean(tile.summary)) continue;
+ * tile (lib/search-lines.mjs, the decision generate-launchpad.mjs makes too). */
+for (const tile of halfDone([...tiles, ...hidden])) {
   problems.push(
     `${tile.path}/${tile.app}.clas.abap: has ${tile.keywords ? '@keywords and no @summary' : '@summary and no @keywords'}`
     + '\n    both or neither — they answer the two halves of one question',
@@ -119,8 +106,8 @@ for (const tile of [...tiles, ...hidden]) {
 }
 
 console.log(
-  `check-keywords: ${required.length + 1} sample(s) hold to it, `
-  + `${exemptHelpers.size} ZZZ helper(s) exempt; `
+  `check-keywords: ${tiles.length + 1} sample(s) hold to it, `
+  + `${hidden.length} ZZZ helper(s) exempt; `
   + `${terms.size} distinct search terms`,
 );
 

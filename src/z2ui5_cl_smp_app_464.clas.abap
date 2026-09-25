@@ -37,8 +37,8 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
       WHEN `RAISE_EXCEPTION`.
         " the division dumps - nothing ever reads the result, and that is
         " the point of the sample
-        DATA(lv_zero) = 0.
-        DATA(lv_result) = 1 / lv_zero ##NEEDED.
+        DATA(zero) = 0.
+        DATA(res) = 1 / zero ##NEEDED.
       WHEN `ASSERT`.
         ASSERT 1 = 0.
 

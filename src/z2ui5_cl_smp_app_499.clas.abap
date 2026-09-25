@@ -243,12 +243,12 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
   METHOD hash_apply.
 
     " '/detail' or '/detail/{variant}' - everything else is the first page
-    DATA(lv_hash) = client->get( )-s_config-hash.
-    check_detail = xsdbool( lv_hash CS `/detail` ).
+    DATA(hash) = client->get( )-s_config-hash.
+    check_detail = xsdbool( hash CS `/detail` ).
     IF check_detail = abap_true.
-      DATA(lv_variant) = substring_after( val = lv_hash sub = `/detail/` ).
-      IF lv_variant CO `abc` AND lv_variant IS NOT INITIAL.
-        variant = lv_variant.
+      DATA(hash_variant) = substring_after( val = hash sub = `/detail/` ).
+      IF hash_variant CO `abc` AND hash_variant IS NOT INITIAL.
+        variant = hash_variant.
       ENDIF.
     ENDIF.
 

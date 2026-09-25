@@ -6,12 +6,11 @@ CLASS z2ui5_cl_smp_app_109 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_placement TYPE string.
+    DATA placement TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
     METHODS on_event.
     METHODS view_display.
     METHODS popover_display
@@ -32,7 +31,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
             )->a( n = `xmlns:core` v = `sap.ui.core`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
     view->ele( `QuickView`
-        )->a( n = `placement` t = mv_placement
+        )->a( n = `placement` t = placement
         )->ele( `QuickViewPage`
             )->a( n = `description` v = `Enjoy`
             )->a( n = `header`      v = `Employee Info`
@@ -109,7 +108,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `placement`
             )->ele( `SegmentedButton`
-                )->a( n = `selectedKey` v = client->_bind( mv_placement )
+                )->a( n = `selectedKey` v = client->_bind( placement )
                 )->ele( `items`
                     )->tag( `SegmentedButtonItem`
                         )->a( n = `icon` v = `sap-icon://add-favorite`
@@ -146,7 +145,8 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+
+      placement = `Left`.
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
@@ -162,13 +162,6 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
     IF client->check_on_event( `POPOVER` ).
       popover_display( `TEST` ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    mv_placement = `Left`.
 
   ENDMETHOD.
 

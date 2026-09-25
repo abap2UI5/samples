@@ -18,8 +18,8 @@ titles, PR descriptions, and any other text must be written in English.
   the change.** Before merging, replace any auto-generated title (e.g. a
   branch name like `Claude/...-abc123`) with a short descriptive English
   title that states what actually changed.
-- **One topic per PR.** A structural change (moving, adding, or renaming
-  subpackages) must not ride along in a PR titled for an unrelated sample —
+- **One topic per PR.** A structural change (a generator, a gate, a workflow,
+  this file) must not ride along in a PR titled for an unrelated sample —
   split it into its own PR so the history stays searchable.
 
 ---
@@ -154,10 +154,10 @@ cannot live there, and it goes into `src/` as an ordinary sample:
 - a **free-style control demo** with no single demo kit original.
 
 **These exceptions are the `Control Behaviour` category** (§4), and they are the
-whole of it: today `Z2UI5_CL_SMP_APP_448` (expand a Panel by ID), `_078`
-(MultiInput with tokens), `_449` (open the PDF viewer by ID), `_088` (switch a
-NavContainer page by ID) and `_202` (a Wizard with steps) — four of them driving
-a control from the backend rather than showing what the control is.
+whole of it: samples that drive a control from the backend — expand a Panel or
+switch a NavContainer page by ID, open the PDF viewer, step a Wizard — rather
+than showing what the control is. The catalogue lists them; this file does not
+count them, because the count goes stale the day a sample is added.
 
 **The category was called `Control` until 2026-08-18**, which was the wrong
 name for exactly this reason: it is the noun samples-controls owns, and a
@@ -346,10 +346,14 @@ The page carries no content header of its own — both rows are built by hand:
      (`sap-icon://nav-back`, `visible = check_app_prev_stack( )`,
      `press = _event_nav_app_leave( )`) is built here.
    - `contentRight` — the three sample repositories of the abap2UI5 family,
-     then a `ToolbarSeparator` (`header_separator( )`,
-     `sapUiSmallMarginBegin sapUiSmallMarginEnd`), then the two entries that
-     leave the system: documentation and GitHub. The separator is the point:
-     the three open an app, the two open a site.
+     then a gap, then the two entries that leave the system: documentation
+     and GitHub. The gap is the point: the three open an app, the two open a
+     site. It rides on the first icon of the second group (`group_start` of
+     `header_button( )`, a wider begin margin), not on a `ToolbarSeparator`:
+     a `sap.m.Bar` on 1.71 lays its children out in normal flow, so a
+     block-level separator starts a new line that the bar's `overflow: hidden`
+     cuts away — which is how the documentation and GitHub icons once
+     vanished on 1.71.
 2. **`render_sub_header( )`** puts an `OverflowToolbar` into `subHeader` and
    holds the `SearchField` (`24rem`).
 
@@ -364,7 +368,7 @@ altogether with that icon. The page explains itself through its tooltips.
 Every abap2UI5 overview app renders the same **entries** — here
 (`render_header( )` / `header_button( )`), in
 [samples-controls](https://github.com/abap2UI5/samples-controls) and in
-[samples-stack](https://github.com/abap2UI5/samples-stack). Six icons, always
+[samples-stack](https://github.com/abap2UI5/samples-stack). Five icons, always
 in this order. `header_button( )` takes each entry's `name` and `descr`
 separately: the tooltip is `<name> - <descr>`, and the name alone titles the
 popover of an uninstalled repository. The names are the *italic* ones below.
@@ -381,8 +385,8 @@ start page (`z2ui5_cl_app_startup`) — dropped from all three overviews on
 | `sap-icon://globe` | — | the repository the app itself lives in |
 
 The repository entries lead to an app **inside** the system, the last two lead
-out of it, and every overview shows that split — this one by a
-`ToolbarSeparator` between the groups in its header Bar's `contentRight`
+out of it, and every overview shows that split — this one by the gap on the
+first icon of the second group in its header Bar's `contentRight`
 (above), samples-controls and samples-stack by a `ToolbarSpacer`
 (`width = 1rem`) between the groups in their single-row `headerContent`. The
 GitHub entry is **not** `sap-icon://source-code`: in the shared header that
@@ -417,7 +421,7 @@ GitHub) still open their site directly through `open_url( )`.
 
 **All three overviews carry this header, layout included** (2026-08-13): the
 `Bar` in the page's `customHeader`, back button and title on the left, the
-five icons with their separator on the right, the two colour states and the
+five icons with their gap on the right, the two colour states and the
 install popover. samples-controls builds it in
 `scripts/generate-overview.mjs` (its overview class is generated — never edit
 the class), samples-stack in `z2ui5_cl_smps_app_000`. All three build it with
@@ -430,20 +434,12 @@ samples-controls' filter toolbar, samples-stack's Regenerate Demo Data button
 order, the colours or the press behaviour belongs in all three repositories in
 the same change.**
 
-Each repository is installed on its own, so every button decides for itself:
-`class_installed( )` instantiates the target class, and
-
-- **on this system** → the press is `cs_event-nav` with the class name as its
-  event argument; `on_event` hands it to `app_call( )`, which navigates with
-  `nav_app_call( )` — the back button returns to the overview.
-- **not on this system** → the press opens that repository on GitHub, and the
-  tooltip says why (`… - not installed, opens GitHub`). A `Button` carries no
-  `href` and `cs_event-open_new_tab` is same-origin only, so the new tab comes
-  from the `URLHELPER` `REDIRECT` frontend action (`open_url( )`) — client-side,
-  inside the click handler, which is what keeps the popup blocker quiet.
-- **the app you are in** (`here = abap_true`, the lightbulb here) → the button
-  stays, disabled, tooltip `… - you are here`, so the row reads the same in
-  every overview.
+Each repository is installed on its own, so every icon decides for itself:
+`class_installed( )` instantiates the target class, and **on this system** the
+press is `cs_event-nav` with the class name as its event argument — `on_event`
+hands it to `app_call( )`, which navigates with `nav_app_call( )`, and the back
+button returns to the overview. What happens when it is not on this system, and
+for the overview you are already in, is the table above.
 
 A repository that **renames** its overview app is installed under both names in
 the wild for a while, so `header_button( )` takes an optional `class_old` and
@@ -778,19 +774,11 @@ did not.
 
 **`header` and `sub` come from the class, not from hand-written labels.** The
 source of truth is the app class's abapGit short text `<DESCRIPT>` in its
-`*.clas.xml`, written in the format `header - sub` — except for demo kit
-rebuilds (§1), where the generator overrides `sub` with the full description
-from the ABAP Doc lines below the `"! Rebuild of the UI5 demo kit sample:`
-line:
+`*.clas.xml`, written in the format `header - sub`:
 - Split the DESCRIPT on the **first** `` ` - ` `` (space-hyphen-space): the part
   before is `header`, the part after is `sub` (which may itself contain ` - `).
 - No ` - ` at all → `header` = the whole DESCRIPT, `sub` = empty.
 - Unescape XML entities (`&amp;` → `&`, etc.) when copying into the ABAP literal.
-- **Controls section only** (groups whose CTEXT starts with `controls -`): the
-  generator drops the namespace prefix from `header` (`sap.m.Switch` → `Switch`
-  — the group heading already names the namespace) and truncates `sub` to one
-  line (`CONTROLS_SUB_MAX` characters, backed off to a word boundary, `+ " ..."`)
-  so the overview never wraps.
 
 When regenerating, **re-read every class's `<DESCRIPT>`** — the descriptions are
 maintained on the classes and change there, so never carry `header`/`sub` over
@@ -817,6 +805,7 @@ newcomer would actually type:
 | `Focus` / `Scroll` | cursor and scroll position |
 | `Formatter` | the curated JS formatters abap2UI5 ships |
 | `Grid Table` | `sap.ui.table.Table` — never `ui.Table` |
+| `Hash` | the URL hash and the app state: `hash_set` / `hash_replace` / `hash_back`, the routing modes (`FRESH` restarts the app, `KEEP` returns to its state), `app_state_set_active` / `app_state_get_href` — what Back, a bookmark, a reload and a shared link restore |
 | `List` / `Table` / `Tree` | `sap.m.List` / `sap.m.Table` / `sap.m.Tree` |
 | `Menu` / `Popover` / `Popup` | menus, popovers, dialogs |
 | `Message` | MessageBox, MessageToast, MessageView, message model |
@@ -887,19 +876,20 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 ## 5. Checklists
 
 **Adding a sample**
-1. Create the class; place it in the correct folder per §2.
+1. Create the class in `src/` — §2 says what qualifies, and there is no other
+   folder (§1).
 2. Regenerate the overview catalog and `SAMPLES.md`: `npm run launchpad` (§4).
 3. `abaplint` → 0 issues → commit (English message).
 
-**Moving a sample / subpackage**
-1. `git mv` the files (no rename needed — `FOLDER_LOGIC=PREFIX`).
+**Removing or renaming a sample**
+1. Delete or rename the two files (`FOLDER_LOGIC=PREFIX` — the file name is
+   the class name, and there is no folder to move between, §1).
 2. Regenerate the overview catalog and `SAMPLES.md`: `npm run launchpad` (§4).
-3. If a subpackage was added/removed/renamed: update the §1 tree and run
-   `node scripts/check-agents-structure.mjs`.
-4. Check the sample did not land somewhere no catalogue reaches:
-   `npm run check:orphans` (§1). Rule 2 of §4 says every sample is listed;
-   this is what enforces it from the tree side.
-5. `abaplint` → 0 issues → commit.
+3. Check the tree still holds to §1: `npm run check:agents` refuses a folder
+   under `src/`, and `npm run check:orphans` a sample class no catalogue
+   reaches — a class in a subfolder, or one without its `.clas.xml`. Rule 2 of
+   §4 says every sample is listed; this is what enforces it from the tree side.
+4. `abaplint` → 0 issues → commit.
 
 **Before every commit**
 
@@ -918,23 +908,29 @@ In the order they fail fastest:
 
 | step | workflow | what it holds |
 |---|---|---|
+| `npm run check:pin` | `check-framework-pin` | every abaplint config resolves abap2UI5 from the same, explicitly named branch — no config quietly lints against a different framework than its neighbours |
 | `npm run lint` | `abap-standard` | `abaplint` reports 0 issues (`abaplint.jsonc`, `v750`) |
 | `npm run check:cloud` | `abap-cloud` | the same tree against the ABAP Cloud API — `main` is installed there as it is (§2) |
 | `npm run check:abap2ui5` | `check-abap2UI5` | the abap2UI5-linter: the app class and the view it builds, plus a headless render of every view. New findings fail; `abap2ui5lint-baseline.json` holds the debt frozen at adoption, and an entry whose finding is gone fails too |
 | `npm run check:agents` | `check-docs` | no drift between the §1 layout and the tree: one flat package, no subfolders, the documented CTEXT |
 | `npm run check:orphans` | `check-docs` | every `z2ui5_cl_smp_app_*` class sits where a catalogue reads it (§1) |
 | `npm run check:keywords` | `check-keywords` | every sample carries `@keywords` and `@summary`, first line, lowercase (§4) |
-| `npm run check:launchpad` | `publish-overview-apps` | the overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) |
-| `npm run check:catalogue` | `publish-overview-apps` | the committed `catalogue.json` still mirrors the folder tree (§3) |
+| `npm run check:launchpad` | `check-docs` | the overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) |
+| `npm run check:catalogue` | `check-docs` | the committed `catalogue.json` still mirrors the folder tree, and keeps the shape its consumers parse (§3) |
+| `npm run check:derived` | `check-docs` | the committed `catalogue-derived.json` — the linter's half of the catalogue — still matches what the linter derives from the tree ("The catalogue", below) |
+| `npm run check:atc` | `check-atc` | three extended-check (SLIN/ATC) findings abaplint does not model: a `SELECT` without `WHERE` and without `"#EC CI_NOWHERE`, `sy-subrc` after a dynamic `ASSIGN`, a text symbol passed to a parameter |
 | `npm run check:prose` | `check-docs` | every class name written in prose exists, here and in the sibling repositories |
 | `npm run check:docs-links` | `check-docs-links` | every `" @docs` URL resolves, and its page names the class back (§4) |
 | `npm run check:app-rules` | `check-app-rules` | the abaplint rule block still matches its source in abap2UI5 (§6) |
 | `npm run rename` | `check-rename` | the samples still rename out of the `z2ui5` namespace; writes to the gitignored `output/`, never to `src/` |
 
-`check:launchpad` runs the two generators with `--check`: same render, compared
-instead of written. The generators are the source of truth either way, because
-a check that regenerated differently from the generator would be worse than
-none.
+`check:launchpad`, `check:catalogue` and `check:derived` run the generators
+with `--check`: same render, compared instead of written (one tail for all of
+them, `scripts/lib/emit.mjs`). The generators are the source of truth either
+way, because a check that regenerated differently from the generator would be
+worse than none. The `catalogues` job of `check-docs.yaml` is where the three
+run on a pull request; `publish-overview-apps` is the other direction — it
+regenerates and pushes (§4).
 
 The last three talk to the network — `check:app-rules` and `check:docs-links`
 prefer a sibling checkout and otherwise fetch, and both **say so and pass** when
@@ -1052,7 +1048,7 @@ By hand, because no script covers it:
 - Run: `npm run check:abap2ui5`
 - CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
   `abap-702`, which lint ABAP itself against three target releases
-- **The gate is effective**: 129 app classes, 156 reconstructed views, and
+- **The gate is effective**: every app class, every reconstructed view, and
   an `abap2ui5lint-baseline.json` that froze the adoption-time debt (#753)
   until every entry was fixed — empty since 0.6.1, kept so the next adoption
   has its shape. It was
@@ -1066,17 +1062,21 @@ By hand, because no script covers it:
   histogram, what the baseline swallowed and per rule, the phase times:
 
   ```
-  sources    129 app classes (128 building a view)
-  views      156 documents reconstructed, nested 11 deep, 1 class produced none
-  judged     2,274 controls of 110 types, 601 bindings, 73 icons, 4,310 attributes
-  gates      properties 129 files, render 156 documents
+  sources    <n> app classes (<n> building a view)
+  views      <n> documents reconstructed, nested <n> deep, <n> class produced none
+  judged     <n> controls of <n> types, <n> bindings, <n> icons, <n> attributes
+  gates      properties <n> files, render <n> documents
   ```
+
+  (The numbers are the run's, not this file's: the two README badges below
+  carry the last ones, and the job summary of every `check-abap2UI5` run
+  prints them.)
 
   (No `baselined` line any more: `abap2ui5lint-baseline.json` has been empty
   since 0.6.1 — the one frozen finding was fixed rather than carried.)
 
-  A `judged` line of zeroes, or `129 classes produced none`, is the earlier
-  failure repeating itself — and now it says so instead of printing
+  A `judged` line of zeroes, or a `produced none` count that is the whole
+  corpus, is the earlier failure repeating itself — and now it says so instead of printing
   "Success! No findings detected."
 
   **Since 2026-09-22 the count is ZERO, and the line is absent from the
@@ -1100,12 +1100,18 @@ By hand, because no script covers it:
   are gone (§2) — what each of them asserted is a unit test in abap2UI5 now,
   the last one's in `z2ui5_cl_ui5_srv_model`'s `ltcl_07_view_host`. **Do not write
   another one here.** A view that only exists once a second class has been
-  called by name is a view no gate in this repository can judge.
+  called by name is a view no gate in this repository can judge. The one
+  accepted exception is `z2ui5_cl_smp_app_104`, the `Nested View` sample that
+  embeds another app's view: it instantiates the sub-app over RTTI
+  (`CREATE OBJECT app_sub TYPE (classname)`) and hands it the container
+  through a dynamic `ASSIGN app_sub->(`VIEW_PARENT`)`, because embedding a
+  class named at runtime *is* what it demonstrates. Its own master view is
+  judged like any other; the embedded one is not, and the sample says so.
 - **The two README badges** (`.github/badges/abap2ui5.json` and
   `.github/badges/check-abap2ui5.json`, shields.io endpoint files) carry the
-  same statement, split along what they mean: *abap2UI5 | 129 apps · 156 views
-  · 2,274 controls* is what is here, blue, a fact; *check-abap2UI5 | 111 rules
-  passed* is what the gate made of it, green (or *3 problems*, *7 errors*,
+  same statement, split along what they mean: *abap2UI5 | n apps · n views
+  · n controls* is what is here, blue, a fact; *check-abap2UI5 | n rules
+  passed* is what the gate made of it, green (or *n problems*, *n errors*,
   red). A run that finds nothing checkable turns both grey and says so. Every
   run rewrites them, `check-abap2UI5` commits them onto the pull request
   branch, and main picks them up when that pull request merges — so the counts
@@ -1132,9 +1138,14 @@ so is this one now.
 Everything else about a script follows from that:
 
 - **No dependencies.** Plain node, so a gate is a few seconds and needs no
-  `npm ci` — `check-docs`, `check-keywords`, `check-docs-links`,
-  `check-app-rules` and `check-prose-names` all run `node <script>` directly
-  in CI.
+  `npm ci` — `check-docs`, `check-keywords`, `check-docs-links`, `check-atc`,
+  `check-framework-pin` and `check-app-rules` run their `npm run check:*`
+  script without an install. **package.json is the one spelling of every
+  gate**: a workflow calls the npm script, never `node scripts/x.mjs` or
+  `npx <tool>` on its own, so what CI runs and what `npm run check` runs
+  cannot diverge. The one step that calls the linter directly is the
+  markdown job summary in `check-abap2UI5.yaml`, and the comment beside it
+  says why (its flags make it a report, not the gate).
 - **One scan, two renderers.** Anything that reads the sample tree goes through
   `scripts/lib/scan-samples.mjs` (§4). A second scan drifts silently.
 - **A scan that cannot place a class says so.** `scanSamples( )` returns
@@ -1291,13 +1302,21 @@ and core classes — refer to the
 
 ## 9. How Apps Work
 
-Every abap2UI5 app implements `z2ui5_if_app` with a single `main()` method. The framework calls `main()` on every roundtrip (HTTP POST). Use the lifecycle checks to react to different situations:
+The mechanics — the `main( )` roundtrip, the three `check_on_*( )` flags, the
+client API of `z2ui5_if_client` (views, popups, `_bind( )`, `_event( )`,
+`follow_up_action( )`, navigation, the URL hash and the app state), messages
+and popups — are the framework's to describe, and it does, in
+[`docs/agents/building-apps.md`](https://github.com/abap2UI5/abap2UI5/blob/main/docs/agents/building-apps.md)
+of abap2UI5 (the `build-an-app` skill), a guide the framework's own gates hold
+to the interface. Read it before writing a sample, and do not copy it here: the
+copy this file used to carry drifted from it in three places within a month.
+What follows is only what this repository decides for itself.
 
-- `client->check_on_init( )` — true on the very first call, and there **only to seed**
-- `client->check_on_navigated( )` — the DISPLAY branch: true on that first call as well, and whenever the app regains the screen (returning from a sub-app or popup, a restored bookmark)
-- `client->check_on_event( )` — true when a user triggered an event
+### The dispatcher
 
-Always use `ELSEIF` to chain these checks — never separate `IF` blocks:
+Always chain the lifecycle checks with `ELSEIF` — never separate `IF` blocks —
+in the order init, navigated, event:
+
 ```abap
 IF client->check_on_init( ).
   " only what must happen ONCE - seed the model, seed a control-state flag
@@ -1308,47 +1327,29 @@ ELSEIF client->check_on_event( ).
 ENDIF.
 ```
 
-**`check_on_init( )` true implies `check_on_navigated( )` true** — every path to an
-instance's first `main( )` sets that flag (`factory_first_start` for a fresh start
-and for a draft restore, `factory_system_startup`, `prepare_app_stack` for
-`nav_app_call` and `nav_app_leave`). So an init branch whose only statement is
-`view_display( )` has an `ELSEIF` twin doing exactly the same thing, and
+**`check_on_init( )` true implies `check_on_navigated( )` true** (the guide
+says why), so an init branch whose only statement is `view_display( )` has an
+`ELSEIF` twin doing exactly the same thing, and
 `IF check_on_init( ) OR check_on_navigated( ).` says the same redundancy in one
-line. An app with nothing to seed drops the init branch entirely:
+line. An app with nothing to seed drops the init branch entirely and dispatches
+on `check_on_navigated( )` and `check_on_event( )` alone.
 
-```abap
-me->client = client.
-IF client->check_on_navigated( ).
-  view_display( ).
-ELSEIF client->check_on_event( ).
-  on_event( ).
-ENDIF.
-```
-
-The exception is a **sub-app that never owns the screen** (apps 105 and 112): it
-renders into the parent's view reference and has no `check_on_navigated( )` branch
-at all, so there `check_on_init( )` is the only place the view is built.
-
-### Returning from a sub-app — always re-display the view
-
-When a called sub-app takes over the screen with its own `view_display( )` and later returns via `nav_app_leave( )`, the browser still shows the sub-app's view — the framework does not restore the previous view automatically. All class attributes survive the roundtrip serialization, so there is nothing to re-read: simply call `view_display( )` again in the `check_on_navigated( )` branch. Do **not** call `data_read( )` or similar there.
-
-```abap
-IF client->check_on_init( ).
-  data_read( ).
-  view_display( ).
-ELSEIF client->check_on_navigated( ).
-  view_display( ).
-ELSEIF client->check_on_event( `SAVE` ).
-  data_update( ).
-ENDIF.
-```
-
-Calling `view_display( )` in the `check_on_navigated( )` branch is **always safe** — even after a popup, where the main view stayed on screen, it simply re-renders the same view. Use it as the general rule. When the app returns exclusively from a popup (`z2ui5_cl_pop_*` / `popup_display`), doing nothing is sufficient — the framework pushes the model automatically whenever `main( )` changed it — but never rely on that when a full-screen sub-app can be called.
+**`view_display( )` in the `check_on_navigated( )` branch is always safe, and
+always there.** A called sub-app that took the screen leaves its own view
+standing when it returns via `nav_app_leave( )`; the attributes survived the
+roundtrip, so nothing is re-read — the view is re-displayed, and `data_read( )`
+is not called there. After a popup the same call simply re-renders the same
+view. The linter's `missing-on-navigated-branch` holds every class to it (§6),
+and the two shapes it exempts are the ones that never own the main view slot:
+a **sub-app that renders into its parent's view** (`z2ui5_cl_smp_app_105` and
+`_112`, where `check_on_init( )` is the only place the view is built) and an
+app that **owns a popup instead of a view** (`z2ui5_cl_smp_app_501`, excluded
+by name in `abap2ui5lint.jsonc` with the reason beside it).
 
 ### Event checking — inline vs. CASE
 
-`check_on_event( )` accepts an optional event name argument. Use it to check for a specific event directly in the `ELSEIF` chain when there are **2–3 events** and no complex dispatch logic is needed:
+`check_on_event( )` takes an optional event name. Check the event inline in the
+`ELSEIF` chain when there are **2–3 events** and no dispatch logic:
 
 ```abap
 IF client->check_on_init( ).
@@ -1360,111 +1361,80 @@ ELSEIF client->check_on_event( `DELETE` ).
 ENDIF.
 ```
 
-Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only when there are **4 or more events**, or when a dedicated `on_event` method is extracted for a larger app.
-
-### Client API (`z2ui5_if_client`)
-
-| Category | Methods | Purpose |
-|---|---|---|
-| Views | `view_display`, `view_destroy` | Main view lifecycle (the model itself is pushed automatically — there is no model-update call) |
-| Nested views | `nest_view_display/destroy`, `nest2_view_*` | Embedded sub-views |
-| Popups | `popup_display`, `popup_destroy` | Modal dialogs |
-| Popovers | `popover_display`, `popover_destroy` | Context popovers |
-| Binding | `_bind(val)` | Data binding — the value is written back before the event handler runs (`_bind_edit` is an obsolete alias) |
-| Events | `_event(val)`, `follow_up_action(val)`, `check_on_event(val)` | Event registration and checking (`_event_client` is an obsolete alias — `follow_up_action` covers both roles: returned into a view attribute it binds the frontend action to a control, called on `client` it queues the action after the current response renders) |
-| Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
-| Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
-| Messages | `message_box_display(text)`, `message_toast_display(text)` | User notifications |
-| Session | `set_session_stateful(val)`, `app_state_set_active(val)` | Session management |
-| Browser | `hash_set(val)`, `follow_up_action(val)` | Browser interaction (`cs_event-history_back` was removed in 1.143.0 — go back by passing the raw JS `history.back()` to `follow_up_action( )`, or `nav_app_leave( )` inside the app; routing via `follow_up_action( cs_event-hash_routing )`) |
-| Info | `get()`, `get_event()`, `get_event_arg()`, `get_app(id)` | Request/context data |
-| Constants | `cs_event`, `cs_view` | Predefined event IDs and view names |
+A `CASE client->get_event( )` (inside `ELSEIF client->check_on_event( )`) starts
+at **4 events**, or when a dedicated `on_event` method is extracted (§11). The
+framework guide dispatches with `CASE` from the first event; here the abaplint
+rule that wants two `WHEN` branches decides (§7).
 
 ### Navigation
 
-**Back Navigation** — always use `client->_event_nav_app_leave()` to bind the back button event directly in the view. This triggers navigation without a roundtrip to the ABAP backend:
+- **The back button is wired in the view**: `press = client->_event_nav_app_leave( )`
+  on the `Page`'s `navButtonPress`, with `showNavButton` bound to
+  `client->check_app_prev_stack( )` (the §10 example) — no roundtrip. Handle
+  `BACK` in `on_event` only when something has to happen with the app or the
+  previous app instance **before** leaving:
 
-```abap
-METHOD view_display.
-
-  DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
-      )->a( n = `displayBlock` v = `true`
-      )->a( n = `height`       v = `100%`
-      )->a( n = `xmlns`        v = `sap.m`
-      )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-      )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-
-  DATA(page) = view->ele( `Shell` )->ele( `Page`
-      )->a( n = `title`          v = `My App`
-      )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-      )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
-  " ...
-  client->view_display( view->stringify( ) ).
-
-ENDMETHOD.
-```
-
-Only use the manual pattern (handling `BACK` in `on_event`) when you need to do something with the app or client instance **before** navigating back — for example, writing data back to the previous app:
-
-```abap
-METHOD on_event.
-
-  CASE client->get_event( ).
-    WHEN `BACK`.
-      " interact with previous app instance first
-      CAST z2ui5_cl_app_parent( client->get_app_prev( ) )->set_result( s_result ).
-      client->nav_app_leave( ).
-  ENDCASE.
-
-ENDMETHOD.
-```
+  ```abap
+  WHEN `BACK`.
+    CAST z2ui5_cl_app_parent( client->get_app_prev( ) )->set_result( s_result ).
+    client->nav_app_leave( ).
+  ```
+- **One browser step back is
+  `client->follow_up_action( client->cs_event-hash_back )`**; back to the
+  previous app is `nav_app_leave( )`. `follow_up_action( )` runs no raw
+  JavaScript any more — a `val` that is not a `cs_event-*` name is not executed
+  — so `history.back()` is not an option. `z2ui5_cl_smp_app_499` shows the
+  whole `hash_*` family.
 
 ---
 
 ## 10. Building Views
 
-Views are XML strings passed to `client->view_display()`, built with
+Views are XML strings passed to `client->view_display( )`, built with
 `z2ui5_cl_ui5_view_builder` — the released builder in the framework's `src/02`.
-It is generic: six methods build any UI5 view 1:1, so there is no list of
-supported controls and nothing to wait for when UI5 adds one. Element and
-property names come straight from the
+It is generic: **seven public methods** build any UI5 view 1:1 — `factory( )`,
+`ele( )`, `tag( )`, `a( )`, `end( )`, `stringify( )` and the static
+`escape_literal( )` — so there is no list of supported controls and nothing to
+wait for when UI5 adds one. Element and property names come straight from the
 [UI5 API Reference](https://ui5.sap.com/#/api) and are written exactly as
-documented there.
+documented there. What each verb does, and the whole of the builder's
+semantics, is section 3 of the framework guide (§9); three of its rules are
+repeated here because samples get them wrong:
 
-### 1. The builder — `factory`, `ele`, `tag`, `a`, `end`, `stringify`
+- **`a( )` takes exactly one of `v`, `b`, `t`.** `v` is the form for a binding,
+  an event, a `{/path}` template and constant text; `b` takes an ABAP boolean
+  and renders `true`/`false` itself (`a( n = `editable` b = mv_edit_mode )`,
+  never a conversion of your own); `t` takes text that carries **data** — user
+  input, a value read from a table — and escapes it as a literal, because a `{`
+  in a `v` is parsed as a binding. Where one attribute mixes text with a
+  binding, escape the text part with
+  `z2ui5_cl_ui5_view_builder=>escape_literal( )` inside `v`.
+- **Empty attributes are rendered.** The builder writes every attribute you
+  add, including an empty one — and `type=""` or `color=""` is not a valid UI5
+  enum value. An attribute whose value may be empty at runtime therefore goes
+  under an `IF`, it is not simply passed:
 
-- `factory( )` returns an **empty root**. Unlike the retired builder it opens
-  no `mvc:View` for you: you open it and declare the namespaces yourself, which
-  is why they are visible in every sample.
-- `ele( n = ns = )` adds a child element and **descends into it** — the chain
-  now points at the new element.
-- `tag( n = ns = )` adds a child element and **stays** on the current one, so
-  the next `tag( )`/`ele( )` becomes its sibling and no `end( )` is needed.
-  This is the form for a leaf, whatever its attributes are.
-- `a( n = v = )` sets an attribute on the element the chain points at — the
-  child just added by `ele( )`/`tag( )`, or the node itself while it has no
-  children. So `a( )` always follows the control it belongs to.
-- `a( n = b = )` takes an **ABAP boolean** and renders `true`/`false` itself:
-  write `a( n = `editable` b = mv_edit_mode )`, never a conversion of your own.
-  Pass either `v` or `b`, never both.
-- `end( )` ascends to the parent element.
-- `stringify( )` renders the whole view, always from the root, no matter which
-  element the reference currently points at.
+  ```abap
+  DATA(button) = toolbar->tag( `Button` )->a( n = `text` v = name ).
+  IF icon IS NOT INITIAL.
+    button->a( n = `icon` v = icon ).
+  ENDIF.
+  ```
+- **There is no raw-text node**, so an inline `<style>` body or any other raw
+  markup goes into the `content` attribute of a `core:HTML` leaf. Write the
+  **decoded** markup — the builder escapes it on stringify:
 
-#### Empty attributes are rendered
+  ```abap
+  page->tag( n = `HTML` ns = `core` )->a( n = `content` v = `<style>` && css && `</style>` ).
+  ```
 
-The builder writes every attribute you add, including an empty one — and
-`type=""` or `color=""` is not a valid UI5 enum value. An attribute whose value
-may be empty at runtime therefore goes under an `IF`, it is not simply passed:
+  And **there is no way back up to a named ancestor**: `end( )` climbs exactly
+  one level, so a view is built the way it nests. When a helper method needs a
+  container the caller owns, the caller passes that reference — see the
+  `nest_view_display( )` samples of the `Nested View` category, which are
+  handed the container they render into rather than searching for it.
 
-```abap
-DATA(button) = toolbar->tag( `Button` )->a( n = `text` v = name ).
-IF icon IS NOT INITIAL.
-  button->a( n = `icon` v = icon ).
-ENDIF.
-```
-
-#### View structure and indentation
+### View structure and layout
 
 Always add 1 blank line before `DATA(view) = z2ui5_cl_ui5_view_builder=>factory( ).`
 to visually separate view construction from preceding logic.
@@ -1549,8 +1519,8 @@ Both shapes are correct, and the choice is about the view, not about style:
   teaching sample reads better with the parts named. `z2ui5_cl_smp_app_052`
   is the worked example.
 
-The split shape reconstructs and renders fine — the linter reads all 172
-documents in this corpus from it. What is *not* allowed is mixing them inside
+The split shape reconstructs and renders fine — the linter reads every
+document in this corpus from it. What is *not* allowed is mixing them inside
 one subtree, and blank lines inside a chain: they belong to the long
 single-chain shape, where they separate an `ele( )` block from its first child.
 
@@ -1566,27 +1536,7 @@ applies them. The fixer rewrites whitespace *between* chain segments only,
 and the layout survives because every fix is verified against the rule — a
 formatting change can never alter what the view builds.
 
-#### Namespaces
-
-Every namespace prefix a view uses must be declared on the view element —
-the builder does not collect them for you. Declare only the ones the view
-actually uses, and use the prefixes the UI5 documentation uses
-(`form` for `sap.ui.layout.form`, `layout` for `sap.ui.layout`, `f` for
-`sap.f`, `table` for `sap.ui.table`).
-
-#### Popups
-
-A popup is a `core:FragmentDefinition` root you build the same way, and hand
-to `client->popup_display( )`:
-
-```abap
-DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
-    )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`      v = `sap.m`
-        )->a( n = `xmlns:core` v = `sap.ui.core` ).
-```
-
-### 2. Bindings
+### Bindings — what this corpus calls things
 
 **Binding paths always come from a bind call — never hardcode them.** Every
 model value a view references must be registered through
@@ -1615,22 +1565,7 @@ handler runs".
 "One-way" is correct only for a real UI5 one-way model that is not `_bind( )`
 — the `device>` JSONModel in `z2ui5_cl_smp_app_445`, for example.
 
-### 3. Two things the builder does not do
-
-- **There is no raw-text node.** An element cannot carry text content, so an
-  inline `<style>` body or any other raw markup goes into the `content`
-  attribute of a `core:HTML` leaf. Write the **decoded** markup — the builder
-  escapes it on stringify:
-
-  ```abap
-  page->tag( n = `HTML` ns = `core` )->a( n = `content` v = `<style>` && css && `</style>` ).
-  ```
-
-- **There is no way back up to a named ancestor.** `end( )` climbs exactly one
-  level, so a view is built the way it nests. When a helper method needs a
-  container the caller owns, the caller passes that reference — see the
-  `nest_view_display( )` samples of the `Nested View` category, which are
-  handed the container they render into rather than searching for it.
+### Retired in the framework, banned here
 
 > The former standalone XML builder `z2ui5_cl_util_xml` is retired in the
 > framework (obsolete package, no new consumers) and is no longer used by any
@@ -1788,26 +1723,30 @@ the interface, the components of `ty_s_event_control` and the parameters of
 
 | Surface | Total | Without a sample anywhere |
 |---|---:|---:|
-| `cs_event-*` | 35 | 1 |
+| `cs_event-*` | 34 | **0** |
 | `z2ui5_if_client` methods | 40 | 7 |
 | `ty_s_event_control` components | 5 | **0** |
-| `_bind( )` parameters | 9 | 2 |
+| `_bind( )` parameters | 10 | 2 |
 
-**All ten are obsolete**, and that is the whole finding — there is no
+(Totals re-counted 2026-09-25 against the framework's `z2ui5_if_client`; the
+coverage column is the 2026-09-22 measurement.)
+
+**All nine are obsolete**, and that is the whole finding — there is no
 uncovered feature, only features nobody should be shown:
 
 - the five `*_model_update( )` methods **do nothing** (the framework pushes
   the model itself since `main_end` compares before and after);
 - `_bind_edit( )` is an alias of `_bind( )`, `_event_client( )` a superseded
   spelling of `follow_up_action( )`;
-- `custom_mapper` / `custom_filter` are marked obsolete at the declaration;
-- `cs_event-z2ui5` was the legacy escape hatch in the interface's own
-  "obsolet" block. abap2UI5 removes it together with the `z2ui5` frontend
-  global whose functions it called (2026-09-22, branch
-  `claude/fervent-hopper-kkyo84`), which takes the `cs_event-*` row above to
-  34 / 0 once that lands. A function an app defines on `window` is called as
-  a raw expression through `follow_up_action( )` instead - not something a
-  sample here demonstrates.
+- `custom_mapper` / `custom_filter` are marked obsolete at the declaration.
+
+`cs_event-z2ui5` stood in the table too, as the one constant without a
+sample: the legacy escape hatch in the interface's own "obsolet" block.
+abap2UI5 removed it on 2026-09-22 together with the `z2ui5` frontend global
+whose functions it called, which is what took the row to 34 / 0. A function an
+app defines on `window` is not something a sample here demonstrates —
+`follow_up_action( )` runs no raw expression any more, and what an app needs
+beyond the `cs_event` set is a custom control.
 
 `cs_event-image_editor_popup_close` stood here too, as *"belongs to a
 `z2ui5_cl_pop_*` popup this repository may not demonstrate"*. That reading was
@@ -1859,18 +1798,19 @@ Learned while curating the sample catalogue — follow these so
 new/edited samples stay consistent:
 
 - **Every sample opens with an intro `MessageStrip`.** As the **first control in
-  the page content** (right after the page is created, before the form/table),
-  add a short, specific English explanation of what the sample demonstrates:
+  the page content** (right after the `Page`, before the form or table), add a
+  short, specific English explanation of what the sample demonstrates:
   ```abap
-  page->message_strip(
-      text     = `<one or two sentences: what this sample shows / does>`
-      type     = `Information`
-      showicon = abap_true
-      class    = `sapUiSmallMargin` ).
+  page->tag( `MessageStrip`
+      )->a( n = `text`     v = `<one or two sentences: what this sample shows / does>`
+      )->a( n = `type`     v = `Information`
+      )->a( n = `showIcon` b = abap_true
+      )->a( n = `class`    v = `sapUiSmallMargin` ).
   ```
   Split a long `text` into `` `chunk ` && `` continuation lines (≤255 chars/line,
-  aligned under the first backtick). If the view is one uncaptured fluent chain,
-  capture the page first (`DATA(page) = <view>->shell( )->page( ... ).`).
+  aligned under the first backtick). Hold the page in a variable for it
+  (`DATA(page) = view->ele( `Shell` )->ele( `Page` … )`, the split shape of
+  §10) rather than threading the strip into one long chain.
 
 - **DESCRIPTs of framework-action / custom-control samples carry a
   capability marker** appended to the `<DESCRIPT>`
@@ -1888,31 +1828,32 @@ new/edited samples stay consistent:
   `scripts/lib/markers.mjs`, and rendered by all three generators; change the
   wording there, never in a rendered copy.
 
-- **A read-only info form disables its inputs** (`enabled = abap_false`) — do not
-  leave display-only values in editable inputs (see `z2ui5_cl_smp_app_122`).
+- **A read-only info form disables its inputs** (`a( n = `enabled` b = abap_false )`)
+  — do not leave display-only values in editable inputs (see
+  `z2ui5_cl_smp_app_122`).
 
-- **No redundant footer Back button.** The `shell( )->page( )` already renders a
-  nav-back button (`navbuttonpress` / `shownavbutton`); do not add a second
-  `Back` button in the page footer (removed from the MessageBox / MessageToast
+- **No redundant footer Back button.** The `Page` already carries the nav-back
+  button (`showNavButton` / `navButtonPress`, §9); do not add a second `Back`
+  button in the page footer (removed from the MessageBox / MessageToast
   samples).
 
-- **Must run on OpenUI5 1.71 — watch for "phantom control" 404s.** A generic
-  aggregation-escape method that names an aggregation the parent does **not**
-  have makes UI5 resolve it as a *control class* and 404 with `failed to load
-  sap/<lib>/<name>.js` on 1.71, crashing the sample. Two real cases:
-  - `object_page_section( )->heading( `uxap` )` — `sap.uxap.ObjectPageSection`
-    has no `heading` aggregation. Put the section title in `title = `…`` and go
-    straight to `sub_sections( )`. (`heading( `f` )` **is** valid on a
-    `dynamic_page_title( )` — sap.f `DynamicPageTitle` has that aggregation.)
-  - `<footer>` on a popup `Dialog` — `sap.m.Dialog` only got a public `footer`
-    aggregation ~1.110; a `page( )->footer( )` is fine (sap.m.Page always had
+- **Must run on OpenUI5 1.71 — watch for "phantom control" 404s.** An `ele( )`
+  that names an aggregation the parent does **not** have makes UI5 resolve it
+  as a *control class* and 404 with `failed to load sap/<lib>/<name>.js` on
+  1.71, crashing the sample. Two real cases:
+  - `ele( n = `heading` ns = `uxap` )` under an `ObjectPageSection` —
+    `sap.uxap.ObjectPageSection` has no `heading` aggregation. Put the section
+    title in `a( n = `title` v = … )` and go straight to `subSections`.
+    (`f:heading` **is** valid under a `sap.f` `DynamicPageTitle`.)
+  - `footer` on a popup `Dialog` — `sap.m.Dialog` only got a public `footer`
+    aggregation ~1.110; a `Page`'s `footer` is fine (sap.m.Page always had
     one). Every control/property here must exist since 1.71 (§2); when in
     doubt check "available since" in the demo kit.
 
-- **`sap.m.SimpleForm` needs `editable = abap_true`** for its label/input pairs
-  to line up on one row — without it the form renders in display mode and the
-  first field is mislaid (fixed in `Z2UI5_CL_SMP_APP_189`; compare
-  `Z2UI5_CL_SMP_APP_133`).
+- **`sap.m.SimpleForm` needs `a( n = `editable` b = abap_true )`** for its
+  label/input pairs to line up on one row — without it the form renders in
+  display mode and the first field is mislaid (fixed in
+  `Z2UI5_CL_SMP_APP_189`; compare `Z2UI5_CL_SMP_APP_133`).
 
 - **`StandardListItem`: `info` right-aligns to the far edge** (a status/amount
   slot). For a secondary attribute that belongs *with* the title (e.g. a
@@ -1928,10 +1869,11 @@ new/edited samples stay consistent:
   DESCRIPT without the page title puts them out of sync again (they had drifted
   to "Focus II" and "Table Filters Reset after view Update").
 
-- **Start every view from `view->shell( )->page( … )`** (not `view->page( … )`)
-  so all samples share the same outer frame (fixed in `Z2UI5_CL_SMP_APP_143`).
+- **Every main view opens `mvc:View` → `Shell` → `Page`** (the §10 example),
+  never `View` → `Page`, so all samples share the same outer frame (fixed in
+  `Z2UI5_CL_SMP_APP_143`).
 
-- **Give a `search_field` an explicit `placeholder`.** Without one UI5 shows its
+- **Give a `SearchField` an explicit `placeholder`.** Without one UI5 shows its
   locale default (German "Suchen" on a DE system), which clashes with the
   otherwise-English samples.
 

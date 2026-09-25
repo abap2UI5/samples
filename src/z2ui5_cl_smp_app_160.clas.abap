@@ -11,33 +11,10 @@ CLASS z2ui5_cl_smp_app_160 DEFINITION PUBLIC.
         index          TYPE i,
         set_sk         TYPE c LENGTH 10,
         matnr          TYPE matnr,
-        description    TYPE c LENGTH 50,
-        is_total       TYPE i,
         pl_total       TYPE i,
         per_cent_total TYPE p LENGTH 2 DECIMALS 1,
-        is_01_prev     TYPE i,
-        pl_01          TYPE i,
-        per_cent_01    TYPE p LENGTH 2 DECIMALS 1,
-        is_02_prev     TYPE i,
-        pl_02          TYPE p LENGTH 2 DECIMALS 1,
-        per_cent_02    TYPE p LENGTH 2 DECIMALS 1,
-        is_03_prev     TYPE i,
-        pl_03          TYPE i,
-        per_cent_03    TYPE p LENGTH 2 DECIMALS 1,
-        is_q01_prev    TYPE i,
-        pl_q01         TYPE i,
-        per_cent_q01   TYPE p LENGTH 2 DECIMALS 1,
-        is_q02_prev    TYPE i,
-        pl_q02         TYPE i,
-        per_cent_q02   TYPE p LENGTH 2 DECIMALS 1,
-        is_q03_prev    TYPE i,
-        pl_q03         TYPE i,
-        per_cent_q03   TYPE p LENGTH 2 DECIMALS 1,
-        is_q04_prev    TYPE i,
-        pl_q04         TYPE i,
-        per_cent_q04   TYPE p LENGTH 2 DECIMALS 1,
       END OF ty_s_output.
-    DATA mt_output TYPE STANDARD TABLE OF ty_s_output WITH EMPTY KEY.
+    DATA t_output TYPE STANDARD TABLE OF ty_s_output WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -66,21 +43,17 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD model_init.
 
-    mt_output = VALUE #( ).
+    t_output = VALUE #( ).
 
     DO 10 TIMES.
-
-      INSERT VALUE #(
-        index = sy-index
-        set_sk = `Test`
-        matnr  = `1234567`
-        description = `Test`
-        pl_01 = 0
-        pl_02 = 0
-      ) INTO TABLE mt_output.
-
+      INSERT VALUE #( index          = sy-index
+                      set_sk         = `Test`
+                      matnr          = `1234567`
+                      pl_total       = sy-index * 10
+                      per_cent_total = sy-index ) INTO TABLE t_output.
     ENDDO.
 
   ENDMETHOD.
@@ -96,7 +69,6 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
         `Id of parent (row) via event.oSource.oParent.sId: ` && client->get_event_arg( 4 ) && |\n| &&
         `Attribute of parameters.value: ` && client->get_event_arg( 5 ) ).
     ENDIF.
-
 
   ENDMETHOD.
 
@@ -116,10 +88,7 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - Events on Cell Level`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-            )->ele( `headerContent`
-                )->tag( `Link`
-            )->end( ).
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Pressing ENTER in a sap.ui.table cell input fires a backend event that carries the cell id, ` &&
@@ -134,7 +103,7 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
     DATA(table) = page->ele( `FlexBox`
         )->a( n = `height` v = `85vh`
         )->ele( n = `Table` ns = `table`
-            )->a( n = `rows`               v = client->_bind( mt_output )
+            )->a( n = `rows`               v = client->_bind( t_output )
             )->a( n = `alternateRowColors` v = `true`
             )->a( n = `selectionMode`      v = `None` ).
 
@@ -169,23 +138,22 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
                 )->a( n = `type`     v = `Number`
                 )->a( n = `editable` b = abap_true
                 )->a( n = `value`    v = `{PL_TOTAL}`
-                )->a( n = `submit`   v = client->_event( val = `PL_TOTAL_CHANGE` t_arg = VALUE #(
-( `${$source>/id}` )
-( `$event.oSource.sId` )
-( `${INDEX}` )
-( `$event.oSource.oParent.sId` )
-( `${$parameters>/value}` )
-) ) ).
+                )->a( n = `submit`   v = client->_event( val   = `PL_TOTAL_CHANGE`
+                                                          t_arg = VALUE #( ( `${$source>/id}` )
+                                                                           ( `$event.oSource.sId` )
+                                                                           ( `${INDEX}` )
+                                                                           ( `$event.oSource.oParent.sId` )
+                                                                           ( `${$parameters>/value}` ) ) ) ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `4rem`
-        )->a( n = `sortProperty`   v = `per_cent_total`
-        )->a( n = `filterProperty` v = `per_cent_total`
+        )->a( n = `sortProperty`   v = `PER_CENT_TOTAL`
+        )->a( n = `filterProperty` v = `PER_CENT_TOTAL`
         )->tag( `Text`
             )->a( n = `text` v = `Column 6`
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
-                )->a( n = `text` v = `{PL_TOTAL} %` ).
+                )->a( n = `text` v = `{PER_CENT_TOTAL} %` ).
 
     client->view_display( view->stringify( ) ).
 

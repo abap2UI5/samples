@@ -53,25 +53,25 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
       " event: dragged row index, drop target index (both 0-based) and
       " the drop position (Before/After)
       TRY.
-          DATA(lv_from) = CONV i( client->get_event_arg( ) ) + 1.
-          DATA(lv_to)   = CONV i( client->get_event_arg( 2 ) ) + 1.
-          DATA(lv_pos)  = client->get_event_arg( 3 ).
-          DATA(ls_row)  = t_products[ lv_from ].
+          DATA(from_index) = CONV i( client->get_event_arg( ) ) + 1.
+          DATA(to_index)   = CONV i( client->get_event_arg( 2 ) ) + 1.
+          DATA(pos)  = client->get_event_arg( 3 ).
+          DATA(s_row)  = t_products[ from_index ].
         CATCH cx_root.
           RETURN.
       ENDTRY.
       " dropping a row onto itself is a no-op
-      IF lv_from = lv_to.
+      IF from_index = to_index.
         RETURN.
       ENDIF.
-      DELETE t_products INDEX lv_from.
-      IF lv_from < lv_to.
-        lv_to = lv_to - 1.
+      DELETE t_products INDEX from_index.
+      IF from_index < to_index.
+        to_index = to_index - 1.
       ENDIF.
-      IF lv_pos = `Before`.
-        INSERT ls_row INTO t_products INDEX lv_to.
+      IF pos = `Before`.
+        INSERT s_row INTO t_products INDEX to_index.
       ELSE.
-        INSERT ls_row INTO t_products INDEX lv_to + 1.
+        INSERT s_row INTO t_products INDEX to_index + 1.
       ENDIF.
     ENDIF.
 

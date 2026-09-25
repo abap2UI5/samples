@@ -99,7 +99,7 @@
   //     117, 131, 185, 191, 195, 211, 338, the "main app calling subapps"
   //     scaffold - were deleted on 2026-09-22 (AGENTS.md section 2), so the
   //     group is empty and carries no pattern. A class of that shape landing
-  //     in src/01 is a reason to look, not to add a line here.
+  //     in src/ is a reason to look, not to add a line here.
   "rules": {
     // The chain's layout is the only picture of the view's tree there is, and
     // nothing else formats it: abaplint's `indentation` is off for app code on
@@ -135,26 +135,20 @@
      * belong now that every class in the tree is an example somebody copies.
      */
 
-    /* 0.2.0 brought `missing-on-navigated-branch`, and it is RIGHT: 85 apps
-     * here dispatch on check_on_init( ) alone, so nothing re-displays when a
-     * called app or a popup hands control back, or when a bookmarked state is
-     * restored. abap2UI5/samples-controls made the branch part of its port
-     * recipe on the same day - "NOT optional and stays even in a static app
-     * with no data and no events".
+    /* `missing-on-navigated-branch` (linter 0.2.0) is RIGHT: an app that
+     * dispatches on check_on_init( ) alone re-displays nothing when a called
+     * app or a popup hands control back, or when a bookmarked state is
+     * restored (AGENTS.md section 9). It shipped here as a hint because most
+     * apps then built their view inline in the init branch and each had to
+     * have it extracted into a method before an ELSEIF had anything to call;
+     * that conversion is done, so the rule stands at warning like every other.
      *
-     * NOT baselined, deliberately. 85 entries would be the biggest suppression
-     * this repository has ever carried, and a baseline says "known and
-     * accepted" - this is neither. A hint keeps every one of them on the
-     * report, where the next person to open an app sees it.
-     *
-     * Why it is not just fixed here: most of these build the view INLINE
-     * inside the IF branch, so each needs its view extracted into a method
-     * before an ELSEIF has anything to call. 85 apps, and the samples are what
-     * people copy - the conversion has to be done properly, not swept.
-     *
-     * RAISE THIS BACK to warning as the apps are converted; the last one
-     * deletes the line. */
-    "missing-on-navigated-branch": "hint",
+     * NEVER baselined, and no exclusion either: a baseline says "known and
+     * accepted", and a missing branch is neither. Even z2ui5_cl_smp_app_501,
+     * which owns a POPUP rather than the main view slot, carries the branch
+     * (a restored bookmark reaches it with the dialog gone). A sample that
+     * lost its branch is fixed, not listed here. */
+    "missing-on-navigated-branch": "warning",
     "render-error": {
       "exclude": [
         // (a) not served by the harness

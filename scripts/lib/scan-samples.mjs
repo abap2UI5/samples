@@ -6,14 +6,14 @@
  * get_catalog( ) (scripts/generate-launchpad.mjs) and the browsable catalogue
  * SAMPLES.md (scripts/generate-samples-md.mjs) - and the facts are not
  * obvious: which classes count as samples, where their title and description
- * come from, which ones are hidden helpers, and what a demo kit rebuild
- * overrides. A second copy of that would drift, and drift here is silent: the
- * app and the markdown would simply disagree about what this repository
- * contains, and nothing would fail.
+ * come from, which ones are hidden helpers, and which ones cannot be placed.
+ * A second copy of that would drift, and drift here is silent: the app and
+ * the markdown would simply disagree about what this repository contains,
+ * and nothing would fail.
  *
  * So the scan lives here and the two generators only RENDER. Rendering
- * decisions stay with them - the controls-section truncation is about the
- * overview never wrapping on a phone, which is not a fact about a sample.
+ * decisions stay with them - how a tile becomes an ABAP literal or a table
+ * row is not a fact about a sample.
  *
  * The rules are AGENTS.md section 4. Edit them here, not in a generator.
  */
@@ -102,14 +102,17 @@ function groupOf(dir) {
  * than dropped: the overview must not list them, and a catalogue that claims
  * to account for the tree has to be able to say they exist.
  *
- * So are the classes this scan cannot place - `orphans`. `src/` is FLAT since
- * 2026-09-22: a sample is a class directly in it, and a subfolder is not a
- * package any more but something nobody catalogues. That skip used to be a
- * silent `continue` and the inverse of it cost fourteen samples two commits of
- * invisibility - absent from the overview app and from SAMPLES.md with every
- * gate green, because nothing that counts tiles can miss what it never
- * scanned. They are collected here and `check-orphan-samples.mjs` refuses
- * them.
+ * So are the classes this scan cannot place - `orphans`, each with a `why`.
+ * Two shapes: a class in a subfolder (`src/` is FLAT since 2026-09-22 - a
+ * sample is a class directly in it, and a subfolder is not a package any more
+ * but something nobody catalogues), and a class without its `.clas.xml`
+ * sidecar, which has no DESCRIPT to take a title from and which abapGit
+ * could not import anyway. Both skips used to be a silent `continue` (the
+ * second one a `console.warn` nobody reads in CI), and the first kind cost
+ * fourteen samples two commits of invisibility - absent from the overview app
+ * and from SAMPLES.md with every gate green, because nothing that counts
+ * tiles can miss what it never scanned. They are collected here and
+ * `check-orphan-samples.mjs` refuses them.
  *
  * @returns {{tiles: object[], hidden: object[], orphans: object[]}}
  */
@@ -129,12 +132,17 @@ function scanSamples() {
     // src/ is flat - one package, every sample directly in it. A class in a
     // subfolder is in no catalogue, so it is reported rather than skipped.
     if (rel.length > 1) {
-      orphans.push({ app: cls, path: where, why: `src/${rel.slice(0, -1).join('/')}, which is not the sample package` });
+      orphans.push({ app: cls, path: where, why: `sits in src/${rel.slice(0, -1).join('/')}, which is not the sample package` });
       continue;
     }
 
+    // ... and so is a class without its sidecar: no DESCRIPT, so no title and
+    // no tile, and abapGit would refuse the import. Reported, never skipped.
     const xmlPath = abap.replace(/\.clas\.abap$/, '.clas.xml');
-    if (!fs.existsSync(xmlPath)) { console.warn(`skipping ${cls}: no .clas.xml`); continue; }
+    if (!fs.existsSync(xmlPath)) {
+      orphans.push({ app: cls, path: where, why: `has no ${cls}.clas.xml beside it - the abapGit sidecar that carries the DESCRIPT every catalogue takes the title from` });
+      continue;
+    }
     const xml = fs.readFileSync(xmlPath, 'utf8');
     const { header, sub } = splitDescript(tag(xml, 'DESCRIPT') || cls);
 
@@ -167,19 +175,9 @@ function scanSamples() {
       }
     }
 
-    // demo kit rebuilds (AGENTS.md section 1) carry the full, untruncated demo
-    // kit description as ABAP Doc lines below the URL line - prefer it as sub
-    // over the 60-char DESCRIPT. The Rebuild line may be preceded by marker
-    // lines (e.g. the generated-port marker), hence the multiline match.
-    const doc = source
-      .match(/^"! Rebuild of the UI5 demo kit sample: \S+\r?\n((?:"! .*\r?\n)+)/m);
-    const fullSub = doc
-      ? doc[1].split(/\r?\n/).map((l) => l.replace(/^"! ?/, '').trim()).filter(Boolean).join(' ')
-      : sub;
-
     // A backtick ends an ABAP string template and a markdown code span; both
     // generators would emit something broken, so it is refused at the source.
-    if ((header + fullSub).includes('`')) throw new Error(`backtick in DESCRIPT of ${cls}`);
+    if ((header + sub).includes('`')) throw new Error(`backtick in DESCRIPT of ${cls}`);
     if (keywords.includes('`')) throw new Error(`backtick in @keywords of ${cls}`);
     if (summary.includes('`')) throw new Error(`backtick in @summary of ${cls}`);
 
@@ -194,7 +192,7 @@ function scanSamples() {
       group: groupOf(path.dirname(abap)),
       header,
       base: headerBase(header),
-      sub: fullSub,
+      sub,
       keywords,
       summary,
       docs,

@@ -30,26 +30,24 @@ CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
 
       product  = `tomato`.
       quantity = `500`.
       input41  = `faasdfdfsaVIp`.
-    ELSEIF client->check_on_navigated( ).
       view_display( ).
 
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
     ENDIF.
-
-    view_display( ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA bind_input31 TYPE string.
-    DATA bind_input32 TYPE string.
+    DATA bind_input31  TYPE string.
+    DATA bind_input32  TYPE string.
     DATA bind_quantity TYPE string.
     DATA bind_input51  TYPE string.
     DATA bind_input52  TYPE string.

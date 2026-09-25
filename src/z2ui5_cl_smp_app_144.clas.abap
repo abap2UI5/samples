@@ -13,10 +13,10 @@ CLASS z2ui5_cl_smp_app_144 DEFINITION PUBLIC.
       END OF ty_s_row.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    METHODS set_view.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -25,7 +25,7 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
 
 
-  METHOD set_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
@@ -47,12 +47,12 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    LOOP AT t_tab REFERENCE INTO DATA(lr_row).
-      DATA(lv_tabix) = sy-tabix.
+    LOOP AT t_tab REFERENCE INTO DATA(row).
+      DATA(index) = sy-tabix.
       page->tag( `Input`
-          )->a( n = `value` v = client->_bind( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).
+          )->a( n = `value` v = client->_bind( val = row->title tab = t_tab tab_index = index ) ).
       page->tag( `Input`
-          )->a( n = `value` v = client->_bind( val = lr_row->value tab = t_tab tab_index = lv_tabix ) ).
+          )->a( n = `value` v = client->_bind( val = row->value tab = t_tab tab_index = index ) ).
     ENDLOOP.
 
     page->ele( `Table`
@@ -104,9 +104,9 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
         t_tab = VALUE #( BASE t_tab
             ( title = `entry 01`  value = `red` )
             ( title = `entry 02`  value = `blue` ) ).
-      set_view( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
-      set_view( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.
