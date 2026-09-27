@@ -315,7 +315,6 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
                                      initialfocus     = `CANCEL`
                                      onclose          = `BOX_CLOSED` ).
 
-      " abap2ui5lint-disable-next-line handler-without-event -- raised by the onclose of the message box above
       WHEN `BOX_CLOSED`.
         " the answer of the box above. Nothing is rendered here: `answer` is
         " bound, and changed bound data reaches the open view on its own

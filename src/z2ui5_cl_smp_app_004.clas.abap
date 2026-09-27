@@ -63,14 +63,12 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
       WHEN `BUTTON_RESTART`.
         client->nav_app_leave( NEW z2ui5_cl_smp_app_004( ) ).
       WHEN `BUTTON_CHANGE_VIEW`.
-        " abap2ui5lint-disable handler-without-event -- a CASE over the view on screen, not over events
         CASE view_main.
           WHEN `MAIN`.
             view_second_display( ).
           WHEN `SECOND`.
             view_main_display( ).
         ENDCASE.
-        " abap2ui5lint-enable
       WHEN `BUTTON_ERROR`.
         DATA(dummy) = 1 / 0.
         client->message_box_display( |{ dummy }| ).

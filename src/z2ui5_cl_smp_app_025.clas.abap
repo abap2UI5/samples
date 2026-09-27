@@ -93,7 +93,6 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    " abap2ui5lint-disable handler-without-event -- a CASE over the view to show, not over events
     CASE show_view.
 
       WHEN `MAIN` OR ``.
@@ -148,7 +147,6 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
                             )->a( n = `text`  v = `show view main` ).
 
     ENDCASE.
-    " abap2ui5lint-enable
 
     client->view_display( view->stringify( ) ).
 

@@ -102,7 +102,6 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
                     )->a( n = `value` v = client->_bind( quantity )
                 )->tag( `Label`
                     )->a( n = `text` v = `product`
-                " abap2ui5lint-disable-next-line editable-control-without-binding -- disabled, it only displays the product
                 )->tag( `Input`
                     )->a( n = `enabled` b = abap_false
                     )->a( n = `value`   t = product

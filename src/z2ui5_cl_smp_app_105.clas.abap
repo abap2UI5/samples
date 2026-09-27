@@ -73,7 +73,6 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
     " client->view_display( ) - it renders into the parent's view reference
     " (view_parent), and the parent app owns the screen and re-displays it.
     me->client = client.
-    " abap2ui5lint-disable-next-line missing-on-navigated-branch -- a sub-app of z2ui5_cl_smp_app_104, see above
     IF client->check_on_init( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
