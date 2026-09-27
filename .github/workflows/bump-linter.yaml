@@ -78,11 +78,6 @@ jobs:
     - if: steps.pin.outputs.changed == 'true'
       run: npm run check:abap2ui5
 
-    # the badges are written by the run above; they belong to the gate's own
-    # workflow, not to this one
-    - if: steps.pin.outputs.changed == 'true'
-      run: git checkout -- .github/badges/ || true
-
     - if: steps.pin.outputs.changed == 'true'
       uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
       with:
