@@ -116,7 +116,6 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
       " name is the bound attribute as the class declares it - T_ROW for a
       " top-level cell, T_ROW-T_ITEM for a cell of the nested table; row is
       " the 1-based index in THAT table, row_parent the owning row above it
-      " abap2ui5lint-disable handler-without-event -- a CASE over the refused attribute and field, not over events
       CASE s_skipped-name.
 
         WHEN `T_ROW`.
@@ -149,7 +148,6 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
           <s_item>-qty_text  = |'{ s_skipped-value }' is not a quantity - the stored value { <s_item>-qty } stands|.
 
       ENDCASE.
-      " abap2ui5lint-enable
 
       report = |{ report }{ s_skipped-name } row { s_skipped-row } field { s_skipped-field }: '{ s_skipped-value }' refused. |.
     ENDLOOP.

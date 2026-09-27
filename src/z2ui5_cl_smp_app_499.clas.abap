@@ -215,7 +215,6 @@ CLASS z2ui5_cl_smp_app_499 IMPLEMENTATION.
         variant = client->get_event_arg( ).
         client->hash_replace( |/detail/{ variant }| ).
 
-      " abap2ui5lint-disable-next-line handler-without-event -- raised by the hashchange listener registered above
       WHEN `HASH_CHANGED`.
         " the router's routeMatched: show the page the hash now names
         hash_apply( ).

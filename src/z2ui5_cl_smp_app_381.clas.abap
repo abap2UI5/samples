@@ -64,7 +64,6 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_event( `SHOW` ).
       show_toast( ).
-    " abap2ui5lint-disable-next-line handler-without-event -- raised by the onClose option in toast_options( )
     ELSEIF client->check_on_event( `TOAST_CLOSED` ).
 
       " the onclose event: fired by the client when the toast is gone, with
