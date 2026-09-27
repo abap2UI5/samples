@@ -1086,6 +1086,14 @@ By hand, because no script covers it:
   failure the count exists to catch — look at the named class before
   accepting it.
 
+  Since linter 0.8.0 the `sources` line counts two classes more and says why:
+  `(<n> building a view, 2 building none here - the view comes from another
+  class)`. Those two are `z2ui5_cl_smp_app_105` and `z2ui5_cl_smp_app_112`,
+  the sub-apps of the `Nested View` sample `z2ui5_cl_smp_app_104` (the
+  accepted exception below): they build into the view reference 104 hands
+  them and display nothing themselves. That is the only acceptable content of
+  that bracket; a third class in it is a sample that lost its view.
+
   The shape that used to produce none was the "main app calling subapps"
   scaffold: the class builds a page, keeps the handle in an instance
   attribute, creates the sub-app with `CREATE OBJECT mo_app TYPE (class)` and
@@ -1475,7 +1483,6 @@ METHOD view_display.
           )->a( n = `height`       v = `100%`
           )->a( n = `xmlns`        v = `sap.m`
           )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core`
           )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
   view->ele( `Shell`

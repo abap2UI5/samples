@@ -6,12 +6,12 @@ CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_check_active TYPE abap_bool.
     DATA mv_check_enabled TYPE abap_bool.
     DATA mv_percent TYPE i.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mv_check_active TYPE abap_bool.
+    DATA client          TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
     METHODS view_display.
@@ -76,7 +76,6 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
 
     DATA(page)          = view->ele( `Shell`
@@ -95,7 +94,7 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     DATA(layout) = page->ele( n = `VerticalLayout` ns = `layout`
-        )->a( n = `class` v = `sapuicontentpadding`
+        )->a( n = `class` v = `sapUiContentPadding`
         )->a( n = `width` v = `100%` ).
     layout->ele( `VBox`
         )->tag( `ProgressIndicator`

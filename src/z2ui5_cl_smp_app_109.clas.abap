@@ -28,8 +28,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core`
-            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
     view->ele( `QuickView`
         )->a( n = `placement` t = mv_placement
         )->ele( `QuickViewPage`
@@ -83,7 +82,6 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
     DATA(page) = view->ele( `Shell`

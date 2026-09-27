@@ -98,8 +98,7 @@ CLASS z2ui5_cl_smp_app_510 IMPLEMENTATION.
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     DATA(panel) = view->ele( `Panel`
         )->a( n = `headerText` t = |nested view in slot { slot }|
@@ -141,8 +140,7 @@ CLASS z2ui5_cl_smp_app_510 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`

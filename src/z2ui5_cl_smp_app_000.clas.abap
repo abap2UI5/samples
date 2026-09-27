@@ -530,6 +530,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     " while the list below it grows and shrinks
     toolbar->tag( `SearchField`
         )->a( n = `width`       v = `24rem`
+        " abap2ui5lint-disable-next-line frontend-action-as-backend-event -- cs_event is this class's own backend event constant, not z2ui5_if_client=>cs_event
         )->a( n = `search`      v = client->_event( cs_event-search )
         )->a( n = `value`       v = client->_bind( search )
         )->a( n = `id`          v = `search`
@@ -570,6 +571,9 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
         " installed on this system: jump right into it, the back button returns
         hint  = tooltip.
+        " the press is one of three wires and is only added when set, since
+        " press="" is no handler (see below) - so it is captured, not inlined
+        " abap2ui5lint-disable-next-line frontend-action-as-backend-event, client-handle-capture -- cs_event is this class's own backend event constant
         press = client->_event( val = cs_event-nav arg = target ).
 
       ELSEIF class IS INITIAL.
@@ -585,6 +589,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         " the press says what is missing and where to get it (install_display),
         " instead of dropping the user on GitHub without a word
         hint  = |{ tooltip } - not installed on this system|.
+        " abap2ui5lint-disable-next-line frontend-action-as-backend-event -- cs_event is this class's own backend event constant, not z2ui5_if_client=>cs_event
         press = client->_event( val   = cs_event-install
                                 t_arg = VALUE #( ( class )
                                                  ( href )

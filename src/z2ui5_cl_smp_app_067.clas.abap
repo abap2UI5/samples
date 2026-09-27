@@ -49,7 +49,6 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->ele( `Shell`
                 )->ele( `Page`
@@ -73,8 +72,9 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `Documentation`
             )->tag( `Link`
-                )->a( n = `text` v = `https://sdk.openui5.org/entity/sap.ui.model.type.Currency`
-                )->a( n = `href` v = `https://sdk.openui5.org/entity/sap.ui.model.type.Currency`
+                )->a( n = `text`   v = `https://sdk.openui5.org/entity/sap.ui.model.type.Currency`
+                )->a( n = `href`   v = `https://sdk.openui5.org/entity/sap.ui.model.type.Currency`
+                )->a( n = `target` v = `_blank`
             )->tag( `Label`
                 )->a( n = `text` v = `One field`
             )->tag( `Input`
@@ -146,8 +146,9 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `Documentation`
             )->tag( `Link`
-                )->a( n = `text` v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
-                )->a( n = `href` v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
+                )->a( n = `text`   v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
+                )->a( n = `href`   v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
+                )->a( n = `target` v = `_blank`
             )->tag( `Label`
                 )->a( n = `text` v = `Numeric`
             )->tag( `Input`

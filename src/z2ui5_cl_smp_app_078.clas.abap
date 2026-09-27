@@ -60,7 +60,6 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
     view           = view->ele( `Shell`
@@ -83,6 +82,7 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
         )->a( n = `addedTokens`   v = client->_bind( mt_tokens_added )
         )->a( n = `removedTokens` v = client->_bind( mt_tokens_removed ) ).
 
+    " abap2ui5lint-disable-next-line editable-control-without-binding -- MultiInputExt above turns what is typed into tokens and sends them
     view->ele( `MultiInput`
         )->a( n = `tokens` v = client->_bind( mt_token )
         )->a( n = `id`     v = `test`

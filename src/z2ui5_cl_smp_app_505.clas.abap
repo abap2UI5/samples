@@ -86,7 +86,7 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
 
       " the same event for every column: the sort property and the order
       " the user asked for ride as arguments
-      DATA(property) = client->get_event_arg( 1 ).
+      DATA(property) = client->get_event_arg( ).
       sort_order     = client->get_event_arg( 2 ).
 
       IF property = `CREATED_TEXT`.
@@ -121,7 +121,6 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
     DATA(page) = view->ele( `Shell`
@@ -178,6 +177,7 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
             )->tag( `Text`
                 )->a( n = `text` v = `{STOCK}` ).
 
+    " abap2ui5lint-disable-next-line unresolved-attribute-value -- its sortOrder (below) is the SortOrder the client's sort event reported
     DATA(col_date) = columns->ele( n = `Column` ns = `table`
         )->a( n = `id`           v = `COL_DATE`
         )->a( n = `sortProperty` v = `CREATED_TEXT` ).

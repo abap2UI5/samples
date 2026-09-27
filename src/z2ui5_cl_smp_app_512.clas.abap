@@ -94,6 +94,7 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
                              ( `{"title":"Delete","actions":["DELETE","Later","CANCEL"],` &&
                                `"emphasizedAction":"DELETE","initialFocus":"CANCEL","onClose":"ANSWERED"}` ) ) ).
 
+      " abap2ui5lint-disable-next-line handler-without-event -- raised by the onClose option of the message box above
       WHEN `ANSWERED`.
         " the answer of the box above. Nothing is rendered here: `answer` is
         " bound, and changed bound data reaches the open view on its own
@@ -144,7 +145,7 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
                                 ( `warning` )
                                 ( `error` ) ) INTO DATA(type).
       row->tag( `Button`
-          )->a( n = `text`  v = type
+          )->a( n = `text`  t = type
           )->a( n = `press` v = client->_event( val = `TYPE`
                                                 arg = type )
           )->a( n = `class` v = `sapUiTinyMarginEnd` ).

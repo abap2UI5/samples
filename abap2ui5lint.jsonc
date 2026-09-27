@@ -18,7 +18,8 @@
   // and a default-on gate whose runtime is missing steps aside for the property
   // gate and the run stays green - which for a corpus whose whole claim is that
   // every one of its views loads in a browser would be the wrong kind of quiet.
-  // Saying so makes a missing @abap2ui5/render-runtime an error instead.
+  // Saying so makes a missing @abap2ui5/linter-render (the render runtime,
+  // published as @abap2ui5/render-runtime up to 0.7.0) an error instead.
   "render": true,
 
   // Adoption-time debt. The corpus only became readable by the linter when it
@@ -75,22 +76,22 @@
   //     repository has.
   //
   // (b) what the RECONSTRUCTION or the sample's own intent makes unjudgeable.
-  //     Neither of these is a defect — both were on this list as unresolved
-  //     debt and both turned out to be the gate judging something other than
-  //     the app. Anything that lands here needs the same treatment: find out
-  //     which of the two it is before it is either fixed or excused.
+  //     The group is empty. Both entries that stood here were on this list as
+  //     unresolved debt and both turned out to be the gate judging something
+  //     other than the app. Anything that lands here needs the same
+  //     treatment: find out which of the two it is before it is either fixed
+  //     or excused.
   //       * 343 used to stand here - it bound a TYPE REF TO table ON PURPOSE,
   //         inside a TRY, to prove the framework refuses a reference. The
   //         statement is `reference_itself_refused` in abap2UI5's
   //         z2ui5_cl_ui5_srv_model test class now and the sample was deleted
   //         with the rest of src/00/98 on 2026-09-22 (AGENTS.md section 2)
-  //       * 421 is NOT a defect: it builds its ids and paths inside a LOOP,
-  //         from the loop variable, so the reconstruction cannot compute them.
-  //         The static rules stopped judging that guess in linter 241787b and
-  //         a guessed id is made unique, but the guessed BINDING still
-  //         resolves to an object in the mock model, which strict property
-  //         validation then rejects. The render gate is judging the guess -
-  //         nothing here to fix in the app
+  //       * 421 used to stand here: it built its cell paths inside a LOOP from
+  //         a captured `_bind( path = abap_true )` string, so the
+  //         reconstruction guessed the BINDING and strict property validation
+  //         rejected the guess. Since 2026-09-27 every cell binds its own row
+  //         component with `_bind( val = row->… tab = t_tab tab_index = … )`,
+  //         which the reconstruction follows, and the view renders
   //     Take an entry off this list with a fix, or with a reason as specific
   //     as these two.
   //
@@ -157,9 +158,7 @@
         // (a) an unmirrored companion control: InputExt, UploadSetExt
         "z2ui5_cl_smp_app_(516|517|530)\\.",
         // (a2) a runtime registration the harness cannot execute
-        "z2ui5_cl_smp_app_518\\.",
-        // (b) UNRESOLVED — see above
-        "z2ui5_cl_smp_app_421\\."
+        "z2ui5_cl_smp_app_518\\."
       ]
     }
   },

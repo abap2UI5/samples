@@ -101,7 +101,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     " the sort event carries the column's sortProperty and the requested
     " order - the client sorts its binding too, so both agree, and the
     " backend order is the one the next model push would restore
-    DATA(property)   = client->get_event_arg( 1 ).
+    DATA(property)   = client->get_event_arg( ).
     DATA(sort_order) = client->get_event_arg( 2 ).
 
     IF sort_order = `Descending`.
@@ -118,7 +118,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
     " the filter event carries the column's filterProperty and the typed
     " value: a contains-filter over that one component, on the full data
-    DATA(property) = client->get_event_arg( 1 ).
+    DATA(property) = client->get_event_arg( ).
     DATA(value)    = to_upper( client->get_event_arg( 2 ) ).
 
     set_data( ).
@@ -156,7 +156,6 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:f`      v = `sap.f`
             )->a( n = `xmlns:table`  v = `sap.ui.table`
             )->a( n = `xmlns:u`      v = `sap.ui.unified` ).

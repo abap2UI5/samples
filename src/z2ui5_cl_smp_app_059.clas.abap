@@ -117,15 +117,13 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
     " sample. check_queue_last and check_no_busy are what make that wire
     " behave - the first so no keystroke is lost, the second so the overlay
     " stays out of the way while they are typed.
-    " abap2ui5lint-disable live-event-roundtrip
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     DATA(page1) = view->ele( `Shell`
         )->ele( `Page`

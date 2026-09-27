@@ -44,7 +44,6 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout`
             )->ele( `Shell`
@@ -177,9 +176,7 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
-      view_display( client ).
-    ELSEIF client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       view_display( client ).
     ENDIF.
 

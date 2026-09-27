@@ -7,6 +7,7 @@ CLASS z2ui5_cl_smp_app_501 DEFINITION PUBLIC.
 
     " the whole table, edited in place: the caller reads it back off this
     " instance with get_app_prev( ), so it is PUBLIC and it is the contract
+    " abap2ui5lint-disable-next-line unbound-public-attribute -- read by the caller, see above
     DATA t_table TYPE z2ui5_cl_smp_app_500=>ty_t_row.
     DATA s_row   TYPE z2ui5_cl_smp_app_500=>ty_s_row.
 

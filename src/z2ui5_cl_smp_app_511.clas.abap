@@ -114,7 +114,8 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
             )->a( n = `text` v = client->_bind( plain_count ) ).
 
     " right: the same wire with check_queue_last - the last keystroke of the
-    " flight is kept and dispatched after the response
+    " flight is kept and dispatched after the response; check_no_busy keeps
+    " the busy overlay from covering the field while it is typed into
     grid->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `Title`
@@ -125,7 +126,8 @@ CLASS z2ui5_cl_smp_app_511 IMPLEMENTATION.
             )->a( n = `liveChange`  v = client->_event(
                 val    = `QUEUED`
                 arg    = `${$parameters>/value}`
-                s_ctrl = VALUE #( check_queue_last = abap_true ) )
+                s_ctrl = VALUE #( check_queue_last = abap_true
+                                  check_no_busy    = abap_true ) )
         )->tag( `Label`
             )->a( n = `text` v = `Value in the backend`
         )->tag( `Text`

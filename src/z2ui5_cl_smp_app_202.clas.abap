@@ -6,9 +6,9 @@ CLASS z2ui5_cl_smp_app_202 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+  PROTECTED SECTION.
     DATA next_step TYPE string.
 
-  PROTECTED SECTION.
     METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
@@ -27,8 +27,7 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     lr_view        = lr_view->ele( `Shell`
         )->ele( `Page`

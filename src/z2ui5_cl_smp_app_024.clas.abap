@@ -8,6 +8,7 @@ CLASS z2ui5_cl_smp_app_024 DEFINITION PUBLIC.
 
     DATA input         TYPE string.
     DATA input2        TYPE string.
+    " abap2ui5lint-disable-next-line unbound-public-attribute -- set by the called app z2ui5_cl_smp_app_025
     DATA backend_event TYPE string.
 
   PROTECTED SECTION.
@@ -80,7 +81,6 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     DATA(page) = view->ele( `Shell`

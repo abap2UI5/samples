@@ -67,7 +67,6 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
     DATA(page) = view->ele( `Shell`

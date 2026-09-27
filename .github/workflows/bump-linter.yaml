@@ -16,7 +16,9 @@
 # The render runtime rides along deliberately: the two are ONE release with one
 # version (the linter's metadata snapshot is generated from exactly the
 # @openui5 version pinned over there), so bumping one alone is the drift the
-# split was allowed on condition of avoiding.
+# split was allowed on condition of avoiding. It is published as
+# @abap2ui5/linter-render from 0.8.0 on and was @abap2ui5/render-runtime up to
+# 0.7.0 - the step takes whichever of the two carries the linter's version.
 name: bump-linter
 
 on:
@@ -57,7 +59,9 @@ jobs:
         # Writes the range in package.json AND the exact version in the lock.
         # Both matter: the range is what a fresh install reads, the lock is
         # what `npm ci` reads, and the gate below runs on the lock.
-        npm install --save-dev "@abap2ui5/linter@$VERSION" "@abap2ui5/render-runtime@$VERSION"
+        RT=@abap2ui5/linter-render
+        npm view "$RT@$VERSION" version >/dev/null 2>&1 || RT=@abap2ui5/render-runtime
+        npm install --save-dev "@abap2ui5/linter@$VERSION" "$RT@$VERSION"
         # package.json alone is not the signal: a release inside the declared
         # range moves only package-lock.json, and that is exactly the bump this
         # corpus needs to see.
@@ -86,7 +90,7 @@ jobs:
         title: 'chore: bump @abap2ui5/linter'
         commit-message: 'chore: bump @abap2ui5/linter to ${{ steps.pin.outputs.version }}'
         body: |
-          Weekly move of `@abap2ui5/linter` and `@abap2ui5/render-runtime` to
+          Weekly move of `@abap2ui5/linter` and `@abap2ui5/linter-render` to
           the latest version on npm (${{ steps.pin.outputs.version }}). The
           linter gate ran over the full corpus in the workflow that opened
           this PR.

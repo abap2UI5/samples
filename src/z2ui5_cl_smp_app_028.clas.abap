@@ -17,10 +17,9 @@ CLASS z2ui5_cl_smp_app_028 DEFINITION PUBLIC.
       END OF ty_s_row.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA counter TYPE i.
-
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA counter TYPE i.
+    DATA client  TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
@@ -97,8 +96,7 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`

@@ -5,6 +5,7 @@ CLASS z2ui5_cl_smp_app_497 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+    " abap2ui5lint-disable unbound-public-attribute -- rows IS bound: render_any( ) binds its tab parameter, which _bind( ) resolves back to this attribute
     TYPES:
       BEGIN OF ty_s_flight,
         carrid   TYPE c LENGTH 3,
@@ -17,6 +18,7 @@ CLASS z2ui5_cl_smp_app_497 DEFINITION PUBLIC.
     " the only place in this app that names a field - add one here and it
     " appears on the screen, because the view below is derived from this type
     DATA rows TYPE STANDARD TABLE OF ty_s_flight WITH EMPTY KEY.
+    " abap2ui5lint-enable
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

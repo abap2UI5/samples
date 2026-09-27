@@ -3,12 +3,8 @@ CLASS z2ui5_cl_smp_app_020 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA text          TYPE string.
-    DATA cancel_text   TYPE string.
-    DATA cancel_event  TYPE string.
-    DATA confirm_text  TYPE string.
-    DATA confirm_event TYPE string.
-    DATA event         TYPE string.
+    " abap2ui5lint-disable-next-line unbound-public-attribute -- the result: the caller reads it back with get_app_prev( )
+    DATA event TYPE string.
 
     CLASS-METHODS factory
       IMPORTING
@@ -21,6 +17,12 @@ CLASS z2ui5_cl_smp_app_020 DEFINITION PUBLIC.
         VALUE(result)   TYPE REF TO z2ui5_cl_smp_app_020.
 
   PROTECTED SECTION.
+    DATA text          TYPE string.
+    DATA cancel_text   TYPE string.
+    DATA cancel_event  TYPE string.
+    DATA confirm_text  TYPE string.
+    DATA confirm_event TYPE string.
+
   PRIVATE SECTION.
 ENDCLASS.
 

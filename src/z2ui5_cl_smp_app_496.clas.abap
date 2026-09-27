@@ -100,7 +100,6 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
@@ -134,11 +133,13 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `send it to the backend`
             )->tag( `Button`
+                " abap2ui5lint-disable-next-line frontend-action-as-backend-event -- cs_event is this class's own backend event constant, not z2ui5_if_client=>cs_event
                 )->a( n = `press` v = client->_event( cs_event-ping )
                 )->a( n = `text`  v = `Send`
             )->tag( `Label`
                 )->a( n = `text` v = `how do I open the tools?`
             )->tag( `Button`
+                " abap2ui5lint-disable-next-line frontend-action-as-backend-event -- cs_event is this class's own backend event constant, not z2ui5_if_client=>cs_event
                 )->a( n = `press` v = client->_event( cs_event-where )
                 )->a( n = `text`  v = `Show me`
                 )->a( n = `icon`  v = `sap-icon://sys-help` ).

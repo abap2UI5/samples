@@ -6,12 +6,12 @@ CLASS z2ui5_cl_smp_app_065 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_input_main  TYPE string.
-    DATA mv_input_nest  TYPE string.
-    DATA mv_count       TYPE i.
+    DATA mv_input_main TYPE string.
+    DATA mv_input_nest TYPE string.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mv_count TYPE i.
+    DATA client   TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
     METHODS view_display.
@@ -66,8 +66,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     DATA(page) = lo_view->ele( `Shell`
         )->ele( `Page`
@@ -112,7 +111,6 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->ele( `Page`
                 )->a( n = `title` v = `Nested View`
                 )->tag( `Button`
@@ -121,7 +119,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
                 )->tag( `Input`
                     )->a( n = `value` v = client->_bind( mv_input_nest ) ).
 
-    client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` ).
+    client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` method_destroy = `removeAllContent` ).
 
   ENDMETHOD.
 

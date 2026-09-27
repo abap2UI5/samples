@@ -47,8 +47,6 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
-            )->a( n = `xmlns:f`      v = `sap.f`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
     DATA(page) = lo_view_nested->ele( `Page`
@@ -113,10 +111,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
-            )->a( n = `xmlns:f`      v = `sap.f`
-            )->a( n = `xmlns:table`  v = `sap.ui.table` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     DATA(page) = lo_view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
@@ -144,9 +139,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:f`      v = `sap.f`
-            )->a( n = `xmlns:table`  v = `sap.ui.table`
             )->ele( `Shell`
                 )->ele( `Page`
                     )->a( n = `title`          v = `abap2UI5 - Nested View - Three Columns with FlexibleColumnLayout`

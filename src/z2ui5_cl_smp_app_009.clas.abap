@@ -254,10 +254,8 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
-            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
     DATA(dialog) = popup->ele( `Dialog`
         )->a( n = `title` v = `abap2UI5 - Value Help` ).
     DATA(tab) = dialog->ele( `Table`
@@ -299,10 +297,9 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
-            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
     DATA(dialog) = popup->ele( `Dialog`
         )->a( n = `title` v = `abap2UI5 - Value Help` ).
 
