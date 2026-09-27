@@ -21,11 +21,11 @@ CLASS z2ui5_cl_smp_app_468 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA input   TYPE string.
-    DATA counter TYPE i.
     DATA routing TYPE abap_bool.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA counter TYPE i.
+    DATA client  TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
     METHODS view_display.
@@ -95,7 +95,6 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     DATA(page) = view->ele( `Shell`

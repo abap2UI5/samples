@@ -17,11 +17,11 @@ CLASS z2ui5_cl_smp_app_197 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mt_table TYPE ty_t_table.
-    DATA mt_table_full TYPE ty_t_table.
     DATA mt_table_products TYPE ty_t_table.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mt_table_full TYPE ty_t_table.
+    DATA client        TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event_filter.
@@ -97,7 +97,6 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->ele( `Shell` ).
 
     DATA(page) = view->ele( `Page`

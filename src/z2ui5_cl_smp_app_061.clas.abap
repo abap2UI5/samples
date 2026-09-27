@@ -27,8 +27,7 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - Dynamic Table Typed at Runtime (RTTI)`
@@ -102,7 +101,7 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
       " and the framework ships no RELEASED DDIC object to use instead. Reading
       " the draft table is not the lesson here - the dynamic typing is.
       " abap2ui5lint-disable non-released-api
-      CREATE DATA t_tab TYPE STANDARD TABLE OF (`Z2UI5_T_01`).
+      CREATE DATA t_tab TYPE STANDARD TABLE OF (`Z2UI5_T_01`) WITH NON-UNIQUE KEY id.
       ASSIGN t_tab->* TO <tab>.
 
       INSERT VALUE z2ui5_t_01( id = `this is an uuid` timestampl = `20230823124303.1234567` id_prev = `previous` ) INTO TABLE <tab>.

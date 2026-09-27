@@ -20,12 +20,12 @@ CLASS z2ui5_cl_smp_app_097 DEFINITION PUBLIC.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
     DATA t_tab2 TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
     DATA mv_layout TYPE string.
-    " public, so it survives the roundtrip - the detail rows need a key that
-    " stays unique after a row was deleted, and lines( t_tab2 ) would not
-    DATA mv_row_id TYPE i.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    " kept across the roundtrip by the draft - the detail rows need a key
+    " that stays unique after a row was deleted, and lines( t_tab2 ) would not
+    DATA mv_row_id TYPE i.
+    DATA client    TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
     METHODS view_display_master.
@@ -45,8 +45,6 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
-            )->a( n = `xmlns:f`      v = `sap.f`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
     DATA(page) = lo_view_nested->ele( `Page`
@@ -112,9 +110,7 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:f`      v = `sap.f`
-            )->a( n = `xmlns:table`  v = `sap.ui.table`
             )->ele( `Shell`
                 )->ele( `Page`
                     )->a( n = `title`          v = `abap2UI5 - Nested View - Master-Detail with FlexibleColumnLayout`

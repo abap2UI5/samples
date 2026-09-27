@@ -136,8 +136,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Message - MessageView and MessagePopover`
@@ -164,7 +163,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
             )->tag( `Link`
                 )->a( n = `text`   v = `Show more information`
                 )->a( n = `target` v = `_blank`
-                )->a( n = `href`   v = `http://sap.com` ).
+                )->a( n = `href`   v = `https://sap.com` ).
 
     " ButtonType 'Negative' would match the error state, but it is only available since UI5 1.73 - src/01 must run on plain 1.71, so the default type is kept
     page->ele( `footer`
@@ -212,7 +211,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
             )->tag( `Link`
                 )->a( n = `text`   v = `Show more information`
                 )->a( n = `target` v = `_blank`
-                )->a( n = `href`   v = `http://sap.com` ).
+                )->a( n = `href`   v = `https://sap.com` ).
 
     dialog->ele( `endButton`
         )->tag( `Button`
@@ -244,7 +243,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
             )->tag( `Link`
                 )->a( n = `text`   v = `Show more information`
                 )->a( n = `target` v = `_blank`
-                )->a( n = `href`   v = `http://sap.com` ).
+                )->a( n = `href`   v = `https://sap.com` ).
 
     client->popover_display( xml = popup->stringify( ) by_id = id ).
 

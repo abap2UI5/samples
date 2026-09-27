@@ -25,7 +25,6 @@ CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
       END OF ty_s_combo,
       ty_t_combo TYPE STANDARD TABLE OF ty_s_combo WITH EMPTY KEY.
 
-    DATA mt_picture       TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
     DATA mt_picture_out   TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
     DATA mv_pic_display   TYPE string.
     DATA mv_picture_base  TYPE string.
@@ -36,6 +35,7 @@ CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
     DATA devices          TYPE ty_t_combo.
 
   PROTECTED SECTION.
+    DATA mt_picture       TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
     DATA selected_picture TYPE ty_s_picture.
     DATA client           TYPE REF TO z2ui5_if_client.
 

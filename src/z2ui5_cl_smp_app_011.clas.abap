@@ -17,11 +17,11 @@ CLASS z2ui5_cl_smp_app_011 DEFINITION PUBLIC.
         editable TYPE abap_bool,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab                 TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
-    DATA check_editable_active TYPE abap_bool.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA check_editable_active TYPE abap_bool.
+    DATA client                TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
 
@@ -39,8 +39,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Table - Editable Cells, Add and Delete Rows`

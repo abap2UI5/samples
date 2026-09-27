@@ -6,10 +6,9 @@ CLASS z2ui5_cl_smp_app_012 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA check_popup TYPE abap_bool.
-
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA check_popup TYPE abap_bool.
+    DATA client      TYPE REF TO z2ui5_if_client.
 
     METHODS on_navigation.
     METHODS on_event.
@@ -89,7 +88,6 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     DATA(page) = view->ele( `Shell`
@@ -159,10 +157,8 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
-            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
     popup->ele( `Dialog`
         )->a( n = `title` v = `Popup - Decide`
         )->ele( `VBox`
@@ -187,10 +183,8 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
-            )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
-            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
     popup->ele( `Dialog`
         )->a( n = `title` v = `Popup - Info`
         )->ele( `VBox`

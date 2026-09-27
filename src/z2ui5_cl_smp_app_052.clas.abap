@@ -17,12 +17,12 @@ CLASS z2ui5_cl_smp_app_052 DEFINITION PUBLIC.
       END OF ty_s_tab.
     TYPES ty_t_tab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mt_table         TYPE ty_t_tab.
-    DATA mv_check_popover TYPE abap_bool.
-    DATA mv_product TYPE string.
+    DATA mt_table TYPE ty_t_tab.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mv_check_popover TYPE abap_bool.
+    DATA mv_product       TYPE string.
+    DATA client           TYPE REF TO z2ui5_if_client.
 
     METHODS  set_data.
     METHODS view_display.
@@ -42,7 +42,6 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
-            )->a( n = `xmlns:f`    v = `sap.f`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
     DATA(popover) = lo_popover->ele( `Popover`
@@ -98,9 +97,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
-            )->a( n = `xmlns:f`      v = `sap.f`
-            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+            )->a( n = `xmlns:f`      v = `sap.f` ).
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`

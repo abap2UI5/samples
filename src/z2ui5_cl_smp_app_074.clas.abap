@@ -9,14 +9,14 @@ CLASS z2ui5_cl_smp_app_074 DEFINITION PUBLIC.
     DATA filepath TYPE string.
     DATA file     TYPE string.
 
-    " what the last upload produced - public, so it survives the roundtrip
-    " and the page can still show it after the next event
+  PROTECTED SECTION.
+    " what the last upload produced - the draft keeps it across the
+    " roundtrip, so the page can still show it after the next event; no
+    " binding reads it, so it does not need to be PUBLIC
     DATA upload_name TYPE string.
     DATA upload_size TYPE i.
     DATA upload_text TYPE string.
-
-  PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client      TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
     METHODS view_display.
@@ -157,7 +157,6 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
     DATA(page) = view->ele( `Shell`

@@ -49,6 +49,7 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
     DATA(ls_get) = client->get( ).
     returned_event = ls_get-event.
 
+    " abap2ui5lint-disable handler-without-event -- the event z2ui5_cl_smp_app_489 left with, not one raised here
     CASE returned_event.
 
       WHEN `DATA_CONFIRMED`.
@@ -71,6 +72,7 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
         client->message_toast_display( `Returned event DATA_CANCELLED, no data passed` ).
 
     ENDCASE.
+    " abap2ui5lint-enable
 
     view_display( ).
 
@@ -85,7 +87,6 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     DATA(page) = view->ele( `Shell`

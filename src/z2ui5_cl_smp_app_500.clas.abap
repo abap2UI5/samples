@@ -17,12 +17,11 @@ CLASS z2ui5_cl_smp_app_500 DEFINITION PUBLIC.
     TYPES ty_t_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
     DATA t_table TYPE ty_t_row.
 
+  PROTECTED SECTION.
     " the id the next added row gets - kept so a delete cannot hand an id out
     " twice, which the popup app matches rows by
     DATA next_id TYPE i.
-
-  PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client  TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
@@ -162,8 +161,8 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
     table->ele( `items`
         )->ele( `ColumnListItem`
             )->a( n = `type`  v = `Navigation`
-            )->a( n = `press` v = client->_event( val   = `ROW_SELECT`
-                                                  t_arg = VALUE #( ( `${ROW_ID}` ) ) )
+            )->a( n = `press` v = client->_event( val = `ROW_SELECT`
+                                                  arg = `${ROW_ID}` )
             )->ele( `cells`
                 )->tag( `CheckBox`
                     )->a( n = `selected` v = `{SELKZ}`

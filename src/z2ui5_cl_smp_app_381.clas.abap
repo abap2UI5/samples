@@ -20,7 +20,6 @@ CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
     DATA close_on_navigation TYPE abap_bool.
     DATA notify_close        TYPE abap_bool.
     DATA css_class           TYPE string.
-    DATA closed_count        TYPE i.
     DATA closed_text         TYPE string.
 
   PROTECTED SECTION.
@@ -31,7 +30,8 @@ CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
       END OF ty_s_opt.
     TYPES ty_t_opt TYPE STANDARD TABLE OF ty_s_opt WITH EMPTY KEY.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA closed_count TYPE i.
+    DATA client       TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS show_toast.
@@ -64,6 +64,7 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_event( `SHOW` ).
       show_toast( ).
+    " abap2ui5lint-disable-next-line handler-without-event -- raised by the onClose option in toast_options( )
     ELSEIF client->check_on_event( `TOAST_CLOSED` ).
 
       " the onclose event: fired by the client when the toast is gone, with

@@ -14,6 +14,7 @@ CLASS z2ui5_cl_smp_app_071 DEFINITION PUBLIC.
 
     DATA set_size_limit TYPE i VALUE 100.
     DATA combo_number   TYPE i VALUE 105.
+    DATA combo_key      TYPE string.
     DATA t_combo        TYPE STANDARD TABLE OF ty_s_combobox WITH EMPTY KEY.
 
   PROTECTED SECTION.
@@ -111,7 +112,8 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `demo`
             )->ele( `ComboBox`
-                )->a( n = `items` v = client->_bind( t_combo )
+                )->a( n = `selectedKey` v = client->_bind( combo_key )
+                )->a( n = `items`       v = client->_bind( t_combo )
                 )->tag( n = `Item` ns = `core`
                     )->a( n = `key`  v = `{KEY}`
                     )->a( n = `text` v = `{TEXT}` ).

@@ -10,14 +10,16 @@ name: check-abap2UI5
 # resolved through package-lock.json, so CI and `npm run check:abap2ui5` run
 # the same version.
 #
-# @abap2ui5/render-runtime is the SECOND devDependency, and the render gate
+# @abap2ui5/linter-render is the SECOND devDependency, and the render gate
 # below is the only reason for it: it carries the @openui5 source packages and
 # playwright the gate serves. The linter names it as an OPTIONAL PEER, which
 # is the one dependency kind npm does not install on its own - so it has to be
-# declared here, or `npx abap2ui5lint` reports the runtime missing and the 172
+# declared here, or `npx abap2ui5lint` reports the runtime missing and the 156
 # documents stop being rendered. It used to arrive by itself, as an optional
 # DEPENDENCY of the linter, which npm does install by default; splitting it
-# out is what keeps a plain `npx @abap2ui5/linter` a small download.
+# out is what keeps a plain `npx @abap2ui5/linter` a small download. Up to
+# 0.7.0 the same package was published as @abap2ui5/render-runtime (now
+# deprecated); from 0.8.0 on it is @abap2ui5/linter-render.
 #
 # The run reports what it LOOKED at, not only what it found: the gates log
 # every file into a collapsed group while they run, and the job closes with

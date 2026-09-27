@@ -38,10 +38,10 @@ CLASS z2ui5_cl_smp_app_504 DEFINITION PUBLIC.
       END OF ty_s_row.
     DATA t_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA report      TYPE string.
     DATA report_text TYPE string.
 
   PROTECTED SECTION.
+    DATA report TYPE string.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
@@ -116,6 +116,7 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
       " name is the bound attribute as the class declares it - T_ROW for a
       " top-level cell, T_ROW-T_ITEM for a cell of the nested table; row is
       " the 1-based index in THAT table, row_parent the owning row above it
+      " abap2ui5lint-disable handler-without-event -- a CASE over the refused attribute and field, not over events
       CASE s_skipped-name.
 
         WHEN `T_ROW`.
@@ -148,6 +149,7 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
           <s_item>-qty_text  = |'{ s_skipped-value }' is not a quantity - the stored value { <s_item>-qty } stands|.
 
       ENDCASE.
+      " abap2ui5lint-enable
 
       report = |{ report }{ s_skipped-name } row { s_skipped-row } field { s_skipped-field }: '{ s_skipped-value }' refused. |.
     ENDLOOP.
@@ -191,8 +193,7 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`

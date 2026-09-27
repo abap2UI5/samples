@@ -24,17 +24,16 @@ CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_s_row.
 
-    DATA app_sub   TYPE REF TO object.
-    DATA classname TYPE string.
-
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA layout      TYPE string.
-    DATA grid_sub    TYPE REF TO z2ui5_cl_ui5_view_builder.
-    DATA view_nested TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA layout TYPE string.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA app_sub     TYPE REF TO object.
+    DATA classname   TYPE string.
+    DATA grid_sub    TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA view_nested TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA client      TYPE REF TO z2ui5_if_client.
 
     METHODS view_display_master.
     METHODS view_display_detail.
@@ -121,9 +120,7 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:f`      v = `sap.f`
-            )->a( n = `xmlns:layout` v = `sap.ui.layout`
             )->ele( `Shell`
                 )->ele( `Page`
                     )->a( n = `title`          v = `abap2UI5 - Nested View - Embed Another App's View`

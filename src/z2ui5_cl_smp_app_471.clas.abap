@@ -10,11 +10,11 @@ CLASS z2ui5_cl_smp_app_471 DEFINITION PUBLIC.
       BEGIN OF ty_s_log,
         entry TYPE string,
       END OF ty_s_log.
-    DATA t_log      TYPE STANDARD TABLE OF ty_s_log WITH EMPTY KEY.
-    DATA registered TYPE abap_bool.
+    DATA t_log TYPE STANDARD TABLE OF ty_s_log WITH EMPTY KEY.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA registered TYPE abap_bool.
+    DATA client     TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
@@ -109,8 +109,7 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`

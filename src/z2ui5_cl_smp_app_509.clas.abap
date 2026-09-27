@@ -51,18 +51,12 @@ CLASS z2ui5_cl_smp_app_509 IMPLEMENTATION.
 
   METHOD view_display.
 
-    " the bare path of the spliced object, so the view can reach into it
-    DATA(config_path) = client->_bind( val  = config_json
-                                       json = abap_true
-                                       path = abap_true ).
-
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
     DATA(page) = view->ele( `Shell`
@@ -87,13 +81,16 @@ CLASS z2ui5_cl_smp_app_509 IMPLEMENTATION.
 
     form->tag( `Label`
         )->a( n = `text` v = `a member of the object - its title` ).
+    " the bare path of the spliced object, so the view can reach into it
     form->tag( `Text`
-        )->a( n = `text` v = |\{{ config_path }/title\}| ).
+        " abap2ui5lint-disable-next-line unknown-binding-path -- the member lives inside the JSON string, which only the client parses
+        )->a( n = `text` v = |\{{ client->_bind( val = config_json json = abap_true path = abap_true ) }/title\}| ).
 
     form->tag( `Label`
         )->a( n = `text` v = `a key no ABAP component could carry - sap.app/id` ).
     form->tag( `Text`
-        )->a( n = `text` v = |\{{ config_path }/sap.app/id\} version \{{ config_path }/sap.app/version\}| ).
+        )->a( n = `text` v = |\{{ client->_bind( val = config_json json = abap_true path = abap_true ) }/sap.app/id\} version | &&
+                             |\{{ client->_bind( val = config_json json = abap_true path = abap_true ) }/sap.app/version\}| ).
 
     form->tag( `Label`
         )->a( n = `text` v = `the array, as an aggregation binding` ).

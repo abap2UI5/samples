@@ -315,6 +315,7 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
                                      initialfocus     = `CANCEL`
                                      onclose          = `BOX_CLOSED` ).
 
+      " abap2ui5lint-disable-next-line handler-without-event -- raised by the onclose of the message box above
       WHEN `BOX_CLOSED`.
         " the answer of the box above. Nothing is rendered here: `answer` is
         " bound, and changed bound data reaches the open view on its own
@@ -350,7 +351,6 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
     DATA(page) = view->ele( `Shell`

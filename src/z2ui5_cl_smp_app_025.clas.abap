@@ -4,13 +4,15 @@ CLASS z2ui5_cl_smp_app_025 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA input              TYPE string.
-    DATA input_previous     TYPE string.
+    " abap2ui5lint-disable unbound-public-attribute -- set by the calling app z2ui5_cl_smp_app_024 before nav_app_call( )
     DATA input_previous_set TYPE string.
     DATA show_view          TYPE string.
     DATA event_backend      TYPE string.
+    " abap2ui5lint-enable
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA input_previous TYPE string.
+    DATA client         TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
     METHODS view_display.
@@ -76,7 +78,6 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     DATA(page) = view->ele( `Shell`
@@ -92,6 +93,7 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    " abap2ui5lint-disable handler-without-event -- a CASE over the view to show, not over events
     CASE show_view.
 
       WHEN `MAIN` OR ``.
@@ -146,6 +148,7 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
                             )->a( n = `text`  v = `show view main` ).
 
     ENDCASE.
+    " abap2ui5lint-enable
 
     client->view_display( view->stringify( ) ).
 

@@ -103,8 +103,7 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
@@ -183,12 +182,14 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
     " Build the rows explicitly (no aggregation binding): only then does every
     " cell keep the stable control id <column>_<row> that set_focus can target.
     " A bound template would clone the cells under randomly generated ids.
-    DATA(path)  = client->_bind( val = t_tab path = abap_true ).
+    " Each cell binds its own row component (tab / tab_index), so the model
+    " keeps the table's array shape while the view addresses single rows.
     DATA(items) = tab->ele( `items` ).
 
     LOOP AT t_tab REFERENCE INTO DATA(row).
 
-      DATA(i) = sy-tabix - 1.
+      DATA(index) = sy-tabix.
+      DATA(i)     = index - 1.
 
       items->ele( `ColumnListItem`
           )->ele( `cells`
@@ -196,22 +197,22 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
                   )->a( n = `text` t = |{ row->index }|
               )->tag( `Input`
                   )->a( n = `id`     t = |{ cs_column-title }_{ i }|
-                  )->a( n = `value`  v = |\{{ path }/{ i }/TITLE\}|
+                  )->a( n = `value`  v = client->_bind( val = row->title tab = t_tab tab_index = index )
                   )->a( n = `submit` v = client->_event( `NEXT` )
               )->tag( `Input`
                   )->a( n = `id`     t = |{ cs_column-color }_{ i }|
-                  )->a( n = `value`  v = |\{{ path }/{ i }/VALUE\}|
+                  )->a( n = `value`  v = client->_bind( val = row->value tab = t_tab tab_index = index )
                   )->a( n = `submit` v = client->_event( `NEXT` )
               )->tag( `Input`
                   )->a( n = `id`     t = |{ cs_column-info }_{ i }|
-                  )->a( n = `value`  v = |\{{ path }/{ i }/INFO\}|
+                  )->a( n = `value`  v = client->_bind( val = row->info tab = t_tab tab_index = index )
                   )->a( n = `submit` v = client->_event( `NEXT` )
               )->tag( `CheckBox`
                   )->a( n = `id`       t = |{ cs_column-checkbox }_{ i }|
-                  )->a( n = `selected` v = |\{{ path }/{ i }/CHECKBOX\}|
+                  )->a( n = `selected` v = client->_bind( val = row->checkbox tab = t_tab tab_index = index )
               )->tag( `Input`
                   )->a( n = `id`     t = |{ cs_column-description }_{ i }|
-                  )->a( n = `value`  v = |\{{ path }/{ i }/DESCRIPTION\}|
+                  )->a( n = `value`  v = client->_bind( val = row->description tab = t_tab tab_index = index )
                   )->a( n = `submit` v = client->_event( `NEXT` ) ).
 
     ENDLOOP.

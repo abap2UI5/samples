@@ -68,11 +68,10 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
 
     DATA(lo_view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock`   v = `true`
-            )->a( n = `height`         v = `100%`
-            )->a( n = `xmlns`          v = `sap.m`
-            )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`     v = `sap.ui.core` ).
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
     DATA(page) = lo_view->ele( `Shell`
         )->ele( `Page`
@@ -107,7 +106,6 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
             )->a( n = `height`         v = `100%`
             )->a( n = `xmlns`          v = `sap.m`
             )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`     v = `sap.ui.core`
             )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1` ).
 
     lo_view_nested->ele( `Shell`
@@ -136,7 +134,7 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
                                 )->ele( `ObjectIdentifier`
                                     )->a( n = `text` v = `{= '{' + ${LO2>FNAME} + '}' }` ).
 
-    client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` ).
+    client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` method_destroy = `removeAllContent` ).
 
   ENDMETHOD.
 
