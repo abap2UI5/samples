@@ -50,10 +50,6 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      with:
-        # check out the branch, not the merge commit, so the badge can go back
-        ref: ${{ github.event.pull_request.head.ref || github.ref }}
-        repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
     - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: '22'
@@ -74,37 +70,41 @@ jobs:
       if: always()
       run: npx abap2ui5lint --no-render --advisory --no-progress --no-badge --format markdown >> "$GITHUB_STEP_SUMMARY"
 
-    # abap2ui5lint.jsonc points "badge" at .github/badges/abap2ui5.json (what
-    # the corpus is) and .github/badges/check-abap2ui5.json (what this gate
-    # made of it), so the step above already rewrote both with what the corpus
-    # now is. The default branch is protected and github-actions[bot] can
-    # never be added to a bypass list, so they are committed onto the PULL
-    # REQUEST branch - the pull request that changes the corpus is what
-    # changes the badges, and main picks them up when that pull request
-    # merges. Same mechanism as publish-overview-apps, including the fallback
-    # for refs that cannot be pushed to: there the stale badge is reported,
-    # never silently accepted. Only after a green gate: a red pull request
-    # cannot merge, so its badges would never reach main anyway - and a badge
-    # commit on top of a failing run reads as if something had been fixed
+    # The gate above rewrote .github/badges/ (abap2ui5lint.jsonc "badge"), and
+    # this step publishes those two files to the `badges` branch - an
+    # orphan branch that holds nothing else and is what the README badges
+    # read. Only on main: main is protected and github-actions[bot] cannot
+    # bypass that, and the old way round - committing the badges onto the
+    # pull request branch - started a second set of runs on that commit which
+    # waited for a maintainer's approval and left the pull request blocked.
+    # A pull request run publishes nothing; the run on main after the merge
+    # does. Only after a green gate, as before. A failed push (a ruleset on
+    # the branch) is a warning: the README then keeps showing the previous
+    # state rather than a wrong one.
     - name: Publish the badges
-      if: success()
-      env:
-        # only a same-repository pull request can be pushed to with
-        # GITHUB_TOKEN; on main and from a fork the badge is only reported
-        PUSHABLE: ${{ github.event_name == 'pull_request'
-                      && github.event.pull_request.head.repo.full_name == github.repository }}
+      if: success() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
       run: |
-        if git diff --quiet -- .github/badges; then
-          echo "The linter badges are up to date."
+        ls .github/badges/*.json >/dev/null 2>&1 || { echo "::warning::The gate wrote no badge files - nothing to publish."; exit 0; }
+        dir="$RUNNER_TEMP/badges"
+        if git ls-remote --exit-code --heads origin badges >/dev/null; then
+          git fetch -q --depth=1 origin badges
+          git worktree add -q "$dir" FETCH_HEAD
+          git -C "$dir" checkout -q -B badges
+        else
+          git worktree add -q --detach "$dir"
+          git -C "$dir" switch -q --orphan badges
+        fi
+        cp .github/badges/*.json "$dir/"
+        cd "$dir"
+        git add -A
+        if git diff --cached --quiet; then
+          echo "The badges branch is up to date."
           exit 0
         fi
-        git diff -- .github/badges
-        if [ "$PUSHABLE" != "true" ]; then
-          echo "::warning::The linter badges are out of date and this ref cannot be pushed to. Run 'npm run check:abap2ui5' and commit .github/badges/."
-          exit 0
+        git -c user.name='github-actions[bot]' -c user.email='github-actions[bot]@users.noreply.github.com' \
+          commit -qm "Badges for ${GITHUB_SHA::7}"
+        if git push -q origin badges; then
+          echo "Badges published to the badges branch."
+        else
+          echo "::warning::The badges could not be pushed to the badges branch - the README keeps showing the previous state."
         fi
-        git config user.name 'github-actions[bot]'
-        git config user.email 'github-actions[bot]@users.noreply.github.com'
-        git commit -qm 'Refresh the abap2UI5-linter badges' -- .github/badges
-        git push
-        echo "Badges refreshed and pushed onto the pull request branch."

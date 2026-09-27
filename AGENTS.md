@@ -1121,11 +1121,11 @@ By hand, because no script covers it:
   · n controls* is what is here, blue, a fact; *check-abap2UI5 | n rules
   passed* is what the gate made of it, green (or *n problems*, *n errors*,
   red). A run that finds nothing checkable turns both grey and says so. Every
-  run rewrites them, `check-abap2UI5` commits them onto the pull request
-  branch, and main picks them up when that pull request merges — so the counts
-  are what the last run actually checked. **A sample added or removed changes
-  these files**; commit them with the change (the workflow pushes them if you
-  forget, and reports it when it cannot).
+  run rewrites them locally, and they are not committed (`.gitignore`):
+  `check-abap2UI5` publishes them from main to the `badges` branch, which the
+  README reads, so the counts are what the last run on main actually checked.
+  A sample added or removed moves them with the first run after its merge —
+  nothing to commit, and no bot commit on the pull request.
 
 ### The scripts under `scripts/`
 

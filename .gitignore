@@ -1,3 +1,7 @@
 downport
 node_modules
 output
+
+# the linter's README badges: every run rewrites them, CI publishes them to
+# the `badges` branch - never committed here
+.github/badges/
