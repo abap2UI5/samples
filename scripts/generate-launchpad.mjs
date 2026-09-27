@@ -38,10 +38,10 @@ import { unsearchable, unrecognisable, halfDone } from './lib/search-lines.mjs';
 import { CHECK, writeOrCheck } from './lib/emit.mjs';
 
 /* `--check` renders exactly the same catalog and compares it instead of
- * writing it, so `npm run check` can hold what the publish-overview-apps
- * workflow holds without rewriting the tree while it does so. Same code path,
- * one branch at the end (lib/emit.mjs): a check that regenerated differently
- * from the generator would be worse than none. */
+ * writing it, so `npm run check` and the `catalogues` job of check-docs.yaml
+ * can hold the catalog to the tree without rewriting the tree while they do
+ * so. Same code path, one branch at the end (lib/emit.mjs): a check that
+ * regenerated differently from the generator would be worse than none. */
 
 // The one overview app, beside the samples it lists. A missing file is an
 // error, not something to skip, because it means the catalog stops being

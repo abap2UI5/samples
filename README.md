@@ -15,7 +15,6 @@
 [![check-keywords](https://github.com/abap2UI5/samples/actions/workflows/check-keywords.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-keywords.yaml)
 <br>
 [![publish-702](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml)
-[![publish-overview](https://github.com/abap2UI5/samples/actions/workflows/publish-overview-apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-overview-apps.yaml)
 
 # abap2UI5 — samples
 
