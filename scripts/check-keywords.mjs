@@ -12,10 +12,11 @@
  * rule and an enforced rule:
  *
  *  1. `npm run launchpad` REWRITES the tree, so it is not something `npm run
- *     check` can call and not something a pull request runs. The one workflow
- *     that does run it - publish-overview-apps - regenerates and PUSHES; a
- *     missing line surfaces there as a job that failed after the catalogue was
- *     already half rebuilt, which is a strange place to learn it.
+ *     check` can call and not something a pull request runs. What does run
+ *     is its `--check` twin (check:launchpad, the `catalogues` job of
+ *     check-docs.yaml), and a missing line surfaces there as a catalogue
+ *     that could not be compared - a gate about the overview app, not about
+ *     the class, which is a strange place to learn it.
  *  2. The generator only sees what becomes a TILE. A sample outside the
  *     catalogue carries both lines anyway - the cookbook links to some of
  *     them - and nothing checked that. It held for the fourteen experimental
