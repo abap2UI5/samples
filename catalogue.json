@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 121,
+  "samples": 122,
   "categories": 24,
   "stages": 6
  },
@@ -1940,6 +1940,26 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/inner_app"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_531",
+   "file": "src/z2ui5_cl_smp_app_531.clas.abap",
+   "category": "Navigation",
+   "stage": "move",
+   "title": "Navigation",
+   "description": "Page Transitions (view_display transition)",
+   "summary": "The next view arrives with a page transition - slide, baseSlide, fade, flip or show - and every way back plays it reversed: nav_app_leave, the browser Back button, an app's own Previous step.",
+   "keywords": [
+    "transition",
+    "animation",
+    "slide",
+    "fade",
+    "flip",
+    "navcontainer",
+    "transition_back",
+    "nav_app_leave"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_488",
