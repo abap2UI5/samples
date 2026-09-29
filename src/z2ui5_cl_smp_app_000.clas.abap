@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 121 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 122 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -844,6 +844,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Move through the app` header = `Hash` sub = `Routing Mode KEEP (Back to the State)` keywords = `routing mode keep navigation state preserved back nav_app_call` path = `src` app = `z2ui5_cl_smp_app_480` )
       ( group = `Move through the app` header = `Navigation` sub = `Call and Leave Apps (nav_app_call)` keywords = `nav_app_call nav_app_leave sub app stack call back` path = `src` app = `z2ui5_cl_smp_app_024` )
       ( group = `Move through the app` header = `Navigation` sub = `Data Loss Protection on Leaving (A,C)` keywords = `dirty unsaved changes leave confirmation warning` path = `src` app = `z2ui5_cl_smp_app_279` )
+      ( group = `Move through the app` header = `Navigation` sub = `Page Transitions (view_display transition)` keywords = `transition animation slide fade flip navcontainer transition_back nav_app_leave` path = `src` app = `z2ui5_cl_smp_app_531` )
       ( group = `Move through the app` header = `Navigation` sub = `Return Data and Events to the Caller` keywords = `r_data result get_app_prev return event payload` path = `src` app = `z2ui5_cl_smp_app_488` )
       ( group = `Move through the app` header = `Navigation` sub = `Uncaught Error and Error Popup` keywords = `exception dump error handling debugtool restart retry` path = `src` app = `z2ui5_cl_smp_app_464` )
       ( group = `Move through the app` header = `Nested View` sub = `Basic Example (nest_view_display)` keywords = `nest_view_display rerender model refresh sub view` path = `src` app = `z2ui5_cl_smp_app_065` )

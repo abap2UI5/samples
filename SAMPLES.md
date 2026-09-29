@@ -3,7 +3,7 @@
 
 # The sample catalogue
 
-Every app in this repository — 129 of them — with what it shows and a link
+Every app in this repository — 133 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
@@ -13,7 +13,7 @@ nothing in it is stripped from `702`.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 121 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 122 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -28,10 +28,10 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path
 
-The **121 ready-to-run samples** the README leads with, and the
+The **122 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
-one idea. With the 7 helper apps they call and the
-overview app itself, that is 129 apps on every branch.
+one idea. With the 10 helper apps they call and the
+overview app itself, that is 133 apps on every branch.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -198,6 +198,7 @@ overview app itself, that is 129 apps on every branch.
 |---|---|
 | Call and Leave Apps (nav_app_call)<br>Calling another app and coming back: nav_app_call puts the caller on a stack, nav_app_leave returns to it.<br><sub>nav_app_call nav_app_leave sub app stack call back</sub><br><sub>docs: [cookbook/event_navigation/navigation/inner_app](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/inner_app)</sub> | [`Z2UI5_CL_SMP_APP_024`](src/z2ui5_cl_smp_app_024.clas.abap) |
 | Data Loss Protection on Leaving (A,C)<br>Refuses to leave an app with unsaved changes: the confirmation popup in front of nav_app_leave, and how the dirty flag gets there.<br><sub>dirty unsaved changes leave confirmation warning</sub><br><sub>docs: [cookbook/event_navigation/navigation/inner_app](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/inner_app)</sub> | [`Z2UI5_CL_SMP_APP_279`](src/z2ui5_cl_smp_app_279.clas.abap) |
+| Page Transitions (view_display transition)<br>The next view arrives with a page transition - slide, baseSlide, fade, flip or show - and every way back plays it reversed: nav_app_leave, the browser Back button, an app's own Previous step.<br><sub>transition animation slide fade flip navcontainer transition_back nav_app_leave</sub> | [`Z2UI5_CL_SMP_APP_531`](src/z2ui5_cl_smp_app_531.clas.abap) |
 | Return Data and Events to the Caller<br>The way back carries data: the called app returns an event name and a payload (r_data) that the caller reads from get_app_prev.<br><sub>r_data result get_app_prev return event payload</sub><br><sub>docs: [cookbook/event_navigation/navigation/inner_app](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/inner_app)</sub> | [`Z2UI5_CL_SMP_APP_488`](src/z2ui5_cl_smp_app_488.clas.abap) |
 | Uncaught Error and Error Popup<br>What an uncaught exception looks like from the user's side - the error popup, and the way back into the app.<br><sub>exception dump error handling debugtool restart retry</sub><br><sub>docs: [cookbook/event_navigation/exception](https://abap2ui5.github.io/docs/cookbook/event_navigation/exception)</sub> | [`Z2UI5_CL_SMP_APP_464`](src/z2ui5_cl_smp_app_464.clas.abap) |
 
@@ -280,7 +281,7 @@ overview app itself, that is 129 apps on every branch.
 
 ## Helper apps
 
-7 classes that are only ever *called* by another sample — a
+10 classes that are only ever *called* by another sample — a
 sub-app, a data object, the other half of a navigation demo. Their short text
 starts with `ZZZ`, which is how the generator knows to give them no tile.
 Listed here so nothing in the tree is invisible; there is no point starting
@@ -290,6 +291,9 @@ one on its own.
 |---|---|
 | **ZZZ** — called by Hash Routing Mode FRESH and KEEP | [`Z2UI5_CL_SMP_APP_469`](src/z2ui5_cl_smp_app_469.clas.abap) |
 | **ZZZ** — called by Navigation Call and Leave Apps | [`Z2UI5_CL_SMP_APP_025`](src/z2ui5_cl_smp_app_025.clas.abap) |
+| **ZZZ** — called by Navigation Page Transitions, a popup app | [`Z2UI5_CL_SMP_APP_534`](src/z2ui5_cl_smp_app_534.clas.abap) |
+| **ZZZ** — called by Navigation Page Transitions, the page | [`Z2UI5_CL_SMP_APP_532`](src/z2ui5_cl_smp_app_532.clas.abap) |
+| **ZZZ** — called by Navigation Page Transitions, the wizard | [`Z2UI5_CL_SMP_APP_533`](src/z2ui5_cl_smp_app_533.clas.abap) |
 | **ZZZ** — called by Navigation Return Data and Events | [`Z2UI5_CL_SMP_APP_489`](src/z2ui5_cl_smp_app_489.clas.abap) |
 | **ZZZ** — called by Nested View Embed Another App, the form | [`Z2UI5_CL_SMP_APP_105`](src/z2ui5_cl_smp_app_105.clas.abap) |
 | **ZZZ** — called by Nested View Embed Another App, the list | [`Z2UI5_CL_SMP_APP_112`](src/z2ui5_cl_smp_app_112.clas.abap) |
