@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 122 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 124 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -788,6 +788,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         keywords = `facetfilter filter object marshalling selected items`
         intro = `The other direction: events arriving from the view, messages and message boxes going back, and the popups, popovers and menus that ask before something happens.`
         path = `src` app = `z2ui5_cl_smp_app_197` )
+      ( group = `Talk to the user` header = `Event` sub = `Custom Data Attached to Controls` keywords = `customdata data app namespace attach control list template t_arg` path = `src` app = `z2ui5_cl_smp_app_536` )
       ( group = `Talk to the user` header = `Event` sub = `Extra Arguments with t_arg` keywords = `argument parameter payload event data fixed value` path = `src` app = `z2ui5_cl_smp_app_167` )
       ( group = `Talk to the user` header = `Event` sub = `Keep the Last Keystroke with check_queue_last` keywords = `livechange keystroke queue busy roundtrip dropped event check_queue_last s_ctrl` path = `src` app = `z2ui5_cl_smp_app_511` )
       ( group = `Talk to the user` header = `Event` sub = `Keyboard Shortcuts, Ctrl+S (A)` keywords = `shortcut hotkey ctrl key combination keyboard_shortcut` path = `src` app = `z2ui5_cl_smp_app_471` )
@@ -885,6 +886,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Reach outside the view` header = `CSS` sub = `Color Table Cells from the Backend` keywords = `color background conditional formatting style data attribute` path = `src` app = `z2ui5_cl_smp_app_305` )
       ( group = `Reach outside the view` header = `CSS` sub = `FlexBox Layouts with Custom Classes` keywords = `flexbox layout responsive navigation tile panel` path = `src` app = `z2ui5_cl_smp_app_255` )
       ( group = `Reach outside the view` header = `CSS` sub = `Ship Your Own CSS with the View` keywords = `style stylesheet inline html class own design` path = `src` app = `z2ui5_cl_smp_app_050` )
+      ( group = `Reach outside the view` header = `CSS` sub = `Style by Data with CustomData writeToDom` keywords = `customdata writetodom data attribute selector marker test anchor` path = `src` app = `z2ui5_cl_smp_app_535` )
       ( group = `Reach outside the view` header = `Device` sub = `Camera, Take Photos (C)` keywords = `camera photo picture webcam capture facing mode` path = `src` app = `z2ui5_cl_smp_app_306` )
       ( group = `Reach outside the view` header = `Device` sub = `Device Model: Phone, Tablet, Desktop (A)` keywords = `sap.ui.device responsive orientation resize media model` path = `src` app = `z2ui5_cl_smp_app_445` )
       ( group = `Reach outside the view` header = `Device`
