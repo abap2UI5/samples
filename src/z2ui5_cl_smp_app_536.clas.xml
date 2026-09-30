@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_536</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Table - Copy Options of the CopyProvider (UI5 1.119+) (A)</DESCRIPT>
+    <DESCRIPT>Event - Custom Data Attached to Controls</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

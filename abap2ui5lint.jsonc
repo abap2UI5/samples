@@ -163,10 +163,10 @@
      * MessageStrip. Only the two VERSION rules are lifted, and only for these
      * classes - everything else is judged as for every sample. */
     "control-too-new": {
-      "exclude": ["z2ui5_cl_smp_app_(535|536)\\."]
+      "exclude": ["z2ui5_cl_smp_app_(538|539)\\."]
     },
     "member-too-new": {
-      "exclude": ["z2ui5_cl_smp_app_(535|536)\\."]
+      "exclude": ["z2ui5_cl_smp_app_(538|539)\\."]
     },
     "render-error": {
       "exclude": [

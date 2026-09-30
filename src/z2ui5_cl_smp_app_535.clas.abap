@@ -1,35 +1,24 @@
-" @keywords clipboard copy paste cellselector copyprovider pasteprovider excel spreadsheet grid control_by_id
-" @summary Spreadsheet-style copy and paste on a grid table: select a cell block and copy it, or paste rows from Excel into the table and let the backend append them - needs UI5 1.119 or newer.
+" @keywords customdata writetodom data attribute selector marker test anchor
+" @summary Writes bound values into the HTML DOM as data-* attributes with CustomData writeToDom, so a stylesheet colours controls by their data and tests find stable anchors.
 CLASS z2ui5_cl_smp_app_535 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_s_product,
-        product_id TYPE string,
-        name       TYPE string,
-        category   TYPE string,
-        price      TYPE string,
-        currency   TYPE string,
-      END OF ty_s_product.
-    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
+      BEGIN OF ty_s_order,
+        id      TYPE string,
+        product TYPE string,
+        status  TYPE string,
+      END OF ty_s_order.
+    DATA status   TYPE string.
+    DATA t_orders TYPE STANDARD TABLE OF ty_s_order WITH EMPTY KEY.
 
   PROTECTED SECTION.
-    TYPES ty_t_rows TYPE STANDARD TABLE OF string_table WITH EMPTY KEY.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS on_event.
-    METHODS on_event_paste.
     METHODS view_display.
-
-    METHODS pasted_rows
-      IMPORTING
-        json          TYPE string
-      RETURNING
-        VALUE(result) TYPE ty_t_rows.
+    METHODS status_next.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -40,111 +29,33 @@ CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
+
     IF client->check_on_init( ).
-      on_init( ).
+
+      status   = `new`.
+      t_orders = VALUE #(
+          ( id = `4711` product = `Notebook`   status = `new` )
+          ( id = `4712` product = `Monitor`    status = `shipped` )
+          ( id = `4713` product = `Keyboard`   status = `delayed` )
+          ( id = `4714` product = `Mouse`      status = `shipped` )
+          ( id = `4715` product = `Headset`    status = `delayed` ) ).
+      view_display( ).
+
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-    ELSEIF client->check_on_event( ).
-      on_event( ).
+    ELSEIF client->check_on_event( `NEXT` ).
+      status_next( ).
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD on_init.
+  METHOD status_next.
 
-    t_products = VALUE #(
-        ( product_id = `HT-1000` name = `Notebook Basic 15`        category = `Laptops`      price = `956.00`  currency = `EUR` )
-        ( product_id = `HT-1001` name = `Notebook Basic 17`        category = `Laptops`      price = `1249.00` currency = `EUR` )
-        ( product_id = `HT-1010` name = `Notebook Professional 15` category = `Laptops`      price = `1999.00` currency = `EUR` )
-        ( product_id = `HT-1030` name = `Ergo Screen E-I`          category = `Flat Screens` price = `230.00`  currency = `EUR` )
-        ( product_id = `HT-1040` name = `Laser Professional Eco`   category = `Printers`     price = `830.00`  currency = `EUR` )
-        ( product_id = `HT-1063` name = `Ergonomic Keyboard`       category = `Keyboards`    price = `14.00`   currency = `EUR` )
-        ( product_id = `HT-1070` name = `Photo Scan`               category = `Scanners`     price = `129.00`  currency = `EUR` ) ).
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `COPY`.
-        " the CopyProvider's copy event - fired before the clipboard is written
-        client->message_toast_display( `Selection copied to the clipboard` ).
-      WHEN `PASTE`.
-        on_event_paste( ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD on_event_paste.
-
-    " the pasted rows arrive in the backend, which decides what they mean -
-    " here: the cells, in column order, become new products
-    DATA(rows) = pasted_rows( client->get_event_arg( ) ).
-
-    LOOP AT rows INTO DATA(cells).
-      INSERT VALUE #( product_id = VALUE #( cells[ 1 ] OPTIONAL )
-                      name       = VALUE #( cells[ 2 ] OPTIONAL )
-                      category   = VALUE #( cells[ 3 ] OPTIONAL )
-                      price      = VALUE #( cells[ 4 ] OPTIONAL )
-                      currency   = VALUE #( cells[ 5 ] OPTIONAL ) ) INTO TABLE t_products.
-    ENDLOOP.
-
-    client->message_toast_display( |{ lines( rows ) } row(s) pasted and appended| ).
-
-  ENDMETHOD.
-
-
-  METHOD pasted_rows.
-
-    " the paste event's data parameter is string[][], so it reaches the
-    " backend as JSON: [["HT-2000","Tablet"],["HT-2001","Phone"]]. One pass
-    " over it - an opening quote starts a cell, a closing one ends it, and a
-    " bracket that closes the second level ends a row.
-    DATA row       TYPE string_table.
-    DATA cell      TYPE string.
-    DATA depth     TYPE i.
-    DATA in_string TYPE abap_bool.
-    DATA escaped   TYPE abap_bool.
-
-    DO strlen( json ) TIMES.
-      DATA(char) = substring( val = json
-                              off = sy-index - 1
-                              len = 1 ).
-
-      IF in_string = abap_true.
-
-        IF escaped = abap_true.
-          cell    = |{ cell }{ char }|.
-          escaped = abap_false.
-        ELSEIF char = `\`.
-          escaped = abap_true.
-        ELSEIF char = `"`.
-          INSERT cell INTO TABLE row.
-          cell      = ``.
-          in_string = abap_false.
-        ELSE.
-          cell = |{ cell }{ char }|.
-        ENDIF.
-
-      ELSEIF char = `"`.
-        in_string = abap_true.
-      ELSEIF char = `[`.
-        depth = depth + 1.
-      ELSEIF char = `]`.
-
-        IF depth = 2.
-          INSERT row INTO TABLE result.
-          row = VALUE #( ).
-        ENDIF.
-        depth = depth - 1.
-
-      ENDIF.
-    ENDDO.
+    status = SWITCH #( status
+        WHEN `new`     THEN `shipped`
+        WHEN `shipped` THEN `delayed`
+        ELSE `new` ).
 
   ENDMETHOD.
 
@@ -153,119 +64,148 @@ CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock`  v = `true`
-            )->a( n = `height`        v = `100%`
-            )->a( n = `xmlns`         v = `sap.m`
-            )->a( n = `xmlns:mvc`     v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`    v = `sap.ui.core`
-            )->a( n = `xmlns:table`   v = `sap.ui.table`
-            )->a( n = `xmlns:plugins` v = `sap.m.plugins`
-            )->a( n = `xmlns:app`     v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1`
-            " the CopyProvider's extractData callback ships with the framework
-            )->a( n = `core:require`  v = `{Clipboard: 'z2ui5/model/clipboard'}` ).
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core` ).
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Grid Table - Copy & Paste, CellSelector (UI5 1.119+)`
+            )->a( n = `title`          v = `abap2UI5 - CSS - Style by Data with CustomData writeToDom`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Drag over the cells to select a block, then press Copy or Ctrl+C - the CopyProvider writes ` &&
-                   `it to the clipboard, as text for a spreadsheet. Copy a few rows in Excel and press Paste or ` &&
-                   `Ctrl+V on the table: the rows travel to the backend, which appends them. Needs UI5 1.119 or newer.`
+        )->a( n = `text`     v = `A core:CustomData with writeToDom="true" writes its key and value as a data-* attribute on the ` &&
+                   `root element of its control. A stylesheet selects on that attribute to style controls by their data, ` &&
+                   `and automated tests use it as a stable anchor that does not depend on generated IDs.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(table) = page->ele( n = `Table` ns = `table`
-        )->a( n = `id`              v = `products`
-        )->a( n = `rows`            v = client->_bind( t_products )
-        )->a( n = `visibleRowCount` v = `8`
-        )->a( n = `selectionMode`   v = `MultiToggle`
-        )->a( n = `class`           v = `sapUiSmallMargin`
-        )->a( n = `paste`           v = client->_event( val = `PASTE` arg = `${$parameters>/data}` ) ).
+    " raw markup travels in the content attribute of a core:HTML leaf - the
+    " builder re-escapes it on stringify, so the literal markup is written here.
+    " Every rule selects on a data-* attribute, which exists only because the
+    " CustomData elements below carry writeToDom="true". The first rule is the
+    " one of the UI5 documentation, word for word
+    page->tag( n = `HTML` ns = `core`
+        )->a( n = `content` v = `<style>` && |\n| &&
+                         `button[data-mydata="Hello"] \{ border: 3px solid red !important; \}` && |\n| &&
+                         `.sapMBtn[data-status="new"] .sapMBtnInner \{ background-color: #d1e8ff; \}` && |\n| &&
+                         `.sapMBtn[data-status="shipped"] .sapMBtnInner \{ background-color: #c8f0c8; \}` && |\n| &&
+                         `.sapMBtn[data-status="delayed"] .sapMBtnInner \{ background-color: #ffd6d6; \}` && |\n| &&
+                         `.sapMListTblRow[data-status="shipped"] \{ background-color: #eefaee; \}` && |\n| &&
+                         `.sapMListTblRow[data-status="delayed"] \{ background-color: #fff0f0; \}` && |\n| &&
+                         `</style>` ).
 
-    table->ele( n = `dependents` ns = `table`
-        )->tag( n = `CellSelector` ns = `plugins`
-        )->tag( n = `CopyProvider` ns = `plugins`
-            )->a( n = `id`          v = `copyProvider`
-            )->a( n = `extractData` v = `Clipboard.extractData`
-            )->a( n = `copy`        v = client->_event( `COPY` ) ).
+    " writeToDom needs the expanded notation: the app:key="value" shortcut
+    " creates a CustomData without the flag, so nothing reaches the DOM. The
+    " key must be a valid HTML ID - keep it lower case, browsers may lower it
+    page->ele( `Panel`
+        )->a( n = `headerText` v = `A static value - the example of the documentation`
+        )->a( n = `class`      v = `sapUiResponsiveMargin`
+        )->a( n = `width`      v = `auto`
+        )->ele( `Button`
+            )->a( n = `text` v = `Renders as <button data-mydata="Hello" ...>`
+            )->ele( `customData`
+                )->tag( n = `CustomData` ns = `core`
+                    )->a( n = `key`        v = `mydata`
+                    )->a( n = `value`      v = `Hello`
+                    )->a( n = `writeToDom` b = abap_true ).
 
-    table->ele( n = `extension` ns = `table`
-        )->ele( `OverflowToolbar`
-            )->tag( `Title`
-                )->a( n = `text` v = `Products`
-            )->tag( `ToolbarSpacer`
-            " the copy has to run inside the click - the browser only lets a
-            " user gesture write the clipboard - so no roundtrip: a frontend
-            " action calls copySelectionData on the plugin directly
-            )->tag( `OverflowToolbarButton`
-                )->a( n = `icon`    v = `sap-icon://copy`
-                )->a( n = `text`    v = `Copy`
-                )->a( n = `tooltip` v = `Copy`
-                )->a( n = `press`   v = client->follow_up_action( val   = client->cs_event-control_by_id
-                                                                  t_arg = VALUE #( ( `copyProvider` ) ( `copySelectionData` ) ( `X` ) ) )
+    DATA(panel) = page->ele( `Panel`
+        )->a( n = `headerText` v = `Data-dependent styling`
+        )->a( n = `class`      v = `sapUiResponsiveMargin`
+        )->a( n = `width`      v = `auto` ).
 
-            " the PasteProvider turns this button into a paste button for the table
-            )->ele( `Button`
-                )->ele( `dependents`
-                    )->tag( n = `PasteProvider` ns = `plugins`
-                        )->a( n = `pasteFor` v = `products` ).
+    panel->tag( `Text`
+        )->a( n = `text`  v = `Pick a status: the selection changes the bound value in the browser, the data-status attribute ` &&
+                   `follows the binding and the button recolours without a roundtrip. Next Status changes it in the backend.`
+        )->a( n = `class` v = `sapUiSmallMarginBottom` ).
 
-    " app:bindings names what a column copies - the clipboard module reads
-    " it, one clipboard cell per path
-    table->ele( n = `columns` ns = `table`
-        )->ele( n = `Column` ns = `table`
-            )->a( n = `app:bindings` v = `PRODUCT_ID`
-            )->tag( `Label`
-                )->a( n = `text` v = `Product ID`
-            )->ele( n = `template` ns = `table`
-                )->tag( `Text`
-                    )->a( n = `text` v = `{PRODUCT_ID}`
-
+    " writeToDom only writes a string value - any other type is skipped and logged
+    panel->ele( `HBox`
+        )->a( n = `alignItems` v = `Center`
+        )->ele( `SegmentedButton`
+            )->a( n = `selectedKey` v = client->_bind( status )
+            )->a( n = `class`       v = `sapUiSmallMarginEnd`
+            )->ele( `items`
+                )->tag( `SegmentedButtonItem`
+                    )->a( n = `key`  v = `new`
+                    )->a( n = `text` v = `New`
+                )->tag( `SegmentedButtonItem`
+                    )->a( n = `key`  v = `shipped`
+                    )->a( n = `text` v = `Shipped`
+                )->tag( `SegmentedButtonItem`
+                    )->a( n = `key`  v = `delayed`
+                    )->a( n = `text` v = `Delayed`
             )->end(
         )->end(
-        )->ele( n = `Column` ns = `table`
-            )->a( n = `app:bindings` v = `NAME`
-            )->tag( `Label`
-                )->a( n = `text` v = `Name`
-            )->ele( n = `template` ns = `table`
-                )->tag( `Text`
-                    )->a( n = `text` v = `{NAME}`
-
+        )->ele( `Button`
+            )->a( n = `text`  v = `Order 4711`
+            )->a( n = `class` v = `sapUiSmallMarginEnd`
+            )->ele( `customData`
+                )->tag( n = `CustomData` ns = `core`
+                    )->a( n = `key`        v = `status`
+                    )->a( n = `value`      v = client->_bind( status )
+                    )->a( n = `writeToDom` b = abap_true
             )->end(
         )->end(
-        )->ele( n = `Column` ns = `table`
-            )->a( n = `app:bindings` v = `CATEGORY`
-            )->tag( `Label`
-                )->a( n = `text` v = `Category`
-            )->ele( n = `template` ns = `table`
-                )->tag( `Text`
-                    )->a( n = `text` v = `{CATEGORY}`
+        )->tag( `Button`
+            )->a( n = `text`  v = `Next Status`
+            )->a( n = `icon`  v = `sap-icon://process`
+            )->a( n = `press` v = client->_event( `NEXT` ) ).
 
-            )->end(
-        )->end(
-        )->ele( n = `Column` ns = `table`
-            )->a( n = `app:bindings` v = `PRICE`
-            )->tag( `Label`
-                )->a( n = `text` v = `Price`
-            )->ele( n = `template` ns = `table`
-                )->tag( `Text`
-                    )->a( n = `text` v = `{PRICE}`
+    panel->tag( `Text`
+        )->a( n = `text`  v = `The button renders as <button data-status="` && client->_bind( status ) && `" class="sapMBtn ...">`
+        )->a( n = `class` v = `sapUiSmallMarginTop` ).
 
-            )->end(
-        )->end(
-        )->ele( n = `Column` ns = `table`
-            )->a( n = `app:bindings` v = `CURRENCY`
-            )->tag( `Label`
-                )->a( n = `text` v = `Currency`
-            )->ele( n = `template` ns = `table`
-                )->tag( `Text`
-                    )->a( n = `text` v = `{CURRENCY}`
-
+    DATA(tab) = page->ele( `Table`
+        )->a( n = `items` v = client->_bind( t_orders )
+        )->a( n = `class` v = `sapUiResponsiveMargin`
+        )->a( n = `width` v = `auto`
+        )->ele( `headerToolbar`
+            )->ele( `OverflowToolbar`
+                )->tag( `Title`
+                    )->a( n = `text` v = `Stable anchors - every row carries data-status and data-testid`
             )->end(
         )->end( ).
+
+    tab->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Order`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Product`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Status`
+        )->end( ).
+
+    " a test selects tr[data-testid="order-4711"] instead of a generated ID
+    " like __item3-__clone7, which changes whenever the table is rebuilt
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `customData`
+                )->tag( n = `CustomData` ns = `core`
+                    )->a( n = `key`        v = `status`
+                    )->a( n = `value`      v = `{STATUS}`
+                    )->a( n = `writeToDom` b = abap_true
+                )->tag( n = `CustomData` ns = `core`
+                    )->a( n = `key`        v = `testid`
+                    )->a( n = `value`      v = `order-{ID}`
+                    )->a( n = `writeToDom` b = abap_true
+            )->end(
+            )->ele( `cells`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{ID}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{PRODUCT}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{STATUS}` ).
 
     client->view_display( view->stringify( ) ).
 

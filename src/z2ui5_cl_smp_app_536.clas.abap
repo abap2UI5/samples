@@ -1,35 +1,24 @@
-" @keywords clipboard copy cellselector copyprovider copysparse copypreference template spreadsheet control_by_id
-" @summary The CopyProvider's options on a responsive table: several fields per column with a text/html template, sparse copying, cells or full rows - paste the result below to see what the clipboard holds. Needs UI5 1.119+.
+" @keywords customdata data app namespace attach control list template t_arg
+" @summary Attaches data objects to controls - with the app: namespace shortcut, bound or static, and as a CustomData template in a list binding - and reads them back with data( ) when an event fires.
 CLASS z2ui5_cl_smp_app_536 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_s_product,
-        product_id TYPE string,
-        name       TYPE string,
-        supplier   TYPE string,
-        quantity   TYPE string,
-        uom        TYPE string,
-        price      TYPE string,
-        currency   TYPE string,
-      END OF ty_s_product.
-    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
-
-    " the CopyProvider's options, bound - a change needs no roundtrip
-    DATA copy_sparse     TYPE abap_bool.
-    DATA copy_preference TYPE string.
-
-    " whatever the user pastes into the text area
-    DATA clipboard_text TYPE string.
+      BEGIN OF ty_s_question,
+        question TYPE string,
+        answer   TYPE string,
+      END OF ty_s_question.
+    DATA coords      TYPE string.
+    DATA answer      TYPE string.
+    DATA t_questions TYPE STANDARD TABLE OF ty_s_question WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -40,47 +29,49 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
+
     IF client->check_on_init( ).
-      on_init( ).
+
+      coords      = `49.29, 8.64`.
+      t_questions = VALUE #(
+          ( question = `What does data( ) return without a key?`
+            answer   = `A plain object that holds all custom data of the control.` )
+          ( question = `Which namespace makes the attribute shortcut work?`
+            answer   = `http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1` )
+          ( question = `Can the value of a custom data be bound?`
+            answer   = `Yes - it is a normal property and follows its binding like any other.` ) ).
+      view_display( ).
+
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-    ELSEIF client->check_on_event( `INSPECT` ).
+    ELSE.
       on_event( ).
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD on_init.
-
-    copy_preference = `Cells`.
-    t_products = VALUE #(
-        ( product_id = `HT-1000` name = `Notebook Basic 15`        supplier = `Very Best Screens` quantity = `10` uom = `PC` price = `956.00`  currency = `EUR` )
-        ( product_id = `HT-1001` name = `Notebook Basic 17`        supplier = `Very Best Screens` quantity = `20` uom = `PC` price = `1249.00` currency = `EUR` )
-        ( product_id = `HT-1007` name = `ITelO Vault`              supplier = `Technocom`         quantity = `15` uom = `PC` price = `299.00`  currency = `EUR` )
-        ( product_id = `HT-1010` name = `Notebook Professional 15` supplier = `Very Best Screens` quantity = `16` uom = `PC` price = `1999.00` currency = `EUR` )
-        ( product_id = `HT-1063` name = `Ergonomic Keyboard`       supplier = `Titanium`          quantity = `50` uom = `PC` price = `14.00`   currency = `EUR` )
-        ( product_id = `HT-1070` name = `Photo Scan`               supplier = `Red Point Stores`  quantity = `8`  uom = `PC` price = `129.00`  currency = `EUR` ) ).
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
   METHOD on_event.
 
-    " the clipboard's text format is a spreadsheet's: a tab between two
-    " cells, a line break between two rows
-    SPLIT clipboard_text AT cl_abap_char_utilities=>newline INTO TABLE DATA(t_line).
-    DELETE t_line WHERE table_line IS INITIAL.
+    CASE abap_true.
 
-    DATA(cells) = 0.
-    LOOP AT t_line INTO DATA(line).
-      SPLIT line AT cl_abap_char_utilities=>horizontal_tab INTO TABLE DATA(t_cell).
-      cells = cells + lines( t_cell ).
-    ENDLOOP.
+      WHEN client->check_on_event( `STATIC` ).
+        client->message_toast_display( |data( "mySuperExtraData" ) = { client->get_event_arg( ) }| ).
 
-    client->message_toast_display( |{ lines( t_line ) } row(s) with { cells } cell(s) arrived in the backend| ).
+      WHEN client->check_on_event( `BOUND` ).
+        client->message_toast_display( |data( "coords" ) = { client->get_event_arg( ) }| ).
+
+      WHEN client->check_on_event( `ALL` ).
+        " data( ) without a key answers a plain object - an object argument
+        " reaches the backend as its JSON text
+        client->message_toast_display( |data( ) = { client->get_event_arg( ) }| ).
+
+      WHEN client->check_on_event( `SELECT` ).
+        " the answer is not looked up in t_questions - it arrives as the
+        " custom data of the list item the user selected
+        answer = client->get_event_arg( ).
+
+    ENDCASE.
 
   ENDMETHOD.
 
@@ -89,132 +80,82 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock`  v = `true`
-            )->a( n = `height`        v = `100%`
-            )->a( n = `xmlns`         v = `sap.m`
-            )->a( n = `xmlns:mvc`     v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`    v = `sap.ui.core`
-            )->a( n = `xmlns:plugins` v = `sap.m.plugins`
-            )->a( n = `xmlns:app`     v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1`
-            " the CopyProvider's extractData callback ships with the framework
-            )->a( n = `core:require`  v = `{Clipboard: 'z2ui5/model/clipboard'}` ).
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:app`    v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1` ).
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Table - Copy Options of the CopyProvider (UI5 1.119+)`
+            )->a( n = `title`          v = `abap2UI5 - Event - Custom Data Attached to Controls`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Select rows or drag over cells, press Copy and paste into the text area below. Each ` &&
-                   `column copies the fields its app:bindings names, one clipboard cell each - app:template is the ` &&
-                   `formatted variant a spreadsheet shows. Sparse keeps the gaps between selected rows, Full copies ` &&
-                   `whole rows. Needs UI5 1.119 or newer.`
+        )->a( n = `text`     v = `Every control can carry data objects of its own with data( ). In an XML view they are written as ` &&
+                   `app:key="value" attributes or as core:CustomData elements, statically or bound, and an event ` &&
+                   `argument reads them back with data( 'key' ) when the control fires.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(table) = page->ele( `Table`
-        )->a( n = `id`    v = `products`
-        )->a( n = `mode`  v = `MultiSelect`
-        )->a( n = `items` v = client->_bind( t_products )
-        )->a( n = `class` v = `sapUiSmallMargin` ).
+    " app:key="value" is the shortcut for a core:CustomData element in the
+    " customData aggregation - it needs the xmlns:app namespace declared above.
+    " The backend SETS custom data through the binding (app:coords follows the
+    " input), and reads it back with data( ) as an event argument. Writing it
+    " into the HTML DOM as a data-* attribute is Z2UI5_CL_SMP_APP_535
+    DATA(panel) = page->ele( `Panel`
+        )->a( n = `headerText` v = `The app: namespace shortcut`
+        )->a( n = `class`      v = `sapUiResponsiveMargin`
+        )->a( n = `width`      v = `auto` ).
 
-    table->ele( `dependents`
-        )->tag( n = `CellSelector` ns = `plugins`
-        )->tag( n = `CopyProvider` ns = `plugins`
-            )->a( n = `id`             v = `copyProvider`
-            )->a( n = `extractData`    v = `Clipboard.extractData`
-            )->a( n = `copySparse`     v = client->_bind( copy_sparse )
-            )->a( n = `copyPreference` v = client->_bind( copy_preference ) ).
+    panel->ele( `HBox`
+        )->a( n = `alignItems` v = `Center`
+        )->tag( `Button`
+            )->a( n = `text`                 v = `Without Binding`
+            )->a( n = `class`                v = `sapUiSmallMarginEnd`
+            )->a( n = `app:mySuperExtraData` v = `just great`
+            )->a( n = `press`                v = client->_event( val = `STATIC`
+                                                                 arg = `$event.getSource().data('mySuperExtraData')` )
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( coords )
+            )->a( n = `width` v = `12rem`
+            )->a( n = `class` v = `sapUiSmallMarginEnd`
+        )->tag( `Button`
+            )->a( n = `text`       v = `With Binding`
+            )->a( n = `class`      v = `sapUiSmallMarginEnd`
+            )->a( n = `app:coords` v = client->_bind( coords )
+            )->a( n = `press`      v = client->_event( val = `BOUND`
+                                                       arg = `$event.getSource().data('coords')` )
+        )->tag( `Button`
+            )->a( n = `text`                 v = `All Custom Data`
+            )->a( n = `app:myData`           v = `Hello`
+            )->a( n = `app:mySuperExtraData` v = `just great`
+            )->a( n = `press`                v = client->_event( val = `ALL`
+                                                                 arg = `$event.getSource().data()` ) ).
 
-    table->ele( `headerToolbar`
-        )->ele( `OverflowToolbar`
-            )->tag( `Title`
-                )->a( n = `text` v = `Products`
-            )->tag( `ToolbarSpacer`
-            )->tag( `Label`
-                )->a( n = `text` v = `Sparse`
-            )->tag( `Switch`
-                )->a( n = `state` v = client->_bind( copy_sparse )
-            )->ele( `SegmentedButton`
-                )->a( n = `selectedKey` v = client->_bind( copy_preference )
-                )->ele( `items`
-                    )->tag( `SegmentedButtonItem`
-                        )->a( n = `key`  v = `Cells`
-                        )->a( n = `text` v = `Cells`
-                    )->tag( `SegmentedButtonItem`
-                        )->a( n = `key`  v = `Full`
-                        )->a( n = `text` v = `Full Rows`
+    " a core:CustomData in the item template is cloned for every row, and its
+    " value binding resolves against that row - so each item carries its answer
+    DATA(list) = page->ele( `List`
+        )->a( n = `headerText`      v = `CustomData in a list binding - select a question`
+        )->a( n = `mode`            v = `SingleSelectMaster`
+        )->a( n = `items`           v = client->_bind( t_questions )
+        )->a( n = `class`           v = `sapUiResponsiveMargin`
+        )->a( n = `width`           v = `auto`
+        )->a( n = `selectionChange` v = client->_event( val = `SELECT`
+                                                        arg = `${$parameters>/listItem}.data('answer')` ) ).
 
-                )->end(
-            )->end(
-            " the copy has to run inside the click - the browser only lets a
-            " user gesture write the clipboard - so no roundtrip: a frontend
-            " action calls copySelectionData on the plugin directly
-            )->tag( `OverflowToolbarButton`
-                )->a( n = `icon`    v = `sap-icon://copy`
-                )->a( n = `text`    v = `Copy`
-                )->a( n = `tooltip` v = `Copy`
-                )->a( n = `press`   v = client->follow_up_action( val   = client->cs_event-control_by_id
-                                                                  t_arg = VALUE #( ( `copyProvider` ) ( `copySelectionData` ) ( `X` ) ) ) ).
+    list->ele( `StandardListItem`
+        )->a( n = `title` v = `{QUESTION}`
+        )->ele( `customData`
+            )->tag( n = `CustomData` ns = `core`
+                )->a( n = `key`   v = `answer`
+                )->a( n = `value` v = `{ANSWER}` ).
 
-    " several fields per column: app:bindings lists them, app:template is
-    " the formatted text/html variant (a formatMessage pattern)
-    table->ele( `columns`
-        )->ele( `Column`
-            )->a( n = `app:bindings` v = `NAME,PRODUCT_ID`
-            )->a( n = `app:template` v = `\{0\} (\{1\})`
-            )->tag( `Text`
-                )->a( n = `text` v = `Product`
-
-        )->end(
-        )->ele( `Column`
-            )->a( n = `app:bindings` v = `SUPPLIER`
-            )->tag( `Text`
-                )->a( n = `text` v = `Supplier`
-
-        )->end(
-        )->ele( `Column`
-            )->a( n = `hAlign`       v = `End`
-            )->a( n = `app:bindings` v = `QUANTITY,UOM`
-            )->a( n = `app:template` v = `\{0\} \{1\}`
-            )->tag( `Text`
-                )->a( n = `text` v = `Quantity`
-
-        )->end(
-        )->ele( `Column`
-            )->a( n = `hAlign`       v = `End`
-            )->a( n = `app:bindings` v = `PRICE,CURRENCY`
-            )->a( n = `app:template` v = `\{0\} \{1\}`
-            )->tag( `Text`
-                )->a( n = `text` v = `Price` ).
-
-    table->ele( `items`
-        )->ele( `ColumnListItem`
-            )->ele( `cells`
-                )->tag( `ObjectIdentifier`
-                    )->a( n = `title` v = `{NAME}`
-                    )->a( n = `text`  v = `{PRODUCT_ID}`
-                )->tag( `Text`
-                    )->a( n = `text` v = `{SUPPLIER}`
-                )->tag( `ObjectNumber`
-                    )->a( n = `number` v = `{QUANTITY}`
-                    )->a( n = `unit`   v = `{UOM}`
-                )->tag( `ObjectNumber`
-                    )->a( n = `number` v = `{PRICE}`
-                    )->a( n = `unit`   v = `{CURRENCY}` ).
-
-    DATA(inspect) = page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin` ).
-    inspect->tag( `TextArea`
-        )->a( n = `value`       v = client->_bind( clipboard_text )
-        )->a( n = `rows`        v = `6`
-        )->a( n = `width`       v = `100%`
-        )->a( n = `placeholder` v = `Paste here (Ctrl+V) to see what the clipboard holds` ).
-    inspect->tag( `Button`
-        )->a( n = `text`  v = `Send to the Backend`
-        )->a( n = `icon`  v = `sap-icon://upload`
-        )->a( n = `press` v = client->_event( `INSPECT` ) ).
+    page->tag( `Text`
+        )->a( n = `text`  v = `Answer read from the selected item: ` && client->_bind( answer )
+        )->a( n = `class` v = `sapUiResponsiveMargin` ).
 
     client->view_display( view->stringify( ) ).
 

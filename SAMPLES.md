@@ -3,7 +3,7 @@
 
 # The sample catalogue
 
-Every app in this repository — 135 of them — with what it shows and a link
+Every app in this repository — 138 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
@@ -13,7 +13,7 @@ nothing in it is stripped from `702`.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 124 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 127 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -28,10 +28,10 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path
 
-The **124 ready-to-run samples** the README leads with, and the
+The **127 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 10 helper apps they call and the
-overview app itself, that is 135 apps on every branch.
+overview app itself, that is 138 apps on every branch.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -99,6 +99,7 @@ overview app itself, that is 135 apps on every branch.
 | Color Table Cells from the Backend<br>Colours single table cells from the backend: the row carries its colour as custom data and a stylesheet turns it into a background.<br><sub>color background conditional formatting style data attribute</sub> | [`Z2UI5_CL_SMP_APP_305`](src/z2ui5_cl_smp_app_305.clas.abap) |
 | FlexBox Layouts with Custom Classes<br>Lays a page out with FlexBox and custom CSS classes - tiles, panels and a QuickView popover, all from the view chain.<br><sub>flexbox layout responsive navigation tile panel</sub><br><sub>docs: [cookbook/view/definition](https://abap2ui5.github.io/docs/cookbook/view/definition)</sub> | [`Z2UI5_CL_SMP_APP_255`](src/z2ui5_cl_smp_app_255.clas.abap) |
 | Ship Your Own CSS with the View<br>Ships a stylesheet with the view, so an app can carry its own design without a change to the UI5 theme.<br><sub>style stylesheet inline html class own design</sub><br><sub>docs: [cookbook/view/definition](https://abap2ui5.github.io/docs/cookbook/view/definition)</sub> | [`Z2UI5_CL_SMP_APP_050`](src/z2ui5_cl_smp_app_050.clas.abap) |
+| Style by Data with CustomData writeToDom<br>Writes bound values into the HTML DOM as data-* attributes with CustomData writeToDom, so a stylesheet colours controls by their data and tests find stable anchors.<br><sub>customdata writetodom data attribute selector marker test anchor</sub> | [`Z2UI5_CL_SMP_APP_535`](src/z2ui5_cl_smp_app_535.clas.abap) |
 
 ### Device
 
@@ -114,6 +115,8 @@ overview app itself, that is 135 apps on every branch.
 | Sample | Class |
 |---|---|
 | Control Objects in t_arg (FacetFilter)<br>Passes whole control objects to the backend in t_arg: a FacetFilter's selected items arrive as data instead of being reconstructed by hand.<br><sub>facetfilter filter object marshalling selected items</sub><br><sub>docs: [cookbook/event_navigation/backend](https://abap2ui5.github.io/docs/cookbook/event_navigation/backend)</sub> | [`Z2UI5_CL_SMP_APP_197`](src/z2ui5_cl_smp_app_197.clas.abap) |
+| Custom Data Attached to Controls<br>Attaches data objects to controls - with the app: namespace shortcut, bound or static, and as a CustomData template in a list binding - and reads them back with data( ) when an event fires.<br><sub>customdata data app namespace attach control list template t_arg</sub> | [`Z2UI5_CL_SMP_APP_536`](src/z2ui5_cl_smp_app_536.clas.abap) |
+| Expressions, Formatters and Literals in t_arg<br>What an event argument can compute in the browser before it is sent - an expression over the pressed row, a formatter's result, a comparison, an object literal - and what each one arrives as in ABAP.<br><sub>argument expression formatter object literal row context t_arg require</sub> | [`Z2UI5_CL_SMP_APP_537`](src/z2ui5_cl_smp_app_537.clas.abap) |
 | Extra Arguments with t_arg<br>Sends extra arguments with an event (t_arg), so a handler knows which row, which value or which fixed payload it was called for.<br><sub>argument parameter payload event data fixed value</sub><br><sub>docs: [cookbook/event_navigation/backend](https://abap2ui5.github.io/docs/cookbook/event_navigation/backend), [tutorials/walkthrough/step-6](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-6)</sub> | [`Z2UI5_CL_SMP_APP_167`](src/z2ui5_cl_smp_app_167.clas.abap) |
 | Keep the Last Keystroke with check_queue_last<br>Two identical liveChange wires side by side: the plain one drops every keystroke typed while a round-trip runs, the one registered with check_queue_last keeps the last of them, so the backend ends on what you typed.<br><sub>livechange keystroke queue busy roundtrip dropped event check_queue_last s_ctrl</sub> | [`Z2UI5_CL_SMP_APP_511`](src/z2ui5_cl_smp_app_511.clas.abap) |
 | Keyboard Shortcuts, Ctrl+S (A)<br>Binds keyboard shortcuts such as Ctrl+S to backend events, so the app answers a key combination the way a desktop program would.<br><sub>shortcut hotkey ctrl key combination keyboard_shortcut</sub><br><sub>docs: [cookbook/browser_interaction/keyboard_shortcuts](https://abap2ui5.github.io/docs/cookbook/browser_interaction/keyboard_shortcuts)</sub> | [`Z2UI5_CL_SMP_APP_471`](src/z2ui5_cl_smp_app_471.clas.abap) |
@@ -151,7 +154,7 @@ overview app itself, that is 135 apps on every branch.
 
 | Sample | Class |
 |---|---|
-| Copy & Paste, CellSelector (UI5 1.119+) (A)<br>Spreadsheet-style copy and paste on a grid table: select a cell block and copy it, or paste rows from Excel into the table and let the backend append them - needs UI5 1.119 or newer.<br><sub>clipboard copy paste cellselector copyprovider pasteprovider excel spreadsheet grid control_by_id</sub> | [`Z2UI5_CL_SMP_APP_535`](src/z2ui5_cl_smp_app_535.clas.abap) |
+| Copy & Paste, CellSelector (UI5 1.119+) (A)<br>Spreadsheet-style copy and paste on a grid table: select a cell block and copy it, or paste rows from Excel into the table and let the backend append them - needs UI5 1.119 or newer.<br><sub>clipboard copy paste cellselector copyprovider pasteprovider excel spreadsheet grid control_by_id</sub> | [`Z2UI5_CL_SMP_APP_538`](src/z2ui5_cl_smp_app_538.clas.abap) |
 | Events on Cell Level<br>Events on cell level in a grid table: which row and which column the user was in, and what arrives in the backend.<br><sub>cell enter row index event grid alv</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_160`](src/z2ui5_cl_smp_app_160.clas.abap) |
 | Full Example with sap.ui.table<br>The full sap.ui.table example: a DynamicPage with search, sort, filter, currency columns and row actions - the closest thing here to a finished ALV.<br><sub>grid alv dynamicpage column row action currency search sort filter</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables), [tutorials/walkthrough/step-9](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-9), [tutorials/walkthrough/step-10](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-10)</sub> | [`Z2UI5_CL_SMP_APP_070`](src/z2ui5_cl_smp_app_070.clas.abap) |
 | Keep Column Filters on Refresh (C)<br>Keeps the active sap.ui.table column filters across a view model update, through the abap2UI5 uitableext custom control - without it they are reset.<br><sub>column filter reset refresh uitableext grid alv</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_143`](src/z2ui5_cl_smp_app_143.clas.abap) |
@@ -246,7 +249,7 @@ overview app itself, that is 135 apps on every branch.
 
 | Sample | Class |
 |---|---|
-| Copy Options of the CopyProvider (UI5 1.119+) (A)<br>The CopyProvider's options on a responsive table: several fields per column with a text/html template, sparse copying, cells or full rows - paste the result below to see what the clipboard holds. Needs UI5 1.119+.<br><sub>clipboard copy cellselector copyprovider copysparse copypreference template spreadsheet control_by_id</sub> | [`Z2UI5_CL_SMP_APP_536`](src/z2ui5_cl_smp_app_536.clas.abap) |
+| Copy Options of the CopyProvider (UI5 1.119+) (A)<br>The CopyProvider's options on a responsive table: several fields per column with a text/html template, sparse copying, cells or full rows - paste the result below to see what the clipboard holds. Needs UI5 1.119+.<br><sub>clipboard copy cellselector copyprovider copysparse copypreference template spreadsheet control_by_id</sub> | [`Z2UI5_CL_SMP_APP_539`](src/z2ui5_cl_smp_app_539.clas.abap) |
 | Drag and Drop Rows (A)<br>Drag and drop of table rows (DragDropInfo), and how the new order reaches the internal table.<br><sub>dnd dragdropinfo reorder rows move</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_459`](src/z2ui5_cl_smp_app_459.clas.abap) |
 | Editable Cells, Add and Delete Rows<br>An editable table: input cells, adding and deleting rows, multi-select and a toolbar over them.<br><sub>edit input add row delete multiselect toolbar</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables), [tutorials/walkthrough/step-8](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-8), [tutorials/walkthrough/step-10](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-10)</sub> | [`Z2UI5_CL_SMP_APP_011`](src/z2ui5_cl_smp_app_011.clas.abap) |
 | Filter Rows in the Backend<br>Filters table rows in the BACKEND from a form above it, so the WHERE runs where the data is.<br><sub>filter server side form growing where</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_045`](src/z2ui5_cl_smp_app_045.clas.abap) |
@@ -260,8 +263,8 @@ overview app itself, that is 135 apps on every branch.
 
 | Sample | Class |
 |---|---|
-| Build Columns Dynamically (template:repeat)<br>Builds the columns of a table at runtime with template:repeat, including the if/then/else the templating language brings.<br><sub>template repeat runtime generated columns if then else</sub><br><sub>docs: [cookbook/view/xml_templating](https://abap2ui5.github.io/docs/cookbook/view/xml_templating)</sub> | [`Z2UI5_CL_SMP_APP_173`](src/z2ui5_cl_smp_app_173.clas.abap) |
-| Dynamic Content in a Nested View<br>XML templating inside a nested view: the generated content is built where the sub view is rendered.<br><sub>template repeat runtime generated nested nest_view_display</sub><br><sub>docs: [cookbook/view/nested_views](https://abap2ui5.github.io/docs/cookbook/view/nested_views), [cookbook/view/xml_templating](https://abap2ui5.github.io/docs/cookbook/view/xml_templating)</sub> | [`Z2UI5_CL_SMP_APP_176`](src/z2ui5_cl_smp_app_176.clas.abap) |
+| Dynamic Content in a Nested View<br>XML templating inside a nested view: the columns come from a layout table via template:repeat, and a change to that table re-renders only the nested view with nest_view_display while the main view stays on screen.<br><sub>xml templating xmlpreprocessor template:repeat meta model metamodel metadata driven dynamic columns nested view nest_view_display re-render refresh</sub><br><sub>docs: [cookbook/view/nested_views](https://abap2ui5.github.io/docs/cookbook/view/nested_views), [cookbook/view/xml_templating](https://abap2ui5.github.io/docs/cookbook/view/xml_templating)</sub> | [`Z2UI5_CL_SMP_APP_176`](src/z2ui5_cl_smp_app_176.clas.abap) |
+| Metadata-Driven Table and Form<br>XML templating driven by a meta model: table columns built with template:repeat, a form generated from a field catalogue with nested template:repeat, template:with and template:if/elseif/else, and a template:if that re-renders on a switch.<br><sub>xml templating xmlpreprocessor template:repeat template:if template:elseif template:with meta model metamodel metadata driven dynamic columns form nested repeat startindex length</sub><br><sub>docs: [cookbook/view/xml_templating](https://abap2ui5.github.io/docs/cookbook/view/xml_templating)</sub> | [`Z2UI5_CL_SMP_APP_173`](src/z2ui5_cl_smp_app_173.clas.abap) |
 
 ### Timer
 

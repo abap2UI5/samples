@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 124 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 127 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -756,13 +756,19 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Get your data on screen` header = `Formatter` sub = `Date Objects for the PlanningCalendar` keywords = `planningcalendar appointment javascript date object iso` path = `src` app = `z2ui5_cl_smp_app_456` )
       ( group = `Get your data on screen` header = `Formatter` sub = `Inline Icons in a Text` keywords = `icon glyph placeholder text status expandinlineicons` path = `src` app = `z2ui5_cl_smp_app_466` )
       ( group = `Get your data on screen` header = `Formatter` sub = `When Not to Use One: Compute in ABAP` keywords = `no formatter computed backend thin frontend prepare` path = `src` app = `z2ui5_cl_smp_app_453` )
-      ( group = `Get your data on screen` header = `Templating` sub = `Build Columns Dynamically (template:repeat)` keywords = `template repeat runtime generated columns if then else` path = `src` app = `z2ui5_cl_smp_app_173` )
-      ( group = `Get your data on screen` header = `Templating` sub = `Dynamic Content in a Nested View` keywords = `template repeat runtime generated nested nest_view_display` path = `src` app = `z2ui5_cl_smp_app_176` )
+      ( group = `Get your data on screen` header = `Templating`
+        sub = `Dynamic Content in a Nested View`
+        keywords = `xml templating xmlpreprocessor template:repeat meta model metamodel metadata driven dynamic columns nested view nest_view_display re-render refresh`
+        path = `src` app = `z2ui5_cl_smp_app_176` )
+      ( group = `Get your data on screen` header = `Templating`
+        sub = `Metadata-Driven Table and Form`
+        keywords = `xml templating xmlpreprocessor template:repeat template:if template:elseif template:with meta model metamodel metadata driven dynamic columns form nested repeat startindex length`
+        path = `src` app = `z2ui5_cl_smp_app_173` )
       ( group = `Show many rows` header = `Grid Table`
         sub = `Copy & Paste, CellSelector (UI5 1.119+) (A)`
         keywords = `clipboard copy paste cellselector copyprovider pasteprovider excel spreadsheet grid control_by_id`
         intro = `Internal tables on screen - the responsive table, the grid table for large sets, lists and trees - with growing, selection, editing and everything a row can carry.`
-        path = `src` app = `z2ui5_cl_smp_app_535` )
+        path = `src` app = `z2ui5_cl_smp_app_538` )
       ( group = `Show many rows` header = `Grid Table` sub = `Events on Cell Level` keywords = `cell enter row index event grid alv` path = `src` app = `z2ui5_cl_smp_app_160` )
       ( group = `Show many rows` header = `Grid Table` sub = `Full Example with sap.ui.table` keywords = `grid alv dynamicpage column row action currency search sort filter` path = `src` app = `z2ui5_cl_smp_app_070` )
       ( group = `Show many rows` header = `Grid Table` sub = `Keep Column Filters on Refresh (C)` keywords = `column filter reset refresh uitableext grid alv` path = `src` app = `z2ui5_cl_smp_app_143` )
@@ -772,7 +778,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Show many rows` header = `Table`
         sub = `Copy Options of the CopyProvider (UI5 1.119+) (A)`
         keywords = `clipboard copy cellselector copyprovider copysparse copypreference template spreadsheet control_by_id`
-        path = `src` app = `z2ui5_cl_smp_app_536` )
+        path = `src` app = `z2ui5_cl_smp_app_539` )
       ( group = `Show many rows` header = `Table` sub = `Drag and Drop Rows (A)` keywords = `dnd dragdropinfo reorder rows move` path = `src` app = `z2ui5_cl_smp_app_459` )
       ( group = `Show many rows` header = `Table` sub = `Editable Cells, Add and Delete Rows` keywords = `edit input add row delete multiselect toolbar` path = `src` app = `z2ui5_cl_smp_app_011` )
       ( group = `Show many rows` header = `Table` sub = `Filter Rows in the Backend` keywords = `filter server side form growing where` path = `src` app = `z2ui5_cl_smp_app_045` )
@@ -793,6 +799,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         keywords = `facetfilter filter object marshalling selected items`
         intro = `The other direction: events arriving from the view, messages and message boxes going back, and the popups, popovers and menus that ask before something happens.`
         path = `src` app = `z2ui5_cl_smp_app_197` )
+      ( group = `Talk to the user` header = `Event` sub = `Custom Data Attached to Controls` keywords = `customdata data app namespace attach control list template t_arg` path = `src` app = `z2ui5_cl_smp_app_536` )
+      ( group = `Talk to the user` header = `Event` sub = `Expressions, Formatters and Literals in t_arg` keywords = `argument expression formatter object literal row context t_arg require` path = `src` app = `z2ui5_cl_smp_app_537` )
       ( group = `Talk to the user` header = `Event` sub = `Extra Arguments with t_arg` keywords = `argument parameter payload event data fixed value` path = `src` app = `z2ui5_cl_smp_app_167` )
       ( group = `Talk to the user` header = `Event` sub = `Keep the Last Keystroke with check_queue_last` keywords = `livechange keystroke queue busy roundtrip dropped event check_queue_last s_ctrl` path = `src` app = `z2ui5_cl_smp_app_511` )
       ( group = `Talk to the user` header = `Event` sub = `Keyboard Shortcuts, Ctrl+S (A)` keywords = `shortcut hotkey ctrl key combination keyboard_shortcut` path = `src` app = `z2ui5_cl_smp_app_471` )
@@ -890,6 +898,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Reach outside the view` header = `CSS` sub = `Color Table Cells from the Backend` keywords = `color background conditional formatting style data attribute` path = `src` app = `z2ui5_cl_smp_app_305` )
       ( group = `Reach outside the view` header = `CSS` sub = `FlexBox Layouts with Custom Classes` keywords = `flexbox layout responsive navigation tile panel` path = `src` app = `z2ui5_cl_smp_app_255` )
       ( group = `Reach outside the view` header = `CSS` sub = `Ship Your Own CSS with the View` keywords = `style stylesheet inline html class own design` path = `src` app = `z2ui5_cl_smp_app_050` )
+      ( group = `Reach outside the view` header = `CSS` sub = `Style by Data with CustomData writeToDom` keywords = `customdata writetodom data attribute selector marker test anchor` path = `src` app = `z2ui5_cl_smp_app_535` )
       ( group = `Reach outside the view` header = `Device` sub = `Camera, Take Photos (C)` keywords = `camera photo picture webcam capture facing mode` path = `src` app = `z2ui5_cl_smp_app_306` )
       ( group = `Reach outside the view` header = `Device` sub = `Device Model: Phone, Tablet, Desktop (A)` keywords = `sap.ui.device responsive orientation resize media model` path = `src` app = `z2ui5_cl_smp_app_445` )
       ( group = `Reach outside the view` header = `Device`

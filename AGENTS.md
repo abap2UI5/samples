@@ -287,7 +287,7 @@ session, an APC channel, the MIME repository, and the **Fiori Launchpad**
 navigate cross-app, moved out of the restricted package on 2026-08-12).
 
 **One deliberate exception (maintainer decision, 2026-09-30): the clipboard
-samples** `Z2UI5_CL_SMP_APP_535` and `Z2UI5_CL_SMP_APP_536`. Copy and paste
+samples** `Z2UI5_CL_SMP_APP_538` and `Z2UI5_CL_SMP_APP_539`. Copy and paste
 in a table is built on `sap.m.plugins.CellSelector` (@since 1.119),
 `CopyProvider` (@since 1.110) and `PasteProvider` (@since 1.91), which have no
 1.71 equivalent, and on the CopyProvider's `extractData` callback that

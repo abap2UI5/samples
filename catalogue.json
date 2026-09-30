@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 124,
+  "samples": 127,
   "categories": 24,
   "stages": 6
  },
@@ -967,6 +967,26 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_535",
+   "file": "src/z2ui5_cl_smp_app_535.clas.abap",
+   "category": "CSS",
+   "stage": "beyond",
+   "title": "CSS",
+   "description": "Style by Data with CustomData writeToDom",
+   "summary": "Writes bound values into the HTML DOM as data-* attributes with CustomData writeToDom, so a stylesheet colours controls by their data and tests find stable anchors.",
+   "keywords": [
+    "customdata",
+    "writetodom",
+    "data",
+    "attribute",
+    "selector",
+    "marker",
+    "test",
+    "anchor"
+   ],
+   "docs": []
+  },
+  {
    "class": "z2ui5_cl_smp_app_306",
    "file": "src/z2ui5_cl_smp_app_306.clas.abap",
    "category": "Device",
@@ -1074,6 +1094,48 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/backend"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_536",
+   "file": "src/z2ui5_cl_smp_app_536.clas.abap",
+   "category": "Event",
+   "stage": "talk",
+   "title": "Event",
+   "description": "Custom Data Attached to Controls",
+   "summary": "Attaches data objects to controls - with the app: namespace shortcut, bound or static, and as a CustomData template in a list binding - and reads them back with data( ) when an event fires.",
+   "keywords": [
+    "customdata",
+    "data",
+    "app",
+    "namespace",
+    "attach",
+    "control",
+    "list",
+    "template",
+    "t_arg"
+   ],
+   "docs": []
+  },
+  {
+   "class": "z2ui5_cl_smp_app_537",
+   "file": "src/z2ui5_cl_smp_app_537.clas.abap",
+   "category": "Event",
+   "stage": "talk",
+   "title": "Event",
+   "description": "Expressions, Formatters and Literals in t_arg",
+   "summary": "What an event argument can compute in the browser before it is sent - an expression over the pressed row, a formatter's result, a comparison, an object literal - and what each one arrives as in ABAP.",
+   "keywords": [
+    "argument",
+    "expression",
+    "formatter",
+    "object",
+    "literal",
+    "row",
+    "context",
+    "t_arg",
+    "require"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_167",
@@ -1435,8 +1497,8 @@
    ]
   },
   {
-   "class": "z2ui5_cl_smp_app_535",
-   "file": "src/z2ui5_cl_smp_app_535.clas.abap",
+   "class": "z2ui5_cl_smp_app_538",
+   "file": "src/z2ui5_cl_smp_app_538.clas.abap",
    "category": "Grid Table",
    "stage": "rows",
    "title": "Grid Table",
@@ -2427,8 +2489,8 @@
    ]
   },
   {
-   "class": "z2ui5_cl_smp_app_536",
-   "file": "src/z2ui5_cl_smp_app_536.clas.abap",
+   "class": "z2ui5_cl_smp_app_539",
+   "file": "src/z2ui5_cl_smp_app_539.clas.abap",
    "category": "Table",
    "stage": "rows",
    "title": "Table",
@@ -2622,45 +2684,66 @@
    ]
   },
   {
-   "class": "z2ui5_cl_smp_app_173",
-   "file": "src/z2ui5_cl_smp_app_173.clas.abap",
-   "category": "Templating",
-   "stage": "data",
-   "title": "Templating",
-   "description": "Build Columns Dynamically (template:repeat)",
-   "summary": "Builds the columns of a table at runtime with template:repeat, including the if/then/else the templating language brings.",
-   "keywords": [
-    "template",
-    "repeat",
-    "runtime",
-    "generated",
-    "columns",
-    "if",
-    "then",
-    "else"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/view/xml_templating"
-   ]
-  },
-  {
    "class": "z2ui5_cl_smp_app_176",
    "file": "src/z2ui5_cl_smp_app_176.clas.abap",
    "category": "Templating",
    "stage": "data",
    "title": "Templating",
    "description": "Dynamic Content in a Nested View",
-   "summary": "XML templating inside a nested view: the generated content is built where the sub view is rendered.",
+   "summary": "XML templating inside a nested view: the columns come from a layout table via template:repeat, and a change to that table re-renders only the nested view with nest_view_display while the main view stays on screen.",
    "keywords": [
-    "template",
-    "repeat",
-    "runtime",
-    "generated",
+    "xml",
+    "templating",
+    "xmlpreprocessor",
+    "template:repeat",
+    "meta",
+    "model",
+    "metamodel",
+    "metadata",
+    "driven",
+    "dynamic",
+    "columns",
     "nested",
-    "nest_view_display"
+    "view",
+    "nest_view_display",
+    "re-render",
+    "refresh"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/nested_views",
+    "https://abap2ui5.github.io/docs/cookbook/view/xml_templating"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_173",
+   "file": "src/z2ui5_cl_smp_app_173.clas.abap",
+   "category": "Templating",
+   "stage": "data",
+   "title": "Templating",
+   "description": "Metadata-Driven Table and Form",
+   "summary": "XML templating driven by a meta model: table columns built with template:repeat, a form generated from a field catalogue with nested template:repeat, template:with and template:if/elseif/else, and a template:if that re-renders on a switch.",
+   "keywords": [
+    "xml",
+    "templating",
+    "xmlpreprocessor",
+    "template:repeat",
+    "template:if",
+    "template:elseif",
+    "template:with",
+    "meta",
+    "model",
+    "metamodel",
+    "metadata",
+    "driven",
+    "dynamic",
+    "columns",
+    "form",
+    "nested",
+    "repeat",
+    "startindex",
+    "length"
+   ],
+   "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/xml_templating"
    ]
   },
