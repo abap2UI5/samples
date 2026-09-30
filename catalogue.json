@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 124,
+  "samples": 125,
   "categories": 24,
   "stages": 6
  },
@@ -1113,6 +1113,27 @@
     "list",
     "template",
     "t_arg"
+   ],
+   "docs": []
+  },
+  {
+   "class": "z2ui5_cl_smp_app_537",
+   "file": "src/z2ui5_cl_smp_app_537.clas.abap",
+   "category": "Event",
+   "stage": "talk",
+   "title": "Event",
+   "description": "Expressions, Formatters and Literals in t_arg",
+   "summary": "What an event argument can compute in the browser before it is sent - an expression over the pressed row, a formatter's result, a comparison, an object literal - and what each one arrives as in ABAP.",
+   "keywords": [
+    "argument",
+    "expression",
+    "formatter",
+    "object",
+    "literal",
+    "row",
+    "context",
+    "t_arg",
+    "require"
    ],
    "docs": []
   },
