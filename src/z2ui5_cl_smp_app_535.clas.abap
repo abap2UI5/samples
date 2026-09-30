@@ -85,16 +85,33 @@ CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
 
     " raw markup travels in the content attribute of a core:HTML leaf - the
     " builder re-escapes it on stringify, so the literal markup is written here.
-    " Every rule selects on a data-status attribute, which exists only because
-    " the CustomData elements below carry writeToDom="true"
+    " Every rule selects on a data-* attribute, which exists only because the
+    " CustomData elements below carry writeToDom="true". The first rule is the
+    " one of the UI5 documentation, word for word
     page->tag( n = `HTML` ns = `core`
         )->a( n = `content` v = `<style>` && |\n| &&
+                         `button[data-mydata="Hello"] \{ border: 3px solid red !important; \}` && |\n| &&
                          `.sapMBtn[data-status="new"] .sapMBtnInner \{ background-color: #d1e8ff; \}` && |\n| &&
                          `.sapMBtn[data-status="shipped"] .sapMBtnInner \{ background-color: #c8f0c8; \}` && |\n| &&
                          `.sapMBtn[data-status="delayed"] .sapMBtnInner \{ background-color: #ffd6d6; \}` && |\n| &&
                          `.sapMListTblRow[data-status="shipped"] \{ background-color: #eefaee; \}` && |\n| &&
                          `.sapMListTblRow[data-status="delayed"] \{ background-color: #fff0f0; \}` && |\n| &&
                          `</style>` ).
+
+    " writeToDom needs the expanded notation: the app:key="value" shortcut
+    " creates a CustomData without the flag, so nothing reaches the DOM. The
+    " key must be a valid HTML ID - keep it lower case, browsers may lower it
+    page->ele( `Panel`
+        )->a( n = `headerText` v = `A static value - the example of the documentation`
+        )->a( n = `class`      v = `sapUiResponsiveMargin`
+        )->a( n = `width`      v = `auto`
+        )->ele( `Button`
+            )->a( n = `text` v = `Renders as <button data-mydata="Hello" ...>`
+            )->ele( `customData`
+                )->tag( n = `CustomData` ns = `core`
+                    )->a( n = `key`        v = `mydata`
+                    )->a( n = `value`      v = `Hello`
+                    )->a( n = `writeToDom` b = abap_true ).
 
     DATA(panel) = page->ele( `Panel`
         )->a( n = `headerText` v = `Data-dependent styling`
