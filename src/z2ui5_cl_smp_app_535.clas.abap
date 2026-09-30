@@ -1,25 +1,24 @@
-" @keywords argument expression formatter object literal row context t_arg require
-" @summary What an event argument can compute in the browser before it is sent - an expression over the pressed row, a formatter's result, a comparison, an object literal - and what each one arrives as in ABAP.
+" @keywords customdata writetodom data attribute selector marker test anchor
+" @summary Writes bound values into the HTML DOM as data-* attributes with CustomData writeToDom, so a stylesheet colours controls by their data and tests find stable anchors.
 CLASS z2ui5_cl_smp_app_535 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_s_row,
-        product  TYPE string,
-        category TYPE string,
-        quantity TYPE i,
-        delivery TYPE string,
-      END OF ty_s_row.
-
-    DATA t_products TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+      BEGIN OF ty_s_order,
+        id      TYPE string,
+        product TYPE string,
+        status  TYPE string,
+      END OF ty_s_order.
+    DATA status   TYPE string.
+    DATA t_orders TYPE STANDARD TABLE OF ty_s_order WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
-    METHODS on_event_row.
+    METHODS status_next.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -33,34 +32,30 @@ CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      t_products = VALUE #(
-        ( product = `Notebook Basic 15` category = `Laptop`      quantity = 3  delivery = `20260720` )
-        ( product = `Flat Basic`        category = `Monitor`     quantity = 12 delivery = `20260805` )
-        ( product = `Ergo Mousepad`     category = `Accessories` quantity = 40 delivery = `20261102` ) ).
+      status   = `new`.
+      t_orders = VALUE #(
+          ( id = `4711` product = `Notebook`   status = `new` )
+          ( id = `4712` product = `Monitor`    status = `shipped` )
+          ( id = `4713` product = `Keyboard`   status = `delayed` )
+          ( id = `4714` product = `Mouse`      status = `shipped` )
+          ( id = `4715` product = `Headset`    status = `delayed` ) ).
       view_display( ).
 
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-    ELSEIF client->check_on_event( `ROW` ).
-      on_event_row( ).
-    ELSEIF client->check_on_event( `LITERAL` ).
-      client->message_box_display( |The object literal arrives as its JSON text:\n\n{ client->get_event_arg( ) }| ).
+    ELSEIF client->check_on_event( `NEXT` ).
+      status_next( ).
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD on_event_row.
+  METHOD status_next.
 
-    " every argument arrives as a string: the number the expression computed
-    " as its digits, the result of the comparison as abap_true or empty -
-    " so it is compared like an abap_bool, never asked IS INITIAL
-    DATA(is_laptop) = COND string( WHEN client->get_event_arg( 3 ) = abap_true THEN `yes` ELSE `no` ).
-
-    client->message_box_display( |Product: { client->get_event_arg( 1 ) }\n| &&
-                                 |Quantity * 10: { client->get_event_arg( 2 ) }\n| &&
-                                 |Is a laptop: { is_laptop }\n| &&
-                                 |Delivery (formatted in the browser): { client->get_event_arg( 4 ) }| ).
+    status = SWITCH #( status
+        WHEN `new`     THEN `shipped`
+        WHEN `shipped` THEN `delayed`
+        ELSE `new` ).
 
   ENDMETHOD.
 
@@ -74,81 +69,143 @@ CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-
-    " the formatter module required into the view is in scope for the event
-    " arguments too - UI5 resolves Formatter.xxx there the way it does in a
-    " property binding
-    view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
-
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Event - Expressions, Formatters and Literals in t_arg`
+            )->a( n = `title`          v = `abap2UI5 - CSS - Style by Data with CustomData writeToDom`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     t = `An argument that starts with $ or { is evaluated in the browser when the event fires, ` &&
-                   `with the full expression binding syntax: a field of the pressed row, arithmetic and ` &&
-                   `comparisons over it, a formatter, an object literal. Only the result travels to ABAP.`
+        )->a( n = `text`     v = `A core:CustomData with writeToDom="true" writes its key and value as a data-* attribute on the ` &&
+                   `root element of its control. A stylesheet selects on that attribute to style controls by their data, ` &&
+                   `and automated tests use it as a stable anchor that does not depend on generated IDs.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->tag( `Link`
-        )->a( n = `text`   v = `UI5 documentation: Handling Events in XML Views`
-        )->a( n = `target` v = `_blank`
-        )->a( n = `href`   v = `https://sdk.openui5.org/topic/b0fb4de7364f4bcbb053a99aa645affe`
-        )->a( n = `class`  v = `sapUiSmallMarginBegin` ).
+    " raw markup travels in the content attribute of a core:HTML leaf - the
+    " builder re-escapes it on stringify, so the literal markup is written here.
+    " Every rule selects on a data-* attribute, which exists only because the
+    " CustomData elements below carry writeToDom="true". The first rule is the
+    " one of the UI5 documentation, word for word
+    page->tag( n = `HTML` ns = `core`
+        )->a( n = `content` v = `<style>` && |\n| &&
+                         `button[data-mydata="Hello"] \{ border: 3px solid red !important; \}` && |\n| &&
+                         `.sapMBtn[data-status="new"] .sapMBtnInner \{ background-color: #d1e8ff; \}` && |\n| &&
+                         `.sapMBtn[data-status="shipped"] .sapMBtnInner \{ background-color: #c8f0c8; \}` && |\n| &&
+                         `.sapMBtn[data-status="delayed"] .sapMBtnInner \{ background-color: #ffd6d6; \}` && |\n| &&
+                         `.sapMListTblRow[data-status="shipped"] \{ background-color: #eefaee; \}` && |\n| &&
+                         `.sapMListTblRow[data-status="delayed"] \{ background-color: #fff0f0; \}` && |\n| &&
+                         `</style>` ).
+
+    " writeToDom needs the expanded notation: the app:key="value" shortcut
+    " creates a CustomData without the flag, so nothing reaches the DOM. The
+    " key must be a valid HTML ID - keep it lower case, browsers may lower it
+    page->ele( `Panel`
+        )->a( n = `headerText` v = `A static value - the example of the documentation`
+        )->a( n = `class`      v = `sapUiResponsiveMargin`
+        )->a( n = `width`      v = `auto`
+        )->ele( `Button`
+            )->a( n = `text` v = `Renders as <button data-mydata="Hello" ...>`
+            )->ele( `customData`
+                )->tag( n = `CustomData` ns = `core`
+                    )->a( n = `key`        v = `mydata`
+                    )->a( n = `value`      v = `Hello`
+                    )->a( n = `writeToDom` b = abap_true ).
+
+    DATA(panel) = page->ele( `Panel`
+        )->a( n = `headerText` v = `Data-dependent styling`
+        )->a( n = `class`      v = `sapUiResponsiveMargin`
+        )->a( n = `width`      v = `auto` ).
+
+    panel->tag( `Text`
+        )->a( n = `text`  v = `Pick a status: the selection changes the bound value in the browser, the data-status attribute ` &&
+                   `follows the binding and the button recolours without a roundtrip. Next Status changes it in the backend.`
+        )->a( n = `class` v = `sapUiSmallMarginBottom` ).
+
+    " writeToDom only writes a string value - any other type is skipped and logged
+    panel->ele( `HBox`
+        )->a( n = `alignItems` v = `Center`
+        )->ele( `SegmentedButton`
+            )->a( n = `selectedKey` v = client->_bind( status )
+            )->a( n = `class`       v = `sapUiSmallMarginEnd`
+            )->ele( `items`
+                )->tag( `SegmentedButtonItem`
+                    )->a( n = `key`  v = `new`
+                    )->a( n = `text` v = `New`
+                )->tag( `SegmentedButtonItem`
+                    )->a( n = `key`  v = `shipped`
+                    )->a( n = `text` v = `Shipped`
+                )->tag( `SegmentedButtonItem`
+                    )->a( n = `key`  v = `delayed`
+                    )->a( n = `text` v = `Delayed`
+            )->end(
+        )->end(
+        )->ele( `Button`
+            )->a( n = `text`  v = `Order 4711`
+            )->a( n = `class` v = `sapUiSmallMarginEnd`
+            )->ele( `customData`
+                )->tag( n = `CustomData` ns = `core`
+                    )->a( n = `key`        v = `status`
+                    )->a( n = `value`      v = client->_bind( status )
+                    )->a( n = `writeToDom` b = abap_true
+            )->end(
+        )->end(
+        )->tag( `Button`
+            )->a( n = `text`  v = `Next Status`
+            )->a( n = `icon`  v = `sap-icon://process`
+            )->a( n = `press` v = client->_event( `NEXT` ) ).
+
+    panel->tag( `Text`
+        )->a( n = `text`  v = `The button renders as <button data-status="` && client->_bind( status ) && `" class="sapMBtn ...">`
+        )->a( n = `class` v = `sapUiSmallMarginTop` ).
 
     DATA(tab) = page->ele( `Table`
-        )->a( n = `headerText` v = `Each row's button sends four values computed from that row`
-        )->a( n = `items`      v = client->_bind( t_products ) ).
+        )->a( n = `items` v = client->_bind( t_orders )
+        )->a( n = `class` v = `sapUiResponsiveMargin`
+        )->a( n = `width` v = `auto`
+        )->ele( `headerToolbar`
+            )->ele( `OverflowToolbar`
+                )->tag( `Title`
+                    )->a( n = `text` v = `Stable anchors - every row carries data-status and data-testid`
+            )->end(
+        )->end( ).
 
-    DATA(columns) = tab->ele( `columns` ).
-    columns->ele( `Column`
-        )->tag( `Text`
-            )->a( n = `text` v = `Product` ).
-    columns->ele( `Column`
-        )->tag( `Text`
-            )->a( n = `text` v = `Category` ).
-    columns->ele( `Column`
-        )->tag( `Text`
-            )->a( n = `text` v = `Quantity` ).
-    columns->ele( `Column`
-        )->tag( `Text`
-            )->a( n = `text` v = `Delivery` ).
-    columns->ele( `Column`
-        )->tag( `Text`
-            )->a( n = `text` v = `Event` ).
+    tab->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Order`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Product`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Status`
+        )->end( ).
 
-    " the relative paths resolve against the row the pressed button sits in -
-    " no row index, no key lookup in the backend
-    DATA(cells) = tab->ele( `items`
-        )->ele( `ColumnListItem` ).
-    cells->tag( `Text`
-        )->a( n = `text` v = `{PRODUCT}` ).
-    cells->tag( `Text`
-        )->a( n = `text` v = `{CATEGORY}` ).
-    cells->tag( `Text`
-        )->a( n = `text` v = `{QUANTITY}` ).
-    cells->tag( `Text`
-        )->a( n = `text` v = `{DELIVERY}` ).
-    cells->tag( `Button`
-        )->a( n = `text`  v = `Send Row`
-        )->a( n = `press` v = client->_event( val   = `ROW`
-                                              t_arg = VALUE #( ( `${PRODUCT}` )
-                                                               ( `${QUANTITY} * 10` )
-                                                               ( `${CATEGORY} === 'Laptop'` )
-                                                               ( `${path: 'DELIVERY', formatter: 'Formatter.DateAbapDateToDateObject'}.toDateString()` ) ) ) ).
-
-    " a raw argument has to start with $ or { - an object literal does, and it
-    " carries numbers, booleans and arrays as what they are; a bare 5.5 or
-    " ['a','b'] would be quoted and sent as text
-    page->tag( `Button`
-        )->a( n = `text`  v = `Send an Object Literal`
-        )->a( n = `class` v = `sapUiSmallMargin`
-        )->a( n = `press` v = client->_event( val = `LITERAL`
-                                              arg = `{ product: 'Notebook', quantity: 3, express: true, tags: ['new', 'sale'] }` ) ).
+    " a test selects tr[data-testid="order-4711"] instead of a generated ID
+    " like __item3-__clone7, which changes whenever the table is rebuilt
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `customData`
+                )->tag( n = `CustomData` ns = `core`
+                    )->a( n = `key`        v = `status`
+                    )->a( n = `value`      v = `{STATUS}`
+                    )->a( n = `writeToDom` b = abap_true
+                )->tag( n = `CustomData` ns = `core`
+                    )->a( n = `key`        v = `testid`
+                    )->a( n = `value`      v = `order-{ID}`
+                    )->a( n = `writeToDom` b = abap_true
+            )->end(
+            )->ele( `cells`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{ID}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{PRODUCT}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{STATUS}` ).
 
     client->view_display( view->stringify( ) ).
 
