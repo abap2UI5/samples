@@ -61,6 +61,11 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
       WHEN client->check_on_event( `BOUND` ).
         client->message_toast_display( |data( "coords" ) = { client->get_event_arg( ) }| ).
 
+      WHEN client->check_on_event( `ALL` ).
+        " data( ) without a key answers a plain object - an object argument
+        " reaches the backend as its JSON text
+        client->message_toast_display( |data( ) = { client->get_event_arg( ) }| ).
+
       WHEN client->check_on_event( `SELECT` ).
         " the answer is not looked up in t_questions - it arrives as the
         " custom data of the list item the user selected
@@ -96,7 +101,10 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " app:key="value" is the shortcut for a core:CustomData element in the
-    " customData aggregation - it needs the xmlns:app namespace declared above
+    " customData aggregation - it needs the xmlns:app namespace declared above.
+    " The backend SETS custom data through the binding (app:coords follows the
+    " input), and reads it back with data( ) as an event argument. Writing it
+    " into the HTML DOM as a data-* attribute is Z2UI5_CL_SMP_APP_535
     DATA(panel) = page->ele( `Panel`
         )->a( n = `headerText` v = `The app: namespace shortcut`
         )->a( n = `class`      v = `sapUiResponsiveMargin`
@@ -116,9 +124,16 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
             )->a( n = `class` v = `sapUiSmallMarginEnd`
         )->tag( `Button`
             )->a( n = `text`       v = `With Binding`
+            )->a( n = `class`      v = `sapUiSmallMarginEnd`
             )->a( n = `app:coords` v = client->_bind( coords )
             )->a( n = `press`      v = client->_event( val = `BOUND`
-                                                       arg = `$event.getSource().data('coords')` ) ).
+                                                       arg = `$event.getSource().data('coords')` )
+        )->tag( `Button`
+            )->a( n = `text`                 v = `All Custom Data`
+            )->a( n = `app:myData`           v = `Hello`
+            )->a( n = `app:mySuperExtraData` v = `just great`
+            )->a( n = `press`                v = client->_event( val = `ALL`
+                                                                 arg = `$event.getSource().data()` ) ).
 
     " a core:CustomData in the item template is cloned for every row, and its
     " value binding resolves against that row - so each item carries its answer
