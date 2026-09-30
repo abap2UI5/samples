@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 125 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 127 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -765,15 +765,20 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         keywords = `xml templating xmlpreprocessor template:repeat template:if template:elseif template:with meta model metamodel metadata driven dynamic columns form nested repeat startindex length`
         path = `src` app = `z2ui5_cl_smp_app_173` )
       ( group = `Show many rows` header = `Grid Table`
-        sub = `Events on Cell Level`
-        keywords = `cell enter row index event grid alv`
+        sub = `Copy & Paste, CellSelector (UI5 1.119+) (A)`
+        keywords = `clipboard copy paste cellselector copyprovider pasteprovider excel spreadsheet grid control_by_id`
         intro = `Internal tables on screen - the responsive table, the grid table for large sets, lists and trees - with growing, selection, editing and everything a row can carry.`
-        path = `src` app = `z2ui5_cl_smp_app_160` )
+        path = `src` app = `z2ui5_cl_smp_app_538` )
+      ( group = `Show many rows` header = `Grid Table` sub = `Events on Cell Level` keywords = `cell enter row index event grid alv` path = `src` app = `z2ui5_cl_smp_app_160` )
       ( group = `Show many rows` header = `Grid Table` sub = `Full Example with sap.ui.table` keywords = `grid alv dynamicpage column row action currency search sort filter` path = `src` app = `z2ui5_cl_smp_app_070` )
       ( group = `Show many rows` header = `Grid Table` sub = `Keep Column Filters on Refresh (C)` keywords = `column filter reset refresh uitableext grid alv` path = `src` app = `z2ui5_cl_smp_app_143` )
       ( group = `Show many rows` header = `List` sub = `Filter and Sort the Binding from ABAP (A)` keywords = `binding_call getbinding sorter filter follow_up_action` path = `src` app = `z2ui5_cl_smp_app_454` )
       ( group = `Show many rows` header = `List` sub = `Live Filter on the Client, No Roundtrip (A)` keywords = `binding_call live search client side no roundtrip filter` path = `src` app = `z2ui5_cl_smp_app_455` )
       ( group = `Show many rows` header = `List` sub = `StandardListItem, Highlight and Events` keywords = `sap.m.list standardlistitem highlight infostate press selection` path = `src` app = `z2ui5_cl_smp_app_048` )
+      ( group = `Show many rows` header = `Table`
+        sub = `Copy Options of the CopyProvider (UI5 1.119+) (A)`
+        keywords = `clipboard copy cellselector copyprovider copysparse copypreference template spreadsheet control_by_id`
+        path = `src` app = `z2ui5_cl_smp_app_539` )
       ( group = `Show many rows` header = `Table` sub = `Drag and Drop Rows (A)` keywords = `dnd dragdropinfo reorder rows move` path = `src` app = `z2ui5_cl_smp_app_459` )
       ( group = `Show many rows` header = `Table` sub = `Editable Cells, Add and Delete Rows` keywords = `edit input add row delete multiselect toolbar` path = `src` app = `z2ui5_cl_smp_app_011` )
       ( group = `Show many rows` header = `Table` sub = `Filter Rows in the Backend` keywords = `filter server side form growing where` path = `src` app = `z2ui5_cl_smp_app_045` )

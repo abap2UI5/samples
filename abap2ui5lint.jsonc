@@ -152,6 +152,22 @@
      * (a restored bookmark reaches it with the dialog gone). A sample that
      * lost its branch is fixed, not listed here. */
     "missing-on-navigated-branch": "warning",
+
+    /* The one deliberate exception to the 1.71 floor (AGENTS.md section 2):
+     * the clipboard samples. sap.m.plugins.CellSelector (@since 1.119),
+     * CopyProvider (@since 1.110) and PasteProvider (@since 1.91) have no
+     * 1.71 equivalent at all, and the copy half needs the CopyProvider's
+     * extractData callback that abap2UI5 ships as z2ui5/model/clipboard.
+     * Maintainer decision 2026-09-30: they sit in src/ with the release they
+     * need in their DESCRIPT ("(UI5 1.119+)"), their @summary and their
+     * MessageStrip. Only the two VERSION rules are lifted, and only for these
+     * classes - everything else is judged as for every sample. */
+    "control-too-new": {
+      "exclude": ["z2ui5_cl_smp_app_(538|539)\\."]
+    },
+    "member-too-new": {
+      "exclude": ["z2ui5_cl_smp_app_(538|539)\\."]
+    },
     "render-error": {
       "exclude": [
         // (a) not served by the harness: the SAPUI5 template namespace

@@ -286,6 +286,18 @@ session, an APC channel, the MIME repository, and the **Fiori Launchpad**
 (`src/09` there — the demos that read startup parameters, set the shell title and
 navigate cross-app, moved out of the restricted package on 2026-08-12).
 
+**One deliberate exception (maintainer decision, 2026-09-30): the clipboard
+samples** `Z2UI5_CL_SMP_APP_538` and `Z2UI5_CL_SMP_APP_539`. Copy and paste
+in a table is built on `sap.m.plugins.CellSelector` (@since 1.119),
+`CopyProvider` (@since 1.110) and `PasteProvider` (@since 1.91), which have no
+1.71 equivalent, and on the CopyProvider's `extractData` callback that
+abap2UI5 ships as `z2ui5/model/clipboard`. They sit in `src/` like every
+other sample and say what they need where a reader looks first: `(UI5 1.119+)`
+in the DESCRIPT, the `@summary` and the intro `MessageStrip`. The ABAP is held
+to all three builds like every other class; only the linter's two version
+rules are lifted for exactly these two classes (`abap2ui5lint.jsonc`). This is
+not a category — a further post-1.71 sample needs the same decision again.
+
 A sample qualifies for `src/` **only if none** of the above restrictions
 apply: OpenUI5-compatible, ABAP-Cloud-ready, standalone, every control **and**
 property available since UI5 1.71 (16 Jan 2020) **and** not deprecated, no native

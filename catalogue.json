@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 125,
+  "samples": 127,
   "categories": 24,
   "stages": 6
  },
@@ -1497,6 +1497,28 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_538",
+   "file": "src/z2ui5_cl_smp_app_538.clas.abap",
+   "category": "Grid Table",
+   "stage": "rows",
+   "title": "Grid Table",
+   "description": "Copy & Paste, CellSelector (UI5 1.119+) (A)",
+   "summary": "Spreadsheet-style copy and paste on a grid table: select a cell block and copy it, or paste rows from Excel into the table and let the backend append them - needs UI5 1.119 or newer.",
+   "keywords": [
+    "clipboard",
+    "copy",
+    "paste",
+    "cellselector",
+    "copyprovider",
+    "pasteprovider",
+    "excel",
+    "spreadsheet",
+    "grid",
+    "control_by_id"
+   ],
+   "docs": []
+  },
+  {
    "class": "z2ui5_cl_smp_app_160",
    "file": "src/z2ui5_cl_smp_app_160.clas.abap",
    "category": "Grid Table",
@@ -2465,6 +2487,27 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_539",
+   "file": "src/z2ui5_cl_smp_app_539.clas.abap",
+   "category": "Table",
+   "stage": "rows",
+   "title": "Table",
+   "description": "Copy Options of the CopyProvider (UI5 1.119+) (A)",
+   "summary": "The CopyProvider's options on a responsive table: several fields per column with a text/html template, sparse copying, cells or full rows - paste the result below to see what the clipboard holds. Needs UI5 1.119+.",
+   "keywords": [
+    "clipboard",
+    "copy",
+    "cellselector",
+    "copyprovider",
+    "copysparse",
+    "copypreference",
+    "template",
+    "spreadsheet",
+    "control_by_id"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_459",
