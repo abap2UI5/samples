@@ -2579,45 +2579,66 @@
    ]
   },
   {
-   "class": "z2ui5_cl_smp_app_173",
-   "file": "src/z2ui5_cl_smp_app_173.clas.abap",
-   "category": "Templating",
-   "stage": "data",
-   "title": "Templating",
-   "description": "Build Columns Dynamically (template:repeat)",
-   "summary": "Builds the columns of a table at runtime with template:repeat, including the if/then/else the templating language brings.",
-   "keywords": [
-    "template",
-    "repeat",
-    "runtime",
-    "generated",
-    "columns",
-    "if",
-    "then",
-    "else"
-   ],
-   "docs": [
-    "https://abap2ui5.github.io/docs/cookbook/view/xml_templating"
-   ]
-  },
-  {
    "class": "z2ui5_cl_smp_app_176",
    "file": "src/z2ui5_cl_smp_app_176.clas.abap",
    "category": "Templating",
    "stage": "data",
    "title": "Templating",
    "description": "Dynamic Content in a Nested View",
-   "summary": "XML templating inside a nested view: the generated content is built where the sub view is rendered.",
+   "summary": "XML templating inside a nested view: the columns come from a layout table via template:repeat, and a change to that table re-renders only the nested view with nest_view_display while the main view stays on screen.",
    "keywords": [
-    "template",
-    "repeat",
-    "runtime",
-    "generated",
+    "xml",
+    "templating",
+    "xmlpreprocessor",
+    "template:repeat",
+    "meta",
+    "model",
+    "metamodel",
+    "metadata",
+    "driven",
+    "dynamic",
+    "columns",
     "nested",
-    "nest_view_display"
+    "view",
+    "nest_view_display",
+    "re-render",
+    "refresh"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/nested_views",
+    "https://abap2ui5.github.io/docs/cookbook/view/xml_templating"
+   ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_173",
+   "file": "src/z2ui5_cl_smp_app_173.clas.abap",
+   "category": "Templating",
+   "stage": "data",
+   "title": "Templating",
+   "description": "Metadata-Driven Table and Form",
+   "summary": "XML templating driven by a meta model: table columns built with template:repeat, a form generated from a field catalogue with nested template:repeat, template:with and template:if/elseif/else, and a template:if that re-renders on a switch.",
+   "keywords": [
+    "xml",
+    "templating",
+    "xmlpreprocessor",
+    "template:repeat",
+    "template:if",
+    "template:elseif",
+    "template:with",
+    "meta",
+    "model",
+    "metamodel",
+    "metadata",
+    "driven",
+    "dynamic",
+    "columns",
+    "form",
+    "nested",
+    "repeat",
+    "startindex",
+    "length"
+   ],
+   "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/xml_templating"
    ]
   },
