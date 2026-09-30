@@ -1,5 +1,5 @@
-" @keywords template repeat runtime generated nested nest_view_display
-" @summary XML templating inside a nested view: the generated content is built where the sub view is rendered.
+" @keywords xml templating xmlpreprocessor template:repeat meta model metamodel metadata driven dynamic columns nested view nest_view_display re-render refresh
+" @summary XML templating inside a nested view: the columns come from a layout table via template:repeat, and a change to that table re-renders only the nested view with nest_view_display while the main view stays on screen.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views https://abap2ui5.github.io/docs/cookbook/view/xml_templating
 CLASS z2ui5_cl_smp_app_176 DEFINITION PUBLIC.
 
@@ -59,6 +59,15 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
       view_display( ).
       nest_view_display( ).
 
+    ELSEIF client->check_on_event( `TOGGLE_AGE` ).
+
+      " templating ran once, when the nested view was built - a changed
+      " layout table only shows once the nested view is built again. The
+      " main view is not sent, it stays on screen as it is
+      ASSIGN mt_layout[ fname = `AGE` ] TO FIELD-SYMBOL(<age>).
+      <age>-visible = COND #( WHEN <age>-visible = `true` THEN `false` ELSE `true` ).
+      nest_view_display( ).
+
     ENDIF.
 
   ENDMETHOD.
@@ -77,16 +86,27 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Templating - Dynamic Content in a Nested View`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-            )->a( n = `id`             v = `test` ).
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `This sample renders a main view and then embeds a second view into it as ` &&
                    `nested content via nest_view_display; the nested table builds its columns and cells ` &&
-                   `at runtime with template:repeat over a layout table.`
+                   `at runtime with template:repeat over a layout table. The button changes that table and ` &&
+                   `re-renders only the nested view.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    page->tag( `Button`
+        )->a( n = `text`  v = `Show / Hide Age Column`
+        )->a( n = `icon`  v = `sap-icon://refresh`
+        )->a( n = `press` v = client->_event( `TOGGLE_AGE` )
+        )->a( n = `class` v = `sapUiSmallMarginBegin` ).
+
+    " the nested view goes into this box - a container of its own, so a
+    " re-render replaces the nested view and nothing else on the page
+    page->tag( `VBox`
+        )->a( n = `id` v = `box_nest` ).
 
     client->view_display( lo_view->stringify( ) ).
 
@@ -103,38 +123,40 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
     DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock`   v = `true`
-            )->a( n = `height`         v = `100%`
             )->a( n = `xmlns`          v = `sap.m`
             )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
             )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1` ).
 
-    lo_view_nested->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title` v = `Nested View`
-            )->ele( `Table`
-                )->a( n = `items` v = client->_bind( mt_data )
-                )->ele( `columns`
-                    )->ele( n = `repeat` ns = `template`
-                        )->a( n = `list` v = layout_path
-                        )->a( n = `var`  v = `LO`
-                        )->ele( `Column`
-                            )->a( n = `mergeDuplicates` v = `{LO>MERGE}`
-                            )->a( n = `visible`         v = `{LO>VISIBLE}`
-                            )->tag( `Text`
-                                )->a( n = `text` v = `{LO>TITLE}`
-                        )->end(
+    lo_view_nested->ele( `Panel`
+        )->a( n = `headerText` v = `Nested View`
+        )->a( n = `class`      v = `sapUiSmallMarginTop`
+        )->ele( `Table`
+            )->a( n = `items` v = client->_bind( mt_data )
+            )->ele( `columns`
+                )->ele( n = `repeat` ns = `template`
+                    )->a( n = `list` v = layout_path
+                    )->a( n = `var`  v = `LO`
+                    )->ele( `Column`
+                        )->a( n = `mergeDuplicates` v = `{LO>MERGE}`
+                        )->a( n = `visible`         v = `{LO>VISIBLE}`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `{LO>TITLE}`
                     )->end(
                 )->end(
-                )->ele( `items`
-                    )->ele( `ColumnListItem`
-                        )->ele( `cells`
-                            )->ele( n = `repeat` ns = `template`
-                                )->a( n = `list` v = layout_path
-                                )->a( n = `var`  v = `LO2`
-                                )->ele( `ObjectIdentifier`
-                                    )->a( n = `text` v = `{= '{' + ${LO2>FNAME} + '}' }` ).
+            )->end(
+            )->ele( `items`
+                )->ele( `ColumnListItem`
+                    )->ele( `cells`
+                        )->ele( n = `repeat` ns = `template`
+                            )->a( n = `list` v = layout_path
+                            )->a( n = `var`  v = `LO2`
+                            )->ele( `ObjectIdentifier`
+                                )->a( n = `text` v = `{= '{' + ${LO2>FNAME} + '}' }` ).
 
-    client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = `addContent` method_destroy = `removeAllContent` ).
+    client->nest_view_display( val            = lo_view_nested->stringify( )
+                               id             = `box_nest`
+                               method_insert  = `addItem`
+                               method_destroy = `removeAllItems` ).
 
   ENDMETHOD.
 

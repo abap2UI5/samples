@@ -756,8 +756,14 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Get your data on screen` header = `Formatter` sub = `Date Objects for the PlanningCalendar` keywords = `planningcalendar appointment javascript date object iso` path = `src` app = `z2ui5_cl_smp_app_456` )
       ( group = `Get your data on screen` header = `Formatter` sub = `Inline Icons in a Text` keywords = `icon glyph placeholder text status expandinlineicons` path = `src` app = `z2ui5_cl_smp_app_466` )
       ( group = `Get your data on screen` header = `Formatter` sub = `When Not to Use One: Compute in ABAP` keywords = `no formatter computed backend thin frontend prepare` path = `src` app = `z2ui5_cl_smp_app_453` )
-      ( group = `Get your data on screen` header = `Templating` sub = `Build Columns Dynamically (template:repeat)` keywords = `template repeat runtime generated columns if then else` path = `src` app = `z2ui5_cl_smp_app_173` )
-      ( group = `Get your data on screen` header = `Templating` sub = `Dynamic Content in a Nested View` keywords = `template repeat runtime generated nested nest_view_display` path = `src` app = `z2ui5_cl_smp_app_176` )
+      ( group = `Get your data on screen` header = `Templating`
+        sub = `Dynamic Content in a Nested View`
+        keywords = `xml templating xmlpreprocessor template:repeat meta model metamodel metadata driven dynamic columns nested view nest_view_display re-render refresh`
+        path = `src` app = `z2ui5_cl_smp_app_176` )
+      ( group = `Get your data on screen` header = `Templating`
+        sub = `Metadata-Driven Table and Form`
+        keywords = `xml templating xmlpreprocessor template:repeat template:if template:elseif template:with meta model metamodel metadata driven dynamic columns form nested repeat startindex length`
+        path = `src` app = `z2ui5_cl_smp_app_173` )
       ( group = `Show many rows` header = `Grid Table`
         sub = `Events on Cell Level`
         keywords = `cell enter row index event grid alv`
