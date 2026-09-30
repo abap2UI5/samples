@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 122,
+  "samples": 124,
   "categories": 24,
   "stages": 6
  },
@@ -967,6 +967,26 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_535",
+   "file": "src/z2ui5_cl_smp_app_535.clas.abap",
+   "category": "CSS",
+   "stage": "beyond",
+   "title": "CSS",
+   "description": "Style by Data with CustomData writeToDom",
+   "summary": "Writes bound values into the HTML DOM as data-* attributes with CustomData writeToDom, so a stylesheet colours controls by their data and tests find stable anchors.",
+   "keywords": [
+    "customdata",
+    "writetodom",
+    "data",
+    "attribute",
+    "selector",
+    "marker",
+    "test",
+    "anchor"
+   ],
+   "docs": []
+  },
+  {
    "class": "z2ui5_cl_smp_app_306",
    "file": "src/z2ui5_cl_smp_app_306.clas.abap",
    "category": "Device",
@@ -1074,6 +1094,27 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/backend"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_536",
+   "file": "src/z2ui5_cl_smp_app_536.clas.abap",
+   "category": "Event",
+   "stage": "talk",
+   "title": "Event",
+   "description": "Custom Data Attached to Controls",
+   "summary": "Attaches data objects to controls - with the app: namespace shortcut, bound or static, and as a CustomData template in a list binding - and reads them back with data( ) when an event fires.",
+   "keywords": [
+    "customdata",
+    "data",
+    "app",
+    "namespace",
+    "attach",
+    "control",
+    "list",
+    "template",
+    "t_arg"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_167",
