@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 122 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 123 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -788,6 +788,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         keywords = `facetfilter filter object marshalling selected items`
         intro = `The other direction: events arriving from the view, messages and message boxes going back, and the popups, popovers and menus that ask before something happens.`
         path = `src` app = `z2ui5_cl_smp_app_197` )
+      ( group = `Talk to the user` header = `Event` sub = `Expressions, Formatters and Literals in t_arg` keywords = `argument expression formatter object literal row context t_arg require` path = `src` app = `z2ui5_cl_smp_app_535` )
       ( group = `Talk to the user` header = `Event` sub = `Extra Arguments with t_arg` keywords = `argument parameter payload event data fixed value` path = `src` app = `z2ui5_cl_smp_app_167` )
       ( group = `Talk to the user` header = `Event` sub = `Keep the Last Keystroke with check_queue_last` keywords = `livechange keystroke queue busy roundtrip dropped event check_queue_last s_ctrl` path = `src` app = `z2ui5_cl_smp_app_511` )
       ( group = `Talk to the user` header = `Event` sub = `Keyboard Shortcuts, Ctrl+S (A)` keywords = `shortcut hotkey ctrl key combination keyboard_shortcut` path = `src` app = `z2ui5_cl_smp_app_471` )

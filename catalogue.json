@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 122,
+  "samples": 123,
   "categories": 24,
   "stages": 6
  },
@@ -1074,6 +1074,27 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/backend"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_535",
+   "file": "src/z2ui5_cl_smp_app_535.clas.abap",
+   "category": "Event",
+   "stage": "talk",
+   "title": "Event",
+   "description": "Expressions, Formatters and Literals in t_arg",
+   "summary": "What an event argument can compute in the browser before it is sent - an expression over the pressed row, a formatter's result, a comparison, an object literal - and what each one arrives as in ABAP.",
+   "keywords": [
+    "argument",
+    "expression",
+    "formatter",
+    "object",
+    "literal",
+    "row",
+    "context",
+    "t_arg",
+    "require"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_167",
