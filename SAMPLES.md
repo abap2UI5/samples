@@ -3,7 +3,7 @@
 
 # The sample catalogue
 
-Every app in this repository — 133 of them — with what it shows and a link
+Every app in this repository — 135 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
@@ -13,7 +13,7 @@ nothing in it is stripped from `702`.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 122 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 124 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -28,10 +28,10 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path
 
-The **122 ready-to-run samples** the README leads with, and the
+The **124 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 10 helper apps they call and the
-overview app itself, that is 133 apps on every branch.
+overview app itself, that is 135 apps on every branch.
 
 [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -151,6 +151,7 @@ overview app itself, that is 133 apps on every branch.
 
 | Sample | Class |
 |---|---|
+| Copy & Paste, CellSelector (UI5 1.119+) (A)<br>Spreadsheet-style copy and paste on a grid table: select a cell block and copy it, or paste rows from Excel into the table and let the backend append them - needs UI5 1.119 or newer.<br><sub>clipboard copy paste cellselector copyprovider pasteprovider excel spreadsheet grid control_by_id</sub> | [`Z2UI5_CL_SMP_APP_535`](src/z2ui5_cl_smp_app_535.clas.abap) |
 | Events on Cell Level<br>Events on cell level in a grid table: which row and which column the user was in, and what arrives in the backend.<br><sub>cell enter row index event grid alv</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_160`](src/z2ui5_cl_smp_app_160.clas.abap) |
 | Full Example with sap.ui.table<br>The full sap.ui.table example: a DynamicPage with search, sort, filter, currency columns and row actions - the closest thing here to a finished ALV.<br><sub>grid alv dynamicpage column row action currency search sort filter</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables), [tutorials/walkthrough/step-9](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-9), [tutorials/walkthrough/step-10](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-10)</sub> | [`Z2UI5_CL_SMP_APP_070`](src/z2ui5_cl_smp_app_070.clas.abap) |
 | Keep Column Filters on Refresh (C)<br>Keeps the active sap.ui.table column filters across a view model update, through the abap2UI5 uitableext custom control - without it they are reset.<br><sub>column filter reset refresh uitableext grid alv</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_143`](src/z2ui5_cl_smp_app_143.clas.abap) |
@@ -245,6 +246,7 @@ overview app itself, that is 133 apps on every branch.
 
 | Sample | Class |
 |---|---|
+| Copy Options of the CopyProvider (UI5 1.119+) (A)<br>The CopyProvider's options on a responsive table: several fields per column with a text/html template, sparse copying, cells or full rows - paste the result below to see what the clipboard holds. Needs UI5 1.119+.<br><sub>clipboard copy cellselector copyprovider copysparse copypreference template spreadsheet control_by_id</sub> | [`Z2UI5_CL_SMP_APP_536`](src/z2ui5_cl_smp_app_536.clas.abap) |
 | Drag and Drop Rows (A)<br>Drag and drop of table rows (DragDropInfo), and how the new order reaches the internal table.<br><sub>dnd dragdropinfo reorder rows move</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_459`](src/z2ui5_cl_smp_app_459.clas.abap) |
 | Editable Cells, Add and Delete Rows<br>An editable table: input cells, adding and deleting rows, multi-select and a toolbar over them.<br><sub>edit input add row delete multiselect toolbar</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables), [tutorials/walkthrough/step-8](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-8), [tutorials/walkthrough/step-10](https://abap2ui5.github.io/docs/tutorials/walkthrough/step-10)</sub> | [`Z2UI5_CL_SMP_APP_011`](src/z2ui5_cl_smp_app_011.clas.abap) |
 | Filter Rows in the Backend<br>Filters table rows in the BACKEND from a form above it, so the WHERE runs where the data is.<br><sub>filter server side form growing where</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_045`](src/z2ui5_cl_smp_app_045.clas.abap) |
