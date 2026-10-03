@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_530 DEFINITION PUBLIC.
 
     " what the field holds right now, and everything scanned so far
     DATA value TYPE string.
-    DATA t_scans TYPE STANDARD TABLE OF ty_s_scan WITH EMPTY KEY.
+    DATA t_scans TYPE STANDARD TABLE OF ty_s_scan WITH DEFAULT KEY.
 
     " bound straight onto InputExt.inputMode: `none` keeps the on-screen
     " keyboard down while the field goes on taking input, `text` brings it
@@ -39,13 +39,13 @@ CLASS z2ui5_cl_smp_app_530 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
       " land in the field, so the first scan needs no tap at all
       focus_field( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -53,6 +53,9 @@ CLASS z2ui5_cl_smp_app_530 IMPLEMENTATION.
 
 
   METHOD on_event.
+          DATA temp1 TYPE z2ui5_cl_smp_app_530=>ty_s_scan.
+        DATA temp2 TYPE string.
+        DATA temp3 LIKE t_scans.
 
     CASE client->get_event( ).
 
@@ -61,19 +64,30 @@ CLASS z2ui5_cl_smp_app_530 IMPLEMENTATION.
         " submit, and the wire carries the value with it, so the roundtrip
         " already has what was scanned
         IF value IS NOT INITIAL.
-          INSERT VALUE #( pos  = lines( t_scans ) + 1
-                          code = value ) INTO TABLE t_scans.
+          
+          CLEAR temp1.
+          temp1-pos = lines( t_scans ) + 1.
+          temp1-code = value.
+          INSERT temp1 INTO TABLE t_scans.
           value = ``.
         ENDIF.
         " back into the empty field, ready for the next code
         focus_field( ).
 
       WHEN `TOGGLE`.
-        mode = COND #( WHEN mode = `none` THEN `text` ELSE `none` ).
+        
+        IF mode = `none`.
+          temp2 = `text`.
+        ELSE.
+          temp2 = `none`.
+        ENDIF.
+        mode = temp2.
         focus_field( ).
 
       WHEN `CLEAR`.
-        t_scans = VALUE #( ).
+        
+        CLEAR temp3.
+        t_scans = temp3.
 
     ENDCASE.
 
@@ -82,15 +96,21 @@ CLASS z2ui5_cl_smp_app_530 IMPLEMENTATION.
 
   METHOD focus_field.
 
+    DATA temp4 TYPE string_table.
+    CLEAR temp4.
+    INSERT c_field INTO TABLE temp4.
     client->follow_up_action( val   = client->cs_event-set_focus
-                              t_arg = VALUE #( ( c_field ) ) ).
+                              t_arg = temp4 ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -98,7 +118,8 @@ CLASS z2ui5_cl_smp_app_530 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Browser - Scan Field with Submit`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -143,7 +164,8 @@ CLASS z2ui5_cl_smp_app_530 IMPLEMENTATION.
             )->a( n = `icon`  v = `sap-icon://delete`
             )->a( n = `type`  v = `Reject` ).
 
-    DATA(table) = page->ele( `Table`
+    
+    table = page->ele( `Table`
         )->a( n = `items`      v = client->_bind( t_scans )
         )->a( n = `headerText` v = `Scanned`
         )->a( n = `class`      v = `sapUiSmallMargin` ).

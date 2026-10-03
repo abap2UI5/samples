@@ -15,14 +15,14 @@ CLASS z2ui5_cl_smp_app_541 DEFINITION PUBLIC.
         state    TYPE string,
         amount   TYPE i,
       END OF ty_s_order.
-    TYPES ty_t_orders TYPE STANDARD TABLE OF ty_s_order WITH EMPTY KEY.
+    TYPES ty_t_orders TYPE STANDARD TABLE OF ty_s_order WITH DEFAULT KEY.
     TYPES:
       BEGIN OF ty_s_finding,
         title       TYPE string,
         description TYPE string,
         icon        TYPE string,
       END OF ty_s_finding.
-    TYPES ty_t_findings TYPE STANDARD TABLE OF ty_s_finding WITH EMPTY KEY.
+    TYPES ty_t_findings TYPE STANDARD TABLE OF ty_s_finding WITH DEFAULT KEY.
 
     DATA t_orders      TYPE ty_t_orders.
     DATA t_findings    TYPE ty_t_findings.
@@ -56,11 +56,11 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -69,22 +69,88 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
 
   METHOD on_init.
 
-    t_orders = VALUE #(
-      ( id = `4711` customer = `Bike Corner`     region = `North` status = `Delivered` amount = 1200 )
-      ( id = `4712` customer = `City Cycles`     region = `South` status = `Open`      amount = 860 )
-      ( id = `4713` customer = `Mountain Outfit` region = `North` status = `Overdue`   amount = 2400 )
-      ( id = `4714` customer = `Velo Point`      region = `West`  status = `Delivered` amount = 640 )
-      ( id = `4715` customer = `Bike Corner`     region = `North` status = `Open`      amount = 1500 )
-      ( id = `4716` customer = `Urban Wheels`    region = `East`  status = `Delivered` amount = 9800 )
-      ( id = `4717` customer = `City Cycles`     region = `South` status = `Overdue`   amount = 720 )
-      ( id = `4718` customer = `Trail Masters`   region = `West`  status = `Delivered` amount = 1900 )
-      ( id = `4719` customer = `Velo Point`      region = `West`  status = `Open`      amount = 1100 )
-      ( id = `4720` customer = `Mountain Outfit` region = `North` status = `Delivered` amount = 1350 ) ).
+    DATA temp1 TYPE z2ui5_cl_smp_app_541=>ty_t_orders.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA temp3 LIKE LINE OF t_orders.
+    DATA order LIKE REF TO temp3.
+      DATA temp4 TYPE z2ui5_cl_smp_app_541=>ty_s_order-state.
+    CLEAR temp1.
+    
+    temp2-id = `4711`.
+    temp2-customer = `Bike Corner`.
+    temp2-region = `North`.
+    temp2-status = `Delivered`.
+    temp2-amount = 1200.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `4712`.
+    temp2-customer = `City Cycles`.
+    temp2-region = `South`.
+    temp2-status = `Open`.
+    temp2-amount = 860.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `4713`.
+    temp2-customer = `Mountain Outfit`.
+    temp2-region = `North`.
+    temp2-status = `Overdue`.
+    temp2-amount = 2400.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `4714`.
+    temp2-customer = `Velo Point`.
+    temp2-region = `West`.
+    temp2-status = `Delivered`.
+    temp2-amount = 640.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `4715`.
+    temp2-customer = `Bike Corner`.
+    temp2-region = `North`.
+    temp2-status = `Open`.
+    temp2-amount = 1500.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `4716`.
+    temp2-customer = `Urban Wheels`.
+    temp2-region = `East`.
+    temp2-status = `Delivered`.
+    temp2-amount = 9800.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `4717`.
+    temp2-customer = `City Cycles`.
+    temp2-region = `South`.
+    temp2-status = `Overdue`.
+    temp2-amount = 720.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `4718`.
+    temp2-customer = `Trail Masters`.
+    temp2-region = `West`.
+    temp2-status = `Delivered`.
+    temp2-amount = 1900.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `4719`.
+    temp2-customer = `Velo Point`.
+    temp2-region = `West`.
+    temp2-status = `Open`.
+    temp2-amount = 1100.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `4720`.
+    temp2-customer = `Mountain Outfit`.
+    temp2-region = `North`.
+    temp2-status = `Delivered`.
+    temp2-amount = 1350.
+    INSERT temp2 INTO TABLE temp1.
+    t_orders = temp1.
 
-    LOOP AT t_orders REFERENCE INTO DATA(order).
-      order->state = SWITCH #( order->status WHEN `Delivered` THEN `Success`
-                                             WHEN `Overdue`   THEN `Error`
-                                             ELSE `Warning` ).
+    
+    
+    LOOP AT t_orders REFERENCE INTO order.
+      
+      CASE order->status.
+        WHEN `Delivered`.
+          temp4 = `Success`.
+        WHEN `Overdue`.
+          temp4 = `Error`.
+        WHEN OTHERS.
+          temp4 = `Warning`.
+      ENDCASE.
+      order->state = temp4.
     ENDLOOP.
 
     view_display( ).
@@ -93,6 +159,8 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp5 TYPE z2ui5_cl_smp_app_541=>ty_t_findings.
+        DATA temp6 TYPE string_table.
 
     CASE client->get_event( ).
 
@@ -103,9 +171,15 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
         panel_visible = abap_true.
         busy          = abap_true.
         headline      = `Reading the rows...`.
-        t_findings    = VALUE #( ).
+        
+        CLEAR temp5.
+        t_findings    = temp5.
+        
+        CLEAR temp6.
+        INSERT `SUMMARIZE` INTO TABLE temp6.
+        INSERT `800` INTO TABLE temp6.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-start_timer
-                                  t_arg = VALUE #( ( `SUMMARIZE` ) ( `800` ) ) ).
+                                  t_arg = temp6 ).
 
       WHEN `SUMMARIZE`.
         on_event_summarize( ).
@@ -122,7 +196,8 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
 
     " the selection was written back before this handler runs - explain the
     " selected rows, or all of them when nothing is selected
-    DATA(t_scope) = t_orders.
+    DATA t_scope LIKE t_orders.
+    t_scope = t_orders.
     DELETE t_scope WHERE selected = abap_false.
 
     IF t_scope IS INITIAL.
@@ -168,16 +243,67 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
     DATA overdue_count TYPE i.
     DATA overdue_amount TYPE i.
     DATA outliers TYPE string.
+      DATA temp8 TYPE z2ui5_cl_smp_app_541=>ty_t_findings.
+      DATA temp9 LIKE LINE OF temp8.
+    DATA largest LIKE LINE OF t_rows.
+    FIELD-SYMBOLS <temp1> LIKE LINE OF t_rows.
+    DATA temp2 LIKE sy-tabix.
+    DATA smallest LIKE LINE OF t_rows.
+    FIELD-SYMBOLS <temp3> LIKE LINE OF t_rows.
+    DATA temp4 LIKE sy-tabix.
+    DATA row LIKE LINE OF t_rows.
+      FIELD-SYMBOLS <region> TYPE ty_s_region.
+        DATA temp10 TYPE ty_s_region.
+    DATA count TYPE i.
+    DATA average TYPE i.
+    DATA strongest LIKE LINE OF t_regions.
+    FIELD-SYMBOLS <temp5> LIKE LINE OF t_regions.
+    DATA temp6 LIKE sy-tabix.
+    DATA region LIKE LINE OF t_regions.
+    DATA strongest_share TYPE ty_s_region-amount.
+    DATA threshold TYPE i.
+        DATA temp11 TYPE string.
+    DATA temp12 TYPE z2ui5_cl_smp_app_541=>ty_t_findings.
+    DATA temp13 LIKE LINE OF temp12.
+    DATA temp7 TYPE z2ui5_cl_smp_app_541=>ty_s_finding-description.
+    DATA temp14 TYPE z2ui5_cl_smp_app_541=>ty_s_finding-icon.
+    DATA temp15 TYPE z2ui5_cl_smp_app_541=>ty_s_finding-description.
 
     IF t_rows IS INITIAL.
-      result = VALUE #( ( title = `Nothing to explain` description = `The table holds no rows.` icon = `sap-icon://hint` ) ).
+      
+      CLEAR temp8.
+      
+      temp9-title = `Nothing to explain`.
+      temp9-description = `The table holds no rows.`.
+      temp9-icon = `sap-icon://hint`.
+      INSERT temp9 INTO TABLE temp8.
+      result = temp8.
       RETURN.
     ENDIF.
 
-    DATA(largest)  = t_rows[ 1 ].
-    DATA(smallest) = t_rows[ 1 ].
+    
+    
+    
+    temp2 = sy-tabix.
+    READ TABLE t_rows INDEX 1 ASSIGNING <temp1>.
+    sy-tabix = temp2.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
+    largest = <temp1>.
+    
+    
+    
+    temp4 = sy-tabix.
+    READ TABLE t_rows INDEX 1 ASSIGNING <temp3>.
+    sy-tabix = temp4.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
+    smallest = <temp3>.
 
-    LOOP AT t_rows INTO DATA(row).
+    
+    LOOP AT t_rows INTO row.
 
       total = total + row-amount.
       IF row-amount > largest-amount.
@@ -193,63 +319,117 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
         overdue_amount = overdue_amount + row-amount.
       ENDIF.
 
-      READ TABLE t_regions ASSIGNING FIELD-SYMBOL(<region>) WITH TABLE KEY region = row-region.
+      
+      READ TABLE t_regions ASSIGNING <region> WITH TABLE KEY region = row-region.
       IF sy-subrc = 0.
         <region>-amount = <region>-amount + row-amount.
       ELSE.
-        INSERT VALUE #( region = row-region amount = row-amount ) INTO TABLE t_regions.
+        
+        CLEAR temp10.
+        temp10-region = row-region.
+        temp10-amount = row-amount.
+        INSERT temp10 INTO TABLE t_regions.
       ENDIF.
     ENDLOOP.
 
-    DATA(count)   = lines( t_rows ).
-    DATA(average) = total / count.
+    
+    count   = lines( t_rows ).
+    
+    average = total / count.
 
-    DATA(strongest) = t_regions[ 1 ].
-    LOOP AT t_regions INTO DATA(region).
+    
+    
+    
+    temp6 = sy-tabix.
+    READ TABLE t_regions INDEX 1 ASSIGNING <temp5>.
+    sy-tabix = temp6.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
+    strongest = <temp5>.
+    
+    LOOP AT t_regions INTO region.
       IF region-amount > strongest-amount.
         strongest = region.
       ENDIF.
     ENDLOOP.
     " an integer variable, not arithmetic inside the template: the transpiled
     " runtime (playground, node backend) formats such an expression as a float
-    DATA(strongest_share) = strongest-amount * 100 / total.
+    
+    strongest_share = strongest-amount * 100 / total.
 
-    DATA(threshold) = 2 * average.
+    
+    threshold = 2 * average.
     LOOP AT t_rows INTO row.
       IF row-amount > threshold.
-        outliers = COND #( WHEN outliers IS INITIAL THEN row-id ELSE |{ outliers }, { row-id }| ).
+        
+        IF outliers IS INITIAL.
+          temp11 = row-id.
+        ELSE.
+          temp11 = |{ outliers }, { row-id }|.
+        ENDIF.
+        outliers = temp11.
       ENDIF.
     ENDLOOP.
 
-    result = VALUE #(
-      ( title       = `Volume`
-        description = |{ count } orders worth { total } EUR, { average } EUR per order on average.|
-        icon        = `sap-icon://sales-order` )
-      ( title       = `Extremes`
-        description = |Largest: { largest-id } of { largest-customer } with { largest-amount } EUR. | &&
-                      |Smallest: { smallest-id } of { smallest-customer } with { smallest-amount } EUR.|
-        icon        = `sap-icon://trend-up` )
-      ( title       = `Regions`
-        description = |{ strongest-region } brings the most: { strongest-amount } EUR, | &&
-                      |{ strongest_share }% of the total across { lines( t_regions ) } regions.|
-        icon        = `sap-icon://map` )
-      ( title       = `Overdue`
-        description = COND #( WHEN overdue_count = 0
-                              THEN `No order is overdue.`
-                              ELSE |{ overdue_count } of { count } orders are overdue, { overdue_amount } EUR in total.| )
-        icon        = COND #( WHEN overdue_count = 0 THEN `sap-icon://accept` ELSE `sap-icon://warning` ) )
-      ( title       = `Outliers`
-        description = COND #( WHEN outliers IS INITIAL
-                              THEN `No order is more than twice the average.`
-                              ELSE |More than twice the average: { outliers }. Worth a second look.| )
-        icon        = `sap-icon://alert` ) ).
+    
+    CLEAR temp12.
+    
+    temp13-title = `Volume`.
+    temp13-description = |{ count } orders worth { total } EUR, { average } EUR per order on average.|.
+    temp13-icon = `sap-icon://sales-order`.
+    INSERT temp13 INTO TABLE temp12.
+    temp13-title = `Extremes`.
+    temp13-description = |Largest: { largest-id } of { largest-customer } with { largest-amount } EUR. | &&
+|Smallest: { smallest-id } of { smallest-customer } with { smallest-amount } EUR.|.
+    temp13-icon = `sap-icon://trend-up`.
+    INSERT temp13 INTO TABLE temp12.
+    temp13-title = `Regions`.
+    temp13-description = |{ strongest-region } brings the most: { strongest-amount } EUR, | &&
+|{ strongest_share }% of the total across { lines( t_regions ) } regions.|.
+    temp13-icon = `sap-icon://map`.
+    INSERT temp13 INTO TABLE temp12.
+    temp13-title = `Overdue`.
+    
+    IF overdue_count = 0.
+      temp7 = `No order is overdue.`.
+    ELSE.
+      temp7 = |{ overdue_count } of { count } orders are overdue, { overdue_amount } EUR in total.|.
+    ENDIF.
+    temp13-description = temp7.
+    
+    IF overdue_count = 0.
+      temp14 = `sap-icon://accept`.
+    ELSE.
+      temp14 = `sap-icon://warning`.
+    ENDIF.
+    temp13-icon = temp14.
+    INSERT temp13 INTO TABLE temp12.
+    temp13-title = `Outliers`.
+    
+    IF outliers IS INITIAL.
+      temp15 = `No order is more than twice the average.`.
+    ELSE.
+      temp15 = |More than twice the average: { outliers }. Worth a second look.|.
+    ENDIF.
+    temp13-description = temp15.
+    temp13-icon = `sap-icon://alert`.
+    INSERT temp13 INTO TABLE temp12.
+    result = temp12.
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA side_content TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA cells TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA panel TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -257,7 +437,8 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - AI - Explain This Data in a DynamicSideContent Panel`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -272,13 +453,15 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " on a narrow screen the panel falls below the table instead of hiding
-    DATA(side_content) = page->ele( n = `DynamicSideContent` ns = `layout`
+    
+    side_content = page->ele( n = `DynamicSideContent` ns = `layout`
         )->a( n = `showSideContent`       v = client->_bind( panel_visible )
         )->a( n = `sideContentVisibility` v = `AlwaysShow`
         )->a( n = `sideContentFallDown`   v = `BelowM`
         )->a( n = `containerQuery`        b = abap_true ).
 
-    DATA(tab) = side_content->ele( n = `mainContent` ns = `layout`
+    
+    tab = side_content->ele( n = `mainContent` ns = `layout`
         )->ele( `Table`
             )->a( n = `items` v = client->_bind( t_orders )
             )->a( n = `mode`  v = `MultiSelect` ).
@@ -294,7 +477,8 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
                 )->a( n = `type`  v = `Emphasized`
                 )->a( n = `press` v = client->_event( `EXPLAIN` ) ).
 
-    DATA(columns) = tab->ele( `columns` ).
+    
+    columns = tab->ele( `columns` ).
     columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Order` ).
@@ -316,7 +500,8 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
         )->tag( `Text`
             )->a( n = `text` v = `Amount` ).
 
-    DATA(cells) = tab->ele( `items`
+    
+    cells = tab->ele( `items`
         )->ele( `ColumnListItem`
             )->a( n = `selected` v = `{SELECTED}`
             )->ele( `cells` ).
@@ -333,7 +518,8 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
         )->a( n = `number` v = `{AMOUNT}`
         )->a( n = `unit`   v = `EUR` ).
 
-    DATA(panel) = side_content->ele( n = `sideContent` ns = `layout`
+    
+    panel = side_content->ele( n = `sideContent` ns = `layout`
         )->ele( `VBox`
             )->a( n = `busy`               v = client->_bind( busy )
             )->a( n = `busyIndicatorDelay` v = `0`

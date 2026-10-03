@@ -13,7 +13,7 @@ CLASS z2ui5_cl_smp_app_540 DEFINITION PUBLIC.
         icon   TYPE string,
         info   TYPE string,
       END OF ty_s_message.
-    TYPES ty_t_messages TYPE STANDARD TABLE OF ty_s_message WITH EMPTY KEY.
+    TYPES ty_t_messages TYPE STANDARD TABLE OF ty_s_message WITH DEFAULT KEY.
 
     DATA t_messages TYPE ty_t_messages.
     DATA busy       TYPE abap_bool.
@@ -50,14 +50,14 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       chat_reset( ).
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -86,7 +86,9 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
 
   METHOD chat_reset.
 
-    t_messages = VALUE #( ).
+    DATA temp1 TYPE z2ui5_cl_smp_app_540=>ty_t_messages.
+    CLEAR temp1.
+    t_messages = temp1.
     busy       = abap_false.
 
     message_add( role = `assistant`
@@ -96,6 +98,7 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
 
 
   METHOD prompt_send.
+    DATA temp2 TYPE string_table.
 
     IF prompt IS INITIAL OR busy = abap_true.
       RETURN.
@@ -110,8 +113,12 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
     " asks for the answer. With a real LLM that second roundtrip is where the
     " seconds are spent. The 800 ms only stand in for that time here - drop
     " the delay to 0 once a real provider answers.
+    
+    CLEAR temp2.
+    INSERT `ANSWER` INTO TABLE temp2.
+    INSERT `800` INTO TABLE temp2.
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-start_timer
-                              t_arg = VALUE #( ( `ANSWER` ) ( `800` ) ) ).
+                              t_arg = temp2 ).
 
   ENDMETHOD.
 
@@ -119,11 +126,35 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
   METHOD message_add.
 
     " newest first - the order of a sap.m feed, with the FeedInput on top
-    INSERT VALUE #( role   = role
-                    text   = text
-                    sender = COND #( WHEN role = `user` THEN `You` ELSE `Assistant` )
-                    icon   = COND #( WHEN role = `user` THEN `sap-icon://customer` ELSE `sap-icon://hint` )
-                    info   = COND #( WHEN role = `assistant` THEN `built-in rule-based provider` ) )
+    DATA temp4 TYPE z2ui5_cl_smp_app_540=>ty_s_message.
+    DATA temp1 TYPE z2ui5_cl_smp_app_540=>ty_s_message-sender.
+    DATA temp2 TYPE z2ui5_cl_smp_app_540=>ty_s_message-icon.
+    DATA temp3 TYPE z2ui5_cl_smp_app_540=>ty_s_message-info.
+    CLEAR temp4.
+    temp4-role = role.
+    temp4-text = text.
+    
+    IF role = `user`.
+      temp1 = `You`.
+    ELSE.
+      temp1 = `Assistant`.
+    ENDIF.
+    temp4-sender = temp1.
+    
+    IF role = `user`.
+      temp2 = `sap-icon://customer`.
+    ELSE.
+      temp2 = `sap-icon://hint`.
+    ENDIF.
+    temp4-icon = temp2.
+    
+    IF role = `assistant`.
+      temp3 = `built-in rule-based provider`.
+    ELSE.
+      CLEAR temp3.
+    ENDIF.
+    temp4-info = temp3.
+    INSERT temp4
            INTO t_messages INDEX 1.
 
   ENDMETHOD.
@@ -152,7 +183,9 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
     DATA first_question TYPE string.
     DATA user_count TYPE i.
 
-    LOOP AT t_history INTO DATA(message).
+    DATA message LIKE LINE OF t_history.
+    DATA words TYPE string.
+    LOOP AT t_history INTO message.
 
       IF message-role <> `user`.
         CONTINUE.
@@ -167,27 +200,28 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
 
     " blanks around the words, punctuation removed: ` hi ` must match the
     " greeting and not the start of `history`
-    DATA(words) = | { to_lower( translate( val = question from = `?!.,;:` to = `` ) ) } |.
+    
+    words = | { to_lower( translate( val = question from = `?!.,;:` to = `` ) ) } |.
 
-    IF contains( val = words sub = ` hello ` ) OR contains( val = words sub = ` hi ` ) OR contains( val = words sub = ` hey ` ).
+    IF words CS ` hello ` OR words CS ` hi ` OR words CS ` hey `.
       result = `Hello! Ask me what I can do, what abap2UI5 is, or how to plug in a real language model.`.
 
-    ELSEIF contains( val = words sub = ` help ` ) OR contains( val = words sub = ` can you do ` ).
+    ELSEIF words CS ` help ` OR words CS ` can you do `.
       result = `I am a rule-based stand-in for a language model. I know a few topics: abap2UI5 itself, how to ` &&
                `plug in a real LLM, how many messages this chat has, and what you asked first.`.
 
-    ELSEIF contains( val = words sub = ` llm ` ) OR contains( val = words sub = ` real ` ) OR contains( val = words sub = ` plug ` ).
+    ELSEIF words CS ` llm ` OR words CS ` real ` OR words CS ` plug `.
       result = `Replace the body of the method get_answer( ) with a call to your model. It already receives the ` &&
                `whole conversation, so the model sees the context - the screen does not change at all.`.
 
-    ELSEIF contains( val = words sub = ` abap2ui5 ` ).
+    ELSEIF words CS ` abap2ui5 `.
       result = `abap2UI5 builds UI5 apps in pure ABAP: one class renders the view, binds its attributes and ` &&
                `handles the events - this chat is one such class.`.
 
-    ELSEIF contains( val = words sub = ` how many ` ).
+    ELSEIF words CS ` how many `.
       result = |This chat holds { lines( t_history ) } messages so far, { user_count } of them from you.|.
 
-    ELSEIF contains( val = words sub = ` first ` ).
+    ELSEIF words CS ` first `.
       result = |The first thing you asked was: "{ first_question }"|.
 
     ELSE.
@@ -199,22 +233,32 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA t_prompts TYPE STANDARD TABLE OF string WITH EMPTY KEY.
+    DATA t_prompts TYPE STANDARD TABLE OF string WITH DEFAULT KEY.
 
-    t_prompts = VALUE #( ( `What can you do?` )
-                         ( `What is abap2UI5?` )
-                         ( `How do I plug in a real LLM?` )
-                         ( `How many messages so far?` )
-                         ( `What did I ask first?` ) ).
+    DATA temp5 LIKE t_prompts.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA content TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA suggestions TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA prompt LIKE LINE OF t_prompts.
+    CLEAR temp5.
+    INSERT `What can you do?` INTO TABLE temp5.
+    INSERT `What is abap2UI5?` INTO TABLE temp5.
+    INSERT `How do I plug in a real LLM?` INTO TABLE temp5.
+    INSERT `How many messages so far?` INTO TABLE temp5.
+    INSERT `What did I ask first?` INTO TABLE temp5.
+    t_prompts = temp5.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - AI - Chat Assistant with FeedInput and FeedListItem`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -235,7 +279,8 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(content) = page->ele( `VBox`
+    
+    content = page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMarginBeginEnd` ).
 
     " the typed text leaves the browser as the event argument - the
@@ -247,10 +292,12 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
         )->a( n = `post`        v = client->_event( val = `POST`
                                                     arg = `${$parameters>/value}` ) ).
 
-    DATA(suggestions) = content->ele( `HBox`
+    
+    suggestions = content->ele( `HBox`
         )->a( n = `wrap`  v = `Wrap`
         )->a( n = `class` v = `sapUiSmallMarginTop` ).
-    LOOP AT t_prompts INTO DATA(prompt).
+    
+    LOOP AT t_prompts INTO prompt.
       suggestions->tag( `Button`
           )->a( n = `text`    t = prompt
           )->a( n = `class`   v = `sapUiTinyMarginEnd sapUiTinyMarginBottom`

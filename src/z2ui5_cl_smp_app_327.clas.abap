@@ -31,7 +31,7 @@ CLASS z2ui5_cl_smp_app_327 DEFINITION PUBLIC.
       END OF ty_s_type.
     DATA s_storage TYPE ty_s_storage.
     DATA s_stored_value TYPE ty_s_value.
-    DATA t_types TYPE STANDARD TABLE OF ty_s_type WITH EMPTY KEY.
+    DATA t_types TYPE STANDARD TABLE OF ty_s_type WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -55,11 +55,11 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -68,12 +68,22 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
 
   METHOD on_init.
 
-    t_types   = VALUE #( ( type = `local` ) ( type = `session` ) ).
-    s_storage = VALUE #( type   = `local`
-                         prefix = `prefix1`
-                         key    = `key1`
-                         value  = VALUE #( field1 = `1`
-                                           field2 = `textfld1` ) ).
+    DATA temp1 LIKE t_types.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-type = `local`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `session`.
+    INSERT temp2 INTO TABLE temp1.
+    t_types   = temp1.
+    CLEAR s_storage.
+    s_storage-type = `local`.
+    s_storage-prefix = `prefix1`.
+    s_storage-key = `key1`.
+    CLEAR s_storage-value.
+    s_storage-value-field1 = `1`.
+    s_storage-value-field2 = `textfld1`.
 
     view_display( ).
 
@@ -81,6 +91,7 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA lv_json TYPE string.
 
     CASE client->get_event( ).
 
@@ -92,11 +103,13 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
         " the key may carry more (or other) fields than this app models - an
         " earlier shape, or a value someone else wrote. A field that is not
         " there simply stays empty.
-        DATA(lv_json) = client->get_event_arg( 4 ).
-        s_storage-value = VALUE #( field1 = json_get_value( json = lv_json
-                                                            name = `FIELD1` )
-                                   field2 = json_get_value( json = lv_json
-                                                            name = `FIELD2` ) ).
+        
+        lv_json = client->get_event_arg( 4 ).
+        CLEAR s_storage-value.
+        s_storage-value-field1 = json_get_value( json = lv_json
+name = `FIELD1` ).
+        s_storage-value-field2 = json_get_value( json = lv_json
+name = `FIELD2` ).
 
       WHEN `GET_STORED_VALUE`.
         s_storage-value = s_stored_value.
@@ -112,9 +125,12 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
     " `"<name>":"` and take what stands up to the next quote. The model writes
     " the ABAP component names in upper case, hence the case-insensitive
     " search. An app parsing arbitrary JSON wants a real parser instead.
-    DATA(lv_marker) = |"{ name }":"|.
+    DATA lv_marker TYPE string.
+    DATA lv_off TYPE i.
+    lv_marker = |"{ name }":"|.
 
-    DATA(lv_off) = find( val = json sub = lv_marker case = abap_false ).
+    
+    lv_off = find( val = json sub = lv_marker case = abap_false ).
     IF lv_off < 0.
       RETURN.
     ENDIF.
@@ -128,7 +144,12 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp3 TYPE string_table.
+    DATA temp1 LIKE LINE OF temp3.
+    DATA temp5 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -138,7 +159,8 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Browser - Local and Session Storage`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -153,6 +175,11 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp3.
+    
+    temp1 = |${ client->_bind( s_storage ) }|.
+    INSERT temp1 INTO TABLE temp3.
     page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Local/Session Storage`
         )->a( n = `editable` b = abap_true
@@ -189,7 +216,7 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
             )->tag( `Button`
                 )->a( n = `press` v = client->follow_up_action(
                            val   = z2ui5_if_client=>cs_event-store_data
-                           t_arg = VALUE #( ( |${ client->_bind( s_storage ) }| ) ) )
+                           t_arg = temp3 )
                 )->a( n = `text`  v = `store`
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( `GET_STORED_VALUE` )
@@ -199,12 +226,15 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
     " and fires `finished` when the stored value differs from `value`. The
     " comparison is by value, so a structure does not re-trigger on every
     " render.
+    
+    CLEAR temp5.
+    INSERT `${$parameters>/type}` INTO TABLE temp5.
+    INSERT `${$parameters>/prefix}` INTO TABLE temp5.
+    INSERT `${$parameters>/key}` INTO TABLE temp5.
+    INSERT `${$parameters>/value}` INTO TABLE temp5.
     page->tag( n = `Storage` ns = `z2ui5`
         )->a( n = `finished` v = client->_event( val   = `LOCAL_STORAGE_LOADED`
-                                   t_arg = VALUE #( ( `${$parameters>/type}` )
-                                                    ( `${$parameters>/prefix}` )
-                                                    ( `${$parameters>/key}` )
-                                                    ( `${$parameters>/value}` ) ) )
+                                   t_arg = temp5 )
         )->a( n = `type`   v = client->_bind( s_storage-type )
         )->a( n = `prefix` v = client->_bind( s_storage-prefix )
         )->a( n = `key`    v = client->_bind( s_storage-key )

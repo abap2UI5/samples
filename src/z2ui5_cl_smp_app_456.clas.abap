@@ -13,12 +13,12 @@ CLASS z2ui5_cl_smp_app_456 DEFINITION PUBLIC.
         title    TYPE string,
         type     TYPE string,
       END OF ty_s_appointment,
-      ty_t_appointment TYPE STANDARD TABLE OF ty_s_appointment WITH EMPTY KEY,
+      ty_t_appointment TYPE STANDARD TABLE OF ty_s_appointment WITH DEFAULT KEY,
       BEGIN OF ty_s_person,
         name           TYPE string,
         t_appointments TYPE ty_t_appointment,
       END OF ty_s_person.
-    DATA t_people   TYPE STANDARD TABLE OF ty_s_person WITH EMPTY KEY.
+    DATA t_people   TYPE STANDARD TABLE OF ty_s_person WITH DEFAULT KEY.
     DATA start_date TYPE string.
 
   PROTECTED SECTION.
@@ -33,23 +33,49 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_people.
+      DATA temp2 LIKE LINE OF temp1.
+      DATA temp3 TYPE z2ui5_cl_smp_app_456=>ty_t_appointment.
+      DATA temp4 LIKE LINE OF temp3.
+      DATA temp5 TYPE z2ui5_cl_smp_app_456=>ty_t_appointment.
+      DATA temp6 LIKE LINE OF temp5.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       start_date = `2026-07-20T07:00:00`.
-      t_people = VALUE #(
-          ( name = `Anna Miller`
-            t_appointments = VALUE #(
-                ( start_at = `2026-07-20T08:00:00` end_at = `2026-07-20T09:00:00`
-                  title = `Team meeting` type = `Type01` )
-                ( start_at = `2026-07-20T11:00:00` end_at = `2026-07-20T12:30:00`
-                  title = `Customer call` type = `Type08` ) ) )
-          ( name = `Tom Schmidt`
-            t_appointments = VALUE #(
-                ( start_at = `2026-07-20T09:30:00` end_at = `2026-07-20T10:30:00`
-                  title = `Code review` type = `Type06` ) ) ) ).
+      
+      CLEAR temp1.
+      
+      temp2-name = `Anna Miller`.
+      
+      CLEAR temp3.
+      
+      temp4-start_at = `2026-07-20T08:00:00`.
+      temp4-end_at = `2026-07-20T09:00:00`.
+      temp4-title = `Team meeting`.
+      temp4-type = `Type01`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-start_at = `2026-07-20T11:00:00`.
+      temp4-end_at = `2026-07-20T12:30:00`.
+      temp4-title = `Customer call`.
+      temp4-type = `Type08`.
+      INSERT temp4 INTO TABLE temp3.
+      temp2-t_appointments = temp3.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Tom Schmidt`.
+      
+      CLEAR temp5.
+      
+      temp6-start_at = `2026-07-20T09:30:00`.
+      temp6-end_at = `2026-07-20T10:30:00`.
+      temp6-title = `Code review`.
+      temp6-type = `Type06`.
+      INSERT temp6 INTO TABLE temp5.
+      temp2-t_appointments = temp5.
+      INSERT temp2 INTO TABLE temp1.
+      t_people = temp1.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -58,7 +84,9 @@ CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -75,7 +103,8 @@ CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
     " use - the model itself stays plain strings everywhere.
     view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Formatter - Date Objects for the PlanningCalendar`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
