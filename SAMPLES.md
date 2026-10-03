@@ -3,7 +3,7 @@
 
 # The sample catalogue
 
-Every app in this repository — 138 of them — with what it shows and a link
+Every app in this repository — 140 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
@@ -13,7 +13,7 @@ nothing in it is stripped from `702`.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 127 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 129 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -28,12 +28,19 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path
 
-The **127 ready-to-run samples** the README leads with, and the
+The **129 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 10 helper apps they call and the
-overview app itself, that is 138 apps on every branch.
+overview app itself, that is 140 apps on every branch.
 
-[Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
+[AI](#ai) · [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
+
+### AI
+
+| Sample | Class |
+|---|---|
+| Chat Assistant with FeedInput and FeedListItem (A)<br>A chat assistant screen - conversation history, suggested prompts, a busy feed while the answer is on its way, a clear button - answered by a built-in rule-based provider that one method turns into a real LLM call.<br><sub>ai llm chat assistant chatbot prompt conversation feedinput feedlistitem busy start_timer</sub> | [`Z2UI5_CL_SMP_APP_540`](src/z2ui5_cl_smp_app_540.clas.abap) |
+| Explain This Data in a DynamicSideContent Panel (A)<br>An explain-this-data button over a table - a side panel summarises the selected rows (counts, totals, extremes, outliers) through a deterministic provider that one method turns into an LLM call.<br><sub>ai llm assistant chat explain summary insight outlier table selection dynamicsidecontent</sub> | [`Z2UI5_CL_SMP_APP_541`](src/z2ui5_cl_smp_app_541.clas.abap) |
 
 ### Basics
 

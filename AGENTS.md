@@ -804,6 +804,7 @@ newcomer would actually type:
 
 | Header | What belongs in it |
 |--------|--------------------|
+| `AI` | an assistant inside the app — a chat, an explanation of the data on screen — answered by a provider method a real LLM replaces. Samples here run without one; the ones calling a real model need an endpoint and live in [samples-stack](https://github.com/abap2UI5/samples-stack) |
 | `Basics I` … `VII` | the entry point — first app, lifecycle, the minimum loop, and what you reach for around it (the developer tools, a unit test on the app's own logic, the translation of its texts). The only numbered series: the Roman numeral orders them as a learning path (rule 5 sorts by `header`), and `header_base( )` still renders them as one block |
 | `Binding` | `_bind( )`, binding syntax, UI5 model types, the model itself |
 | `Browser` | the browser page and tab: URL, title, favicon, reload, clipboard, storage, logout |

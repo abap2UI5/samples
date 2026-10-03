@@ -50,13 +50,14 @@
   {
    "id": "talk",
    "title": "Talk to the user",
-   "blurb": "The other direction: events arriving from the view, messages and message boxes going back, and the popups, popovers and menus that ask before something happens.",
+   "blurb": "The other direction: events arriving from the view, messages and message boxes going back, the popups, popovers and menus that ask before something happens - and an assistant that answers back.",
    "categories": [
     "Event",
     "Message",
     "Popup",
     "Popover",
-    "Menu"
+    "Menu",
+    "AI"
    ]
   },
   {
