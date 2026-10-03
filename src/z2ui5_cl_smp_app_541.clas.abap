@@ -208,6 +208,9 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
         strongest = region.
       ENDIF.
     ENDLOOP.
+    " an integer variable, not arithmetic inside the template: the transpiled
+    " runtime (playground, node backend) formats such an expression as a float
+    DATA(strongest_share) = strongest-amount * 100 / total.
 
     DATA(threshold) = 2 * average.
     LOOP AT t_rows INTO row.
@@ -226,7 +229,7 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
         icon        = `sap-icon://trend-up` )
       ( title       = `Regions`
         description = |{ strongest-region } brings the most: { strongest-amount } EUR, | &&
-                      |{ strongest-amount * 100 / total }% of the total across { lines( t_regions ) } regions.|
+                      |{ strongest_share }% of the total across { lines( t_regions ) } regions.|
         icon        = `sap-icon://map` )
       ( title       = `Overdue`
         description = COND #( WHEN overdue_count = 0
