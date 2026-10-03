@@ -56,7 +56,7 @@ CLASS z2ui5_cl_smp_app_507 IMPLEMENTATION.
       t_plain = VALUE #(
         ( name = `Handling` value = 4 maxvalue = 5  enabled = abap_true  note = `maxValue 5, enabled` )
         ( name = `Price`    value = 7 maxvalue = 10 enabled = abap_true  note = `maxValue 10, enabled` )
-        ( name = `Design`   value = 3                enabled = abap_true  note = `NO maxValue - the UI5 default 5 is meant` )
+        ( name = `Design`   value = 3 maxvalue = 0  enabled = abap_true  note = `NO maxValue - the UI5 default 5 is meant` )
         ( name = `Archived` value = 2 maxvalue = 5  enabled = abap_false note = `maxValue 5, NOT enabled` ) ).
       t_omit  = t_plain.
       t_paths = t_plain.

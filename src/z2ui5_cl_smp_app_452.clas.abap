@@ -67,10 +67,12 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
           group       = `Purchase Order 450001` )
         ( type        = `Warning`
           title       = `Enter a text with maximum 6 characters length`
+          subtitle    = ``
           description = description
           group       = `Purchase Order 450002` )
         ( type        = `Warning`
           title       = `Enter a text with maximum 8 characters length`
+          subtitle    = ``
           description = description
           group       = `Purchase Order 450002` )
         ( type        = `Error`
@@ -85,24 +87,29 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
           group       = `Purchase Order 450002` )
         ( type        = `Error`
           title       = `Technical message without object relation`
+          subtitle    = ``
           description = description
           group       = `General` )
         ( type        = `Warning`
           title       = `Global System will be down on Sunday`
+          subtitle    = ``
           description = description
           group       = `General` )
         ( type        = `Error`
           title       = `Global System will be down on Sunday`
+          subtitle    = ``
           description = description
           group       = `General` )
         ( type        = `Error`
           title       = `An Error`
           subtitle    = `Ungrouped message`
-          description = description )
+          description = description
+          group       = `` )
         ( type        = `Warning`
           title       = `A Warning`
           subtitle    = `Ungrouped message`
-          description = description ) ).
+          description = description
+          group       = `` ) ).
 
     view_display( ).
 

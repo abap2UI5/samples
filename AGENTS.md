@@ -651,9 +651,13 @@ too) and how it is written as a table row (`generate-samples-md.mjs`).
 
 ### Tile schema
 
-One row per app; `group`, `header`, `sub` and `app` are always present,
-`keywords` only when the class carries the comment line, `intro` on the first
-tile of a group only:
+One row per app, and **every row names every field** - `intro` is the
+stage's blurb on the first tile of a group and `` intro = `` `` on every
+other, `keywords` is written empty if a class ever lacks the comment line. A
+row that leaves a field out is initial there on 7.40+, but the 702 branch is
+the abaplint downport, which builds every row of a `VALUE` in one work area
+it never clears - a left-out `intro` repeated the first tile's blurb under
+every tile of its group (§10, VALUE #( ) formatting):
 
 ```abap
 ( group = `<stage title>` header = `<display title>` sub = `<short description>` keywords = `<extra search terms>` intro = `<stage blurb, first tile of the group only>` path = `<folder>` app = `<class name, lowercase>` )
@@ -1616,6 +1620,16 @@ t_products = VALUE #(
     weight_measure = `4.2`
     weight_unit    = `KG` ) ).
 ```
+
+**A later row names every component an earlier row set**, with an empty
+value (`` `` ``, `0`, `abap_false`, `VALUE #( )`) where it has none - an empty
+row `( )` after a filled one included. On 7.40+ a left-out component is
+initial; on the `702` branch, which is the abaplint downport, every row of a
+`VALUE` is built in one work area that is never cleared, so the row inherits
+the previous row's value - silently, nothing reports it. The upstream fix is
+tracked in abap2UI5's backlog (`abaplint-downport-value-row-not-cleared`);
+until it ships and is pinned, spell the components out. `FOR` rows and rows
+that all assign the same components are not affected.
 
 ---
 

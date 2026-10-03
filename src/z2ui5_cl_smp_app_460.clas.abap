@@ -48,7 +48,7 @@ CLASS z2ui5_cl_smp_app_460 IMPLEMENTATION.
           ( text = `Pictures` nodes = VALUE #(
               ( text = `Vacation` nodes = VALUE #(
                   ( text = `Beach.jpg` ) ) ) ) )
-          ( text = `Music` ) ).
+          ( text = `Music` nodes = VALUE #( ) ) ).
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).

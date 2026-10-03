@@ -40,7 +40,7 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
               ( text = `Contract.docx` ) ) )
           ( text = `Archive` nodes = VALUE #(
               ( text = `Old_Report.pdf` ) ) )
-          ( text = `Trash` ) ).
+          ( text = `Trash` nodes = VALUE #( ) ) ).
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).

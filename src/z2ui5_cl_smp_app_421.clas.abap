@@ -70,7 +70,7 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
         ( index = 2 title = `entry 03` value = `green`  info = `completed` description = `this is a description` checkbox = abap_true )
         ( index = 3 title = `entry 04` value = `orange` info = `completed` description = ``                     checkbox = abap_true )
         ( index = 4 title = `entry 05` value = `grey`   info = `completed` description = `this is a description` checkbox = abap_true )
-        ( index = 5 ) ).
+        ( index = 5 title = ``         value = ``       info = ``          description = ``                     checkbox = abap_false ) ).
 
     default_focus( ).
     view_display( ).
