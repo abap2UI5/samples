@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 127 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 129 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -794,11 +794,13 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Show many rows` header = `Tree` sub = `Editable Nodes with CustomTreeItem (C)` keywords = `customtreeitem rename input binding write back` path = `src` app = `z2ui5_cl_smp_app_463` )
       ( group = `Show many rows` header = `Tree` sub = `Inside a Dialog (C)` keywords = `popup expand state hierarchy nodes` path = `src` app = `z2ui5_cl_smp_app_462` )
       ( group = `Show many rows` header = `Tree` sub = `Nested ABAP Table in a sap.m.Tree` keywords = `hierarchy nodes nested json items` path = `src` app = `z2ui5_cl_smp_app_460` )
-      ( group = `Talk to the user` header = `Event`
-        sub = `Control Objects in t_arg (FacetFilter)`
-        keywords = `facetfilter filter object marshalling selected items`
-        intro = `The other direction: events arriving from the view, messages and message boxes going back, and the popups, popovers and menus that ask before something happens.`
-        path = `src` app = `z2ui5_cl_smp_app_197` )
+      ( group = `Talk to the user` header = `AI`
+        sub = `Chat Assistant with FeedInput and FeedListItem (A)`
+        keywords = `ai llm chat assistant chatbot prompt conversation feedinput feedlistitem busy start_timer`
+        intro = `The other direction: events arriving from the view, messages and message boxes going back, the popups, popovers and menus that ask before something happens - and an assistant that answers back.`
+        path = `src` app = `z2ui5_cl_smp_app_540` )
+      ( group = `Talk to the user` header = `AI` sub = `Explain This Data in a DynamicSideContent Panel (A)` keywords = `ai llm assistant chat explain summary insight outlier table selection dynamicsidecontent` path = `src` app = `z2ui5_cl_smp_app_541` )
+      ( group = `Talk to the user` header = `Event` sub = `Control Objects in t_arg (FacetFilter)` keywords = `facetfilter filter object marshalling selected items` path = `src` app = `z2ui5_cl_smp_app_197` )
       ( group = `Talk to the user` header = `Event` sub = `Custom Data Attached to Controls` keywords = `customdata data app namespace attach control list template t_arg` path = `src` app = `z2ui5_cl_smp_app_536` )
       ( group = `Talk to the user` header = `Event` sub = `Expressions, Formatters and Literals in t_arg` keywords = `argument expression formatter object literal row context t_arg require` path = `src` app = `z2ui5_cl_smp_app_537` )
       ( group = `Talk to the user` header = `Event` sub = `Extra Arguments with t_arg` keywords = `argument parameter payload event data fixed value` path = `src` app = `z2ui5_cl_smp_app_167` )

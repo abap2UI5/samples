@@ -48,7 +48,7 @@
   {
    "id": "talk",
    "title": "Talk to the user",
-   "blurb": "The other direction: events arriving from the view, messages and message boxes going back, and the popups, popovers and menus that ask before something happens."
+   "blurb": "The other direction: events arriving from the view, messages and message boxes going back, the popups, popovers and menus that ask before something happens - and an assistant that answers back."
   },
   {
    "id": "move",
@@ -62,11 +62,57 @@
   }
  ],
  "counts": {
-  "samples": 127,
-  "categories": 24,
+  "samples": 129,
+  "categories": 25,
   "stages": 6
  },
  "samples": [
+  {
+   "class": "z2ui5_cl_smp_app_540",
+   "file": "src/z2ui5_cl_smp_app_540.clas.abap",
+   "category": "AI",
+   "stage": "talk",
+   "title": "AI",
+   "description": "Chat Assistant with FeedInput and FeedListItem (A)",
+   "summary": "A chat assistant screen - conversation history, suggested prompts, a busy feed while the answer is on its way, a clear button - answered by a built-in rule-based provider that one method turns into a real LLM call.",
+   "keywords": [
+    "ai",
+    "llm",
+    "chat",
+    "assistant",
+    "chatbot",
+    "prompt",
+    "conversation",
+    "feedinput",
+    "feedlistitem",
+    "busy",
+    "start_timer"
+   ],
+   "docs": []
+  },
+  {
+   "class": "z2ui5_cl_smp_app_541",
+   "file": "src/z2ui5_cl_smp_app_541.clas.abap",
+   "category": "AI",
+   "stage": "talk",
+   "title": "AI",
+   "description": "Explain This Data in a DynamicSideContent Panel (A)",
+   "summary": "An explain-this-data button over a table - a side panel summarises the selected rows (counts, totals, extremes, outliers) through a deterministic provider that one method turns into an LLM call.",
+   "keywords": [
+    "ai",
+    "llm",
+    "assistant",
+    "chat",
+    "explain",
+    "summary",
+    "insight",
+    "outlier",
+    "table",
+    "selection",
+    "dynamicsidecontent"
+   ],
+   "docs": []
+  },
   {
    "class": "z2ui5_cl_smp_app_493",
    "file": "src/z2ui5_cl_smp_app_493.clas.abap",
