@@ -140,8 +140,10 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
     "
     " Calling an endpoint needs an HTTP destination or a communication
     " arrangement on the system, which a sample in this repository cannot
-    " bring along - the samples that call a real model live in
-    " abap2UI5/samples-stack: https://github.com/abap2UI5/samples-stack
+    " bring along. The same chat against a real model is
+    " Z2UI5_CL_SMPS_APP_014 in abap2UI5/samples-stack, package 10 (AI / LLM),
+    " where the provider is configuration rather than code:
+    " https://github.com/abap2UI5/samples-stack/tree/main/src/10
     "
     " Until then this deterministic provider answers: a few keyword rules
     " over the last question, so the sample runs on every system and in CI.

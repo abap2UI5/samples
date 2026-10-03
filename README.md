@@ -1,6 +1,7 @@
 [![ABAP NW 7.02 to ABAP Cloud](https://img.shields.io/badge/ABAP-NW%207.02%20%E2%86%92%20Cloud-blue)](#try-it-in-60-seconds)
 [![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
 [![abap2UI5](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fabap2UI5%2Fsamples%2Fbadges%2Fabap2ui5.json)](#the-learning-path)
+[![AI-ready: llms.txt · skills · MCP](https://img.shields.io/badge/AI--ready-llms.txt%20%C2%B7%20skills%20%C2%B7%20MCP-blue)](https://abap2ui5.github.io/docs/get_started/ai.html)
 <br><br>
 [![abap-standard](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml)
 [![abap-cloud](https://github.com/abap2UI5/samples/actions/workflows/abap-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-cloud.yaml)
@@ -73,6 +74,16 @@ CSS. Every card opens the source, or starts the class in the
 [playground](https://abap2ui5.github.io/playground/) with nothing installed at
 all. [SAMPLES.md](SAMPLES.md) is the same catalogue to scroll and `Ctrl+F`.
 Both are generated from the tree, so both are what is actually here.
+
+Building with an AI coding agent? The
+[AI page](https://abap2ui5.github.io/docs/get_started/ai.html) of the
+documentation sets up the skills and the
+[MCP server](https://github.com/abap2UI5/mcp-server) — whose sample search
+covers every sample here:
+`claude mcp add abap2ui5 -- npx --yes -p @abap2ui5/mcp-server abap2ui5-mcp`.
+The Claude Code plugin is two commands:
+`/plugin marketplace add abap2UI5/abap2UI5`, then
+`/plugin install abap2ui5@abap2ui5`.
 
 #### The learning path
 

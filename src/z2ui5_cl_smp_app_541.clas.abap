@@ -150,8 +150,10 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
     "
     " Calling an endpoint needs an HTTP destination or a communication
     " arrangement on the system, which a sample in this repository cannot
-    " bring along - the samples that call a real model live in
-    " abap2UI5/samples-stack: https://github.com/abap2UI5/samples-stack
+    " bring along. The same idea against a real model - a table whose rows
+    " go to the model as context, its summary back into a panel - is
+    " Z2UI5_CL_SMPS_APP_015 in abap2UI5/samples-stack, package 10 (AI / LLM):
+    " https://github.com/abap2UI5/samples-stack/tree/main/src/10
     "
     " Until then this deterministic provider explains the rows: totals,
     " extremes, the strongest region, the overdue share and the outliers.
