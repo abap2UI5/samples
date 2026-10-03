@@ -107,17 +107,22 @@ function rewrite(file, list) {
     return chunks.map((c, i) =>
       `${i === 0 ? first : contIndent}\`${c}\`${i < chunks.length - 1 ? ' &&' : ''}`);
   };
+  /* Every row names every component, `keywords` and `intro` included when
+   * they are empty. A row that leaves one out is initial there on 7.40+, but
+   * the abaplint downport builds all rows of a VALUE in one work area that it
+   * never clears, so on the 702 branch the left-out `intro` kept the previous
+   * tile's - the first tile's blurb repeated under every tile of its group
+   * (abap2UI5 backlog: abaplint-downport-value-row-not-cleared). */
   const rows = list.map((t) => {
-    const kw = t.keywords ? ` keywords = \`${t.keywords}\`` : '';
-    const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\`${kw} path = \`${t.path}\` app = \`${t.app}\` )`;
+    const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\` keywords = \`${t.keywords || ''}\` intro = \`\` path = \`${t.path}\` app = \`${t.app}\` )`;
     // the blurb is a paragraph, never on the one-line shape
     if (one.length <= MAX_LINE && !t.intro) return one;
     const fieldIndent = `${indent}  `;
     return [
       `${indent}( group = \`${t.group}\` header = \`${t.header}\``,
       ...chunked('sub', t.sub, fieldIndent),
-      ...(t.keywords ? chunked('keywords', t.keywords, fieldIndent) : []),
-      ...(t.intro ? chunked('intro', t.intro, fieldIndent) : []),
+      ...chunked('keywords', t.keywords || '', fieldIndent),
+      ...chunked('intro', t.intro || '', fieldIndent),
       `${fieldIndent}path = \`${t.path}\` app = \`${t.app}\` )`,
     ].join('\n');
   });

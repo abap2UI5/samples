@@ -48,7 +48,8 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
             target         = `/NAME` )
           ( message        = `Draft saved automatically`
             type           = `Information`
-            additionaltext = `Autosave` ) ).
+            additionaltext = `Autosave`
+            target         = `` ) ).
 
       view_display( ).
     ELSEIF client->check_on_navigated( ).

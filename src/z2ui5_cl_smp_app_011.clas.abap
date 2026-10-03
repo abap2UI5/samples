@@ -142,7 +142,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
           ( title = `entry 03` value = `green`  info = `completed` descr = `this is a description` checkbox = abap_true )
           ( title = `entry 04` value = `orange` info = `completed` descr = `` checkbox = abap_true )
           ( title = `entry 05` value = `grey`   info = `completed` descr = `this is a description` checkbox = abap_true )
-          ( ) ).
+          ( title = `` value = `` info = `` descr = `` checkbox = abap_false ) ).
 
       view_display( ).
     ELSEIF client->check_on_navigated( ).
