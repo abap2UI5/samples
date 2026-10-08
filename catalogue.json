@@ -136,7 +136,7 @@
     "https://abap2ui5.github.io/docs/get_started/hello_world",
     "https://abap2ui5.github.io/docs/cookbook/view/definition",
     "https://abap2ui5.github.io/docs/cookbook/expert_more/snippets",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-1"
+    "https://abap2ui5.github.io/docs/tutorials/step-1"
    ]
   },
   {
@@ -161,7 +161,7 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/binding",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-4"
+    "https://abap2ui5.github.io/docs/tutorials/step-4"
    ]
   },
   {
@@ -186,7 +186,7 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle",
     "https://abap2ui5.github.io/docs/cookbook/expert_more/snippets",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-3"
+    "https://abap2ui5.github.io/docs/tutorials/step-3"
    ]
   },
   {
@@ -212,7 +212,7 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle",
     "https://abap2ui5.github.io/docs/cookbook/expert_more/snippets",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-3"
+    "https://abap2ui5.github.io/docs/tutorials/step-3"
    ]
   },
   {
@@ -1202,7 +1202,7 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/backend",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-6"
+    "https://abap2ui5.github.io/docs/tutorials/step-6"
    ]
   },
   {
@@ -1607,8 +1607,8 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/tables",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-9",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-10"
+    "https://abap2ui5.github.io/docs/tutorials/step-9",
+    "https://abap2ui5.github.io/docs/tutorials/step-10"
    ]
   },
   {
@@ -1801,7 +1801,7 @@
     "selection"
    ],
    "docs": [
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-5"
+    "https://abap2ui5.github.io/docs/tutorials/step-5"
    ]
   },
   {
@@ -2492,7 +2492,7 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popup",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-7"
+    "https://abap2ui5.github.io/docs/tutorials/step-7"
    ]
   },
   {
@@ -2593,8 +2593,8 @@
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/tables",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-8",
-    "https://abap2ui5.github.io/docs/tutorials/walkthrough/step-10"
+    "https://abap2ui5.github.io/docs/tutorials/step-8",
+    "https://abap2ui5.github.io/docs/tutorials/step-10"
    ]
   },
   {
