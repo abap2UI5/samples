@@ -223,35 +223,36 @@ function docBlocks(source) {
   return out;
 }
 
-export { code, textSymbolArg, raisingUndeclared, docBlocks };
+export { code, textSymbolArg, raisingUndeclared, docBlocks, scan };
 
-/* The scan itself - only when run as a script, so a test can import the two
- * decisions above without scanning the tree. */
+/* The scan of the tree - only when run as a script, so a test can import
+ * scan( ) and the decisions above without scanning the tree. */
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main();
 }
 
-function main() {
-const findings = [];
-
-for (const rel of abapFiles('src')) {
-  for (const b of docBlocks(readFileSync(join(ROOT, rel), 'utf8'))) {
+/* Every finding in one ABAP source, as { rule, line, message } - the whole
+ * decision, so the self-test (scripts/test/checks.test.mjs) runs exactly
+ * what the gate runs. */
+function scan(source) {
+  const findings = [];
+  for (const b of docBlocks(source)) {
     for (const name of raisingUndeclared(b.doc, b.decl)) {
       findings.push({
         rule: 'abapdoc_raising',
-        at: `${rel}:${b.line}`,
+        line: b.line,
         message: `"! @raising ${name} - the method below does not declare it in its RAISING clause`,
       });
     }
   }
   let claim = null;
-  for (const st of statements(readFileSync(join(ROOT, rel), 'utf8'))) {
+  for (const st of statements(source)) {
     const { code: c, raw, start } = st;
 
     if (/^SELECT\b/i.test(c) && !/\bWHERE\b/i.test(c) && !/#EC\s+CI_NOWHERE/i.test(raw)) {
       findings.push({
         rule: 'nowhere',
-        at: `${rel}:${start}`,
+        line: start,
         message: 'SELECT without a WHERE clause - the extended check wants "#EC CI_NOWHERE on the statement',
       });
     }
@@ -259,7 +260,7 @@ for (const rel of abapFiles('src')) {
     if (textSymbolArg(c) !== -1) {
       findings.push({
         rule: 'text_symbol_arg',
-        at: `${rel}:${start}`,
+        line: start,
         message: "a text symbol is a CHARACTER literal - a parameter typed `string` answers \"not type-compatible with formal parameter\"; read it into a variable and pass that",
       });
     }
@@ -272,7 +273,7 @@ for (const rel of abapFiles('src')) {
       if (claim === 'plain') {
         findings.push({
           rule: 'subrc_after_assign',
-          at: `${rel}:${start}`,
+          line: start,
           message: `${c.slice(0, 70)} - a successful dynamic ASSIGN does not reset sy-subrc on every release (#1937); use IS [NOT] ASSIGNED`,
         });
       }
@@ -281,6 +282,16 @@ for (const rel of abapFiles('src')) {
     }
     if (SETS_SUBRC.test(c) || /\bEXCEPTIONS\b/i.test(c)) claim = null;
     if (/^(METHOD|ENDMETHOD|FORM|ENDFORM)\b/i.test(c)) claim = null;
+  }
+  return findings;
+}
+
+function main() {
+const findings = [];
+
+for (const rel of abapFiles('src')) {
+  for (const f of scan(readFileSync(join(ROOT, rel), 'utf8'))) {
+    findings.push({ rule: f.rule, at: `${rel}:${f.line}`, message: f.message });
   }
 }
 

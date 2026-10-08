@@ -1,0 +1,43 @@
+name: check-app-patterns
+
+# Three app-code shapes that build, lint and run, and are still wrong - each
+# fixed by hand in a sweep, with nothing keeping it fixed:
+#
+#   chain_sibling          a second element chained at the level of the
+#                          statement's head element: the layout rule indents it
+#                          as a child of the head, the tree has it as a sibling
+#                          (17 classes, split into one statement per sibling
+#                          on 2026-10-08)
+#   nav_leave_get_app      nav_app_leave( get_app( ...id_prev_app_stack ) ),
+#                          directly or through a variable - the bare
+#                          nav_app_leave( ) goes there by itself and survives
+#                          an expired caller draft
+#   numeric_input_untraced an Input bound untyped to a numeric attribute the
+#                          class computes with, in a class that never reads
+#                          get( )-t_model_skipped - refused text leaves the old
+#                          value standing behind what the user typed
+#
+# Plain node, no dependencies, so it stays a few seconds.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-app-patterns-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-app-patterns:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version: '22'
+    - run: npm run check:patterns

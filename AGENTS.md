@@ -936,6 +936,8 @@ In the order they fail fastest:
 | `npm run check:catalogue` | `check-docs` | the committed `catalogue.json` still mirrors the folder tree, and keeps the shape its consumers parse (§3) |
 | `npm run check:derived` | `check-docs` | the committed `catalogue-derived.json` — the linter's half of the catalogue — still matches what the linter derives from the tree ("The catalogue", below) |
 | `npm run check:atc` | `check-atc` | four extended-check (SLIN/ATC) findings abaplint does not model: a `SELECT` without `WHERE` and without `"#EC CI_NOWHERE`, `sy-subrc` after a dynamic `ASSIGN`, a text symbol passed to a parameter, an ABAP Doc `@raising` the method's `RAISING` clause does not declare |
+| `npm run check:patterns` | `check-app-patterns` | three app-code shapes that build, lint and run and are still wrong: a sibling chained after a statement's head element (§10, one statement per sibling; a leading `x->end( )` is fine), `nav_app_leave( )` handed `get_app( …id_prev_app_stack )` directly or through a variable (§9), and an `Input` bound untyped to a numeric attribute the class computes with, in a class that never reads `get( )-t_model_skipped` |
+| `npm run check:selftest` | `check-selftest` | `check:atc` and `check:patterns` against fixtures (`scripts/test/`): every rule fires on its shape and stays silent on its look-alikes — a rule that stopped matching would otherwise read as a clean tree |
 | `npm run check:prose` | `check-docs` | every class name written in prose exists, here and in the sibling repositories |
 | `npm run check:docs-links` | `check-docs-links` | every `" @docs` URL resolves, and its page names the class back (§4) |
 | `npm run check:app-rules` | `check-app-rules` | the abaplint rule block still matches its source in abap2UI5 (§6) |
@@ -1163,7 +1165,8 @@ Everything else about a script follows from that:
 
 - **No dependencies.** Plain node, so a gate is a few seconds and needs no
   `npm ci` — `check-docs`, `check-keywords`, `check-docs-links`, `check-atc`,
-  `check-framework-pin` and `check-app-rules` run their `npm run check:*`
+  `check-app-patterns`, `check-selftest`, `check-framework-pin` and
+  `check-app-rules` run their `npm run check:*`
   script without an install. **package.json is the one spelling of every
   gate**: a workflow calls the npm script, never `node scripts/x.mjs` or
   `npx <tool>` on its own, so what CI runs and what `npm run check` runs
@@ -1409,6 +1412,12 @@ rule that wants two `WHEN` branches decides (§7).
   JavaScript any more — a `val` that is not a `cs_event-*` name is not executed
   — so `history.back()` is not an option. `z2ui5_cl_smp_app_499` shows the
   whole `hash_*` family.
+- **Back to the caller is the bare `nav_app_leave( )`** — or
+  `nav_app_leave( event = … )` to hand it an event. Never load the caller by
+  id first (`nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) )`,
+  directly or through a variable): the bare call goes to the same app, and
+  unlike `get_app( )` it survives a caller whose draft has expired.
+  `npm run check:patterns` (`nav_leave_get_app`) refuses it.
 
 ---
 
@@ -1558,6 +1567,13 @@ in `check-abap2UI5.yaml`) checks all six rules and `npm run fmt:chains`
 applies them. The fixer rewrites whitespace *between* chain segments only,
 and the layout survives because every fix is verified against the rule — a
 formatting change can never alter what the view builds.
+
+What the layout rule cannot see is a **sibling chained after the head
+element** of a split-shape statement: `page->tag( A )->…->tag( B )` builds
+two siblings, and the rule indents `B` one level deeper than the tree has it.
+`npm run check:patterns` (`chain_sibling`) refuses it — start a new statement
+per sibling from the container. A statement that *opens* with `x->end( )` to
+reach the parent of a held container is fine.
 
 ### Bindings — what this corpus calls things
 
