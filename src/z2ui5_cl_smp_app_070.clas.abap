@@ -369,16 +369,14 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
     IF mv_search_value IS NOT INITIAL.
 
-      " uppercase against uppercase, as the twins z2ui5_cl_smp_app_053 and
-      " z2ui5_cl_smp_app_059 search - this copy compared case-sensitively
+      " uppercase against uppercase - a case-insensitive search, as in the
+      " twins z2ui5_cl_smp_app_053 and z2ui5_cl_smp_app_059
       DATA(lv_search) = to_upper( mv_search_value ).
 
-      " Collected rather than deleted in place: DELETE ... INDEX sy-tabix
+      " Collected rather than deleted in place: a DELETE ... INDEX sy-tabix
       " inside a LOOP over the same table shifts the rows under the loop's own
-      " cursor - a system silently SKIPS the row after each deletion (so the
-      " search returns wrong rows) and the transpiled backend raises
-      " TABLE_INVALID_INDEX. The DO loop above the DELETE can leave sy-tabix
-      " pointing elsewhere as well. Found 2026-08-17.
+      " cursor and silently SKIPS the row after each deletion, so the search
+      " would return wrong rows. Found 2026-08-17.
       DATA(lt_all) = mt_table.
       mt_table = VALUE #( ).
 

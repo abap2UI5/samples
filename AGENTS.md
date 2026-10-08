@@ -931,6 +931,7 @@ In the order they fail fastest:
 | `npm run check:orphans` | `check-docs` | every `z2ui5_cl_smp_app_*` class sits where a catalogue reads it (§1) |
 | `npm run check:keywords` | `check-keywords` | every sample carries `@keywords` and `@summary`, first line, lowercase (§4) |
 | `npm run check:markers` | `check-docs` | every `(A)` / `(C)` / `(A,C)` on a DESCRIPT is backed by the code, and every frontend action or custom control is marked (§12) |
+| `npm run check:titles` | `check-docs` | every sample's page title is `abap2UI5 - ` + its DESCRIPT without the marker (§12) |
 | `npm run check:launchpad` | `check-docs` | the overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) |
 | `npm run check:catalogue` | `check-docs` | the committed `catalogue.json` still mirrors the folder tree, and keeps the shape its consumers parse (§3) |
 | `npm run check:derived` | `check-docs` | the committed `catalogue-derived.json` — the linter's half of the catalogue — still matches what the linter derives from the tree ("The catalogue", below) |
@@ -1849,11 +1850,18 @@ new/edited samples stay consistent:
   (leading space), surfaced in the overview:
   - `(C)` — uses an abap2UI5 **custom control** (the `z2ui5` cc namespace:
     `ele( n = … ns = `z2ui5` )`, `z2ui5.cc`, `xmlns:z2ui5`).
-  - `(A)` — performs a **frontend action**: `client->follow_up_action( )`
-    (including the `cs_event-control_by_id` / `cs_event-control_global` /
-    `cs_event-binding_call` events), or a
-    client-side interaction like drag-and-drop. The ubiquitous back-button
-    `client->_event_nav_app_leave( )` does **not** count.
+  - `(A)` — performs a **frontend action**. The list is closed — exactly
+    these three, nothing "like" them:
+    1. a `client->follow_up_action( )` call (including the
+       `cs_event-control_by_id` / `cs_event-control_global` /
+       `cs_event-binding_call` events, which only ever travel through it);
+    2. a `client->_event_client( )` call, the obsolete spelling of the same;
+    3. **drag and drop** — a control of the `sap.ui.core.dnd` namespace
+       (`` ns = `dnd` ``) or a `dragDropConfig` aggregation.
+    Any other client-side behaviour (an expression binding, a formatter, a
+    `liveChange` wire, a `core:require`) is **not** `(A)`; a new kind needs
+    this list and the gate changed in the same commit. The ubiquitous
+    back-button `client->_event_nav_app_leave( )` does **not** count.
   - `(A,C)` — both. Regenerate the overviews after changing any DESCRIPT (§4).
   An option on an ordinary roundtrip `_event( )` (`s_ctrl`, e.g.
   `check_prevent_default`) is **not** a frontend action: the event still goes
@@ -1862,10 +1870,10 @@ new/edited samples stay consistent:
   **The gate is `npm run check:markers`** (`scripts/check-markers.mjs`, the
   `capability_markers` job of `check-docs`): it reads every tile's code with
   comments stripped and refuses a marker the code does not back as well as
-  a missing one — `(A)` for a `follow_up_action( )` / `_event_client( )` call
-  (looked for outside string literals) or a `dnd` / `dragDropConfig` element,
-  `(C)` for a `z2ui5`-namespace element or an `xmlns:z2ui5` declaration. The
-  two definitions live in that script and here; change them together.
+  a missing one — `(A)` for exactly the three items above (the two calls
+  looked for outside string literals), `(C)` for a `z2ui5`-namespace element
+  or an `xmlns:z2ui5` declaration. The two definitions live in that script
+  and here; change them together.
   The legend a reader sees - under the overview app's list, in the preamble of
   `SAMPLES.md`, as `naming.markers` in `catalogue.json` - is written once, in
   `scripts/lib/markers.mjs`, and rendered by all three generators; change the
@@ -1911,6 +1919,13 @@ new/edited samples stay consistent:
   it is recognisably the right sample. Change the two together: renaming a
   DESCRIPT without the page title puts them out of sync again (they had drifted
   to "Focus II" and "Table Filters Reset after view Update").
+  **The gate is `npm run check:titles`** (`scripts/check-page-titles.mjs`, the
+  `page_titles` job of `check-docs`). It reads the first `Page` built after
+  the main view's `Shell` — in the same chain, off a variable, or as the first
+  page of a NavContainer in the Shell — and wants the title as that literal.
+  Not judged: a `Dialog` title, further NavContainer pages, nested-view pages,
+  the overview app (`abap2UI5 - Samples`, §3) and the ZZZ helpers, which have
+  no tile.
 
 - **Every main view opens `mvc:View` → `Shell` → `Page`** (the §10 example),
   never `View` → `Page`, so all samples share the same outer frame (fixed in

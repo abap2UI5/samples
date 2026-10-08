@@ -13,15 +13,16 @@
  *
  * The definitions are section 12's, encoded here - change them in both places:
  *
- *   (A)  the class performs a FRONTEND ACTION:
+ *   (A)  the class performs a FRONTEND ACTION - a closed list, exactly these:
  *          - client->follow_up_action( ... ) - this covers every cs_event-*
  *            the framework executes in the browser, including the control
  *            events control_by_id / control_global / binding_call, which are
  *            only ever passed to it;
  *          - client->_event_client( ... ), the deprecated spelling of the same;
- *          - a client-side interaction such as drag and drop: a control of
- *            the `dnd` namespace (`ns = \`dnd\``, `<dnd:`) or the
- *            `dragDropConfig` aggregation.
+ *          - drag and drop: a control of the `dnd` namespace
+ *            (`ns = \`dnd\``, `<dnd:`) or the `dragDropConfig` aggregation.
+ *        Nothing else client-side counts; a new kind is added to ACTION
+ *        below and to section 12 in the same commit.
  *        NOT the back button (`client->_event_nav_app_leave( )`), and NOT an
  *        option on an ordinary roundtrip `_event( )` (`s_ctrl`, e.g.
  *        check_prevent_default): that event still goes to the backend and

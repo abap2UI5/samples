@@ -9,7 +9,7 @@
  * renderer reads it. The three cannot drift.
  */
 export const MARKERS = {
-  '(A)': 'performs a frontend action (client->follow_up_action( ) or a client-side interaction such as drag and drop)',
+  '(A)': 'performs a frontend action (client->follow_up_action( ), or drag and drop)',
   '(C)': 'uses an abap2UI5 custom control (the z2ui5.cc namespace)',
   '(A,C)': 'both',
 };

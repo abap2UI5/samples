@@ -167,6 +167,7 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
     DATA total TYPE i.
     DATA overdue_count TYPE i.
     DATA overdue_amount TYPE i.
+    DATA strongest_share TYPE p LENGTH 16 DECIMALS 0.
     DATA outliers TYPE string.
 
     IF t_rows IS INITIAL.
@@ -210,10 +211,16 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
         strongest = region.
       ENDIF.
     ENDLOOP.
-    " an integer variable, not arithmetic inside the template: the transpiled
-    " runtime (playground, node backend) formats such an expression as a float.
-    " Rows that all carry 0 EUR have no share to speak of - and no division.
-    DATA(strongest_share) = COND i( WHEN total <> 0 THEN strongest-amount * 100 / total ).
+
+    " a variable, not arithmetic inside the template: the transpiled runtime
+    " (playground, node backend) formats such an expression as a float. Packed,
+    " because amount * 100 leaves the range of TYPE i long before the amount
+    " does, and one packed operand makes the whole expression packed. Rows
+    " that all carry 0 EUR have no share to speak of - and no division.
+    IF total <> 0.
+      strongest_share = strongest-amount.
+      strongest_share = strongest_share * 100 / total.
+    ENDIF.
 
     DATA(threshold) = 2 * average.
     LOOP AT t_rows INTO row.

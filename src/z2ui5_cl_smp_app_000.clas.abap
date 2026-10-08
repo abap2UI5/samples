@@ -50,7 +50,7 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     " what a marker at the end of a title means - (A), (C), (A,C). Written by
     " the generator from scripts/lib/markers.mjs, the one legend SAMPLES.md
     " and catalogue.json render too, so the three cannot drift
-    CONSTANTS c_legend TYPE string VALUE `Markers on a title: (A) performs a frontend action (client->follow_up_action( ) or a client-side interaction such as drag and drop); (C) uses an abap2UI5 custom control (the z2ui5.cc namespace); (A,C) both`.
+    CONSTANTS c_legend TYPE string VALUE `Markers on a title: (A) performs a frontend action (client->follow_up_action( ), or drag and drop); (C) uses an abap2UI5 custom control (the z2ui5.cc namespace); (A,C) both`.
 
     CONSTANTS:
       BEGIN OF cs_event,

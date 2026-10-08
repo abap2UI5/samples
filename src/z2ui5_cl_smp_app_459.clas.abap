@@ -60,8 +60,10 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
         CATCH cx_root.
           RETURN.
       ENDTRY.
-      " dropping a row onto itself is a no-op
-      IF lv_from = lv_to.
+      " dropping a row onto itself is a no-op, and a target outside the
+      " table is refused here - after the DELETE an INSERT out of range
+      " would lose the dragged row
+      IF lv_from = lv_to OR lv_to < 1 OR lv_to > lines( t_products ).
         RETURN.
       ENDIF.
       DELETE t_products INDEX lv_from.

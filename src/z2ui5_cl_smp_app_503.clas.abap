@@ -24,7 +24,9 @@ CLASS z2ui5_cl_smp_app_503 DEFINITION PUBLIC.
         net           TYPE i
         percent       TYPE i
       RETURNING
-        VALUE(result) TYPE i.
+        VALUE(result) TYPE i
+      RAISING
+        cx_sy_conversion_overflow.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -53,10 +55,22 @@ CLASS z2ui5_cl_smp_app_503 IMPLEMENTATION.
       view_display( ).
 
     ELSEIF client->check_on_event( `CALC` ).
+
+      " text typed into an Input bound to TYPE i does not dump: the framework
+      " keeps the old number and names the field in t_model_skipped - so the
+      " sum would silently use a value the screen no longer shows
+      DATA(t_skipped) = client->get( )-t_model_skipped.
+      IF t_skipped IS NOT INITIAL.
+        gross = ``.
+        client->message_box_display( text = |'{ t_skipped[ 1 ]-value }' is no whole number this field can hold - it keeps its old value.|
+                                     type = `error` ).
+        RETURN.
+      ENDIF.
+
       TRY.
           gross = |{ gross_amount( net = amount percent = rate ) }|.
         CATCH cx_sy_conversion_overflow cx_sy_arithmetic_overflow.
-          CLEAR gross.
+          gross = ``.
           client->message_box_display( text = `The gross amount does not fit an integer - enter a smaller net amount or rate.`
                                        type = `error` ).
       ENDTRY.

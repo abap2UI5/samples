@@ -22,7 +22,7 @@ is the whole sample.
 New to abap2UI5? Start at [Basics](#basics), then the
 [documentation](https://abap2ui5.github.io/docs/).
 
-**Markers on a title:** `(A)` performs a frontend action (client->follow_up_action( ) or a client-side interaction such as drag and drop); `(C)` uses an abap2UI5 custom control (the z2ui5.cc namespace); `(A,C)` both.
+**Markers on a title:** `(A)` performs a frontend action (client->follow_up_action( ), or drag and drop); `(C)` uses an abap2UI5 custom control (the z2ui5.cc namespace); `(A,C)` both.
 
 ---
 
