@@ -79,9 +79,9 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         client->message_toast_display( |'Event SELKZ' { lv_selkz } | ).
         set_selkz( lv_selkz ).
       WHEN `ROW_ACTION_ITEM_NAVIGATION`.
-        client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { client->get_event_arg( ) } | ).
+        client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row ID { client->get_event_arg( ) }| ).
       WHEN `ROW_ACTION_ITEM_EDIT`.
-        client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { client->get_event_arg( ) } | ).
+        client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row ID { client->get_event_arg( ) }| ).
     ENDCASE.
 
   ENDMETHOD.
@@ -253,7 +253,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         )->a( n = `sortProperty`   v = `ROW_ID`
         )->a( n = `filterProperty` v = `ROW_ID`
         )->tag( `Text`
-            )->a( n = `text` v = `Index`
+            )->a( n = `text` v = `ID`
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{ROW_ID}` ).
@@ -355,12 +355,12 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
   METHOD set_data.
 
     mt_table = VALUE #(
-        ( selkz = abap_false row_id = `1` product = `table`    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = `ST` price = `1000.50` waers = `EUR` process = `10`  process_state = `None` )
-        ( selkz = abap_false row_id = `2` product = `chair`    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = `ST` price = `2000.55` waers = `USD` process = `20` process_state = `Warning` )
-        ( selkz = abap_false row_id = `3` product = `sofa`     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = `ST` price = `3000.11` waers = `CNY` process = `30` process_state = `Success` )
-        ( selkz = abap_false row_id = `4` product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_002` quantity = 200  meins = `ST` price = `4000.88` waers = `USD` process = `40` process_state = `Information` )
-        ( selkz = abap_false row_id = `5` product = `printer`  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = `ST` price = `5000.47` waers = `EUR` process = `70` process_state = `Warning` )
-        ( selkz = abap_false row_id = `6` product = `table2`   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = `ST` price = `6000.33` waers = `GBP` process = `90`  process_state = `Error` ) ).
+        ( selkz = abap_false row_id = `1` product = `table`    create_date = `2023-01-01` create_by = `Olaf`   storage_location = `AREA_001` quantity = 400 meins = `ST` price = `1000.50` waers = `EUR` process = `10` process_state = `None` )
+        ( selkz = abap_false row_id = `2` product = `chair`    create_date = `2022-01-01` create_by = `Karlo`  storage_location = `AREA_001` quantity = 123 meins = `ST` price = `2000.55` waers = `USD` process = `20` process_state = `Warning` )
+        ( selkz = abap_false row_id = `3` product = `sofa`     create_date = `2021-05-01` create_by = `Elin`   storage_location = `AREA_002` quantity = 700 meins = `ST` price = `3000.11` waers = `CNY` process = `30` process_state = `Success` )
+        ( selkz = abap_false row_id = `4` product = `computer` create_date = `2023-01-27` create_by = `Theo`   storage_location = `AREA_002` quantity = 200 meins = `ST` price = `4000.88` waers = `USD` process = `40` process_state = `Information` )
+        ( selkz = abap_false row_id = `5` product = `printer`  create_date = `2023-01-01` create_by = `Renate` storage_location = `AREA_003` quantity = 90  meins = `ST` price = `5000.47` waers = `EUR` process = `70` process_state = `Warning` )
+        ( selkz = abap_false row_id = `6` product = `table2`   create_date = `2023-01-01` create_by = `Angela` storage_location = `AREA_003` quantity = 110 meins = `ST` price = `6000.33` waers = `GBP` process = `90` process_state = `Error` ) ).
 
   ENDMETHOD.
 

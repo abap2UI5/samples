@@ -849,14 +849,14 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Talk to the user` header = `Message` sub = `MessageBox for Any Data` keywords = `messagebox details table structure tree object reference escape limit action onclose` intro = `` path = `src` app = `z2ui5_cl_smp_app_502` )
       ( group = `Talk to the user` header = `Message` sub = `MessageBox from SY, BAPIRET2 or Exception` keywords = `t100 message class number exception cx_root error abend` intro = `` path = `src` app = `z2ui5_cl_smp_app_008` )
       ( group = `Talk to the user` header = `Message`
-        sub = `MessageBox via the Global Object`
+        sub = `MessageBox via the Global Object (A)`
         keywords = `messagebox global object control_global follow_up_action options icon contentwidth textdirection closeonnavigation dependenton actions onclose`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_512` )
       ( group = `Talk to the user` header = `Message` sub = `MessageBox, Types and Custom Actions` keywords = `confirm warning error success information dialog action` intro = `` path = `src` app = `z2ui5_cl_smp_app_382` )
       ( group = `Talk to the user` header = `Message` sub = `MessagePopover URL Policy (A)` keywords = `url policy link security validator relative allow deny` intro = `` path = `src` app = `z2ui5_cl_smp_app_474` )
       ( group = `Talk to the user` header = `Message`
-        sub = `MessageToast via the Global Object`
+        sub = `MessageToast via the Global Object (A)`
         keywords = `toast notification global object control_global follow_up_action options duration position animation anchor collision class css template`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_381` )
@@ -881,21 +881,21 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Move through the app` header = `Focus` sub = `Jump to the Next Input on Enter (A)` keywords = `cursor enter tab next field form set_focus` intro = `` path = `src` app = `z2ui5_cl_smp_app_189` )
       ( group = `Move through the app` header = `Focus` sub = `Set Focus and Select Text in an Input (A)` keywords = `cursor set_focus selection position textfield` intro = `` path = `src` app = `z2ui5_cl_smp_app_133` )
       ( group = `Move through the app` header = `Hash`
-        sub = `App State, Bookmark and Share`
+        sub = `App State, Bookmark and Share (A)`
         keywords = `app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state switch off event form`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_498` )
       ( group = `Move through the app` header = `Hash`
-        sub = `App-Owned Routing (#/detail)`
+        sub = `App-Owned Routing (#/detail) (A)`
         keywords = `routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback follow_up_action event form`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_499` )
-      ( group = `Move through the app` header = `Hash` sub = `Routing Mode FRESH (a New Instance)` keywords = `routing mode fresh default off navigation restart new instance nav_app_call` intro = `` path = `src` app = `z2ui5_cl_smp_app_468` )
-      ( group = `Move through the app` header = `Hash` sub = `Routing Mode KEEP (Back to the State)` keywords = `routing mode keep navigation state preserved back nav_app_call` intro = `` path = `src` app = `z2ui5_cl_smp_app_480` )
+      ( group = `Move through the app` header = `Hash` sub = `Routing Mode FRESH (a New Instance) (A)` keywords = `routing mode fresh default off navigation restart new instance nav_app_call` intro = `` path = `src` app = `z2ui5_cl_smp_app_468` )
+      ( group = `Move through the app` header = `Hash` sub = `Routing Mode KEEP (Back to the State) (A)` keywords = `routing mode keep navigation state preserved back nav_app_call` intro = `` path = `src` app = `z2ui5_cl_smp_app_480` )
       ( group = `Move through the app` header = `Navigation` sub = `Call and Leave Apps (nav_app_call)` keywords = `nav_app_call nav_app_leave sub app stack call back` intro = `` path = `src` app = `z2ui5_cl_smp_app_024` )
       ( group = `Move through the app` header = `Navigation` sub = `Data Loss Protection on Leaving (A,C)` keywords = `dirty unsaved changes leave confirmation warning` intro = `` path = `src` app = `z2ui5_cl_smp_app_279` )
       ( group = `Move through the app` header = `Navigation`
-        sub = `Page Transitions (view_display transition)`
+        sub = `Page Transitions (view_display transition) (A)`
         keywords = `transition animation slide fade flip navcontainer transition_back nav_app_leave`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_531` )
