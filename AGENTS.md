@@ -930,6 +930,7 @@ In the order they fail fastest:
 | `npm run check:agents` | `check-docs` | no drift between the §1 layout and the tree: one flat package, no subfolders, the documented CTEXT |
 | `npm run check:orphans` | `check-docs` | every `z2ui5_cl_smp_app_*` class sits where a catalogue reads it (§1) |
 | `npm run check:keywords` | `check-keywords` | every sample carries `@keywords` and `@summary`, first line, lowercase (§4) |
+| `npm run check:markers` | `check-docs` | every `(A)` / `(C)` / `(A,C)` on a DESCRIPT is backed by the code, and every frontend action or custom control is marked (§12) |
 | `npm run check:launchpad` | `check-docs` | the overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) |
 | `npm run check:catalogue` | `check-docs` | the committed `catalogue.json` still mirrors the folder tree, and keeps the shape its consumers parse (§3) |
 | `npm run check:derived` | `check-docs` | the committed `catalogue-derived.json` — the linter's half of the catalogue — still matches what the linter derives from the tree ("The catalogue", below) |
@@ -1854,6 +1855,17 @@ new/edited samples stay consistent:
     client-side interaction like drag-and-drop. The ubiquitous back-button
     `client->_event_nav_app_leave( )` does **not** count.
   - `(A,C)` — both. Regenerate the overviews after changing any DESCRIPT (§4).
+  An option on an ordinary roundtrip `_event( )` (`s_ctrl`, e.g.
+  `check_prevent_default`) is **not** a frontend action: the event still goes
+  to the backend and nothing else (`Z2UI5_CL_SMP_APP_472` carried `(A)` for
+  it until 2026-10-08).
+  **The gate is `npm run check:markers`** (`scripts/check-markers.mjs`, the
+  `capability_markers` job of `check-docs`): it reads every tile's code with
+  comments stripped and refuses a marker the code does not back as well as
+  a missing one — `(A)` for a `follow_up_action( )` / `_event_client( )` call
+  (looked for outside string literals) or a `dnd` / `dragDropConfig` element,
+  `(C)` for a `z2ui5`-namespace element or an `xmlns:z2ui5` declaration. The
+  two definitions live in that script and here; change them together.
   The legend a reader sees - under the overview app's list, in the preamble of
   `SAMPLES.md`, as `naming.markers` in `catalogue.json` - is written once, in
   `scripts/lib/markers.mjs`, and rendered by all three generators; change the

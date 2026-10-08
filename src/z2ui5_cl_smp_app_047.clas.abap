@@ -51,9 +51,23 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `BUTTON_INT` ).
-      int_sum = int1 + int2.
+      " both summands are typed by the user - their sum can leave the range
+      " of TYPE i even when each of them fits
+      TRY.
+          int_sum = int1 + int2.
+        CATCH cx_sy_arithmetic_overflow cx_sy_conversion_overflow.
+          CLEAR int_sum.
+          client->message_box_display( text = `The sum does not fit TYPE i.`
+                                       type = `error` ).
+      ENDTRY.
     ELSEIF client->check_on_event( `BUTTON_DEC` ).
-      dec_sum = dec1 + dec2.
+      TRY.
+          dec_sum = dec1 + dec2.
+        CATCH cx_sy_arithmetic_overflow cx_sy_conversion_overflow.
+          CLEAR dec_sum.
+          client->message_box_display( text = `The sum does not fit TYPE p LENGTH 10 DECIMALS 4.`
+                                       type = `error` ).
+      ENDTRY.
     ENDIF.
 
   ENDMETHOD.

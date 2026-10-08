@@ -350,7 +350,7 @@
    "stage": "data",
    "title": "Binding",
    "description": "Dynamic Table Typed at Runtime (RTTI)",
-   "summary": "The row type is created at runtime from a DDIC name with CREATE DATA, and the generic data reference is bound straight into the view - editable, multi-selectable, and it survives the roundtrip back to ABAP.",
+   "summary": "The row type is built at runtime from a DDIC name plus a SELKZ selection flag (RTTI, TYPE HANDLE), and the generic data reference is bound straight into the view - editable, multi-selectable, and it survives the roundtrip back to ABAP.",
    "keywords": [
     "generic",
     "data",
@@ -359,7 +359,10 @@
     "data",
     "ddic",
     "dynamic",
-    "itab"
+    "itab",
+    "rtti",
+    "handle",
+    "selkz"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/binding"
@@ -1252,7 +1255,7 @@
    "category": "Event",
    "stage": "talk",
    "title": "Event",
-   "description": "Link with preventDefault (A)",
+   "description": "Link with preventDefault",
    "summary": "A Link whose default browser action is suppressed (check_prevent_default), so the app handles the click instead of the href.",
    "keywords": [
     "link",

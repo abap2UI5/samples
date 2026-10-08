@@ -16,7 +16,9 @@ CLASS z2ui5_cl_smp_app_503 DEFINITION PUBLIC.
     "!
     "! @parameter net | the net amount
     "! @parameter percent | the tax rate, in percent
-    "! @parameter result | the gross amount, rounded to whole units
+    "! @parameter result | the gross amount, rounded to whole units, the half
+    "!                     away from zero
+    "! @raising cx_sy_conversion_overflow | the gross does not fit TYPE i
     METHODS gross_amount
       IMPORTING
         net           TYPE i
@@ -51,7 +53,13 @@ CLASS z2ui5_cl_smp_app_503 IMPLEMENTATION.
       view_display( ).
 
     ELSEIF client->check_on_event( `CALC` ).
-      gross = |{ gross_amount( net = amount percent = rate ) }|.
+      TRY.
+          gross = |{ gross_amount( net = amount percent = rate ) }|.
+        CATCH cx_sy_conversion_overflow cx_sy_arithmetic_overflow.
+          CLEAR gross.
+          client->message_box_display( text = `The gross amount does not fit an integer - enter a smaller net amount or rate.`
+                                       type = `error` ).
+      ENDTRY.
     ENDIF.
 
   ENDMETHOD.
@@ -59,9 +67,14 @@ CLASS z2ui5_cl_smp_app_503 IMPLEMENTATION.
 
   METHOD gross_amount.
 
-    " the rounding is the part worth a test: + 50 before the integer division
-    " rounds the half up instead of cutting it off
-    result = net + ( net * percent + 50 ) DIV 100.
+    " computed as a packed number: net * percent leaves the range of TYPE i
+    " long before the gross does, and assigning to a packed number with no
+    " decimals rounds commercially - the half away from zero, so -10.5 becomes
+    " -11 as 10.5 becomes 11. The rounding is the part worth a test.
+    DATA gross_p TYPE p LENGTH 16 DECIMALS 0.
+
+    gross_p = net + net * percent / 100.
+    result = gross_p.
 
   ENDMETHOD.
 
@@ -86,7 +99,7 @@ CLASS z2ui5_cl_smp_app_503 IMPLEMENTATION.
         )->a( n = `text`     v = `The sum below is computed by gross_amount( ), a method that takes what it needs and ` &&
                    `returns what it computes - it reads no attribute and never sees the client. That is what makes ` &&
                    `it testable: the local test class in z2ui5_cl_smp_app_503.clas.testclasses.abap calls it with ` &&
-                   `three inputs and asserts the three answers, without a browser, a view or a roundtrip. abapGit ` &&
+                   `four inputs and asserts the four answers, without a browser, a view or a roundtrip. abapGit ` &&
                    `keeps that file beside the class, and CLSCCINCL in the .clas.xml is what says the class has one.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true

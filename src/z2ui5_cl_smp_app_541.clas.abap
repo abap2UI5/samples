@@ -211,8 +211,9 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
     " an integer variable, not arithmetic inside the template: the transpiled
-    " runtime (playground, node backend) formats such an expression as a float
-    DATA(strongest_share) = strongest-amount * 100 / total.
+    " runtime (playground, node backend) formats such an expression as a float.
+    " Rows that all carry 0 EUR have no share to speak of - and no division.
+    DATA(strongest_share) = COND i( WHEN total <> 0 THEN strongest-amount * 100 / total ).
 
     DATA(threshold) = 2 * average.
     LOOP AT t_rows INTO row.

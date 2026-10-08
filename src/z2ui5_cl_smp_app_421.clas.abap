@@ -263,7 +263,13 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
 
     IF focuscolumn = cs_column-title.
 
-      DATA(nextrow) = CONV i( focusrow ) + 1.
+      " focusrow is what the user typed into the Row Index input - a Number
+      " input still lets 99999999999 through, which does not fit TYPE i
+      TRY.
+          DATA(nextrow) = CONV i( focusrow ) + 1.
+        CATCH cx_sy_conversion_error cx_sy_arithmetic_error.
+          nextrow = 0.
+      ENDTRY.
       IF line_exists( t_tab[ nextrow + 1 ] ).
         focusrow = |{ nextrow }|.
       ELSE.

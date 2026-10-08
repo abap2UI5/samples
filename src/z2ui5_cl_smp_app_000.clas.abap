@@ -744,7 +744,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         intro = `How an ABAP field becomes something a user reads and edits: binding an attribute, the types that convert it, formatters, and views built from data rather than written out.`
         path = `src` app = `z2ui5_cl_smp_app_497` )
       ( group = `Get your data on screen` header = `Binding` sub = `Currency Amounts (sap.ui.model.type.Currency)` keywords = `amount decimals leading zeros number format` intro = `` path = `src` app = `z2ui5_cl_smp_app_067` )
-      ( group = `Get your data on screen` header = `Binding` sub = `Dynamic Table Typed at Runtime (RTTI)` keywords = `generic data reference create data ddic dynamic itab` intro = `` path = `src` app = `z2ui5_cl_smp_app_061` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Dynamic Table Typed at Runtime (RTTI)` keywords = `generic data reference create data ddic dynamic itab rtti handle selkz` intro = `` path = `src` app = `z2ui5_cl_smp_app_061` )
       ( group = `Get your data on screen` header = `Binding` sub = `Expression Binding, Types and Composite Parts` keywords = `formatter parts conditional regexp visible enabled syntax` intro = `` path = `src` app = `z2ui5_cl_smp_app_027` )
       ( group = `Get your data on screen` header = `Binding` sub = `Model setSizeLimit for Large Tables (A)` keywords = `combobox jsonmodel size limit large itab 100 entries` intro = `` path = `src` app = `z2ui5_cl_smp_app_071` )
       ( group = `Get your data on screen` header = `Binding`
@@ -832,7 +832,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Talk to the user` header = `Event` sub = `Extra Arguments with t_arg` keywords = `argument parameter payload event data fixed value` intro = `` path = `src` app = `z2ui5_cl_smp_app_167` )
       ( group = `Talk to the user` header = `Event` sub = `Keep the Last Keystroke with check_queue_last` keywords = `livechange keystroke queue busy roundtrip dropped event check_queue_last s_ctrl` intro = `` path = `src` app = `z2ui5_cl_smp_app_511` )
       ( group = `Talk to the user` header = `Event` sub = `Keyboard Shortcuts, Ctrl+S (A)` keywords = `shortcut hotkey ctrl key combination keyboard_shortcut` intro = `` path = `src` app = `z2ui5_cl_smp_app_471` )
-      ( group = `Talk to the user` header = `Event` sub = `Link with preventDefault (A)` keywords = `link href default action check_prevent_default` intro = `` path = `src` app = `z2ui5_cl_smp_app_472` )
+      ( group = `Talk to the user` header = `Event` sub = `Link with preventDefault` keywords = `link href default action check_prevent_default` intro = `` path = `src` app = `z2ui5_cl_smp_app_472` )
       ( group = `Talk to the user` header = `Event`
         sub = `Literal Arguments (check_arg_literal)`
         keywords = `event argument literal quoted expression evaluated check_arg_literal t_arg data binding syntax dollar brace`
