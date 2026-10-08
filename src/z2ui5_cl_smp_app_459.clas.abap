@@ -106,9 +106,8 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
         )->a( n = `items` v = client->_bind( t_products )
         )->a( n = `id`    v = `reorderTable` ).
 
-    " dragDropConfig is a plain sap.m aggregation here (ns = ``); the
-    " DragDropInfo goes through _generic because the typed builder method
-    " has no dropPosition parameter
+    " dragDropConfig is an aggregation of the sap.m Table (no ns), the
+    " DragDropInfo inside it a control of sap.ui.core.dnd (ns = `dnd`)
     tab->ele( `dragDropConfig`
         )->ele( n = `DragDropInfo` ns = `dnd`
             )->a( n = `sourceAggregation` v = `items`

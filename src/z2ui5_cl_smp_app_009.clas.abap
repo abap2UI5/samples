@@ -125,12 +125,15 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
         ENDIF.
         popup_value_employee( ).
       WHEN `POPUP_TABLE_VALUE_CUSTOM_CONTINUE`.
-        DELETE t_employees_sel WHERE selkz = abap_false.
+        " the selection is counted on a copy - deleting from the bound table
+        " itself emptied the open popup's list when nothing was selected
+        DATA(t_chosen_employee) = t_employees_sel.
+        DELETE t_chosen_employee WHERE selkz = abap_false.
 
-        IF lines( t_employees_sel ) = 1.
+        IF lines( t_chosen_employee ) = 1.
 
-          s_screen-name     = t_employees_sel[ 1 ]-name.
-          s_screen-lastname = t_employees_sel[ 1 ]-lastname.
+          s_screen-name     = t_chosen_employee[ 1 ]-name.
+          s_screen-lastname = t_chosen_employee[ 1 ]-lastname.
           client->message_toast_display( `value selected` ).
           client->popup_destroy( ).
 
@@ -138,11 +141,12 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
           client->message_toast_display( `please select exactly one employee` ).
         ENDIF.
       WHEN `POPUP_TABLE_VALUE_CONTINUE`.
-        DELETE t_suggestion_sel WHERE selkz = abap_false.
+        DATA(t_chosen_color) = t_suggestion_sel.
+        DELETE t_chosen_color WHERE selkz = abap_false.
 
-        IF lines( t_suggestion_sel ) = 1.
+        IF lines( t_chosen_color ) = 1.
 
-          s_screen-color_02 = t_suggestion_sel[ 1 ]-value.
+          s_screen-color_02 = t_chosen_color[ 1 ]-value.
           client->message_toast_display( `value selected` ).
           client->popup_destroy( ).
 

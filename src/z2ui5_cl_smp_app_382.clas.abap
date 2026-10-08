@@ -6,12 +6,12 @@ CLASS z2ui5_cl_smp_app_382 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
     DATA title TYPE string.
     DATA message TYPE string.
     DATA details TYPE string.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
