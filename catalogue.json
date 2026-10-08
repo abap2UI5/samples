@@ -2098,11 +2098,12 @@
    "stage": "move",
    "title": "Navigation",
    "description": "Return Data and Events to the Caller",
-   "summary": "The way back carries data: the called app returns an event name and a payload (r_data) that the caller reads from get_app_prev.",
+   "summary": "The way back carries data: the called app returns an event name and a payload (r_data) that the caller reads from client->get( ).",
    "keywords": [
     "r_data",
+    "r_event_data",
+    "nav_app_leave",
     "result",
-    "get_app_prev",
     "return",
     "event",
     "payload"

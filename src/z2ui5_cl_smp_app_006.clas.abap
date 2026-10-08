@@ -14,10 +14,10 @@ CLASS z2ui5_cl_smp_app_006 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_s_row.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA key TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA key    TYPE string.
 
     METHODS on_init.
     METHODS on_event.
@@ -45,6 +45,8 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
 
 
   METHOD on_init.
+
+    key = `BLUE`.
 
     refresh_data( ).
     view_display( ).
@@ -116,7 +118,7 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
             )->tag( `Title`
                 )->a( n = `text` v = `title of the table`
             )->ele( `SegmentedButton`
-                )->a( n = `selectedKey` t = key
+                )->a( n = `selectedKey` v = client->_bind( key )
                 )->ele( `items`
                     )->tag( `SegmentedButtonItem`
                         )->a( n = `icon` v = `sap-icon://accept`

@@ -219,11 +219,13 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         client->message_box_display( `Event in nested nested view raised` ).
       WHEN `ROW_NAVIGATE`.
 
+        " a row without a title has nothing to open - the third column stays
+        " closed instead of being filled behind a two-column layout
         IF client->get_event_arg( ) IS NOT INITIAL.
           mv_layout = `ThreeColumnsEndExpanded`.
           mv_title  = client->get_event_arg( ).
+          view_display_detail_detail( ).
         ENDIF.
-        view_display_detail_detail( ).
 
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.

@@ -40,6 +40,7 @@ CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
     METHODS on_event_sub.
     METHODS on_event_selchange.
     METHODS on_init_sub.
+    METHODS view_display_sub.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -71,6 +72,14 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
     classname = to_upper( classname ).
     CREATE OBJECT app_sub TYPE (classname).
+    view_display_sub( ).
+
+  ENDMETHOD.
+
+
+  METHOD view_display_sub.
+
+    view_display_detail( ).
 
     ASSIGN app_sub->(`VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
 
@@ -82,9 +91,15 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
     CALL METHOD app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
 
     " render explicitly: check_on_init( ) is the TOP app's lifecycle flag,
-    " not the sub-app's - on this (SELCHANGE) roundtrip it is false, so the
-    " sub-app's own main( ) would add nothing to the detail column
+    " not the sub-app's - on a SELCHANGE or navigated roundtrip it is false,
+    " so the sub-app's own main( ) would add nothing to the detail column
     CALL METHOD app_sub->(`VIEW_DISPLAY`).
+
+    client->nest_view_display(
+      val            = view_nested->stringify( )
+      id             = `test`
+      method_insert  = `addMidColumnPage`
+      method_destroy = `removeAllMidColumnPages` ).
 
   ENDMETHOD.
 
@@ -173,14 +188,7 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
     classname = s_sel-info.
 
     layout = `TwoColumnsMidExpanded`.
-    view_display_detail( ).
     on_init_sub( ).
-
-    client->nest_view_display(
-      val            = view_nested->stringify( )
-      id             = `test`
-      method_insert  = `addMidColumnPage`
-      method_destroy = `removeAllMidColumnPages` ).
 
   ENDMETHOD.
 
@@ -198,7 +206,16 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
       view_display_master( ).
 
     ELSEIF client->check_on_navigated( ).
+
+      " the embedded view again: it is nested inside the master, so a
+      " re-displayed master alone would leave the mid column empty - the
+      " sub-app instance is kept, and with it what was typed into it
       view_display_master( ).
+
+      IF app_sub IS BOUND.
+        view_display_sub( ).
+      ENDIF.
+
     ELSEIF client->check_on_event( `SELCHANGE` ).
       on_event_selchange( ).
     ELSEIF client->check_on_event( ).

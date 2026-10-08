@@ -73,7 +73,8 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
     DATA(lr_wiz_step22) = lr_wizard->ele( `WizardStep`
         )->a( n = `id`        v = `STEP22`
         )->a( n = `title`     v = `STEP2.2`
-        )->a( n = `validated` b = abap_true ).
+        )->a( n = `validated` b = abap_true
+        )->a( n = `nextStep`  v = `STEP3` ).
 
     lr_wiz_step22->tag( `MessageStrip`
         )->a( n = `text` v = `STEP22` ).
@@ -81,12 +82,17 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
     DATA(lr_wiz_step23) = lr_wizard->ele( `WizardStep`
         )->a( n = `id`        v = `STEP23`
         )->a( n = `title`     v = `STEP2.3`
-        )->a( n = `validated` b = abap_true ).
+        )->a( n = `validated` b = abap_true
+        )->a( n = `nextStep`  v = `STEP3` ).
 
     lr_wiz_step23->tag( `MessageStrip`
         )->a( n = `text` v = `STEP23` ).
 
+    " both branches join again here - in branching mode a step without a
+    " nextStep is the LAST one, so without the two links above this step
+    " could never be reached
     DATA(lr_wiz_step3) = lr_wizard->ele( `WizardStep`
+        )->a( n = `id`        v = `STEP3`
         )->a( n = `title`     v = `STEP3`
         )->a( n = `validated` b = abap_true ).
 

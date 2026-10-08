@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /*
- * check-atc — two findings a sample can ship that no gate here could see.
+ * check-atc — three findings a sample can ship that no gate here could see.
  *
- * Both come from the same place: abaplint models neither, so a sample passes
+ * All three come from the same place: abaplint models neither, so a sample passes
  * every gate in this repository and the problem surfaces on the system
  * somebody installed it on. That is worse than a missing sample - it is the
  * code they copied because it was published as the way to do the thing.
@@ -37,7 +37,8 @@
  *
  *    It is a CHARACTER literal, so a formal parameter typed `string` - the
  *    view builder's `v`, for one - answers `'...'(001) is not type-compatible
- *    with formal parameter V`, a SYNTAX_ERROR of the whole class. Three of these shipped here, in app 519 - the sample whose subject IS
+ *    with formal parameter V`, a SYNTAX_ERROR of the whole class. Three of
+ *    these shipped here, in app 519 - the sample whose subject IS
  *    translatable texts, so the one place it was certain to appear.
  *
  *    A PARAMETER binding only: `lv_x = 'y'(001).` is an assignment and a plain

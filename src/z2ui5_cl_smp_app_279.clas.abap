@@ -82,7 +82,10 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
         )->a( n = `visible` v = client->_bind( dirty )
         )->a( n = `class`   v = `sapUiSmallMarginBegin` ).
 
-    page->tag( n = `Dirty` ns = `z2ui5` ).
+    " isDirty is what arms the control - unbound it stays false, and the
+    " browser never asks before the page is closed or reloaded
+    page->tag( n = `Dirty` ns = `z2ui5`
+        )->a( n = `isDirty` v = client->_bind( dirty ) ).
 
     client->view_display( page->stringify( ) ).
 

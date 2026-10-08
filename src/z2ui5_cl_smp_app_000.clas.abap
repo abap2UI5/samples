@@ -899,7 +899,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         keywords = `transition animation slide fade flip navcontainer transition_back nav_app_leave`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_531` )
-      ( group = `Move through the app` header = `Navigation` sub = `Return Data and Events to the Caller` keywords = `r_data result get_app_prev return event payload` intro = `` path = `src` app = `z2ui5_cl_smp_app_488` )
+      ( group = `Move through the app` header = `Navigation` sub = `Return Data and Events to the Caller` keywords = `r_data r_event_data nav_app_leave result return event payload` intro = `` path = `src` app = `z2ui5_cl_smp_app_488` )
       ( group = `Move through the app` header = `Navigation` sub = `Uncaught Error and Error Popup` keywords = `exception dump error handling debugtool restart retry` intro = `` path = `src` app = `z2ui5_cl_smp_app_464` )
       ( group = `Move through the app` header = `Nested View` sub = `Basic Example (nest_view_display)` keywords = `nest_view_display rerender model refresh sub view` intro = `` path = `src` app = `z2ui5_cl_smp_app_065` )
       ( group = `Move through the app` header = `Nested View`
