@@ -1,6 +1,6 @@
 " @keywords binding _bind model attribute value input button roundtrip messagebox serialize
 " @summary Binds a class attribute to an Input with _bind( ), so what the user types is in the ABAP variable on the next roundtrip - a Text shows it back and a MessageBox confirms the roundtrip.
-" @docs https://abap2ui5.github.io/docs/cookbook/model/binding https://abap2ui5.github.io/docs/tutorials/walkthrough/step-4
+" @docs https://abap2ui5.github.io/docs/cookbook/model/binding https://abap2ui5.github.io/docs/tutorials/step-4
 CLASS z2ui5_cl_smp_app_494 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
