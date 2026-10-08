@@ -935,7 +935,7 @@ In the order they fail fastest:
 | `npm run check:launchpad` | `check-docs` | the overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) |
 | `npm run check:catalogue` | `check-docs` | the committed `catalogue.json` still mirrors the folder tree, and keeps the shape its consumers parse (§3) |
 | `npm run check:derived` | `check-docs` | the committed `catalogue-derived.json` — the linter's half of the catalogue — still matches what the linter derives from the tree ("The catalogue", below) |
-| `npm run check:atc` | `check-atc` | three extended-check (SLIN/ATC) findings abaplint does not model: a `SELECT` without `WHERE` and without `"#EC CI_NOWHERE`, `sy-subrc` after a dynamic `ASSIGN`, a text symbol passed to a parameter |
+| `npm run check:atc` | `check-atc` | four extended-check (SLIN/ATC) findings abaplint does not model: a `SELECT` without `WHERE` and without `"#EC CI_NOWHERE`, `sy-subrc` after a dynamic `ASSIGN`, a text symbol passed to a parameter, an ABAP Doc `@raising` the method's `RAISING` clause does not declare |
 | `npm run check:prose` | `check-docs` | every class name written in prose exists, here and in the sibling repositories |
 | `npm run check:docs-links` | `check-docs-links` | every `" @docs` URL resolves, and its page names the class back (§4) |
 | `npm run check:app-rules` | `check-app-rules` | the abaplint rule block still matches its source in abap2UI5 (§6) |
@@ -1427,7 +1427,7 @@ repeated here because samples get them wrong:
 
 - **`a( )` takes exactly one of `v`, `b`, `t`.** `v` is the form for a binding,
   an event, a `{/path}` template and constant text; `b` takes an ABAP boolean
-  and renders `true`/`false` itself (`a( n = `editable` b = mv_edit_mode )`,
+  and renders `true`/`false` itself (`` a( n = `editable` b = mv_edit_mode ) ``,
   never a conversion of your own); `t` takes text that carries **data** — user
   input, a value read from a table — and escapes it as a literal, because a `{`
   in a `v` is parsed as a binding. Where one attribute mixes text with a
@@ -1849,7 +1849,7 @@ new/edited samples stay consistent:
   capability marker** appended to the `<DESCRIPT>`
   (leading space), surfaced in the overview:
   - `(C)` — uses an abap2UI5 **custom control** (the `z2ui5` cc namespace:
-    `ele( n = … ns = `z2ui5` )`, `z2ui5.cc`, `xmlns:z2ui5`).
+    `` ele( n = … ns = `z2ui5` ) ``, `z2ui5.cc`, `xmlns:z2ui5`).
   - `(A)` — performs a **frontend action**. The list is closed — exactly
     these three, nothing "like" them:
     1. a `client->follow_up_action( )` call (including the
@@ -1879,7 +1879,7 @@ new/edited samples stay consistent:
   `scripts/lib/markers.mjs`, and rendered by all three generators; change the
   wording there, never in a rendered copy.
 
-- **A read-only info form disables its inputs** (`a( n = `enabled` b = abap_false )`)
+- **A read-only info form disables its inputs** (`` a( n = `enabled` b = abap_false ) ``)
   — do not leave display-only values in editable inputs (see
   `z2ui5_cl_smp_app_122`).
 
@@ -1892,16 +1892,16 @@ new/edited samples stay consistent:
   that names an aggregation the parent does **not** have makes UI5 resolve it
   as a *control class* and 404 with `failed to load sap/<lib>/<name>.js` on
   1.71, crashing the sample. Two real cases:
-  - `ele( n = `heading` ns = `uxap` )` under an `ObjectPageSection` —
+  - `` ele( n = `heading` ns = `uxap` ) `` under an `ObjectPageSection` —
     `sap.uxap.ObjectPageSection` has no `heading` aggregation. Put the section
-    title in `a( n = `title` v = … )` and go straight to `subSections`.
+    title in `` a( n = `title` v = … ) `` and go straight to `subSections`.
     (`f:heading` **is** valid under a `sap.f` `DynamicPageTitle`.)
   - `footer` on a popup `Dialog` — `sap.m.Dialog` only got a public `footer`
     aggregation ~1.110; a `Page`'s `footer` is fine (sap.m.Page always had
     one). Every control/property here must exist since 1.71 (§2); when in
     doubt check "available since" in the demo kit.
 
-- **`sap.m.SimpleForm` needs `a( n = `editable` b = abap_true )`** for its
+- **`sap.m.SimpleForm` needs `` a( n = `editable` b = abap_true ) ``** for its
   label/input pairs to line up on one row — without it the form renders in
   display mode and the first field is mislaid (fixed in
   `Z2UI5_CL_SMP_APP_189`; compare `Z2UI5_CL_SMP_APP_133`).

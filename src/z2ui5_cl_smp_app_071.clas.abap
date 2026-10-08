@@ -33,10 +33,21 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
 
     me->client = client.
 
+    " text typed into an Input bound to TYPE i does not dump: the framework
+    " keeps the old number and names the field in t_model_skipped - so the
+    " update would silently use a value the screen no longer shows
+    DATA(t_skipped) = client->get( )-t_model_skipped.
+    IF t_skipped IS NOT INITIAL.
+      client->message_box_display( text = |'{ t_skipped[ 1 ]-value }' is no number this field can hold - it keeps its old value.|
+                                   type = `error` ).
+      RETURN.
+    ENDIF.
+
     IF client->check_on_init( ).
 
       combo_fill( ).
       view_display( ).
+
     ELSEIF client->check_on_navigated( ).
       view_display( ).
 

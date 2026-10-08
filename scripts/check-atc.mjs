@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /*
- * check-atc — three findings a sample can ship that no gate here could see.
+ * check-atc — four findings a sample can ship that no gate here could see.
  *
- * All three come from the same place: abaplint models neither, so a sample passes
+ * All four come from the same place: abaplint models neither, so a sample passes
  * every gate in this repository and the problem surfaces on the system
  * somebody installed it on. That is worse than a missing sample - it is the
  * code they copied because it was published as the way to do the thing.
@@ -44,6 +44,18 @@
  *    A PARAMETER binding only: `lv_x = 'y'(001).` is an assignment and a plain
  *    conversion, and a symbol inside a string template sits in a general
  *    expression position. Read it into a variable and pass that.
+ *
+ * 4. ABAPDOC_RAISING - an ABAP Doc `@raising <x>` naming an exception the
+ *    method's signature does not declare.
+ *
+ *    The syntax check reads the doc block against the declaration it
+ *    documents and warns when a `@raising` names a class missing from the
+ *    RAISING clause - the text documents a contract the method does not
+ *    have, and ADT shows it anyway. Only this direction is a finding: an
+ *    exception the signature declares and the doc block leaves out is an
+ *    undocumented one, which is a choice, not a contradiction. Decided per
+ *    METHODS / CLASS-METHODS declaration directly under the block (a chained
+ *    element ends at its comma).
  *
  * The scan reads ABAP STATEMENTS, not lines - a multi-line `ASSIGN COMPONENT`
  * looks like a plain `ASSIGN` to a line-based scan, which would report the one
@@ -167,7 +179,51 @@ function textSymbolArg(c) {
   return -1;
 }
 
-export { code, textSymbolArg };
+/* `@raising` names of a `"!` block that the declaration below it does not
+ * declare in its RAISING clause. `doc` is the block's lines, `decl` the code
+ * of the declaration (comments stripped). Empty when the declaration is not a
+ * method, so a stray `@raising` above anything else stays the position rule's
+ * business. */
+function raisingUndeclared(doc, decl) {
+  if (!/^\s*(CLASS-)?METHODS\b/i.test(decl)) return [];
+  const named = [];
+  for (const line of doc) {
+    const m = /^\s*"!\s*@raising\s+([\w/]+)/i.exec(line);
+    if (m) named.push(m[1]);
+  }
+  if (named.length === 0) return [];
+  const clause = /\bRAISING\b([\s\S]*?)(\bEXCEPTIONS\b|$)/i.exec(decl);
+  const declared = new Set(
+    clause ? clause[1].replace(/\bRESUMABLE\s*\(/gi, ' ').replace(/[(),.:]/g, ' ').split(/\s+/).filter(Boolean).map((x) => x.toLowerCase()) : [],
+  );
+  return named.filter((n) => !declared.has(n.toLowerCase()));
+}
+
+/* Every `"!` block with the declaration directly under it: the code from the
+ * first line after the block up to the `.` that ends the statement, or the
+ * `,` that ends a chained element. */
+function docBlocks(source) {
+  const lines = source.split(/\r?\n/);
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (!/^\s*"!/.test(lines[i])) continue;
+    const start = i;
+    while (i < lines.length && /^\s*"!/.test(lines[i])) i++;
+    const doc = lines.slice(start, i);
+    let decl = '';
+    for (let j = i; j < lines.length; j++) {
+      const c = code(lines[j]);
+      const end = c.search(/[.,]\s*$/);
+      decl += ` ${end >= 0 ? c.slice(0, end + 1) : c}`;
+      if (end >= 0) break;
+    }
+    out.push({ line: start + 1, doc, decl: decl.replace(/\s+/g, ' ').trim() });
+    i--;
+  }
+  return out;
+}
+
+export { code, textSymbolArg, raisingUndeclared, docBlocks };
 
 /* The scan itself - only when run as a script, so a test can import the two
  * decisions above without scanning the tree. */
@@ -179,6 +235,15 @@ function main() {
 const findings = [];
 
 for (const rel of abapFiles('src')) {
+  for (const b of docBlocks(readFileSync(join(ROOT, rel), 'utf8'))) {
+    for (const name of raisingUndeclared(b.doc, b.decl)) {
+      findings.push({
+        rule: 'abapdoc_raising',
+        at: `${rel}:${b.line}`,
+        message: `"! @raising ${name} - the method below does not declare it in its RAISING clause`,
+      });
+    }
+  }
   let claim = null;
   for (const st of statements(readFileSync(join(ROOT, rel), 'utf8'))) {
     const { code: c, raw, start } = st;
@@ -229,10 +294,12 @@ if (findings.length > 0) {
     '                     an assignment and a string template need nothing.\n' +
     'subrc_after_assign - IS [NOT] ASSIGNED, and `UNASSIGN <fs>.` BEFORE the ASSIGN\n' +
     '                     when it sits in a loop or the symbol was assigned earlier.\n' +
-    '                     ASSIGN COMPONENT is not this finding and is never reported.',
+    '                     ASSIGN COMPONENT is not this finding and is never reported.\n' +
+    'abapdoc_raising    - declare the exception in RAISING, or drop the @raising line;\n' +
+    '                     an exception the doc leaves out is not a finding.',
   );
   process.exit(1);
 }
 
-console.log('check-atc: no SELECT without a WHERE, no sy-subrc after a dynamic ASSIGN,\n            no text symbol passed to a parameter - OK');
+console.log('check-atc: no SELECT without a WHERE, no sy-subrc after a dynamic ASSIGN,\n            no text symbol passed to a parameter, no @raising the signature\n            does not declare - OK');
 }

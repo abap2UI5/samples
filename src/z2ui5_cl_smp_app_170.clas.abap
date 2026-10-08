@@ -36,8 +36,8 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
 
     dialog->ele( `IconTabBar`
         )->a( n = `select`      v = client->follow_up_action( val   = client->cs_event-control_by_id
-                                                                                         view  = client->cs_view-popup
-                                                                                         t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
+                                                              view  = client->cs_view-popup
+                                                              t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
         )->a( n = `expandable`  b = abap_false
         )->a( n = `expanded`    b = abap_true
         )->a( n = `headerMode`  v = `Inline`

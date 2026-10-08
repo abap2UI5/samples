@@ -58,37 +58,43 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
     " a readable label per system type instead of the raw booleans
     form->tag( `Label`
-        )->a( n = `text` v = `System type`
-        )->ele( `ObjectStatus`
-            )->a( n = `state` v = `Information`
-            )->a( n = `text`  v = `{= ${device>/system/phone} ? 'Phone' : (${device>/system/tablet} ? 'Tablet' : (${device>/system/desktop} ? 'Desktop' : 'Other')) }` ).
+        )->a( n = `text` v = `System type` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `state` v = `Information`
+        )->a( n = `text`  v = `{= ${device>/system/phone} ? 'Phone' : (${device>/system/tablet} ? 'Tablet' : (${device>/system/desktop} ? 'Desktop' : 'Other')) }` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Orientation`
-        )->ele( `ObjectStatus`
-            )->a( n = `text` v = `{= ${device>/orientation/landscape} ? 'Landscape' : 'Portrait' }` ).
+        )->a( n = `text` v = `Orientation` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `text` v = `{= ${device>/orientation/landscape} ? 'Landscape' : 'Portrait' }` ).
 
     " resize/width and resize/height are updated live by UI5
     form->tag( `Label`
-        )->a( n = `text` v = `Window size`
-        )->ele( `ObjectStatus`
-            )->a( n = `text` v = `{device>/resize/width} x {device>/resize/height} px` ).
+        )->a( n = `text` v = `Window size` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `text` v = `{device>/resize/width} x {device>/resize/height} px` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Touch support`
-        )->ele( `ObjectStatus`
-            )->a( n = `state` v = `{= ${device>/support/touch} ? 'Success' : 'None' }`
-            )->a( n = `text`  v = `{= ${device>/support/touch} ? 'Yes' : 'No' }` ).
+        )->a( n = `text` v = `Touch support` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `state` v = `{= ${device>/support/touch} ? 'Success' : 'None' }`
+        )->a( n = `text`  v = `{= ${device>/support/touch} ? 'Yes' : 'No' }` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Browser`
-        )->tag( `Text`
-            )->a( n = `text` v = `{device>/browser/name} {device>/browser/version}` ).
+        )->a( n = `text` v = `Browser` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = `{device>/browser/name} {device>/browser/version}` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Operating system`
-        )->tag( `Text`
-            )->a( n = `text` v = `{device>/os/name} {device>/os/version}` ).
+        )->a( n = `text` v = `Operating system` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = `{device>/os/name} {device>/os/version}` ).
 
     result = form.
 

@@ -95,13 +95,14 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
         )->a( n = `class`       v = `sapUiSmallMarginBottom` ).
 
     email_form->tag( `Label`
-        )->a( n = `text` v = `Mail Body`
-        )->tag( `TextArea`
-            )->a( n = `value`           v = client->_bind( email-body )
-            )->a( n = `width`           v = `100%`
-            )->a( n = `valueLiveUpdate` b = abap_true
-            )->a( n = `growing`         b = abap_true
-            )->a( n = `growingMaxLines` v = `7` ).
+        )->a( n = `text` v = `Mail Body` ).
+
+    email_form->tag( `TextArea`
+        )->a( n = `value`           v = client->_bind( email-body )
+        )->a( n = `width`           v = `100%`
+        )->a( n = `valueLiveUpdate` b = abap_true
+        )->a( n = `growing`         b = abap_true
+        )->a( n = `growingMaxLines` v = `7` ).
 
     email_form->tag( `Button`
         )->a( n = `press` v = client->follow_up_action( val   = client->cs_event-urlhelper

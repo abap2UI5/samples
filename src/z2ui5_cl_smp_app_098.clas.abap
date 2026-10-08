@@ -116,11 +116,12 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
     DATA(page) = lo_view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
 
-    page = page->tag( `Text`
-        )->a( n = `text` v = client->_bind( mv_title )
-        )->tag( `Button`
-            )->a( n = `press` v = client->_event( `NN_VIEW` )
-            )->a( n = `text`  v = `frontend event` ).
+    page->tag( `Text`
+        )->a( n = `text` v = client->_bind( mv_title ) ).
+
+    page->tag( `Button`
+        )->a( n = `press` v = client->_event( `NN_VIEW` )
+        )->a( n = `text`  v = `frontend event` ).
 
     client->nest2_view_display(
       val            = lo_view_nested->stringify( )

@@ -196,44 +196,49 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
                 )->ele( n = `content` ns = `form` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Input with suggestion items`
-        )->ele( `Input`
-            )->a( n = `placeholder`     v = `fill in your favorite colour`
-            )->a( n = `value`           v = client->_bind( s_screen-color_01 )
-            )->a( n = `suggestionItems` v = client->_bind( t_suggestion )
-            )->a( n = `showSuggestion`  b = abap_true
-            )->ele( `suggestionItems`
-                )->tag( n = `ListItem` ns = `core`
-                    )->a( n = `text`           v = `{VALUE}`
-                    )->a( n = `additionalText` v = `{DESCR}` ).
+        )->a( n = `text` v = `Input with suggestion items` ).
+
+    form->ele( `Input`
+        )->a( n = `placeholder`     v = `fill in your favorite colour`
+        )->a( n = `value`           v = client->_bind( s_screen-color_01 )
+        )->a( n = `suggestionItems` v = client->_bind( t_suggestion )
+        )->a( n = `showSuggestion`  b = abap_true
+        )->ele( `suggestionItems`
+            )->tag( n = `ListItem` ns = `core`
+                )->a( n = `text`           v = `{VALUE}`
+                )->a( n = `additionalText` v = `{DESCR}` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Input only numbers allowed`
-        )->tag( `Input`
-            )->a( n = `placeholder` v = `quantity`
-            )->a( n = `type`        v = `Number`
-            )->a( n = `value`       v = client->_bind( s_screen-quantity ) ).
+        )->a( n = `text` v = `Input only numbers allowed` ).
+
+    form->tag( `Input`
+        )->a( n = `placeholder` v = `quantity`
+        )->a( n = `type`        v = `Number`
+        )->a( n = `value`       v = client->_bind( s_screen-quantity ) ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Input with value`
-        )->tag( `Input`
-            )->a( n = `placeholder`      v = `fill in your favorite colour`
-            )->a( n = `value`            v = client->_bind( s_screen-color_02 )
-            )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE` )
-            )->a( n = `showValueHelp`    b = abap_true ).
+        )->a( n = `text` v = `Input with value` ).
+
+    form->tag( `Input`
+        )->a( n = `placeholder`      v = `fill in your favorite colour`
+        )->a( n = `value`            v = client->_bind( s_screen-color_02 )
+        )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE` )
+        )->a( n = `showValueHelp`    b = abap_true ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Custom value Popup`
-        )->tag( `Input`
-            )->a( n = `placeholder`      v = `name`
-            )->a( n = `value`            v = client->_bind( s_screen-name )
-            )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
-            )->a( n = `showValueHelp`    b = abap_true
-        )->tag( `Input`
-            )->a( n = `placeholder`      v = `lastname`
-            )->a( n = `value`            v = client->_bind( s_screen-lastname )
-            )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
-            )->a( n = `showValueHelp`    b = abap_true ).
+        )->a( n = `text` v = `Custom value Popup` ).
+
+    form->tag( `Input`
+        )->a( n = `placeholder`      v = `name`
+        )->a( n = `value`            v = client->_bind( s_screen-name )
+        )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
+        )->a( n = `showValueHelp`    b = abap_true ).
+
+    form->tag( `Input`
+        )->a( n = `placeholder`      v = `lastname`
+        )->a( n = `value`            v = client->_bind( s_screen-lastname )
+        )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
+        )->a( n = `showValueHelp`    b = abap_true ).
 
     page->ele( `footer`
         )->ele( `OverflowToolbar`

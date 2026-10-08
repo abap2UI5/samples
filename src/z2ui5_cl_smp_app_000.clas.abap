@@ -394,19 +394,14 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
           )->a( n = `alignItems` v = `Center`
           )->a( n = `wrap`       v = `Wrap` ).
 
-      IF tile-sub IS INITIAL.
-        row->tag( `Link`
-            )->a( n = `text`  t = tile-header
-            )->a( n = `press` v = client->_event( tile-app )
-            )->a( n = `width` t = width ).
+      row->tag( `Link`
+          )->a( n = `text`  t = tile-header
+          )->a( n = `press` v = client->_event( tile-app )
+          )->a( n = `width` t = width ).
 
-      ELSE.
-        row->tag( `Link`
-            )->a( n = `text`  t = tile-header
-            )->a( n = `press` v = client->_event( tile-app )
-            )->a( n = `width` t = width
-            )->tag( `Text`
-                )->a( n = `text` t = tile-sub ).
+      IF tile-sub IS NOT INITIAL.
+        row->tag( `Text`
+            )->a( n = `text` t = tile-sub ).
       ENDIF.
 
       " straight to the ABAP behind the sample - the tile shows what it does,

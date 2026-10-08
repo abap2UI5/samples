@@ -533,9 +533,10 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
                  press = client->_event( `BOX_ACTIONS` ) ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Your answer`
-        )->tag( `Text`
-            )->a( n = `text` v = client->_bind( answer ) ).
+        )->a( n = `text` v = `Your answer` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = client->_bind( answer ) ).
 
     render_demo( form  = form
                  label = `Details`
@@ -576,10 +577,11 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
     row->tag( `Button`
         )->a( n = `text`  t = text
         )->a( n = `press` v = press
-        )->a( n = `width` v = `15rem`
-        )->tag( `Text`
-            )->a( n = `text`  t = descr
-            )->a( n = `class` v = `sapUiSmallMarginBegin` ).
+        )->a( n = `width` v = `15rem` ).
+
+    row->tag( `Text`
+        )->a( n = `text`  t = descr
+        )->a( n = `class` v = `sapUiSmallMarginBegin` ).
 
   ENDMETHOD.
 

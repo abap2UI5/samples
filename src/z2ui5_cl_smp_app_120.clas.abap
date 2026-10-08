@@ -77,41 +77,42 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
         )->a( n = `altitude`         v = client->_bind( altitude )
         )->a( n = `accuracy`         v = client->_bind( accuracy )
         )->a( n = `altitudeAccuracy` v = client->_bind( altitudeaccuracy )
-        )->a( n = `speed`            v = client->_bind( speed )
-        )->ele( n = `SimpleForm` ns = `form`
-            )->a( n = `title`    v = `Geolocation`
-            )->a( n = `editable` b = abap_false
-            )->ele( n = `content` ns = `form`
-                )->tag( `Label`
-                    )->a( n = `text`     v = `Longitude`
-                )->tag( `Input`
-                    )->a( n = `editable` b = abap_false
-                    )->a( n = `value`    v = client->_bind( longitude )
-                )->tag( `Label`
-                    )->a( n = `text`     v = `Latitude`
-                )->tag( `Input`
-                    )->a( n = `editable` b = abap_false
-                    )->a( n = `value`    v = client->_bind( latitude )
-                )->tag( `Label`
-                    )->a( n = `text`     v = `Altitude`
-                )->tag( `Input`
-                    )->a( n = `editable` b = abap_false
-                    )->a( n = `value`    v = client->_bind( altitude )
-                )->tag( `Label`
-                    )->a( n = `text`     v = `Accuracy`
-                )->tag( `Input`
-                    )->a( n = `editable` b = abap_false
-                    )->a( n = `value`    v = client->_bind( accuracy )
-                )->tag( `Label`
-                    )->a( n = `text`     v = `AltitudeAccuracy`
-                )->tag( `Input`
-                    )->a( n = `editable` b = abap_false
-                    )->a( n = `value`    v = client->_bind( altitudeaccuracy )
-                )->tag( `Label`
-                    )->a( n = `text`     v = `Speed`
-                )->tag( `Input`
-                    )->a( n = `editable` b = abap_false
-                    )->a( n = `value`    v = client->_bind( speed ) ).
+        )->a( n = `speed`            v = client->_bind( speed ) ).
+
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Geolocation`
+        )->a( n = `editable` b = abap_false
+        )->ele( n = `content` ns = `form`
+            )->tag( `Label`
+                )->a( n = `text`     v = `Longitude`
+            )->tag( `Input`
+                )->a( n = `editable` b = abap_false
+                )->a( n = `value`    v = client->_bind( longitude )
+            )->tag( `Label`
+                )->a( n = `text`     v = `Latitude`
+            )->tag( `Input`
+                )->a( n = `editable` b = abap_false
+                )->a( n = `value`    v = client->_bind( latitude )
+            )->tag( `Label`
+                )->a( n = `text`     v = `Altitude`
+            )->tag( `Input`
+                )->a( n = `editable` b = abap_false
+                )->a( n = `value`    v = client->_bind( altitude )
+            )->tag( `Label`
+                )->a( n = `text`     v = `Accuracy`
+            )->tag( `Input`
+                )->a( n = `editable` b = abap_false
+                )->a( n = `value`    v = client->_bind( accuracy )
+            )->tag( `Label`
+                )->a( n = `text`     v = `AltitudeAccuracy`
+            )->tag( `Input`
+                )->a( n = `editable` b = abap_false
+                )->a( n = `value`    v = client->_bind( altitudeaccuracy )
+            )->tag( `Label`
+                )->a( n = `text`     v = `Speed`
+            )->tag( `Input`
+                )->a( n = `editable` b = abap_false
+                )->a( n = `value`    v = client->_bind( speed ) ).
 
     client->view_display( view->stringify( ) ).
 

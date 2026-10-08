@@ -89,23 +89,28 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
         )->ele( n = `content` ns = `form` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Cancel the browser navigation`
-        )->tag( `Switch`
-            )->a( n = `state`  v = client->_bind( block_navigation )
-            )->a( n = `change` v = client->_event( `TOGGLE` )
-        )->tag( `Label`
-            )->a( n = `text` v = `Link`
-        )->tag( `Link`
-            )->a( n = `text`   v = `Open abap2ui5.org`
-            )->a( n = `target` v = `_blank`
-            )->a( n = `href`   v = `https://abap2ui5.org`
-            )->a( n = `press`  v = client->_event(
-                val    = `LINK_PRESS`
-                s_ctrl = VALUE #( check_prevent_default = block_navigation ) )
-        )->tag( `Label`
-            )->a( n = `text` v = `Result`
-        )->tag( `Text`
-            )->a( n = `text` v = client->_bind( last_press ) ).
+        )->a( n = `text` v = `Cancel the browser navigation` ).
+
+    form->tag( `Switch`
+        )->a( n = `state`  v = client->_bind( block_navigation )
+        )->a( n = `change` v = client->_event( `TOGGLE` ) ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `Link` ).
+
+    form->tag( `Link`
+        )->a( n = `text`   v = `Open abap2ui5.org`
+        )->a( n = `target` v = `_blank`
+        )->a( n = `href`   v = `https://abap2ui5.org`
+        )->a( n = `press`  v = client->_event(
+            val    = `LINK_PRESS`
+            s_ctrl = VALUE #( check_prevent_default = block_navigation ) ) ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `Result` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = client->_bind( last_press ) ).
 
     client->view_display( view->stringify( ) ).
 

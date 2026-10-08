@@ -61,9 +61,7 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
         view_display( ).
 
       WHEN `BACK_WITH_EVENT`.
-        DATA(app_back) = CAST z2ui5_cl_smp_app_024( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-        app_back->backend_event = `CALL_PREVIOUS_APP_INPUT_RETURN`.
-        client->nav_app_leave( app_back ).
+        client->nav_app_leave( event = `CALL_PREVIOUS_APP_INPUT_RETURN` ).
 
     ENDCASE.
 
