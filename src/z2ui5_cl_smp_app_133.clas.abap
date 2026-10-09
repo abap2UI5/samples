@@ -40,8 +40,9 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Pressing a button runs the set_focus front-end action, which moves keyboard focus to the ` &&
-                   `target input and selects the text between the given start and end positions.`
+        )->a( n = `text`     v = `Press focus here beside a field: the set_focus front-end action moves the keyboard ` &&
+                   `focus into that input and selects the characters between Selection start and Selection end ` &&
+                   `(0-based) - change the two positions and press again to move the selection.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -53,15 +54,15 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
             )->tag( `Title`
                 )->a( n = `text` v = `Input`
             )->tag( `Label`
-                )->a( n = `text` v = `Sel_Start`
+                )->a( n = `text` v = `Selection start`
             )->tag( `Input`
                 )->a( n = `value` v = client->_bind( selstart )
             )->tag( `Label`
-                )->a( n = `text` v = `Sel_End`
+                )->a( n = `text` v = `Selection end`
             )->tag( `Input`
                 )->a( n = `value` v = client->_bind( selend )
             )->tag( `Label`
-                )->a( n = `text` v = `field_01`
+                )->a( n = `text` v = `Field 1`
             )->tag( `Input`
                 )->a( n = `id`    v = `BUTTON01`
                 )->a( n = `value` v = client->_bind( field_01 )
@@ -69,7 +70,7 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
                 )->a( n = `press` v = client->_event( `BUTTON01` )
                 )->a( n = `text`  v = `focus here`
             )->tag( `Label`
-                )->a( n = `text` v = `field_02`
+                )->a( n = `text` v = `Field 2`
             )->tag( `Input`
                 )->a( n = `id`    v = `BUTTON02`
                 )->a( n = `value` v = client->_bind( field_02 )

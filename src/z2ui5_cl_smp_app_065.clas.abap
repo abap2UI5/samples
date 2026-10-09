@@ -27,7 +27,10 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_navigated( ).
+
       view_display( ).
+      nest_view_display( ).
+
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
@@ -51,7 +54,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
         " change only a nest-bound field, without re-rendering the nested XML.
         " The main and nested views share one model and that model is pushed
         " with every response, so the nested view picks the change up too.
-        " Press "Rerender only nested view" first so the nested view exists.
+        " After "Rerender Main without nest" there is no nested view to reach.
         mv_count      = mv_count + 1.
         mv_input_nest = |nest model updated #{ mv_count }|.
     ENDCASE.
@@ -76,8 +79,9 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
             )->a( n = `id`             v = `test` ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `A main view with a nested view inside: the buttons re-render everything, only the ` &&
-                   `main view, only the nested view, or refresh just the nested view's model.`
+        )->a( n = `text`     v = `A main view with a nested view inside, both displayed on start. Type into both ` &&
+                   `inputs, then press the buttons: re-render everything, only the main view (the nested one is gone ` &&
+                   `then), only the nested view, or change just the nested view's model with no re-render at all.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).

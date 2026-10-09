@@ -1,4 +1,4 @@
-" @keywords export save base64 attachment xstring document
+" @keywords export save base64 attachment xstring document download_b64_file
 " @summary Sends a file to the browser as a download - an xstring encoded as base64, handed over as an attachment.
 " @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download
 CLASS z2ui5_cl_smp_app_186 DEFINITION PUBLIC.

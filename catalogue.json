@@ -405,7 +405,8 @@
     "large",
     "itab",
     "100",
-    "entries"
+    "entries",
+    "set_size_limit"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/size_limit"
@@ -563,7 +564,8 @@
     "paste",
     "copy",
     "text",
-    "area"
+    "area",
+    "clipboard_copy"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/clipboard"
@@ -628,7 +630,8 @@
     "session",
     "end",
     "fiori",
-    "launchpad"
+    "launchpad",
+    "system_logout"
    ],
    "docs": []
   },
@@ -731,7 +734,8 @@
     "tab",
     "image",
     "data",
-    "uri"
+    "uri",
+    "set_favicon"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/title"
@@ -1333,7 +1337,8 @@
     "base64",
     "attachment",
     "xstring",
-    "document"
+    "document",
+    "download_b64_file"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download"
@@ -1722,7 +1727,8 @@
     "restart",
     "new",
     "instance",
-    "nav_app_call"
+    "nav_app_call",
+    "hash_routing"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
@@ -1744,7 +1750,8 @@
     "state",
     "preserved",
     "back",
-    "nav_app_call"
+    "nav_app_call",
+    "hash_routing"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
@@ -1884,7 +1891,8 @@
     "escape",
     "limit",
     "action",
-    "onclose"
+    "onclose",
+    "message_box_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/translation_messages/logging",
@@ -1907,7 +1915,8 @@
     "exception",
     "cx_root",
     "error",
-    "abend"
+    "abend",
+    "message_box_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/exception",
@@ -1956,7 +1965,9 @@
     "success",
     "information",
     "dialog",
-    "action"
+    "action",
+    "onclose",
+    "message_box_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
@@ -2218,7 +2229,8 @@
     "report",
     "two",
     "column",
-    "split"
+    "split",
+    "nest_view_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/nested_views"
@@ -2239,7 +2251,9 @@
     "detail",
     "detail",
     "deep",
-    "navigation"
+    "navigation",
+    "nest_view_display",
+    "nest2_view_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/nested_views"
@@ -2343,7 +2357,10 @@
     "list",
     "selection",
     "placement",
-    "anchor"
+    "anchor",
+    "pick",
+    "popover_display",
+    "popover_destroy"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover"
@@ -2429,7 +2446,9 @@
     "path",
     "aggregation",
     "dialog",
-    "row"
+    "row",
+    "bind_element",
+    "bindelement"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend",
@@ -2449,7 +2468,9 @@
     "dialog",
     "pages",
     "back",
-    "forward"
+    "forward",
+    "icontabbar",
+    "control_by_id"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popup"
@@ -2492,7 +2513,10 @@
     "destroy",
     "rerender",
     "background",
-    "view"
+    "view",
+    "popup_display",
+    "popup_destroy",
+    "view_destroy"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popup",
@@ -2811,7 +2835,8 @@
     "wait",
     "long",
     "running",
-    "backend"
+    "backend",
+    "start_timer"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer"
@@ -2831,7 +2856,8 @@
     "auto",
     "refresh",
     "follow_up_action",
-    "seconds"
+    "seconds",
+    "start_timer"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer"

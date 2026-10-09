@@ -1,4 +1,4 @@
-" @keywords clipboard paste copy text area
+" @keywords clipboard paste copy text area clipboard_copy
 " @summary Copies text into the browser clipboard from the backend: a follow-up action carries the string, a toast confirms what landed there.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/clipboard
 CLASS z2ui5_cl_smp_app_325 DEFINITION PUBLIC.

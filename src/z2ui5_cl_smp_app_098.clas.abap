@@ -1,4 +1,4 @@
-" @keywords fcl three column detail detail deep navigation
+" @keywords fcl three column detail detail deep navigation nest_view_display nest2_view_display
 " @summary The FlexibleColumnLayout with three columns - list, detail and detail-of-detail - and the navigation that opens each one.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views
 CLASS z2ui5_cl_smp_app_098 DEFINITION PUBLIC.

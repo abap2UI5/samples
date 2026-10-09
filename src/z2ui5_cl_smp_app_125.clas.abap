@@ -41,11 +41,11 @@ CLASS z2ui5_cl_smp_app_125 IMPLEMENTATION.
           )->a( n = `class`    v = `sapUiSmallMargin` ).
 
       page->ele( n = `SimpleForm` ns = `form`
-          )->a( n = `title`    v = `Form Title`
+          )->a( n = `title`    v = `Browser Tab Title`
           )->a( n = `editable` b = abap_true
           )->ele( n = `content` ns = `form`
               )->tag( `Label`
-                  )->a( n = `text` v = `title`
+                  )->a( n = `text` v = `Tab title`
               )->tag( `Input`
                   )->a( n = `value` v = client->_bind( title )
               )->tag( `Button`

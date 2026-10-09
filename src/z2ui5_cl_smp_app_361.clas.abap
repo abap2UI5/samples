@@ -1,4 +1,4 @@
-" @keywords logoff signout icf session end fiori launchpad
+" @keywords logoff signout icf session end fiori launchpad system_logout
 " @summary Ends the session from the client - the logoff an ICF session or a Fiori launchpad needs, triggered as a follow-up action.
 CLASS z2ui5_cl_smp_app_361 DEFINITION PUBLIC.
 

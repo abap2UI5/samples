@@ -44,8 +44,9 @@ CLASS z2ui5_cl_smp_app_019 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `A SegmentedButton switches the table's selection mode (None, Single, Multi) at ` &&
-                   `runtime; a second table below collects the rows selected in the first.`
+        )->a( n = `text`     v = `Pick a selection mode with the SegmentedButton, select rows in the first table and ` &&
+                   `press copy selected entries: each row's selected property is bound to its SELKZ field, so the ` &&
+                   `selection is already in the internal table when the event arrives, and the second table shows it.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).

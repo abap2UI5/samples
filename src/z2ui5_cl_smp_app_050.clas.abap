@@ -92,7 +92,7 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
                          `</style>` ).
 
     page->ele( n = `SimpleForm` ns = `form`
-        )->a( n = `title`    v = `Form Title`
+        )->a( n = `title`    v = `Post a Quantity`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form`
             )->tag( `Title`

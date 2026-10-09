@@ -1,4 +1,4 @@
-" @keywords messagebox details table structure tree object reference escape limit action onclose
+" @keywords messagebox details table structure tree object reference escape limit action onclose message_box_display
 " @summary Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - the ABAP side of a message box.
 " @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/logging https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.

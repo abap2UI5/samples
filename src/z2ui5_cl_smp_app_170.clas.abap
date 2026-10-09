@@ -1,4 +1,4 @@
-" @keywords navcontainer dialog pages back forward
+" @keywords navcontainer dialog pages back forward icontabbar control_by_id
 " @summary A NavContainer inside a dialog: several pages in one popup, with back and forward between them.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popup
 CLASS z2ui5_cl_smp_app_170 DEFINITION PUBLIC.
@@ -133,8 +133,10 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Press the button to open a dialog; from there a second popup can be opened and navigated ` &&
-                   `back to the first, demonstrating popup-to-popup navigation.`
+        )->a( n = `text`     v = `Open the dialog and pick its tabs: each tab switches the NavContainer inside the dialog ` &&
+                   `to another page, on the client - the select event calls the container's to method by id ` &&
+                   `(follow_up_action with cs_event-control_by_id), no roundtrip. The first page also opens a second ` &&
+                   `popup, whose button brings the first one back.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).

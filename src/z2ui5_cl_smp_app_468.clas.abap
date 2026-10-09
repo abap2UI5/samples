@@ -1,4 +1,4 @@
-" @keywords routing mode fresh default off navigation restart new instance nav_app_call
+" @keywords routing mode fresh default off navigation restart new instance nav_app_call hash_routing
 " @summary Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash
 "! Hash-based app routing (UI5 Router style), mode FRESH:
