@@ -5,3 +5,6 @@ output
 # the linter's README badges: every run rewrites them, CI publishes them to
 # the `badges` branch - never committed here
 .github/badges/
+
+# the browser smoke (E2E.md): the abap2UI5 clone `npm run e2e:setup` writes
+.abap2UI5/

@@ -1,0 +1,54 @@
+name: e2e
+
+# Every sample as the real app, in a headless browser (E2E.md).
+#
+# Every other gate here is static: abaplint reads the ABAP, the abap2UI5
+# linter reconstructs a view and renders it with no backend behind it. None of
+# them runs a roundtrip, so a sample that lints clean and dies the moment it
+# starts - a view the XML parser refuses, a binding to a PROTECTED attribute,
+# a follow-up action that runs before the control it needs - passes all of
+# them. The first browser run over all 140 samples found four of those.
+#
+# This job builds the framework at A2UI5_PIN plus every sample into the
+# transpiled Node backend, boots each sample, types into its first input,
+# selects its first row and presses its buttons. The whole corpus fits a pull
+# request (~2 min build, ~10 min run), so there is no subset logic: a change
+# to one sample runs all of them. What is expected to fail, and why, is
+# e2e/expected.mjs.
+
+on:
+  pull_request:
+    paths:
+    - 'src/**'
+    - 'e2e/**'
+    - 'scripts/e2e-*.mjs'
+    - 'scripts/lib/e2e.mjs'
+    - 'A2UI5_PIN'
+    - 'package.json'
+    - 'package-lock.json'
+    - '.github/workflows/e2e.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version: '22'
+        cache: 'npm'
+    - run: npm ci
+    - run: npx playwright install --with-deps chromium
+    # abap2UI5 at A2UI5_PIN into .abap2UI5, with its dependencies
+    - run: npm run e2e:setup
+    - run: npm run e2e:build
+    - run: npm run e2e
