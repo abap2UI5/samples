@@ -880,7 +880,7 @@
    "stage": "beyond",
    "title": "Control Behaviour",
    "description": "Register an Icon Font (A)",
-   "summary": "Registers the sap.tnt icon collection with IconPool so a sap-icon://SAP-icons-TNT/... URI resolves - without it the icon renders no glyph and logs nothing.",
+   "summary": "Registers the sap.tnt icon collection with IconPool so a sap-icon://SAP-icons-TNT/... URI resolves - without it the icon renders no glyph, and only the console says why.",
    "keywords": [
     "icon",
     "font",

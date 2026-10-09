@@ -945,6 +945,7 @@ In the order they fail fastest:
 | `npm run check:docs-links` | `check-docs-links` | every `" @docs` URL resolves, and its page names the class back (§4) |
 | `npm run check:app-rules` | `check-app-rules` | the abaplint rule block still matches its source in abap2UI5 (§6) |
 | `npm run rename` | `check-rename` | the samples still rename out of the `z2ui5` namespace; writes to the gitignored `output/`, never to `src/` |
+| `npm run e2e` (not in `check`) | `e2e` | every sample boots in a headless browser on the transpiled backend and survives its first input, its first row and six button presses: no fatal overlay, no page or console error, no backend 4xx/5xx - [E2E.md](E2E.md) |
 
 `check:launchpad`, `check:catalogue` and `check:derived` run the generators
 with `--check`: same render, compared instead of written (one tail for all of
@@ -964,6 +965,18 @@ back when an unreachable source was a failure.
 `abaplint --fix` over the whole tree, so running it leaves you with a
 downported working copy rather than an answer. Run it deliberately, on a
 clean tree, and `git checkout .` afterwards.
+
+**Nor is `npm run e2e`** (`e2e`, on pull requests that touch `src/` or the
+harness). It needs `npm run e2e:setup` (abap2UI5 at `A2UI5_PIN`, cloned into
+the git-ignored `.abap2UI5`) and `npm run e2e:build` first, about twelve
+minutes in all. It is the only gate that RUNS a sample: every other step
+reads the source or a reconstructed view, and the first run (2026-10-09) found
+four defects in samples that had passed all of them - a view the XML parser
+refused, a binding to a PROTECTED attribute that answered HTTP 500, an icon
+drawn before its font was registered, a nested template UI5 called a future
+fatal error. What it
+expects to fail is `e2e/expected.mjs`, each entry with its reason; E2E.md
+says how to run one sample and why the harness looks the way it does.
 
 By hand, because no script covers it:
 - abapGit file format for all file types: UTF-8, LF only, final newline,

@@ -28,6 +28,9 @@
     "check:patterns": "node scripts/check-app-patterns.mjs",
     "check:selftest": "node --test \"scripts/test/*.test.mjs\"",
     "check:pin": "node scripts/check-framework-pin.mjs",
+    "e2e:setup": "node scripts/e2e-setup.mjs",
+    "e2e:build": "node scripts/e2e-build.mjs",
+    "e2e": "node scripts/e2e-smoke.mjs",
     "rename": "abaplint .github/abaplint/rename_test.jsonc --rename",
     "syfixes": "find . -type f -name '*.abap' -exec sed -i -e 's/ RAISE EXCEPTION TYPE cx_sy_itab_line_not_found/ ASSERT 1 = 0/g' {} + ",
     "downport": "abaplint --fix .github/abaplint/abap_702.jsonc && npm run syfixes && node scripts/generate-samples-md.mjs",
@@ -45,7 +48,16 @@
   "devDependencies": {
     "@abap2ui5/linter": "^0.8.5",
     "@abap2ui5/linter-render": "^0.8.5",
-    "@abaplint/cli": "^2.120.60"
+    "@abaplint/cli": "^2.120.60",
+    "@openui5/sap.f": "1.152.0",
+    "@openui5/sap.m": "1.152.0",
+    "@openui5/sap.tnt": "1.152.0",
+    "@openui5/sap.ui.core": "1.152.0",
+    "@openui5/sap.ui.layout": "1.152.0",
+    "@openui5/sap.ui.table": "1.152.0",
+    "@openui5/sap.ui.unified": "1.152.0",
+    "@openui5/sap.uxap": "1.152.0",
+    "playwright": "^1.63.0"
   },
   "engines": {
     "node": ">=22"
