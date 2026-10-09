@@ -26,16 +26,16 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       IF event_backend = `NEW_APP_EVENT`.
         client->message_box_display( `new app called and event NEW_APP_EVENT raised` ).
       ENDIF.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -43,11 +43,16 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE REF TO z2ui5_cl_smp_app_024.
+        DATA app_024 LIKE temp1.
 
     CASE client->get_event( ).
 
       WHEN `BUTTON_READ_PREVIOUS`.
-        DATA(app_024) = CAST z2ui5_cl_smp_app_024( client->get_app_prev( ) ).
+        
+        temp1 ?= client->get_app_prev( ).
+        
+        app_024 = temp1.
         input_previous = app_024->input2.
         client->message_toast_display( `data of previous app read` ).
         view_display( ).
@@ -70,7 +75,9 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -78,7 +85,8 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - flow logic - APP 02`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

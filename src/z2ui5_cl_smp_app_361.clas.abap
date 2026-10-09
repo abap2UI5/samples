@@ -13,16 +13,21 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+      DATA temp1 TYPE string_table.
 
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
 
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+      
+      view = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
               )->a( n = `displayBlock` v = `true`
               )->a( n = `height`       v = `100%`
               )->a( n = `xmlns`        v = `sap.m`
               )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-      DATA(page) = view->ele( `Shell`
+      
+      page = view->ele( `Shell`
           )->ele( `Page`
               )->a( n = `title`          v = `abap2UI5 - Browser - Logout from the Client`
               )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -50,10 +55,13 @@ CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
           )->a( n = `showIcon` b = abap_true
           )->a( n = `class`    v = `sapUiMediumMargin` ).
 
+      
+      CLEAR temp1.
+      INSERT `/sap/public/bc/icf/logoff?redirecturl=www.google.com` INTO TABLE temp1.
       page->tag( `Button`
           )->a( n = `press` v = client->follow_up_action(
                       val   = client->cs_event-system_logout
-                      t_arg = VALUE #( ( `/sap/public/bc/icf/logoff?redirecturl=www.google.com` ) ) )
+                      t_arg = temp1 )
           )->a( n = `text`  v = `Logout (client, with redirect)`
           )->a( n = `icon`  v = `sap-icon://log`
           )->a( n = `type`  v = `Reject`
@@ -76,7 +84,7 @@ CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
 
       client->view_display( view->stringify( ) ).
 
-    ELSEIF client->check_on_event( `LOGOUT` ).
+    ELSEIF client->check_on_event( `LOGOUT` ) IS NOT INITIAL.
       " same method as in the two buttons above, only called on client instead of
       " returned into the view - the action is queued and runs once this response renders
       client->follow_up_action( client->cs_event-system_logout ).

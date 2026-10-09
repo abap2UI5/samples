@@ -15,7 +15,7 @@ CLASS z2ui5_cl_smp_app_071 DEFINITION PUBLIC.
     DATA set_size_limit TYPE i VALUE 100.
     DATA combo_number   TYPE i VALUE 105.
     DATA combo_key      TYPE string.
-    DATA t_combo        TYPE STANDARD TABLE OF ty_s_combobox WITH EMPTY KEY.
+    DATA t_combo        TYPE STANDARD TABLE OF ty_s_combobox WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -30,35 +30,55 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+    DATA t_skipped TYPE z2ui5_if_client=>ty_t_model_skip.
+      FIELD-SYMBOLS <temp1> LIKE LINE OF t_skipped.
+      DATA temp2 LIKE sy-tabix.
+      DATA temp3 TYPE string_table.
+      DATA temp1 LIKE LINE OF temp3.
 
     me->client = client.
 
     " text typed into an Input bound to TYPE i does not dump: the framework
     " keeps the old number and names the field in t_model_skipped - so the
     " update would silently use a value the screen no longer shows
-    DATA(t_skipped) = client->get( )-t_model_skipped.
+    
+    t_skipped = client->get( )-t_model_skipped.
     IF t_skipped IS NOT INITIAL.
-      client->message_box_display( text = |'{ t_skipped[ 1 ]-value }' is no number this field can hold - it keeps its old value.|
+      
+      
+      temp2 = sy-tabix.
+      READ TABLE t_skipped INDEX 1 ASSIGNING <temp1>.
+      sy-tabix = temp2.
+      IF sy-subrc <> 0.
+        ASSERT 1 = 0.
+      ENDIF.
+      client->message_box_display( text = |'{ <temp1>-value }' is no number this field can hold - it keeps its old value.|
                                    type = `error` ).
       RETURN.
     ENDIF.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       combo_fill( ).
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( `UPDATE` ).
+    ELSEIF client->check_on_event( `UPDATE` ) IS NOT INITIAL.
 
+      
+      CLEAR temp3.
+      
+      temp1 = set_size_limit.
+      INSERT temp1 INTO TABLE temp3.
+      INSERT client->cs_view-main INTO TABLE temp3.
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_size_limit
-          t_arg = VALUE #( ( CONV #( set_size_limit ) ) ( client->cs_view-main ) ) ).
+          t_arg = temp3 ).
       client->message_toast_display( |Size limit set to { set_size_limit } - open the ComboBox again| ).
 
-    ELSEIF client->check_on_event( `UPDATE_MODEL` ).
+    ELSEIF client->check_on_event( `UPDATE_MODEL` ) IS NOT INITIAL.
 
       combo_fill( ).
       client->message_toast_display( |The ComboBox now holds { combo_number } entries| ).
@@ -70,9 +90,16 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
 
   METHOD combo_fill.
 
-    t_combo = VALUE #( ).
+    DATA temp5 LIKE t_combo.
+      DATA temp6 TYPE z2ui5_cl_smp_app_071=>ty_s_combobox.
+    CLEAR temp5.
+    t_combo = temp5.
     DO combo_number TIMES.
-      INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
+      
+      CLEAR temp6.
+      temp6-key = sy-index.
+      temp6-text = sy-index.
+      INSERT temp6 INTO TABLE t_combo.
     ENDDO.
 
   ENDMETHOD.
@@ -80,7 +107,9 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -89,7 +118,8 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - Model setSizeLimit for Large Tables`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

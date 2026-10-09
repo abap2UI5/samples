@@ -13,10 +13,10 @@ CLASS z2ui5_cl_smp_app_538 DEFINITION PUBLIC.
         price      TYPE string,
         currency   TYPE string,
       END OF ty_s_product.
-    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
+    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH DEFAULT KEY.
 
   PROTECTED SECTION.
-    TYPES ty_t_rows TYPE STANDARD TABLE OF string_table WITH EMPTY KEY.
+    TYPES ty_t_rows TYPE STANDARD TABLE OF string_table WITH DEFAULT KEY.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -40,11 +40,11 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -53,14 +53,53 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
 
   METHOD on_init.
 
-    t_products = VALUE #(
-        ( product_id = `HT-1000` name = `Notebook Basic 15`        category = `Laptops`      price = `956.00`  currency = `EUR` )
-        ( product_id = `HT-1001` name = `Notebook Basic 17`        category = `Laptops`      price = `1249.00` currency = `EUR` )
-        ( product_id = `HT-1010` name = `Notebook Professional 15` category = `Laptops`      price = `1999.00` currency = `EUR` )
-        ( product_id = `HT-1030` name = `Ergo Screen E-I`          category = `Flat Screens` price = `230.00`  currency = `EUR` )
-        ( product_id = `HT-1040` name = `Laser Professional Eco`   category = `Printers`     price = `830.00`  currency = `EUR` )
-        ( product_id = `HT-1063` name = `Ergonomic Keyboard`       category = `Keyboards`    price = `14.00`   currency = `EUR` )
-        ( product_id = `HT-1070` name = `Photo Scan`               category = `Scanners`     price = `129.00`  currency = `EUR` ) ).
+    DATA temp1 LIKE t_products.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-product_id = `HT-1000`.
+    temp2-name = `Notebook Basic 15`.
+    temp2-category = `Laptops`.
+    temp2-price = `956.00`.
+    temp2-currency = `EUR`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product_id = `HT-1001`.
+    temp2-name = `Notebook Basic 17`.
+    temp2-category = `Laptops`.
+    temp2-price = `1249.00`.
+    temp2-currency = `EUR`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product_id = `HT-1010`.
+    temp2-name = `Notebook Professional 15`.
+    temp2-category = `Laptops`.
+    temp2-price = `1999.00`.
+    temp2-currency = `EUR`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product_id = `HT-1030`.
+    temp2-name = `Ergo Screen E-I`.
+    temp2-category = `Flat Screens`.
+    temp2-price = `230.00`.
+    temp2-currency = `EUR`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product_id = `HT-1040`.
+    temp2-name = `Laser Professional Eco`.
+    temp2-category = `Printers`.
+    temp2-price = `830.00`.
+    temp2-currency = `EUR`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product_id = `HT-1063`.
+    temp2-name = `Ergonomic Keyboard`.
+    temp2-category = `Keyboards`.
+    temp2-price = `14.00`.
+    temp2-currency = `EUR`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product_id = `HT-1070`.
+    temp2-name = `Photo Scan`.
+    temp2-category = `Scanners`.
+    temp2-price = `129.00`.
+    temp2-currency = `EUR`.
+    INSERT temp2 INTO TABLE temp1.
+    t_products = temp1.
 
     view_display( ).
 
@@ -84,14 +123,66 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
 
     " the pasted rows arrive in the backend, which decides what they mean -
     " here: the cells, in column order, become new products
-    DATA(rows) = pasted_rows( client->get_event_arg( ) ).
+    DATA rows TYPE z2ui5_cl_smp_app_538=>ty_t_rows.
+    DATA cells LIKE LINE OF rows.
+      DATA temp3 TYPE z2ui5_cl_smp_app_538=>ty_s_product.
+      DATA temp1 TYPE z2ui5_cl_smp_app_538=>ty_s_product-product_id.
+      DATA temp2 TYPE string.
+      DATA temp4 TYPE z2ui5_cl_smp_app_538=>ty_s_product-name.
+      DATA temp5 TYPE string.
+      DATA temp6 TYPE z2ui5_cl_smp_app_538=>ty_s_product-category.
+      DATA temp7 TYPE string.
+      DATA temp8 TYPE z2ui5_cl_smp_app_538=>ty_s_product-price.
+      DATA temp9 TYPE string.
+      DATA temp10 TYPE z2ui5_cl_smp_app_538=>ty_s_product-currency.
+      DATA temp11 TYPE string.
+    rows = pasted_rows( client->get_event_arg( ) ).
 
-    LOOP AT rows INTO DATA(cells).
-      INSERT VALUE #( product_id = VALUE #( cells[ 1 ] OPTIONAL )
-                      name       = VALUE #( cells[ 2 ] OPTIONAL )
-                      category   = VALUE #( cells[ 3 ] OPTIONAL )
-                      price      = VALUE #( cells[ 4 ] OPTIONAL )
-                      currency   = VALUE #( cells[ 5 ] OPTIONAL ) ) INTO TABLE t_products.
+    
+    LOOP AT rows INTO cells.
+      
+      CLEAR temp3.
+      
+      CLEAR temp1.
+      
+      READ TABLE cells INTO temp2 INDEX 1.
+      IF sy-subrc = 0.
+        temp1 = temp2.
+      ENDIF.
+      temp3-product_id = temp1.
+      
+      CLEAR temp4.
+      
+      READ TABLE cells INTO temp5 INDEX 2.
+      IF sy-subrc = 0.
+        temp4 = temp5.
+      ENDIF.
+      temp3-name = temp4.
+      
+      CLEAR temp6.
+      
+      READ TABLE cells INTO temp7 INDEX 3.
+      IF sy-subrc = 0.
+        temp6 = temp7.
+      ENDIF.
+      temp3-category = temp6.
+      
+      CLEAR temp8.
+      
+      READ TABLE cells INTO temp9 INDEX 4.
+      IF sy-subrc = 0.
+        temp8 = temp9.
+      ENDIF.
+      temp3-price = temp8.
+      
+      CLEAR temp10.
+      
+      READ TABLE cells INTO temp11 INDEX 5.
+      IF sy-subrc = 0.
+        temp10 = temp11.
+      ENDIF.
+      temp3-currency = temp10.
+      INSERT temp3 INTO TABLE t_products.
     ENDLOOP.
 
     client->message_toast_display( |{ lines( rows ) } row(s) pasted and appended| ).
@@ -110,9 +201,12 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
     DATA depth     TYPE i.
     DATA in_string TYPE abap_bool.
     DATA escaped   TYPE abap_bool.
+      DATA char TYPE string.
+          DATA temp4 TYPE string_table.
 
     DO strlen( json ) TIMES.
-      DATA(char) = substring( val = json
+      
+      char = substring( val = json
                               off = sy-index - 1
                               len = 1 ).
 
@@ -139,7 +233,9 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
 
         IF depth = 2.
           INSERT row INTO TABLE result.
-          row = VALUE #( ).
+          
+          CLEAR temp4.
+          row = temp4.
         ENDIF.
         depth = depth - 1.
 
@@ -151,7 +247,11 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp5 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock`  v = `true`
             )->a( n = `height`        v = `100%`
@@ -163,7 +263,8 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
             )->a( n = `xmlns:app`     v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1`
             " the CopyProvider's extractData callback ships with the framework
             )->a( n = `core:require`  v = `{Clipboard: 'z2ui5/model/clipboard'}` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - Copy & Paste, CellSelector (UI5 1.119+)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -177,7 +278,8 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(table) = page->ele( n = `Table` ns = `table`
+    
+    table = page->ele( n = `Table` ns = `table`
         )->a( n = `id`              v = `products`
         )->a( n = `rows`            v = client->_bind( t_products )
         )->a( n = `visibleRowCount` v = `8`
@@ -192,6 +294,11 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
             )->a( n = `extractData` v = `Clipboard.extractData`
             )->a( n = `copy`        v = client->_event( `COPY` ) ).
 
+    
+    CLEAR temp5.
+    INSERT `copyProvider` INTO TABLE temp5.
+    INSERT `copySelectionData` INTO TABLE temp5.
+    INSERT `X` INTO TABLE temp5.
     table->ele( n = `extension` ns = `table`
         )->ele( `OverflowToolbar`
             )->tag( `Title`
@@ -205,7 +312,7 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
                 )->a( n = `text`    v = `Copy`
                 )->a( n = `tooltip` v = `Copy`
                 )->a( n = `press`   v = client->follow_up_action( val   = client->cs_event-control_by_id
-                                                                  t_arg = VALUE #( ( `copyProvider` ) ( `copySelectionData` ) ( `X` ) ) )
+                                                                  t_arg = temp5 )
 
             " the PasteProvider turns this button into a paste button for the table
             )->ele( `Button`
