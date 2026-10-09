@@ -1,4 +1,4 @@
-" @keywords nested view destroy nest_view_destroy nest2_view_destroy slot scope cs_view nested nested2 control_by_id focus
+" @keywords nested view destroy nest_view_destroy nest2_view_destroy slot scope cs_view nested nested2 control_by_id focus nest_view_display nest2_view_display
 " @summary Two nested views built and torn down on demand, and a frontend action aimed at one of them by its slot - the view parameter of follow_up_action.
 "! Two containers on the main page, one nested view each. nest_view_display
 "! puts a view INTO a container, nest_view_destroy takes it out again and

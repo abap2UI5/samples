@@ -1,4 +1,4 @@
-" @keywords messagebox details table structure tree object reference escape limit action onclose
+" @keywords messagebox details table structure tree object reference escape limit action onclose message_box_display
 " @summary Every shape message_box_display( ) accepts - a text, a number, HTML, messages, a table, a structure, an object - the ABAP side of a message box.
 " @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/logging https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.
@@ -533,9 +533,10 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
                  press = client->_event( `BOX_ACTIONS` ) ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Your answer`
-        )->tag( `Text`
-            )->a( n = `text` v = client->_bind( answer ) ).
+        )->a( n = `text` v = `Your answer` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = client->_bind( answer ) ).
 
     render_demo( form  = form
                  label = `Details`
@@ -576,10 +577,11 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
     row->tag( `Button`
         )->a( n = `text`  t = text
         )->a( n = `press` v = press
-        )->a( n = `width` v = `15rem`
-        )->tag( `Text`
-            )->a( n = `text`  t = descr
-            )->a( n = `class` v = `sapUiSmallMarginBegin` ).
+        )->a( n = `width` v = `15rem` ).
+
+    row->tag( `Text`
+        )->a( n = `text`  t = descr
+        )->a( n = `class` v = `sapUiSmallMarginBegin` ).
 
   ENDMETHOD.
 

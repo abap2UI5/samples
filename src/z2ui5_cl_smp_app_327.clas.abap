@@ -99,7 +99,13 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
                                                             name = `FIELD2` ) ).
 
       WHEN `GET_STORED_VALUE`.
+        " The z2ui5:Storage control reads the storage only when it renders,
+        " and `store` writes it on the client without a roundtrip - so the
+        " last value read may be stale. Take it, and re-display: the fresh
+        " control reads the key again and reports a newer value through
+        " `finished` (LOCAL_STORAGE_LOADED above).
         s_storage-value = s_stored_value.
+        view_display( ).
 
     ENDCASE.
 

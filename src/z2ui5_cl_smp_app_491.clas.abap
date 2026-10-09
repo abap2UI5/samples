@@ -1,4 +1,4 @@
-" @keywords favicon icon tab image data uri
+" @keywords favicon icon tab image data uri set_favicon
 " @summary Sets the browser tab's favicon at runtime, from an image the backend hands over as a data URI.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/title
 CLASS z2ui5_cl_smp_app_491 DEFINITION PUBLIC.

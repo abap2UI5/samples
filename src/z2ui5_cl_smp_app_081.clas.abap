@@ -1,4 +1,4 @@
-" @keywords list selection placement anchor
+" @keywords list selection placement anchor pick popover_display popover_destroy
 " @summary A Popover holding a list to pick from - the anchored alternative to a full dialog.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover
 CLASS z2ui5_cl_smp_app_081 DEFINITION PUBLIC.
@@ -74,7 +74,8 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `Opens a Popover anchored to a button, showing a selectable list inside it; the ` &&
-                   `segmented button chooses on which side the popover appears.`
+                   `segmented button chooses on which side the popover appears. Pick an entry: the popover closes, ` &&
+                   `and the selection is kept - open it again and the entry is still marked.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -147,9 +148,13 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
     CASE client->get_event( ).
 
       WHEN `SEL_CHANGE`.
-        DATA(lt_sel) = mt_tab.
-        DELETE lt_sel WHERE selected = abap_false.
-        client->message_toast_display( |{ lines( lt_sel ) } selected| ).
+        " the list is SingleSelectMaster and SELECTED is bound, so the row
+        " the user picked is flagged in mt_tab already - name it, then close
+        " the popover the way a pick from a value list does
+        LOOP AT mt_tab INTO DATA(ls_row) WHERE selected = abap_true.
+          client->message_toast_display( |{ ls_row-name } selected| ).
+        ENDLOOP.
+        client->popover_destroy( ).
 
       WHEN `POPOVER_LIST`.
         popover_list_display( `TEST` ).

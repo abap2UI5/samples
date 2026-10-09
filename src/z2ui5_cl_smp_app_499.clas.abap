@@ -1,4 +1,4 @@
-" @keywords routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback follow_up_action event form
+" @keywords routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback follow_up_action event form control_by_id
 " @summary The whole hash_* family in one app: hash_set pushes #/detail, hash_replace rewrites it in place, hash_back steps back like a router, a deep link restores.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash
 "! App-owned hash routing - the URL semantics of a UI5 router, 1:1, and the

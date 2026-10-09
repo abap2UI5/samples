@@ -1,4 +1,4 @@
-" @keywords sub app class embed instantiate another app rtti
+" @keywords sub app class embed instantiate another app rtti nest_view_display
 " @summary Embeds ANOTHER app's view into this one - the class is instantiated over RTTI and renders inside the page it is given.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views
 "! This is the recorded exception to the "main app calling sub-apps" rule of
@@ -28,8 +28,12 @@ CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
 
     DATA layout TYPE string.
 
+    " PUBLIC, because the embedded app binds its own attributes
+    " (client->_bind( mv_class_1 )), and the framework resolves a binding
+    " only along public attributes - APP_SUB->MV_CLASS_1
+    DATA app_sub TYPE REF TO object.
+
   PROTECTED SECTION.
-    DATA app_sub     TYPE REF TO object.
     DATA classname   TYPE string.
     DATA grid_sub    TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA view_nested TYPE REF TO z2ui5_cl_ui5_view_builder.
@@ -40,6 +44,7 @@ CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
     METHODS on_event_sub.
     METHODS on_event_selchange.
     METHODS on_init_sub.
+    METHODS view_display_sub.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -71,6 +76,14 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
     classname = to_upper( classname ).
     CREATE OBJECT app_sub TYPE (classname).
+    view_display_sub( ).
+
+  ENDMETHOD.
+
+
+  METHOD view_display_sub.
+
+    view_display_detail( ).
 
     ASSIGN app_sub->(`VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
 
@@ -82,9 +95,15 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
     CALL METHOD app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
 
     " render explicitly: check_on_init( ) is the TOP app's lifecycle flag,
-    " not the sub-app's - on this (SELCHANGE) roundtrip it is false, so the
-    " sub-app's own main( ) would add nothing to the detail column
+    " not the sub-app's - on a SELCHANGE or navigated roundtrip it is false,
+    " so the sub-app's own main( ) would add nothing to the detail column
     CALL METHOD app_sub->(`VIEW_DISPLAY`).
+
+    client->nest_view_display(
+      val            = view_nested->stringify( )
+      id             = `test`
+      method_insert  = `addMidColumnPage`
+      method_destroy = `removeAllMidColumnPages` ).
 
   ENDMETHOD.
 
@@ -173,14 +192,7 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
     classname = s_sel-info.
 
     layout = `TwoColumnsMidExpanded`.
-    view_display_detail( ).
     on_init_sub( ).
-
-    client->nest_view_display(
-      val            = view_nested->stringify( )
-      id             = `test`
-      method_insert  = `addMidColumnPage`
-      method_destroy = `removeAllMidColumnPages` ).
 
   ENDMETHOD.
 
@@ -198,7 +210,16 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
       view_display_master( ).
 
     ELSEIF client->check_on_navigated( ).
+
+      " the embedded view again: it is nested inside the master, so a
+      " re-displayed master alone would leave the mid column empty - the
+      " sub-app instance is kept, and with it what was typed into it
       view_display_master( ).
+
+      IF app_sub IS BOUND.
+        view_display_sub( ).
+      ENDIF.
+
     ELSEIF client->check_on_event( `SELCHANGE` ).
       on_event_selchange( ).
     ELSEIF client->check_on_event( ).

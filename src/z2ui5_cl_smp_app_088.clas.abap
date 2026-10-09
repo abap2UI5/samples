@@ -33,6 +33,12 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
 
   METHOD view_display.
 
+    " the NavContainer opens on the page of the selected tab: after a
+    " re-display (Back, a restored state) the tab and the page stay in step
+    DATA(initial_page) = COND string( WHEN mv_selected_key = `page2` OR mv_selected_key = `page3`
+                                      THEN mv_selected_key
+                                      ELSE `page1` ).
+
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
@@ -72,7 +78,7 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
                 )->a( n = `key`  v = `page3` ).
 
     page->ele( `NavContainer`
-        )->a( n = `initialPage`           v = `page1`
+        )->a( n = `initialPage`           t = initial_page
         )->a( n = `id`                    v = `NavCon`
         )->a( n = `defaultTransitionName` v = `flip`
         )->ele( `pages`

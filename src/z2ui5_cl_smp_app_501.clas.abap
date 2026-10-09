@@ -100,8 +100,11 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
 
   METHOD leave.
 
+    " no app passed: nav_app_leave( ) returns to the caller on the stack by
+    " itself, and - unlike a get_app( ) on the stack id - survives a caller
+    " whose draft has expired instead of failing the roundtrip
     client->popup_destroy( ).
-    client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+    client->nav_app_leave( ).
 
   ENDMETHOD.
 

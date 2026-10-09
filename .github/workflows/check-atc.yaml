@@ -6,7 +6,7 @@ name: check-atc
 # somebody's system, which is worse than a missing sample: it is the code they
 # copied because it was published as the way to do the thing.
 #
-# Three findings, each named by the rule that decides it:
+# Four findings, each named by the rule that decides it:
 #
 #   nowhere            21 SELECT statements read a small demo table with no
 #                      WHERE and none of them said so
@@ -15,6 +15,9 @@ name: check-atc
 #   text_symbol_arg    three text symbols went straight to the view builder's
 #                      `v`, which is TYPE string - a SYNTAX_ERROR of the class,
 #                      reported from a system on 2026-09-16
+#   abapdoc_raising    an ABAP Doc `@raising` naming an exception the method's
+#                      RAISING clause does not declare (the reverse - a declared
+#                      exception the doc leaves out - is not a finding)
 #
 # A JOB of its own, not a step of `npm run check`: this repository runs one
 # workflow per gate, because a gate that only exists in the local chain cannot

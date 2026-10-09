@@ -17,7 +17,6 @@ CLASS z2ui5_cl_smp_app_006 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA key    TYPE string.
 
     METHODS on_init.
     METHODS on_event.
@@ -95,8 +94,8 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A large table (10,000 rows) is rendered inside a ScrollContainer using growing / ` &&
-                   `scroll-to-load, with a sticky header toolbar: a segmented button and two sort buttons that ` &&
-                   `sort the table in the backend and push the new order to the client.`
+                   `scroll-to-load, with a sticky header toolbar whose two sort buttons sort the table in the ` &&
+                   `backend and push the new order to the client.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -114,20 +113,7 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
     tab->ele( `headerToolbar`
         )->ele( `Toolbar`
             )->tag( `Title`
-                )->a( n = `text` v = `title of the table`
-            )->ele( `SegmentedButton`
-                )->a( n = `selectedKey` t = key
-                )->ele( `items`
-                    )->tag( `SegmentedButtonItem`
-                        )->a( n = `icon` v = `sap-icon://accept`
-                        )->a( n = `key`  v = `BLUE`
-                        )->a( n = `text` v = `blue`
-                    )->tag( `SegmentedButtonItem`
-                        )->a( n = `icon` v = `sap-icon://add-favorite`
-                        )->a( n = `key`  v = `GREEN`
-                        )->a( n = `text` v = `green`
-                )->end(
-            )->end(
+                )->a( n = `text` v = `10,000 Rows`
             )->tag( `ToolbarSpacer`
             )->tag( `Button`
                 )->a( n = `press`   v = client->_event( `SORT_DESCENDING` )

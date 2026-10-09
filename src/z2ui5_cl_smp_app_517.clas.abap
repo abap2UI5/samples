@@ -119,10 +119,12 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
         " change wire alone never reaches FILE_REMOVED below
         )->a( n = `remove`          v = client->_event( `FILE_REMOVED` ) ).
 
+    " instantUpload = false keeps the files as pending items, nothing is
+    " posted. uploadEnabled must stay true: false disables the add button
+    " (and, on newer releases, the drop as well), so no file could be added
     page->ele( n = `UploadSet` ns = `upload`
         )->a( n = `id`            v = `demoUploadSet`
         )->a( n = `instantUpload` b = abap_false
-        )->a( n = `uploadEnabled` b = abap_false
         )->a( n = `class`         v = `sapUiSmallMargin` ).
 
     DATA(table) = page->ele( `Table`

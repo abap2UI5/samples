@@ -155,14 +155,14 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
                 )->tag( `Text`
                     )->a( n = `text` v = `{FIELD3}`
             )->end(
-        )->end(
-    )->end(
-        )->ele( n = `rowActionTemplate` ns = `table`
-            )->ele( n = `RowAction` ns = `table`
-                )->ele( n = `RowActionItem` ns = `table`
-                    )->a( n = `icon`  v = `sap-icon://add`
-                    )->a( n = `text`  v = `Add`
-                    )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_ADD` arg = `${FIELD1}` ) ).
+        )->end( ).
+
+    table->ele( n = `rowActionTemplate` ns = `table`
+        )->ele( n = `RowAction` ns = `table`
+            )->ele( n = `RowActionItem` ns = `table`
+                )->a( n = `icon`  v = `sap-icon://add`
+                )->a( n = `text`  v = `Add`
+                )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_ADD` arg = `${FIELD1}` ) ).
 
     client->view_display( view->stringify( ) ).
 

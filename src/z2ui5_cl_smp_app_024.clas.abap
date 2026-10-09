@@ -6,10 +6,8 @@ CLASS z2ui5_cl_smp_app_024 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA input         TYPE string.
-    DATA input2        TYPE string.
-    " abap2ui5lint-disable-next-line unbound-public-attribute -- set by the called app z2ui5_cl_smp_app_025
-    DATA backend_event TYPE string.
+    DATA input  TYPE string.
+    DATA input2 TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,10 +27,10 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_navigated( ).
 
-      IF backend_event = `CALL_PREVIOUS_APP_INPUT_RETURN`.
+      " abap2ui5lint-disable-next-line handler-without-event -- handed over by z2ui5_cl_smp_app_025 with nav_app_leave( event = ... )
+      IF client->get_event( ) = `CALL_PREVIOUS_APP_INPUT_RETURN`.
 
         DATA(app_025) = CAST z2ui5_cl_smp_app_025( client->get_app_prev( ) ).
-        backend_event = VALUE #( ).
         client->message_box_display( |Input made in the previous app: { app_025->input }| ).
 
       ENDIF.

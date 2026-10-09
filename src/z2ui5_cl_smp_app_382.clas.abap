@@ -1,4 +1,4 @@
-" @keywords confirm warning error success information dialog action
+" @keywords confirm warning error success information dialog action onclose message_box_display
 " @summary Every MessageBox type - confirm, warning, error, success, information - and what a custom action button changes about the answer.
 " @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_382 DEFINITION PUBLIC.
@@ -6,12 +6,12 @@ CLASS z2ui5_cl_smp_app_382 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
     DATA title TYPE string.
     DATA message TYPE string.
     DATA details TYPE string.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
@@ -49,7 +49,12 @@ CLASS z2ui5_cl_smp_app_382 IMPLEMENTATION.
 
   METHOD on_event.
 
+    " every box names BOX_CLOSED as its onclose event: the button the user
+    " pressed comes back as the first event argument - the type's default
+    " (OK, CANCEL, CLOSE) or one of the custom actions
     CASE client->get_event( ).
+      WHEN `BOX_CLOSED`.
+        client->message_toast_display( |Answer: { client->get_event_arg( ) }| ).
       WHEN `CUSTOM`.
         client->message_box_display(
             text             = message
@@ -57,13 +62,15 @@ CLASS z2ui5_cl_smp_app_382 IMPLEMENTATION.
             type             = `information`
             details          = details
             actions          = VALUE #( ( `Approve` ) ( `Reject` ) )
-            emphasizedaction = `Approve` ).
+            emphasizedaction = `Approve`
+            onclose          = `BOX_CLOSED` ).
       WHEN OTHERS.
         client->message_box_display(
             text    = message
             title   = title
             type    = client->get_event( )
-            details = details ).
+            details = details
+            onclose = `BOX_CLOSED` ).
     ENDCASE.
 
   ENDMETHOD.
@@ -85,8 +92,9 @@ CLASS z2ui5_cl_smp_app_382 IMPLEMENTATION.
                     )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `This sample demonstrates MessageBox: open confirm, information, success, ` &&
-                   `warning, error, or a custom dialog with your own actions.`
+        )->a( n = `text`     v = `Open a MessageBox of each type, or a custom one with your own actions, and close it: ` &&
+                   `onclose raises a backend event that carries the pressed button, and the toast shows it - ` &&
+                   `OK or CANCEL for confirm, CLOSE for error, Approve or Reject for the custom box.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).

@@ -1,4 +1,4 @@
-" @keywords combobox jsonmodel size limit large itab 100 entries
+" @keywords combobox jsonmodel size limit large itab 100 entries set_size_limit
 " @summary A JSON model shows only the first 100 entries until setSizeLimit is raised, which is why a ComboBox over a large table quietly stops at a hundred rows.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/size_limit
 CLASS z2ui5_cl_smp_app_071 DEFINITION PUBLIC.
@@ -33,10 +33,21 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
 
     me->client = client.
 
+    " text typed into an Input bound to TYPE i does not dump: the framework
+    " keeps the old number and names the field in t_model_skipped - so the
+    " update would silently use a value the screen no longer shows
+    DATA(t_skipped) = client->get( )-t_model_skipped.
+    IF t_skipped IS NOT INITIAL.
+      client->message_box_display( text = |'{ t_skipped[ 1 ]-value }' is no number this field can hold - it keeps its old value.|
+                                   type = `error` ).
+      RETURN.
+    ENDIF.
+
     IF client->check_on_init( ).
 
       combo_fill( ).
       view_display( ).
+
     ELSEIF client->check_on_navigated( ).
       view_display( ).
 
@@ -45,12 +56,12 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_size_limit
           t_arg = VALUE #( ( CONV #( set_size_limit ) ) ( client->cs_view-main ) ) ).
-      client->message_toast_display( `SizeLimitUpdated` ).
+      client->message_toast_display( |Size limit set to { set_size_limit } - open the ComboBox again| ).
 
     ELSEIF client->check_on_event( `UPDATE_MODEL` ).
 
       combo_fill( ).
-      client->message_toast_display( `update number of entries` ).
+      client->message_toast_display( |The ComboBox now holds { combo_number } entries| ).
 
     ENDIF.
 
@@ -85,8 +96,9 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `A ComboBox bound to a large internal table: adjust the model's setSizeLimit to ` &&
-                   `control how many of the entries the control actually renders.`
+        )->a( n = `text`     v = `The ComboBox below is bound to 105 entries, but a JSON model hands a list binding ` &&
+                   `only its first 100: open it and scroll to the end - it stops at 100. Raise setSizeLimit to 200 and ` &&
+                   `press update size limit, and all 105 appear. Number of Entries refills the table with as many rows.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -110,7 +122,7 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
                 )->a( n = `press` v = client->_event( val = `UPDATE_MODEL` )
                 )->a( n = `text`  v = `update number entries`
             )->tag( `Label`
-                )->a( n = `text` v = `demo`
+                )->a( n = `text` v = `ComboBox`
             )->ele( `ComboBox`
                 )->a( n = `selectedKey` v = client->_bind( combo_key )
                 )->a( n = `items`       v = client->_bind( t_combo )

@@ -1,4 +1,4 @@
-" @keywords progressindicator busy wait long running backend
+" @keywords progressindicator busy wait long running backend start_timer
 " @summary A ProgressIndicator during a long backend call, driven by follow-up actions rather than by a frozen screen.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer
 CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
@@ -43,24 +43,28 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
     IF client->check_on_event( `LOAD` ).
 
-      mv_percent       = mv_percent + 25.
-      mv_check_active  = abap_true.
-      mv_check_enabled = abap_false.
-
-      IF mv_percent > 100.
-
-        mv_percent       = 0.
-        mv_check_active  = abap_false.
-        mv_check_enabled = abap_true.
+      " a press starts the bar over, a timer tick carries it on
+      IF mv_check_active = abap_false.
+        mv_percent = 0.
       ENDIF.
 
-      client->message_toast_display( `loaded` ).
+      " the long-running backend step this bar reports on
       WAIT UP TO 2 SECONDS.
+      mv_percent = mv_percent + 25.
 
-      IF mv_check_active = abap_true.
+      IF mv_percent < 100.
+
+        mv_check_active  = abap_true.
+        mv_check_enabled = abap_false.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-start_timer
             t_arg = VALUE #( ( `LOAD` ) ( `0` ) ) ).
+
+      ELSE.
+
+        mv_check_active  = abap_false.
+        mv_check_enabled = abap_true.
+        client->message_toast_display( `loaded` ).
       ENDIF.
 
     ENDIF.
@@ -88,7 +92,7 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A ProgressIndicator driven from the backend: pressing Load runs a WAIT-delayed server ` &&
-                   `step and re-arms a client timer (follow_up_action), advancing the bar in 25% steps until it completes.`
+                   `step and re-arms a client timer (follow_up_action), advancing the bar in 25% steps until it stands at 100%.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).

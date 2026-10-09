@@ -1,4 +1,4 @@
-" @keywords logoff signout icf session end fiori launchpad
+" @keywords logoff signout icf session end fiori launchpad system_logout
 " @summary Ends the session from the client - the logoff an ICF session or a Fiori launchpad needs, triggered as a follow-up action.
 CLASS z2ui5_cl_smp_app_361 DEFINITION PUBLIC.
 
@@ -34,28 +34,30 @@ CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
                      `Launchpad the shell container handles the sign-out; otherwise the app navigates to the ICF logoff endpoint.`
           )->a( n = `type`     v = `Information`
           )->a( n = `showIcon` b = abap_true
-          )->a( n = `class`    v = `sapUiMediumMargin`
-          )->tag( `Button`
-              )->a( n = `press` v = client->follow_up_action( client->cs_event-system_logout )
-              )->a( n = `text`  v = `Logout (client)`
-              )->a( n = `icon`  v = `sap-icon://log`
-              )->a( n = `type`  v = `Reject`
-              )->a( n = `class` v = `sapUiSmallMargin` ).
+          )->a( n = `class`    v = `sapUiMediumMargin` ).
+
+      page->tag( `Button`
+          )->a( n = `press` v = client->follow_up_action( client->cs_event-system_logout )
+          )->a( n = `text`  v = `Logout (client)`
+          )->a( n = `icon`  v = `sap-icon://log`
+          )->a( n = `type`  v = `Reject`
+          )->a( n = `class` v = `sapUiSmallMargin` ).
 
       page->tag( `MessageStrip`
           )->a( n = `text`     v = `The same client-side call, but with an argument: t_arg passes the ICF logoff endpoint, here with a ` &&
                      `redirect to google.com appended. Still no backend roundtrip - the argument is baked into the view.`
           )->a( n = `type`     v = `Information`
           )->a( n = `showIcon` b = abap_true
-          )->a( n = `class`    v = `sapUiMediumMargin`
-          )->tag( `Button`
-              )->a( n = `press` v = client->follow_up_action(
-                          val   = client->cs_event-system_logout
-                          t_arg = VALUE #( ( `/sap/public/bc/icf/logoff?redirecturl=www.google.com` ) ) )
-              )->a( n = `text`  v = `Logout (client, with redirect)`
-              )->a( n = `icon`  v = `sap-icon://log`
-              )->a( n = `type`  v = `Reject`
-              )->a( n = `class` v = `sapUiSmallMargin` ).
+          )->a( n = `class`    v = `sapUiMediumMargin` ).
+
+      page->tag( `Button`
+          )->a( n = `press` v = client->follow_up_action(
+                      val   = client->cs_event-system_logout
+                      t_arg = VALUE #( ( `/sap/public/bc/icf/logoff?redirecturl=www.google.com` ) ) )
+          )->a( n = `text`  v = `Logout (client, with redirect)`
+          )->a( n = `icon`  v = `sap-icon://log`
+          )->a( n = `type`  v = `Reject`
+          )->a( n = `class` v = `sapUiSmallMargin` ).
 
       page->tag( `MessageStrip`
           )->a( n = `text`     v = `The other way round: _event( 'LOGOUT' ) makes the button call the backend, and follow_up_action( ) ` &&
@@ -63,13 +65,14 @@ CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
                      `Take this route when the logout depends on backend logic, e.g. saving a draft first.`
           )->a( n = `type`     v = `Information`
           )->a( n = `showIcon` b = abap_true
-          )->a( n = `class`    v = `sapUiMediumMargin`
-          )->tag( `Button`
-              )->a( n = `press` v = client->_event( `LOGOUT` )
-              )->a( n = `text`  v = `Logout (via backend)`
-              )->a( n = `icon`  v = `sap-icon://log`
-              )->a( n = `type`  v = `Reject`
-              )->a( n = `class` v = `sapUiSmallMargin` ).
+          )->a( n = `class`    v = `sapUiMediumMargin` ).
+
+      page->tag( `Button`
+          )->a( n = `press` v = client->_event( `LOGOUT` )
+          )->a( n = `text`  v = `Logout (via backend)`
+          )->a( n = `icon`  v = `sap-icon://log`
+          )->a( n = `type`  v = `Reject`
+          )->a( n = `class` v = `sapUiSmallMargin` ).
 
       client->view_display( view->stringify( ) ).
 

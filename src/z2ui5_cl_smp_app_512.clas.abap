@@ -135,9 +135,10 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
         )->a( n = `layout`   v = `ResponsiveGridLayout`
         )->ele( n = `content` ns = `form` ).
 
-    DATA(row) = form->tag( `Label`
-        )->a( n = `text` v = `The method is the type`
-        )->ele( `HBox` ).
+    form->tag( `Label`
+        )->a( n = `text` v = `The method is the type` ).
+
+    DATA(row) = form->ele( `HBox` ).
 
     LOOP AT VALUE string_table( ( `information` )
                                 ( `success` )
@@ -169,22 +170,24 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
                  press = client->_event( `ACTIONS` ) ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Your answer`
-        )->tag( `Text`
-            )->a( n = `text` v = client->_bind( answer ) ).
+        )->a( n = `text` v = `Your answer` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = client->_bind( answer ) ).
 
     " ... and the call WIRED into the view: the same box, opened by the
     " press itself. The backend never sees this button - which is the second
     " reason the global object exists
     form->tag( `Label`
-        )->a( n = `text` v = `Wired`
-        )->tag( `Button`
-            )->a( n = `text`  v = `No round-trip at all`
-            )->a( n = `press` v = client->follow_up_action(
-                                      val   = client->cs_event-control_global
-                                      t_arg = VALUE #( ( `MESSAGE_BOX` )
-                                                       ( `show` )
-                                                       ( `Opened by the press itself - the backend never saw it.` ) ) ) ).
+        )->a( n = `text` v = `Wired` ).
+
+    form->tag( `Button`
+        )->a( n = `text`  v = `No round-trip at all`
+        )->a( n = `press` v = client->follow_up_action(
+                                  val   = client->cs_event-control_global
+                                  t_arg = VALUE #( ( `MESSAGE_BOX` )
+                                                   ( `show` )
+                                                   ( `Opened by the press itself - the backend never saw it.` ) ) ) ).
 
     page->ele( `Panel`
         )->a( n = `id`         v = `demoPanel`
@@ -210,10 +213,11 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
     row->tag( `Button`
         )->a( n = `text`  t = text
         )->a( n = `press` v = press
-        )->a( n = `width` v = `15rem`
-        )->tag( `Text`
-            )->a( n = `text`  t = descr
-            )->a( n = `class` v = `sapUiSmallMarginBegin` ).
+        )->a( n = `width` v = `15rem` ).
+
+    row->tag( `Text`
+        )->a( n = `text`  t = descr
+        )->a( n = `class` v = `sapUiSmallMarginBegin` ).
 
   ENDMETHOD.
 

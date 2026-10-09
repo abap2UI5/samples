@@ -1,4 +1,4 @@
-" @keywords sap.ui.device responsive orientation resize media model
+" @keywords sap.ui.device responsive orientation resize media model popup_close popup_display
 " @summary Reads the sap.ui.Device model - phone, tablet or desktop, orientation and resize - so a view can react to the device it is on.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/device_model https://abap2ui5.github.io/docs/cookbook/device_capabilities/info
 CLASS z2ui5_cl_smp_app_445 DEFINITION PUBLIC.
@@ -58,37 +58,43 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
     " a readable label per system type instead of the raw booleans
     form->tag( `Label`
-        )->a( n = `text` v = `System type`
-        )->ele( `ObjectStatus`
-            )->a( n = `state` v = `Information`
-            )->a( n = `text`  v = `{= ${device>/system/phone} ? 'Phone' : (${device>/system/tablet} ? 'Tablet' : (${device>/system/desktop} ? 'Desktop' : 'Other')) }` ).
+        )->a( n = `text` v = `System type` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `state` v = `Information`
+        )->a( n = `text`  v = `{= ${device>/system/phone} ? 'Phone' : (${device>/system/tablet} ? 'Tablet' : (${device>/system/desktop} ? 'Desktop' : 'Other')) }` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Orientation`
-        )->ele( `ObjectStatus`
-            )->a( n = `text` v = `{= ${device>/orientation/landscape} ? 'Landscape' : 'Portrait' }` ).
+        )->a( n = `text` v = `Orientation` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `text` v = `{= ${device>/orientation/landscape} ? 'Landscape' : 'Portrait' }` ).
 
     " resize/width and resize/height are updated live by UI5
     form->tag( `Label`
-        )->a( n = `text` v = `Window size`
-        )->ele( `ObjectStatus`
-            )->a( n = `text` v = `{device>/resize/width} x {device>/resize/height} px` ).
+        )->a( n = `text` v = `Window size` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `text` v = `{device>/resize/width} x {device>/resize/height} px` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Touch support`
-        )->ele( `ObjectStatus`
-            )->a( n = `state` v = `{= ${device>/support/touch} ? 'Success' : 'None' }`
-            )->a( n = `text`  v = `{= ${device>/support/touch} ? 'Yes' : 'No' }` ).
+        )->a( n = `text` v = `Touch support` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `state` v = `{= ${device>/support/touch} ? 'Success' : 'None' }`
+        )->a( n = `text`  v = `{= ${device>/support/touch} ? 'Yes' : 'No' }` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Browser`
-        )->tag( `Text`
-            )->a( n = `text` v = `{device>/browser/name} {device>/browser/version}` ).
+        )->a( n = `text` v = `Browser` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = `{device>/browser/name} {device>/browser/version}` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Operating system`
-        )->tag( `Text`
-            )->a( n = `text` v = `{device>/os/name} {device>/os/version}` ).
+        )->a( n = `text` v = `Operating system` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = `{device>/os/name} {device>/os/version}` ).
 
     result = form.
 
@@ -102,7 +108,8 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
@@ -170,7 +177,8 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core` ).
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
     " the dialog width itself is driven by the device model
     DATA(dialog) = popup->ele( `Dialog`

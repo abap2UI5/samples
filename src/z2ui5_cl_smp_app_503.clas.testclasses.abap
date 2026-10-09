@@ -7,6 +7,7 @@ CLASS ltcl_gross_amount DEFINITION FOR TESTING RISK LEVEL HARMLESS DURATION SHOR
     METHODS test_nineteen_percent FOR TESTING.
     METHODS test_rounds_the_half_up FOR TESTING.
     METHODS test_zero_changes_nothing FOR TESTING.
+    METHODS test_negative_half_away FOR TESTING.
 
 ENDCLASS.
 
@@ -31,8 +32,7 @@ CLASS ltcl_gross_amount IMPLEMENTATION.
 
   METHOD test_rounds_the_half_up.
 
-    " 7% of 10 is 0.7 - the integer division would cut it off, the + 50 in
-    " gross_amount( ) rounds it up to a whole unit
+    " 7% of 10 is 0.7 - gross_amount( ) rounds 10.7 to a whole unit
     cl_abap_unit_assert=>assert_equals( exp = 11
                                         act = cut->gross_amount( net     = 10
                                                                  percent = 7 ) ).
@@ -44,6 +44,15 @@ CLASS ltcl_gross_amount IMPLEMENTATION.
     cl_abap_unit_assert=>assert_equals( exp = 42
                                         act = cut->gross_amount( net     = 42
                                                                  percent = 0 ) ).
+
+  ENDMETHOD.
+
+  METHOD test_negative_half_away.
+
+    " a credit note: -10.5 rounds away from zero, like 10.5 does
+    cl_abap_unit_assert=>assert_equals( exp = -11
+                                        act = cut->gross_amount( net     = -10
+                                                                 percent = 5 ) ).
 
   ENDMETHOD.
 

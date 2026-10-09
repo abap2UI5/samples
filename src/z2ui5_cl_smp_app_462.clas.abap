@@ -1,4 +1,4 @@
-" @keywords popup expand state hierarchy nodes
+" @keywords popup expand state hierarchy nodes popup_display
 " @summary A tree inside a dialog, including which nodes stay expanded when the popup is opened again.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/trees
 CLASS z2ui5_cl_smp_app_462 DEFINITION PUBLIC.

@@ -1,4 +1,4 @@
-" @keywords initial render one roundtrip anchor button
+" @keywords initial render one roundtrip anchor button popover_display
 " @summary View and popover in ONE roundtrip: both displayed from the same main( ) call, with the popover anchored to a button built in that very response.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover
 "! View and popover in ONE roundtrip: view_display( ) and popover_display( )

@@ -1,4 +1,4 @@
-" @keywords fcl master detail list report two column split
+" @keywords fcl master detail list report two column split nest_view_display
 " @summary Master and detail in a FlexibleColumnLayout: a list on the left, its record on the right, each in its own nested view.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views
 CLASS z2ui5_cl_smp_app_097 DEFINITION PUBLIC.

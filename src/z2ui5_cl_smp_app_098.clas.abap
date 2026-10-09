@@ -1,4 +1,4 @@
-" @keywords fcl three column detail detail deep navigation
+" @keywords fcl three column detail detail deep navigation nest_view_display nest2_view_display
 " @summary The FlexibleColumnLayout with three columns - list, detail and detail-of-detail - and the navigation that opens each one.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views
 CLASS z2ui5_cl_smp_app_098 DEFINITION PUBLIC.
@@ -116,11 +116,12 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
     DATA(page) = lo_view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
 
-    page = page->tag( `Text`
-        )->a( n = `text` v = client->_bind( mv_title )
-        )->tag( `Button`
-            )->a( n = `press` v = client->_event( `NN_VIEW` )
-            )->a( n = `text`  v = `frontend event` ).
+    page->tag( `Text`
+        )->a( n = `text` v = client->_bind( mv_title ) ).
+
+    page->tag( `Button`
+        )->a( n = `press` v = client->_event( `NN_VIEW` )
+        )->a( n = `text`  v = `frontend event` ).
 
     client->nest2_view_display(
       val            = lo_view_nested->stringify( )
@@ -219,11 +220,13 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         client->message_box_display( `Event in nested nested view raised` ).
       WHEN `ROW_NAVIGATE`.
 
+        " a row without a title has nothing to open - the third column stays
+        " closed instead of being filled behind a two-column layout
         IF client->get_event_arg( ) IS NOT INITIAL.
           mv_layout = `ThreeColumnsEndExpanded`.
           mv_title  = client->get_event_arg( ).
+          view_display_detail_detail( ).
         ENDIF.
-        view_display_detail_detail( ).
 
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.

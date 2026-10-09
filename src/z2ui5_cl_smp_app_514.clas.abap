@@ -16,7 +16,8 @@ CLASS z2ui5_cl_smp_app_514 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
-    " not bound - the index the backend last jumped to, counted from 1
+    " not bound - the page the carousel shows, counted from 1; the
+    " pageChanged event keeps it in step when the user swipes
     DATA current TYPE i.
 
     METHODS view_display.
@@ -90,6 +91,13 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
       WHEN `LAST`.
         page_show( lines( t_pages ) ).
 
+      WHEN `PAGE_CHANGED`.
+        " swiped or jumped - activePages is 0-based, current counts from 1
+        DATA(active) = client->get_event_arg( ).
+        IF active CO `0123456789` AND active IS NOT INITIAL.
+          current = active + 1.
+        ENDIF.
+
     ENDCASE.
 
   ENDMETHOD.
@@ -139,10 +147,11 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
             )->a( n = `icon`  v = `sap-icon://open-command-field` ).
 
     page->ele( `Carousel`
-        )->a( n = `id`     v = `demoCarousel`
-        )->a( n = `height` v = `20rem`
-        )->a( n = `pages`  v = client->_bind( t_pages )
-        )->a( n = `class`  v = `sapUiSmallMargin`
+        )->a( n = `id`          v = `demoCarousel`
+        )->a( n = `height`      v = `20rem`
+        )->a( n = `pages`       v = client->_bind( t_pages )
+        )->a( n = `class`       v = `sapUiSmallMargin`
+        )->a( n = `pageChanged` v = client->_event( val = `PAGE_CHANGED` arg = `${$parameters>/activePages/0}` )
 
         )->ele( `pages`
             )->ele( `VBox`

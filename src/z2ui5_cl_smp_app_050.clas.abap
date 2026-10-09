@@ -89,26 +89,27 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
                          `.mySuperRedButton .sapMBtnContent \{` && |\n| &&
                          `    color: #fff !important;` && |\n| &&
                          `\}` && |\n| &&
-                         `</style>`
-        )->ele( n = `SimpleForm` ns = `form`
-            )->a( n = `title`    v = `Form Title`
-            )->a( n = `editable` b = abap_true
-            )->ele( n = `content` ns = `form`
-                )->tag( `Title`
-                    )->a( n = `text` v = `Input`
-                )->tag( `Label`
-                    )->a( n = `text` v = `quantity`
-                )->tag( `Input`
-                    )->a( n = `value` v = client->_bind( quantity )
-                )->tag( `Label`
-                    )->a( n = `text` v = `product`
-                )->tag( `Input`
-                    )->a( n = `enabled` b = abap_false
-                    )->a( n = `value`   t = product
-                )->tag( `Button`
-                    )->a( n = `press` v = client->_event( `BUTTON_POST` )
-                    )->a( n = `text`  v = `post`
-                    )->a( n = `class` v = `mySuperRedButton` ).
+                         `</style>` ).
+
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Post a Quantity`
+        )->a( n = `editable` b = abap_true
+        )->ele( n = `content` ns = `form`
+            )->tag( `Title`
+                )->a( n = `text` v = `Input`
+            )->tag( `Label`
+                )->a( n = `text` v = `quantity`
+            )->tag( `Input`
+                )->a( n = `value` v = client->_bind( quantity )
+            )->tag( `Label`
+                )->a( n = `text` v = `product`
+            )->tag( `Input`
+                )->a( n = `enabled` b = abap_false
+                )->a( n = `value`   t = product
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_POST` )
+                )->a( n = `text`  v = `post`
+                )->a( n = `class` v = `mySuperRedButton` ).
 
     client->view_display( view->stringify( ) ).
 

@@ -63,11 +63,11 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
     IF client->check_on_event( `PL_TOTAL_CHANGE` ).
       client->message_box_display(
-        `Id of Input via source object: ` && client->get_event_arg( ) && |\n| &&
-        `Id of Input via event.oSource.sId: ` && client->get_event_arg( 2 ) && |\n| &&
-        `Value of same row, index: ` && client->get_event_arg( 3 ) && |\n| &&
-        `Id of parent (row) via event.oSource.oParent.sId: ` && client->get_event_arg( 4 ) && |\n| &&
-        `Attribute of parameters.value: ` && client->get_event_arg( 5 ) ).
+        |Id of Input via source object: { client->get_event_arg( ) }\n| &&
+        |Id of Input via event.oSource.sId: { client->get_event_arg( 2 ) }\n| &&
+        |Value of same row, index: { client->get_event_arg( 3 ) }\n| &&
+        |Id of parent (row) via event.oSource.oParent.sId: { client->get_event_arg( 4 ) }\n| &&
+        |Attribute of parameters.value: { client->get_event_arg( 5 ) }| ).
     ENDIF.
 
   ENDMETHOD.

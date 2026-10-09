@@ -128,7 +128,7 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
                         )->a( n = `text` v = `CX_SY_ZERO_DIVIDE`
                     )->tag( `Button`
                         )->a( n = `press` v = client->_event( `BUTTON_ERROR` )
-                        )->a( n = `text`  v = `Error not catched by the user` ).
+                        )->a( n = `text`  v = `Error not caught by the app` ).
 
     client->view_display( view->stringify( ) ).
 

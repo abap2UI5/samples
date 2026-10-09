@@ -687,7 +687,9 @@ extended check (SLIN/ATC). Put there what a newcomer would type but the visible
 text cannot hold: **synonyms** (`f4` for value help, `alv` for the grid table),
 **control names** the sample uses (`combobox`, `facetfilter`, `progressindicator`),
 and the **abap2UI5 API** it demonstrates (`nav_app_call`, `binding_call`,
-`control_by_id`). Four to eight terms, no backticks. The line is optional — a
+`control_by_id`) — every framework `cs_event-*` constant the code passes and
+every curated client method it calls must be among them, which
+`npm run check:api-keywords` holds (§5). Four to eight terms, no backticks. The line is optional — a
 sample without one is simply found by its header, sub and class name.
 
 **`@summary` is the sentence under the title**, a second comment line directly
@@ -930,10 +932,15 @@ In the order they fail fastest:
 | `npm run check:agents` | `check-docs` | no drift between the §1 layout and the tree: one flat package, no subfolders, the documented CTEXT |
 | `npm run check:orphans` | `check-docs` | every `z2ui5_cl_smp_app_*` class sits where a catalogue reads it (§1) |
 | `npm run check:keywords` | `check-keywords` | every sample carries `@keywords` and `@summary`, first line, lowercase (§4) |
+| `npm run check:api-keywords` | `check-api-keywords` | every framework `cs_event-*` constant a sample passes, and every call of a curated client method (`popup_display`, `popover_display`, `nest_view_display`, `nav_app_call`, the hash and app-state calls, …), stands in its `@keywords` (§4) — the script's header says what is left out and why |
+| `npm run check:markers` | `check-docs` | every `(A)` / `(C)` / `(A,C)` on a DESCRIPT is backed by the code, and every frontend action or custom control is marked (§12) |
+| `npm run check:titles` | `check-docs` | every sample's page title is `abap2UI5 - ` + its DESCRIPT without the marker (§12) |
 | `npm run check:launchpad` | `check-docs` | the overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) |
 | `npm run check:catalogue` | `check-docs` | the committed `catalogue.json` still mirrors the folder tree, and keeps the shape its consumers parse (§3) |
 | `npm run check:derived` | `check-docs` | the committed `catalogue-derived.json` — the linter's half of the catalogue — still matches what the linter derives from the tree ("The catalogue", below) |
-| `npm run check:atc` | `check-atc` | three extended-check (SLIN/ATC) findings abaplint does not model: a `SELECT` without `WHERE` and without `"#EC CI_NOWHERE`, `sy-subrc` after a dynamic `ASSIGN`, a text symbol passed to a parameter |
+| `npm run check:atc` | `check-atc` | four extended-check (SLIN/ATC) findings abaplint does not model: a `SELECT` without `WHERE` and without `"#EC CI_NOWHERE`, `sy-subrc` after a dynamic `ASSIGN`, a text symbol passed to a parameter, an ABAP Doc `@raising` the method's `RAISING` clause does not declare |
+| `npm run check:patterns` | `check-app-patterns` | three app-code shapes that build, lint and run and are still wrong: a sibling chained after a statement's head element (§10, one statement per sibling; a leading `x->end( )` is fine), `nav_app_leave( )` handed `get_app( …id_prev_app_stack )` directly or through a variable (§9), and an `Input` bound untyped to a numeric attribute the class computes with, in a class that never reads `get( )-t_model_skipped` |
+| `npm run check:selftest` | `check-selftest` | `check:atc`, `check:patterns` and `check:api-keywords` against fixtures (`scripts/test/`): every rule fires on its shape and stays silent on its look-alikes — a rule that stopped matching would otherwise read as a clean tree |
 | `npm run check:prose` | `check-docs` | every class name written in prose exists, here and in the sibling repositories |
 | `npm run check:docs-links` | `check-docs-links` | every `" @docs` URL resolves, and its page names the class back (§4) |
 | `npm run check:app-rules` | `check-app-rules` | the abaplint rule block still matches its source in abap2UI5 (§6) |
@@ -1160,8 +1167,10 @@ so is this one now.
 Everything else about a script follows from that:
 
 - **No dependencies.** Plain node, so a gate is a few seconds and needs no
-  `npm ci` — `check-docs`, `check-keywords`, `check-docs-links`, `check-atc`,
-  `check-framework-pin` and `check-app-rules` run their `npm run check:*`
+  `npm ci` — `check-docs`, `check-keywords`, `check-api-keywords`,
+  `check-docs-links`, `check-atc`, `check-app-patterns`, `check-selftest`,
+  `check-framework-pin` and
+  `check-app-rules` run their `npm run check:*`
   script without an install. **package.json is the one spelling of every
   gate**: a workflow calls the npm script, never `node scripts/x.mjs` or
   `npx <tool>` on its own, so what CI runs and what `npm run check` runs
@@ -1407,6 +1416,12 @@ rule that wants two `WHEN` branches decides (§7).
   JavaScript any more — a `val` that is not a `cs_event-*` name is not executed
   — so `history.back()` is not an option. `z2ui5_cl_smp_app_499` shows the
   whole `hash_*` family.
+- **Back to the caller is the bare `nav_app_leave( )`** — or
+  `nav_app_leave( event = … )` to hand it an event. Never load the caller by
+  id first (`nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) )`,
+  directly or through a variable): the bare call goes to the same app, and
+  unlike `get_app( )` it survives a caller whose draft has expired.
+  `npm run check:patterns` (`nav_leave_get_app`) refuses it.
 
 ---
 
@@ -1425,7 +1440,7 @@ repeated here because samples get them wrong:
 
 - **`a( )` takes exactly one of `v`, `b`, `t`.** `v` is the form for a binding,
   an event, a `{/path}` template and constant text; `b` takes an ABAP boolean
-  and renders `true`/`false` itself (`a( n = `editable` b = mv_edit_mode )`,
+  and renders `true`/`false` itself (`` a( n = `editable` b = mv_edit_mode ) ``,
   never a conversion of your own); `t` takes text that carries **data** — user
   input, a value read from a table — and escapes it as a literal, because a `{`
   in a `v` is parsed as a binding. Where one attribute mixes text with a
@@ -1556,6 +1571,13 @@ in `check-abap2UI5.yaml`) checks all six rules and `npm run fmt:chains`
 applies them. The fixer rewrites whitespace *between* chain segments only,
 and the layout survives because every fix is verified against the rule — a
 formatting change can never alter what the view builds.
+
+What the layout rule cannot see is a **sibling chained after the head
+element** of a split-shape statement: `page->tag( A )->…->tag( B )` builds
+two siblings, and the rule indents `B` one level deeper than the tree has it.
+`npm run check:patterns` (`chain_sibling`) refuses it — start a new statement
+per sibling from the container. A statement that *opens* with `x->end( )` to
+reach the parent of a held container is fine.
 
 ### Bindings — what this corpus calls things
 
@@ -1847,19 +1869,37 @@ new/edited samples stay consistent:
   capability marker** appended to the `<DESCRIPT>`
   (leading space), surfaced in the overview:
   - `(C)` — uses an abap2UI5 **custom control** (the `z2ui5` cc namespace:
-    `ele( n = … ns = `z2ui5` )`, `z2ui5.cc`, `xmlns:z2ui5`).
-  - `(A)` — performs a **frontend action**: `client->follow_up_action( )`
-    (including the `cs_event-control_by_id` / `cs_event-control_global` /
-    `cs_event-binding_call` events), or a
-    client-side interaction like drag-and-drop. The ubiquitous back-button
-    `client->_event_nav_app_leave( )` does **not** count.
+    `` ele( n = … ns = `z2ui5` ) ``, `z2ui5.cc`, `xmlns:z2ui5`).
+  - `(A)` — performs a **frontend action**. The list is closed — exactly
+    these three, nothing "like" them:
+    1. a `client->follow_up_action( )` call (including the
+       `cs_event-control_by_id` / `cs_event-control_global` /
+       `cs_event-binding_call` events, which only ever travel through it);
+    2. a `client->_event_client( )` call, the obsolete spelling of the same;
+    3. **drag and drop** — a control of the `sap.ui.core.dnd` namespace
+       (`` ns = `dnd` ``) or a `dragDropConfig` aggregation.
+    Any other client-side behaviour (an expression binding, a formatter, a
+    `liveChange` wire, a `core:require`) is **not** `(A)`; a new kind needs
+    this list and the gate changed in the same commit. The ubiquitous
+    back-button `client->_event_nav_app_leave( )` does **not** count.
   - `(A,C)` — both. Regenerate the overviews after changing any DESCRIPT (§4).
+  An option on an ordinary roundtrip `_event( )` (`s_ctrl`, e.g.
+  `check_prevent_default`) is **not** a frontend action: the event still goes
+  to the backend and nothing else (`Z2UI5_CL_SMP_APP_472` carried `(A)` for
+  it until 2026-10-08).
+  **The gate is `npm run check:markers`** (`scripts/check-markers.mjs`, the
+  `capability_markers` job of `check-docs`): it reads every tile's code with
+  comments stripped and refuses a marker the code does not back as well as
+  a missing one — `(A)` for exactly the three items above (the two calls
+  looked for outside string literals), `(C)` for a `z2ui5`-namespace element
+  or an `xmlns:z2ui5` declaration. The two definitions live in that script
+  and here; change them together.
   The legend a reader sees - under the overview app's list, in the preamble of
   `SAMPLES.md`, as `naming.markers` in `catalogue.json` - is written once, in
   `scripts/lib/markers.mjs`, and rendered by all three generators; change the
   wording there, never in a rendered copy.
 
-- **A read-only info form disables its inputs** (`a( n = `enabled` b = abap_false )`)
+- **A read-only info form disables its inputs** (`` a( n = `enabled` b = abap_false ) ``)
   — do not leave display-only values in editable inputs (see
   `z2ui5_cl_smp_app_122`).
 
@@ -1872,16 +1912,16 @@ new/edited samples stay consistent:
   that names an aggregation the parent does **not** have makes UI5 resolve it
   as a *control class* and 404 with `failed to load sap/<lib>/<name>.js` on
   1.71, crashing the sample. Two real cases:
-  - `ele( n = `heading` ns = `uxap` )` under an `ObjectPageSection` —
+  - `` ele( n = `heading` ns = `uxap` ) `` under an `ObjectPageSection` —
     `sap.uxap.ObjectPageSection` has no `heading` aggregation. Put the section
-    title in `a( n = `title` v = … )` and go straight to `subSections`.
+    title in `` a( n = `title` v = … ) `` and go straight to `subSections`.
     (`f:heading` **is** valid under a `sap.f` `DynamicPageTitle`.)
   - `footer` on a popup `Dialog` — `sap.m.Dialog` only got a public `footer`
     aggregation ~1.110; a `Page`'s `footer` is fine (sap.m.Page always had
     one). Every control/property here must exist since 1.71 (§2); when in
     doubt check "available since" in the demo kit.
 
-- **`sap.m.SimpleForm` needs `a( n = `editable` b = abap_true )`** for its
+- **`sap.m.SimpleForm` needs `` a( n = `editable` b = abap_true ) ``** for its
   label/input pairs to line up on one row — without it the form renders in
   display mode and the first field is mislaid (fixed in
   `Z2UI5_CL_SMP_APP_189`; compare `Z2UI5_CL_SMP_APP_133`).
@@ -1899,6 +1939,13 @@ new/edited samples stay consistent:
   it is recognisably the right sample. Change the two together: renaming a
   DESCRIPT without the page title puts them out of sync again (they had drifted
   to "Focus II" and "Table Filters Reset after view Update").
+  **The gate is `npm run check:titles`** (`scripts/check-page-titles.mjs`, the
+  `page_titles` job of `check-docs`). It reads the first `Page` built after
+  the main view's `Shell` — in the same chain, off a variable, or as the first
+  page of a NavContainer in the Shell — and wants the title as that literal.
+  Not judged: a `Dialog` title, further NavContainer pages, nested-view pages,
+  the overview app (`abap2UI5 - Samples`, §3) and the ZZZ helpers, which have
+  no tile.
 
 - **Every main view opens `mvc:View` → `Shell` → `Page`** (the §10 example),
   never `View` → `Page`, so all samples share the same outer frame (fixed in

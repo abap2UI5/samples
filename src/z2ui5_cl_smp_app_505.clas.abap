@@ -191,10 +191,11 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
     ENDIF.
 
     col_date->tag( `Text`
-        )->a( n = `text` v = `Created (backend sort)`
-        )->ele( n = `template` ns = `table`
-            )->tag( `Text`
-                )->a( n = `text` v = `{CREATED_TEXT}` ).
+        )->a( n = `text` v = `Created (backend sort)` ).
+
+    col_date->ele( n = `template` ns = `table`
+        )->tag( `Text`
+            )->a( n = `text` v = `{CREATED_TEXT}` ).
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = client->_bind( last_sort )

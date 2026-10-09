@@ -1,4 +1,4 @@
-" @keywords interval polling auto refresh follow_up_action seconds
+" @keywords interval polling auto refresh follow_up_action seconds start_timer
 " @summary Refreshes the view every n seconds - the polling interval as a follow-up action the app renews itself.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer
 CLASS z2ui5_cl_smp_app_028 DEFINITION PUBLIC.
@@ -15,7 +15,8 @@ CLASS z2ui5_cl_smp_app_028 DEFINITION PUBLIC.
         info     TYPE string,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab   TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA running TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA counter TYPE i.
@@ -40,7 +41,7 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-    ELSEIF client->check_on_event( `TIMER_FINISHED` ).
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -50,6 +51,7 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
   METHOD on_init.
 
     counter = 1.
+    running = abap_true.
     t_tab = VALUE #(
         ( title = |entry{ counter }|
           info  = `completed`
@@ -63,19 +65,28 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
 
   METHOD on_event.
 
-    counter = counter + 1.
-    INSERT VALUE #(
-        title = |entry{ counter }|
-        info  = `completed`
-        descr = `this is a description`
-        icon  = `sap-icon://account` )
-      INTO TABLE t_tab.
+    CASE client->get_event( ).
 
-    IF counter < 3.
-      start_timer( ).
-    ELSE.
-      client->message_toast_display( `timer deactivated` ).
-    ENDIF.
+      WHEN `TIMER_FINISHED`.
+        counter = counter + 1.
+        INSERT VALUE #(
+            title = |entry{ counter }|
+            info  = `completed`
+            descr = `this is a description`
+            icon  = `sap-icon://account` )
+          INTO TABLE t_tab.
+
+        IF counter < 3.
+          start_timer( ).
+        ELSE.
+          running = abap_false.
+          client->message_toast_display( `timer deactivated` ).
+        ENDIF.
+
+      WHEN `RESTART`.
+        on_init( ).
+
+    ENDCASE.
 
   ENDMETHOD.
 
@@ -106,7 +117,8 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
 
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `The list refreshes itself automatically: a client-side timer (follow_up_action) fires ` &&
-                   `every 2 seconds, appending a new entry on the server until three rows exist.`
+                   `every 2 seconds, appending a new entry on the server until three rows exist. ` &&
+                   `Restart starts over - it is disabled while the timer runs, so one press can never start a second timer.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -119,6 +131,15 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
             )->a( n = `description` v = `{DESCR}`
             )->a( n = `icon`        v = `{ICON}`
             )->a( n = `info`        v = `{INFO}` ).
+
+    page->ele( `footer`
+        )->ele( `OverflowToolbar`
+            )->tag( `ToolbarSpacer`
+            )->tag( `Button`
+                )->a( n = `text`    v = `Restart`
+                )->a( n = `icon`    v = `sap-icon://restart`
+                )->a( n = `enabled` v = |\{= !${ client->_bind( running ) } \}|
+                )->a( n = `press`   v = client->_event( `RESTART` ) ).
 
     client->view_display( view->stringify( ) ).
 

@@ -1,4 +1,4 @@
-" @keywords nested stack popup in popup second dialog
+" @keywords nested stack popup in popup second dialog popup_display
 " @summary A dialog opened from inside a dialog, and what closing the inner one does to the stack.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popup
 CLASS z2ui5_cl_smp_app_161 DEFINITION PUBLIC.
@@ -88,8 +88,9 @@ CLASS z2ui5_cl_smp_app_161 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `This sample opens a popup from a button and then chains to a second popup ` &&
-                   `from within the first one.`
+        )->a( n = `text`     v = `Open the popup, then open a second one from inside it. abap2UI5 keeps one popup on ` &&
+                   `screen at a time, so the second replaces the first rather than stacking on it - and closing it ` &&
+                   `brings the first one back because the backend displays it again (popup_destroy, then popup_display).`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).

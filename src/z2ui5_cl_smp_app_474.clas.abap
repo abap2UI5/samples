@@ -1,4 +1,4 @@
-" @keywords url policy link security validator relative allow deny
+" @keywords url policy link security validator relative allow deny control_by_id
 " @summary The URL policy of a MessagePopover: which links it will follow and which it refuses, and why the default is the strict one.
 " @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_474 DEFINITION PUBLIC.

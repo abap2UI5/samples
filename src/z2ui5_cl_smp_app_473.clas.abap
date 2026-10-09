@@ -1,4 +1,4 @@
-" @keywords menuitem nested submenu textpath controller path
+" @keywords menuitem nested submenu textpath controller path control_global
 " @summary A nested Menu that reports the FULL path of the item that was chosen, not just its text.
 CLASS z2ui5_cl_smp_app_473 DEFINITION PUBLIC.
 

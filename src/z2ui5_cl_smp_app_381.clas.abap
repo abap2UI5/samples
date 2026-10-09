@@ -246,27 +246,34 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
             )->ele( n = `content` ns = `form` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Message`
-        )->tag( `Input`
-            )->a( n = `value` v = client->_bind( message )
-        )->tag( `Label`
-            )->a( n = `text` v = `Duration (ms)`
-        )->tag( `Input`
-            )->a( n = `type`  v = `Number`
-            )->a( n = `value` v = client->_bind( duration )
-        )->tag( `Label`
-            )->a( n = `text` v = `Width`
-        )->tag( `Input`
-            )->a( n = `value` v = client->_bind( width ) ).
+        )->a( n = `text` v = `Message` ).
 
-    DATA(select_my) = form->tag( `Label`
-        )->a( n = `text` v = `my`
-        )->ele( `Select`
-            )->a( n = `selectedKey` v = client->_bind( my ) ).
-    DATA(select_at) = form->tag( `Label`
-        )->a( n = `text` v = `at`
-        )->ele( `Select`
-            )->a( n = `selectedKey` v = client->_bind( at ) ).
+    form->tag( `Input`
+        )->a( n = `value` v = client->_bind( message ) ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `Duration (ms)` ).
+
+    form->tag( `Input`
+        )->a( n = `type`  v = `Number`
+        )->a( n = `value` v = client->_bind( duration ) ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `Width` ).
+
+    form->tag( `Input`
+        )->a( n = `value` v = client->_bind( width ) ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `my` ).
+
+    DATA(select_my) = form->ele( `Select`
+        )->a( n = `selectedKey` v = client->_bind( my ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `at` ).
+
+    DATA(select_at) = form->ele( `Select`
+        )->a( n = `selectedKey` v = client->_bind( at ) ).
 
     LOOP AT get_positions( ) INTO DATA(position).
       select_my->tag( n = `Item` ns = `core`
@@ -278,72 +285,90 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
     ENDLOOP.
 
     form->tag( `Label`
-        )->a( n = `text` v = `of - dock to the anchor box instead of the window`
-        )->tag( `CheckBox`
-            )->a( n = `selected` v = client->_bind( dock_to_anchor )
-        )->tag( `Label`
-            )->a( n = `text` v = `offset`
-        )->tag( `Input`
-            )->a( n = `value` v = client->_bind( offset ) ).
+        )->a( n = `text` v = `of - dock to the anchor box instead of the window` ).
+
+    form->tag( `CheckBox`
+        )->a( n = `selected` v = client->_bind( dock_to_anchor ) ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `collision`
-        )->ele( `Select`
-            )->a( n = `selectedKey` v = client->_bind( collision )
-            )->tag( n = `Item` ns = `core`
-                )->a( n = `key`  v = `fit fit`
-                )->a( n = `text` v = `fit fit - shift into the viewport`
-            )->tag( n = `Item` ns = `core`
-                )->a( n = `key`  v = `flip flip`
-                )->a( n = `text` v = `flip flip - flip to the opposite side`
-            )->tag( n = `Item` ns = `core`
-                )->a( n = `key`  v = `flipfit flipfit`
-                )->a( n = `text` v = `flipfit flipfit - flip first, then shift`
-            )->tag( n = `Item` ns = `core`
-                )->a( n = `key`  v = `none none`
-                )->a( n = `text` v = `none none - stay where told` ).
+        )->a( n = `text` v = `offset` ).
 
-    DATA(select_animation) = form->tag( `Label`
-        )->a( n = `text` v = `animationTimingFunction`
-        )->ele( `Select`
-            )->a( n = `selectedKey` v = client->_bind( animation_timing ) ).
+    form->tag( `Input`
+        )->a( n = `value` v = client->_bind( offset ) ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `collision` ).
+
+    form->ele( `Select`
+        )->a( n = `selectedKey` v = client->_bind( collision )
+        )->tag( n = `Item` ns = `core`
+            )->a( n = `key`  v = `fit fit`
+            )->a( n = `text` v = `fit fit - shift into the viewport`
+        )->tag( n = `Item` ns = `core`
+            )->a( n = `key`  v = `flip flip`
+            )->a( n = `text` v = `flip flip - flip to the opposite side`
+        )->tag( n = `Item` ns = `core`
+            )->a( n = `key`  v = `flipfit flipfit`
+            )->a( n = `text` v = `flipfit flipfit - flip first, then shift`
+        )->tag( n = `Item` ns = `core`
+            )->a( n = `key`  v = `none none`
+            )->a( n = `text` v = `none none - stay where told` ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `animationTimingFunction` ).
+
+    DATA(select_animation) = form->ele( `Select`
+        )->a( n = `selectedKey` v = client->_bind( animation_timing ) ).
     select_animation->tag( n = `Item` ns = `core`
         )->a( n = `key`  v = `ease`
-        )->a( n = `text` v = `ease`
-        )->tag( n = `Item` ns = `core`
-            )->a( n = `key`  v = `linear`
-            )->a( n = `text` v = `linear`
-        )->tag( n = `Item` ns = `core`
-            )->a( n = `key`  v = `ease-in`
-            )->a( n = `text` v = `ease-in`
-        )->tag( n = `Item` ns = `core`
-            )->a( n = `key`  v = `ease-out`
-            )->a( n = `text` v = `ease-out`
-        )->tag( n = `Item` ns = `core`
-            )->a( n = `key`  v = `ease-in-out`
-            )->a( n = `text` v = `ease-in-out` ).
+        )->a( n = `text` v = `ease` ).
+
+    select_animation->tag( n = `Item` ns = `core`
+        )->a( n = `key`  v = `linear`
+        )->a( n = `text` v = `linear` ).
+
+    select_animation->tag( n = `Item` ns = `core`
+        )->a( n = `key`  v = `ease-in`
+        )->a( n = `text` v = `ease-in` ).
+
+    select_animation->tag( n = `Item` ns = `core`
+        )->a( n = `key`  v = `ease-out`
+        )->a( n = `text` v = `ease-out` ).
+
+    select_animation->tag( n = `Item` ns = `core`
+        )->a( n = `key`  v = `ease-in-out`
+        )->a( n = `text` v = `ease-in-out` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `animationDuration (ms)`
-        )->tag( `Input`
-            )->a( n = `type`  v = `Number`
-            )->a( n = `value` v = client->_bind( animation_duration )
-        )->tag( `Label`
-            )->a( n = `text` v = `autoClose`
-        )->tag( `CheckBox`
-            )->a( n = `selected` v = client->_bind( autoclose )
-        )->tag( `Label`
-            )->a( n = `text` v = `closeOnBrowserNavigation`
-        )->tag( `CheckBox`
-            )->a( n = `selected` v = client->_bind( close_on_navigation )
-        )->tag( `Label`
-            )->a( n = `text` v = `onclose - report the closing as a backend event`
-        )->tag( `CheckBox`
-            )->a( n = `selected` v = client->_bind( notify_close )
-        )->tag( `Label`
-            )->a( n = `text` v = `class - a CSS class for the toast (myToast is styled above)`
-        )->tag( `Input`
-            )->a( n = `value` v = client->_bind( css_class ) ).
+        )->a( n = `text` v = `animationDuration (ms)` ).
+
+    form->tag( `Input`
+        )->a( n = `type`  v = `Number`
+        )->a( n = `value` v = client->_bind( animation_duration ) ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `autoClose` ).
+
+    form->tag( `CheckBox`
+        )->a( n = `selected` v = client->_bind( autoclose ) ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `closeOnBrowserNavigation` ).
+
+    form->tag( `CheckBox`
+        )->a( n = `selected` v = client->_bind( close_on_navigation ) ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `onclose - report the closing as a backend event` ).
+
+    form->tag( `CheckBox`
+        )->a( n = `selected` v = client->_bind( notify_close ) ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `class - a CSS class for the toast (myToast is styled above)` ).
+
+    form->tag( `Input`
+        )->a( n = `value` v = client->_bind( css_class ) ).
 
     form->tag( `Button`
         )->a( n = `press` v = client->_event( `SHOW` )
@@ -351,24 +376,26 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
         )->a( n = `type`  v = `Emphasized` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `the onclose event`
-        )->tag( `Text`
-            )->a( n = `text` v = client->_bind( closed_text ) ).
+        )->a( n = `text` v = `the onclose event` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = client->_bind( closed_text ) ).
 
     " ... and the second reason the global object exists: the same call WIRED
     " into the view. The toast is composed on the client - the extra argument
     " fills the {0} placeholder of the text - so a button that only wants to
     " say what was pressed needs no round-trip to the backend at all
     form->tag( `Label`
-        )->a( n = `text` v = `wired, no round-trip - the text is composed on the client`
-        )->tag( `Button`
-            )->a( n = `text`  v = `Compose on the client`
-            )->a( n = `press` v = client->follow_up_action(
-                                       val   = client->cs_event-control_global
-                                       t_arg = VALUE #( ( `MESSAGE_TOAST` )
-                                                        ( `show` )
-                                                        ( `{0} - composed on the client, the backend never saw this press` )
-                                                        ( `${$source>/text}` ) ) ) ).
+        )->a( n = `text` v = `wired, no round-trip - the text is composed on the client` ).
+
+    form->tag( `Button`
+        )->a( n = `text`  v = `Compose on the client`
+        )->a( n = `press` v = client->follow_up_action(
+                                   val   = client->cs_event-control_global
+                                   t_arg = VALUE #( ( `MESSAGE_TOAST` )
+                                                    ( `show` )
+                                                    ( `{0} - composed on the client, the backend never saw this press` )
+                                                    ( `${$source>/text}` ) ) ) ).
 
     client->view_display( page->stringify( ) ).
 

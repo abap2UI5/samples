@@ -45,7 +45,7 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( n = `SimpleForm` ns = `form`
-        )->a( n = `title`    v = `Form Title`
+        )->a( n = `title`    v = `New Tab`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form`
             )->tag( `Button`
@@ -63,15 +63,8 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
 
     IF client->check_on_navigated( ).
       view_display( ).
-    ENDIF.
-
-    IF client->get_event( ) = `BUTTON_OPEN_NEW_TAB`.
-
-      client->follow_up_action(
-          val   = z2ui5_if_client=>cs_event-open_new_tab
-          t_arg = VALUE #(
-              ( url_own_get( ) )
-              ) ).
+    ELSEIF client->check_on_event( `BUTTON_OPEN_NEW_TAB` ).
+      client->follow_up_action( val = z2ui5_if_client=>cs_event-open_new_tab t_arg = VALUE #( ( url_own_get( ) ) ) ).
     ENDIF.
 
   ENDMETHOD.

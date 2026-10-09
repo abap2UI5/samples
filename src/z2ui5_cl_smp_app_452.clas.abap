@@ -1,4 +1,4 @@
-" @keywords messagepopover messageitem dialog grouped message list
+" @keywords messagepopover messageitem dialog grouped message list popup_close popup_display popover_close popover_display
 " @summary MessageView and MessagePopover over a list of messages, grouped by type, with the detail page behind each entry.
 " @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_452 DEFINITION PUBLIC.
@@ -123,8 +123,6 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
         popup_display( ).
       WHEN `POPOVER`.
         popover_display( `messagePopoverBtn` ).
-      WHEN `POPOVER_CLOSE`.
-        client->popover_destroy( ).
     ENDCASE.
 
   ENDMETHOD.
@@ -238,9 +236,9 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
 
     popup->ele( `MessagePopover`
-        )->a( n = `items`       v = client->_bind( t_msg )
-        )->a( n = `placement`   v = `Top`
-        )->a( n = `beforeClose` v = client->_event( `POPOVER_CLOSE` )
+        )->a( n = `items`      v = client->_bind( t_msg )
+        )->a( n = `placement`  v = `Top`
+        )->a( n = `afterClose` v = client->follow_up_action( client->cs_event-popover_close )
         )->ele( `MessageItem`
             )->a( n = `type`        v = `{TYPE}`
             )->a( n = `title`       v = `{TITLE}`

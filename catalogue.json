@@ -23,7 +23,7 @@
   "caveat": "Sample numbers are handed out per repository, and the three repositories reuse each other's numbers freely - there is no global number space. A number alone therefore names nothing: the class prefix is what says which repository's sample you mean. Always use the full class name.",
   "example": "z2ui5_cl_smp_app_493 (here: Hello World) and z2ui5_cl_smps_app_493 (samples-stack: a FilterBar with variant management) share the number 493 and have nothing to do with each other.",
   "markers": {
-   "(A)": "performs a frontend action (client->follow_up_action( ) or a client-side interaction such as drag and drop)",
+   "(A)": "performs a frontend action (client->follow_up_action( ), or drag and drop)",
    "(C)": "uses an abap2UI5 custom control (the z2ui5.cc namespace)",
    "(A,C)": "both"
   }
@@ -109,7 +109,8 @@
     "outlier",
     "table",
     "selection",
-    "dynamicsidecontent"
+    "dynamicsidecontent",
+    "start_timer"
    ],
    "docs": []
   },
@@ -181,7 +182,8 @@
     "serialize",
     "check_on_init",
     "check_on_event",
-    "check_on_navigated"
+    "check_on_navigated",
+    "nav_app_call"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle",
@@ -350,7 +352,7 @@
    "stage": "data",
    "title": "Binding",
    "description": "Dynamic Table Typed at Runtime (RTTI)",
-   "summary": "The row type is created at runtime from a DDIC name with CREATE DATA, and the generic data reference is bound straight into the view - editable, multi-selectable, and it survives the roundtrip back to ABAP.",
+   "summary": "The row type is built at runtime from a DDIC name plus a SELKZ selection flag (RTTI, TYPE HANDLE), and the generic data reference is bound straight into the view - editable, multi-selectable, and it survives the roundtrip back to ABAP.",
    "keywords": [
     "generic",
     "data",
@@ -359,7 +361,10 @@
     "data",
     "ddic",
     "dynamic",
-    "itab"
+    "itab",
+    "rtti",
+    "handle",
+    "selkz"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/binding"
@@ -402,7 +407,8 @@
     "large",
     "itab",
     "100",
-    "entries"
+    "entries",
+    "set_size_limit"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/size_limit"
@@ -560,7 +566,8 @@
     "paste",
     "copy",
     "text",
-    "area"
+    "area",
+    "clipboard_copy"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/clipboard"
@@ -625,7 +632,8 @@
     "session",
     "end",
     "fiori",
-    "launchpad"
+    "launchpad",
+    "system_logout"
    ],
    "docs": []
   },
@@ -708,7 +716,8 @@
     "none",
     "inputext",
     "focus",
-    "warehouse"
+    "warehouse",
+    "set_focus"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard"
@@ -728,7 +737,8 @@
     "tab",
     "image",
     "data",
-    "uri"
+    "uri",
+    "set_favicon"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/title"
@@ -880,7 +890,8 @@
     "collection",
     "glyph",
     "missing",
-    "control_global"
+    "control_global",
+    "start_timer"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
@@ -926,7 +937,8 @@
     "wait",
     "spinner",
     "long",
-    "running"
+    "running",
+    "start_timer"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
@@ -985,7 +997,8 @@
     "responsive",
     "navigation",
     "tile",
-    "panel"
+    "panel",
+    "popover_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/definition"
@@ -1067,7 +1080,9 @@
     "orientation",
     "resize",
     "media",
-    "model"
+    "model",
+    "popup_close",
+    "popup_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/device_model",
@@ -1252,7 +1267,7 @@
    "category": "Event",
    "stage": "talk",
    "title": "Event",
-   "description": "Link with preventDefault (A)",
+   "description": "Link with preventDefault",
    "summary": "A Link whose default browser action is suppressed (check_prevent_default), so the app handles the click instead of the href.",
    "keywords": [
     "link",
@@ -1330,7 +1345,8 @@
     "base64",
     "attachment",
     "xstring",
-    "document"
+    "document",
+    "download_b64_file"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download"
@@ -1638,7 +1654,7 @@
    "category": "Hash",
    "stage": "move",
    "title": "Hash",
-   "description": "App State, Bookmark and Share",
+   "description": "App State, Bookmark and Share (A)",
    "summary": "The Fiori app-state pattern: the URL carries the state id, so a bookmark, a reload or a shared link restores the entered data.",
    "keywords": [
     "app",
@@ -1660,7 +1676,8 @@
     "switch",
     "off",
     "event",
-    "form"
+    "form",
+    "clipboard_copy"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/app_state"
@@ -1672,7 +1689,7 @@
    "category": "Hash",
    "stage": "move",
    "title": "Hash",
-   "description": "App-Owned Routing (#/detail)",
+   "description": "App-Owned Routing (#/detail) (A)",
    "summary": "The whole hash_* family in one app: hash_set pushes #/detail, hash_replace rewrites it in place, hash_back steps back like a router, a deep link restores.",
    "keywords": [
     "routing",
@@ -1695,7 +1712,8 @@
     "onnavback",
     "follow_up_action",
     "event",
-    "form"
+    "form",
+    "control_by_id"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
@@ -1707,7 +1725,7 @@
    "category": "Hash",
    "stage": "move",
    "title": "Hash",
-   "description": "Routing Mode FRESH (a New Instance)",
+   "description": "Routing Mode FRESH (a New Instance) (A)",
    "summary": "Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.",
    "keywords": [
     "routing",
@@ -1719,7 +1737,8 @@
     "restart",
     "new",
     "instance",
-    "nav_app_call"
+    "nav_app_call",
+    "hash_routing"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
@@ -1731,7 +1750,7 @@
    "category": "Hash",
    "stage": "move",
    "title": "Hash",
-   "description": "Routing Mode KEEP (Back to the State)",
+   "description": "Routing Mode KEEP (Back to the State) (A)",
    "summary": "Hash routing in mode KEEP: the URL carries the app-state draft as well, so Back and Forward return to the state, not just to the app.",
    "keywords": [
     "routing",
@@ -1741,7 +1760,8 @@
     "state",
     "preserved",
     "back",
-    "nav_app_call"
+    "nav_app_call",
+    "hash_routing"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash"
@@ -1818,7 +1838,8 @@
     "submenu",
     "textpath",
     "controller",
-    "path"
+    "path",
+    "control_global"
    ],
    "docs": []
   },
@@ -1837,7 +1858,8 @@
     "button",
     "messagetoast",
     "require",
-    "module"
+    "module",
+    "popover_display"
    ],
    "docs": []
   },
@@ -1881,7 +1903,8 @@
     "escape",
     "limit",
     "action",
-    "onclose"
+    "onclose",
+    "message_box_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/translation_messages/logging",
@@ -1904,7 +1927,8 @@
     "exception",
     "cx_root",
     "error",
-    "abend"
+    "abend",
+    "message_box_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/exception",
@@ -1917,7 +1941,7 @@
    "category": "Message",
    "stage": "talk",
    "title": "Message",
-   "description": "MessageBox via the Global Object",
+   "description": "MessageBox via the Global Object (A)",
    "summary": "The MessageBox steered as the UI5 control it is: the display method IS the box type, and every sap.m.MessageBox option travels 1:1 in the option object of the global call.",
    "keywords": [
     "messagebox",
@@ -1953,7 +1977,9 @@
     "success",
     "information",
     "dialog",
-    "action"
+    "action",
+    "onclose",
+    "message_box_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
@@ -1975,7 +2001,8 @@
     "validator",
     "relative",
     "allow",
-    "deny"
+    "deny",
+    "control_by_id"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
@@ -1987,7 +2014,7 @@
    "category": "Message",
    "stage": "talk",
    "title": "Message",
-   "description": "MessageToast via the Global Object",
+   "description": "MessageToast via the Global Object (A)",
    "summary": "The MessageToast steered as the UI5 control it is: every sap.m.MessageToast option 1:1 through the global object, plus a toast composed on the client without a round-trip.",
    "keywords": [
     "toast",
@@ -2024,7 +2051,11 @@
     "dialog",
     "grouped",
     "message",
-    "list"
+    "list",
+    "popup_close",
+    "popup_display",
+    "popover_close",
+    "popover_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
@@ -2065,7 +2096,10 @@
     "changes",
     "leave",
     "confirmation",
-    "warning"
+    "warning",
+    "set_focus",
+    "popup_display",
+    "popup_close"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/inner_app"
@@ -2077,7 +2111,7 @@
    "category": "Navigation",
    "stage": "move",
    "title": "Navigation",
-   "description": "Page Transitions (view_display transition)",
+   "description": "Page Transitions (view_display transition) (A)",
    "summary": "The next view arrives with a page transition - slide, baseSlide, fade, flip or show - and every way back plays it reversed: nav_app_leave, the browser Back button, an app's own Previous step.",
    "keywords": [
     "transition",
@@ -2087,7 +2121,9 @@
     "flip",
     "navcontainer",
     "transition_back",
-    "nav_app_leave"
+    "nav_app_leave",
+    "nav_app_call",
+    "hash_routing"
    ],
    "docs": []
   },
@@ -2098,14 +2134,16 @@
    "stage": "move",
    "title": "Navigation",
    "description": "Return Data and Events to the Caller",
-   "summary": "The way back carries data: the called app returns an event name and a payload (r_data) that the caller reads from get_app_prev.",
+   "summary": "The way back carries data: the called app returns an event name and a payload (r_data) that the caller reads from client->get( ).",
    "keywords": [
     "r_data",
+    "r_event_data",
+    "nav_app_leave",
     "result",
-    "get_app_prev",
     "return",
     "event",
-    "payload"
+    "payload",
+    "nav_app_call"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/inner_app"
@@ -2172,7 +2210,9 @@
     "nested",
     "nested2",
     "control_by_id",
-    "focus"
+    "focus",
+    "nest_view_display",
+    "nest2_view_display"
    ],
    "docs": []
   },
@@ -2192,7 +2232,8 @@
     "instantiate",
     "another",
     "app",
-    "rtti"
+    "rtti",
+    "nest_view_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/nested_views"
@@ -2214,7 +2255,8 @@
     "report",
     "two",
     "column",
-    "split"
+    "split",
+    "nest_view_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/nested_views"
@@ -2235,7 +2277,9 @@
     "detail",
     "detail",
     "deep",
-    "navigation"
+    "navigation",
+    "nest_view_display",
+    "nest2_view_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/nested_views"
@@ -2281,7 +2325,8 @@
     "slot",
     "cs_view",
     "focus",
-    "control_by_id"
+    "control_by_id",
+    "popover_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover"
@@ -2301,7 +2346,8 @@
     "one",
     "roundtrip",
     "anchor",
-    "button"
+    "button",
+    "popover_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover"
@@ -2321,7 +2367,8 @@
     "card",
     "links",
     "grouped",
-    "fields"
+    "fields",
+    "popover_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover"
@@ -2339,7 +2386,10 @@
     "list",
     "selection",
     "placement",
-    "anchor"
+    "anchor",
+    "pick",
+    "popover_display",
+    "popover_destroy"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover"
@@ -2380,7 +2430,8 @@
     "in",
     "popup",
     "second",
-    "dialog"
+    "dialog",
+    "popup_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popup"
@@ -2425,7 +2476,11 @@
     "path",
     "aggregation",
     "dialog",
-    "row"
+    "row",
+    "bind_element",
+    "bindelement",
+    "popup_close",
+    "popup_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend",
@@ -2445,7 +2500,10 @@
     "dialog",
     "pages",
     "back",
-    "forward"
+    "forward",
+    "icontabbar",
+    "control_by_id",
+    "popup_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popup"
@@ -2466,7 +2524,8 @@
     "suggestion",
     "input",
     "dialog",
-    "select"
+    "select",
+    "popup_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popup",
@@ -2488,7 +2547,12 @@
     "destroy",
     "rerender",
     "background",
-    "view"
+    "view",
+    "popup_display",
+    "popup_destroy",
+    "view_destroy",
+    "nav_app_call",
+    "popup_close"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popup",
@@ -2807,7 +2871,8 @@
     "wait",
     "long",
     "running",
-    "backend"
+    "backend",
+    "start_timer"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer"
@@ -2827,7 +2892,8 @@
     "auto",
     "refresh",
     "follow_up_action",
-    "seconds"
+    "seconds",
+    "start_timer"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer"
@@ -2886,7 +2952,8 @@
     "expand",
     "state",
     "hierarchy",
-    "nodes"
+    "nodes",
+    "popup_display"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/trees"

@@ -1,4 +1,4 @@
-" @keywords transition animation slide fade flip navcontainer transition_back nav_app_leave
+" @keywords transition animation slide fade flip navcontainer transition_back nav_app_leave nav_app_call hash_routing
 " @summary The next view arrives with a page transition - slide, baseSlide, fade, flip or show - and every way back plays it reversed: nav_app_leave, the browser Back button, an app's own Previous step.
 "! The page transitions of client->view_display( transition = ... ). Every
 "! button opens the page z2ui5_cl_smp_app_532 with one transition; the way

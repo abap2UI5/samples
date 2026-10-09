@@ -83,22 +83,22 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
                     )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `A growing, scrollable table filtered on the backend: entering a value in the form and ` &&
-                   `pressing filter deletes the non-matching rows server-side before re-rendering.`
+        )->a( n = `text`     v = `A growing, scrollable table of 1000 rows filtered on the backend: type completed or ` &&
+                   `uncompleted into Info and press filter - the backend rebuilds the rows and deletes every one ` &&
+                   `whose Info differs. An empty Info shows all rows again.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->ele( n = `SimpleForm` ns = `form`
-        )->a( n = `title`    v = `Form Title`
+        )->a( n = `title`    v = `Filter`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form`
-            )->tag( `Title`
-                )->a( n = `text` v = `Filter`
             )->tag( `Label`
-                )->a( n = `text` v = `info`
+                )->a( n = `text` v = `Info`
             )->tag( `Input`
-                )->a( n = `value` v = client->_bind( mv_info_filter )
+                )->a( n = `value`       v = client->_bind( mv_info_filter )
+                )->a( n = `placeholder` v = `completed or uncompleted`
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( `FILTER_INFO` )
                 )->a( n = `text`  v = `filter` ).

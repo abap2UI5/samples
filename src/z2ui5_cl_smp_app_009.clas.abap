@@ -1,4 +1,4 @@
-" @keywords f4 search help suggestion input dialog select
+" @keywords f4 search help suggestion input dialog select popup_display
 " @summary The value help, both halves: suggestions while typing and the F4 dialog behind the field, over the same data.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popup https://abap2ui5.github.io/docs/cookbook/expert_more/value_help
 CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
@@ -125,12 +125,15 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
         ENDIF.
         popup_value_employee( ).
       WHEN `POPUP_TABLE_VALUE_CUSTOM_CONTINUE`.
-        DELETE t_employees_sel WHERE selkz = abap_false.
+        " the selection is counted on a copy - deleting from the bound table
+        " itself emptied the open popup's list when nothing was selected
+        DATA(t_chosen_employee) = t_employees_sel.
+        DELETE t_chosen_employee WHERE selkz = abap_false.
 
-        IF lines( t_employees_sel ) = 1.
+        IF lines( t_chosen_employee ) = 1.
 
-          s_screen-name     = t_employees_sel[ 1 ]-name.
-          s_screen-lastname = t_employees_sel[ 1 ]-lastname.
+          s_screen-name     = t_chosen_employee[ 1 ]-name.
+          s_screen-lastname = t_chosen_employee[ 1 ]-lastname.
           client->message_toast_display( `value selected` ).
           client->popup_destroy( ).
 
@@ -138,11 +141,12 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
           client->message_toast_display( `please select exactly one employee` ).
         ENDIF.
       WHEN `POPUP_TABLE_VALUE_CONTINUE`.
-        DELETE t_suggestion_sel WHERE selkz = abap_false.
+        DATA(t_chosen_color) = t_suggestion_sel.
+        DELETE t_chosen_color WHERE selkz = abap_false.
 
-        IF lines( t_suggestion_sel ) = 1.
+        IF lines( t_chosen_color ) = 1.
 
-          s_screen-color_02 = t_suggestion_sel[ 1 ]-value.
+          s_screen-color_02 = t_chosen_color[ 1 ]-value.
           client->message_toast_display( `value selected` ).
           client->popup_destroy( ).
 
@@ -192,44 +196,49 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
                 )->ele( n = `content` ns = `form` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Input with suggestion items`
-        )->ele( `Input`
-            )->a( n = `placeholder`     v = `fill in your favorite colour`
-            )->a( n = `value`           v = client->_bind( s_screen-color_01 )
-            )->a( n = `suggestionItems` v = client->_bind( t_suggestion )
-            )->a( n = `showSuggestion`  b = abap_true
-            )->ele( `suggestionItems`
-                )->tag( n = `ListItem` ns = `core`
-                    )->a( n = `text`           v = `{VALUE}`
-                    )->a( n = `additionalText` v = `{DESCR}` ).
+        )->a( n = `text` v = `Input with suggestion items` ).
+
+    form->ele( `Input`
+        )->a( n = `placeholder`     v = `fill in your favorite colour`
+        )->a( n = `value`           v = client->_bind( s_screen-color_01 )
+        )->a( n = `suggestionItems` v = client->_bind( t_suggestion )
+        )->a( n = `showSuggestion`  b = abap_true
+        )->ele( `suggestionItems`
+            )->tag( n = `ListItem` ns = `core`
+                )->a( n = `text`           v = `{VALUE}`
+                )->a( n = `additionalText` v = `{DESCR}` ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Input only numbers allowed`
-        )->tag( `Input`
-            )->a( n = `placeholder` v = `quantity`
-            )->a( n = `type`        v = `Number`
-            )->a( n = `value`       v = client->_bind( s_screen-quantity ) ).
+        )->a( n = `text` v = `Input only numbers allowed` ).
+
+    form->tag( `Input`
+        )->a( n = `placeholder` v = `quantity`
+        )->a( n = `type`        v = `Number`
+        )->a( n = `value`       v = client->_bind( s_screen-quantity ) ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Input with value`
-        )->tag( `Input`
-            )->a( n = `placeholder`      v = `fill in your favorite colour`
-            )->a( n = `value`            v = client->_bind( s_screen-color_02 )
-            )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE` )
-            )->a( n = `showValueHelp`    b = abap_true ).
+        )->a( n = `text` v = `Input with value` ).
+
+    form->tag( `Input`
+        )->a( n = `placeholder`      v = `fill in your favorite colour`
+        )->a( n = `value`            v = client->_bind( s_screen-color_02 )
+        )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE` )
+        )->a( n = `showValueHelp`    b = abap_true ).
 
     form->tag( `Label`
-        )->a( n = `text` v = `Custom value Popup`
-        )->tag( `Input`
-            )->a( n = `placeholder`      v = `name`
-            )->a( n = `value`            v = client->_bind( s_screen-name )
-            )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
-            )->a( n = `showValueHelp`    b = abap_true
-        )->tag( `Input`
-            )->a( n = `placeholder`      v = `lastname`
-            )->a( n = `value`            v = client->_bind( s_screen-lastname )
-            )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
-            )->a( n = `showValueHelp`    b = abap_true ).
+        )->a( n = `text` v = `Custom value Popup` ).
+
+    form->tag( `Input`
+        )->a( n = `placeholder`      v = `name`
+        )->a( n = `value`            v = client->_bind( s_screen-name )
+        )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
+        )->a( n = `showValueHelp`    b = abap_true ).
+
+    form->tag( `Input`
+        )->a( n = `placeholder`      v = `lastname`
+        )->a( n = `value`            v = client->_bind( s_screen-lastname )
+        )->a( n = `valueHelpRequest` v = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
+        )->a( n = `showValueHelp`    b = abap_true ).
 
     page->ele( `footer`
         )->ele( `OverflowToolbar`

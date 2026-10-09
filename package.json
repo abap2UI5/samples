@@ -15,6 +15,9 @@
     "check:agents": "node scripts/check-agents-structure.mjs",
     "check:orphans": "node scripts/check-orphan-samples.mjs",
     "check:keywords": "node scripts/check-keywords.mjs",
+    "check:api-keywords": "node scripts/check-api-keywords.mjs",
+    "check:markers": "node scripts/check-markers.mjs",
+    "check:titles": "node scripts/check-page-titles.mjs",
     "check:launchpad": "node scripts/generate-launchpad.mjs --check && node scripts/generate-samples-md.mjs --check",
     "check:catalogue": "node scripts/generate-catalogue.mjs --check && node scripts/check-catalogue-contract.mjs",
     "check:derived": "node scripts/generate-derived.mjs --check",
@@ -22,11 +25,13 @@
     "check:docs-links": "node scripts/check-docs-links.mjs",
     "check:app-rules": "node scripts/check-app-rules.mjs",
     "check:atc": "node scripts/check-atc.mjs",
+    "check:patterns": "node scripts/check-app-patterns.mjs",
+    "check:selftest": "node --test \"scripts/test/*.test.mjs\"",
     "check:pin": "node scripts/check-framework-pin.mjs",
     "rename": "abaplint .github/abaplint/rename_test.jsonc --rename",
     "syfixes": "find . -type f -name '*.abap' -exec sed -i -e 's/ RAISE EXCEPTION TYPE cx_sy_itab_line_not_found/ ASSERT 1 = 0/g' {} + ",
     "downport": "abaplint --fix .github/abaplint/abap_702.jsonc && npm run syfixes && node scripts/generate-samples-md.mjs",
-    "check": "npm run check:pin && npm run lint && npm run check:cloud && npm run check:abap2ui5 && npm run check:agents && npm run check:orphans && npm run check:keywords && npm run check:launchpad && npm run check:catalogue && npm run check:derived && npm run check:prose && npm run check:docs-links && npm run check:app-rules && npm run check:atc && npm run rename"
+    "check": "npm run check:pin && npm run lint && npm run check:cloud && npm run check:abap2ui5 && npm run check:agents && npm run check:orphans && npm run check:keywords && npm run check:api-keywords && npm run check:markers && npm run check:titles && npm run check:launchpad && npm run check:catalogue && npm run check:derived && npm run check:prose && npm run check:docs-links && npm run check:app-rules && npm run check:atc && npm run check:patterns && npm run check:selftest && npm run rename"
   },
   "repository": {
     "type": "git",

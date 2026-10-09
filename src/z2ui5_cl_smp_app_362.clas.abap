@@ -83,10 +83,11 @@ CLASS z2ui5_cl_smp_app_362 IMPLEMENTATION.
             val   = z2ui5_if_client=>cs_event-scroll_to
             t_arg = VALUE #( ( `id_page` ) ( `1500` ) ( `0` ) ) ).
       WHEN `REFRESH`.
-        " A redraw of the table would normally reset the scroll position.
+        " The redraw of the view resets the scroll position.
         " The current scroll info comes in on every roundtrip via
         " client->get( )-s_scroll, so we push it back via SCROLL_TO and
         " the user lands at the exact same spot after the redraw.
+        view_display( ).
         restore_scroll( ).
         client->message_toast_display( `Table refreshed, scroll preserved` ).
     ENDCASE.

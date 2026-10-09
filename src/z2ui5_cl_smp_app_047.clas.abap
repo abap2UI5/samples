@@ -39,6 +39,17 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
+
+    " text typed into an Input bound to TYPE i or p does not dump: the framework
+    " keeps the old number and names the field in t_model_skipped - so the
+    " sum would silently use a value the screen no longer shows
+    DATA(t_skipped) = client->get( )-t_model_skipped.
+    IF t_skipped IS NOT INITIAL.
+      client->message_box_display( text = |'{ t_skipped[ 1 ]-value }' is no number this field can hold - it keeps its old value.|
+                                   type = `error` ).
+      RETURN.
+    ENDIF.
+
     IF client->check_on_init( ).
 
       date = sy-datum.
@@ -51,9 +62,23 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `BUTTON_INT` ).
-      int_sum = int1 + int2.
+      " both summands are typed by the user - their sum can leave the range
+      " of TYPE i even when each of them fits
+      TRY.
+          int_sum = int1 + int2.
+        CATCH cx_sy_arithmetic_overflow cx_sy_conversion_overflow.
+          int_sum = VALUE #( ).
+          client->message_box_display( text = `The sum does not fit TYPE i.`
+                                       type = `error` ).
+      ENDTRY.
     ELSEIF client->check_on_event( `BUTTON_DEC` ).
-      dec_sum = dec1 + dec2.
+      TRY.
+          dec_sum = dec1 + dec2.
+        CATCH cx_sy_arithmetic_overflow cx_sy_conversion_overflow.
+          dec_sum = VALUE #( ).
+          client->message_box_display( text = `The sum does not fit TYPE p LENGTH 10 DECIMALS 4.`
+                                       type = `error` ).
+      ENDTRY.
     ENDIF.
 
   ENDMETHOD.

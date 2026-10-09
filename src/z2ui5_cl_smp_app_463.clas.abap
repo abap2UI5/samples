@@ -105,9 +105,8 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
             )->a( n = `text`  v = `Show model`
             )->a( n = `icon`  v = `sap-icon://show` ).
 
-    " CustomTreeItem is not a typed builder method - build it via _generic;
-    " its content aggregation holds the editable Input, bound to
-    " {TEXT} because the items aggregation itself is bound with _bind
+    " the CustomTreeItem's content aggregation holds the editable Input, bound
+    " to {TEXT} because the items aggregation itself is bound with _bind
     DATA(tree) = page->ele( `Tree`
         )->a( n = `id`         v = `tree1`
         )->a( n = `items`      v = client->_bind( t_nodes )

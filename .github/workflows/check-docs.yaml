@@ -48,6 +48,34 @@ jobs:
         node-version: '22'
     - run: npm run check:orphans
 
+  # The capability marker a title ends in - (A), (C), (A,C) - against the code
+  # it names (AGENTS.md section 12). It was written by hand and nothing read it
+  # back: a sample that only set an option on an ordinary roundtrip event
+  # carried (A), and seven that call follow_up_action( ) carried none.
+  capability_markers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version: '22'
+    - run: npm run check:markers
+
+  # The page title of every sample against its DESCRIPT (AGENTS.md section 12):
+  # `abap2UI5 - ` + the DESCRIPT without its capability marker. A user opens a
+  # sample from its tile and must find the same name on the page; renaming a
+  # DESCRIPT failed nothing, and the two had drifted apart before.
+  page_titles:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version: '22'
+    - run: npm run check:titles
+
   # The view-chain layout used to be a job here, running scripts/chain-format.mjs
   # because no linter rule judged the four-space STEP. `chain-house-layout` does,
   # and it is stricter than the pair it replaced, so the layout is now gated

@@ -153,6 +153,9 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
       LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
         lr_tab->editable = check_editable_active.
       ENDLOOP.
+      " the button text (edit / display) is rendered from the protected flag,
+      " not bound - the model push alone would leave it saying `edit`
+      view_display( ).
 
     ELSEIF client->check_on_event( `BUTTON_DELETE` ).
       DELETE t_tab WHERE selkz = abap_true.

@@ -1,4 +1,4 @@
-" @keywords routing mode fresh default off navigation restart new instance nav_app_call
+" @keywords routing mode fresh default off navigation restart new instance nav_app_call hash_routing
 " @summary Hash routing in mode FRESH: the URL names the CLASS, so Back and a bookmark restart the app as a new instance.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/hash
 "! Hash-based app routing (UI5 Router style), mode FRESH:
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
     DATA(page) = view->ele( `Shell`
         )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Hash - Routing mode fresh`
+            )->a( n = `title`          v = `abap2UI5 - Hash - Routing Mode FRESH (a New Instance)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
