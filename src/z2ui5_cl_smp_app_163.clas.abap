@@ -1,4 +1,4 @@
-" @keywords menu menuitem popover button messagetoast require module
+" @keywords menu menuitem popover button messagetoast require module popover_display
 " @summary A Menu opened as a popover from a Button, whose items call a UI5 module loaded with core:require, so the click is answered in the frontend.
 CLASS z2ui5_cl_smp_app_163 DEFINITION PUBLIC.
 

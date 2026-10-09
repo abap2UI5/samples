@@ -687,7 +687,9 @@ extended check (SLIN/ATC). Put there what a newcomer would type but the visible
 text cannot hold: **synonyms** (`f4` for value help, `alv` for the grid table),
 **control names** the sample uses (`combobox`, `facetfilter`, `progressindicator`),
 and the **abap2UI5 API** it demonstrates (`nav_app_call`, `binding_call`,
-`control_by_id`). Four to eight terms, no backticks. The line is optional — a
+`control_by_id`) — every framework `cs_event-*` constant the code passes and
+every curated client method it calls must be among them, which
+`npm run check:api-keywords` holds (§5). Four to eight terms, no backticks. The line is optional — a
 sample without one is simply found by its header, sub and class name.
 
 **`@summary` is the sentence under the title**, a second comment line directly
@@ -930,6 +932,7 @@ In the order they fail fastest:
 | `npm run check:agents` | `check-docs` | no drift between the §1 layout and the tree: one flat package, no subfolders, the documented CTEXT |
 | `npm run check:orphans` | `check-docs` | every `z2ui5_cl_smp_app_*` class sits where a catalogue reads it (§1) |
 | `npm run check:keywords` | `check-keywords` | every sample carries `@keywords` and `@summary`, first line, lowercase (§4) |
+| `npm run check:api-keywords` | `check-api-keywords` | every framework `cs_event-*` constant a sample passes, and every call of a curated client method (`popup_display`, `popover_display`, `nest_view_display`, `nav_app_call`, the hash and app-state calls, …), stands in its `@keywords` (§4) — the script's header says what is left out and why |
 | `npm run check:markers` | `check-docs` | every `(A)` / `(C)` / `(A,C)` on a DESCRIPT is backed by the code, and every frontend action or custom control is marked (§12) |
 | `npm run check:titles` | `check-docs` | every sample's page title is `abap2UI5 - ` + its DESCRIPT without the marker (§12) |
 | `npm run check:launchpad` | `check-docs` | the overview catalog and `SAMPLES.md` still mirror the folder tree (§3, §4) |
@@ -937,7 +940,7 @@ In the order they fail fastest:
 | `npm run check:derived` | `check-docs` | the committed `catalogue-derived.json` — the linter's half of the catalogue — still matches what the linter derives from the tree ("The catalogue", below) |
 | `npm run check:atc` | `check-atc` | four extended-check (SLIN/ATC) findings abaplint does not model: a `SELECT` without `WHERE` and without `"#EC CI_NOWHERE`, `sy-subrc` after a dynamic `ASSIGN`, a text symbol passed to a parameter, an ABAP Doc `@raising` the method's `RAISING` clause does not declare |
 | `npm run check:patterns` | `check-app-patterns` | three app-code shapes that build, lint and run and are still wrong: a sibling chained after a statement's head element (§10, one statement per sibling; a leading `x->end( )` is fine), `nav_app_leave( )` handed `get_app( …id_prev_app_stack )` directly or through a variable (§9), and an `Input` bound untyped to a numeric attribute the class computes with, in a class that never reads `get( )-t_model_skipped` |
-| `npm run check:selftest` | `check-selftest` | `check:atc` and `check:patterns` against fixtures (`scripts/test/`): every rule fires on its shape and stays silent on its look-alikes — a rule that stopped matching would otherwise read as a clean tree |
+| `npm run check:selftest` | `check-selftest` | `check:atc`, `check:patterns` and `check:api-keywords` against fixtures (`scripts/test/`): every rule fires on its shape and stays silent on its look-alikes — a rule that stopped matching would otherwise read as a clean tree |
 | `npm run check:prose` | `check-docs` | every class name written in prose exists, here and in the sibling repositories |
 | `npm run check:docs-links` | `check-docs-links` | every `" @docs` URL resolves, and its page names the class back (§4) |
 | `npm run check:app-rules` | `check-app-rules` | the abaplint rule block still matches its source in abap2UI5 (§6) |
@@ -1164,8 +1167,9 @@ so is this one now.
 Everything else about a script follows from that:
 
 - **No dependencies.** Plain node, so a gate is a few seconds and needs no
-  `npm ci` — `check-docs`, `check-keywords`, `check-docs-links`, `check-atc`,
-  `check-app-patterns`, `check-selftest`, `check-framework-pin` and
+  `npm ci` — `check-docs`, `check-keywords`, `check-api-keywords`,
+  `check-docs-links`, `check-atc`, `check-app-patterns`, `check-selftest`,
+  `check-framework-pin` and
   `check-app-rules` run their `npm run check:*`
   script without an install. **package.json is the one spelling of every
   gate**: a workflow calls the npm script, never `node scripts/x.mjs` or

@@ -1,4 +1,4 @@
-" @keywords barcode scanner scan field submit enter soft keyboard none inputext focus warehouse
+" @keywords barcode scanner scan field submit enter soft keyboard none inputext focus warehouse set_focus
 " @summary A scan field: InputExt keeps the soft keyboard down, the cursor is parked in the field, and the scanner's Enter fires submit straight into the backend.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard
 CLASS z2ui5_cl_smp_app_530 DEFINITION PUBLIC.

@@ -1,4 +1,4 @@
-" @keywords sub app class embed instantiate another app rtti
+" @keywords sub app class embed instantiate another app rtti nest_view_display
 " @summary Embeds ANOTHER app's view into this one - the class is instantiated over RTTI and renders inside the page it is given.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views
 "! This is the recorded exception to the "main app calling sub-apps" rule of

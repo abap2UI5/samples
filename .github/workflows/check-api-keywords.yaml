@@ -1,0 +1,38 @@
+name: check-api-keywords
+
+# A sample is found by the abap2UI5 API it shows - through its `@keywords`,
+# which the overview's search box, Ctrl+F over SAMPLES.md and an agent asking
+# "is there a sample for X" all read, and none of them reads the code. A
+# sample that passes `cs_event-popup_close` or calls `popover_display( )`
+# without naming it there never comes up for somebody who types the name:
+# 27 tiles did, when this gate was written.
+#
+# Every framework `cs_event-*` constant the code passes, and every call of a
+# curated client method, must stand in the keywords. The header of
+# scripts/check-api-keywords.mjs lists what is deliberately NOT curated
+# (lifecycle, feedback channels, the destroy/leave companions) and why.
+#
+# Plain node, no dependencies, so it stays a few seconds.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-api-keywords-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-api-keywords:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version: '22'
+    - run: npm run check:api-keywords

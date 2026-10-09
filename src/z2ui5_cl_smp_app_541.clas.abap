@@ -1,4 +1,4 @@
-" @keywords ai llm assistant chat explain summary insight outlier table selection dynamicsidecontent
+" @keywords ai llm assistant chat explain summary insight outlier table selection dynamicsidecontent start_timer
 " @summary An explain-this-data button over a table - a side panel summarises the selected rows (counts, totals, extremes, outliers) through a deterministic provider that one method turns into an LLM call.
 CLASS z2ui5_cl_smp_app_541 DEFINITION PUBLIC.
 

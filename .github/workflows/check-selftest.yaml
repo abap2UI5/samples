@@ -1,11 +1,11 @@
 name: check-selftest
 
-# The source-scanning gates tested against fixtures: check-atc.mjs and
-# check-app-patterns.mjs. After the sweep that motivates a rule the tree no
-# longer holds the shape it was written for, so a rule that silently stopped
-# matching looks exactly like a clean tree - green on every pull request while
-# it decides nothing. scripts/test/ runs each rule against a fixture that must
-# fire it and one that must not.
+# The source-scanning gates tested against fixtures: check-atc.mjs,
+# check-app-patterns.mjs and check-api-keywords.mjs. After the sweep that
+# motivates a rule the tree no longer holds the shape it was written for, so a
+# rule that silently stopped matching looks exactly like a clean tree - green
+# on every pull request while it decides nothing. scripts/test/ runs each rule
+# against a fixture that must fire it and one that must not.
 #
 # Plain node (`node --test`), no dependencies, so it stays a few seconds.
 

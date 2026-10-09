@@ -21,7 +21,7 @@ CLASS z2ui5_cl_smp_app_492 IMPLEMENTATION.
     IF client->check_on_navigated( ).
 
       DATA(s_config) = client->get( )-s_config.
-      url = s_config-pathname && s_config-search.
+      url = |{ s_config-pathname }{ s_config-search }|.
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`

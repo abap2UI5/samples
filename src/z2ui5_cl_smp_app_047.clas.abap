@@ -67,7 +67,7 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
       TRY.
           int_sum = int1 + int2.
         CATCH cx_sy_arithmetic_overflow cx_sy_conversion_overflow.
-          CLEAR int_sum.
+          int_sum = VALUE #( ).
           client->message_box_display( text = `The sum does not fit TYPE i.`
                                        type = `error` ).
       ENDTRY.
@@ -75,7 +75,7 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
       TRY.
           dec_sum = dec1 + dec2.
         CATCH cx_sy_arithmetic_overflow cx_sy_conversion_overflow.
-          CLEAR dec_sum.
+          dec_sum = VALUE #( ).
           client->message_box_display( text = `The sum does not fit TYPE p LENGTH 10 DECIMALS 4.`
                                        type = `error` ).
       ENDTRY.

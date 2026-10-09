@@ -1,4 +1,4 @@
-" @keywords dirty unsaved changes leave confirmation warning
+" @keywords dirty unsaved changes leave confirmation warning set_focus popup_display popup_close
 " @summary Refuses to leave an app with unsaved changes: the confirmation popup in front of nav_app_leave, and how the dirty flag gets there.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation/inner_app
 CLASS z2ui5_cl_smp_app_279 DEFINITION PUBLIC.
@@ -113,8 +113,6 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
         dirty = VALUE #( ).
         client->nav_app_leave( ).
 
-      WHEN `POPUP_CANCEL`.
-        client->popup_destroy( ).
       WHEN `SUBMIT`.
         dirty = xsdbool( text_input IS NOT INITIAL ).
       WHEN `RESET`.
@@ -143,7 +141,7 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
         )->end(
         )->ele( `buttons`
             )->tag( `Button`
-                )->a( n = `press` v = client->_event( `POPUP_CANCEL` )
+                )->a( n = `press` v = client->follow_up_action( client->cs_event-popup_close )
                 )->a( n = `text`  v = `Cancel`
             )->tag( `Button`
                 )->a( n = `press` v = client->_event( `POPUP_LEAVE` )

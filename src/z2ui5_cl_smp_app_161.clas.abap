@@ -1,4 +1,4 @@
-" @keywords nested stack popup in popup second dialog
+" @keywords nested stack popup in popup second dialog popup_display
 " @summary A dialog opened from inside a dialog, and what closing the inner one does to the stack.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popup
 CLASS z2ui5_cl_smp_app_161 DEFINITION PUBLIC.

@@ -1,4 +1,4 @@
-" @keywords list report dynamicpage row link details table popover slot cs_view focus control_by_id
+" @keywords list report dynamicpage row link details table popover slot cs_view focus control_by_id popover_display
 " @summary Opens a Popover from a table row - which row was pressed, how its record reaches the popover, and how a frontend action is aimed at the popover slot.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover
 CLASS z2ui5_cl_smp_app_052 DEFINITION PUBLIC.

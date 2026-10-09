@@ -1,6 +1,6 @@
 /*
- * Self-test of the source-scanning gates: check-atc.mjs and
- * check-app-patterns.mjs.
+ * Self-test of the source-scanning gates: check-atc.mjs,
+ * check-app-patterns.mjs and check-api-keywords.mjs.
  *
  * A green gate proves little on its own - after the sweep that motivated a
  * rule, the tree no longer holds the shape it was written for, so a rule
@@ -19,6 +19,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { scan } from '../check-atc.mjs';
 import { RULES } from '../check-app-patterns.mjs';
+import { scan as apiKeywords } from '../check-api-keywords.mjs';
 
 const fixture = (name) => readFileSync(new URL(`fixtures/${name}`, import.meta.url), 'utf8');
 
@@ -66,4 +67,17 @@ test('check-app-patterns: no t_model_skipped read - the computed Input fires, th
   const src = fixture('patterns-clean.abap').replace(/t_model_skipped/g, 't_other');
   const hits = RULES.numeric_input_untraced(src).map((f) => f.line);
   assert.deepEqual(hits, [42]); // amount feeds gross_amount( ); quantity is only shown
+});
+
+test('check-api-keywords: an API name the keywords miss fires once, at its first use', () => {
+  // popup_display and cs_event-popup_close are not named; popover_display and
+  // start_timer are. The class's own cs_event-ping, the feedback channels,
+  // popup_destroy and every name in a comment or literal stay silent.
+  const hits = apiKeywords(fixture('api-keywords.abap'), 'fixture popover_display start_timer')
+    .map((f) => `${f.name}@${f.line}`);
+  assert.deepEqual(hits, ['popup_display@22', 'popup_close@23']);
+});
+
+test('check-api-keywords: keywords naming every use stay silent', () => {
+  assert.deepEqual(apiKeywords(fixture('api-keywords.abap'), 'Popup_Display popup_close popover_display start_timer'), []);
 });
