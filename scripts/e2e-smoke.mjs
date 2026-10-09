@@ -148,9 +148,21 @@ async function checkApp(browser, cls) {
   let phase = 'boot';
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'en-US' });
   const page = await ctx.newPage();
-  page.on('pageerror', (e) => { if (!noise(cls, e.message)) errs.push(`[${phase}] pageerror: ${e.message.slice(0, 200)}`); });
+  // A press that sends the whole page to another origin (URLHELPER REDIRECT,
+  // a link) ends the app on purpose. From the moment that navigation starts,
+  // what the page reports is the departing or the foreign document, not the
+  // app - in CI's headless shell the old page throws "sap is not defined" on
+  // the way out (app 316). The press loop stops there too.
+  let left = false;
+  page.on('request', (r) => {
+    // http(s) only: a mailto:, tel: or sms: link hands off to the device and
+    // the page stays where it is
+    const u = new URL(r.url());
+    if (r.isNavigationRequest() && r.frame() === page.mainFrame() && /^https?:$/.test(u.protocol) && u.origin !== ORIGIN) left = true;
+  });
+  page.on('pageerror', (e) => { if (!left && !noise(cls, e.message)) errs.push(`[${phase}] pageerror: ${e.message.slice(0, 200)}`); });
   page.on('console', (m) => {
-    if (m.type() === 'error' && !noise(cls, m.text())) errs.push(`[${phase}] console: ${m.text().replace(/\s+/g, ' ').slice(0, 240)}`);
+    if (!left && m.type() === 'error' && !noise(cls, m.text())) errs.push(`[${phase}] console: ${m.text().replace(/\s+/g, ' ').slice(0, 240)}`);
   });
   // the body is read asynchronously - awaited before the context closes, so a
   // failure on the last step is not lost
@@ -233,9 +245,9 @@ async function checkApp(browser, cls) {
         if (!(await loc.count())) continue;
         try { await loc.click({ timeout: 4000 }); } catch { try { await loc.dispatchEvent('click'); } catch { continue; } }
         res.pressed.push(b.label);
-        await settle(page).catch((e) => errs.push(`[${phase}] ${e.message}`));
+        await settle(page).catch((e) => { if (!left) errs.push(`[${phase}] ${e.message}`); });
+        if (left || !page.url().startsWith(ORIGIN)) { res.left = b.label; break; }
         if (await fatal()) break;
-        if (!page.url().startsWith(ORIGIN)) break;
         await closePopups();
       }
     }
@@ -296,7 +308,7 @@ for (const cls of classes) {
     r = { cls, pressed: [], filled: [], errs: [`the browser died: ${String(e.message).slice(0, 120)}`] };
   }
   const unexpected = exp.expect ? r.errs.filter((e) => !exp.expect.test(e)) : r.errs;
-  const extra = `${FLOWS[cls] ? '  (+flow)' : `  pressed ${r.pressed.length}`}${r.filled.length ? ` filled ${r.filled.join('+')}` : ''}`;
+  const extra = `${FLOWS[cls] ? '  (+flow)' : `  pressed ${r.pressed.length}`}${r.filled.length ? ` filled ${r.filled.join('+')}` : ''}${r.left ? ` (left the app on "${r.left}")` : ''}`;
   if (unexpected.length) { failed++; console.log(`FAIL  ${no}${extra}\n      ${unexpected.join('\n      ')}`); }
   else if (r.errs.length) { tolerated++; console.log(`pass  ${no}${extra}  (expected failure: ${exp.why})`); }
   else console.log(`pass  ${no}${extra}`);
