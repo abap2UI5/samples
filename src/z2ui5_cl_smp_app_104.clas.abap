@@ -28,8 +28,12 @@ CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
 
     DATA layout TYPE string.
 
+    " PUBLIC, because the embedded app binds its own attributes
+    " (client->_bind( mv_class_1 )), and the framework resolves a binding
+    " only along public attributes - APP_SUB->MV_CLASS_1
+    DATA app_sub TYPE REF TO object.
+
   PROTECTED SECTION.
-    DATA app_sub     TYPE REF TO object.
     DATA classname   TYPE string.
     DATA grid_sub    TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA view_nested TYPE REF TO z2ui5_cl_ui5_view_builder.

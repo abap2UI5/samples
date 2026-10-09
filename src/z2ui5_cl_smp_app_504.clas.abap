@@ -266,9 +266,11 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
         )->a( n = `valueStateText` v = `{STOCK_TEXT}` ).
 
     " the nested table: a list bound RELATIVELY to the row's T_ITEM, so a
-    " refused quantity is traced as T_ROW-T_ITEM with row_parent set
+    " refused quantity is traced as T_ROW-T_ITEM with row_parent set.
+    " templateShareable: false - the list is cloned once per row, and a
+    " nested template marked neither way is a FUTURE FATAL error in UI5
     cells->ele( `List`
-        )->a( n = `items`          v = `{T_ITEM}`
+        )->a( n = `items`          v = `{ path: 'T_ITEM', templateShareable: false }`
         )->a( n = `showSeparators` v = `None`
         )->ele( `CustomListItem`
             )->ele( `HBox`

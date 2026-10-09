@@ -1,4 +1,4 @@
-" @keywords icon font registerfont iconpool tnt collection glyph missing control_global
+" @keywords icon font registerfont iconpool tnt collection glyph missing control_global start_timer
 " @summary Registers the sap.tnt icon collection with IconPool so a sap-icon://SAP-icons-TNT/... URI resolves - without it the icon renders no glyph and logs nothing.
 " @docs https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend
 CLASS z2ui5_cl_smp_app_518 DEFINITION PUBLIC.
@@ -26,6 +26,8 @@ CLASS z2ui5_cl_smp_app_518 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
+    ELSEIF client->check_on_event( `FONT_REGISTERED` ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.
@@ -47,6 +49,13 @@ CLASS z2ui5_cl_smp_app_518 IMPLEMENTATION.
                                                ( `registerFont` )
                                                ( `SAP-icons-TNT` )
                                                ( `sap/tnt/themes/base/fonts/` ) ) ).
+
+    " A follow-up action runs AFTER the view of the same roundtrip has
+    " rendered, so the TNT icon below was drawn while the collection was
+    " still unknown - empty. The timer queues one roundtrip behind the
+    " registration, and the view it displays again draws the glyph.
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-start_timer
+                              t_arg = VALUE #( ( `FONT_REGISTERED` ) ( `0` ) ) ).
 
   ENDMETHOD.
 

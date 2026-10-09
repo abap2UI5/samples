@@ -976,7 +976,11 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         path = `src` app = `z2ui5_cl_smp_app_513` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `MultiInput with Tokens (C)` keywords = `multiinput token tokens suggestion custom control` intro = `` path = `src` app = `z2ui5_cl_smp_app_078` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `Open the PDF Viewer by ID (A)` keywords = `pdfviewer pdf document viewer popup control_by_id whitelisted` intro = `` path = `src` app = `z2ui5_cl_smp_app_449` )
-      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Register an Icon Font (A)` keywords = `icon font registerfont iconpool tnt collection glyph missing control_global` intro = `` path = `src` app = `z2ui5_cl_smp_app_518` )
+      ( group = `Reach outside the view` header = `Control Behaviour`
+        sub = `Register an Icon Font (A)`
+        keywords = `icon font registerfont iconpool tnt collection glyph missing control_global start_timer`
+        intro = ``
+        path = `src` app = `z2ui5_cl_smp_app_518` )
       ( group = `Reach outside the view` header = `Control Behaviour`
         sub = `Switch NavContainer Page by ID (A)`
         keywords = `navcontainer icontabbar icontabheader page switch control_by_id whitelisted`

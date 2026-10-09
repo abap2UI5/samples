@@ -890,7 +890,8 @@
     "collection",
     "glyph",
     "missing",
-    "control_global"
+    "control_global",
+    "start_timer"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
