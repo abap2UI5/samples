@@ -186,10 +186,20 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+    " INFO travels back from the browser with the rest of the bound table, so
+    " it is no trusted class name: instantiate only the sub-apps this sample
+    " lists, never whatever class a crafted request puts into the row
+    DATA(sub_app) = to_upper( s_sel-info ).
+    IF sub_app <> `Z2UI5_CL_SMP_APP_105` AND sub_app <> `Z2UI5_CL_SMP_APP_112`.
+      client->message_box_display( text = |{ sub_app } is not one of the apps this sample embeds.|
+                                   type = `error` ).
+      RETURN.
+    ENDIF.
+
     IF classname IS NOT INITIAL.
       view_display_master( ).
     ENDIF.
-    classname = s_sel-info.
+    classname = sub_app.
 
     layout = `TwoColumnsMidExpanded`.
     on_init_sub( ).
