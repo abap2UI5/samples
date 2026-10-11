@@ -1024,15 +1024,15 @@ By hand, because no script covers it:
     SMPS) and is the only rule `check-app-rules` excludes from the
     comparison. It sits last in the file behind a marker that says so.
     Everything above that marker must match the source.
-- **Every rule abaplint ships is listed in the config — all 188 of them**
+- **Every rule abaplint ships is listed in the config — all 201 of them**
   (2026-08-16; it was 17 here, 44 in samples-controls and 41 in
-  samples-stack, the rest defaulting to off unnoticed). 171 are on. **A rule
+  samples-stack, the rest defaulting to off unnoticed). 180 are on. **A rule
   is never left out of the file.** When an abaplint upgrade adds one, add the
   key to `app-rules.json` in abap2UI5 and copy the block into all three
   consumers: on if all three corpora pass, off with the reason in a comment
   above it if they do not. An unlisted rule reads as "nobody decided" rather
   than "decided against".
-- The 17 that are off carry their reason in the file. In short: four rules
+- The 21 that are off carry their reason in the file. In short: four rules
   want Hungarian notation and `no_public_attributes` wants the model hidden,
   both against §7 and §9; `abapdoc` treats demos as a published API; seven
   rules read a view builder chain or a `VALUE #( )` data table as a
@@ -1040,8 +1040,12 @@ By hand, because no script covers it:
   (`chain-house-layout` in `npm run check:abap2ui5`, §10); `prefer_inline` /
   `no_inline_in_optional_branches` move declarations the samples place
   deliberately; `prefer_corresponding` proposes a rewrite that does not
-  activate on a generic field symbol; and `smim_consistency` cannot resolve
-  a MIME folder that lives on the system.
+  activate on a generic field symbol; `smim_consistency` cannot resolve
+  a MIME folder that lives on the system; `prefer_string_template` and
+  `prefer_insert_into_table` would be style rewrites of 1,811 and 92
+  statements across the three corpora; `no_dynamic_stuff` flags the dynamic
+  calls some samples exist to show; and `generic_regex` has no pattern to
+  check.
 - Several rules run with flags off or an `exclude` rather than wholesale.
   The ones worth knowing here: `check_subrc` (`selectSingle`, `selectTable`
   — "no rows" is a legitimate state, and the SELECT either feeds a binding
