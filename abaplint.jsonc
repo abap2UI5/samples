@@ -40,7 +40,7 @@
   // thing above the line that may differ. Everything else - what is checked,
   // what is not, and why - is a joint decision of the three corpora.
   //
-  // Every rule abaplint ships is listed: all 188. 171 are on, 17 are off and
+  // Every rule abaplint ships is listed: all 201. 180 are on, 21 are off and
   // each says why. A rule is NEVER left out of the file. When an abaplint
   // upgrade adds one, add the key: on if all three corpora pass, off with the
   // reason if they do not. An unlisted rule reads as "nobody decided" rather
@@ -106,6 +106,28 @@
     // parent MIME folder lives on the system, not in the repository, so the
     // rule cannot resolve it from the sources alone.
     "smim_consistency": false,
+    // --- off: measured against the three corpora, and not met ---------
+    // Listed with abaplint 2.120.73 (2026-10-11), counts as samples /
+    // samples-controls / samples-stack.
+    // "|{ a }{ b }|" instead of "a && b": 161 / 1,635 / 15 findings. A style
+    // rewrite of 1,811 lines, most of them view texts in ports - a change of
+    // its own, not a rule switched on underneath it.
+    "prefer_string_template": false,
+    // INSERT ... INTO TABLE instead of APPEND: 12 / 64 / 16 findings. The
+    // same trade - a mechanical rewrite of 92 statements for a style rule.
+    "prefer_insert_into_table": false,
+    // Every dynamic construct is a finding: 17 / 8 / 21, and they are the
+    // point rather than an accident. Each overview app starts the chosen
+    // sample with CREATE OBJECT TYPE (name), app 104 is about instantiating
+    // another app over RTTI, the lock samples call the generated ENQUEUE_
+    // module by name, the LLM factory and app 074 reach a class that only
+    // some releases have, and sorting or filtering a table by the column
+    // the user clicked is a dynamic ASSIGN / SORT BY (name).
+    "no_dynamic_stuff": false,
+    // Reports each match of the patterns it is configured with. The shared
+    // set has no pattern to enforce, and on with an empty list checks
+    // nothing - "on" would claim a check that does not exist.
+    "generic_regex": false,
     // --- on, with settings --------------------------------------------
     // Hard ABAP limit, not a convention: a longer line breaks the abapGit
     // import with "Literals across more than one line are not allowed".
@@ -267,6 +289,18 @@
         "z2ui5_cl_smpc_demo_\\d+\\.clas\\."
       ]
     },
+    // A MESSAGE with inline text has no screen to land on in an abap2UI5
+    // app - the client's message_box / message_toast are how a sample says
+    // something. The one exclude is samples-stack's APC handler
+    // (z2ui5_cl_smps_app_489_ws): it ends a failed request with
+    // MESSAGE <exception> TYPE 'X', a short dump naming the exception,
+    // because RAISE SHORTDUMP only exists from 7.53 and that package runs
+    // from 7.50 - the class says so where it does it.
+    "use_message_class": {
+      "exclude": [
+        "z2ui5_cl_smps_app_489_ws\\.clas\\."
+      ]
+    },
     // --- on, scoped to what the RAP corpus can comply with -------------
     // Excluded for samples-stack: CDS entities, actions and fields are
     // CamelCase by definition (Ticket, TravelUuid, Activate) and the rule
@@ -387,6 +421,7 @@
     "call_transaction_authority_check": true,
     "catch_and_raise": true,
     "cds_association_name": true,
+    "cds_check_syntax": true,
     "cds_comment_style": true,
     "cds_field_order": true,
     "cds_legacy_view": true,
@@ -414,6 +449,7 @@
     "downport": true,
     "dynpro_checks": true,
     "easy_to_find_messages": true,
+    "else_after_all_returns": true,
     "empty_event": true,
     "empty_statement": true,
     "exit_or_check": true,
@@ -472,6 +508,8 @@
     "parser_error": true,
     "parser_missing_space": true,
     "pragma_style": true,
+    "prefer_abap_bool": true,
+    "prefer_abap_bool_values": true,
     "prefer_is_not": true,
     "prefer_pragmas": true,
     // Excluded for samples-stack package 06, which ships at 7.40 SP08 (see
@@ -485,6 +523,7 @@
     "prefer_returning_to_exporting": true,
     "prefer_xsdbool": true,
     "preferred_compare_operator": true,
+    "preferred_parameter_ignored": true,
     "prefix_is_current_class": true,
     "reduce_procedural_code": true,
     "reduce_string_templates": true,
@@ -516,6 +555,7 @@
     "uncaught_exception": true,
     "unknown_types": true,
     "unnecessary_chaining": true,
+    "unnecessary_loop_guard": true,
     "unnecessary_pragma": true,
     "unnecessary_return": true,
     "unreachable_code": true,
@@ -528,6 +568,8 @@
     "use_new": true,
     "when_others_last": true,
     "whitespace_end": true,
+    "wrong_abapdoc_position": true,
+    "xml_bom": true,
     "xml_consistency": true,
     // ===================================================================
     // THE ONE PER-REPOSITORY RULE - everything above this line is identical
