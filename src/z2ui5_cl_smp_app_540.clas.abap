@@ -7,11 +7,15 @@ CLASS z2ui5_cl_smp_app_540 DEFINITION PUBLIC.
 
     TYPES:
       BEGIN OF ty_s_message,
-        role   TYPE string,
-        sender TYPE string,
-        text   TYPE string,
-        icon   TYPE string,
-        info   TYPE string,
+        role      TYPE string,
+        sender    TYPE string,
+        text      TYPE string,
+        "! what the feed shows: TEXT HTML-escaped, because a FeedListItem
+        "! renders its text as FormattedText - TEXT itself stays the raw
+        "! history get_answer( ) hands to a model
+        text_html TYPE string,
+        icon      TYPE string,
+        info      TYPE string,
       END OF ty_s_message.
     TYPES ty_t_messages TYPE STANDARD TABLE OF ty_s_message WITH EMPTY KEY.
 
@@ -31,6 +35,14 @@ CLASS z2ui5_cl_smp_app_540 DEFINITION PUBLIC.
       IMPORTING
         role TYPE string
         text TYPE string.
+
+    "! the three characters FormattedText reads as markup - escaped, so a
+    "! tag somebody typed, or code in a model's answer, shows as the text it is
+    METHODS html_escape
+      IMPORTING
+        val           TYPE string
+      RETURNING
+        VALUE(result) TYPE string.
 
     "! The provider seam: the whole conversation in, the next answer out.
     "! @parameter t_history | the conversation so far, newest message first
@@ -119,12 +131,23 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
   METHOD message_add.
 
     " newest first - the order of a sap.m feed, with the FeedInput on top
-    INSERT VALUE #( role   = role
-                    text   = text
-                    sender = COND #( WHEN role = `user` THEN `You` ELSE `Assistant` )
-                    icon   = COND #( WHEN role = `user` THEN `sap-icon://customer` ELSE `sap-icon://hint` )
-                    info   = COND #( WHEN role = `assistant` THEN `built-in rule-based provider` ) )
+    INSERT VALUE #( role      = role
+                    text      = text
+                    text_html = html_escape( text )
+                    sender    = COND #( WHEN role = `user` THEN `You` ELSE `Assistant` )
+                    icon      = COND #( WHEN role = `user` THEN `sap-icon://customer` ELSE `sap-icon://hint` )
+                    info      = COND #( WHEN role = `assistant` THEN `built-in rule-based provider` ) )
            INTO t_messages INDEX 1.
+
+  ENDMETHOD.
+
+
+  METHOD html_escape.
+
+    " the ampersand FIRST, or the other two would be escaped twice
+    result = replace( val = val    sub = `&` with = `&amp;` occ = 0 ).
+    result = replace( val = result sub = `<` with = `&lt;`  occ = 0 ).
+    result = replace( val = result sub = `>` with = `&gt;`  occ = 0 ).
 
   ENDMETHOD.
 
@@ -268,7 +291,7 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
         )->ele( `items`
             )->tag( `FeedListItem`
                 )->a( n = `sender`       v = `{SENDER}`
-                )->a( n = `text`         v = `{TEXT}`
+                )->a( n = `text`         v = `{TEXT_HTML}`
                 )->a( n = `icon`         v = `{ICON}`
                 )->a( n = `info`         v = `{INFO}`
                 )->a( n = `senderActive` b = abap_false
