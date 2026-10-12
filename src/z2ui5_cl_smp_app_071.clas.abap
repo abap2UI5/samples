@@ -12,6 +12,8 @@ CLASS z2ui5_cl_smp_app_071 DEFINITION PUBLIC.
         text TYPE string,
       END OF ty_s_combobox.
 
+    CONSTANTS max_entries TYPE i VALUE 10000.
+
     DATA set_size_limit TYPE i VALUE 100.
     DATA combo_number   TYPE i VALUE 105.
     DATA combo_key      TYPE string.
@@ -59,6 +61,15 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
       client->message_toast_display( |Size limit set to { set_size_limit } - open the ComboBox again| ).
 
     ELSEIF client->check_on_event( `UPDATE_MODEL` ).
+
+      " the number comes from the browser: a typed 100000000 would build a
+      " hundred million rows in the session and ship them all to the client,
+      " so the table stays within what a ComboBox can sensibly show
+      IF combo_number < 0 OR combo_number > max_entries.
+        client->message_box_display( text = |Number of Entries must be between 0 and { max_entries }.|
+                                     type = `error` ).
+        RETURN.
+      ENDIF.
 
       combo_fill( ).
       client->message_toast_display( |The ComboBox now holds { combo_number } entries| ).
