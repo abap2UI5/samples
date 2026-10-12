@@ -1024,22 +1024,24 @@ By hand, because no script covers it:
     SMPS) and is the only rule `check-app-rules` excludes from the
     comparison. It sits last in the file behind a marker that says so.
     Everything above that marker must match the source.
-- **Every rule abaplint ships is listed in the config — all 201 of them**
+- **Every rule abaplint ships is listed in the config — all 212 of them**
   (2026-08-16; it was 17 here, 44 in samples-controls and 41 in
-  samples-stack, the rest defaulting to off unnoticed). 180 are on. **A rule
+  samples-stack, the rest defaulting to off unnoticed; 212 since abaplint
+  2.120.75). 190 are on. **A rule
   is never left out of the file.** When an abaplint upgrade adds one, add the
   key to `app-rules.json` in abap2UI5 and copy the block into all three
   consumers: on if all three corpora pass, off with the reason in a comment
   above it if they do not. An unlisted rule reads as "nobody decided" rather
   than "decided against".
-- The 21 that are off carry their reason in the file. In short: four rules
+- The 22 that are off carry their reason in the file. In short: four rules
   want Hungarian notation and `no_public_attributes` wants the model hidden,
   both against §7 and §9; `abapdoc` treats demos as a published API; seven
   rules read a view builder chain or a `VALUE #( )` data table as a
   malformed parameter list, and that layout has its own gate
   (`chain-house-layout` in `npm run check:abap2ui5`, §10); `prefer_inline` /
   `no_inline_in_optional_branches` move declarations the samples place
-  deliberately; `prefer_corresponding` proposes a rewrite that does not
+  deliberately, and `prefer_inline_cast` folds the previous app a sample
+  reads back into one chained cast; `prefer_corresponding` proposes a rewrite that does not
   activate on a generic field symbol; `smim_consistency` cannot resolve
   a MIME folder that lives on the system; `prefer_string_template` and
   `prefer_insert_into_table` would be style rewrites of 1,811 and 92
