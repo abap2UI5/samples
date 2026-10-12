@@ -40,7 +40,7 @@
   // thing above the line that may differ. Everything else - what is checked,
   // what is not, and why - is a joint decision of the three corpora.
   //
-  // Every rule abaplint ships is listed: all 201. 180 are on, 21 are off and
+  // Every rule abaplint ships is listed: all 212. 190 are on, 22 are off and
   // each says why. A rule is NEVER left out of the file. When an abaplint
   // upgrade adds one, add the key: on if all three corpora pass, off with the
   // reason if they do not. An unlisted rule reads as "nobody decided" rather
@@ -96,6 +96,11 @@
     // (DATA temp9, DATA comps LIKE temp9) that cannot be inlined at all.
     "prefer_inline": false,
     "no_inline_in_optional_branches": false,
+    // The cast of the previous app into a variable of its own type, read on
+    // the next line (DATA(app) = CAST ...( client->get_app_prev( ) ).) -
+    // the rule wants one chained expression instead: 2 / 0 / 0 findings on
+    // 2.120.75. The sample names the app it reads back on purpose.
+    "prefer_inline_cast": false,
     // --- off: the proposed rewrite does not activate ------------------
     // The MOVE-CORRESPONDING statements left in the tree copy between two
     // generic "TYPE any" field symbols. CORRESPONDING #( ) derives its type
@@ -410,6 +415,9 @@
       "abstractEntity": "Z2UI5_"
     },
     // --- on, as shipped -----------------------------------------------
+    "abapdoc_html_tag": true,
+    "abapdoc_leading_at": true,
+    "abapdoc_parameter_names": true,
     "add_test_attributes": true,
     "aff_and_xml": true,
     "align_pseudo_comments": true,
@@ -428,6 +436,7 @@
     "cds_parser_error": true,
     "chain_mainly_declarations": true,
     "change_if_to_case": true,
+    "changing_sorted_line": true,
     "check_comments": true,
     "check_ddic": true,
     "check_include": true,
@@ -445,6 +454,7 @@
     "cyclomatic_complexity": true,
     "db_operation_in_loop": true,
     "definitions_top": true,
+    "delete_index_in_loop": true,
     "description_empty": true,
     "downport": true,
     "dynpro_checks": true,
@@ -455,6 +465,7 @@
     "exit_or_check": true,
     "expand_macros": true,
     "exporting": true,
+    "final_newline": true,
     "fm_global_parameters_obsolete": true,
     "forbidden_identifier": true,
     "forbidden_pseudo_and_pragma": true,
@@ -474,6 +485,7 @@
     "implicit_start_of_selection": true,
     "index_completely_contained": true,
     "inline_data_old_versions": true,
+    "inline_packed_computation": true,
     "intf_referencing_clas": true,
     "invalid_table_index": true,
     "line_break_style": true,
@@ -525,6 +537,7 @@
     "preferred_compare_operator": true,
     "preferred_parameter_ignored": true,
     "prefix_is_current_class": true,
+    "range_row_values": true,
     "reduce_procedural_code": true,
     "reduce_string_templates": true,
     "redundant_conversion": true,
@@ -538,6 +551,7 @@
     "short_case": true,
     "sicf_consistency": true,
     "slow_parameter_passing": true,
+    "sort_empty_key": true,
     "space_before_colon": true,
     "space_before_dot": true,
     "sql_escape_host_variables": true,
@@ -545,6 +559,7 @@
     "start_at_tab": true,
     "static_call_via_instance": true,
     "strict_sql": true,
+    "subrc_after_assign": true,
     "superfluous_value": true,
     "sy_modification": true,
     "sy_read_restriction": true,
