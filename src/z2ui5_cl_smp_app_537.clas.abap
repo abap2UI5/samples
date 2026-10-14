@@ -13,7 +13,7 @@ CLASS z2ui5_cl_smp_app_537 DEFINITION PUBLIC.
         delivery TYPE string,
       END OF ty_s_row.
 
-    DATA t_products TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_products TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -28,22 +28,39 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_537 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_products.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      t_products = VALUE #(
-        ( product = `Notebook Basic 15` category = `Laptop`      quantity = 3  delivery = `20260720` )
-        ( product = `Flat Basic`        category = `Monitor`     quantity = 12 delivery = `20260805` )
-        ( product = `Ergo Mousepad`     category = `Accessories` quantity = 40 delivery = `20261102` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-product = `Notebook Basic 15`.
+      temp2-category = `Laptop`.
+      temp2-quantity = 3.
+      temp2-delivery = `20260720`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Flat Basic`.
+      temp2-category = `Monitor`.
+      temp2-quantity = 12.
+      temp2-delivery = `20260805`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Ergo Mousepad`.
+      temp2-category = `Accessories`.
+      temp2-quantity = 40.
+      temp2-delivery = `20261102`.
+      INSERT temp2 INTO TABLE temp1.
+      t_products = temp1.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `ROW` ).
+    ELSEIF client->check_on_event( `ROW` ) IS NOT INITIAL.
       on_event_row( ).
-    ELSEIF client->check_on_event( `LITERAL` ).
+    ELSEIF client->check_on_event( `LITERAL` ) IS NOT INITIAL.
       client->message_box_display( |The object literal arrives as its JSON text:\n\n{ client->get_event_arg( ) }| ).
     ENDIF.
 
@@ -55,7 +72,15 @@ CLASS z2ui5_cl_smp_app_537 IMPLEMENTATION.
     " every argument arrives as a string: the number the expression computed
     " as its digits, the result of the comparison as abap_true or empty -
     " so it is compared like an abap_bool, never asked IS INITIAL
-    DATA(is_laptop) = COND string( WHEN client->get_event_arg( 3 ) = abap_true THEN `yes` ELSE `no` ).
+    DATA temp3 TYPE string.
+    DATA is_laptop LIKE temp3.
+    IF client->get_event_arg( 3 ) = abap_true.
+      temp3 = `yes`.
+    ELSE.
+      temp3 = `no`.
+    ENDIF.
+    
+    is_laptop = temp3.
 
     client->message_box_display( |Product: { client->get_event_arg( 1 ) }\n| &&
                                  |Quantity * 10: { client->get_event_arg( 2 ) }\n| &&
@@ -67,7 +92,13 @@ CLASS z2ui5_cl_smp_app_537 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA cells TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp4 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -80,7 +111,8 @@ CLASS z2ui5_cl_smp_app_537 IMPLEMENTATION.
     " property binding
     view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Event - Expressions, Formatters and Literals in t_arg`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -100,11 +132,13 @@ CLASS z2ui5_cl_smp_app_537 IMPLEMENTATION.
         )->a( n = `href`   v = `https://sdk.openui5.org/topic/b0fb4de7364f4bcbb053a99aa645affe`
         )->a( n = `class`  v = `sapUiSmallMarginBegin` ).
 
-    DATA(tab) = page->ele( `Table`
+    
+    tab = page->ele( `Table`
         )->a( n = `headerText` v = `Each row's button sends four values computed from that row`
         )->a( n = `items`      v = client->_bind( t_products ) ).
 
-    DATA(columns) = tab->ele( `columns` ).
+    
+    columns = tab->ele( `columns` ).
     columns->ele( `Column`
         )->tag( `Text`
             )->a( n = `text` v = `Product` ).
@@ -123,7 +157,8 @@ CLASS z2ui5_cl_smp_app_537 IMPLEMENTATION.
 
     " the relative paths resolve against the row the pressed button sits in -
     " no row index, no key lookup in the backend
-    DATA(cells) = tab->ele( `items`
+    
+    cells = tab->ele( `items`
         )->ele( `ColumnListItem` ).
     cells->tag( `Text`
         )->a( n = `text` v = `{PRODUCT}` ).
@@ -133,13 +168,16 @@ CLASS z2ui5_cl_smp_app_537 IMPLEMENTATION.
         )->a( n = `text` v = `{QUANTITY}` ).
     cells->tag( `Text`
         )->a( n = `text` v = `{DELIVERY}` ).
+    
+    CLEAR temp4.
+    INSERT `${PRODUCT}` INTO TABLE temp4.
+    INSERT `${QUANTITY} * 10` INTO TABLE temp4.
+    INSERT `${CATEGORY} === 'Laptop'` INTO TABLE temp4.
+    INSERT `${path: 'DELIVERY', formatter: 'Formatter.DateAbapDateToDateObject'}.toDateString()` INTO TABLE temp4.
     cells->tag( `Button`
         )->a( n = `text`  v = `Send Row`
         )->a( n = `press` v = client->_event( val   = `ROW`
-                                              t_arg = VALUE #( ( `${PRODUCT}` )
-                                                               ( `${QUANTITY} * 10` )
-                                                               ( `${CATEGORY} === 'Laptop'` )
-                                                               ( `${path: 'DELIVERY', formatter: 'Formatter.DateAbapDateToDateObject'}.toDateString()` ) ) ) ).
+                                              t_arg = temp4 ) ).
 
     " a raw argument has to start with $ or { - an object literal does, and it
     " carries numbers, booleans and arrays as what they are; a bare 5.5 or
