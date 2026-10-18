@@ -3,7 +3,7 @@
 
 # The sample catalogue
 
-Every app in this repository — 140 of them — with what it shows and a link
+Every app in this repository — 141 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
@@ -13,7 +13,7 @@ nothing in it is stripped from `702`.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 129 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 130 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -28,10 +28,10 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path
 
-The **129 ready-to-run samples** the README leads with, and the
+The **130 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 10 helper apps they call and the
-overview app itself, that is 140 apps on every branch.
+overview app itself, that is 141 apps on every branch.
 
 [AI](#ai) · [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -138,6 +138,7 @@ overview app itself, that is 140 apps on every branch.
 | Download to the Browser (A)<br>Sends a file to the browser as a download - an xstring encoded as base64, handed over as an attachment.<br><sub>export save base64 attachment xstring document download_b64_file</sub><br><sub>docs: [cookbook/device_capabilities/upload_download](https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download)</sub> | [`Z2UI5_CL_SMP_APP_186`](src/z2ui5_cl_smp_app_186.clas.abap) |
 | Upload to the Backend (C)<br>Takes a file from the FileUploader into the backend as base64 - a picture or a document, arriving as an xstring.<br><sub>fileuploader base64 attachment import picture document</sub><br><sub>docs: [cookbook/device_capabilities/upload_download](https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download)</sub> | [`Z2UI5_CL_SMP_APP_074`](src/z2ui5_cl_smp_app_074.clas.abap) |
 | Upload with an UploadSet (C)<br>Takes files from a sap.m.upload.UploadSet into the backend as base64 - the invisible UploadSetExt companion reads each one, so no upload endpoint is needed.<br><sub>uploadset upload drag drop multiple files base64 attachment uploadsetext companion</sub><br><sub>docs: [cookbook/device_capabilities/upload_download](https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download)</sub> | [`Z2UI5_CL_SMP_APP_517`](src/z2ui5_cl_smp_app_517.clas.abap) |
+| ZIP and CSV Download with cl_abap_zip (A)<br>Downloads an editable table as a CSV file built in plain ABAP, and the same CSV together with a text note packed into one ZIP archive with cl_abap_zip.<br><sub>zip cl_abap_zip csv export download_b64_file base64 xstring utf-8 itab</sub> | [`Z2UI5_CL_SMP_APP_542`](src/z2ui5_cl_smp_app_542.clas.abap) |
 
 ### Focus
 
