@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 129,
+  "samples": 130,
   "categories": 25,
   "stages": 6
  },
@@ -1395,6 +1395,27 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/device_capabilities/upload_download"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_542",
+   "file": "src/z2ui5_cl_smp_app_542.clas.abap",
+   "category": "File",
+   "stage": "beyond",
+   "title": "File",
+   "description": "ZIP and CSV Download with cl_abap_zip (A)",
+   "summary": "Downloads an editable table as a CSV file built in plain ABAP, and the same CSV together with a text note packed into one ZIP archive with cl_abap_zip.",
+   "keywords": [
+    "zip",
+    "cl_abap_zip",
+    "csv",
+    "export",
+    "download_b64_file",
+    "base64",
+    "xstring",
+    "utf-8",
+    "itab"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_421",

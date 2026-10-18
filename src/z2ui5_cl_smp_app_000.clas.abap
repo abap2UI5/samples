@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 129 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 130 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -1010,7 +1010,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Reach outside the view` header = `Device` sub = `Geolocation from the Browser (C)` keywords = `gps position latitude longitude altitude location` intro = `` path = `src` app = `z2ui5_cl_smp_app_120` )
       ( group = `Reach outside the view` header = `File` sub = `Download to the Browser (A)` keywords = `export save base64 attachment xstring document download_b64_file` intro = `` path = `src` app = `z2ui5_cl_smp_app_186` )
       ( group = `Reach outside the view` header = `File` sub = `Upload to the Backend (C)` keywords = `fileuploader base64 attachment import picture document` intro = `` path = `src` app = `z2ui5_cl_smp_app_074` )
-      ( group = `Reach outside the view` header = `File` sub = `Upload with an UploadSet (C)` keywords = `uploadset upload drag drop multiple files base64 attachment uploadsetext companion` intro = `` path = `src` app = `z2ui5_cl_smp_app_517` ) ).
+      ( group = `Reach outside the view` header = `File` sub = `Upload with an UploadSet (C)` keywords = `uploadset upload drag drop multiple files base64 attachment uploadsetext companion` intro = `` path = `src` app = `z2ui5_cl_smp_app_517` )
+      ( group = `Reach outside the view` header = `File` sub = `ZIP and CSV Download with cl_abap_zip (A)` keywords = `zip cl_abap_zip csv export download_b64_file base64 xstring utf-8 itab` intro = `` path = `src` app = `z2ui5_cl_smp_app_542` ) ).
 
   ENDMETHOD.
 
