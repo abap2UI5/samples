@@ -63,15 +63,15 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
     tab->ele( `columns`
         )->ele( `Column`
             )->tag( `Text`
-                )->a( n = `text` v = `uuid`
+                )->a( n = `text` v = `user`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `date`
         )->end(
         )->ele( `Column`
             )->tag( `Text`
                 )->a( n = `text` v = `time`
-        )->end(
-        )->ele( `Column`
-            )->tag( `Text`
-                )->a( n = `text` v = `previous`
         )->end( ).
 
     tab->ele( `items`
@@ -79,11 +79,11 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
             )->a( n = `selected` v = `{SELKZ}`
             )->ele( `cells`
                 )->tag( `Input`
-                    )->a( n = `value` v = `{ID}`
+                    )->a( n = `value` v = `{UNAME}`
                 )->tag( `Input`
-                    )->a( n = `value` v = `{TIMESTAMPL}`
+                    )->a( n = `value` v = `{DATUM}`
                 )->tag( `Input`
-                    )->a( n = `value` v = `{ID_PREV}` ).
+                    )->a( n = `value` v = `{UZEIT}` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -99,11 +99,10 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       " The point of this sample is a row type built at runtime from a DDIC
-      " name; it needs SOME table that is present on every abap2UI5 system,
-      " and the framework ships no RELEASED DDIC object to use instead. Reading
-      " the draft table is not the lesson here - the dynamic typing is.
-      " abap2ui5lint-disable non-released-api
-      DATA(row_type) = CAST cl_abap_structdescr( cl_abap_typedescr=>describe_by_name( `Z2UI5_T_01` ) ).
+      " name. SYST - the structure behind sy - is present on every release
+      " abap2UI5 runs on, ABAP Cloud included; the framework's own draft table
+      " is not an API (building-apps guide, section 5) and is not used here.
+      DATA(row_type) = CAST cl_abap_structdescr( cl_abap_typedescr=>describe_by_name( `SYST` ) ).
 
       " the DDIC components plus a SELKZ flag that exists in no dictionary:
       " the Table's selection binds to it, so a selected row stays selected
@@ -116,12 +115,12 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
       CREATE DATA t_tab TYPE HANDLE tab_type.
       ASSIGN t_tab->* TO <tab>.
 
-      DATA(entry) = VALUE z2ui5_t_01( id = `this is an uuid` timestampl = `20230823124303.1234567` id_prev = `previous` ).
+      " sy IS a SYST, so the rows are filled by component name - the only
+      " way to write a structure whose type exists at runtime alone
       DO 3 TIMES.
         APPEND INITIAL LINE TO <tab> ASSIGNING FIELD-SYMBOL(<row>).
-        MOVE-CORRESPONDING entry TO <row>.
+        MOVE-CORRESPONDING sy TO <row>.
       ENDDO.
-      " abap2ui5lint-enable non-released-api
 
       view_display( ).
 
