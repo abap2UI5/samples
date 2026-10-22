@@ -105,6 +105,7 @@ CLASS z2ui5_cl_smp_app_507 IMPLEMENTATION.
     render_list( parent = row
                  title  = `_bind( t_omit omit_initial = abap_true )`
                  descr  = `initial fields stay out: Design shows 5 stars - but Archived is enabled now, its abap_false was initial too`
+                 " abap2ui5lint-disable-next-line omit-initial-drops-false -- the dropped abap_false IS the demo: the third list shows the fix
                  items  = client->_bind( val          = t_omit
                                          omit_initial = abap_true ) ).
 
