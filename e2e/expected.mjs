@@ -24,7 +24,7 @@ export const APPS = {
   },
   z2ui5_cl_smp_app_061: {
     expect: /cl_abap_typedescr\.describe_by_name/,
-    why: 'NOT on purpose - the runtime, not the sample: since the framework moved to @abaplint/runtime and transpiler 2.14 (A2UI5_PIN 52976a7), describe_by_name( `SYST` ) answers type_not_found on Node, where 2.13 resolved it; on a system it works. Remove this entry when the runtime resolves SYST again',
+    why: 'NOT on purpose - the runtime, not the sample: the transpiled runtime knows no type SYST by name (no DDIC entry, no built-in name in CREATE DATA ... TYPE (name)), so describe_by_name( `SYST` ) answers type_not_found on Node; on a system it works. Since the sample moved to SYST (2026-10-22), on every pin. abap2UI5 backlog item runtime-create-data-syst - remove this entry when the runtime resolves SYST',
   },
   z2ui5_cl_smp_app_464: {
     expect: /Division by zero|ASSERTION_FAILED/,
