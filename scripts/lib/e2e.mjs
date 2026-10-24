@@ -122,3 +122,11 @@ export async function waitForIdle(page, { quiet = 400, timeout = 30000 } = {}) {
     throw new Error(`the app never went quiet for ${quiet}ms`);
   });
 }
+
+/** The folder the transpiler wrote the classes into: node/output/project
+ *  since the framework's transpiler puts its own objects there (beside the
+ *  libraries' folders), node/output itself on an older pin. */
+export function transpiledDir(a2) {
+  const project = path.join(a2, 'node/output/project');
+  return fs.existsSync(project) ? project : path.join(a2, 'node/output');
+}

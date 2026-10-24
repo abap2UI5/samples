@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 130,
+  "samples": 131,
   "categories": 25,
   "stages": 6
  },
@@ -634,6 +634,28 @@
     "fiori",
     "launchpad",
     "system_logout"
+   ],
+   "docs": []
+  },
+  {
+   "class": "z2ui5_cl_smp_app_543",
+   "file": "src/z2ui5_cl_smp_app_543.clas.abap",
+   "category": "Browser",
+   "stage": "beyond",
+   "title": "Browser",
+   "description": "Offline Queue for a Stock Count (A)",
+   "summary": "A stock count that keeps working through a dead spot: SAVE waits in the browser while the backend cannot be reached and is sent, in order, once it can.",
+   "keywords": [
+    "offline",
+    "network",
+    "connection",
+    "queue",
+    "inventory",
+    "count",
+    "capture",
+    "warehouse",
+    "offline_queue",
+    "follow_up_action"
    ],
    "docs": []
   },

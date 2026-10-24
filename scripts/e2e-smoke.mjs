@@ -29,7 +29,7 @@ import path from 'path';
 import { spawn } from 'child_process';
 import { pathToFileURL } from 'url';
 import { chromium } from 'playwright';
-import { ROOT, resolveA2UI5, benign, allowEvalForSourceUi5, waitForIdle } from './lib/e2e.mjs';
+import { ROOT, resolveA2UI5, benign, allowEvalForSourceUi5, waitForIdle, transpiledDir } from './lib/e2e.mjs';
 import { APPS, NOISE } from '../e2e/expected.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i === -1 ? d : process.argv[i + 1]; };
@@ -45,7 +45,7 @@ if (!(PORT > 0 && PORT < 65536) || !(MAX_PRESS >= 0)) {
 
 const A2 = resolveA2UI5();
 if (!A2) { console.error('e2e-smoke: abap2UI5 checkout not found - run `npm run e2e:setup`'); process.exit(1); }
-const OUTPUT = path.join(A2, 'node/output');
+const OUTPUT = transpiledDir(A2);
 let classes = fs.existsSync(OUTPUT) ? fs.readdirSync(OUTPUT).filter((f) => /^z2ui5_cl_smp_app_\w+\.clas\.mjs$/.test(f)).map((f) => f.slice(0, -9)).sort() : [];
 if (!classes.length) { console.error('e2e-smoke: no transpiled sample - run `npm run e2e:build`'); process.exit(1); }
 if (ONLY.length) classes = classes.filter((c) => ONLY.some((o) => c.endsWith(o)));
