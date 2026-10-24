@@ -3,7 +3,7 @@
 
 # The sample catalogue
 
-Every app in this repository — 141 of them — with what it shows and a link
+Every app in this repository — 142 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
@@ -13,7 +13,7 @@ nothing in it is stripped from `702`.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 130 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 131 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -28,10 +28,10 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path
 
-The **130 ready-to-run samples** the README leads with, and the
+The **131 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 10 helper apps they call and the
-overview app itself, that is 141 apps on every branch.
+overview app itself, that is 142 apps on every branch.
 
 [AI](#ai) · [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -78,6 +78,7 @@ overview app itself, that is 141 apps on every branch.
 | Keyboard Layout of an Input (inputmode) (C)<br>Sets the HTML inputmode of an Input through the bound inputMode property of z2ui5.cc.InputExt - the keyboard layout is model data, not an action.<br><sub>inputmode soft keyboard numeric keypad barcode scanner mobile inputext bound property</sub><br><sub>docs: [cookbook/browser_interaction/soft_keyboard](https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard)</sub> | [`Z2UI5_CL_SMP_APP_516`](src/z2ui5_cl_smp_app_516.clas.abap) |
 | Local and Session Storage (A,C)<br>Writes to the browser's local and session storage and reads it back, so a value survives a reload without any state in the backend.<br><sub>localstorage sessionstorage persist store_data offline</sub><br><sub>docs: [cookbook/browser_interaction/clipboard](https://abap2ui5.github.io/docs/cookbook/browser_interaction/clipboard)</sub> | [`Z2UI5_CL_SMP_APP_327`](src/z2ui5_cl_smp_app_327.clas.abap) |
 | Logout from the Client (A)<br>Ends the session from the client - the logoff an ICF session or a Fiori launchpad needs, triggered as a follow-up action.<br><sub>logoff signout icf session end fiori launchpad system_logout</sub> | [`Z2UI5_CL_SMP_APP_361`](src/z2ui5_cl_smp_app_361.clas.abap) |
+| Offline Queue for a Stock Count (A)<br>A stock count that keeps working through a dead spot: SAVE waits in the browser while the backend cannot be reached and is sent, in order, once it can.<br><sub>offline network connection queue inventory count capture warehouse offline_queue follow_up_action</sub> | [`Z2UI5_CL_SMP_APP_543`](src/z2ui5_cl_smp_app_543.clas.abap) |
 | Open a URL in a New Tab (A)<br>Opens a URL in a new browser tab from an event, leaving the running app where it is.<br><sub>url window open_new_tab link target</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_073`](src/z2ui5_cl_smp_app_073.clas.abap) |
 | Open Mail, Phone and SMS Links (A)<br>Opens mailto:, tel: and sms: links through URLHelper, so the device answers with its own mail or phone app instead of the browser.<br><sub>mailto tel sms urlhelper redirect native link</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_316`](src/z2ui5_cl_smp_app_316.clas.abap) |
 | Reload the Page (A)<br>Navigates the browser to a same-domain URL with the location_reload front-end action, with a scratch input beside it to show what the reload takes with it.<br><sub>reload refresh restart location_reload url</sub><br><sub>docs: [cookbook/browser_interaction/url_handling](https://abap2ui5.github.io/docs/cookbook/browser_interaction/url_handling)</sub> | [`Z2UI5_CL_SMP_APP_492`](src/z2ui5_cl_smp_app_492.clas.abap) |

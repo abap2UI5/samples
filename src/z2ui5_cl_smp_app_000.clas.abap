@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 130 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 131 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -953,6 +953,11 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         path = `src` app = `z2ui5_cl_smp_app_516` )
       ( group = `Reach outside the view` header = `Browser` sub = `Local and Session Storage (A,C)` keywords = `localstorage sessionstorage persist store_data offline` intro = `` path = `src` app = `z2ui5_cl_smp_app_327` )
       ( group = `Reach outside the view` header = `Browser` sub = `Logout from the Client (A)` keywords = `logoff signout icf session end fiori launchpad system_logout` intro = `` path = `src` app = `z2ui5_cl_smp_app_361` )
+      ( group = `Reach outside the view` header = `Browser`
+        sub = `Offline Queue for a Stock Count (A)`
+        keywords = `offline network connection queue inventory count capture warehouse offline_queue follow_up_action`
+        intro = ``
+        path = `src` app = `z2ui5_cl_smp_app_543` )
       ( group = `Reach outside the view` header = `Browser` sub = `Open a URL in a New Tab (A)` keywords = `url window open_new_tab link target` intro = `` path = `src` app = `z2ui5_cl_smp_app_073` )
       ( group = `Reach outside the view` header = `Browser` sub = `Open Mail, Phone and SMS Links (A)` keywords = `mailto tel sms urlhelper redirect native link` intro = `` path = `src` app = `z2ui5_cl_smp_app_316` )
       ( group = `Reach outside the view` header = `Browser` sub = `Reload the Page (A)` keywords = `reload refresh restart location_reload url` intro = `` path = `src` app = `z2ui5_cl_smp_app_492` )
