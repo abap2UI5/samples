@@ -24,7 +24,7 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
     me->client     = client.
     " no event branch: the tab switch is answered on the client by the
     " follow-up action below, nothing reaches the backend
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -35,11 +35,20 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
 
     " the NavContainer opens on the page of the selected tab: after a
     " re-display (Back, a restored state) the tab and the page stay in step
-    DATA(initial_page) = COND string( WHEN mv_selected_key = `page2` OR mv_selected_key = `page3`
-                                      THEN mv_selected_key
-                                      ELSE `page1` ).
+    DATA temp1 TYPE string.
+    DATA initial_page LIKE temp1.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp2 TYPE string_table.
+    IF mv_selected_key = `page2` OR mv_selected_key = `page3`.
+      temp1 = mv_selected_key.
+    ELSE.
+      temp1 = `page1`.
+    ENDIF.
+    
+    initial_page = temp1.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -59,10 +68,15 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp2.
+    INSERT `NavCon` INTO TABLE temp2.
+    INSERT `to` INTO TABLE temp2.
+    INSERT `${$parameters>/key}` INTO TABLE temp2.
     page->ele( `IconTabHeader`
         )->a( n = `selectedKey` v = client->_bind( mv_selected_key )
         )->a( n = `select`      v = client->follow_up_action( val   = client->cs_event-control_by_id
-                                                                                     t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/key}` ) ) )
+                                                                                     t_arg = temp2 )
         )->a( n = `mode`        v = `Inline`
         )->ele( `items`
             )->ele( `IconTabFilter`
