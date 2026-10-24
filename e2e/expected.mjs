@@ -22,6 +22,10 @@ export const APPS = {
   z2ui5_cl_smp_app_112: {
     skip: 'the second sub-app of Z2UI5_CL_SMP_APP_104, same reason as 105; driven by the same flow',
   },
+  z2ui5_cl_smp_app_061: {
+    expect: /cl_abap_typedescr\.describe_by_name/,
+    why: 'NOT on purpose - the runtime, not the sample: since the framework moved to @abaplint/runtime and transpiler 2.14 (A2UI5_PIN 52976a7), describe_by_name( `SYST` ) answers type_not_found on Node, where 2.13 resolved it; on a system it works. Remove this entry when the runtime resolves SYST again',
+  },
   z2ui5_cl_smp_app_464: {
     expect: /Division by zero|ASSERTION_FAILED/,
     why: 'the sample shows what an uncaught exception and a dump look like: its two buttons divide by zero and fail an ASSERT, and the backend answers HTTP 500 on purpose',
