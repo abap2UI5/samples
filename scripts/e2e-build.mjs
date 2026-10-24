@@ -17,7 +17,7 @@
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { ROOT, resolveA2UI5, patchFollowUpAction } from './lib/e2e.mjs';
+import { ROOT, resolveA2UI5, patchFollowUpAction, transpiledDir } from './lib/e2e.mjs';
 
 const A2 = resolveA2UI5();
 if (!A2) {
@@ -80,7 +80,7 @@ console.log('e2e-build: transpiling into node/output ...');
 sh('node node/setup/downport-fix.mjs prepare-transpile');
 sh('npx abap_transpile ./node/setup/abap_transpile.json');
 
-const built = fs.readdirSync(path.join(A2, 'node/output')).filter((f) => /^z2ui5_cl_smp_app_\w+\.clas\.mjs$/.test(f)).length;
+const built = fs.readdirSync(transpiledDir(A2)).filter((f) => /^z2ui5_cl_smp_app_\w+\.clas\.mjs$/.test(f)).length;
 console.log(`e2e-build: done - ${built} sample(s) transpiled in ${Math.round((Date.now() - t0) / 1000)} s`);
 if (built !== samples) {
   console.error(`e2e-build: ${samples - built} sample(s) copied but not transpiled`);
