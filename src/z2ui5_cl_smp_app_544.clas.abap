@@ -31,8 +31,9 @@ CLASS z2ui5_cl_smp_app_544 DEFINITION PUBLIC.
         total    TYPE string VALUE `T`,
       END OF cs_kind.
 
-    DATA t_rows    TYPE ty_t_sales.
-    DATA t_columns TYPE STANDARD TABLE OF ty_s_column WITH EMPTY KEY.
+    DATA t_rows       TYPE ty_t_sales.
+    DATA t_columns    TYPE STANDARD TABLE OF ty_s_column WITH EMPTY KEY.
+    DATA visible_rows TYPE i.
 
     "! Sorts the rows by the grouping columns and inserts a subtotal row after
     "! each group and the grand total after the last row. Amounts only add up
@@ -162,6 +163,9 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
                              unit_fields  = VALUE #( ( `CURRENCY` ) )
                              kind_field   = `KIND`
                    CHANGING  rows         = t_rows ).
+
+    " every row on screen: a scrolled-away grand total is easy to miss
+    visible_rows = lines( t_rows ).
 
   ENDMETHOD.
 
@@ -415,10 +419,10 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
                          `</style>` ).
 
     DATA(table) = page->ele( n = `Table` ns = `table`
-        )->a( n = `rows`               v = client->_bind( t_rows )
-        )->a( n = `selectionMode`      v = `None`
-        )->a( n = `visibleRowCount`    v = `20`
-        )->a( n = `class`              v = `sapUiSmallMarginBeginEnd` ).
+        )->a( n = `rows`            v = client->_bind( t_rows )
+        )->a( n = `selectionMode`   v = `None`
+        )->a( n = `visibleRowCount` v = client->_bind( visible_rows )
+        )->a( n = `class`           v = `sapUiSmallMarginBeginEnd` ).
 
     table->ele( n = `extension` ns = `table`
         )->ele( `OverflowToolbar`
