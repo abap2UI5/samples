@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 131 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 132 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -783,6 +783,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Show many rows` header = `Grid Table` sub = `Events on Cell Level` keywords = `cell enter row index event grid alv` intro = `` path = `src` app = `z2ui5_cl_smp_app_160` )
       ( group = `Show many rows` header = `Grid Table` sub = `Full Example with sap.ui.table` keywords = `grid alv dynamicpage column row action currency search sort filter` intro = `` path = `src` app = `z2ui5_cl_smp_app_070` )
       ( group = `Show many rows` header = `Grid Table` sub = `Keep Column Filters on Refresh (C)` keywords = `column filter reset refresh uitableext grid alv` intro = `` path = `src` app = `z2ui5_cl_smp_app_143` )
+      ( group = `Show many rows` header = `Grid Table` sub = `Subtotals and Grand Total per Currency` keywords = `grid table subtotal grand total group sum currency rowsettings writetodom` intro = `` path = `src` app = `z2ui5_cl_smp_app_544` )
       ( group = `Show many rows` header = `List` sub = `Filter and Sort the Binding from ABAP (A)` keywords = `binding_call getbinding sorter filter follow_up_action` intro = `` path = `src` app = `z2ui5_cl_smp_app_454` )
       ( group = `Show many rows` header = `List` sub = `Live Filter on the Client, No Roundtrip (A)` keywords = `binding_call live search client side no roundtrip filter` intro = `` path = `src` app = `z2ui5_cl_smp_app_455` )
       ( group = `Show many rows` header = `List` sub = `StandardListItem, Highlight and Events` keywords = `sap.m.list standardlistitem highlight infostate press selection` intro = `` path = `src` app = `z2ui5_cl_smp_app_048` )
