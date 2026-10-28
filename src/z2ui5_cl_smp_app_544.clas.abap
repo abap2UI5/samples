@@ -17,7 +17,7 @@ CLASS z2ui5_cl_smp_app_544 DEFINITION PUBLIC.
         "! what the row is: a sale (empty), a subtotal or a grand total, see cs_kind
         kind     TYPE string,
       END OF ty_s_sale.
-    TYPES ty_t_sales TYPE STANDARD TABLE OF ty_s_sale WITH EMPTY KEY.
+    TYPES ty_t_sales TYPE STANDARD TABLE OF ty_s_sale WITH DEFAULT KEY.
     TYPES:
       BEGIN OF ty_s_column,
         name     TYPE string,
@@ -32,7 +32,7 @@ CLASS z2ui5_cl_smp_app_544 DEFINITION PUBLIC.
       END OF cs_kind.
 
     DATA t_rows       TYPE ty_t_sales.
-    DATA t_columns    TYPE STANDARD TABLE OF ty_s_column WITH EMPTY KEY.
+    DATA t_columns    TYPE STANDARD TABLE OF ty_s_column WITH DEFAULT KEY.
     DATA visible_rows TYPE i.
 
     "! Sorts the rows by the grouping columns and inserts a subtotal row after
@@ -62,7 +62,7 @@ CLASS z2ui5_cl_smp_app_544 DEFINITION PUBLIC.
         level TYPE i,
         row   TYPE REF TO data,
       END OF ty_s_sum.
-    TYPES ty_t_sums TYPE STANDARD TABLE OF ty_s_sum WITH EMPTY KEY.
+    TYPES ty_t_sums TYPE STANDARD TABLE OF ty_s_sum WITH DEFAULT KEY.
 
     DATA client         TYPE REF TO z2ui5_if_client.
     DATA t_sales        TYPE ty_t_sales.
@@ -109,11 +109,11 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `GROUP` ).
+    ELSEIF client->check_on_event( `GROUP` ) IS NOT INITIAL.
       rows_group( ).
     ENDIF.
 
@@ -122,26 +122,128 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
 
   METHOD on_init.
 
-    t_sales = VALUE #(
-        ( region = `EMEA`     country = `Germany`     category = `Hardware` product = `Notebook`         quantity = 10 amount = `12000.00` currency = `EUR` )
-        ( region = `APAC`     country = `Japan`       category = `Software` product = `Antivirus`        quantity = 50 amount = `2500.00`  currency = `USD` )
-        ( region = `EMEA`     country = `Switzerland` category = `Hardware` product = `Monitor`          quantity = 8  amount = `2400.00`  currency = `CHF` )
-        ( region = `Americas` country = `USA`         category = `Hardware` product = `Server`           quantity = 2  amount = `18000.00` currency = `USD` )
-        ( region = `EMEA`     country = `Germany`     category = `Software` product = `Office Suite`     quantity = 25 amount = `4500.00`  currency = `EUR` )
-        ( region = `Americas` country = `Canada`      category = `Hardware` product = `Monitor`          quantity = 5  amount = `1500.00`  currency = `CAD` )
-        ( region = `EMEA`     country = `France`      category = `Hardware` product = `Notebook`         quantity = 6  amount = `7200.00`  currency = `EUR` )
-        ( region = `APAC`     country = `Australia`   category = `Services` product = `Training`         quantity = 2  amount = `3000.00`  currency = `USD` )
-        ( region = `EMEA`     country = `Switzerland` category = `Services` product = `Installation`     quantity = 3  amount = `1350.00`  currency = `CHF` )
-        ( region = `Americas` country = `USA`         category = `Services` product = `Support Contract` quantity = 12 amount = `6000.00`  currency = `USD` )
-        ( region = `APAC`     country = `Japan`       category = `Hardware` product = `Notebook`         quantity = 4  amount = `4800.00`  currency = `USD` )
-        ( region = `Americas` country = `Canada`      category = `Software` product = `Office Suite`     quantity = 40 amount = `7600.00`  currency = `CAD` ) ).
+    DATA temp28 TYPE z2ui5_cl_smp_app_544=>ty_t_sales.
+    DATA temp29 LIKE LINE OF temp28.
+    DATA temp30 LIKE t_columns.
+    DATA temp31 LIKE LINE OF temp30.
+    CLEAR temp28.
+    
+    temp29-region = `EMEA`.
+    temp29-country = `Germany`.
+    temp29-category = `Hardware`.
+    temp29-product = `Notebook`.
+    temp29-quantity = 10.
+    temp29-amount = `12000.00`.
+    temp29-currency = `EUR`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `APAC`.
+    temp29-country = `Japan`.
+    temp29-category = `Software`.
+    temp29-product = `Antivirus`.
+    temp29-quantity = 50.
+    temp29-amount = `2500.00`.
+    temp29-currency = `USD`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `EMEA`.
+    temp29-country = `Switzerland`.
+    temp29-category = `Hardware`.
+    temp29-product = `Monitor`.
+    temp29-quantity = 8.
+    temp29-amount = `2400.00`.
+    temp29-currency = `CHF`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `Americas`.
+    temp29-country = `USA`.
+    temp29-category = `Hardware`.
+    temp29-product = `Server`.
+    temp29-quantity = 2.
+    temp29-amount = `18000.00`.
+    temp29-currency = `USD`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `EMEA`.
+    temp29-country = `Germany`.
+    temp29-category = `Software`.
+    temp29-product = `Office Suite`.
+    temp29-quantity = 25.
+    temp29-amount = `4500.00`.
+    temp29-currency = `EUR`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `Americas`.
+    temp29-country = `Canada`.
+    temp29-category = `Hardware`.
+    temp29-product = `Monitor`.
+    temp29-quantity = 5.
+    temp29-amount = `1500.00`.
+    temp29-currency = `CAD`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `EMEA`.
+    temp29-country = `France`.
+    temp29-category = `Hardware`.
+    temp29-product = `Notebook`.
+    temp29-quantity = 6.
+    temp29-amount = `7200.00`.
+    temp29-currency = `EUR`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `APAC`.
+    temp29-country = `Australia`.
+    temp29-category = `Services`.
+    temp29-product = `Training`.
+    temp29-quantity = 2.
+    temp29-amount = `3000.00`.
+    temp29-currency = `USD`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `EMEA`.
+    temp29-country = `Switzerland`.
+    temp29-category = `Services`.
+    temp29-product = `Installation`.
+    temp29-quantity = 3.
+    temp29-amount = `1350.00`.
+    temp29-currency = `CHF`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `Americas`.
+    temp29-country = `USA`.
+    temp29-category = `Services`.
+    temp29-product = `Support Contract`.
+    temp29-quantity = 12.
+    temp29-amount = `6000.00`.
+    temp29-currency = `USD`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `APAC`.
+    temp29-country = `Japan`.
+    temp29-category = `Hardware`.
+    temp29-product = `Notebook`.
+    temp29-quantity = 4.
+    temp29-amount = `4800.00`.
+    temp29-currency = `USD`.
+    INSERT temp29 INTO TABLE temp28.
+    temp29-region = `Americas`.
+    temp29-country = `Canada`.
+    temp29-category = `Software`.
+    temp29-product = `Office Suite`.
+    temp29-quantity = 40.
+    temp29-amount = `7600.00`.
+    temp29-currency = `CAD`.
+    INSERT temp29 INTO TABLE temp28.
+    t_sales = temp28.
 
     " the order of this list is the order of the groups, the first ticked
     " column outermost
-    t_columns = VALUE #(
-        ( name = `REGION`   label = `Region`   selected = abap_true )
-        ( name = `COUNTRY`  label = `Country`  selected = abap_false )
-        ( name = `CATEGORY` label = `Category` selected = abap_false ) ).
+    
+    CLEAR temp30.
+    
+    temp31-name = `REGION`.
+    temp31-label = `Region`.
+    temp31-selected = abap_true.
+    INSERT temp31 INTO TABLE temp30.
+    temp31-name = `COUNTRY`.
+    temp31-label = `Country`.
+    temp31-selected = abap_false.
+    INSERT temp31 INTO TABLE temp30.
+    temp31-name = `CATEGORY`.
+    temp31-label = `Category`.
+    temp31-selected = abap_false.
+    INSERT temp31 INTO TABLE temp30.
+    t_columns = temp30.
 
     rows_group( ).
     view_display( ).
@@ -153,14 +255,24 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
 
     DATA t_group_by TYPE string_table.
 
-    LOOP AT t_columns INTO DATA(s_column) WHERE selected = abap_true.
+    DATA s_column LIKE LINE OF t_columns.
+    DATA temp32 TYPE string_table.
+    DATA temp4 TYPE string_table.
+    LOOP AT t_columns INTO s_column WHERE selected = abap_true.
       APPEND s_column-name TO t_group_by.
     ENDLOOP.
 
     t_rows = t_sales.
+    
+    CLEAR temp32.
+    INSERT `AMOUNT` INTO TABLE temp32.
+    INSERT `QUANTITY` INTO TABLE temp32.
+    
+    CLEAR temp4.
+    INSERT `CURRENCY` INTO TABLE temp4.
     subtotals_add( EXPORTING group_by     = t_group_by
-                             value_fields = VALUE #( ( `AMOUNT` ) ( `QUANTITY` ) )
-                             unit_fields  = VALUE #( ( `CURRENCY` ) )
+                             value_fields = temp32
+                             unit_fields  = temp4
                              kind_field   = `KIND`
                    CHANGING  rows         = t_rows ).
 
@@ -186,9 +298,26 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
     FIELD-SYMBOLS <sum>     TYPE any.
     FIELD-SYMBOLS <field>   TYPE any.
 
-    t_group_fields = VALUE #( ).
-    t_value_fields = VALUE #( ).
-    t_unit_fields  = VALUE #( ).
+    DATA temp34 TYPE string_table.
+    DATA temp35 TYPE string_table.
+    DATA temp36 TYPE string_table.
+      DATA temp37 LIKE sy-subrc.
+      DATA temp38 LIKE sy-subrc.
+      DATA temp39 LIKE sy-tabix.
+      DATA temp40 LIKE sy-subrc.
+      DATA temp41 LIKE sy-subrc.
+      DATA temp42 LIKE sy-tabix.
+      DATA temp43 TYPE abap_sortorder.
+      DATA temp44 TYPE abap_sortorder.
+      DATA index LIKE sy-tabix.
+    CLEAR temp34.
+    t_group_fields = temp34.
+    
+    CLEAR temp35.
+    t_value_fields = temp35.
+    
+    CLEAR temp36.
+    t_unit_fields  = temp36.
     kind_column    = to_upper( kind_field ).
 
     READ TABLE rows INDEX 1 ASSIGNING <row>.
@@ -201,7 +330,16 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
     LOOP AT group_by INTO field.
       field = to_upper( field ).
       ASSIGN COMPONENT field OF STRUCTURE <row> TO <field>.
-      IF sy-subrc = 0 AND NOT line_exists( t_group_fields[ table_line = field ] ).
+      
+      
+      
+      temp38 = sy-subrc.
+      temp39 = sy-tabix.
+      READ TABLE t_group_fields WITH KEY table_line = field TRANSPORTING NO FIELDS.
+      temp37 = sy-subrc.
+      sy-subrc = temp38.
+      sy-tabix = temp39.
+      IF sy-subrc = 0 AND NOT temp37 = 0.
         APPEND field TO t_group_fields.
       ENDIF.
     ENDLOOP.
@@ -212,7 +350,16 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
     LOOP AT value_fields INTO field.
       field = to_upper( field ).
       ASSIGN COMPONENT field OF STRUCTURE <row> TO <field>.
-      IF sy-subrc = 0 AND NOT line_exists( t_group_fields[ table_line = field ] ).
+      
+      
+      
+      temp41 = sy-subrc.
+      temp42 = sy-tabix.
+      READ TABLE t_group_fields WITH KEY table_line = field TRANSPORTING NO FIELDS.
+      temp40 = sy-subrc.
+      sy-subrc = temp41.
+      sy-tabix = temp42.
+      IF sy-subrc = 0 AND NOT temp40 = 0.
         APPEND field TO t_value_fields.
       ENDIF.
     ENDLOOP.
@@ -225,10 +372,16 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
     ENDLOOP.
 
     LOOP AT t_group_fields INTO field.
-      APPEND VALUE #( name = field ) TO t_order.
+      
+      CLEAR temp43.
+      temp43-name = field.
+      APPEND temp43 TO t_order.
     ENDLOOP.
     LOOP AT t_unit_fields INTO field.
-      APPEND VALUE #( name = field ) TO t_order.
+      
+      CLEAR temp44.
+      temp44-name = field.
+      APPEND temp44 TO t_order.
     ENDLOOP.
     SORT rows STABLE BY (t_order).
 
@@ -240,7 +393,8 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
     levels = lines( t_group_fields ).
 
     LOOP AT rows ASSIGNING <row>.
-      DATA(index) = sy-tabix.
+      
+      index = sy-tabix.
       APPEND <row> TO <grouped>.
       DO levels + 1 TIMES.
         sum_add( EXPORTING row   = <row>
@@ -286,6 +440,8 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
     FIELD-SYMBOLS <sum>    TYPE any.
     FIELD-SYMBOLS <source> TYPE any.
     FIELD-SYMBOLS <target> TYPE any.
+          DATA temp45 TYPE string.
+      DATA temp46 TYPE z2ui5_cl_smp_app_544=>ty_s_sum.
 
     LOOP AT sums INTO s_sum WHERE level = level.
       UNASSIGN <sum>.
@@ -322,10 +478,20 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
       IF kind_column IS NOT INITIAL.
         ASSIGN COMPONENT kind_column OF STRUCTURE <sum> TO <target>.
         IF sy-subrc = 0.
-          <target> = COND string( WHEN level = 0 THEN cs_kind-total ELSE cs_kind-subtotal ).
+          
+          IF level = 0.
+            temp45 = cs_kind-total.
+          ELSE.
+            temp45 = cs_kind-subtotal.
+          ENDIF.
+          <target> = temp45.
         ENDIF.
       ENDIF.
-      INSERT VALUE #( level = level row = new_sum ) INTO TABLE sums.
+      
+      CLEAR temp46.
+      temp46-level = level.
+      temp46-row = new_sum.
+      INSERT temp46 INTO TABLE sums.
 
     ENDIF.
 
@@ -345,9 +511,13 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
   METHOD groups_common.
 
     DATA field TYPE string.
+      DATA temp47 TYPE string_table.
 
     LOOP AT t_group_fields INTO field.
-      IF fields_equal( left = left right = right fields = VALUE #( ( field ) ) ) = abap_false.
+      
+      CLEAR temp47.
+      INSERT field INTO TABLE temp47.
+      IF fields_equal( left = left right = right fields = temp47 ) = abap_false.
         RETURN.
       ENDIF.
       result = result + 1.
@@ -382,9 +552,19 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA t_layout TYPE STANDARD TABLE OF ty_s_column WITH EMPTY KEY.
+    DATA t_layout TYPE STANDARD TABLE OF ty_s_column WITH DEFAULT KEY.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp49 LIKE t_layout.
+    DATA temp50 LIKE LINE OF temp49.
+    DATA columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA s_layout LIKE LINE OF t_layout.
+      DATA text TYPE string.
+      DATA align TYPE string.
+      DATA column TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -392,7 +572,8 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - Subtotals and Grand Total per Currency`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -418,7 +599,8 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
                          `[data-rowkind="S"], [data-rowkind="T"] \{ font-weight: bold; \}` && |\n| &&
                          `</style>` ).
 
-    DATA(table) = page->ele( n = `Table` ns = `table`
+    
+    table = page->ele( n = `Table` ns = `table`
         )->a( n = `rows`            v = client->_bind( t_rows )
         )->a( n = `selectionMode`   v = `None`
         )->a( n = `visibleRowCount` v = client->_bind( visible_rows )
@@ -445,20 +627,48 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
 
     " no sortProperty and no filterProperty: sorting in the browser would tear
     " the subtotals from their groups
-    t_layout = VALUE #(
-        ( name = `REGION`   label = `Region`   selected = abap_false )
-        ( name = `COUNTRY`  label = `Country`  selected = abap_false )
-        ( name = `CATEGORY` label = `Category` selected = abap_false )
-        ( name = `PRODUCT`  label = `Product`  selected = abap_false )
-        ( name = `QUANTITY` label = `Quantity` selected = abap_false )
-        ( name = `AMOUNT`   label = `Amount`   selected = abap_false )
-        ( name = `CURRENCY` label = `Currency` selected = abap_false ) ).
+    
+    CLEAR temp49.
+    
+    temp50-name = `REGION`.
+    temp50-label = `Region`.
+    temp50-selected = abap_false.
+    INSERT temp50 INTO TABLE temp49.
+    temp50-name = `COUNTRY`.
+    temp50-label = `Country`.
+    temp50-selected = abap_false.
+    INSERT temp50 INTO TABLE temp49.
+    temp50-name = `CATEGORY`.
+    temp50-label = `Category`.
+    temp50-selected = abap_false.
+    INSERT temp50 INTO TABLE temp49.
+    temp50-name = `PRODUCT`.
+    temp50-label = `Product`.
+    temp50-selected = abap_false.
+    INSERT temp50 INTO TABLE temp49.
+    temp50-name = `QUANTITY`.
+    temp50-label = `Quantity`.
+    temp50-selected = abap_false.
+    INSERT temp50 INTO TABLE temp49.
+    temp50-name = `AMOUNT`.
+    temp50-label = `Amount`.
+    temp50-selected = abap_false.
+    INSERT temp50 INTO TABLE temp49.
+    temp50-name = `CURRENCY`.
+    temp50-label = `Currency`.
+    temp50-selected = abap_false.
+    INSERT temp50 INTO TABLE temp49.
+    t_layout = temp49.
 
-    DATA(columns) = table->ele( n = `columns` ns = `table` ).
-    LOOP AT t_layout INTO DATA(s_layout).
+    
+    columns = table->ele( n = `columns` ns = `table` ).
+    
+    LOOP AT t_layout INTO s_layout.
 
-      DATA(text) = |\{{ s_layout-name }\}|.
-      DATA(align) = `Begin`.
+      
+      text = |\{{ s_layout-name }\}|.
+      
+      align = `Begin`.
       CASE s_layout-name.
         WHEN `PRODUCT`.
           text = |\{= $\{KIND\} === '{ cs_kind-total }' ? 'Total' : $\{KIND\} === '{ cs_kind-subtotal }' ? 'Subtotal' : $\{PRODUCT\} \}|.
@@ -469,7 +679,8 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
           align = `End`.
       ENDCASE.
 
-      DATA(column) = columns->ele( n = `Column` ns = `table`
+      
+      column = columns->ele( n = `Column` ns = `table`
           )->a( n = `width` v = `10rem` ).
       column->tag( `Label` )->a( n = `text` t = s_layout-label ).
 

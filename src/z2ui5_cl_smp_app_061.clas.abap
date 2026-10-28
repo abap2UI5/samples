@@ -22,19 +22,24 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    FIELD-SYMBOLS <tab> TYPE table.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - Dynamic Table Typed at Runtime (RTTI)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    FIELD-SYMBOLS <tab> TYPE table.
+    
     ASSIGN t_tab->* TO <tab>.
 
     page->tag( `MessageStrip`
@@ -45,7 +50,8 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->ele( `Table`
+    
+    tab = page->ele( `Table`
         )->a( n = `items` v = client->_bind( <tab> )
         )->a( n = `mode`  v = `MultiSelect`
         )->ele( `headerToolbar`
@@ -93,24 +99,41 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     FIELD-SYMBOLS <tab> TYPE table.
+      DATA temp1 TYPE REF TO cl_abap_structdescr.
+      DATA row_type LIKE temp1.
+      DATA components TYPE abap_component_tab.
+      DATA temp2 TYPE abap_componentdescr.
+      DATA temp3 TYPE REF TO cl_abap_datadescr.
+      DATA tab_type TYPE REF TO cl_abap_tabledescr.
+        FIELD-SYMBOLS <row> LIKE LINE OF <tab>.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       " The point of this sample is a row type built at runtime from a DDIC
       " name. SYST - the structure behind sy - is present on every release
       " abap2UI5 runs on, ABAP Cloud included; the framework's own draft table
       " is not an API (building-apps guide, section 5) and is not used here.
-      DATA(row_type) = CAST cl_abap_structdescr( cl_abap_typedescr=>describe_by_name( `SYST` ) ).
+      
+      temp1 ?= cl_abap_typedescr=>describe_by_name( `SYST` ).
+      
+      row_type = temp1.
 
       " the DDIC components plus a SELKZ flag that exists in no dictionary:
       " the Table's selection binds to it, so a selected row stays selected
       " across roundtrips and re-renders instead of living in the control
-      DATA(components) = row_type->get_components( ).
-      INSERT VALUE #( name = `SELKZ`
-                      type = CAST #( cl_abap_typedescr=>describe_by_name( `ABAP_BOOL` ) ) ) INTO TABLE components.
-      DATA(tab_type) = cl_abap_tabledescr=>create( cl_abap_structdescr=>create( components ) ).
+      
+      components = row_type->get_components( ).
+      
+      CLEAR temp2.
+      temp2-name = `SELKZ`.
+      
+      temp3 ?= cl_abap_typedescr=>describe_by_name( `ABAP_BOOL` ).
+      temp2-type = temp3.
+      INSERT temp2 INTO TABLE components.
+      
+      tab_type = cl_abap_tabledescr=>create( cl_abap_structdescr=>create( components ) ).
 
       CREATE DATA t_tab TYPE HANDLE tab_type.
       ASSIGN t_tab->* TO <tab>.
@@ -118,13 +141,14 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
       " sy IS a SYST, so the rows are filled by component name - the only
       " way to write a structure whose type exists at runtime alone
       DO 3 TIMES.
-        APPEND INITIAL LINE TO <tab> ASSIGNING FIELD-SYMBOL(<row>).
+        
+        APPEND INITIAL LINE TO <tab> ASSIGNING <row>.
         MOVE-CORRESPONDING sy TO <row>.
       ENDDO.
 
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 

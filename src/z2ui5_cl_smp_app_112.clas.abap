@@ -11,7 +11,7 @@ CLASS z2ui5_cl_smp_app_112 DEFINITION PUBLIC.
 
     DATA view_parent TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA mv_class_2 TYPE string.
-    DATA t_items TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
+    DATA t_items TYPE STANDARD TABLE OF ty_s_item WITH DEFAULT KEY.
 
     METHODS on_event.
     METHODS view_display.
@@ -29,9 +29,20 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
 
     " Deliberately styled DIFFERENTLY from sub-app class 1 (a form), so the
     " parent demo 104 shows at a glance WHICH class is embedded right now.
-    t_items = VALUE #( ( product = `Notebook 17"` info = `in stock` )
-                       ( product = `Monitor 27"`  info = `2 weeks` )
-                       ( product = `Dock Pro`     info = `sold out` ) ).
+    DATA temp1 LIKE t_items.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-product = `Notebook 17"`.
+    temp2-info = `in stock`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `Monitor 27"`.
+    temp2-info = `2 weeks`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `Dock Pro`.
+    temp2-info = `sold out`.
+    INSERT temp2 INTO TABLE temp1.
+    t_items = temp1.
 
     view_parent->tag( `MessageStrip`
         )->a( n = `text`     v = `SUB-APP CLASS 2 (z2ui5_cl_smp_app_112): an orange LIST - a different class ` &&
@@ -63,7 +74,7 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `MESSAGE_SUB` ).
+    IF client->check_on_event( `MESSAGE_SUB` ) IS NOT INITIAL.
       client->message_box_display( `event raised in SUB-APP CLASS 2 (the list)` ).
     ENDIF.
 
@@ -76,9 +87,9 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
     " client->view_display( ) - it renders into the parent's view reference
     " (view_parent), and the parent app owns the screen and re-displays it.
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 

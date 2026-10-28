@@ -41,28 +41,40 @@ CLASS z2ui5_cl_smp_app_503 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA t_skipped TYPE z2ui5_if_client=>ty_t_model_skip.
+        FIELD-SYMBOLS <temp1> LIKE LINE OF t_skipped.
+        DATA temp2 LIKE sy-tabix.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       amount = 100.
       rate   = 19.
 
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( `CALC` ).
+    ELSEIF client->check_on_event( `CALC` ) IS NOT INITIAL.
 
       " text typed into an Input bound to TYPE i does not dump: the framework
       " keeps the old number and names the field in t_model_skipped - so the
       " sum would silently use a value the screen no longer shows
-      DATA(t_skipped) = client->get( )-t_model_skipped.
+      
+      t_skipped = client->get( )-t_model_skipped.
       IF t_skipped IS NOT INITIAL.
         gross = ``.
-        client->message_box_display( text = |'{ t_skipped[ 1 ]-value }' is no whole number this field can hold - it keeps its old value.|
+        
+        
+        temp2 = sy-tabix.
+        READ TABLE t_skipped INDEX 1 ASSIGNING <temp1>.
+        sy-tabix = temp2.
+        IF sy-subrc <> 0.
+          ASSERT 1 = 0.
+        ENDIF.
+        client->message_box_display( text = |'{ <temp1>-value }' is no whole number this field can hold - it keeps its old value.|
                                      type = `error` ).
         RETURN.
       ENDIF.
@@ -95,7 +107,9 @@ CLASS z2ui5_cl_smp_app_503 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -103,7 +117,8 @@ CLASS z2ui5_cl_smp_app_503 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Basics VI - Unit Tests for the App Logic`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

@@ -12,7 +12,7 @@ CLASS z2ui5_cl_smp_app_542 DEFINITION PUBLIC.
         quantity TYPE i,
         price    TYPE p LENGTH 9 DECIMALS 2,
       END OF ty_s_product.
-    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
+    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH DEFAULT KEY.
     DATA note       TYPE string.
 
   PROTECTED SECTION.
@@ -64,11 +64,11 @@ CLASS z2ui5_cl_smp_app_542 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -79,11 +79,31 @@ CLASS z2ui5_cl_smp_app_542 IMPLEMENTATION.
 
     " the second and third name hold the separator and quotes on purpose -
     " the CSV has to escape them
-    t_products = VALUE #(
-        ( id = `P-001` name = `Notebook Basic 15`  quantity = 3  price = `956.00` )
-        ( id = `P-002` name = `Cable "USB-C"; 2 m` quantity = 25 price = `9.90` )
-        ( id = `P-003` name = `Monitor 27"`        quantity = 4  price = `289.00` )
-        ( id = `P-004` name = `Wireless Mouse`     quantity = 12 price = `24.50` ) ).
+    DATA temp1 LIKE t_products.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-id = `P-001`.
+    temp2-name = `Notebook Basic 15`.
+    temp2-quantity = 3.
+    temp2-price = `956.00`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `P-002`.
+    temp2-name = `Cable "USB-C"; 2 m`.
+    temp2-quantity = 25.
+    temp2-price = `9.90`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `P-003`.
+    temp2-name = `Monitor 27"`.
+    temp2-quantity = 4.
+    temp2-price = `289.00`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-id = `P-004`.
+    temp2-name = `Wireless Mouse`.
+    temp2-quantity = 12.
+    temp2-price = `24.50`.
+    INSERT temp2 INTO TABLE temp1.
+    t_products = temp1.
     note = `Stock list exported from abap2UI5.`.
 
     view_display( ).
@@ -92,22 +112,26 @@ CLASS z2ui5_cl_smp_app_542 IMPLEMENTATION.
 
 
   METHOD on_event.
+          DATA zip TYPE REF TO cl_abap_zip.
+        DATA error TYPE REF TO cx_root.
 
     TRY.
 
-        IF client->check_on_event( `DOWNLOAD_CSV` ).
+        IF client->check_on_event( `DOWNLOAD_CSV` ) IS NOT INITIAL.
           file_download( name = `products.csv` mime = `text/csv` content = string_to_xstring( csv_build( ) ) ).
 
-        ELSEIF client->check_on_event( `DOWNLOAD_ZIP` ).
+        ELSEIF client->check_on_event( `DOWNLOAD_ZIP` ) IS NOT INITIAL.
 
-          DATA(zip) = NEW cl_abap_zip( ).
+          
+          CREATE OBJECT zip TYPE cl_abap_zip.
           zip->add( name = `products.csv` content = string_to_xstring( csv_build( ) ) ).
           zip->add( name = `note.txt`     content = string_to_xstring( note ) ).
 
           file_download( name = `export.zip` mime = `application/zip` content = zip->save( ) ).
         ENDIF.
 
-      CATCH cx_root INTO DATA(error).
+        
+      CATCH cx_root INTO error.
         client->message_box_display( text = error->get_text( ) type = `error` ).
     ENDTRY.
 
@@ -115,11 +139,13 @@ CLASS z2ui5_cl_smp_app_542 IMPLEMENTATION.
 
 
   METHOD csv_build.
+    DATA product LIKE LINE OF t_products.
 
     " a header line, then one line per row - separator ;, lines end in CRLF
     result = |ID;Name;Quantity;Price\r\n|.
 
-    LOOP AT t_products INTO DATA(product).
+    
+    LOOP AT t_products INTO product.
       result = result && |{ csv_field( product-id ) };{ csv_field( product-name ) };| &&
                          |{ csv_field( |{ product-quantity }| ) };{ csv_field( |{ product-price }| ) }\r\n|.
     ENDLOOP.
@@ -144,9 +170,16 @@ CLASS z2ui5_cl_smp_app_542 IMPLEMENTATION.
 
     " download_b64_file takes a base64 data URL and the name the browser
     " saves it under
+    DATA temp3 TYPE string_table.
+    DATA temp1 LIKE LINE OF temp3.
+    CLEAR temp3.
+    
+    temp1 = |data:{ mime };base64,{ base64_encode( content ) }|.
+    INSERT temp1 INTO TABLE temp3.
+    INSERT name INTO TABLE temp3.
     client->follow_up_action(
         val   = client->cs_event-download_b64_file
-        t_arg = VALUE #( ( |data:{ mime };base64,{ base64_encode( content ) }| ) ( name ) ) ).
+        t_arg = temp3 ).
 
   ENDMETHOD.
 
@@ -212,14 +245,18 @@ CLASS z2ui5_cl_smp_app_542 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - File - ZIP and CSV Download with cl_abap_zip`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -233,7 +270,8 @@ CLASS z2ui5_cl_smp_app_542 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(table) = page->ele( `Table`
+    
+    table = page->ele( `Table`
         )->a( n = `items` v = client->_bind( t_products )
         )->a( n = `class` v = `sapUiSmallMargin` ).
 
