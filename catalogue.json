@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 132,
+  "samples": 133,
   "categories": 25,
   "stages": 6
  },
@@ -1600,6 +1600,35 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/formatter"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_545",
+   "file": "src/z2ui5_cl_smp_app_545.clas.abap",
+   "category": "Grid Table",
+   "stage": "rows",
+   "title": "Grid Table",
+   "description": "Collapsible Subtotals in a TreeTable (A)",
+   "summary": "Subtotals as a hierarchy in a sap.ui.table.TreeTable - a grand total per currency, a node per region and country carrying its sum, the sales as leaves - collapsible in the browser.",
+   "keywords": [
+    "tree",
+    "table",
+    "treetable",
+    "subtotal",
+    "grand",
+    "total",
+    "group",
+    "sum",
+    "currency",
+    "hierarchy",
+    "collapse",
+    "expand",
+    "arraynames",
+    "expandtolevel",
+    "collapseall",
+    "control_by_id",
+    "rowsettings"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_538",

@@ -3,7 +3,7 @@
 
 # The sample catalogue
 
-Every app in this repository — 143 of them — with what it shows and a link
+Every app in this repository — 144 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
@@ -13,7 +13,7 @@ nothing in it is stripped from `702`.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 132 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 133 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -28,10 +28,10 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path
 
-The **132 ready-to-run samples** the README leads with, and the
+The **133 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 10 helper apps they call and the
-overview app itself, that is 143 apps on every branch.
+overview app itself, that is 144 apps on every branch.
 
 [AI](#ai) · [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -163,6 +163,7 @@ overview app itself, that is 143 apps on every branch.
 
 | Sample | Class |
 |---|---|
+| Collapsible Subtotals in a TreeTable (A)<br>Subtotals as a hierarchy in a sap.ui.table.TreeTable - a grand total per currency, a node per region and country carrying its sum, the sales as leaves - collapsible in the browser.<br><sub>tree table treetable subtotal grand total group sum currency hierarchy collapse expand arraynames expandtolevel collapseall control_by_id rowsettings</sub> | [`Z2UI5_CL_SMP_APP_545`](src/z2ui5_cl_smp_app_545.clas.abap) |
 | Copy & Paste, CellSelector (UI5 1.119+) (A)<br>Spreadsheet-style copy and paste on a grid table: select a cell block and copy it, or paste rows from Excel into the table and let the backend append them - needs UI5 1.119 or newer.<br><sub>clipboard copy paste cellselector copyprovider pasteprovider excel spreadsheet grid control_by_id</sub> | [`Z2UI5_CL_SMP_APP_538`](src/z2ui5_cl_smp_app_538.clas.abap) |
 | Events on Cell Level<br>Events on cell level in a grid table: which row and which column the user was in, and what arrives in the backend.<br><sub>cell enter row index event grid alv</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables)</sub> | [`Z2UI5_CL_SMP_APP_160`](src/z2ui5_cl_smp_app_160.clas.abap) |
 | Full Example with sap.ui.table<br>The full sap.ui.table example: a DynamicPage with search, sort, filter, currency columns and row actions - the closest thing here to a finished ALV.<br><sub>grid alv dynamicpage column row action currency search sort filter</sub><br><sub>docs: [cookbook/model/tables](https://abap2ui5.github.io/docs/cookbook/model/tables), [tutorials/step-9](https://abap2ui5.github.io/docs/tutorials/step-9), [tutorials/step-10](https://abap2ui5.github.io/docs/tutorials/step-10)</sub> | [`Z2UI5_CL_SMP_APP_070`](src/z2ui5_cl_smp_app_070.clas.abap) |
