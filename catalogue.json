@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 131,
+  "samples": 133,
   "categories": 25,
   "stages": 6
  },
@@ -1602,6 +1602,35 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_545",
+   "file": "src/z2ui5_cl_smp_app_545.clas.abap",
+   "category": "Grid Table",
+   "stage": "rows",
+   "title": "Grid Table",
+   "description": "Collapsible Subtotals in a TreeTable (A)",
+   "summary": "Subtotals as a hierarchy in a sap.ui.table.TreeTable - a grand total per currency, a node per region and country carrying its sum, the sales as leaves - collapsible in the browser.",
+   "keywords": [
+    "tree",
+    "table",
+    "treetable",
+    "subtotal",
+    "grand",
+    "total",
+    "group",
+    "sum",
+    "currency",
+    "hierarchy",
+    "collapse",
+    "expand",
+    "arraynames",
+    "expandtolevel",
+    "collapseall",
+    "control_by_id",
+    "rowsettings"
+   ],
+   "docs": []
+  },
+  {
    "class": "z2ui5_cl_smp_app_538",
    "file": "src/z2ui5_cl_smp_app_538.clas.abap",
    "category": "Grid Table",
@@ -1690,6 +1719,28 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/tables"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_544",
+   "file": "src/z2ui5_cl_smp_app_544.clas.abap",
+   "category": "Grid Table",
+   "stage": "rows",
+   "title": "Grid Table",
+   "description": "Subtotals and Grand Total per Currency",
+   "summary": "Groups a sap.ui.table by the columns the user ticks - a subtotal row after each group, a grand total at the end, amounts summed per currency - and styles the total rows from their data.",
+   "keywords": [
+    "grid",
+    "table",
+    "subtotal",
+    "grand",
+    "total",
+    "group",
+    "sum",
+    "currency",
+    "rowsettings",
+    "writetodom"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_498",
