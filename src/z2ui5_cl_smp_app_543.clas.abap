@@ -12,7 +12,7 @@ CLASS z2ui5_cl_smp_app_543 DEFINITION PUBLIC.
         material TYPE string,
         quantity TYPE string,
       END OF ty_s_count.
-    DATA t_counts  TYPE STANDARD TABLE OF ty_s_count WITH EMPTY KEY.
+    DATA t_counts  TYPE STANDARD TABLE OF ty_s_count WITH DEFAULT KEY.
     DATA bin       TYPE string.
     DATA material  TYPE string.
     DATA quantity  TYPE string.
@@ -34,11 +34,11 @@ CLASS z2ui5_cl_smp_app_543 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -46,6 +46,7 @@ CLASS z2ui5_cl_smp_app_543 IMPLEMENTATION.
 
 
   METHOD on_init.
+    DATA temp1 TYPE string_table.
 
     bin = `A-01-03`.
     view_display( ).
@@ -54,14 +55,18 @@ CLASS z2ui5_cl_smp_app_543 IMPLEMENTATION.
     " the backend cannot be reached it is kept in the browser - with what was
     " typed - and sent once it can, in the order it was made. &1 in the toast
     " is how many wait. Every other event (CLEAR here) fails as usual.
+    
+    CLEAR temp1.
+    INSERT `Saved offline - &1 waiting, sent when the network is back` INTO TABLE temp1.
+    INSERT `SAVE` INTO TABLE temp1.
     client->follow_up_action( val   = client->cs_event-offline_queue
-                              t_arg = VALUE #( ( `Saved offline - &1 waiting, sent when the network is back` )
-                                               ( `SAVE` ) ) ).
+                              t_arg = temp1 ).
 
   ENDMETHOD.
 
 
   METHOD on_event.
+        DATA temp3 TYPE z2ui5_cl_smp_app_543=>ty_s_count.
 
     CASE client->get_event( ).
 
@@ -72,10 +77,13 @@ CLASS z2ui5_cl_smp_app_543 IMPLEMENTATION.
           client->message_box_display( text = `Material and quantity are required.` type = `error` ).
           RETURN.
         ENDIF.
-        INSERT VALUE #( pos      = lines( t_counts ) + 1
-                        bin      = bin
-                        material = material
-                        quantity = quantity ) INTO TABLE t_counts.
+        
+        CLEAR temp3.
+        temp3-pos = lines( t_counts ) + 1.
+        temp3-bin = bin.
+        temp3-material = material.
+        temp3-quantity = quantity.
+        INSERT temp3 INTO TABLE t_counts.
         CLEAR material.
         CLEAR quantity.
         client->message_toast_display( |Counted - { lines( t_counts ) } entries| ).
@@ -90,14 +98,18 @@ CLASS z2ui5_cl_smp_app_543 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Browser - Offline Queue for a Stock Count`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -142,7 +154,8 @@ CLASS z2ui5_cl_smp_app_543 IMPLEMENTATION.
                 )->a( n = `class` v = `sapUiSmallMarginBegin`
                 )->a( n = `press` v = client->_event( `CLEAR` ) ).
 
-    DATA(table) = page->ele( `Table`
+    
+    table = page->ele( `Table`
         )->a( n = `items`      v = client->_bind( t_counts )
         )->a( n = `noDataText` v = `Nothing counted yet`
         )->a( n = `class`      v = `sapUiSmallMargin` ).

@@ -12,7 +12,7 @@ CLASS z2ui5_cl_smp_app_535 DEFINITION PUBLIC.
         status  TYPE string,
       END OF ty_s_order.
     DATA status   TYPE string.
-    DATA t_orders TYPE STANDARD TABLE OF ty_s_order WITH EMPTY KEY.
+    DATA t_orders TYPE STANDARD TABLE OF ty_s_order WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -27,23 +27,43 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_orders.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       status   = `new`.
-      t_orders = VALUE #(
-          ( id = `4711` product = `Notebook`   status = `new` )
-          ( id = `4712` product = `Monitor`    status = `shipped` )
-          ( id = `4713` product = `Keyboard`   status = `delayed` )
-          ( id = `4714` product = `Mouse`      status = `shipped` )
-          ( id = `4715` product = `Headset`    status = `delayed` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-id = `4711`.
+      temp2-product = `Notebook`.
+      temp2-status = `new`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-id = `4712`.
+      temp2-product = `Monitor`.
+      temp2-status = `shipped`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-id = `4713`.
+      temp2-product = `Keyboard`.
+      temp2-status = `delayed`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-id = `4714`.
+      temp2-product = `Mouse`.
+      temp2-status = `shipped`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-id = `4715`.
+      temp2-product = `Headset`.
+      temp2-status = `delayed`.
+      INSERT temp2 INTO TABLE temp1.
+      t_orders = temp1.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `NEXT` ).
+    ELSEIF client->check_on_event( `NEXT` ) IS NOT INITIAL.
       status_next( ).
     ENDIF.
 
@@ -52,24 +72,35 @@ CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
 
   METHOD status_next.
 
-    status = SWITCH #( status
-        WHEN `new`     THEN `shipped`
-        WHEN `shipped` THEN `delayed`
-        ELSE `new` ).
+    DATA temp3 TYPE string.
+    CASE status.
+      WHEN `new`.
+        temp3 = `shipped`.
+      WHEN `shipped`.
+        temp3 = `delayed`.
+      WHEN OTHERS.
+        temp3 = `new`.
+    ENDCASE.
+    status = temp3.
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA panel TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - CSS - Style by Data with CustomData writeToDom`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -113,7 +144,8 @@ CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
                     )->a( n = `value`      v = `Hello`
                     )->a( n = `writeToDom` b = abap_true ).
 
-    DATA(panel) = page->ele( `Panel`
+    
+    panel = page->ele( `Panel`
         )->a( n = `headerText` v = `Data-dependent styling`
         )->a( n = `class`      v = `sapUiResponsiveMargin`
         )->a( n = `width`      v = `auto` ).
@@ -160,7 +192,8 @@ CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
         )->a( n = `text`  v = `The button renders as <button data-status="` && client->_bind( status ) && `" class="sapMBtn ...">`
         )->a( n = `class` v = `sapUiSmallMarginTop` ).
 
-    DATA(tab) = page->ele( `Table`
+    
+    tab = page->ele( `Table`
         )->a( n = `items` v = client->_bind( t_orders )
         )->a( n = `class` v = `sapUiResponsiveMargin`
         )->a( n = `width` v = `auto`

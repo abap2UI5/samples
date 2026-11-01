@@ -25,7 +25,10 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
     " the classes below exist nowhere in UI5 - they are shipped with the view
     " in the core:HTML style element and referenced by the class attribute of
     " the controls, so a page can carry its own design
-    DATA(css) = `.navigationExamples .ne-flexbox1,`              &&
+    DATA css TYPE string.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    css = `.navigationExamples .ne-flexbox1,`              &&
                 `.navigationExamples .ne-flexbox2 \{`             &&
                 `    padding: 0;`                                &&
                 `\}`                                              &&
@@ -62,7 +65,8 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
                 `    font-size: 0.875rem;`                       &&
                 `\}`.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -74,7 +78,8 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
     view->tag( n = `HTML` ns = `core`
         )->a( n = `content` v = `<style>` && css && `</style>` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - CSS - FlexBox Layouts with Custom Classes`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -153,7 +158,8 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
@@ -174,9 +180,9 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `POPOVER` ).
+    ELSEIF client->check_on_event( `POPOVER` ) IS NOT INITIAL.
       popover_display( `hint_icon` ).
     ENDIF.
 

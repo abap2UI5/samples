@@ -12,7 +12,7 @@ CLASS z2ui5_cl_smp_app_536 DEFINITION PUBLIC.
       END OF ty_s_question.
     DATA coords      TYPE string.
     DATA answer      TYPE string.
-    DATA t_questions TYPE STANDARD TABLE OF ty_s_question WITH EMPTY KEY.
+    DATA t_questions TYPE STANDARD TABLE OF ty_s_question WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -27,22 +27,30 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_questions.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       coords      = `49.29, 8.64`.
-      t_questions = VALUE #(
-          ( question = `What does data( ) return without a key?`
-            answer   = `A plain object that holds all custom data of the control.` )
-          ( question = `Which namespace makes the attribute shortcut work?`
-            answer   = `http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1` )
-          ( question = `Can the value of a custom data be bound?`
-            answer   = `Yes - it is a normal property and follows its binding like any other.` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-question = `What does data( ) return without a key?`.
+      temp2-answer = `A plain object that holds all custom data of the control.`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-question = `Which namespace makes the attribute shortcut work?`.
+      temp2-answer = `http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-question = `Can the value of a custom data be bound?`.
+      temp2-answer = `Yes - it is a normal property and follows its binding like any other.`.
+      INSERT temp2 INTO TABLE temp1.
+      t_questions = temp1.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -78,7 +86,11 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA panel TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA list TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -86,7 +98,8 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:app`    v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Event - Custom Data Attached to Controls`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -105,7 +118,8 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
     " The backend SETS custom data through the binding (app:coords follows the
     " input), and reads it back with data( ) as an event argument. Writing it
     " into the HTML DOM as a data-* attribute is Z2UI5_CL_SMP_APP_535
-    DATA(panel) = page->ele( `Panel`
+    
+    panel = page->ele( `Panel`
         )->a( n = `headerText` v = `The app: namespace shortcut`
         )->a( n = `class`      v = `sapUiResponsiveMargin`
         )->a( n = `width`      v = `auto` ).
@@ -137,7 +151,8 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
 
     " a core:CustomData in the item template is cloned for every row, and its
     " value binding resolves against that row - so each item carries its answer
-    DATA(list) = page->ele( `List`
+    
+    list = page->ele( `List`
         )->a( n = `headerText`      v = `CustomData in a list binding - select a question`
         )->a( n = `mode`            v = `SingleSelectMaster`
         )->a( n = `items`           v = client->_bind( t_questions )

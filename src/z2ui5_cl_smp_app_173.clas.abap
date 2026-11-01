@@ -19,7 +19,7 @@ CLASS z2ui5_cl_smp_app_173 DEFINITION PUBLIC.
         date TYPE string,
         age  TYPE string,
       END OF ty_s_data,
-      ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH EMPTY KEY.
+      ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH DEFAULT KEY.
 
     TYPES:
       BEGIN OF ty_s_layout,
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_smp_app_173 DEFINITION PUBLIC.
         merge   TYPE string,
         visible TYPE string,
       END OF ty_s_layout,
-      ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH EMPTY KEY.
+      ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH DEFAULT KEY.
 
     TYPES:
       BEGIN OF ty_s_field,
@@ -35,14 +35,14 @@ CLASS z2ui5_cl_smp_app_173 DEFINITION PUBLIC.
         label TYPE string,
         type  TYPE string,
       END OF ty_s_field,
-      ty_t_field TYPE STANDARD TABLE OF ty_s_field WITH EMPTY KEY.
+      ty_t_field TYPE STANDARD TABLE OF ty_s_field WITH DEFAULT KEY.
 
     TYPES:
       BEGIN OF ty_s_group,
         title   TYPE string,
         t_field TYPE ty_t_field,
       END OF ty_s_group,
-      ty_t_group TYPE STANDARD TABLE OF ty_s_group WITH EMPTY KEY.
+      ty_t_group TYPE STANDARD TABLE OF ty_s_group WITH DEFAULT KEY.
 
     TYPES:
       BEGIN OF ty_s_meta,
@@ -83,12 +83,23 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
     " the template model is the view model, so what the repeat, the with and
     " the if read are bound attributes - their paths are composed from the
     " bind call, never written by hand
-    DATA(layout_path) = |\{template>{ client->_bind( val = mt_layout path = abap_true ) }\}|.
-    DATA(flag_path)   = |\{template>{ client->_bind( val = mv_flag path = abap_true ) }\}|.
-    DATA(meta_path)   = |template>{ client->_bind( val = ms_meta path = abap_true ) }|.
-    DATA(detail_path) = |\{{ client->_bind( val = ms_detail path = abap_true ) }\}|.
+    DATA layout_path TYPE string.
+    DATA flag_path TYPE string.
+    DATA meta_path TYPE string.
+    DATA detail_path TYPE string.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA box TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA field TYPE REF TO z2ui5_cl_ui5_view_builder.
+    layout_path = |\{template>{ client->_bind( val = mt_layout path = abap_true ) }\}|.
+    
+    flag_path   = |\{template>{ client->_bind( val = mv_flag path = abap_true ) }\}|.
+    
+    meta_path   = |template>{ client->_bind( val = ms_meta path = abap_true ) }|.
+    
+    detail_path = |\{{ client->_bind( val = ms_detail path = abap_true ) }\}|.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock`   v = `true`
             )->a( n = `height`         v = `100%`
@@ -150,7 +161,8 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
         )->a( n = `text`  v = `Form - fields from a meta model (template:with, nested repeat, if/elseif/else)`
         )->a( n = `class` v = `sapUiMediumMarginTop` ).
 
-    DATA(box) = view->ele( n = `with` ns = `template`
+    
+    box = view->ele( n = `with` ns = `template`
         )->a( n = `path` v = meta_path
         )->a( n = `var`  v = `meta`
         )->ele( `VBox`
@@ -168,7 +180,8 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
                     )->a( n = `title` v = `{head>LABEL}`
                     )->a( n = `text`  v = `{= '{' + ${head>NAME} + '}' }` ).
 
-    DATA(field) = box->ele( n = `SimpleForm` ns = `form`
+    
+    field = box->ele( n = `SimpleForm` ns = `form`
         )->a( n = `editable` b = abap_true
         )->a( n = `layout`   v = `ResponsiveGridLayout`
         )->ele( n = `content` ns = `form`
@@ -233,32 +246,93 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
 
   METHOD model_init.
 
-    mt_data = VALUE #( ( name = `Theo` date = `01.01.2000` age = `5` )
-                       ( name = `Lore` date = `01.01.2000` age = `1` ) ).
+    DATA temp1 TYPE z2ui5_cl_smp_app_173=>ty_t_data.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA temp3 TYPE z2ui5_cl_smp_app_173=>ty_t_layout.
+    DATA temp4 LIKE LINE OF temp3.
+    DATA temp5 TYPE z2ui5_cl_smp_app_173=>ty_t_group.
+    DATA temp6 LIKE LINE OF temp5.
+    DATA temp7 TYPE z2ui5_cl_smp_app_173=>ty_t_field.
+    DATA temp8 LIKE LINE OF temp7.
+    DATA temp9 TYPE z2ui5_cl_smp_app_173=>ty_t_field.
+    DATA temp10 LIKE LINE OF temp9.
+    CLEAR temp1.
+    
+    temp2-name = `Theo`.
+    temp2-date = `01.01.2000`.
+    temp2-age = `5`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-name = `Lore`.
+    temp2-date = `01.01.2000`.
+    temp2-age = `1`.
+    INSERT temp2 INTO TABLE temp1.
+    mt_data = temp1.
 
-    mt_layout = VALUE #( ( fname = `NAME` merge = `false` visible = `true` )
-                         ( fname = `DATE` merge = `false` visible = `true` )
-                         ( fname = `AGE`  merge = `false` visible = `false` ) ).
+    
+    CLEAR temp3.
+    
+    temp4-fname = `NAME`.
+    temp4-merge = `false`.
+    temp4-visible = `true`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-fname = `DATE`.
+    temp4-merge = `false`.
+    temp4-visible = `true`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-fname = `AGE`.
+    temp4-merge = `false`.
+    temp4-visible = `false`.
+    INSERT temp4 INTO TABLE temp3.
+    mt_layout = temp3.
 
     " the meta model - which fields the form has, in which group, of which
     " type. Reorder a field, move it to the other group or change its type
     " and the generated form follows, no view code changes
-    ms_meta = VALUE #(
-      entity  = `Person`
-      t_group = VALUE #(
-        ( title   = `General`
-          t_field = VALUE #( ( name = `NAME` label = `Name`       type = `STRING` )
-                             ( name = `DATE` label = `Birth Date` type = `DATE` )
-                             ( name = `CITY` label = `City`       type = `STRING` ) ) )
-        ( title   = `Details`
-          t_field = VALUE #( ( name = `AGE`    label = `Age`    type = `NUMBER` )
-                             ( name = `ACTIVE` label = `Active` type = `BOOLEAN` ) ) ) ) ).
+    CLEAR ms_meta.
+    ms_meta-entity = `Person`.
+    
+    CLEAR temp5.
+    
+    temp6-title = `General`.
+    
+    CLEAR temp7.
+    
+    temp8-name = `NAME`.
+    temp8-label = `Name`.
+    temp8-type = `STRING`.
+    INSERT temp8 INTO TABLE temp7.
+    temp8-name = `DATE`.
+    temp8-label = `Birth Date`.
+    temp8-type = `DATE`.
+    INSERT temp8 INTO TABLE temp7.
+    temp8-name = `CITY`.
+    temp8-label = `City`.
+    temp8-type = `STRING`.
+    INSERT temp8 INTO TABLE temp7.
+    temp6-t_field = temp7.
+    INSERT temp6 INTO TABLE temp5.
+    temp6-title = `Details`.
+    
+    CLEAR temp9.
+    
+    temp10-name = `AGE`.
+    temp10-label = `Age`.
+    temp10-type = `NUMBER`.
+    INSERT temp10 INTO TABLE temp9.
+    temp10-name = `ACTIVE`.
+    temp10-label = `Active`.
+    temp10-type = `BOOLEAN`.
+    INSERT temp10 INTO TABLE temp9.
+    temp6-t_field = temp9.
+    INSERT temp6 INTO TABLE temp5.
+    ms_meta-t_group = temp5.
 
-    ms_detail = VALUE #( name   = `Lore`
-                         date   = `2000-01-01`
-                         city   = `Walldorf`
-                         age    = 26
-                         active = abap_true ).
+    CLEAR ms_detail.
+    ms_detail-name = `Lore`.
+    ms_detail-date = `2000-01-01`.
+    ms_detail-city = `Walldorf`.
+    ms_detail-age = 26.
+    ms_detail-active = abap_true.
 
   ENDMETHOD.
 
@@ -267,12 +341,12 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `CHANGE_FLAG` ).
+    ELSEIF client->check_on_event( `CHANGE_FLAG` ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
