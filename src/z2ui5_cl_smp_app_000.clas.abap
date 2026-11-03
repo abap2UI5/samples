@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 133 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 135 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -776,9 +776,14 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_173` )
       ( group = `Show many rows` header = `Grid Table`
+        sub = `10,000 Rows, Column Sort and Filter on Server`
+        keywords = `large table window windowed _bind_tab t_sort _bind_path grid table scrolling lazy loading server sort server filter column menu sortproperty filterproperty big data 10000 rows performance`
+        intro = `Internal tables on screen - the responsive table, the grid table for large sets, lists and trees - with growing, selection, editing and everything a row can carry.`
+        path = `src` app = `z2ui5_cl_smp_app_547` )
+      ( group = `Show many rows` header = `Grid Table`
         sub = `Collapsible Subtotals in a TreeTable (A)`
         keywords = `tree table treetable subtotal grand total group sum currency hierarchy collapse expand arraynames expandtolevel collapseall control_by_id rowsettings`
-        intro = `Internal tables on screen - the responsive table, the grid table for large sets, lists and trees - with growing, selection, editing and everything a row can carry.`
+        intro = ``
         path = `src` app = `z2ui5_cl_smp_app_545` )
       ( group = `Show many rows` header = `Grid Table`
         sub = `Copy & Paste, CellSelector (UI5 1.119+) (A)`
@@ -792,6 +797,11 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Show many rows` header = `List` sub = `Filter and Sort the Binding from ABAP (A)` keywords = `binding_call getbinding sorter filter follow_up_action` intro = `` path = `src` app = `z2ui5_cl_smp_app_454` )
       ( group = `Show many rows` header = `List` sub = `Live Filter on the Client, No Roundtrip (A)` keywords = `binding_call live search client side no roundtrip filter` intro = `` path = `src` app = `z2ui5_cl_smp_app_455` )
       ( group = `Show many rows` header = `List` sub = `StandardListItem, Highlight and Events` keywords = `sap.m.list standardlistitem highlight infostate press selection` intro = `` path = `src` app = `z2ui5_cl_smp_app_048` )
+      ( group = `Show many rows` header = `Table`
+        sub = `10,000 Rows in Windows, Server Search and Sort (A)`
+        keywords = `large table window windowed _bind_tab _bind_path growing paging lazy loading server sort server filter search binding_call follow_up_action big data 10000 rows performance selection`
+        intro = ``
+        path = `src` app = `z2ui5_cl_smp_app_546` )
       ( group = `Show many rows` header = `Table`
         sub = `Copy Options of the CopyProvider (UI5 1.119+) (A)`
         keywords = `clipboard copy cellselector copyprovider copysparse copypreference template spreadsheet control_by_id`
