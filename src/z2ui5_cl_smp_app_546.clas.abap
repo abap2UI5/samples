@@ -1,5 +1,5 @@
-" @keywords large table window windowed _bind_path growing paging lazy loading server sort server filter search binding_call follow_up_action big data 10000 rows performance selection
-" @summary 10,000 products in a growing sap.m.Table with _bind( window ): 200 rows at a time in the browser, search and sort on the server over all rows, the selection back in its own row.
+" @keywords large table window windowed _bind_tab _bind_path growing paging lazy loading server sort server filter search binding_call follow_up_action big data 10000 rows performance selection
+" @summary 10,000 products in a growing sap.m.Table with _bind_tab( ): 200 rows at a time in the browser, search and sort on the server over all rows, the selection back in its own row.
 CLASS z2ui5_cl_smp_app_546 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -106,7 +106,7 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `The table is bound with _bind( val = t_product window = 200 ): the 10,000 rows stay in ` &&
+        )->a( n = `text`     v = `The table is bound with _bind_tab( val = t_product window = 200 ): the 10,000 rows stay in ` &&
                    `the app, the browser gets 200 of them and asks the server for the next 200 when More reaches ` &&
                    `the end - without calling the app. The search and the two sort buttons are binding calls, and ` &&
                    `the binding hands them to the server, which sorts and filters all rows. Tick some products and ` &&
@@ -120,8 +120,8 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
 
     DATA(table) = page->ele( `Table`
         )->a( n = `id`               v = `products`
-        )->a( n = `items`            v = client->_bind( val    = t_product
-                                                        window = 200 )
+        )->a( n = `items`            v = client->_bind_tab( val    = t_product
+                                                            window = 200 )
         )->a( n = `growing`          v = `true`
         )->a( n = `growingThreshold` v = `50`
         )->a( n = `class`            v = `sapUiSmallMarginBeginEnd` ).
@@ -131,7 +131,7 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
             )->tag( `Title`
                 )->a( n = `text` v = `Products`
             )->tag( `ObjectNumber`
-                " abap2ui5lint-disable-next-line unknown-binding-path -- /__WINDOW is the window state the framework sends next to a table bound with window
+                " abap2ui5lint-disable-next-line unknown-binding-path -- /__WINDOW is the window state the framework sends next to a table bound with _bind_tab( )
                 )->a( n = `number` v = total
                 )->a( n = `unit`   v = `rows`
             )->tag( `ToolbarSpacer`

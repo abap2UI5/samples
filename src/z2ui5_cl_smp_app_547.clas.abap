@@ -1,5 +1,5 @@
-" @keywords large table window windowed _bind_path grid table scrolling lazy loading server sort server filter column menu sortproperty filterproperty big data 10000 rows performance
-" @summary 10,000 orders in a sap.ui.table.Table with _bind( window ): the browser holds 100 rows and fetches more as the user scrolls, and the column menu sorts and filters all rows on the server.
+" @keywords large table window windowed _bind_tab t_sort _bind_path grid table scrolling lazy loading server sort server filter column menu sortproperty filterproperty big data 10000 rows performance
+" @summary 10,000 orders in a sap.ui.table.Table with _bind_tab( ): the newest first, the browser holds 100 rows and fetches more as the user scrolls, and the column menu sorts and filters all rows on the server.
 CLASS z2ui5_cl_smp_app_547 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -84,8 +84,9 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `The table is bound with _bind( val = t_order window = 100 ): the 10,000 orders stay in ` &&
-                   `the app and the browser holds 100 of them. Scroll down and the binding fetches the next ` &&
+        )->a( n = `text`     v = `The table is bound with _bind_tab( val = t_order window = 100 ): the 10,000 orders stay in ` &&
+                   `the app and the browser holds 100 of them, the newest first - the order the app passes in ` &&
+                   `t_sort. Scroll down and the binding fetches the next ` &&
                    `window from the server - without calling the app. Sort or filter a column from its menu: the ` &&
                    `server sorts and filters all 10,000 rows and sends the first window of the result.`
         )->a( n = `type`     v = `Information`
@@ -95,9 +96,13 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
     " the window state the server sends along: the rows the filter lets through
     DATA(total) = |\{/__WINDOW{ client->_bind_path( t_order ) }/TOTAL\}|.
 
+    " t_sort: the app's own order, the newest first - the column menu sorts
+    " anew on the server, and a render with the same t_sort keeps that
     DATA(table) = page->ele( n = `Table` ns = `table`
-        )->a( n = `rows`            v = client->_bind( val    = t_order
-                                                       window = 100 )
+        )->a( n = `rows`            v = client->_bind_tab( val    = t_order
+                                                           window = 100
+                                                           t_sort = VALUE #( ( path       = `CREATED`
+                                                                               descending = abap_true ) ) )
         )->a( n = `selectionMode`   v = `None`
         )->a( n = `visibleRowCount` v = `15`
         )->a( n = `class`           v = `sapUiSmallMarginBeginEnd` ).
@@ -107,7 +112,7 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
             )->tag( `Title`
                 )->a( n = `text` v = `Orders`
             )->tag( `ObjectNumber`
-                " abap2ui5lint-disable-next-line unknown-binding-path -- /__WINDOW is the window state the framework sends next to a table bound with window
+                " abap2ui5lint-disable-next-line unknown-binding-path -- /__WINDOW is the window state the framework sends next to a table bound with _bind_tab( )
                 )->a( n = `number` v = total
                 )->a( n = `unit`   v = `rows` ).
 
