@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 133,
+  "samples": 135,
   "categories": 25,
   "stages": 6
  },
@@ -1602,6 +1602,41 @@
    ]
   },
   {
+   "class": "z2ui5_cl_smp_app_547",
+   "file": "src/z2ui5_cl_smp_app_547.clas.abap",
+   "category": "Grid Table",
+   "stage": "rows",
+   "title": "Grid Table",
+   "description": "10,000 Rows, Column Sort and Filter on Server",
+   "summary": "10,000 orders in a sap.ui.table.Table with _bind( window ): the browser holds 100 rows and fetches more as the user scrolls, and the column menu sorts and filters all rows on the server.",
+   "keywords": [
+    "large",
+    "table",
+    "window",
+    "windowed",
+    "_bind_path",
+    "grid",
+    "table",
+    "scrolling",
+    "lazy",
+    "loading",
+    "server",
+    "sort",
+    "server",
+    "filter",
+    "column",
+    "menu",
+    "sortproperty",
+    "filterproperty",
+    "big",
+    "data",
+    "10000",
+    "rows",
+    "performance"
+   ],
+   "docs": []
+  },
+  {
    "class": "z2ui5_cl_smp_app_545",
    "file": "src/z2ui5_cl_smp_app_545.clas.abap",
    "category": "Grid Table",
@@ -2691,6 +2726,40 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/scrolling"
    ]
+  },
+  {
+   "class": "z2ui5_cl_smp_app_546",
+   "file": "src/z2ui5_cl_smp_app_546.clas.abap",
+   "category": "Table",
+   "stage": "rows",
+   "title": "Table",
+   "description": "10,000 Rows in Windows, Server Search and Sort (A)",
+   "summary": "10,000 products in a growing sap.m.Table with _bind( window ): 200 rows at a time in the browser, search and sort on the server over all rows, the selection back in its own row.",
+   "keywords": [
+    "large",
+    "table",
+    "window",
+    "windowed",
+    "_bind_path",
+    "growing",
+    "paging",
+    "lazy",
+    "loading",
+    "server",
+    "sort",
+    "server",
+    "filter",
+    "search",
+    "binding_call",
+    "follow_up_action",
+    "big",
+    "data",
+    "10000",
+    "rows",
+    "performance",
+    "selection"
+   ],
+   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_539",
