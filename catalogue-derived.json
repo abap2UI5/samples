@@ -271,6 +271,6 @@
     {"class":"z2ui5_cl_smp_app_544","minUi5":"1.71","needs":[],"controls":[77,3,23,5,14,6,7,17,18,20,54,55,9,72,83,73],"controlCount":17},
     {"class":"z2ui5_cl_smp_app_545","minUi5":"1.71","needs":[],"controls":[0,23,5,14,6,7,17,18,20,9,72,83,84],"controlCount":23},
     {"class":"z2ui5_cl_smp_app_546","minUi5":"1.71","needs":[],"controls":[0,77,10,11,5,12,14,6,93,7,16,17,18,20,9],"controlCount":31},
-    {"class":"z2ui5_cl_smp_app_547","minUi5":"1.71","needs":[],"controls":[23,5,12,14,6,7,17,18,9,72,73],"controlCount":26}
+    {"class":"z2ui5_cl_smp_app_547","minUi5":"1.71","needs":[],"controls":[23,26,5,12,14,6,7,17,18,9,72,73],"controlCount":26}
   ]
 }

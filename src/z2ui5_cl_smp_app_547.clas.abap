@@ -1,4 +1,4 @@
-" @keywords large table window windowed _bind_tab t_sort _bind_path grid table scrolling lazy loading server sort server filter column menu sortproperty filterproperty big data 10000 rows performance
+" @keywords large table window windowed _bind_tab t_sort _bind_tab_row _bind_path link grid table scrolling lazy loading server sort server filter column menu sortproperty filterproperty big data 10000 rows performance
 " @summary 10,000 orders in a sap.ui.table.Table with _bind_tab( ): the newest first, the browser holds 100 rows and fetches more as the user scrolls, and the column menu sorts and filters all rows on the server.
 CLASS z2ui5_cl_smp_app_547 DEFINITION PUBLIC.
 
@@ -23,6 +23,7 @@ CLASS z2ui5_cl_smp_app_547 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
+    METHODS on_open.
     METHODS view_display.
 
   PRIVATE SECTION.
@@ -39,6 +40,8 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
       on_init( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
+    ELSEIF client->check_on_event( `OPEN` ).
+      on_open( ).
     ENDIF.
 
   ENDMETHOD.
@@ -68,6 +71,24 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD on_open.
+
+    " the link names the row as the grid shows it - sorted and filtered by
+    " the server, so a position, not a row of t_order: _bind_tab_row( )
+    " answers which row it is
+    DATA(row) = client->_bind_tab_row( val = t_order
+                                       row = CONV i( client->get_event_arg( ) ) + 1 ).
+    IF row = 0.
+      RETURN.
+    ENDIF.
+
+    DATA(s_order) = t_order[ row ].
+    client->message_box_display( |Order { s_order-id }: { s_order-customer }, { s_order-city }, | &&
+                                 |{ s_order-status }, { s_order-amount } EUR.| ).
+
+  ENDMETHOD.
+
+
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -88,7 +109,8 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
                    `the app and the browser holds 100 of them, the newest first - the order the app passes in ` &&
                    `t_sort. Scroll down and the binding fetches the next ` &&
                    `window from the server - without calling the app. Sort or filter a column from its menu: the ` &&
-                   `server sorts and filters all 10,000 rows and sends the first window of the result.`
+                   `server sorts and filters all 10,000 rows and sends the first window of the result. An order number ` &&
+                   `opens the order the grid shows there - _bind_tab_row( ) finds it in the table.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -127,8 +149,10 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
         )->tag( `Label`
             )->a( n = `text` v = `Order`
         )->ele( n = `template` ns = `table`
-            )->tag( `Text`
-                )->a( n = `text` v = `{ID}` ).
+            )->tag( `Link`
+                )->a( n = `text`  v = `{ID}`
+                )->a( n = `press` v = client->_event( val = `OPEN`
+                                                      arg = `$event.oSource.getBindingContext().getPath().split('/').pop()` ) ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `CUSTOMER`
