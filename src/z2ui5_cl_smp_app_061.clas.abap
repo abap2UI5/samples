@@ -34,9 +34,6 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    FIELD-SYMBOLS <tab> TYPE table.
-    ASSIGN t_tab->* TO <tab>.
-
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `A table typed dynamically at runtime via RTTI from a DDIC table type, with editable ` &&
                    `multi-select rows bound directly to the dynamically created data. The row type gets an extra ` &&
@@ -45,8 +42,10 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
+    " the generic data reference itself is bound - _bind( ) takes a REF TO
+    " data and binds what it points to, so no ASSIGN is needed just to bind
     DATA(tab) = page->ele( `Table`
-        )->a( n = `items` v = client->_bind( <tab> )
+        )->a( n = `items` v = client->_bind( t_tab )
         )->a( n = `mode`  v = `MultiSelect`
         )->ele( `headerToolbar`
             )->ele( `OverflowToolbar`
