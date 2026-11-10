@@ -20,6 +20,18 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `POPOVER` ).
+      popover_display( `hint_icon` ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD view_display.
 
     " the classes below exist nowhere in UI5 - they are shipped with the view
@@ -167,18 +179,6 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
             )->a( n = `pageId`      v = `sampleInformationId` ).
 
     client->popover_display( xml = view->stringify( ) by_id = id ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_navigated( ).
-      view_display( ).
-    ELSEIF client->check_on_event( `POPOVER` ).
-      popover_display( `hint_icon` ).
-    ENDIF.
 
   ENDMETHOD.
 

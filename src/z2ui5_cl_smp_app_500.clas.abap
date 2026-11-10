@@ -24,8 +24,8 @@ CLASS z2ui5_cl_smp_app_500 DEFINITION PUBLIC.
     DATA client  TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS read_back_from_popup.
 
   PRIVATE SECTION.
@@ -48,63 +48,6 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    t_table = VALUE #( ( row_id = 1 carrid = `LH` connid = `0400` cityfrom = `FRANKFURT` cityto = `NEW YORK` )
-                       ( row_id = 2 carrid = `UA` connid = `0941` cityfrom = `FRANKFURT` cityto = `SAN FRANCISCO` )
-                       ( row_id = 3 carrid = `AA` connid = `0017` cityfrom = `NEW YORK`  cityto = `SAN FRANCISCO` ) ).
-    next_id = 4.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `ROW_SELECT`.
-        " the row press carries its ROW_ID, so the popup app is handed the
-        " row to edit rather than a screen position
-        client->nav_app_call( z2ui5_cl_smp_app_501=>factory( t_table = t_table
-                                                             row_id  = CONV #( client->get_event_arg( ) )
-                                                             edit    = abap_true ) ).
-
-      WHEN `BUTTON_ADD`.
-        client->nav_app_call( z2ui5_cl_smp_app_501=>factory( t_table = t_table
-                                                             row_id  = next_id
-                                                             edit    = abap_false ) ).
-        next_id = next_id + 1.
-
-      WHEN `BUTTON_DELETE`.
-        DELETE t_table WHERE selkz = abap_true.
-        view_display( ).
-
-      WHEN `BUTTON_REFRESH`.
-        on_init( ).
-        view_display( ).
-
-      WHEN `BUTTON_SAVE`.
-        client->message_toast_display( |{ lines( t_table ) } row(s) saved| ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD read_back_from_popup.
-
-    " get_app_prev( ) hands over the INSTANCE that was called, so its edited
-    " table is read straight off it - no payload has to travel back
-    TRY.
-        DATA(app) = CAST z2ui5_cl_smp_app_501( client->get_app_prev( ) ).
-        t_table = app->t_table.
-
-      CATCH cx_root ##NO_HANDLER.
-    ENDTRY.
 
   ENDMETHOD.
 
@@ -197,6 +140,63 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
                 )->a( n = `press` v = client->_event( `BUTTON_SAVE` ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `ROW_SELECT`.
+        " the row press carries its ROW_ID, so the popup app is handed the
+        " row to edit rather than a screen position
+        client->nav_app_call( z2ui5_cl_smp_app_501=>factory( t_table = t_table
+                                                             row_id  = CONV #( client->get_event_arg( ) )
+                                                             edit    = abap_true ) ).
+
+      WHEN `BUTTON_ADD`.
+        client->nav_app_call( z2ui5_cl_smp_app_501=>factory( t_table = t_table
+                                                             row_id  = next_id
+                                                             edit    = abap_false ) ).
+        next_id = next_id + 1.
+
+      WHEN `BUTTON_DELETE`.
+        DELETE t_table WHERE selkz = abap_true.
+        view_display( ).
+
+      WHEN `BUTTON_REFRESH`.
+        on_init( ).
+        view_display( ).
+
+      WHEN `BUTTON_SAVE`.
+        client->message_toast_display( |{ lines( t_table ) } row(s) saved| ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    t_table = VALUE #( ( row_id = 1 carrid = `LH` connid = `0400` cityfrom = `FRANKFURT` cityto = `NEW YORK` )
+                       ( row_id = 2 carrid = `UA` connid = `0941` cityfrom = `FRANKFURT` cityto = `SAN FRANCISCO` )
+                       ( row_id = 3 carrid = `AA` connid = `0017` cityfrom = `NEW YORK`  cityto = `SAN FRANCISCO` ) ).
+    next_id = 4.
+
+  ENDMETHOD.
+
+
+  METHOD read_back_from_popup.
+
+    " get_app_prev( ) hands over the INSTANCE that was called, so its edited
+    " table is read straight off it - no payload has to travel back
+    TRY.
+        DATA(app) = CAST z2ui5_cl_smp_app_501( client->get_app_prev( ) ).
+        t_table = app->t_table.
+
+      CATCH cx_root ##NO_HANDLER.
+    ENDTRY.
 
   ENDMETHOD.
 

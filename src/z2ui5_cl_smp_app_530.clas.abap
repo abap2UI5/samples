@@ -52,42 +52,6 @@ CLASS z2ui5_cl_smp_app_530 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `SUBMIT`.
-        " a scanner types the code and sends Enter - sap.m.Input raises
-        " submit, and the wire carries the value with it, so the roundtrip
-        " already has what was scanned
-        IF value IS NOT INITIAL.
-          INSERT VALUE #( pos  = lines( t_scans ) + 1
-                          code = value ) INTO TABLE t_scans.
-          value = ``.
-        ENDIF.
-        " back into the empty field, ready for the next code
-        focus_field( ).
-
-      WHEN `TOGGLE`.
-        mode = COND #( WHEN mode = `none` THEN `text` ELSE `none` ).
-        focus_field( ).
-
-      WHEN `CLEAR`.
-        t_scans = VALUE #( ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD focus_field.
-
-    client->follow_up_action( val   = client->cs_event-set_focus
-                              t_arg = VALUE #( ( c_field ) ) ).
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -166,6 +130,42 @@ CLASS z2ui5_cl_smp_app_530 IMPLEMENTATION.
                     )->a( n = `text` v = `{CODE}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `SUBMIT`.
+        " a scanner types the code and sends Enter - sap.m.Input raises
+        " submit, and the wire carries the value with it, so the roundtrip
+        " already has what was scanned
+        IF value IS NOT INITIAL.
+          INSERT VALUE #( pos  = lines( t_scans ) + 1
+                          code = value ) INTO TABLE t_scans.
+          value = ``.
+        ENDIF.
+        " back into the empty field, ready for the next code
+        focus_field( ).
+
+      WHEN `TOGGLE`.
+        mode = COND #( WHEN mode = `none` THEN `text` ELSE `none` ).
+        focus_field( ).
+
+      WHEN `CLEAR`.
+        t_scans = VALUE #( ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD focus_field.
+
+    client->follow_up_action( val   = client->cs_event-set_focus
+                              t_arg = VALUE #( ( c_field ) ) ).
 
   ENDMETHOD.
 

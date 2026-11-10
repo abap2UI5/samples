@@ -23,6 +23,30 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
 
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_init( ).
+
+      field_01 = `this is a text`.
+      field_02 = `this is another text`.
+      selstart = `3`.
+      selend   = `7`.
+      view_display( ).
+
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `BUTTON01` ) OR client->check_on_event( `BUTTON02` ).
+
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-set_focus
+          t_arg = VALUE #( ( client->get_event( ) ) ( selstart ) ( selend ) ) ).
+      client->message_toast_display( |focus changed| ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -79,30 +103,6 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
                 )->a( n = `text`  v = `focus here` ).
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_init( ).
-
-      field_01 = `this is a text`.
-      field_02 = `this is another text`.
-      selstart = `3`.
-      selend   = `7`.
-      view_display( ).
-
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-    ELSEIF client->check_on_event( `BUTTON01` ) OR client->check_on_event( `BUTTON02` ).
-
-      client->follow_up_action(
-          val   = z2ui5_if_client=>cs_event-set_focus
-          t_arg = VALUE #( ( client->get_event( ) ) ( selstart ) ( selend ) ) ).
-      client->message_toast_display( |focus changed| ).
-    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

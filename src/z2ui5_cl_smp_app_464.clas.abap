@@ -30,23 +30,6 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `RAISE_EXCEPTION`.
-        " the division dumps - nothing ever reads the result, and that is
-        " the point of the sample
-        DATA(lv_zero) = 0.
-        DATA(lv_result) = 1 / lv_zero ##NEEDED.
-      WHEN `ASSERT`.
-        ASSERT 1 = 0.
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -85,6 +68,23 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
             )->a( n = `class` v = `sapUiTinyMarginTop` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `RAISE_EXCEPTION`.
+        " the division dumps - nothing ever reads the result, and that is
+        " the point of the sample
+        DATA(lv_zero) = 0.
+        DATA(lv_result) = 1 / lv_zero ##NEEDED.
+      WHEN `ASSERT`.
+        ASSERT 1 = 0.
+
+    ENDCASE.
 
   ENDMETHOD.
 

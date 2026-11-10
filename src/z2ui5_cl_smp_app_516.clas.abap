@@ -36,28 +36,6 @@ CLASS z2ui5_cl_smp_app_516 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    " The mode is an ordinary bound attribute, so switching the keyboard is a
-    " model update and nothing else - no follow-up action travels, and there
-    " is no ordering to get right between the action and the next render.
-    CASE client->get_event( ).
-      WHEN `NUMERIC`.
-        mode = `numeric`.
-      WHEN `DECIMAL`.
-        mode = `decimal`.
-      WHEN `TEL`.
-        mode = `tel`.
-      WHEN `NONE`.
-        mode = `none`.
-      WHEN `OFF`.
-        " empty leaves the field exactly as sap.m.Input rendered it
-        mode = ``.
-    ENDCASE.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -124,6 +102,28 @@ CLASS z2ui5_cl_smp_app_516 IMPLEMENTATION.
             )->a( n = `text`  v = `plain sap.m.Input` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    " The mode is an ordinary bound attribute, so switching the keyboard is a
+    " model update and nothing else - no follow-up action travels, and there
+    " is no ordering to get right between the action and the next render.
+    CASE client->get_event( ).
+      WHEN `NUMERIC`.
+        mode = `numeric`.
+      WHEN `DECIMAL`.
+        mode = `decimal`.
+      WHEN `TEL`.
+        mode = `tel`.
+      WHEN `NONE`.
+        mode = `none`.
+      WHEN `OFF`.
+        " empty leaves the field exactly as sap.m.Input rendered it
+        mode = ``.
+    ENDCASE.
 
   ENDMETHOD.
 

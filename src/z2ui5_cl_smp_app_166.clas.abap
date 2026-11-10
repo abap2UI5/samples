@@ -38,6 +38,31 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_166 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+
+      ms_struc-title  = `title`.
+      ms_struc-value  = `val01`.
+      ms_struc-value2 = `val02`.
+
+      ms_struc2-title  = `title`.
+      ms_struc2-value  = `val01`.
+      ms_struc2-value2 = `val02`.
+      ms_struc2-incl_title = `title_incl`.
+      ms_struc2-incl_value = `val01_incl`.
+      ms_struc2-incl_value2 = `val02_incl`.
+
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -81,31 +106,6 @@ CLASS z2ui5_cl_smp_app_166 IMPLEMENTATION.
         )->a( n = `value` v = client->_bind( val = ms_struc2-incl_value2 ) ).
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF client->check_on_init( ).
-
-      ms_struc-title  = `title`.
-      ms_struc-value  = `val01`.
-      ms_struc-value2 = `val02`.
-
-      ms_struc2-title  = `title`.
-      ms_struc2-value  = `val01`.
-      ms_struc2-value2 = `val02`.
-      ms_struc2-incl_title = `title_incl`.
-      ms_struc2-incl_value = `val01_incl`.
-      ms_struc2-incl_value2 = `val02_incl`.
-
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-    ENDIF.
 
   ENDMETHOD.
 

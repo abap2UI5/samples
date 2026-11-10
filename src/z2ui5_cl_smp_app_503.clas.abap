@@ -79,20 +79,6 @@ CLASS z2ui5_cl_smp_app_503 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD gross_amount.
-
-    " computed as a packed number: net * percent leaves the range of TYPE i
-    " long before the gross does, and assigning to a packed number with no
-    " decimals rounds commercially - the half away from zero, so -10.5 becomes
-    " -11 as 10.5 becomes 11. The rounding is the part worth a test.
-    DATA gross_p TYPE p LENGTH 16 DECIMALS 0.
-
-    gross_p = net + net * percent / 100.
-    result = gross_p.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -144,6 +130,20 @@ CLASS z2ui5_cl_smp_app_503 IMPLEMENTATION.
                 )->a( n = `press` v = client->_event( `CALC` ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD gross_amount.
+
+    " computed as a packed number: net * percent leaves the range of TYPE i
+    " long before the gross does, and assigning to a packed number with no
+    " decimals rounds commercially - the half away from zero, so -10.5 becomes
+    " -11 as 10.5 becomes 11. The rounding is the part worth a test.
+    DATA gross_p TYPE p LENGTH 16 DECIMALS 0.
+
+    gross_p = net + net * percent / 100.
+    result = gross_p.
 
   ENDMETHOD.
 

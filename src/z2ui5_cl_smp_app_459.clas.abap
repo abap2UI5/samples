@@ -46,40 +46,6 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    IF client->get_event( ) = `REORDER`.
-      " the three event args arrive resolved client-side from the drop
-      " event: dragged row index, drop target index (both 0-based) and
-      " the drop position (Before/After)
-      TRY.
-          DATA(lv_from) = CONV i( client->get_event_arg( ) ) + 1.
-          DATA(lv_to)   = CONV i( client->get_event_arg( 2 ) ) + 1.
-          DATA(lv_pos)  = client->get_event_arg( 3 ).
-          DATA(ls_row)  = t_products[ lv_from ].
-        CATCH cx_root.
-          RETURN.
-      ENDTRY.
-      " dropping a row onto itself is a no-op, and a target outside the
-      " table is refused here - after the DELETE an INSERT out of range
-      " would lose the dragged row
-      IF lv_from = lv_to OR lv_to < 1 OR lv_to > lines( t_products ).
-        RETURN.
-      ENDIF.
-      DELETE t_products INDEX lv_from.
-      IF lv_from < lv_to.
-        lv_to = lv_to - 1.
-      ENDIF.
-      IF lv_pos = `Before`.
-        INSERT ls_row INTO t_products INDEX lv_to.
-      ELSE.
-        INSERT ls_row INTO t_products INDEX lv_to + 1.
-      ENDIF.
-    ENDIF.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -141,6 +107,40 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
                     )->a( n = `text` v = `{CATEGORY}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->get_event( ) = `REORDER`.
+      " the three event args arrive resolved client-side from the drop
+      " event: dragged row index, drop target index (both 0-based) and
+      " the drop position (Before/After)
+      TRY.
+          DATA(lv_from) = CONV i( client->get_event_arg( ) ) + 1.
+          DATA(lv_to)   = CONV i( client->get_event_arg( 2 ) ) + 1.
+          DATA(lv_pos)  = client->get_event_arg( 3 ).
+          DATA(ls_row)  = t_products[ lv_from ].
+        CATCH cx_root.
+          RETURN.
+      ENDTRY.
+      " dropping a row onto itself is a no-op, and a target outside the
+      " table is refused here - after the DELETE an INSERT out of range
+      " would lose the dragged row
+      IF lv_from = lv_to OR lv_to < 1 OR lv_to > lines( t_products ).
+        RETURN.
+      ENDIF.
+      DELETE t_products INDEX lv_from.
+      IF lv_from < lv_to.
+        lv_to = lv_to - 1.
+      ENDIF.
+      IF lv_pos = `Before`.
+        INSERT ls_row INTO t_products INDEX lv_to.
+      ELSE.
+        INSERT ls_row INTO t_products INDEX lv_to + 1.
+      ENDIF.
+    ENDIF.
 
   ENDMETHOD.
 

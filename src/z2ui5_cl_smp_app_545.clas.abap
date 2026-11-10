@@ -66,8 +66,8 @@ CLASS z2ui5_cl_smp_app_545 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
     METHODS view_display.
+    METHODS model_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -80,7 +80,8 @@ CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `EXPAND` ).
@@ -91,82 +92,6 @@ CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
       client->follow_up_action( val   = client->cs_event-control_by_id
                                 t_arg = VALUE #( ( `tree` ) ( `collapseAll` ) ) ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    DATA(t_sales) = VALUE ty_t_sales(
-        ( region = `EMEA`     country = `Germany`     product = `Notebook`         quantity = 10 amount = `12000.00` currency = `EUR` )
-        ( region = `APAC`     country = `Japan`       product = `Antivirus`        quantity = 50 amount = `2500.00`  currency = `USD` )
-        ( region = `EMEA`     country = `Switzerland` product = `Monitor`          quantity = 8  amount = `2400.00`  currency = `CHF` )
-        ( region = `Americas` country = `USA`         product = `Server`           quantity = 2  amount = `18000.00` currency = `USD` )
-        ( region = `EMEA`     country = `Germany`     product = `Office Suite`     quantity = 25 amount = `4500.00`  currency = `EUR` )
-        ( region = `Americas` country = `Canada`      product = `Monitor`          quantity = 5  amount = `1500.00`  currency = `CAD` )
-        ( region = `EMEA`     country = `France`      product = `Notebook`         quantity = 6  amount = `7200.00`  currency = `EUR` )
-        ( region = `APAC`     country = `Australia`   product = `Training`         quantity = 2  amount = `3000.00`  currency = `USD` )
-        ( region = `EMEA`     country = `Switzerland` product = `Installation`     quantity = 3  amount = `1350.00`  currency = `CHF` )
-        ( region = `Americas` country = `USA`         product = `Support Contract` quantity = 12 amount = `6000.00`  currency = `USD` )
-        ( region = `APAC`     country = `Japan`       product = `Notebook`         quantity = 4  amount = `4800.00`  currency = `USD` )
-        ( region = `Americas` country = `Canada`      product = `Office Suite`     quantity = 40 amount = `7600.00`  currency = `CAD` ) ).
-
-    t_tree = tree_build( t_sales ).
-
-    " room for every node, so expanding all scrolls nothing out of sight
-    visible_rows = lines( t_sales ).
-    LOOP AT t_tree INTO DATA(s_total).
-      visible_rows = visible_rows + 1.
-      LOOP AT s_total-nodes INTO DATA(s_region).
-        visible_rows = visible_rows + 1 + lines( s_region-nodes ).
-      ENDLOOP.
-    ENDLOOP.
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD tree_build.
-
-    DATA t_sorted TYPE ty_t_sales.
-    FIELD-SYMBOLS <total>   TYPE ty_s_total.
-    FIELD-SYMBOLS <region>  TYPE ty_s_region.
-    FIELD-SYMBOLS <country> TYPE ty_s_country.
-
-    t_sorted = t_sales.
-    SORT t_sorted STABLE BY currency.
-
-    LOOP AT t_sorted INTO DATA(s_sale).
-
-      READ TABLE result ASSIGNING <total> WITH KEY currency = s_sale-currency.
-      IF sy-subrc <> 0.
-        APPEND VALUE #( name = `Grand Total` currency = s_sale-currency kind = cs_kind-total ) TO result ASSIGNING <total>.
-      ENDIF.
-      <total>-quantity = <total>-quantity + s_sale-quantity.
-      <total>-amount   = <total>-amount + s_sale-amount.
-
-      READ TABLE <total>-nodes ASSIGNING <region> WITH KEY name = s_sale-region.
-      IF sy-subrc <> 0.
-        APPEND VALUE #( name = s_sale-region currency = s_sale-currency kind = cs_kind-subtotal ) TO <total>-nodes ASSIGNING <region>.
-      ENDIF.
-      <region>-quantity = <region>-quantity + s_sale-quantity.
-      <region>-amount   = <region>-amount + s_sale-amount.
-
-      READ TABLE <region>-nodes ASSIGNING <country> WITH KEY name = s_sale-country.
-      IF sy-subrc <> 0.
-        APPEND VALUE #( name = s_sale-country currency = s_sale-currency kind = cs_kind-subtotal ) TO <region>-nodes ASSIGNING <country>.
-      ENDIF.
-      <country>-quantity = <country>-quantity + s_sale-quantity.
-      <country>-amount   = <country>-amount + s_sale-amount.
-
-      APPEND VALUE #( name     = s_sale-product
-                      quantity = s_sale-quantity
-                      amount   = s_sale-amount
-                      currency = s_sale-currency
-                      kind     = `` ) TO <country>-nodes.
-
-    ENDLOOP.
 
   ENDMETHOD.
 
@@ -264,6 +189,80 @@ CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
                 )->a( n = `text` v = `{CURRENCY}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD tree_build.
+
+    DATA t_sorted TYPE ty_t_sales.
+    FIELD-SYMBOLS <total>   TYPE ty_s_total.
+    FIELD-SYMBOLS <region>  TYPE ty_s_region.
+    FIELD-SYMBOLS <country> TYPE ty_s_country.
+
+    t_sorted = t_sales.
+    SORT t_sorted STABLE BY currency.
+
+    LOOP AT t_sorted INTO DATA(s_sale).
+
+      READ TABLE result ASSIGNING <total> WITH KEY currency = s_sale-currency.
+      IF sy-subrc <> 0.
+        APPEND VALUE #( name = `Grand Total` currency = s_sale-currency kind = cs_kind-total ) TO result ASSIGNING <total>.
+      ENDIF.
+      <total>-quantity = <total>-quantity + s_sale-quantity.
+      <total>-amount   = <total>-amount + s_sale-amount.
+
+      READ TABLE <total>-nodes ASSIGNING <region> WITH KEY name = s_sale-region.
+      IF sy-subrc <> 0.
+        APPEND VALUE #( name = s_sale-region currency = s_sale-currency kind = cs_kind-subtotal ) TO <total>-nodes ASSIGNING <region>.
+      ENDIF.
+      <region>-quantity = <region>-quantity + s_sale-quantity.
+      <region>-amount   = <region>-amount + s_sale-amount.
+
+      READ TABLE <region>-nodes ASSIGNING <country> WITH KEY name = s_sale-country.
+      IF sy-subrc <> 0.
+        APPEND VALUE #( name = s_sale-country currency = s_sale-currency kind = cs_kind-subtotal ) TO <region>-nodes ASSIGNING <country>.
+      ENDIF.
+      <country>-quantity = <country>-quantity + s_sale-quantity.
+      <country>-amount   = <country>-amount + s_sale-amount.
+
+      APPEND VALUE #( name     = s_sale-product
+                      quantity = s_sale-quantity
+                      amount   = s_sale-amount
+                      currency = s_sale-currency
+                      kind     = `` ) TO <country>-nodes.
+
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    DATA(t_sales) = VALUE ty_t_sales(
+        ( region = `EMEA`     country = `Germany`     product = `Notebook`         quantity = 10 amount = `12000.00` currency = `EUR` )
+        ( region = `APAC`     country = `Japan`       product = `Antivirus`        quantity = 50 amount = `2500.00`  currency = `USD` )
+        ( region = `EMEA`     country = `Switzerland` product = `Monitor`          quantity = 8  amount = `2400.00`  currency = `CHF` )
+        ( region = `Americas` country = `USA`         product = `Server`           quantity = 2  amount = `18000.00` currency = `USD` )
+        ( region = `EMEA`     country = `Germany`     product = `Office Suite`     quantity = 25 amount = `4500.00`  currency = `EUR` )
+        ( region = `Americas` country = `Canada`      product = `Monitor`          quantity = 5  amount = `1500.00`  currency = `CAD` )
+        ( region = `EMEA`     country = `France`      product = `Notebook`         quantity = 6  amount = `7200.00`  currency = `EUR` )
+        ( region = `APAC`     country = `Australia`   product = `Training`         quantity = 2  amount = `3000.00`  currency = `USD` )
+        ( region = `EMEA`     country = `Switzerland` product = `Installation`     quantity = 3  amount = `1350.00`  currency = `CHF` )
+        ( region = `Americas` country = `USA`         product = `Support Contract` quantity = 12 amount = `6000.00`  currency = `USD` )
+        ( region = `APAC`     country = `Japan`       product = `Notebook`         quantity = 4  amount = `4800.00`  currency = `USD` )
+        ( region = `Americas` country = `Canada`      product = `Office Suite`     quantity = 40 amount = `7600.00`  currency = `CAD` ) ).
+
+    t_tree = tree_build( t_sales ).
+
+    " room for every node, so expanding all scrolls nothing out of sight
+    visible_rows = lines( t_sales ).
+    LOOP AT t_tree INTO DATA(s_total).
+      visible_rows = visible_rows + 1.
+      LOOP AT s_total-nodes INTO DATA(s_region).
+        visible_rows = visible_rows + 1 + lines( s_region-nodes ).
+      ENDLOOP.
+    ENDLOOP.
 
   ENDMETHOD.
 

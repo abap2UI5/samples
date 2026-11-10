@@ -20,10 +20,10 @@ CLASS z2ui5_cl_smp_app_538 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
+    METHODS view_display.
     METHODS on_event.
     METHODS on_event_paste.
-    METHODS view_display.
+    METHODS model_init.
 
     METHODS pasted_rows
       IMPORTING
@@ -41,110 +41,13 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    t_products = VALUE #(
-        ( product_id = `HT-1000` name = `Notebook Basic 15`        category = `Laptops`      price = `956.00`  currency = `EUR` )
-        ( product_id = `HT-1001` name = `Notebook Basic 17`        category = `Laptops`      price = `1249.00` currency = `EUR` )
-        ( product_id = `HT-1010` name = `Notebook Professional 15` category = `Laptops`      price = `1999.00` currency = `EUR` )
-        ( product_id = `HT-1030` name = `Ergo Screen E-I`          category = `Flat Screens` price = `230.00`  currency = `EUR` )
-        ( product_id = `HT-1040` name = `Laser Professional Eco`   category = `Printers`     price = `830.00`  currency = `EUR` )
-        ( product_id = `HT-1063` name = `Ergonomic Keyboard`       category = `Keyboards`    price = `14.00`   currency = `EUR` )
-        ( product_id = `HT-1070` name = `Photo Scan`               category = `Scanners`     price = `129.00`  currency = `EUR` ) ).
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `COPY`.
-        " the CopyProvider's copy event - fired before the clipboard is written
-        client->message_toast_display( `Selection copied to the clipboard` ).
-      WHEN `PASTE`.
-        on_event_paste( ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD on_event_paste.
-
-    " the pasted rows arrive in the backend, which decides what they mean -
-    " here: the cells, in column order, become new products
-    DATA(rows) = pasted_rows( client->get_event_arg( ) ).
-
-    LOOP AT rows INTO DATA(cells).
-      INSERT VALUE #( product_id = VALUE #( cells[ 1 ] OPTIONAL )
-                      name       = VALUE #( cells[ 2 ] OPTIONAL )
-                      category   = VALUE #( cells[ 3 ] OPTIONAL )
-                      price      = VALUE #( cells[ 4 ] OPTIONAL )
-                      currency   = VALUE #( cells[ 5 ] OPTIONAL ) ) INTO TABLE t_products.
-    ENDLOOP.
-
-    client->message_toast_display( |{ lines( rows ) } row(s) pasted and appended| ).
-
-  ENDMETHOD.
-
-
-  METHOD pasted_rows.
-
-    " the paste event's data parameter is string[][], so it reaches the
-    " backend as JSON: [["HT-2000","Tablet"],["HT-2001","Phone"]]. One pass
-    " over it - an opening quote starts a cell, a closing one ends it, and a
-    " bracket that closes the second level ends a row.
-    DATA row       TYPE string_table.
-    DATA cell      TYPE string.
-    DATA depth     TYPE i.
-    DATA in_string TYPE abap_bool.
-    DATA escaped   TYPE abap_bool.
-
-    DO strlen( json ) TIMES.
-      DATA(char) = substring( val = json
-                              off = sy-index - 1
-                              len = 1 ).
-
-      IF in_string = abap_true.
-
-        IF escaped = abap_true.
-          cell    = |{ cell }{ char }|.
-          escaped = abap_false.
-        ELSEIF char = `\`.
-          escaped = abap_true.
-        ELSEIF char = `"`.
-          INSERT cell INTO TABLE row.
-          cell      = ``.
-          in_string = abap_false.
-        ELSE.
-          cell = |{ cell }{ char }|.
-        ENDIF.
-
-      ELSEIF char = `"`.
-        in_string = abap_true.
-      ELSEIF char = `[`.
-        depth = depth + 1.
-      ELSEIF char = `]`.
-
-        IF depth = 2.
-          INSERT row INTO TABLE result.
-          row = VALUE #( ).
-        ENDIF.
-        depth = depth - 1.
-
-      ENDIF.
-    ENDDO.
 
   ENDMETHOD.
 
@@ -268,6 +171,102 @@ CLASS z2ui5_cl_smp_app_538 IMPLEMENTATION.
         )->end( ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `COPY`.
+        " the CopyProvider's copy event - fired before the clipboard is written
+        client->message_toast_display( `Selection copied to the clipboard` ).
+      WHEN `PASTE`.
+        on_event_paste( ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_event_paste.
+
+    " the pasted rows arrive in the backend, which decides what they mean -
+    " here: the cells, in column order, become new products
+    DATA(rows) = pasted_rows( client->get_event_arg( ) ).
+
+    LOOP AT rows INTO DATA(cells).
+      INSERT VALUE #( product_id = VALUE #( cells[ 1 ] OPTIONAL )
+                      name       = VALUE #( cells[ 2 ] OPTIONAL )
+                      category   = VALUE #( cells[ 3 ] OPTIONAL )
+                      price      = VALUE #( cells[ 4 ] OPTIONAL )
+                      currency   = VALUE #( cells[ 5 ] OPTIONAL ) ) INTO TABLE t_products.
+    ENDLOOP.
+
+    client->message_toast_display( |{ lines( rows ) } row(s) pasted and appended| ).
+
+  ENDMETHOD.
+
+
+  METHOD pasted_rows.
+
+    " the paste event's data parameter is string[][], so it reaches the
+    " backend as JSON: [["HT-2000","Tablet"],["HT-2001","Phone"]]. One pass
+    " over it - an opening quote starts a cell, a closing one ends it, and a
+    " bracket that closes the second level ends a row.
+    DATA row       TYPE string_table.
+    DATA cell      TYPE string.
+    DATA depth     TYPE i.
+    DATA in_string TYPE abap_bool.
+    DATA escaped   TYPE abap_bool.
+
+    DO strlen( json ) TIMES.
+      DATA(char) = substring( val = json
+                              off = sy-index - 1
+                              len = 1 ).
+
+      IF in_string = abap_true.
+
+        IF escaped = abap_true.
+          cell    = |{ cell }{ char }|.
+          escaped = abap_false.
+        ELSEIF char = `\`.
+          escaped = abap_true.
+        ELSEIF char = `"`.
+          INSERT cell INTO TABLE row.
+          cell      = ``.
+          in_string = abap_false.
+        ELSE.
+          cell = |{ cell }{ char }|.
+        ENDIF.
+
+      ELSEIF char = `"`.
+        in_string = abap_true.
+      ELSEIF char = `[`.
+        depth = depth + 1.
+      ELSEIF char = `]`.
+
+        IF depth = 2.
+          INSERT row INTO TABLE result.
+          row = VALUE #( ).
+        ENDIF.
+        depth = depth - 1.
+
+      ENDIF.
+    ENDDO.
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    t_products = VALUE #(
+        ( product_id = `HT-1000` name = `Notebook Basic 15`        category = `Laptops`      price = `956.00`  currency = `EUR` )
+        ( product_id = `HT-1001` name = `Notebook Basic 17`        category = `Laptops`      price = `1249.00` currency = `EUR` )
+        ( product_id = `HT-1010` name = `Notebook Professional 15` category = `Laptops`      price = `1999.00` currency = `EUR` )
+        ( product_id = `HT-1030` name = `Ergo Screen E-I`          category = `Flat Screens` price = `230.00`  currency = `EUR` )
+        ( product_id = `HT-1040` name = `Laser Professional Eco`   category = `Printers`     price = `830.00`  currency = `EUR` )
+        ( product_id = `HT-1063` name = `Ergonomic Keyboard`       category = `Keyboards`    price = `14.00`   currency = `EUR` )
+        ( product_id = `HT-1070` name = `Photo Scan`               category = `Scanners`     price = `129.00`  currency = `EUR` ) ).
 
   ENDMETHOD.
 

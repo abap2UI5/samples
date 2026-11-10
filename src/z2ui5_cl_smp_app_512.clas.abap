@@ -11,8 +11,8 @@ CLASS z2ui5_cl_smp_app_512 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS render_demo
       IMPORTING
         form  TYPE REF TO z2ui5_cl_ui5_view_builder
@@ -35,71 +35,6 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `TYPE`.
-        " The display method IS the box type: show, alert, confirm,
-        " information, warning, error, success - the seven methods
-        " sap.m.MessageBox carries, called by name. No mapping, no
-        " translation, nothing this sample has to keep in sync with UI5
-        client->follow_up_action( val   = client->cs_event-control_global
-                                  t_arg = VALUE #( ( `MESSAGE_BOX` )
-                                                   ( client->get_event_arg( ) )
-                                                   ( |MessageBox.{ client->get_event_arg( ) }( ) - called by its own name| ) ) ).
-
-      WHEN `OPTIONS`.
-        " Everything sap.m.MessageBox takes, in the option object of the
-        " call: a t_arg that starts with a brace is embedded as REAL JSON,
-        " so this arrives as an object and the names are the UI5 names.
-        " These five have no parameter on client->message_box_display( ) -
-        " they belong to the control, not to the ABAP app, and this is
-        " where they are set. Z2UI5_CL_SMP_APP_502 is the other half: the
-        " same box, filled with whatever data the app already holds
-        client->follow_up_action(
-            val   = client->cs_event-control_global
-            t_arg = VALUE #( ( `MESSAGE_BOX` )
-                             ( `warning` )
-                             ( `The delivery date lies in the past.` )
-                             ( `{"title":"Please check","icon":"WARNING","contentWidth":"25rem",` &&
-                               `"textDirection":"Inherit","closeOnNavigation":false,"styleClass":"sapUiSizeCompact"}` ) ) ).
-
-      WHEN `DEPENDENT`.
-        " dependentOn ties the box to the lifecycle of a control - it is
-        " destroyed with it. The backend sends the control id and the
-        " frontend resolves it; an id it cannot resolve drops the option
-        " rather than handing UI5 a string it would choke on. UI5 1.124 on
-        client->follow_up_action(
-            val   = client->cs_event-control_global
-            t_arg = VALUE #( ( `MESSAGE_BOX` )
-                             ( `information` )
-                             ( `This box is a dependent of the panel below - it dies with it.` )
-                             ( `{"dependentOn":"demoPanel"}` ) ) ).
-
-      WHEN `ACTIONS`.
-        " onClose is a BACKEND event name even here: the frontend turns it
-        " into the round-trip that reaches the ANSWERED branch below, with
-        " the pressed action as the first event argument. So the raw call
-        " is not a one-way street - it reaches the app again like any event
-        client->follow_up_action(
-            val   = client->cs_event-control_global
-            t_arg = VALUE #( ( `MESSAGE_BOX` )
-                             ( `warning` )
-                             ( `Delete document 4711?` )
-                             ( `{"title":"Delete","actions":["DELETE","Later","CANCEL"],` &&
-                               `"emphasizedAction":"DELETE","initialFocus":"CANCEL","onClose":"ANSWERED"}` ) ) ).
-
-      WHEN `ANSWERED`.
-        " the answer of the box above. Nothing is rendered here: `answer` is
-        " bound, and changed bound data reaches the open view on its own
-        answer = client->get_event_arg( ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -197,6 +132,71 @@ CLASS z2ui5_cl_smp_app_512 IMPLEMENTATION.
             )->a( n = `text` v = `A box opened with dependentOn is destroyed when this panel is.` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `TYPE`.
+        " The display method IS the box type: show, alert, confirm,
+        " information, warning, error, success - the seven methods
+        " sap.m.MessageBox carries, called by name. No mapping, no
+        " translation, nothing this sample has to keep in sync with UI5
+        client->follow_up_action( val   = client->cs_event-control_global
+                                  t_arg = VALUE #( ( `MESSAGE_BOX` )
+                                                   ( client->get_event_arg( ) )
+                                                   ( |MessageBox.{ client->get_event_arg( ) }( ) - called by its own name| ) ) ).
+
+      WHEN `OPTIONS`.
+        " Everything sap.m.MessageBox takes, in the option object of the
+        " call: a t_arg that starts with a brace is embedded as REAL JSON,
+        " so this arrives as an object and the names are the UI5 names.
+        " These five have no parameter on client->message_box_display( ) -
+        " they belong to the control, not to the ABAP app, and this is
+        " where they are set. Z2UI5_CL_SMP_APP_502 is the other half: the
+        " same box, filled with whatever data the app already holds
+        client->follow_up_action(
+            val   = client->cs_event-control_global
+            t_arg = VALUE #( ( `MESSAGE_BOX` )
+                             ( `warning` )
+                             ( `The delivery date lies in the past.` )
+                             ( `{"title":"Please check","icon":"WARNING","contentWidth":"25rem",` &&
+                               `"textDirection":"Inherit","closeOnNavigation":false,"styleClass":"sapUiSizeCompact"}` ) ) ).
+
+      WHEN `DEPENDENT`.
+        " dependentOn ties the box to the lifecycle of a control - it is
+        " destroyed with it. The backend sends the control id and the
+        " frontend resolves it; an id it cannot resolve drops the option
+        " rather than handing UI5 a string it would choke on. UI5 1.124 on
+        client->follow_up_action(
+            val   = client->cs_event-control_global
+            t_arg = VALUE #( ( `MESSAGE_BOX` )
+                             ( `information` )
+                             ( `This box is a dependent of the panel below - it dies with it.` )
+                             ( `{"dependentOn":"demoPanel"}` ) ) ).
+
+      WHEN `ACTIONS`.
+        " onClose is a BACKEND event name even here: the frontend turns it
+        " into the round-trip that reaches the ANSWERED branch below, with
+        " the pressed action as the first event argument. So the raw call
+        " is not a one-way street - it reaches the app again like any event
+        client->follow_up_action(
+            val   = client->cs_event-control_global
+            t_arg = VALUE #( ( `MESSAGE_BOX` )
+                             ( `warning` )
+                             ( `Delete document 4711?` )
+                             ( `{"title":"Delete","actions":["DELETE","Later","CANCEL"],` &&
+                               `"emphasizedAction":"DELETE","initialFocus":"CANCEL","onClose":"ANSWERED"}` ) ) ).
+
+      WHEN `ANSWERED`.
+        " the answer of the box above. Nothing is rendered here: `answer` is
+        " bound, and changed bound data reaches the open view on its own
+        answer = client->get_event_arg( ).
+
+    ENDCASE.
 
   ENDMETHOD.
 

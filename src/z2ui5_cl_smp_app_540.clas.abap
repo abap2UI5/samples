@@ -25,8 +25,8 @@ CLASS z2ui5_cl_smp_app_540 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS chat_reset.
     METHODS prompt_send
       IMPORTING
@@ -72,6 +72,88 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA t_prompts TYPE STANDARD TABLE OF string WITH EMPTY KEY.
+
+    t_prompts = VALUE #( ( `What can you do?` )
+                         ( `What is abap2UI5?` )
+                         ( `How do I plug in a real LLM?` )
+                         ( `How many messages so far?` )
+                         ( `What did I ask first?` ) ).
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
+
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - AI - Chat Assistant with FeedInput and FeedListItem`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+
+    page->ele( `headerContent`
+        )->tag( `Button`
+            )->a( n = `text`    v = `Clear Chat`
+            )->a( n = `icon`    v = `sap-icon://delete`
+            )->a( n = `enabled` v = |\{= !${ client->_bind( busy ) } \}|
+            )->a( n = `press`   v = client->_event( `CLEAR` ) ).
+
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A chat assistant screen: the question shows at once, the feed stays busy until the answer ` &&
+                   `arrives in a second roundtrip. The answer comes from one method that receives the whole conversation - ` &&
+                   `here a rule-based stand-in, in a real app the call to your language model.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    DATA(content) = page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMarginBeginEnd` ).
+
+    " the typed text leaves the browser as the event argument - the
+    " FeedInput clears itself after post, so its value is not bound
+    content->tag( `FeedInput`
+        )->a( n = `placeholder` v = `Ask the assistant something...`
+        )->a( n = `icon`        v = `sap-icon://customer`
+        )->a( n = `enabled`     v = |\{= !${ client->_bind( busy ) } \}|
+        )->a( n = `post`        v = client->_event( val = `POST`
+                                                    arg = `${$parameters>/value}` ) ).
+
+    DATA(suggestions) = content->ele( `HBox`
+        )->a( n = `wrap`  v = `Wrap`
+        )->a( n = `class` v = `sapUiSmallMarginTop` ).
+    LOOP AT t_prompts INTO DATA(prompt).
+      suggestions->tag( `Button`
+          )->a( n = `text`    t = prompt
+          )->a( n = `class`   v = `sapUiTinyMarginEnd sapUiTinyMarginBottom`
+          )->a( n = `enabled` v = |\{= !${ client->_bind( busy ) } \}|
+          )->a( n = `press`   v = client->_event( val = `SUGGEST`
+                                                  arg = prompt ) ).
+    ENDLOOP.
+
+    content->ele( `List`
+        )->a( n = `items`              v = client->_bind( t_messages )
+        )->a( n = `busy`               v = client->_bind( busy )
+        )->a( n = `busyIndicatorDelay` v = `0`
+        )->a( n = `showSeparators`     v = `Inner`
+        )->a( n = `noDataText`         v = `No messages yet.`
+        )->ele( `items`
+            )->tag( `FeedListItem`
+                )->a( n = `sender`       v = `{SENDER}`
+                )->a( n = `text`         v = `{TEXT_HTML}`
+                )->a( n = `icon`         v = `{ICON}`
+                )->a( n = `info`         v = `{INFO}`
+                )->a( n = `senderActive` b = abap_false
+                )->a( n = `iconActive`   b = abap_false ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -216,88 +298,6 @@ CLASS z2ui5_cl_smp_app_540 IMPLEMENTATION.
     ELSE.
       result = |You said: "{ question }". I only follow a few rules - ask me what I can do to see them.|.
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD view_display.
-
-    DATA t_prompts TYPE STANDARD TABLE OF string WITH EMPTY KEY.
-
-    t_prompts = VALUE #( ( `What can you do?` )
-                         ( `What is abap2UI5?` )
-                         ( `How do I plug in a real LLM?` )
-                         ( `How many messages so far?` )
-                         ( `What did I ask first?` ) ).
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-
-    DATA(page) = view->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - AI - Chat Assistant with FeedInput and FeedListItem`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
-
-    page->ele( `headerContent`
-        )->tag( `Button`
-            )->a( n = `text`    v = `Clear Chat`
-            )->a( n = `icon`    v = `sap-icon://delete`
-            )->a( n = `enabled` v = |\{= !${ client->_bind( busy ) } \}|
-            )->a( n = `press`   v = client->_event( `CLEAR` ) ).
-
-    page->tag( `MessageStrip`
-        )->a( n = `text`     v = `A chat assistant screen: the question shows at once, the feed stays busy until the answer ` &&
-                   `arrives in a second roundtrip. The answer comes from one method that receives the whole conversation - ` &&
-                   `here a rule-based stand-in, in a real app the call to your language model.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    DATA(content) = page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMarginBeginEnd` ).
-
-    " the typed text leaves the browser as the event argument - the
-    " FeedInput clears itself after post, so its value is not bound
-    content->tag( `FeedInput`
-        )->a( n = `placeholder` v = `Ask the assistant something...`
-        )->a( n = `icon`        v = `sap-icon://customer`
-        )->a( n = `enabled`     v = |\{= !${ client->_bind( busy ) } \}|
-        )->a( n = `post`        v = client->_event( val = `POST`
-                                                    arg = `${$parameters>/value}` ) ).
-
-    DATA(suggestions) = content->ele( `HBox`
-        )->a( n = `wrap`  v = `Wrap`
-        )->a( n = `class` v = `sapUiSmallMarginTop` ).
-    LOOP AT t_prompts INTO DATA(prompt).
-      suggestions->tag( `Button`
-          )->a( n = `text`    t = prompt
-          )->a( n = `class`   v = `sapUiTinyMarginEnd sapUiTinyMarginBottom`
-          )->a( n = `enabled` v = |\{= !${ client->_bind( busy ) } \}|
-          )->a( n = `press`   v = client->_event( val = `SUGGEST`
-                                                  arg = prompt ) ).
-    ENDLOOP.
-
-    content->ele( `List`
-        )->a( n = `items`              v = client->_bind( t_messages )
-        )->a( n = `busy`               v = client->_bind( busy )
-        )->a( n = `busyIndicatorDelay` v = `0`
-        )->a( n = `showSeparators`     v = `Inner`
-        )->a( n = `noDataText`         v = `No messages yet.`
-        )->ele( `items`
-            )->tag( `FeedListItem`
-                )->a( n = `sender`       v = `{SENDER}`
-                )->a( n = `text`         v = `{TEXT_HTML}`
-                )->a( n = `icon`         v = `{ICON}`
-                )->a( n = `info`         v = `{INFO}`
-                )->a( n = `senderActive` b = abap_false
-                )->a( n = `iconActive`   b = abap_false ).
-
-    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

@@ -14,8 +14,8 @@ CLASS z2ui5_cl_smp_app_025 DEFINITION PUBLIC.
     DATA input_previous TYPE string.
     DATA client         TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -38,32 +38,6 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `BUTTON_READ_PREVIOUS`.
-        DATA(app_024) = CAST z2ui5_cl_smp_app_024( client->get_app_prev( ) ).
-        input_previous = app_024->input2.
-        client->message_toast_display( `data of previous app read` ).
-        view_display( ).
-
-      WHEN `SHOW_VIEW_MAIN`.
-        show_view = `MAIN`.
-        view_display( ).
-
-      WHEN `SHOW_VIEW_SECOND`.
-        show_view = `SECOND`.
-        view_display( ).
-
-      WHEN `BACK_WITH_EVENT`.
-        client->nav_app_leave( event = `CALL_PREVIOUS_APP_INPUT_RETURN` ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -149,6 +123,32 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
     ENDCASE.
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `BUTTON_READ_PREVIOUS`.
+        DATA(app_024) = CAST z2ui5_cl_smp_app_024( client->get_app_prev( ) ).
+        input_previous = app_024->input2.
+        client->message_toast_display( `data of previous app read` ).
+        view_display( ).
+
+      WHEN `SHOW_VIEW_MAIN`.
+        show_view = `MAIN`.
+        view_display( ).
+
+      WHEN `SHOW_VIEW_SECOND`.
+        show_view = `SECOND`.
+        view_display( ).
+
+      WHEN `BACK_WITH_EVENT`.
+        client->nav_app_leave( event = `CALL_PREVIOUS_APP_INPUT_RETURN` ).
+
+    ENDCASE.
 
   ENDMETHOD.
 

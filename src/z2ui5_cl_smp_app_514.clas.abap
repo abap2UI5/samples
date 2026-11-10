@@ -21,8 +21,8 @@ CLASS z2ui5_cl_smp_app_514 DEFINITION PUBLIC.
     DATA current TYPE i.
 
     METHODS view_display.
-    METHODS model_init.
     METHODS on_event.
+    METHODS model_init.
     METHODS page_show
       IMPORTING
         index TYPE i.
@@ -44,61 +44,6 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD model_init.
-
-    t_pages = VALUE #( ( title = `Bicycle`  text = `The first page of the carousel.` )
-                       ( title = `Car`      text = `The second page - and the one the buttons below jump to.` )
-                       ( title = `Train`    text = `The third page.` )
-                       ( title = `Aircraft` text = `The fourth and last page.` ) ).
-    current = 1.
-
-  ENDMETHOD.
-
-
-  METHOD page_show.
-
-    current = index.
-    " A page of this carousel is a CLONE of the aggregation template, and a
-    " clone has no id the backend can spell: UI5 mints it from the template
-    " id, the parent id and the position, and the parent id carries the view
-    " prefix assigned at runtime. So the item is addressed POSITIONALLY -
-    " `<control id>/<aggregation>/<index>`, 0-based - which the frontend
-    " resolves against the live aggregation. It is the equivalent of the UI5
-    " controller idiom oCarousel.setActivePage( oCarousel.getPages()[ i ] ).
-    client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                              t_arg = VALUE #( ( `demoCarousel` )
-                                               ( `setActivePage` )
-                                               ( |demoCarousel/pages/{ index - 1 }| ) ) ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `FIRST`.
-        page_show( 1 ).
-
-      WHEN `NEXT`.
-        " wrap around at the end - the count is ABAP's, not the carousel's
-        page_show( COND #( WHEN current >= lines( t_pages ) THEN 1 ELSE current + 1 ) ).
-
-      WHEN `LAST`.
-        page_show( lines( t_pages ) ).
-
-      WHEN `PAGE_CHANGED`.
-        " swiped or jumped - activePages is 0-based, current counts from 1
-        DATA(active) = client->get_event_arg( ).
-        IF active CO `0123456789` AND active IS NOT INITIAL.
-          current = active + 1.
-        ENDIF.
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -175,6 +120,61 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
     " survives in ABAP. Re-issuing the call from here - after the view that
     " will hold it - is what keeps the two in step across a rebuild.
     page_show( current ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `FIRST`.
+        page_show( 1 ).
+
+      WHEN `NEXT`.
+        " wrap around at the end - the count is ABAP's, not the carousel's
+        page_show( COND #( WHEN current >= lines( t_pages ) THEN 1 ELSE current + 1 ) ).
+
+      WHEN `LAST`.
+        page_show( lines( t_pages ) ).
+
+      WHEN `PAGE_CHANGED`.
+        " swiped or jumped - activePages is 0-based, current counts from 1
+        DATA(active) = client->get_event_arg( ).
+        IF active CO `0123456789` AND active IS NOT INITIAL.
+          current = active + 1.
+        ENDIF.
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD page_show.
+
+    current = index.
+    " A page of this carousel is a CLONE of the aggregation template, and a
+    " clone has no id the backend can spell: UI5 mints it from the template
+    " id, the parent id and the position, and the parent id carries the view
+    " prefix assigned at runtime. So the item is addressed POSITIONALLY -
+    " `<control id>/<aggregation>/<index>`, 0-based - which the frontend
+    " resolves against the live aggregation. It is the equivalent of the UI5
+    " controller idiom oCarousel.setActivePage( oCarousel.getPages()[ i ] ).
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
+                              t_arg = VALUE #( ( `demoCarousel` )
+                                               ( `setActivePage` )
+                                               ( |demoCarousel/pages/{ index - 1 }| ) ) ).
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    t_pages = VALUE #( ( title = `Bicycle`  text = `The first page of the carousel.` )
+                       ( title = `Car`      text = `The second page - and the one the buttons below jump to.` )
+                       ( title = `Train`    text = `The third page.` )
+                       ( title = `Aircraft` text = `The fourth and last page.` ) ).
+    current = 1.
 
   ENDMETHOD.
 

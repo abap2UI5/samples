@@ -13,8 +13,8 @@ CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
     DATA mv_check_active TYPE abap_bool.
     DATA client          TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -34,39 +34,6 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    IF client->check_on_event( `LOAD` ).
-
-      " a press starts the bar over, a timer tick carries it on
-      IF mv_check_active = abap_false.
-        mv_percent = 0.
-      ENDIF.
-
-      " the long-running backend step this bar reports on
-      WAIT UP TO 2 SECONDS.
-      mv_percent = mv_percent + 25.
-
-      IF mv_percent < 100.
-
-        mv_check_active  = abap_true.
-        mv_check_enabled = abap_false.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-start_timer
-            t_arg = VALUE #( ( `LOAD` ) ( `0` ) ) ).
-
-      ELSE.
-
-        mv_check_active  = abap_false.
-        mv_check_enabled = abap_true.
-        client->message_toast_display( `loaded` ).
-      ENDIF.
-
     ENDIF.
 
   ENDMETHOD.
@@ -113,6 +80,39 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
         )->a( n = `enabled` v = client->_bind( mv_check_enabled ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->check_on_event( `LOAD` ).
+
+      " a press starts the bar over, a timer tick carries it on
+      IF mv_check_active = abap_false.
+        mv_percent = 0.
+      ENDIF.
+
+      " the long-running backend step this bar reports on
+      WAIT UP TO 2 SECONDS.
+      mv_percent = mv_percent + 25.
+
+      IF mv_percent < 100.
+
+        mv_check_active  = abap_true.
+        mv_check_enabled = abap_false.
+        client->follow_up_action(
+            val   = z2ui5_if_client=>cs_event-start_timer
+            t_arg = VALUE #( ( `LOAD` ) ( `0` ) ) ).
+
+      ELSE.
+
+        mv_check_active  = abap_false.
+        mv_check_enabled = abap_true.
+        client->message_toast_display( `loaded` ).
+      ENDIF.
+
+    ENDIF.
 
   ENDMETHOD.
 

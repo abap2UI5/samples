@@ -49,9 +49,9 @@ CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
     DATA client      TYPE REF TO z2ui5_if_client.
     DATA t_employees TYPE ty_t_employee.
 
-    METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
+    METHODS model_init.
     METHODS popup_value_suggestion.
     METHODS popup_value_employee.
 
@@ -65,100 +65,13 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    t_suggestion = VALUE #(
-        ( descr = `this is the color Green`  value = `GREEN` )
-        ( descr = `this is the color Blue`   value = `BLUE` )
-        ( descr = `this is the color Black`  value = `BLACK` )
-        ( descr = `this is the color Grey`   value = `GREY` )
-        ( descr = `this is the color Blue2`  value = `BLUE2` )
-        ( descr = `this is the color Blue3`  value = `BLUE3` ) ).
-
-    t_cities = VALUE #(
-        ( value = `London` descr = `London` )
-        ( value = `Paris`  descr = `Paris` )
-        ( value = `Rome`   descr = `Rome` ) ).
-
-    t_employees = VALUE #(
-        ( city = `London` name = `Tom`       lastname = `lastname1`  nr = `00001` )
-        ( city = `London` name = `Tom2`      lastname = `lastname2`  nr = `00002` )
-        ( city = `London` name = `Tom3`      lastname = `lastname3`  nr = `00003` )
-        ( city = `London` name = `Tom4`      lastname = `lastname4`  nr = `00004` )
-        ( city = `Rome`   name = `Michaela1` lastname = `lastname5`  nr = `00005` )
-        ( city = `Rome`   name = `Michaela2` lastname = `lastname6`  nr = `00006` )
-        ( city = `Rome`   name = `Michaela3` lastname = `lastname7`  nr = `00007` )
-        ( city = `Rome`   name = `Michaela4` lastname = `lastname8`  nr = `00008` )
-        ( city = `Paris`  name = `Hermine1`  lastname = `lastname9`  nr = `00009` )
-        ( city = `Paris`  name = `Hermine2`  lastname = `lastname10` nr = `00010` )
-        ( city = `Paris`  name = `Hermine3`  lastname = `lastname11` nr = `00011` ) ).
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `POPUP_TABLE_VALUE`.
-        t_suggestion_sel = t_suggestion.
-        popup_value_suggestion( ).
-      WHEN `POPUP_TABLE_VALUE_CUSTOM`.
-        t_employees_sel = VALUE #( ).
-        popup_value_employee( ).
-      WHEN `SEARCH`.
-        t_employees_sel = t_employees.
-
-        IF s_screen-city IS NOT INITIAL.
-          DELETE t_employees_sel WHERE city <> s_screen-city.
-        ENDIF.
-        popup_value_employee( ).
-      WHEN `POPUP_TABLE_VALUE_CUSTOM_CONTINUE`.
-        " the selection is counted on a copy - deleting from the bound table
-        " itself emptied the open popup's list when nothing was selected
-        DATA(t_chosen_employee) = t_employees_sel.
-        DELETE t_chosen_employee WHERE selkz = abap_false.
-
-        IF lines( t_chosen_employee ) = 1.
-
-          s_screen-name     = t_chosen_employee[ 1 ]-name.
-          s_screen-lastname = t_chosen_employee[ 1 ]-lastname.
-          client->message_toast_display( `value selected` ).
-          client->popup_destroy( ).
-
-        ELSE.
-          client->message_toast_display( `please select exactly one employee` ).
-        ENDIF.
-      WHEN `POPUP_TABLE_VALUE_CONTINUE`.
-        DATA(t_chosen_color) = t_suggestion_sel.
-        DELETE t_chosen_color WHERE selkz = abap_false.
-
-        IF lines( t_chosen_color ) = 1.
-
-          s_screen-color_02 = t_chosen_color[ 1 ]-value.
-          client->message_toast_display( `value selected` ).
-          client->popup_destroy( ).
-
-        ELSE.
-          client->message_toast_display( `please select exactly one color` ).
-        ENDIF.
-      WHEN `BUTTON_SEND`.
-        client->message_box_display( `success - values sent to the server` ).
-      WHEN `BUTTON_CLEAR`.
-        s_screen = VALUE #( ).
-        client->message_box_display( `View initialized` ).
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -255,6 +168,61 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
                 )->a( n = `type`  v = `Accept` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `POPUP_TABLE_VALUE`.
+        t_suggestion_sel = t_suggestion.
+        popup_value_suggestion( ).
+      WHEN `POPUP_TABLE_VALUE_CUSTOM`.
+        t_employees_sel = VALUE #( ).
+        popup_value_employee( ).
+      WHEN `SEARCH`.
+        t_employees_sel = t_employees.
+
+        IF s_screen-city IS NOT INITIAL.
+          DELETE t_employees_sel WHERE city <> s_screen-city.
+        ENDIF.
+        popup_value_employee( ).
+      WHEN `POPUP_TABLE_VALUE_CUSTOM_CONTINUE`.
+        " the selection is counted on a copy - deleting from the bound table
+        " itself emptied the open popup's list when nothing was selected
+        DATA(t_chosen_employee) = t_employees_sel.
+        DELETE t_chosen_employee WHERE selkz = abap_false.
+
+        IF lines( t_chosen_employee ) = 1.
+
+          s_screen-name     = t_chosen_employee[ 1 ]-name.
+          s_screen-lastname = t_chosen_employee[ 1 ]-lastname.
+          client->message_toast_display( `value selected` ).
+          client->popup_destroy( ).
+
+        ELSE.
+          client->message_toast_display( `please select exactly one employee` ).
+        ENDIF.
+      WHEN `POPUP_TABLE_VALUE_CONTINUE`.
+        DATA(t_chosen_color) = t_suggestion_sel.
+        DELETE t_chosen_color WHERE selkz = abap_false.
+
+        IF lines( t_chosen_color ) = 1.
+
+          s_screen-color_02 = t_chosen_color[ 1 ]-value.
+          client->message_toast_display( `value selected` ).
+          client->popup_destroy( ).
+
+        ELSE.
+          client->message_toast_display( `please select exactly one color` ).
+        ENDIF.
+      WHEN `BUTTON_SEND`.
+        client->message_box_display( `success - values sent to the server` ).
+      WHEN `BUTTON_CLEAR`.
+        s_screen = VALUE #( ).
+        client->message_box_display( `View initialized` ).
+    ENDCASE.
 
   ENDMETHOD.
 
@@ -377,6 +345,37 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
             )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    t_suggestion = VALUE #(
+        ( descr = `this is the color Green`  value = `GREEN` )
+        ( descr = `this is the color Blue`   value = `BLUE` )
+        ( descr = `this is the color Black`  value = `BLACK` )
+        ( descr = `this is the color Grey`   value = `GREY` )
+        ( descr = `this is the color Blue2`  value = `BLUE2` )
+        ( descr = `this is the color Blue3`  value = `BLUE3` ) ).
+
+    t_cities = VALUE #(
+        ( value = `London` descr = `London` )
+        ( value = `Paris`  descr = `Paris` )
+        ( value = `Rome`   descr = `Rome` ) ).
+
+    t_employees = VALUE #(
+        ( city = `London` name = `Tom`       lastname = `lastname1`  nr = `00001` )
+        ( city = `London` name = `Tom2`      lastname = `lastname2`  nr = `00002` )
+        ( city = `London` name = `Tom3`      lastname = `lastname3`  nr = `00003` )
+        ( city = `London` name = `Tom4`      lastname = `lastname4`  nr = `00004` )
+        ( city = `Rome`   name = `Michaela1` lastname = `lastname5`  nr = `00005` )
+        ( city = `Rome`   name = `Michaela2` lastname = `lastname6`  nr = `00006` )
+        ( city = `Rome`   name = `Michaela3` lastname = `lastname7`  nr = `00007` )
+        ( city = `Rome`   name = `Michaela4` lastname = `lastname8`  nr = `00008` )
+        ( city = `Paris`  name = `Hermine1`  lastname = `lastname9`  nr = `00009` )
+        ( city = `Paris`  name = `Hermine2`  lastname = `lastname10` nr = `00010` )
+        ( city = `Paris`  name = `Hermine3`  lastname = `lastname11` nr = `00011` ) ).
 
   ENDMETHOD.
 

@@ -9,11 +9,11 @@ CLASS z2ui5_cl_smp_app_474 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
+    METHODS view_display.
     METHODS popover_open
       IMPORTING
         policy TYPE string.
-    METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -29,53 +29,6 @@ CLASS z2ui5_cl_smp_app_474 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `OPEN_RELATIVE_ONLY`.
-        popover_open( `RELATIVE_ONLY` ).
-
-      WHEN `OPEN_ALLOW_ALL`.
-        popover_open( `ALLOW_ALL` ).
-
-      WHEN `OPEN_DENY_ALL`.
-        popover_open( `DENY_ALL` ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD popover_open.
-
-    " setAsyncURLHandler takes a JS callback in a UI5 controller, which no
-    " backend payload can carry - the frontend therefore takes the NAME of a
-    " built-in policy and installs the matching validator itself:
-    " RELATIVE_ONLY (only in-app links stay clickable), ALLOW_ALL, DENY_ALL
-    "
-    " The handler is live control state a rebuild destroys, and this method is
-    " not on the display path - control-state-lost-on-rebuild is right about
-    " both. It is still not a defect HERE: every open goes through this method,
-    " so the validator is re-installed immediately before each openBy( ) below,
-    " and there is no window in which the popover is visible without it. That
-    " is the one thing the rule cannot see, so it is said here instead.
-    " abap2ui5lint-disable control-state-lost-on-rebuild -- re-issued before every openBy
-    client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                              t_arg = VALUE #( ( `msgPopover` )
-                                               ( `setAsyncURLHandler` )
-                                               ( policy ) ) ).
-    " abap2ui5lint-enable control-state-lost-on-rebuild
-
-    " ... and only then open it, anchored to the button that fired the event
-    client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                              t_arg = VALUE #( ( `msgPopover` )
-                                               ( `openBy` )
-                                               ( client->get_event_arg( ) ) ) ).
 
   ENDMETHOD.
 
@@ -143,6 +96,53 @@ CLASS z2ui5_cl_smp_app_474 IMPLEMENTATION.
             )->a( n = `class` v = `sapUiTinyMarginBegin` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `OPEN_RELATIVE_ONLY`.
+        popover_open( `RELATIVE_ONLY` ).
+
+      WHEN `OPEN_ALLOW_ALL`.
+        popover_open( `ALLOW_ALL` ).
+
+      WHEN `OPEN_DENY_ALL`.
+        popover_open( `DENY_ALL` ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD popover_open.
+
+    " setAsyncURLHandler takes a JS callback in a UI5 controller, which no
+    " backend payload can carry - the frontend therefore takes the NAME of a
+    " built-in policy and installs the matching validator itself:
+    " RELATIVE_ONLY (only in-app links stay clickable), ALLOW_ALL, DENY_ALL
+    "
+    " The handler is live control state a rebuild destroys, and this method is
+    " not on the display path - control-state-lost-on-rebuild is right about
+    " both. It is still not a defect HERE: every open goes through this method,
+    " so the validator is re-installed immediately before each openBy( ) below,
+    " and there is no window in which the popover is visible without it. That
+    " is the one thing the rule cannot see, so it is said here instead.
+    " abap2ui5lint-disable control-state-lost-on-rebuild -- re-issued before every openBy
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
+                              t_arg = VALUE #( ( `msgPopover` )
+                                               ( `setAsyncURLHandler` )
+                                               ( policy ) ) ).
+    " abap2ui5lint-enable control-state-lost-on-rebuild
+
+    " ... and only then open it, anchored to the button that fired the event
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
+                              t_arg = VALUE #( ( `msgPopover` )
+                                               ( `openBy` )
+                                               ( client->get_event_arg( ) ) ) ).
 
   ENDMETHOD.
 

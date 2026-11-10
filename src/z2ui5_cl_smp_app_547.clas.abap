@@ -22,9 +22,9 @@ CLASS z2ui5_cl_smp_app_547 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS on_open.
     METHODS view_display.
+    METHODS on_open.
+    METHODS model_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -37,54 +37,13 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `OPEN` ).
       on_open( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    DATA(t_customer) = VALUE string_table( ( `Adler GmbH` ) ( `Berger AG` ) ( `Calder Ltd` ) ( `Dumont SA` ) ( `Eriksen AB` )
-                                           ( `Ferrari Srl` ) ( `Garcia SL` ) ( `Hansen A/S` ) ( `Ivanov OOO` ) ( `Jansen BV` ) ).
-    DATA(t_city) = VALUE string_table( ( `Berlin` ) ( `Zurich` ) ( `London` ) ( `Paris` ) ( `Stockholm` )
-                                       ( `Milan` ) ( `Madrid` ) ( `Copenhagen` ) ( `Vienna` ) ( `Amsterdam` ) ).
-    DATA(t_status) = VALUE string_table( ( `New` ) ( `In Process` ) ( `Shipped` ) ( `Delivered` ) ).
-    DATA(start) = CONV d( `20250101` ).
-
-    DO 10000 TIMES.
-      DATA(index) = sy-index.
-      APPEND VALUE #( id       = index
-                      customer = t_customer[ ( ( index * 7 ) MOD 10 ) + 1 ]
-                      city     = t_city[ ( ( index * 3 ) MOD 10 ) + 1 ]
-                      status   = t_status[ ( index MOD 4 ) + 1 ]
-                      amount   = ( ( index * 6151 ) MOD 500000 ) / 100
-                      created  = start + ( ( index * 13 ) MOD 365 ) ) TO t_order.
-    ENDDO.
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_open.
-
-    " the link names the row as the grid shows it - sorted and filtered by
-    " the server, so a position, not a row of t_order: _bind_tab_row( )
-    " answers which row it is
-    DATA(row) = client->_bind_tab_row( val = t_order
-                                       row = CONV i( client->get_event_arg( ) ) + 1 ).
-    IF row = 0.
-      RETURN.
-    ENDIF.
-
-    DATA(s_order) = t_order[ row ].
-    client->message_box_display( |Order { s_order-id }: { s_order-customer }, { s_order-city }, | &&
-                                 |{ s_order-status }, { s_order-amount } EUR.| ).
 
   ENDMETHOD.
 
@@ -200,6 +159,46 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
                 )->a( n = `text` v = `{CREATED}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_open.
+
+    " the link names the row as the grid shows it - sorted and filtered by
+    " the server, so a position, not a row of t_order: _bind_tab_row( )
+    " answers which row it is
+    DATA(row) = client->_bind_tab_row( val = t_order
+                                       row = CONV i( client->get_event_arg( ) ) + 1 ).
+    IF row = 0.
+      RETURN.
+    ENDIF.
+
+    DATA(s_order) = t_order[ row ].
+    client->message_box_display( |Order { s_order-id }: { s_order-customer }, { s_order-city }, | &&
+                                 |{ s_order-status }, { s_order-amount } EUR.| ).
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    DATA(t_customer) = VALUE string_table( ( `Adler GmbH` ) ( `Berger AG` ) ( `Calder Ltd` ) ( `Dumont SA` ) ( `Eriksen AB` )
+                                           ( `Ferrari Srl` ) ( `Garcia SL` ) ( `Hansen A/S` ) ( `Ivanov OOO` ) ( `Jansen BV` ) ).
+    DATA(t_city) = VALUE string_table( ( `Berlin` ) ( `Zurich` ) ( `London` ) ( `Paris` ) ( `Stockholm` )
+                                       ( `Milan` ) ( `Madrid` ) ( `Copenhagen` ) ( `Vienna` ) ( `Amsterdam` ) ).
+    DATA(t_status) = VALUE string_table( ( `New` ) ( `In Process` ) ( `Shipped` ) ( `Delivered` ) ).
+    DATA(start) = CONV d( `20250101` ).
+
+    DO 10000 TIMES.
+      DATA(index) = sy-index.
+      APPEND VALUE #( id       = index
+                      customer = t_customer[ ( ( index * 7 ) MOD 10 ) + 1 ]
+                      city     = t_city[ ( ( index * 3 ) MOD 10 ) + 1 ]
+                      status   = t_status[ ( index MOD 4 ) + 1 ]
+                      amount   = ( ( index * 6151 ) MOD 500000 ) / 100
+                      created  = start + ( ( index * 13 ) MOD 365 ) ) TO t_order.
+    ENDDO.
 
   ENDMETHOD.
 

@@ -20,6 +20,47 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
 
 
+  METHOD z2ui5_if_app~main.
+
+    FIELD-SYMBOLS <tab> TYPE table.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+
+      " The point of this sample is a row type built at runtime from a DDIC
+      " name. SYST - the structure behind sy - is present on every release
+      " abap2UI5 runs on, ABAP Cloud included; the framework's own draft table
+      " is not an API (building-apps guide, section 5) and is not used here.
+      DATA(row_type) = CAST cl_abap_structdescr( cl_abap_typedescr=>describe_by_name( `SYST` ) ).
+
+      " the DDIC components plus a SELKZ flag that exists in no dictionary:
+      " the Table's selection binds to it, so a selected row stays selected
+      " across roundtrips and re-renders instead of living in the control
+      DATA(components) = row_type->get_components( ).
+      INSERT VALUE #( name = `SELKZ`
+                      type = CAST #( cl_abap_typedescr=>describe_by_name( `ABAP_BOOL` ) ) ) INTO TABLE components.
+      DATA(tab_type) = cl_abap_tabledescr=>create( cl_abap_structdescr=>create( components ) ).
+
+      CREATE DATA t_tab TYPE HANDLE tab_type.
+      ASSIGN t_tab->* TO <tab>.
+
+      " sy IS a SYST, so the rows are filled by component name - the only
+      " way to write a structure whose type exists at runtime alone
+      DO 3 TIMES.
+        APPEND INITIAL LINE TO <tab> ASSIGNING FIELD-SYMBOL(<row>).
+        MOVE-CORRESPONDING sy TO <row>.
+      ENDDO.
+
+      view_display( ).
+
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -85,47 +126,6 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
                     )->a( n = `value` v = `{UZEIT}` ).
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    FIELD-SYMBOLS <tab> TYPE table.
-
-    me->client = client.
-
-    IF client->check_on_init( ).
-
-      " The point of this sample is a row type built at runtime from a DDIC
-      " name. SYST - the structure behind sy - is present on every release
-      " abap2UI5 runs on, ABAP Cloud included; the framework's own draft table
-      " is not an API (building-apps guide, section 5) and is not used here.
-      DATA(row_type) = CAST cl_abap_structdescr( cl_abap_typedescr=>describe_by_name( `SYST` ) ).
-
-      " the DDIC components plus a SELKZ flag that exists in no dictionary:
-      " the Table's selection binds to it, so a selected row stays selected
-      " across roundtrips and re-renders instead of living in the control
-      DATA(components) = row_type->get_components( ).
-      INSERT VALUE #( name = `SELKZ`
-                      type = CAST #( cl_abap_typedescr=>describe_by_name( `ABAP_BOOL` ) ) ) INTO TABLE components.
-      DATA(tab_type) = cl_abap_tabledescr=>create( cl_abap_structdescr=>create( components ) ).
-
-      CREATE DATA t_tab TYPE HANDLE tab_type.
-      ASSIGN t_tab->* TO <tab>.
-
-      " sy IS a SYST, so the rows are filled by component name - the only
-      " way to write a structure whose type exists at runtime alone
-      DO 3 TIMES.
-        APPEND INITIAL LINE TO <tab> ASSIGNING FIELD-SYMBOL(<row>).
-        MOVE-CORRESPONDING sy TO <row>.
-      ENDDO.
-
-      view_display( ).
-
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

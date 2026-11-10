@@ -34,8 +34,8 @@ CLASS z2ui5_cl_smp_app_421 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS focus.
     METHODS read_focus.
     METHODS next_focus.
@@ -58,40 +58,6 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    t_tab = VALUE #(
-        ( index = 0 title = `entry 01` value = `red`    info = `completed` description = `this is a description` checkbox = abap_true )
-        ( index = 1 title = `entry 02` value = `blue`   info = `completed` description = `this is a description` checkbox = abap_true )
-        ( index = 2 title = `entry 03` value = `green`  info = `completed` description = `this is a description` checkbox = abap_true )
-        ( index = 3 title = `entry 04` value = `orange` info = `completed` description = ``                     checkbox = abap_true )
-        ( index = 4 title = `entry 05` value = `grey`   info = `completed` description = `this is a description` checkbox = abap_true )
-        ( index = 5 title = ``         value = ``       info = ``          description = ``                     checkbox = abap_false ) ).
-
-    default_focus( ).
-    view_display( ).
-    focus( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `FOCUS`.
-        focus( ).
-      WHEN `NEXT`.
-        read_focus( ).
-        next_focus( ).
-        focus( ).
-      WHEN `RESET`.
-        default_focus( ).
-        focus( ).
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -218,6 +184,40 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
     ENDLOOP.
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `FOCUS`.
+        focus( ).
+      WHEN `NEXT`.
+        read_focus( ).
+        next_focus( ).
+        focus( ).
+      WHEN `RESET`.
+        default_focus( ).
+        focus( ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    t_tab = VALUE #(
+        ( index = 0 title = `entry 01` value = `red`    info = `completed` description = `this is a description` checkbox = abap_true )
+        ( index = 1 title = `entry 02` value = `blue`   info = `completed` description = `this is a description` checkbox = abap_true )
+        ( index = 2 title = `entry 03` value = `green`  info = `completed` description = `this is a description` checkbox = abap_true )
+        ( index = 3 title = `entry 04` value = `orange` info = `completed` description = ``                     checkbox = abap_true )
+        ( index = 4 title = `entry 05` value = `grey`   info = `completed` description = `this is a description` checkbox = abap_true )
+        ( index = 5 title = ``         value = ``       info = ``          description = ``                     checkbox = abap_false ) ).
+
+    default_focus( ).
+    view_display( ).
+    focus( ).
 
   ENDMETHOD.
 

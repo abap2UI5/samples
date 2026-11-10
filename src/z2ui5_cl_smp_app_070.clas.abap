@@ -30,8 +30,8 @@ CLASS z2ui5_cl_smp_app_070 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS set_search.
     METHODS set_data.
     METHODS set_sort.
@@ -60,90 +60,6 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
-        client->message_toast_display( `Search Entries` ).
-        set_data( ).
-        set_search( ).
-      WHEN `SORT`.
-        set_sort( ).
-      WHEN `FILTER`.
-        set_filter( ).
-      WHEN `SELKZ`.
-        client->message_toast_display( |'Event SELKZ' { lv_selkz } | ).
-        set_selkz( lv_selkz ).
-      WHEN `ROW_ACTION_ITEM_NAVIGATION`.
-        client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row ID { client->get_event_arg( ) }| ).
-      WHEN `ROW_ACTION_ITEM_EDIT`.
-        client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row ID { client->get_event_arg( ) }| ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD set_selkz.
-
-    LOOP AT mt_table REFERENCE INTO DATA(lr_row).
-      lr_row->selkz = iv_selkz.
-    ENDLOOP.
-
-  ENDMETHOD.
-
-
-  METHOD set_sort.
-
-    " the sort event carries the column's sortProperty and the requested
-    " order - the client sorts its binding too, so both agree, and the
-    " backend order is the one the next model push would restore
-    DATA(property)   = client->get_event_arg( ).
-    DATA(sort_order) = client->get_event_arg( 2 ).
-
-    IF sort_order = `Descending`.
-      SORT mt_table BY (property) DESCENDING.
-    ELSE.
-      SORT mt_table BY (property) ASCENDING.
-    ENDIF.
-    client->message_toast_display( |Event SORT { property } { sort_order }| ).
-
-  ENDMETHOD.
-
-
-  METHOD set_filter.
-
-    " the filter event carries the column's filterProperty and the typed
-    " value: a contains-filter over that one component, on the full data
-    DATA(property) = client->get_event_arg( ).
-    DATA(value)    = to_upper( client->get_event_arg( 2 ) ).
-
-    set_data( ).
-    set_search( ).
-
-    IF value IS INITIAL.
-      client->message_toast_display( |Event FILTER { property } cleared| ).
-      RETURN.
-    ENDIF.
-
-    DATA(lt_all) = mt_table.
-    mt_table = VALUE #( ).
-
-    LOOP AT lt_all REFERENCE INTO DATA(lr_row).
-      ASSIGN COMPONENT property OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
-
-      IF sy-subrc <> 0.
-        CONTINUE.
-      ENDIF.
-
-      IF to_upper( |{ <field> }| ) CS value.
-        INSERT lr_row->* INTO TABLE mt_table.
-      ENDIF.
-    ENDLOOP.
-    client->message_toast_display( |Event FILTER { property } { value }| ).
 
   ENDMETHOD.
 
@@ -348,6 +264,90 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
                     )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_EDIT` arg = `${ROW_ID}` ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
+        client->message_toast_display( `Search Entries` ).
+        set_data( ).
+        set_search( ).
+      WHEN `SORT`.
+        set_sort( ).
+      WHEN `FILTER`.
+        set_filter( ).
+      WHEN `SELKZ`.
+        client->message_toast_display( |'Event SELKZ' { lv_selkz } | ).
+        set_selkz( lv_selkz ).
+      WHEN `ROW_ACTION_ITEM_NAVIGATION`.
+        client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row ID { client->get_event_arg( ) }| ).
+      WHEN `ROW_ACTION_ITEM_EDIT`.
+        client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row ID { client->get_event_arg( ) }| ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD set_selkz.
+
+    LOOP AT mt_table REFERENCE INTO DATA(lr_row).
+      lr_row->selkz = iv_selkz.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD set_sort.
+
+    " the sort event carries the column's sortProperty and the requested
+    " order - the client sorts its binding too, so both agree, and the
+    " backend order is the one the next model push would restore
+    DATA(property)   = client->get_event_arg( ).
+    DATA(sort_order) = client->get_event_arg( 2 ).
+
+    IF sort_order = `Descending`.
+      SORT mt_table BY (property) DESCENDING.
+    ELSE.
+      SORT mt_table BY (property) ASCENDING.
+    ENDIF.
+    client->message_toast_display( |Event SORT { property } { sort_order }| ).
+
+  ENDMETHOD.
+
+
+  METHOD set_filter.
+
+    " the filter event carries the column's filterProperty and the typed
+    " value: a contains-filter over that one component, on the full data
+    DATA(property) = client->get_event_arg( ).
+    DATA(value)    = to_upper( client->get_event_arg( 2 ) ).
+
+    set_data( ).
+    set_search( ).
+
+    IF value IS INITIAL.
+      client->message_toast_display( |Event FILTER { property } cleared| ).
+      RETURN.
+    ENDIF.
+
+    DATA(lt_all) = mt_table.
+    mt_table = VALUE #( ).
+
+    LOOP AT lt_all REFERENCE INTO DATA(lr_row).
+      ASSIGN COMPONENT property OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+
+      IF sy-subrc <> 0.
+        CONTINUE.
+      ENDIF.
+
+      IF to_upper( |{ <field> }| ) CS value.
+        INSERT lr_row->* INTO TABLE mt_table.
+      ENDIF.
+    ENDLOOP.
+    client->message_toast_display( |Event FILTER { property } { value }| ).
 
   ENDMETHOD.
 

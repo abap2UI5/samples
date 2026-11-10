@@ -42,50 +42,17 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
 
 
-  METHOD read_frontend_info.
+  METHOD z2ui5_if_app~main.
 
-    DATA(ls_get) = client->get( ).
+    me->client = client.
+    IF client->check_on_init( ).
 
-    device_browser         = ls_get-s_device-browser-name.
-    device_browser_version = ls_get-s_device-browser-version.
-    device_os              = ls_get-s_device-os-name.
-    device_os_version      = ls_get-s_device-os-version.
-    device_systemtype      = ls_get-s_device-system.
-    device_orientation     = ls_get-s_device-orientation.
-    device_height          = CONV string( ls_get-s_device-resize-height ).
-    device_width           = CONV string( ls_get-s_device-resize-width ).
-    device_phone           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-phone ).
-    device_desktop         = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-desktop ).
-    device_tablet          = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-tablet ).
-    device_combi           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-combi ).
-    device_touch           = ls_get-s_device-support-touch.
-    device_pointer         = ls_get-s_device-support-pointer.
-    device_retina          = ls_get-s_device-support-retina.
-    ui5_version            = ls_get-s_ui5-version.
-    ui5_theme              = ls_get-s_ui5-theme.
-    ui5_gav                = ls_get-s_ui5-gav.
-    ui5_build_timestamp    = ls_get-s_ui5-build_timestamp.
+      read_frontend_info( ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
-    " the raw values are short codes (cr, ff, win, mac, ...). cs_device
-    " names every one of them, so an app branches on the constant rather
-    " than on a string it would have to know - here into a label per group
-    browser_label = SWITCH #( ls_get-s_device-browser-name
-                              WHEN z2ui5_if_client=>cs_device-browser-chrome  THEN `Google Chrome (or Chromium)`
-                              WHEN z2ui5_if_client=>cs_device-browser-firefox THEN `Mozilla Firefox`
-                              WHEN z2ui5_if_client=>cs_device-browser-safari  THEN `Apple Safari`
-                              WHEN z2ui5_if_client=>cs_device-browser-edge    THEN `Microsoft Edge`
-                              ELSE `not one cs_device-browser names` ).
-    os_label      = SWITCH #( ls_get-s_device-os-name
-                              WHEN z2ui5_if_client=>cs_device-os-windows   THEN `Windows`
-                              WHEN z2ui5_if_client=>cs_device-os-macintosh THEN `macOS`
-                              WHEN z2ui5_if_client=>cs_device-os-linux     THEN `Linux`
-                              WHEN z2ui5_if_client=>cs_device-os-ios       THEN `iOS`
-                              WHEN z2ui5_if_client=>cs_device-os-android   THEN `Android`
-                              ELSE `not one cs_device-os names` ).
-    orientation_label = SWITCH #( ls_get-s_device-orientation
-                                  WHEN z2ui5_if_client=>cs_device-orientation-portrait  THEN `portrait - one column would fit best`
-                                  WHEN z2ui5_if_client=>cs_device-orientation-landscape THEN `landscape - room for two columns`
-                                  ELSE `not one cs_device-orientation names` ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -233,17 +200,50 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD read_frontend_info.
 
-    me->client = client.
-    IF client->check_on_init( ).
+    DATA(ls_get) = client->get( ).
 
-      read_frontend_info( ).
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
+    device_browser         = ls_get-s_device-browser-name.
+    device_browser_version = ls_get-s_device-browser-version.
+    device_os              = ls_get-s_device-os-name.
+    device_os_version      = ls_get-s_device-os-version.
+    device_systemtype      = ls_get-s_device-system.
+    device_orientation     = ls_get-s_device-orientation.
+    device_height          = CONV string( ls_get-s_device-resize-height ).
+    device_width           = CONV string( ls_get-s_device-resize-width ).
+    device_phone           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-phone ).
+    device_desktop         = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-desktop ).
+    device_tablet          = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-tablet ).
+    device_combi           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-combi ).
+    device_touch           = ls_get-s_device-support-touch.
+    device_pointer         = ls_get-s_device-support-pointer.
+    device_retina          = ls_get-s_device-support-retina.
+    ui5_version            = ls_get-s_ui5-version.
+    ui5_theme              = ls_get-s_ui5-theme.
+    ui5_gav                = ls_get-s_ui5-gav.
+    ui5_build_timestamp    = ls_get-s_ui5-build_timestamp.
 
-    ENDIF.
+    " the raw values are short codes (cr, ff, win, mac, ...). cs_device
+    " names every one of them, so an app branches on the constant rather
+    " than on a string it would have to know - here into a label per group
+    browser_label = SWITCH #( ls_get-s_device-browser-name
+                              WHEN z2ui5_if_client=>cs_device-browser-chrome  THEN `Google Chrome (or Chromium)`
+                              WHEN z2ui5_if_client=>cs_device-browser-firefox THEN `Mozilla Firefox`
+                              WHEN z2ui5_if_client=>cs_device-browser-safari  THEN `Apple Safari`
+                              WHEN z2ui5_if_client=>cs_device-browser-edge    THEN `Microsoft Edge`
+                              ELSE `not one cs_device-browser names` ).
+    os_label      = SWITCH #( ls_get-s_device-os-name
+                              WHEN z2ui5_if_client=>cs_device-os-windows   THEN `Windows`
+                              WHEN z2ui5_if_client=>cs_device-os-macintosh THEN `macOS`
+                              WHEN z2ui5_if_client=>cs_device-os-linux     THEN `Linux`
+                              WHEN z2ui5_if_client=>cs_device-os-ios       THEN `iOS`
+                              WHEN z2ui5_if_client=>cs_device-os-android   THEN `Android`
+                              ELSE `not one cs_device-os names` ).
+    orientation_label = SWITCH #( ls_get-s_device-orientation
+                                  WHEN z2ui5_if_client=>cs_device-orientation-portrait  THEN `portrait - one column would fit best`
+                                  WHEN z2ui5_if_client=>cs_device-orientation-landscape THEN `landscape - room for two columns`
+                                  ELSE `not one cs_device-orientation names` ).
 
   ENDMETHOD.
 ENDCLASS.

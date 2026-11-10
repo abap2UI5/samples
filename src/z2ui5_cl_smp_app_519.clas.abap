@@ -32,18 +32,6 @@ CLASS z2ui5_cl_smp_app_519 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    IF client->get_event( ) = `GREET`.
-      " The text element is translated, the value is not - so the two are
-      " concatenated here rather than written as one literal. A text element
-      " with a placeholder would be a message class instead.
-      client->message_box_display( |{ 'Hello'(004) } { name }| ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     " the three text symbols this app is about - see the block below
@@ -112,6 +100,18 @@ CLASS z2ui5_cl_smp_app_519 IMPLEMENTATION.
             )->a( n = `class` v = `sapUiSmallMarginTop` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->get_event( ) = `GREET`.
+      " The text element is translated, the value is not - so the two are
+      " concatenated here rather than written as one literal. A text element
+      " with a placeholder would be a message class instead.
+      client->message_box_display( |{ 'Hello'(004) } { name }| ).
+    ENDIF.
 
   ENDMETHOD.
 

@@ -46,39 +46,6 @@ CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `SEARCH`.
-        " apply a declarative filter to the list's items binding -
-        " client-side after the response renders. The model data stays
-        " untouched (no table copy, no model change); an empty query
-        " clears the filter again.
-        " t_arg is positional: id, aggregation, method, params
-        client->follow_up_action( val   = z2ui5_if_client=>cs_event-binding_call
-                                  t_arg = VALUE #( ( `productList` )
-                                                   ( `items` )
-                                                   ( `filter` )
-                                                   ( `NAME` )
-                                                   ( `Contains` )
-                                                   ( client->get_event_arg( ) ) ) ).
-
-      WHEN `SORT_ASC` OR `SORT_DESC`.
-        client->follow_up_action( val   = z2ui5_if_client=>cs_event-binding_call
-                                  t_arg = VALUE #( ( `productList` )
-                                                   ( `items` )
-                                                   ( `sort` )
-                                                   ( `NAME` )
-                                                   ( COND #( WHEN client->get_event( ) = `SORT_DESC`
-                                                             THEN `true`
-                                                             ELSE `false` ) ) ) ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -131,6 +98,39 @@ CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
             )->a( n = `description` v = `{CATEGORY}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `SEARCH`.
+        " apply a declarative filter to the list's items binding -
+        " client-side after the response renders. The model data stays
+        " untouched (no table copy, no model change); an empty query
+        " clears the filter again.
+        " t_arg is positional: id, aggregation, method, params
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-binding_call
+                                  t_arg = VALUE #( ( `productList` )
+                                                   ( `items` )
+                                                   ( `filter` )
+                                                   ( `NAME` )
+                                                   ( `Contains` )
+                                                   ( client->get_event_arg( ) ) ) ).
+
+      WHEN `SORT_ASC` OR `SORT_DESC`.
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-binding_call
+                                  t_arg = VALUE #( ( `productList` )
+                                                   ( `items` )
+                                                   ( `sort` )
+                                                   ( `NAME` )
+                                                   ( COND #( WHEN client->get_event( ) = `SORT_DESC`
+                                                             THEN `true`
+                                                             ELSE `false` ) ) ) ).
+
+    ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.

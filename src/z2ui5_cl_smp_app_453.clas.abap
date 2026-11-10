@@ -64,52 +64,6 @@ CLASS z2ui5_cl_smp_app_453 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD products_prepare.
-
-    " Everything the UI shows beyond the raw values is decided HERE, in ABAP.
-    " The original UI5 demo kit samples do all of this in their frontend
-    " Formatter.js - abap2UI5 is a thin frontend, so it moves server-side and
-    " the view binds the finished field. Note what each of these actually is:
-    " a threshold, a rounding rule, a string composition and two lookups from
-    " a business status to a visual. None of them is a rendering detail the
-    " browser knows better than the backend, so none of them belongs in the
-    " curated formatter module (which is why the functions that used to do
-    " them there were removed again).
-    LOOP AT t_products REFERENCE INTO DATA(product).
-
-      " classification by threshold - business logic, never a formatter
-      product->weight_state = COND #( WHEN product->weight < 1000 THEN `Success`
-                                      WHEN product->weight < 2000 THEN `Warning`
-                                      ELSE `Error` ).
-
-      " a packed field renders its declared decimals, so the display string
-      " is simply its character form - no client-side rounding needed
-      product->price_disp = |{ product->price }|.
-
-      product->dimensions = |{ product->width } x { product->depth } x | &&
-                            |{ product->height } { product->dim_unit }|.
-
-      " which icon and which state stand for a business status is a backend
-      " decision - the frontend must not carry the domain's vocabulary
-      product->status_icon  = SWITCH #( product->status
-                                        WHEN `Available`    THEN `sap-icon://accept`
-                                        WHEN `Out of Stock` THEN `sap-icon://alert`
-                                        WHEN `Discontinued` THEN `sap-icon://decline` ).
-      product->status_state = SWITCH #( product->status
-                                        WHEN `Available`    THEN `Success`
-                                        WHEN `Out of Stock` THEN `Warning`
-                                        WHEN `Discontinued` THEN `Error`
-                                        ELSE `None` ).
-
-      product->delivery_state = SWITCH #( product->delivery
-                                          WHEN `Shipped`         THEN `Success`
-                                          WHEN `Failed Shipping` THEN `Error`
-                                          ELSE `None` ).
-    ENDLOOP.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -190,6 +144,52 @@ CLASS z2ui5_cl_smp_app_453 IMPLEMENTATION.
                     )->a( n = `text`  v = `{DELIVERY}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD products_prepare.
+
+    " Everything the UI shows beyond the raw values is decided HERE, in ABAP.
+    " The original UI5 demo kit samples do all of this in their frontend
+    " Formatter.js - abap2UI5 is a thin frontend, so it moves server-side and
+    " the view binds the finished field. Note what each of these actually is:
+    " a threshold, a rounding rule, a string composition and two lookups from
+    " a business status to a visual. None of them is a rendering detail the
+    " browser knows better than the backend, so none of them belongs in the
+    " curated formatter module (which is why the functions that used to do
+    " them there were removed again).
+    LOOP AT t_products REFERENCE INTO DATA(product).
+
+      " classification by threshold - business logic, never a formatter
+      product->weight_state = COND #( WHEN product->weight < 1000 THEN `Success`
+                                      WHEN product->weight < 2000 THEN `Warning`
+                                      ELSE `Error` ).
+
+      " a packed field renders its declared decimals, so the display string
+      " is simply its character form - no client-side rounding needed
+      product->price_disp = |{ product->price }|.
+
+      product->dimensions = |{ product->width } x { product->depth } x | &&
+                            |{ product->height } { product->dim_unit }|.
+
+      " which icon and which state stand for a business status is a backend
+      " decision - the frontend must not carry the domain's vocabulary
+      product->status_icon  = SWITCH #( product->status
+                                        WHEN `Available`    THEN `sap-icon://accept`
+                                        WHEN `Out of Stock` THEN `sap-icon://alert`
+                                        WHEN `Discontinued` THEN `sap-icon://decline` ).
+      product->status_state = SWITCH #( product->status
+                                        WHEN `Available`    THEN `Success`
+                                        WHEN `Out of Stock` THEN `Warning`
+                                        WHEN `Discontinued` THEN `Error`
+                                        ELSE `None` ).
+
+      product->delivery_state = SWITCH #( product->delivery
+                                          WHEN `Shipped`         THEN `Success`
+                                          WHEN `Failed Shipping` THEN `Error`
+                                          ELSE `None` ).
+    ENDLOOP.
 
   ENDMETHOD.
 

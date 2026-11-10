@@ -6,8 +6,8 @@ CLASS z2ui5_cl_smp_app_105 DEFINITION PUBLIC.
     DATA view_parent TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA mv_class_1 TYPE string.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -17,6 +17,21 @@ ENDCLASS.
 
 
 CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    " No check_on_navigated( ) branch: this is a SUB-APP. It never calls
+    " client->view_display( ) - it renders into the parent's view reference
+    " (view_parent), and the parent app owns the screen and re-displays it.
+    me->client = client.
+    IF client->check_on_init( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
 
   METHOD view_display.
 
@@ -65,21 +80,6 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
 
     IF client->check_on_event( `MESSAGE_SUB` ).
       client->message_box_display( `event raised in SUB-APP CLASS 1 (the form)` ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    " No check_on_navigated( ) branch: this is a SUB-APP. It never calls
-    " client->view_display( ) - it renders into the parent's view reference
-    " (view_parent), and the parent app owns the screen and re-displays it.
-    me->client = client.
-    IF client->check_on_init( ).
-      view_display( ).
-    ELSEIF client->check_on_event( ).
-      on_event( ).
     ENDIF.
 
   ENDMETHOD.

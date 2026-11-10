@@ -32,8 +32,8 @@ CLASS z2ui5_cl_smp_app_470 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS popup_components
       IMPORTING
         index TYPE string.
@@ -67,15 +67,6 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
     ELSEIF client->check_on_event( ).
       on_event( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    IF client->get_event( ) = `SHOW`.
-      popup_components( client->get_event_arg( ) ).
     ENDIF.
 
   ENDMETHOD.
@@ -140,6 +131,15 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
                     )->a( n = `icon`  v = `sap-icon://product` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->get_event( ) = `SHOW`.
+      popup_components( client->get_event_arg( ) ).
+    ENDIF.
 
   ENDMETHOD.
 

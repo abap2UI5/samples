@@ -76,127 +76,6 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_init.
-
-    message             = `This is a message toast.`.
-    duration            = `3000`.
-    width               = `15em`.
-    my                  = `center bottom`.
-    at                  = `center bottom`.
-    offset              = `0 0`.
-    collision           = `fit fit`.
-    animation_timing    = `ease`.
-    animation_duration  = `1000`.
-    autoclose           = abap_true.
-    close_on_navigation = abap_true.
-    notify_close        = abap_true.
-    css_class           = `myToast`.
-    closed_text         = `no toast closed yet`.
-
-  ENDMETHOD.
-
-
-  METHOD show_toast.
-
-    " Where a toast docks, how it animates, how wide it is - that is the
-    " CONTROL, not the ABAP app, so it is set the way every other UI5 control
-    " is steered from here: the whitelisted global call, whose last argument
-    " is the option object of sap.m.MessageToast.show( ) 1:1.
-    "
-    " client->message_toast_display( ) carries none of these. It carries what
-    " an ABAP app decides - the text, how long the toast stands, and the
-    " backend event its closing raises - and the class
-    " Z2UI5_CL_SMP_APP_502 shows that side for the message box
-    client->follow_up_action( val   = client->cs_event-control_global
-                              t_arg = VALUE #( ( `MESSAGE_TOAST` )
-                                               ( `show` )
-                                               ( message )
-                                               ( toast_options( ) ) ) ).
-
-  ENDMETHOD.
-
-
-  METHOD toast_options.
-
-    DATA t_opt TYPE string_table.
-
-    " The option object as JSON. A t_arg that starts with a brace is embedded
-    " as REAL JSON by the framework, so this arrives on the client as an
-    " object - not as a string that happens to look like one. Numbers stay
-    " unquoted and flags are true/false, because sap.m.MessageToast checks
-    " the type of every option it reads.
-    "
-    " An option the form left EMPTY is left out rather than sent empty: a
-    " `"duration":` is no JSON, the backend would fail to parse the whole
-    " object and embed it as a plain string, and the toast would then show
-    " with no options at all - quietly, which is the one failure mode of this
-    " path worth knowing
-    " The two numbers travel unquoted, so anything but digits would break the
-    " object - a typo in the form then costs the OPTIONS, not the toast
-    IF duration IS NOT INITIAL AND duration CO `0123456789`.
-      APPEND |"duration":{ duration }| TO t_opt.
-    ENDIF.
-    IF animation_duration IS NOT INITIAL AND animation_duration CO `0123456789`.
-      APPEND |"animationDuration":{ animation_duration }| TO t_opt.
-    ENDIF.
-    LOOP AT VALUE ty_t_opt( ( name = `width`                   val = width )
-                            ( name = `my`                      val = my )
-                            ( name = `at`                      val = at )
-                            ( name = `offset`                  val = offset )
-                            ( name = `collision`               val = collision )
-                            ( name = `animationTimingFunction` val = animation_timing ) ) INTO DATA(s_opt).
-      IF s_opt-val IS NOT INITIAL.
-        APPEND |"{ s_opt-name }":"{ json_escape( s_opt-val ) }"| TO t_opt.
-      ENDIF.
-    ENDLOOP.
-    APPEND |"autoClose":{ COND string( WHEN autoclose = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
-    APPEND |"closeOnBrowserNavigation":{ COND string( WHEN close_on_navigation = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
-
-    " `of` is the element the toast docks to - my/at are read relative to it
-    " instead of to the window. It travels as a jQuery selector, so the
-    " anchor is a DOM node with an id the backend can spell: the core:HTML
-    " box in the view below, not a control whose id UI5 prefixes at runtime
-    IF dock_to_anchor = abap_true.
-      APPEND |"of":"#toastAnchor"| TO t_opt.
-    ENDIF.
-
-    " `class` is the one entry here that is NO MessageToast option: the
-    " frontend puts the classes on the DOM node of the toast, which carries
-    " no id to address it by. It rides in the same object
-    IF css_class IS NOT INITIAL.
-      APPEND |"class":"{ json_escape( css_class ) }"| TO t_opt.
-    ENDIF.
-
-    " onClose is a BACKEND event name here, not a JS callback: the frontend
-    " turns it into the round-trip that reaches on_event below
-    IF notify_close = abap_true.
-      APPEND |"onClose":"TOAST_CLOSED"| TO t_opt.
-    ENDIF.
-
-    LOOP AT t_opt INTO DATA(option).
-      IF result IS INITIAL.
-        result = option.
-      ELSE.
-        result = |{ result },{ option }|.
-      ENDIF.
-    ENDLOOP.
-
-    result = |\{{ result }\}|.
-
-  ENDMETHOD.
-
-
-  METHOD json_escape.
-
-    " The values above are typed into the form: a `"` or `\` left raw would
-    " end the string early, the object would not parse, and the toast would
-    " show with no options - quietly (see toast_options)
-    result = replace( val = val    sub = `\` with = `\\` occ = 0 ).
-    result = replace( val = result sub = `"` with = `\"` occ = 0 ).
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
@@ -398,6 +277,127 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
                                                     ( `${$source>/text}` ) ) ) ).
 
     client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    message             = `This is a message toast.`.
+    duration            = `3000`.
+    width               = `15em`.
+    my                  = `center bottom`.
+    at                  = `center bottom`.
+    offset              = `0 0`.
+    collision           = `fit fit`.
+    animation_timing    = `ease`.
+    animation_duration  = `1000`.
+    autoclose           = abap_true.
+    close_on_navigation = abap_true.
+    notify_close        = abap_true.
+    css_class           = `myToast`.
+    closed_text         = `no toast closed yet`.
+
+  ENDMETHOD.
+
+
+  METHOD show_toast.
+
+    " Where a toast docks, how it animates, how wide it is - that is the
+    " CONTROL, not the ABAP app, so it is set the way every other UI5 control
+    " is steered from here: the whitelisted global call, whose last argument
+    " is the option object of sap.m.MessageToast.show( ) 1:1.
+    "
+    " client->message_toast_display( ) carries none of these. It carries what
+    " an ABAP app decides - the text, how long the toast stands, and the
+    " backend event its closing raises - and the class
+    " Z2UI5_CL_SMP_APP_502 shows that side for the message box
+    client->follow_up_action( val   = client->cs_event-control_global
+                              t_arg = VALUE #( ( `MESSAGE_TOAST` )
+                                               ( `show` )
+                                               ( message )
+                                               ( toast_options( ) ) ) ).
+
+  ENDMETHOD.
+
+
+  METHOD toast_options.
+
+    DATA t_opt TYPE string_table.
+
+    " The option object as JSON. A t_arg that starts with a brace is embedded
+    " as REAL JSON by the framework, so this arrives on the client as an
+    " object - not as a string that happens to look like one. Numbers stay
+    " unquoted and flags are true/false, because sap.m.MessageToast checks
+    " the type of every option it reads.
+    "
+    " An option the form left EMPTY is left out rather than sent empty: a
+    " `"duration":` is no JSON, the backend would fail to parse the whole
+    " object and embed it as a plain string, and the toast would then show
+    " with no options at all - quietly, which is the one failure mode of this
+    " path worth knowing
+    " The two numbers travel unquoted, so anything but digits would break the
+    " object - a typo in the form then costs the OPTIONS, not the toast
+    IF duration IS NOT INITIAL AND duration CO `0123456789`.
+      APPEND |"duration":{ duration }| TO t_opt.
+    ENDIF.
+    IF animation_duration IS NOT INITIAL AND animation_duration CO `0123456789`.
+      APPEND |"animationDuration":{ animation_duration }| TO t_opt.
+    ENDIF.
+    LOOP AT VALUE ty_t_opt( ( name = `width`                   val = width )
+                            ( name = `my`                      val = my )
+                            ( name = `at`                      val = at )
+                            ( name = `offset`                  val = offset )
+                            ( name = `collision`               val = collision )
+                            ( name = `animationTimingFunction` val = animation_timing ) ) INTO DATA(s_opt).
+      IF s_opt-val IS NOT INITIAL.
+        APPEND |"{ s_opt-name }":"{ json_escape( s_opt-val ) }"| TO t_opt.
+      ENDIF.
+    ENDLOOP.
+    APPEND |"autoClose":{ COND string( WHEN autoclose = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
+    APPEND |"closeOnBrowserNavigation":{ COND string( WHEN close_on_navigation = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
+
+    " `of` is the element the toast docks to - my/at are read relative to it
+    " instead of to the window. It travels as a jQuery selector, so the
+    " anchor is a DOM node with an id the backend can spell: the core:HTML
+    " box in the view below, not a control whose id UI5 prefixes at runtime
+    IF dock_to_anchor = abap_true.
+      APPEND |"of":"#toastAnchor"| TO t_opt.
+    ENDIF.
+
+    " `class` is the one entry here that is NO MessageToast option: the
+    " frontend puts the classes on the DOM node of the toast, which carries
+    " no id to address it by. It rides in the same object
+    IF css_class IS NOT INITIAL.
+      APPEND |"class":"{ json_escape( css_class ) }"| TO t_opt.
+    ENDIF.
+
+    " onClose is a BACKEND event name here, not a JS callback: the frontend
+    " turns it into the round-trip that reaches on_event below
+    IF notify_close = abap_true.
+      APPEND |"onClose":"TOAST_CLOSED"| TO t_opt.
+    ENDIF.
+
+    LOOP AT t_opt INTO DATA(option).
+      IF result IS INITIAL.
+        result = option.
+      ELSE.
+        result = |{ result },{ option }|.
+      ENDIF.
+    ENDLOOP.
+
+    result = |\{{ result }\}|.
+
+  ENDMETHOD.
+
+
+  METHOD json_escape.
+
+    " The values above are typed into the form: a `"` or `\` left raw would
+    " end the string early, the object would not parse, and the toast would
+    " show with no options - quietly (see toast_options)
+    result = replace( val = val    sub = `\` with = `\\` occ = 0 ).
+    result = replace( val = result sub = `"` with = `\"` occ = 0 ).
 
   ENDMETHOD.
 

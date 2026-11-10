@@ -19,9 +19,9 @@ CLASS z2ui5_cl_smp_app_452 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
+    METHODS model_init.
     METHODS popup_display.
     METHODS popover_display
       IMPORTING
@@ -37,93 +37,13 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    DATA(description) = `First Error message description. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ` &&
-      `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` &&
-      `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ` &&
-      `Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`.
-
-    t_msg = VALUE #(
-        ( type        = `Error`
-          title       = `Account 801 requires an assignment`
-          subtitle    = `Role is invalid`
-          description = description
-          group       = `Purchase Order 450001` )
-        ( type        = `Warning`
-          title       = `Account 821 requires a check`
-          subtitle    = `Undefined task`
-          description = description
-          group       = `Purchase Order 450001` )
-        ( type        = `Warning`
-          title       = `Enter a text with maximum 6 characters length`
-          subtitle    = ``
-          description = description
-          group       = `Purchase Order 450002` )
-        ( type        = `Warning`
-          title       = `Enter a text with maximum 8 characters length`
-          subtitle    = ``
-          description = description
-          group       = `Purchase Order 450002` )
-        ( type        = `Error`
-          title       = `Account 802 requires an assignment`
-          subtitle    = `Role is invalid`
-          description = description
-          group       = `Purchase Order 450002` )
-        ( type        = `Information`
-          title       = `Account 804 requires an assignment`
-          subtitle    = `Information type subtitle`
-          description = description
-          group       = `Purchase Order 450002` )
-        ( type        = `Error`
-          title       = `Technical message without object relation`
-          subtitle    = ``
-          description = description
-          group       = `General` )
-        ( type        = `Warning`
-          title       = `Global System will be down on Sunday`
-          subtitle    = ``
-          description = description
-          group       = `General` )
-        ( type        = `Error`
-          title       = `Global System will be down on Sunday`
-          subtitle    = ``
-          description = description
-          group       = `General` )
-        ( type        = `Error`
-          title       = `An Error`
-          subtitle    = `Ungrouped message`
-          description = description
-          group       = `` )
-        ( type        = `Warning`
-          title       = `A Warning`
-          subtitle    = `Ungrouped message`
-          description = description
-          group       = `` ) ).
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `POPUP`.
-        popup_display( ).
-      WHEN `POPOVER`.
-        popover_display( `messagePopoverBtn` ).
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -185,6 +105,18 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
                 )->a( n = `id`    v = `messagePopoverBtn` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `POPUP`.
+        popup_display( ).
+      WHEN `POPOVER`.
+        popover_display( `messagePopoverBtn` ).
+    ENDCASE.
 
   ENDMETHOD.
 
@@ -251,6 +183,73 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
                 )->a( n = `href`   v = `https://sap.com` ).
 
     client->popover_display( xml = popup->stringify( ) by_id = id ).
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    DATA(description) = `First Error message description. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ` &&
+      `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` &&
+      `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ` &&
+      `Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`.
+
+    t_msg = VALUE #(
+        ( type        = `Error`
+          title       = `Account 801 requires an assignment`
+          subtitle    = `Role is invalid`
+          description = description
+          group       = `Purchase Order 450001` )
+        ( type        = `Warning`
+          title       = `Account 821 requires a check`
+          subtitle    = `Undefined task`
+          description = description
+          group       = `Purchase Order 450001` )
+        ( type        = `Warning`
+          title       = `Enter a text with maximum 6 characters length`
+          subtitle    = ``
+          description = description
+          group       = `Purchase Order 450002` )
+        ( type        = `Warning`
+          title       = `Enter a text with maximum 8 characters length`
+          subtitle    = ``
+          description = description
+          group       = `Purchase Order 450002` )
+        ( type        = `Error`
+          title       = `Account 802 requires an assignment`
+          subtitle    = `Role is invalid`
+          description = description
+          group       = `Purchase Order 450002` )
+        ( type        = `Information`
+          title       = `Account 804 requires an assignment`
+          subtitle    = `Information type subtitle`
+          description = description
+          group       = `Purchase Order 450002` )
+        ( type        = `Error`
+          title       = `Technical message without object relation`
+          subtitle    = ``
+          description = description
+          group       = `General` )
+        ( type        = `Warning`
+          title       = `Global System will be down on Sunday`
+          subtitle    = ``
+          description = description
+          group       = `General` )
+        ( type        = `Error`
+          title       = `Global System will be down on Sunday`
+          subtitle    = ``
+          description = description
+          group       = `General` )
+        ( type        = `Error`
+          title       = `An Error`
+          subtitle    = `Ungrouped message`
+          description = description
+          group       = `` )
+        ( type        = `Warning`
+          title       = `A Warning`
+          subtitle    = `Ungrouped message`
+          description = description
+          group       = `` ) ).
 
   ENDMETHOD.
 

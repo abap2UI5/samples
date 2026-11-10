@@ -11,8 +11,8 @@ CLASS z2ui5_cl_smp_app_109 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS popover_display
       IMPORTING
         id TYPE string.
@@ -23,53 +23,18 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
-  METHOD popover_display.
+  METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core` ).
-    view->ele( `QuickView`
-        )->a( n = `placement` t = mv_placement
-        )->ele( `QuickViewPage`
-            )->a( n = `description` v = `Enjoy`
-            )->a( n = `header`      v = `Employee Info`
-            )->a( n = `pageId`      v = `employeePageId`
-            )->a( n = `title`       v = `choper725`
-            )->a( n = `titleUrl`    v = `https://github.com/abap2UI5/abap2UI5`
-            )->ele( `QuickViewGroup`
-                )->a( n = `heading` v = `Contact Details`
-                )->ele( `QuickViewGroupElement`
-                    )->a( n = `label` v = `Mobile`
-                    )->a( n = `type`  v = `mobile`
-                    )->a( n = `value` v = `123-456-789`
-                )->end(
-                )->ele( `QuickViewGroupElement`
-                    )->a( n = `label` v = `Phone`
-                    )->a( n = `type`  v = `phone`
-                    )->a( n = `value` v = `789-456-123`
-                )->end(
-                )->ele( `QuickViewGroupElement`
-                    )->a( n = `emailSubject` v = `Subject`
-                    )->a( n = `label`        v = `Email`
-                    )->a( n = `type`         v = `email`
-                    )->a( n = `value`        v = `thisisemail@email.com`
-                )->end(
-            )->end(
-            )->ele( `QuickViewGroup`
-                )->a( n = `heading` v = `Company`
-                )->ele( `QuickViewGroupElement`
-                    )->a( n = `label` v = `Name`
-                    )->a( n = `type`  v = `link`
-                    )->a( n = `url`   v = `https://github.com/abap2UI5/abap2UI5`
-                    )->a( n = `value` v = `Adventure Company`
-                )->end(
-                )->ele( `QuickViewGroupElement`
-                    )->a( n = `label` v = `Address`
-                    )->a( n = `value` v = `Here`
-                )->end( ).
+    me->client = client.
+    IF client->check_on_init( ).
 
-    client->popover_display( xml = view->stringify( ) by_id = id ).
+      mv_placement = `Left`.
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -139,27 +104,62 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_init( ).
-
-      mv_placement = `Left`.
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-    ELSEIF client->check_on_event( ).
-      on_event( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
   METHOD on_event.
 
     IF client->check_on_event( `POPOVER` ).
       popover_display( `TEST` ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD popover_display.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
+    view->ele( `QuickView`
+        )->a( n = `placement` t = mv_placement
+        )->ele( `QuickViewPage`
+            )->a( n = `description` v = `Enjoy`
+            )->a( n = `header`      v = `Employee Info`
+            )->a( n = `pageId`      v = `employeePageId`
+            )->a( n = `title`       v = `choper725`
+            )->a( n = `titleUrl`    v = `https://github.com/abap2UI5/abap2UI5`
+            )->ele( `QuickViewGroup`
+                )->a( n = `heading` v = `Contact Details`
+                )->ele( `QuickViewGroupElement`
+                    )->a( n = `label` v = `Mobile`
+                    )->a( n = `type`  v = `mobile`
+                    )->a( n = `value` v = `123-456-789`
+                )->end(
+                )->ele( `QuickViewGroupElement`
+                    )->a( n = `label` v = `Phone`
+                    )->a( n = `type`  v = `phone`
+                    )->a( n = `value` v = `789-456-123`
+                )->end(
+                )->ele( `QuickViewGroupElement`
+                    )->a( n = `emailSubject` v = `Subject`
+                    )->a( n = `label`        v = `Email`
+                    )->a( n = `type`         v = `email`
+                    )->a( n = `value`        v = `thisisemail@email.com`
+                )->end(
+            )->end(
+            )->ele( `QuickViewGroup`
+                )->a( n = `heading` v = `Company`
+                )->ele( `QuickViewGroupElement`
+                    )->a( n = `label` v = `Name`
+                    )->a( n = `type`  v = `link`
+                    )->a( n = `url`   v = `https://github.com/abap2UI5/abap2UI5`
+                    )->a( n = `value` v = `Adventure Company`
+                )->end(
+                )->ele( `QuickViewGroupElement`
+                    )->a( n = `label` v = `Address`
+                    )->a( n = `value` v = `Here`
+                )->end( ).
+
+    client->popover_display( xml = view->stringify( ) by_id = id ).
 
   ENDMETHOD.
 

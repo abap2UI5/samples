@@ -32,6 +32,45 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
 
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+
+      check_editable_active = abap_false.
+      t_tab                 = VALUE #(
+          ( title = `entry 01` value = `red`    info = `completed` descr = `this is a description` checkbox = abap_true )
+          ( title = `entry 02` value = `blue`   info = `completed` descr = `this is a description` checkbox = abap_true )
+          ( title = `entry 03` value = `green`  info = `completed` descr = `this is a description` checkbox = abap_true )
+          ( title = `entry 04` value = `orange` info = `completed` descr = `` checkbox = abap_true )
+          ( title = `entry 05` value = `grey`   info = `completed` descr = `this is a description` checkbox = abap_true )
+          ( title = `` value = `` info = `` descr = `` checkbox = abap_false ) ).
+
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+
+    ELSEIF client->check_on_event( `BUTTON_EDIT` ).
+      check_editable_active = xsdbool( check_editable_active = abap_false ).
+      LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
+        lr_tab->editable = check_editable_active.
+      ENDLOOP.
+      " the button text (edit / display) is rendered from the protected flag,
+      " not bound - the model push alone would leave it saying `edit`
+      view_display( ).
+
+    ELSEIF client->check_on_event( `BUTTON_DELETE` ).
+      DELETE t_tab WHERE selkz = abap_true.
+
+    ELSEIF client->check_on_event( `BUTTON_ADD` ).
+
+      INSERT VALUE #( editable = check_editable_active ) INTO TABLE t_tab.
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -125,45 +164,6 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
                     )->a( n = `enabled`  v = `{EDITABLE}` ).
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF client->check_on_init( ).
-
-      check_editable_active = abap_false.
-      t_tab                 = VALUE #(
-          ( title = `entry 01` value = `red`    info = `completed` descr = `this is a description` checkbox = abap_true )
-          ( title = `entry 02` value = `blue`   info = `completed` descr = `this is a description` checkbox = abap_true )
-          ( title = `entry 03` value = `green`  info = `completed` descr = `this is a description` checkbox = abap_true )
-          ( title = `entry 04` value = `orange` info = `completed` descr = `` checkbox = abap_true )
-          ( title = `entry 05` value = `grey`   info = `completed` descr = `this is a description` checkbox = abap_true )
-          ( title = `` value = `` info = `` descr = `` checkbox = abap_false ) ).
-
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-
-    ELSEIF client->check_on_event( `BUTTON_EDIT` ).
-      check_editable_active = xsdbool( check_editable_active = abap_false ).
-      LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
-        lr_tab->editable = check_editable_active.
-      ENDLOOP.
-      " the button text (edit / display) is rendered from the protected flag,
-      " not bound - the model push alone would leave it saying `edit`
-      view_display( ).
-
-    ELSEIF client->check_on_event( `BUTTON_DELETE` ).
-      DELETE t_tab WHERE selkz = abap_true.
-
-    ELSEIF client->check_on_event( `BUTTON_ADD` ).
-
-      INSERT VALUE #( editable = check_editable_active ) INTO TABLE t_tab.
-    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

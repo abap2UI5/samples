@@ -39,6 +39,71 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_init( ).
+
+      t_tab = VALUE #(
+        ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
+
+      mv_layout = `OneColumn`.
+      view_display_master( ).
+      view_display_detail( ).
+
+    ELSEIF client->check_on_navigated( ).
+
+      " every column that was open again: the nested views live inside the
+      " master, so a re-displayed master alone would leave them empty
+      view_display_master( ).
+      view_display_detail( ).
+
+      IF mv_layout = `ThreeColumnsEndExpanded`.
+        view_display_detail_detail( ).
+      ENDIF.
+
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `NN_VIEW`.
+        client->message_box_display( `Event in nested nested view raised` ).
+      WHEN `ROW_NAVIGATE`.
+
+        " a row without a title has nothing to open - the third column stays
+        " closed instead of being filled behind a two-column layout
+        IF client->get_event_arg( ) IS NOT INITIAL.
+          mv_layout = `ThreeColumnsEndExpanded`.
+          mv_title  = client->get_event_arg( ).
+          view_display_detail_detail( ).
+        ENDIF.
+
+      WHEN `SELCHANGE`.
+        DATA(lt_sel) = t_tab.
+        DELETE lt_sel WHERE selected = abap_false.
+        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
+
+        IF sy-subrc = 0 AND NOT line_exists( t_tab2[ title = ls_sel-title ] ).
+          INSERT ls_sel INTO TABLE t_tab2.
+        ENDIF.
+        mv_layout = `TwoColumnsMidExpanded`.
+        view_display_detail( ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
   METHOD view_display_detail.
 
     DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
@@ -174,71 +239,6 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
             )->a( n = `selected`    v = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_init( ).
-
-      t_tab = VALUE #(
-        ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
-
-      mv_layout = `OneColumn`.
-      view_display_master( ).
-      view_display_detail( ).
-
-    ELSEIF client->check_on_navigated( ).
-
-      " every column that was open again: the nested views live inside the
-      " master, so a re-displayed master alone would leave them empty
-      view_display_master( ).
-      view_display_detail( ).
-
-      IF mv_layout = `ThreeColumnsEndExpanded`.
-        view_display_detail_detail( ).
-      ENDIF.
-
-    ELSEIF client->check_on_event( ).
-      on_event( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `NN_VIEW`.
-        client->message_box_display( `Event in nested nested view raised` ).
-      WHEN `ROW_NAVIGATE`.
-
-        " a row without a title has nothing to open - the third column stays
-        " closed instead of being filled behind a two-column layout
-        IF client->get_event_arg( ) IS NOT INITIAL.
-          mv_layout = `ThreeColumnsEndExpanded`.
-          mv_title  = client->get_event_arg( ).
-          view_display_detail_detail( ).
-        ENDIF.
-
-      WHEN `SELCHANGE`.
-        DATA(lt_sel) = t_tab.
-        DELETE lt_sel WHERE selected = abap_false.
-        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-
-        IF sy-subrc = 0 AND NOT line_exists( t_tab2[ title = ls_sel-title ] ).
-          INSERT ls_sel INTO TABLE t_tab2.
-        ENDIF.
-        mv_layout = `TwoColumnsMidExpanded`.
-        view_display_detail( ).
-    ENDCASE.
 
   ENDMETHOD.
 

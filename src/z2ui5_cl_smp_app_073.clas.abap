@@ -21,6 +21,19 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `BUTTON_OPEN_NEW_TAB` ).
+      client->follow_up_action( val = z2ui5_if_client=>cs_event-open_new_tab t_arg = VALUE #( ( url_own_get( ) ) ) ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -53,19 +66,6 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
                 )->a( n = `text`  v = `open new tab` ).
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF client->check_on_navigated( ).
-      view_display( ).
-    ELSEIF client->check_on_event( `BUTTON_OPEN_NEW_TAB` ).
-      client->follow_up_action( val = z2ui5_if_client=>cs_event-open_new_tab t_arg = VALUE #( ( url_own_get( ) ) ) ).
-    ENDIF.
 
   ENDMETHOD.
 

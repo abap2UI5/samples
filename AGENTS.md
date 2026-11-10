@@ -1256,7 +1256,7 @@ already on every system the sample runs on. Today that is
 borrowed as *a name that exists*, not used as an API: the sample only reads its
 shape, never its rows, and if the framework ever changes the table the sample
 changes the string. Say that in the sample, as 061 does. Data a sample needs
-for its own sake is built in ABAP — `VALUE #( ( … ) ( … ) )` in `on_init( )` —
+for its own sake is built in ABAP — `VALUE #( ( … ) ( … ) )` in `model_init( )` —
 never selected from the dictionary.
 
 - Follow the [SAP ABAP Style Guide](https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md).
@@ -1290,14 +1290,14 @@ never selected from the dictionary.
   - Max 1 consecutive blank line inside a method body.
   - Always add 1 blank line **before** an `IF` block — **except** when the method is a pure dispatcher (its only purpose is to jump to other methods, with no own logic before the `IF`). In that case, omit the blank line between the opening assignment and the `IF`.
   - Always add 1 blank line **before** `ELSEIF` and `ELSE`.
-  - In setup methods (`on_init` and similar), add 1 blank line between the last data assignment and the first non-assignment statement (e.g. before `view_display( )`):
+  - In setup methods (`model_init` and similar), add 1 blank line between the last data assignment and the first non-assignment statement (e.g. before a `data_read( )`):
     ```abap
-    METHOD on_init.
+    METHOD model_init.
 
       price    = `1234`.
       currency = `EUR`.
 
-      view_display( ).
+      data_read( ).
 
     ENDMETHOD.
     ```
@@ -1693,11 +1693,13 @@ Write everything directly in `main` — no method encapsulation needed. Count on
 
 ### Larger apps — canonical template
 
-When the logic no longer fits inside `main`, always extract exactly `on_init` and `on_event` as the first step — never use other method names for this purpose. `main` then becomes a pure dispatcher that calls these two methods. Only add further methods (`view_display`, `data_read`, etc.) when they are actually needed.
+When the logic no longer fits inside `main`, extract `view_display`, `on_event` and - where the app seeds data - `model_init`, under exactly these names. `main` then becomes a pure dispatcher. Only add further methods (`data_read`, etc.) when they are actually needed.
+
+**One order, in the declarations and in the implementation:** `main`, `view_display`, `on_event`, the event handlers and helpers, and `model_init` last. A reader meets what the app shows first, then what it does, and the seed data - usually the longest and least interesting part - at the end. `model_init` only seeds: the `check_on_init( )` branch of `main` calls it and then `view_display( )`. (Until 2026-11 the first extraction was called `on_init` and displayed the view itself; samples-controls always used `model_init`, and the three repositories read alike now. An `on_init` remains only where the init path does more than seed and display - apps 004, 081, 381, 382, 421, 501, 543.)
 
 In the `check_on_navigated( )` branch the dispatcher calls `view_display( )` directly — the app state survived the serialization, only the view must be re-displayed. Extract a dedicated `on_navigation` method only when the app additionally needs to process results from the called sub-app (via `get_app_prev( )`) before re-displaying.
 
-**Never create a pass-through method with only one statement.** If an extracted method (e.g. `on_init`) would contain only a single call, replace the method call in the dispatcher with that single call directly — and omit the pass-through method entirely. For example, if `on_init` would only call `view_display( )`, write `view_display( )` directly in the `IF client->check_on_init( ).` branch instead.
+**Never create a pass-through method with only one statement.** If an extracted method (e.g. `model_init`) would contain only a single call, replace the method call in the dispatcher with that single call directly — and omit the pass-through method entirely. For example, if `model_init` would only call `data_read( )`, write `data_read( )` directly in the `IF client->check_on_init( ).` branch instead.
 
 ### Event handler sub-methods
 
@@ -1713,11 +1715,11 @@ CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.        " first call: load data, display view
-    METHODS on_event.       " user triggered an event
     METHODS view_display.   " build and render the view
+    METHODS on_event.       " user triggered an event
     METHODS data_read.      " SELECT from database
     METHODS data_update.    " INSERT / UPDATE / DELETE
+    METHODS model_init.     " first call: seed what the app starts with
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -1728,7 +1730,8 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
@@ -1738,10 +1741,11 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_init.
+  METHOD view_display.
 
-    data_read( ).
-    view_display( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( ).
+    " ...
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -1765,15 +1769,6 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD view_display.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( ).
-    " ...
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
   METHOD data_read.
 
     " SELECT ...
@@ -1784,6 +1779,14 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
   METHOD data_update.
 
     " INSERT / UPDATE / DELETE ...
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    " the values the app starts with ...
+    data_read( ).
 
   ENDMETHOD.
 

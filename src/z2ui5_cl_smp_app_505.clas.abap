@@ -33,9 +33,9 @@ CLASS z2ui5_cl_smp_app_505 DEFINITION PUBLIC.
     DATA client     TYPE REF TO z2ui5_if_client.
     DATA sort_order TYPE string.
 
-    METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
+    METHODS model_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -47,67 +47,12 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    " the display text is what the column shows - day first, which sorts
-    " wrong as text; the real date next to it is what the backend sorts by
-    t_row = VALUE #(
-      ( product = `Notebook 15"` stock = 12 created = `20260115` )
-      ( product = `Monitor 27"`  stock = 5  created = `20251203` )
-      ( product = `USB-C Dock`   stock = 40 created = `20260302` )
-      ( product = `Keyboard`     stock = 71 created = `20250928` )
-      ( product = `Headset`      stock = 9  created = `20260107` ) ).
-
-    LOOP AT t_row REFERENCE INTO DATA(row).
-      DATA(created) = CONV string( row->created ).
-      row->created_text = |{ created+6(2) }.{ created+4(2) }.{ created(4) }|.
-    ENDLOOP.
-
-    last_sort = `not sorted yet`.
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    IF client->check_on_event( `SORT` ).
-
-      " the same event for every column: the sort property and the order
-      " the user asked for ride as arguments
-      DATA(property) = client->get_event_arg( ).
-      sort_order     = client->get_event_arg( 2 ).
-
-      IF property = `CREATED_TEXT`.
-        " the veto held on the client, so nothing is sorted yet: sort the
-        " ABAP table by the real date, then re-render so the column shows
-        " the indicator the client sort would have set
-        IF sort_order = `Descending`.
-          SORT t_row BY created DESCENDING.
-        ELSE.
-          SORT t_row BY created ASCENDING.
-        ENDIF.
-
-        last_sort = |Date { sort_order } - sorted in the BACKEND by the real date, the client sort was cancelled|.
-        view_display( ).
-
-      ELSE.
-        " the client sorted already; the backend only takes note. Nothing
-        " is re-rendered, the bound text below reaches the view on its own
-        last_sort = |{ property } { sort_order } - sorted by the CLIENT, the default ran|.
-      ENDIF.
-
     ENDIF.
 
   ENDMETHOD.
@@ -204,6 +149,60 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->check_on_event( `SORT` ).
+
+      " the same event for every column: the sort property and the order
+      " the user asked for ride as arguments
+      DATA(property) = client->get_event_arg( ).
+      sort_order     = client->get_event_arg( 2 ).
+
+      IF property = `CREATED_TEXT`.
+        " the veto held on the client, so nothing is sorted yet: sort the
+        " ABAP table by the real date, then re-render so the column shows
+        " the indicator the client sort would have set
+        IF sort_order = `Descending`.
+          SORT t_row BY created DESCENDING.
+        ELSE.
+          SORT t_row BY created ASCENDING.
+        ENDIF.
+
+        last_sort = |Date { sort_order } - sorted in the BACKEND by the real date, the client sort was cancelled|.
+        view_display( ).
+
+      ELSE.
+        " the client sorted already; the backend only takes note. Nothing
+        " is re-rendered, the bound text below reaches the view on its own
+        last_sort = |{ property } { sort_order } - sorted by the CLIENT, the default ran|.
+      ENDIF.
+
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    " the display text is what the column shows - day first, which sorts
+    " wrong as text; the real date next to it is what the backend sorts by
+    t_row = VALUE #(
+      ( product = `Notebook 15"` stock = 12 created = `20260115` )
+      ( product = `Monitor 27"`  stock = 5  created = `20251203` )
+      ( product = `USB-C Dock`   stock = 40 created = `20260302` )
+      ( product = `Keyboard`     stock = 71 created = `20250928` )
+      ( product = `Headset`      stock = 9  created = `20260107` ) ).
+
+    LOOP AT t_row REFERENCE INTO DATA(row).
+      DATA(created) = CONV string( row->created ).
+      row->created_text = |{ created+6(2) }.{ created+4(2) }.{ created(4) }|.
+    ENDLOOP.
+
+    last_sort = `not sorted yet`.
 
   ENDMETHOD.
 

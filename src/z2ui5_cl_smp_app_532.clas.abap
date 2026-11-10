@@ -34,15 +34,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_532 IMPLEMENTATION.
 
-  METHOD factory.
-
-    result = NEW #( ).
-    result->transition = transition.
-    result->level      = level.
-
-  ENDMETHOD.
-
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -56,28 +47,6 @@ CLASS z2ui5_cl_smp_app_532 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `DEEPER`.
-        client->nav_app_call( factory( transition = transition level = level + 1 ) ).
-
-      WHEN `RERENDER`.
-        renders = renders + 1.
-        view_display( abap_false ).
-
-      WHEN `REPLACE`.
-        client->nav_app_leave( factory( transition = transition level = level ) ).
-
-      WHEN `POPUP`.
-        client->nav_app_call( NEW z2ui5_cl_smp_app_534( ) ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -153,6 +122,37 @@ CLASS z2ui5_cl_smp_app_532 IMPLEMENTATION.
     ELSE.
       client->view_display( view->stringify( ) ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `DEEPER`.
+        client->nav_app_call( factory( transition = transition level = level + 1 ) ).
+
+      WHEN `RERENDER`.
+        renders = renders + 1.
+        view_display( abap_false ).
+
+      WHEN `REPLACE`.
+        client->nav_app_leave( factory( transition = transition level = level ) ).
+
+      WHEN `POPUP`.
+        client->nav_app_call( NEW z2ui5_cl_smp_app_534( ) ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD factory.
+
+    result = NEW #( ).
+    result->transition = transition.
+    result->level      = level.
 
   ENDMETHOD.
 

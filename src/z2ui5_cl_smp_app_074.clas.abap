@@ -18,8 +18,8 @@ CLASS z2ui5_cl_smp_app_074 DEFINITION PUBLIC.
     DATA upload_text TYPE string.
     DATA client      TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
     " Both wrap a pair of classes that do the same job under different names:
     " the first is the ABAP Cloud one, the second the classic on-premise one.
@@ -52,6 +52,66 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
+
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - File - Upload to the Backend`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+
+    page->tag( `MessageStrip`
+        )->a( n = `text` v = `The file_uploader custom control returns the picked file as a base64 data URL; the backend ` &&
+                   `strips the prefix, decodes the payload and reports what arrived - name, size in bytes and content.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    IF upload_name IS NOT INITIAL.
+
+      DATA(box) = page->ele( `Panel`
+          )->a( n = `headerText` v = `Received in the backend`
+          )->a( n = `class`      v = `sapUiSmallMargin`
+          )->ele( `VBox`
+              )->a( n = `class` v = `sapUiSmallMargin` ).
+
+      box->tag( `ObjectStatus`
+          )->a( n = `title` v = `File`
+          )->a( n = `text`  t = upload_name ).
+      box->tag( `ObjectStatus`
+          )->a( n = `title` v = `Size`
+          )->a( n = `text`  t = |{ upload_size } bytes|
+          )->a( n = `state` v = `Success` ).
+      box->tag( `TextArea`
+          )->a( n = `value`    t = upload_text
+          )->a( n = `editable` b = abap_false
+          )->a( n = `rows`     v = `8`
+          )->a( n = `width`    v = `100%`
+          )->a( n = `class`    v = `sapUiSmallMarginTop` ).
+
+    ENDIF.
+
+    page->ele( `footer`
+        )->ele( `OverflowToolbar`
+            )->tag( n = `FileUploader` ns = `z2ui5`
+                )->a( n = `placeholder` v = `filepath here...`
+                )->a( n = `upload`      v = client->_event( `UPLOAD` )
+                )->a( n = `path`        v = client->_bind( filepath )
+                )->a( n = `value`       v = client->_bind( file ) ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -145,66 +205,6 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
           IMPORTING
             data  = result.
     ENDTRY.
-
-  ENDMETHOD.
-
-
-  METHOD view_display.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
-
-    DATA(page) = view->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - File - Upload to the Backend`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
-
-    page->tag( `MessageStrip`
-        )->a( n = `text` v = `The file_uploader custom control returns the picked file as a base64 data URL; the backend ` &&
-                   `strips the prefix, decodes the payload and reports what arrived - name, size in bytes and content.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    IF upload_name IS NOT INITIAL.
-
-      DATA(box) = page->ele( `Panel`
-          )->a( n = `headerText` v = `Received in the backend`
-          )->a( n = `class`      v = `sapUiSmallMargin`
-          )->ele( `VBox`
-              )->a( n = `class` v = `sapUiSmallMargin` ).
-
-      box->tag( `ObjectStatus`
-          )->a( n = `title` v = `File`
-          )->a( n = `text`  t = upload_name ).
-      box->tag( `ObjectStatus`
-          )->a( n = `title` v = `Size`
-          )->a( n = `text`  t = |{ upload_size } bytes|
-          )->a( n = `state` v = `Success` ).
-      box->tag( `TextArea`
-          )->a( n = `value`    t = upload_text
-          )->a( n = `editable` b = abap_false
-          )->a( n = `rows`     v = `8`
-          )->a( n = `width`    v = `100%`
-          )->a( n = `class`    v = `sapUiSmallMarginTop` ).
-
-    ENDIF.
-
-    page->ele( `footer`
-        )->ele( `OverflowToolbar`
-            )->tag( n = `FileUploader` ns = `z2ui5`
-                )->a( n = `placeholder` v = `filepath here...`
-                )->a( n = `upload`      v = client->_event( `UPLOAD` )
-                )->a( n = `path`        v = client->_bind( filepath )
-                )->a( n = `value`       v = client->_bind( file ) ).
-
-    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

@@ -31,6 +31,25 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_init( ).
+
+      " seeded once - a re-display after a navigation keeps what was typed
+      url   = VALUE #( url = `http://www.sap.com` ).
+      email = VALUE #( email   = `email@email.com`
+                       subject = `subject`
+                       body    = `body` ).
+
+      view_display( client ).
+
+    ELSEIF client->check_on_navigated( ).
+      view_display( client ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD view_display.
 
     DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
@@ -162,25 +181,6 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
         )->a( n = `text`  v = `Redirect` ).
 
     client->view_display( page->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    IF client->check_on_init( ).
-
-      " seeded once - a re-display after a navigation keeps what was typed
-      url   = VALUE #( url = `http://www.sap.com` ).
-      email = VALUE #( email   = `email@email.com`
-                       subject = `subject`
-                       body    = `body` ).
-
-      view_display( client ).
-
-    ELSEIF client->check_on_navigated( ).
-      view_display( client ).
-    ENDIF.
 
   ENDMETHOD.
 

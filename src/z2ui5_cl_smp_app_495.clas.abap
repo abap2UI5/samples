@@ -53,13 +53,6 @@ CLASS z2ui5_cl_smp_app_495 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD log_step.
-
-    INSERT VALUE #( no = |{ lines( t_log ) + 1 }| check = val ) INTO TABLE t_log.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -104,6 +97,13 @@ CLASS z2ui5_cl_smp_app_495 IMPLEMENTATION.
             )->a( n = `description` v = `call {NO}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD log_step.
+
+    INSERT VALUE #( no = |{ lines( t_log ) + 1 }| check = val ) INTO TABLE t_log.
 
   ENDMETHOD.
 ENDCLASS.

@@ -23,7 +23,6 @@ CLASS z2ui5_cl_smp_app_197 DEFINITION PUBLIC.
     DATA mt_table_full TYPE ty_t_table.
     DATA client        TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
     METHODS on_event_filter.
     METHODS view_display.
     METHODS data_read.
@@ -44,46 +43,14 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      data_read( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `RESET` ).
       mt_table = mt_table_full.
     ELSEIF client->check_on_event( `FILTER` ).
       on_event_filter( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    data_read( ).
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event_filter.
-
-    " listClose hands over selectedItems - an ARRAY OF CONTROLS
-    " (sap.m.FacetFilterItem). The framework marshals every control-valued
-    " event argument into a flat JSON object carrying its ID plus the values
-    " of its metadata properties, so a property is read as /<index>/<property>
-    " - there is no mProperties level in the payload.
-    DATA t_range TYPE RANGE OF string.
-
-    LOOP AT json_get_values( json = client->get_event_arg( )
-                             name = `key` ) INTO DATA(lv_key).
-      APPEND VALUE #( sign = `I` option = `EQ` low = lv_key ) TO t_range.
-    ENDLOOP.
-
-    " an empty selection is no filter at all - the list closed with every
-    " item unchecked, which must show all rows again, not none of them
-    mt_table = mt_table_full.
-
-    IF t_range IS NOT INITIAL.
-      DELETE mt_table WHERE product NOT IN t_range.
     ENDIF.
 
   ENDMETHOD.
@@ -165,6 +132,31 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
         )->a( n = `text` v = `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event_filter.
+
+    " listClose hands over selectedItems - an ARRAY OF CONTROLS
+    " (sap.m.FacetFilterItem). The framework marshals every control-valued
+    " event argument into a flat JSON object carrying its ID plus the values
+    " of its metadata properties, so a property is read as /<index>/<property>
+    " - there is no mProperties level in the payload.
+    DATA t_range TYPE RANGE OF string.
+
+    LOOP AT json_get_values( json = client->get_event_arg( )
+                             name = `key` ) INTO DATA(lv_key).
+      APPEND VALUE #( sign = `I` option = `EQ` low = lv_key ) TO t_range.
+    ENDLOOP.
+
+    " an empty selection is no filter at all - the list closed with every
+    " item unchecked, which must show all rows again, not none of them
+    mt_table = mt_table_full.
+
+    IF t_range IS NOT INITIAL.
+      DELETE mt_table WHERE product NOT IN t_range.
+    ENDIF.
 
   ENDMETHOD.
 

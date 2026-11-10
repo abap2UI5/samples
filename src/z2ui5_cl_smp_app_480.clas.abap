@@ -22,8 +22,8 @@ CLASS z2ui5_cl_smp_app_480 DEFINITION PUBLIC.
     DATA counter TYPE i.
     DATA client  TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -41,22 +41,6 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `INC`.
-        counter = counter + 1.
-        view_display( ).
-
-      WHEN `GO_DETAIL`.
-        client->nav_app_call( NEW z2ui5_cl_smp_app_469( ) ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -125,6 +109,22 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `INC`.
+        counter = counter + 1.
+        view_display( ).
+
+      WHEN `GO_DETAIL`.
+        client->nav_app_call( NEW z2ui5_cl_smp_app_469( ) ).
+
+    ENDCASE.
 
   ENDMETHOD.
 

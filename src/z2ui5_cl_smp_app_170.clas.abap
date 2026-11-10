@@ -22,6 +22,71 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_navigated( ).
+      view_display( ).
+
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Popup - Navigate between Dialogs (NavContainer)`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Open the dialog and pick its tabs: each tab switches the NavContainer inside the dialog ` &&
+                   `to another page, on the client - the select event calls the container's to method by id ` &&
+                   `(follow_up_action with cs_event-control_by_id), no roundtrip. The first page also opens a second ` &&
+                   `popup, whose button brings the first one back.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    page->tag( `Button`
+        )->a( n = `press` v = client->_event( `POPUP` )
+        )->a( n = `text`  v = `Open Popup...` ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `GOTO_2ND`.
+        simple_popup2( ).
+
+      WHEN `BTN_OK_2ND`.
+        client->popup_destroy( ).
+        simple_popup1( ).
+
+      WHEN `BTN_OK_1ND`.
+        client->popup_destroy( ).
+
+      WHEN `POPUP`.
+        simple_popup1( ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
   METHOD simple_popup1.
 
     DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
@@ -114,71 +179,6 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
                 )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD view_display.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-    DATA(page) = view->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Popup - Navigate between Dialogs (NavContainer)`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
-
-    page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Open the dialog and pick its tabs: each tab switches the NavContainer inside the dialog ` &&
-                   `to another page, on the client - the select event calls the container's to method by id ` &&
-                   `(follow_up_action with cs_event-control_by_id), no roundtrip. The first page also opens a second ` &&
-                   `popup, whose button brings the first one back.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    page->tag( `Button`
-        )->a( n = `press` v = client->_event( `POPUP` )
-        )->a( n = `text`  v = `Open Popup...` ).
-
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `GOTO_2ND`.
-        simple_popup2( ).
-
-      WHEN `BTN_OK_2ND`.
-        client->popup_destroy( ).
-        simple_popup1( ).
-
-      WHEN `BTN_OK_1ND`.
-        client->popup_destroy( ).
-
-      WHEN `POPUP`.
-        simple_popup1( ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_navigated( ).
-      view_display( ).
-
-    ELSEIF client->check_on_event( ).
-      on_event( ).
-    ENDIF.
 
   ENDMETHOD.
 

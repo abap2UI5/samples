@@ -21,8 +21,8 @@ CLASS z2ui5_cl_smp_app_081 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS popover_list_display
       IMPORTING
         id TYPE string.
@@ -33,25 +33,18 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
-  METHOD popover_list_display.
+  METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core` ).
-    view->ele( `Popover`
-        )->a( n = `title`     v = `Popover Title`
-        )->a( n = `placement` t = mv_placement
-        )->ele( `List`
-            )->a( n = `items`           v = client->_bind( mt_tab )
-            )->a( n = `mode`            v = `SingleSelectMaster`
-            )->a( n = `selectionChange` v = client->_event( val = `SEL_CHANGE` )
-            )->tag( `StandardListItem`
-                )->a( n = `title`       v = `{ID}`
-                )->a( n = `description` v = `{NAME}`
-                )->a( n = `selected`    v = `{SELECTED}` ).
+    me->client = client.
+    IF client->check_on_init( ).
+      on_init( ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
 
-    client->popover_display( xml = view->stringify( ) by_id = id ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -127,22 +120,6 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_init( ).
-      on_init( ).
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-
-    ELSEIF client->check_on_event( ).
-      on_event( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
   METHOD on_event.
 
     CASE client->get_event( ).
@@ -159,6 +136,29 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
       WHEN `POPOVER_LIST`.
         popover_list_display( `TEST` ).
     ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD popover_list_display.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
+    view->ele( `Popover`
+        )->a( n = `title`     v = `Popover Title`
+        )->a( n = `placement` t = mv_placement
+        )->ele( `List`
+            )->a( n = `items`           v = client->_bind( mt_tab )
+            )->a( n = `mode`            v = `SingleSelectMaster`
+            )->a( n = `selectionChange` v = client->_event( val = `SEL_CHANGE` )
+            )->tag( `StandardListItem`
+                )->a( n = `title`       v = `{ID}`
+                )->a( n = `description` v = `{NAME}`
+                )->a( n = `selected`    v = `{SELECTED}` ).
+
+    client->popover_display( xml = view->stringify( ) by_id = id ).
 
   ENDMETHOD.
 

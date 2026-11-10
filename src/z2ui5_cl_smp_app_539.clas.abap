@@ -27,9 +27,9 @@ CLASS z2ui5_cl_smp_app_539 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
+    METHODS model_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -41,46 +41,13 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `INSPECT` ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    copy_preference = `Cells`.
-    t_products = VALUE #(
-        ( product_id = `HT-1000` name = `Notebook Basic 15`        supplier = `Very Best Screens` quantity = `10` uom = `PC` price = `956.00`  currency = `EUR` )
-        ( product_id = `HT-1001` name = `Notebook Basic 17`        supplier = `Very Best Screens` quantity = `20` uom = `PC` price = `1249.00` currency = `EUR` )
-        ( product_id = `HT-1007` name = `ITelO Vault`              supplier = `Technocom`         quantity = `15` uom = `PC` price = `299.00`  currency = `EUR` )
-        ( product_id = `HT-1010` name = `Notebook Professional 15` supplier = `Very Best Screens` quantity = `16` uom = `PC` price = `1999.00` currency = `EUR` )
-        ( product_id = `HT-1063` name = `Ergonomic Keyboard`       supplier = `Titanium`          quantity = `50` uom = `PC` price = `14.00`   currency = `EUR` )
-        ( product_id = `HT-1070` name = `Photo Scan`               supplier = `Red Point Stores`  quantity = `8`  uom = `PC` price = `129.00`  currency = `EUR` ) ).
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    " the clipboard's text format is a spreadsheet's: a tab between two
-    " cells, a line break between two rows
-    SPLIT clipboard_text AT cl_abap_char_utilities=>newline INTO TABLE DATA(t_line).
-    DELETE t_line WHERE table_line IS INITIAL.
-
-    DATA(cells) = 0.
-    LOOP AT t_line INTO DATA(line).
-      SPLIT line AT cl_abap_char_utilities=>horizontal_tab INTO TABLE DATA(t_cell).
-      cells = cells + lines( t_cell ).
-    ENDLOOP.
-
-    client->message_toast_display( |{ lines( t_line ) } row(s) with { cells } cell(s) arrived in the backend| ).
 
   ENDMETHOD.
 
@@ -217,6 +184,38 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
         )->a( n = `press` v = client->_event( `INSPECT` ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    " the clipboard's text format is a spreadsheet's: a tab between two
+    " cells, a line break between two rows
+    SPLIT clipboard_text AT cl_abap_char_utilities=>newline INTO TABLE DATA(t_line).
+    DELETE t_line WHERE table_line IS INITIAL.
+
+    DATA(cells) = 0.
+    LOOP AT t_line INTO DATA(line).
+      SPLIT line AT cl_abap_char_utilities=>horizontal_tab INTO TABLE DATA(t_cell).
+      cells = cells + lines( t_cell ).
+    ENDLOOP.
+
+    client->message_toast_display( |{ lines( t_line ) } row(s) with { cells } cell(s) arrived in the backend| ).
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    copy_preference = `Cells`.
+    t_products = VALUE #(
+        ( product_id = `HT-1000` name = `Notebook Basic 15`        supplier = `Very Best Screens` quantity = `10` uom = `PC` price = `956.00`  currency = `EUR` )
+        ( product_id = `HT-1001` name = `Notebook Basic 17`        supplier = `Very Best Screens` quantity = `20` uom = `PC` price = `1249.00` currency = `EUR` )
+        ( product_id = `HT-1007` name = `ITelO Vault`              supplier = `Technocom`         quantity = `15` uom = `PC` price = `299.00`  currency = `EUR` )
+        ( product_id = `HT-1010` name = `Notebook Professional 15` supplier = `Very Best Screens` quantity = `16` uom = `PC` price = `1999.00` currency = `EUR` )
+        ( product_id = `HT-1063` name = `Ergonomic Keyboard`       supplier = `Titanium`          quantity = `50` uom = `PC` price = `14.00`   currency = `EUR` )
+        ( product_id = `HT-1070` name = `Photo Scan`               supplier = `Red Point Stores`  quantity = `8`  uom = `PC` price = `129.00`  currency = `EUR` ) ).
 
   ENDMETHOD.
 

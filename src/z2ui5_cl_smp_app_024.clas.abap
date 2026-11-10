@@ -12,8 +12,8 @@ CLASS z2ui5_cl_smp_app_024 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -40,33 +40,6 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `CALL_NEW_APP`.
-        client->nav_app_call( NEW z2ui5_cl_smp_app_025( ) ).
-
-      WHEN `CALL_NEW_APP_VIEW`.
-        DATA(app) = NEW z2ui5_cl_smp_app_025( ).
-        app->show_view = `SECOND`.
-        client->nav_app_call( app ).
-
-      WHEN `CALL_NEW_APP_READ`.
-        DATA(app_next) = NEW z2ui5_cl_smp_app_025( ).
-        app_next->input_previous_set = input.
-        client->nav_app_call( app_next ).
-
-      WHEN `CALL_NEW_APP_EVENT`.
-        app_next = NEW z2ui5_cl_smp_app_025( ).
-        app_next->event_backend = `NEW_APP_EVENT`.
-        client->nav_app_call( app_next ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -129,6 +102,33 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
                         )->a( n = `value` v = client->_bind( input2 ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `CALL_NEW_APP`.
+        client->nav_app_call( NEW z2ui5_cl_smp_app_025( ) ).
+
+      WHEN `CALL_NEW_APP_VIEW`.
+        DATA(app) = NEW z2ui5_cl_smp_app_025( ).
+        app->show_view = `SECOND`.
+        client->nav_app_call( app ).
+
+      WHEN `CALL_NEW_APP_READ`.
+        DATA(app_next) = NEW z2ui5_cl_smp_app_025( ).
+        app_next->input_previous_set = input.
+        client->nav_app_call( app_next ).
+
+      WHEN `CALL_NEW_APP_EVENT`.
+        app_next = NEW z2ui5_cl_smp_app_025( ).
+        app_next->event_backend = `NEW_APP_EVENT`.
+        client->nav_app_call( app_next ).
+
+    ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.

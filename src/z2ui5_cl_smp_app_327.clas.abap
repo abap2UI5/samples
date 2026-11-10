@@ -36,9 +36,9 @@ CLASS z2ui5_cl_smp_app_327 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
+    METHODS model_init.
     METHODS json_get_value
       IMPORTING
         json          TYPE string
@@ -56,78 +56,13 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    t_types   = VALUE #( ( type = `local` ) ( type = `session` ) ).
-    s_storage = VALUE #( type   = `local`
-                         prefix = `prefix1`
-                         key    = `key1`
-                         value  = VALUE #( field1 = `1`
-                                           field2 = `textfld1` ) ).
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `LOCAL_STORAGE_LOADED`.
-        " The z2ui5:Storage control read a value out of the browser storage
-        " and reports it through its `finished` event. The payload is a whole
-        " structure, so it arrives as JSON - here it is picked apart field by
-        " field, which is also what keeps this tolerant: whatever sits under
-        " the key may carry more (or other) fields than this app models - an
-        " earlier shape, or a value someone else wrote. A field that is not
-        " there simply stays empty.
-        DATA(lv_json) = client->get_event_arg( 4 ).
-        s_storage-value = VALUE #( field1 = json_get_value( json = lv_json
-                                                            name = `FIELD1` )
-                                   field2 = json_get_value( json = lv_json
-                                                            name = `FIELD2` ) ).
-
-      WHEN `GET_STORED_VALUE`.
-        " The z2ui5:Storage control reads the storage only when it renders,
-        " and `store` writes it on the client without a roundtrip - so the
-        " last value read may be stale. Take it, and re-display: the fresh
-        " control reads the key again and reports a newer value through
-        " `finished` (LOCAL_STORAGE_LOADED above).
-        s_storage-value = s_stored_value.
-        view_display( ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD json_get_value.
-
-    " A minimal reader for one string field of a flat JSON object: find
-    " `"<name>":"` and take what stands up to the next quote. The model writes
-    " the ABAP component names in upper case, hence the case-insensitive
-    " search. An app parsing arbitrary JSON wants a real parser instead.
-    DATA(lv_marker) = |"{ name }":"|.
-
-    DATA(lv_off) = find( val = json sub = lv_marker case = abap_false ).
-    IF lv_off < 0.
-      RETURN.
-    ENDIF.
-
-    result = substring_before( val = substring( val = json
-                                                off = lv_off + strlen( lv_marker ) )
-                               sub = `"` ).
 
   ENDMETHOD.
 
@@ -217,6 +152,70 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
         )->a( n = `value`  v = client->_bind( s_stored_value ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `LOCAL_STORAGE_LOADED`.
+        " The z2ui5:Storage control read a value out of the browser storage
+        " and reports it through its `finished` event. The payload is a whole
+        " structure, so it arrives as JSON - here it is picked apart field by
+        " field, which is also what keeps this tolerant: whatever sits under
+        " the key may carry more (or other) fields than this app models - an
+        " earlier shape, or a value someone else wrote. A field that is not
+        " there simply stays empty.
+        DATA(lv_json) = client->get_event_arg( 4 ).
+        s_storage-value = VALUE #( field1 = json_get_value( json = lv_json
+                                                            name = `FIELD1` )
+                                   field2 = json_get_value( json = lv_json
+                                                            name = `FIELD2` ) ).
+
+      WHEN `GET_STORED_VALUE`.
+        " The z2ui5:Storage control reads the storage only when it renders,
+        " and `store` writes it on the client without a roundtrip - so the
+        " last value read may be stale. Take it, and re-display: the fresh
+        " control reads the key again and reports a newer value through
+        " `finished` (LOCAL_STORAGE_LOADED above).
+        s_storage-value = s_stored_value.
+        view_display( ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD json_get_value.
+
+    " A minimal reader for one string field of a flat JSON object: find
+    " `"<name>":"` and take what stands up to the next quote. The model writes
+    " the ABAP component names in upper case, hence the case-insensitive
+    " search. An app parsing arbitrary JSON wants a real parser instead.
+    DATA(lv_marker) = |"{ name }":"|.
+
+    DATA(lv_off) = find( val = json sub = lv_marker case = abap_false ).
+    IF lv_off < 0.
+      RETURN.
+    ENDIF.
+
+    result = substring_before( val = substring( val = json
+                                                off = lv_off + strlen( lv_marker ) )
+                               sub = `"` ).
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    t_types   = VALUE #( ( type = `local` ) ( type = `session` ) ).
+    s_storage = VALUE #( type   = `local`
+                         prefix = `prefix1`
+                         key    = `key1`
+                         value  = VALUE #( field1 = `1`
+                                           field2 = `textfld1` ) ).
 
   ENDMETHOD.
 

@@ -31,22 +31,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
 
-  METHOD refresh_data.
-
-    " rebuilt from scratch on every call - it runs on the init AND on every
-    " filter press, and without the reset each press appended another 1000
-    " rows before the filter deleted the ones it did not want
-    t_tab = VALUE #( ).
-    DO 1000 TIMES.
-      DATA(ls_row) = VALUE ty_s_row( count = sy-index  value = `red`
-        info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
-        descr = `this is a description` checkbox = abap_true ).
-      INSERT ls_row INTO TABLE t_tab.
-    ENDDO.
-
-  ENDMETHOD.
-
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -154,6 +138,22 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
                     )->a( n = `text` v = `{COUNT}` ).
 
     client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD refresh_data.
+
+    " rebuilt from scratch on every call - it runs on the init AND on every
+    " filter press, and without the reset each press appended another 1000
+    " rows before the filter deleted the ones it did not want
+    t_tab = VALUE #( ).
+    DO 1000 TIMES.
+      DATA(ls_row) = VALUE ty_s_row( count = sy-index  value = `red`
+        info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
+        descr = `this is a description` checkbox = abap_true ).
+      INSERT ls_row INTO TABLE t_tab.
+    ENDDO.
 
   ENDMETHOD.
 

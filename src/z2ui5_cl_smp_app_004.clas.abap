@@ -43,14 +43,6 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_init.
-
-    view_main_display( ).
-    client->message_box_display( `app started, init values set` ).
-
-  ENDMETHOD.
-
-
   METHOD on_event.
 
     CASE client->get_event( ).
@@ -73,6 +65,14 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
         DATA(dummy) = 1 / 0.
         client->message_box_display( |{ dummy }| ).
     ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    view_main_display( ).
+    client->message_box_display( `app started, init values set` ).
 
   ENDMETHOD.
 

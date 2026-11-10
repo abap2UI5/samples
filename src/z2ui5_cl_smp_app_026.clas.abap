@@ -53,37 +53,6 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD popover_display.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core` ).
-    view->ele( `Popover`
-        )->a( n = `title`     v = `Popover Title`
-        )->a( n = `placement` t = placement
-        )->ele( `footer`
-            )->ele( `OverflowToolbar`
-                )->tag( `ToolbarSpacer`
-                )->tag( `Button`
-                    )->a( n = `press` v = client->_event( `BUTTON_CANCEL` )
-                    )->a( n = `text`  v = `Cancel`
-                )->tag( `Button`
-                    )->a( n = `press` v = client->_event( `BUTTON_CONFIRM` )
-                    )->a( n = `text`  v = `Confirm`
-                    )->a( n = `type`  v = `Emphasized`
-            )->end(
-        )->end(
-        )->tag( `Text`
-            )->a( n = `text` v = `make an input here:`
-        )->tag( `Input`
-            )->a( n = `value` v = client->_bind( input ) ).
-
-    client->popover_display( xml = view->stringify( ) by_id = id ).
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -149,6 +118,37 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
                 )->a( n = `id`    v = `TEST` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD popover_display.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
+    view->ele( `Popover`
+        )->a( n = `title`     v = `Popover Title`
+        )->a( n = `placement` t = placement
+        )->ele( `footer`
+            )->ele( `OverflowToolbar`
+                )->tag( `ToolbarSpacer`
+                )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `BUTTON_CANCEL` )
+                    )->a( n = `text`  v = `Cancel`
+                )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `BUTTON_CONFIRM` )
+                    )->a( n = `text`  v = `Confirm`
+                    )->a( n = `type`  v = `Emphasized`
+            )->end(
+        )->end(
+        )->tag( `Text`
+            )->a( n = `text` v = `make an input here:`
+        )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input ) ).
+
+    client->popover_display( xml = view->stringify( ) by_id = id ).
 
   ENDMETHOD.
 

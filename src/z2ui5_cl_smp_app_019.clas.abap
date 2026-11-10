@@ -29,6 +29,38 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_019 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+
+      sel_mode = `None`.
+      t_tab    = VALUE #( descr = `this is a description`
+          ( title = `title_01` value = `value_01` )
+          ( title = `title_02` value = `value_02` )
+          ( title = `title_03` value = `value_03` )
+          ( title = `title_04` value = `value_04` )
+          ( title = `title_05` value = `value_05` ) ).
+      view_display( ).
+
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `BUTTON_SEGMENT_CHANGE` ).
+
+      client->message_toast_display( `Selection Mode changed` ).
+      view_display( ).
+
+    ELSEIF client->check_on_event( `BUTTON_READ_SEL` ).
+
+      t_tab_sel = t_tab.
+      DELETE t_tab_sel WHERE selkz <> abap_true.
+      view_display( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -137,38 +169,6 @@ CLASS z2ui5_cl_smp_app_019 IMPLEMENTATION.
                         )->a( n = `text` v = `{DESCR}` ).
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF client->check_on_init( ).
-
-      sel_mode = `None`.
-      t_tab    = VALUE #( descr = `this is a description`
-          ( title = `title_01` value = `value_01` )
-          ( title = `title_02` value = `value_02` )
-          ( title = `title_03` value = `value_03` )
-          ( title = `title_04` value = `value_04` )
-          ( title = `title_05` value = `value_05` ) ).
-      view_display( ).
-
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-    ELSEIF client->check_on_event( `BUTTON_SEGMENT_CHANGE` ).
-
-      client->message_toast_display( `Selection Mode changed` ).
-      view_display( ).
-
-    ELSEIF client->check_on_event( `BUTTON_READ_SEL` ).
-
-      t_tab_sel = t_tab.
-      DELETE t_tab_sel WHERE selkz <> abap_true.
-      view_display( ).
-    ENDIF.
 
   ENDMETHOD.
 

@@ -57,7 +57,7 @@ CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
+    METHODS view_display.
     METHODS on_event_basic
       IMPORTING
         event         TYPE clike
@@ -77,7 +77,7 @@ CLASS z2ui5_cl_smp_app_502 DEFINITION PUBLIC.
       IMPORTING
         event TYPE clike.
 
-    METHODS view_display.
+    METHODS on_event.
     METHODS render_basic
       IMPORTING form TYPE REF TO z2ui5_cl_ui5_view_builder.
     METHODS render_message
@@ -128,6 +128,57 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Message - MessageBox for Any Data`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `client->message_box_display( ) takes TYPE any: throw in what the app already holds. ` &&
+                   `Messages are recognized first and bring their own severity and title; everything else - a table, ` &&
+                   `a structure, a tree, an object, a number, an HTML string - is rendered instead of dropped. ` &&
+                   `One button per case, and each button is one call: the app pre-formats nothing. That is what this ` &&
+                   `method is for; a pure sap.m.MessageBox option is set on the control instead - ` &&
+                   `Z2UI5_CL_SMP_APP_512 is the same box, steered through the global object.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `editable`        b = abap_true
+        )->a( n = `layout`          v = `ResponsiveGridLayout`
+        )->a( n = `labelSpanXL`     v = `2`
+        )->a( n = `labelSpanL`      v = `2`
+        )->a( n = `labelSpanM`      v = `3`
+        )->a( n = `labelSpanS`      v = `12`
+        )->a( n = `adjustLabelSpan` v = `false`
+        )->a( n = `columnsXL`       v = `1`
+        )->a( n = `columnsL`        v = `1`
+        )->a( n = `columnsM`        v = `1`
+        )->ele( n = `content` ns = `form` ).
+
+    render_basic( form ).
+    render_message( form ).
+    render_data( form ).
+    render_limit( form ).
+    render_box( form ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -338,57 +389,6 @@ CLASS z2ui5_cl_smp_app_502 IMPLEMENTATION.
                                      details = `this text is not shown - the table owns the details` ).
 
     ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD view_display.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
-
-    DATA(page) = view->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Message - MessageBox for Any Data`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
-
-    page->tag( `MessageStrip`
-        )->a( n = `text`     v = `client->message_box_display( ) takes TYPE any: throw in what the app already holds. ` &&
-                   `Messages are recognized first and bring their own severity and title; everything else - a table, ` &&
-                   `a structure, a tree, an object, a number, an HTML string - is rendered instead of dropped. ` &&
-                   `One button per case, and each button is one call: the app pre-formats nothing. That is what this ` &&
-                   `method is for; a pure sap.m.MessageBox option is set on the control instead - ` &&
-                   `Z2UI5_CL_SMP_APP_512 is the same box, steered through the global object.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
-        )->a( n = `editable`        b = abap_true
-        )->a( n = `layout`          v = `ResponsiveGridLayout`
-        )->a( n = `labelSpanXL`     v = `2`
-        )->a( n = `labelSpanL`      v = `2`
-        )->a( n = `labelSpanM`      v = `3`
-        )->a( n = `labelSpanS`      v = `12`
-        )->a( n = `adjustLabelSpan` v = `false`
-        )->a( n = `columnsXL`       v = `1`
-        )->a( n = `columnsL`        v = `1`
-        )->a( n = `columnsM`        v = `1`
-        )->ele( n = `content` ns = `form` ).
-
-    render_basic( form ).
-    render_message( form ).
-    render_data( form ).
-    render_limit( form ).
-    render_box( form ).
-
-    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
