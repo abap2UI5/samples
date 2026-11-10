@@ -163,11 +163,9 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
 
       WHEN `BUTTON_DELETE`.
         DELETE t_table WHERE selkz = abap_true.
-        view_display( ).
 
       WHEN `BUTTON_REFRESH`.
         on_init( ).
-        view_display( ).
 
       WHEN `BUTTON_SAVE`.
         client->message_toast_display( |{ lines( t_table ) } row(s) saved| ).

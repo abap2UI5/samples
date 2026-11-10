@@ -49,13 +49,14 @@ CLASS z2ui5_cl_smp_app_019 IMPLEMENTATION.
     ELSEIF client->check_on_event( `BUTTON_SEGMENT_CHANGE` ).
 
       client->message_toast_display( `Selection Mode changed` ).
+      " the Table's mode is written into the view at render time: the new
+      " mode takes a fresh Table, which reads its selection from SELKZ again
       view_display( ).
 
     ELSEIF client->check_on_event( `BUTTON_READ_SEL` ).
 
       t_tab_sel = t_tab.
       DELETE t_tab_sel WHERE selkz <> abap_true.
-      view_display( ).
     ENDIF.
 
   ENDMETHOD.

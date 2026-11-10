@@ -30,6 +30,8 @@ CLASS z2ui5_cl_smp_app_518 IMPLEMENTATION.
     ELSEIF client->check_on_event( `FONT_REGISTERED` ).
 
       font_registered = abap_true.
+      " the TNT icon is a control the first view deliberately left out
+      " (see font_register) - adding it takes a new view, not a model push
       view_display( ).
 
     ENDIF.

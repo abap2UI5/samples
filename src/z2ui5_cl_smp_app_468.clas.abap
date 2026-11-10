@@ -22,10 +22,10 @@ CLASS z2ui5_cl_smp_app_468 DEFINITION PUBLIC.
 
     DATA input   TYPE string.
     DATA routing TYPE abap_bool.
+    DATA counter TYPE i.
 
   PROTECTED SECTION.
-    DATA counter TYPE i.
-    DATA client  TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
     METHODS on_event.
@@ -98,7 +98,7 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
         )->a( n = `text` v = `and raise a counter` ).
     form->tag( `Button`
         )->a( n = `press` v = client->_event( `INC` )
-        )->a( n = `text`  t = |increment ({ counter })| ).
+        )->a( n = `text`  v = |increment ({ client->_bind( counter ) })| ).
 
     form->tag( `Label`
         )->a( n = `text` v = `2. Navigate forward` ).
@@ -133,7 +133,6 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
 
       WHEN `INC`.
         counter = counter + 1.
-        view_display( ).
 
       WHEN `GO_DETAIL`.
         client->nav_app_call( NEW z2ui5_cl_smp_app_469( ) ).

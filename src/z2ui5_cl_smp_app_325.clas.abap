@@ -106,22 +106,21 @@ CLASS z2ui5_cl_smp_app_325 IMPLEMENTATION.
 
       client->view_display( view->stringify( ) ).
 
+    ELSEIF client->check_on_event( `COPY_INPUT` ).
+
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-clipboard_copy
+          t_arg = VALUE #( ( input ) ) ).
+      client->message_toast_display( |input field copied: { input }| ).
+
+    ELSEIF client->check_on_event( `COPY_TEXT_AREA` ).
+
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-clipboard_copy
+          t_arg = VALUE #( ( text ) ) ).
+      client->message_toast_display( |text area copied: { text }| ).
+
     ENDIF.
-
-    CASE client->get_event( ).
-      WHEN `COPY_INPUT`.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-clipboard_copy
-            t_arg = VALUE #( ( input ) ) ).
-        client->message_toast_display( |input field copied: { input }| ).
-
-      WHEN `COPY_TEXT_AREA`.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-clipboard_copy
-            t_arg = VALUE #( ( text ) ) ).
-        client->message_toast_display( |text area copied: { text }| ).
-
-    ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.

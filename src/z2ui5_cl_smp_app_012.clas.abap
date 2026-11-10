@@ -115,13 +115,18 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
         client->view_destroy( ).
       WHEN `POPUP_DECIDE_CONTINUE`.
         client->popup_destroy( ).
+        " BUTTON_POPUP_01 destroyed the view behind the popup - nothing is
+        " left for a model push to update, so the view is built again
         view_display( ).
         client->message_toast_display( `continue pressed` ).
       WHEN `POPUP_DECIDE_CANCEL`.
         client->popup_destroy( ).
+        " as above: the view may have been destroyed when the popup opened
         view_display( ).
         client->message_toast_display( `cancel pressed` ).
       WHEN `BUTTON_POPUP_02`.
+        " the rebuild is the subject of this button: the background is
+        " rendered again while the popup opens
         view_display( ).
         popup_decide( ).
       WHEN `BUTTON_POPUP_03`.

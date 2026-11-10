@@ -140,6 +140,8 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
           file     = VALUE #( ).
           filepath = VALUE #( ).
 
+          " the result panel is not part of the view before the first upload,
+          " and its texts are rendered, not bound - the view is built again
           view_display( ).
         ENDIF.
 

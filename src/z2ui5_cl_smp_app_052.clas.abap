@@ -39,17 +39,12 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
-
       view_display( ).
       set_data( ).
-      RETURN.
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-    ENDIF.
-
-    IF client->check_on_event( `POPOVER_DETAIL` ).
+    ELSEIF client->check_on_event( `POPOVER_DETAIL` ).
 
       mv_check_popover = abap_true.
       mv_product       = client->get_event_arg( 2 ).

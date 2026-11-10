@@ -23,18 +23,19 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
       mv_value = `my value`.
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-    ENDIF.
+    ELSEIF client->check_on_event( ).
 
-    CASE client->get_event( ).
-      WHEN `EVENT_FIX_VAL` OR `EVENT_MODEL_VALUE` OR `SOURCE_PROPERTY_TEXT` OR `EVENT_PROPERTY_VALUE` OR `PARENT_PROPERTY_ID`.
-        client->message_box_display( |backend event: { client->get_event_arg( ) }| ).
-    ENDCASE.
+      CASE client->get_event( ).
+        WHEN `EVENT_FIX_VAL` OR `EVENT_MODEL_VALUE` OR `SOURCE_PROPERTY_TEXT` OR `EVENT_PROPERTY_VALUE` OR `PARENT_PROPERTY_ID`.
+          client->message_box_display( |backend event: { client->get_event_arg( ) }| ).
+      ENDCASE.
+
+    ENDIF.
 
   ENDMETHOD.
 

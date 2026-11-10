@@ -27,6 +27,8 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_navigated( ).
 
+      " more than a re-display: the app this one called can hand an event
+      " back with nav_app_leave( event = ... ), and it arrives on this branch
       " abap2ui5lint-disable-next-line handler-without-event -- handed over by z2ui5_cl_smp_app_025 with nav_app_leave( event = ... )
       IF client->get_event( ) = `CALL_PREVIOUS_APP_INPUT_RETURN`.
 

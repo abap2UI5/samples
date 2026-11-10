@@ -4,6 +4,7 @@ CLASS z2ui5_cl_smp_app_025 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA input              TYPE string.
+    DATA input_previous     TYPE string.
     " abap2ui5lint-disable unbound-public-attribute -- set by the calling app z2ui5_cl_smp_app_024 before nav_app_call( )
     DATA input_previous_set TYPE string.
     DATA show_view          TYPE string.
@@ -11,8 +12,7 @@ CLASS z2ui5_cl_smp_app_025 DEFINITION PUBLIC.
     " abap2ui5lint-enable
 
   PROTECTED SECTION.
-    DATA input_previous TYPE string.
-    DATA client         TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
     METHODS on_event.
@@ -28,6 +28,9 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
 
+      " nothing is seeded here: the calling app z2ui5_cl_smp_app_024 set the
+      " public attributes before nav_app_call( ) - the start only reports
+      " the event it was handed
       IF event_backend = `NEW_APP_EVENT`.
         client->message_box_display( `new app called and event NEW_APP_EVENT raised` ).
       ENDIF.
@@ -83,7 +86,7 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
                         )->tag( `Label`
                             )->a( n = `text` v = `Data of previous app`
                         )->tag( `Input`
-                            )->a( n = `value`   t = input_previous
+                            )->a( n = `value`   v = client->_bind( input_previous )
                             )->a( n = `enabled` b = abap_false
                         )->tag( `Button`
                             )->a( n = `press` v = client->_event( `BUTTON_READ_PREVIOUS` )
@@ -135,14 +138,16 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
         DATA(app_024) = CAST z2ui5_cl_smp_app_024( client->get_app_prev( ) ).
         input_previous = app_024->input2.
         client->message_toast_display( `data of previous app read` ).
-        view_display( ).
 
       WHEN `SHOW_VIEW_MAIN`.
         show_view = `MAIN`.
+        " a different set of controls, not a changed value: the other view
+        " has to be built
         view_display( ).
 
       WHEN `SHOW_VIEW_SECOND`.
         show_view = `SECOND`.
+        " as above: the second view is a different set of controls
         view_display( ).
 
       WHEN `BACK_WITH_EVENT`.

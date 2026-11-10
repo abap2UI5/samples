@@ -134,6 +134,8 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
 
     ENDCASE.
 
+    " not an event path: back from the called app the view slot is this
+    " app's again and has to be filled
     view_display( ).
 
   ENDMETHOD.

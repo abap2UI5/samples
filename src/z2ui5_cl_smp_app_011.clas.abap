@@ -17,7 +17,8 @@ CLASS z2ui5_cl_smp_app_011 DEFINITION PUBLIC.
         editable TYPE abap_bool,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab            TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA edit_button_text TYPE string VALUE `edit`.
 
   PROTECTED SECTION.
     DATA check_editable_active TYPE abap_bool.
@@ -56,9 +57,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
       LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
         lr_tab->editable = check_editable_active.
       ENDLOOP.
-      " the button text (edit / display) is rendered from the protected flag,
-      " not bound - the model push alone would leave it saying `edit`
-      view_display( ).
+      edit_button_text = SWITCH #( check_editable_active WHEN abap_true THEN `display` ELSE `edit` ).
 
     ELSEIF client->check_on_event( `BUTTON_DELETE` ).
       DELETE t_tab WHERE selkz = abap_true.
@@ -115,7 +114,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
                     )->a( n = `icon`  v = `sap-icon://add`
                 )->tag( `Button`
                     )->a( n = `press` v = client->_event( `BUTTON_EDIT` )
-                    )->a( n = `text`  t = SWITCH #( check_editable_active WHEN abap_true THEN `display` ELSE `edit` )
+                    )->a( n = `text`  v = client->_bind( edit_button_text )
                     )->a( n = `tooltip` v = `Switch the cells between display and edit mode`
                     )->a( n = `icon`  v = `sap-icon://edit`
             )->end(

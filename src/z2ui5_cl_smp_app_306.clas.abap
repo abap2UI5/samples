@@ -173,6 +173,8 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
         selected_picture = mt_picture_out[ selected = abap_true ].
         mv_pic_display   = mt_picture[ selected_picture-id ]-data.
         rebuild_output( ).
+        " the full-size Image is only part of the view once a picture was
+        " chosen - the first selection adds a control, so the view is rebuilt
         view_display( ).
 
     ENDCASE.

@@ -89,9 +89,12 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
       WHEN `TEST`.
         client->message_box_display( |input { mv_input_nest }| ).
       WHEN `ALL`.
+        " the re-render is what this button shows - nothing bound changed
         view_display( ).
         nest_view_display( ).
       WHEN `MAIN`.
+        " on purpose without nest_view_display( ): the rebuilt main view
+        " comes up without the nested one
         view_display( ).
       WHEN `NEST`.
         nest_view_display( ).

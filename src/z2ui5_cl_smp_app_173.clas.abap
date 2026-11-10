@@ -88,6 +88,8 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `CHANGE_FLAG` ).
+      " a template:if is evaluated once, while the view is expanded - the
+      " changed flag reaches it only through a rebuild
       view_display( ).
     ENDIF.
 
