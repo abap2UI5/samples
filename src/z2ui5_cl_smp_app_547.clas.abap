@@ -152,7 +152,7 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
             )->tag( `Link`
                 )->a( n = `text`  v = `{ID}`
                 )->a( n = `press` v = client->_event( val = `OPEN`
-                                                      arg = `$event.oSource.getBindingContext().getPath().split('/').pop()` ) ).
+                                                      arg = `$event.getSource().getBindingContext().getPath().split('/').pop()` ) ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `sortProperty`   v = `CUSTOMER`

@@ -1,4 +1,4 @@
-" @keywords tree table treetable subtotal grand total group sum currency hierarchy collapse expand arraynames expandtolevel collapseall control_by_id rowsettings
+" @keywords tree table treetable subtotal grand total group sum currency hierarchy collapse expand arraynames expandtolevel collapseall control_by_id rowsettings _bind_path
 " @summary Subtotals as a hierarchy in a sap.ui.table.TreeTable - a grand total per currency, a node per region and country carrying its sum, the sales as leaves - collapsible in the browser.
 CLASS z2ui5_cl_smp_app_545 DEFINITION PUBLIC.
 
@@ -199,7 +199,7 @@ CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
     " the first level - the grand totals - starts expanded
     DATA(table) = page->ele( n = `TreeTable` ns = `table`
         )->a( n = `id`              v = `tree`
-        )->a( n = `rows`            v = |\{ path: '{ client->_bind( val = t_tree path = abap_true ) }', | &&
+        )->a( n = `rows`            v = |\{ path: '{ client->_bind_path( t_tree ) }', | &&
                                         |parameters: \{ arrayNames: ['NODES'], numberOfExpandedLevels: 1 \} \}|
         )->a( n = `selectionMode`   v = `None`
         )->a( n = `visibleRowCount` v = client->_bind( visible_rows )

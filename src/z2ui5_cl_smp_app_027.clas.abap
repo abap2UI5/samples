@@ -1,4 +1,4 @@
-" @keywords formatter parts conditional regexp visible enabled syntax
+" @keywords formatter parts conditional regexp visible enabled syntax _bind_path
 " @summary Expression binding in the view - conditions, composite parts and a regular expression decide visible and enabled without asking the backend.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/expression_binding
 CLASS z2ui5_cl_smp_app_027 DEFINITION PUBLIC.
@@ -96,10 +96,10 @@ CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
         )->a( n = `text` v = `max value of the first two inputs` ).
 
     form->tag( `Input`
-        )->a( n = `value` v = |\{ type : "sap.ui.model.type.Integer", path:"{ client->_bind( val = input31 path = abap_true ) }" \}| ).
+        )->a( n = `value` v = |\{ type : "sap.ui.model.type.Integer", path:"{ client->_bind_path( input31 ) }" \}| ).
 
     form->tag( `Input`
-        )->a( n = `value` v = |\{ type : "sap.ui.model.type.Integer", path:"{ client->_bind( val = input32 path = abap_true ) }" \}| ).
+        )->a( n = `value` v = |\{ type : "sap.ui.model.type.Integer", path:"{ client->_bind_path( input32 ) }" \}| ).
 
     form->tag( `Input`
         )->a( n = `enabled` b = abap_false
@@ -109,7 +109,7 @@ CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
         )->a( n = `text` v = `only enabled when the quantity equals 500` ).
 
     form->tag( `Input`
-        )->a( n = `value` v = |\{ type : "sap.ui.model.type.Integer", path:"{ client->_bind( val = quantity path = abap_true ) }" \}| ).
+        )->a( n = `value` v = |\{ type : "sap.ui.model.type.Integer", path:"{ client->_bind_path( quantity ) }" \}| ).
 
     form->tag( `Input`
         )->a( n = `enabled` v = |\{= 500===${ client->_bind( quantity ) } \}|
@@ -136,8 +136,8 @@ CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
 
     form->tag( `Input`
         )->a( n = `enabled` b = abap_false
-        )->a( n = `value`   v = |\{ parts: [ "{ client->_bind( val = input51 path = abap_true ) }", | &&
-                                    |"{ client->_bind( val = input52 path = abap_true ) }" ] \}| ).
+        )->a( n = `value`   v = |\{ parts: [ "{ client->_bind_path( input51 ) }", | &&
+                                    |"{ client->_bind_path( input52 ) }" ] \}| ).
 
     client->view_display( view->stringify( ) ).
 

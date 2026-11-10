@@ -1,4 +1,4 @@
-" @keywords edit input add row delete multiselect toolbar
+" @keywords edit input add row delete multiselect toolbar _bind_path
 " @summary An editable table: input cells, adding and deleting rows, multi-select and a toolbar over them.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/tables https://abap2ui5.github.io/docs/tutorials/step-8 https://abap2ui5.github.io/docs/tutorials/step-10
 CLASS z2ui5_cl_smp_app_011 DEFINITION PUBLIC.
@@ -55,7 +55,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     DATA(tab) = page->ele( `Table`
-        )->a( n = `items` v = |\{path: '{ client->_bind( val = t_tab path = abap_true ) }', templateShareable: false\}|
+        )->a( n = `items` v = |\{path: '{ client->_bind_path( t_tab ) }', templateShareable: false\}|
         )->a( n = `mode`  v = `MultiSelect`
         )->ele( `headerToolbar`
             )->ele( `OverflowToolbar`

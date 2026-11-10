@@ -1,4 +1,4 @@
-" @keywords messagemanager validation target field state central model
+" @keywords messagemanager validation target field state central model _bind_path
 " @summary The UI5 message model: validation messages carry the field they belong to, so the control shows the state and one list holds them all.
 " @docs https://abap2ui5.github.io/docs/cookbook/translation_messages/message
 CLASS z2ui5_cl_smp_app_467 DEFINITION PUBLIC.
@@ -102,7 +102,7 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
         )->tag( `Label`
             )->a( n = `text`  v = `Amount (integer only - validation collected automatically)`
         )->tag( `Input`
-            )->a( n = `value` v = |\{ path: '{ client->_bind( val = amount path = abap_true ) }', | &&
+            )->a( n = `value` v = |\{ path: '{ client->_bind_path( amount ) }', | &&
                               |type: 'sap.ui.model.type.Integer' \}|
             )->a( n = `width` v = `12rem` ).
 

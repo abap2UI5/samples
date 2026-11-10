@@ -1,4 +1,4 @@
-" @keywords progressindicator busy wait long running backend start_timer
+" @keywords progressindicator busy wait long running backend start_timer _bind_path
 " @summary A ProgressIndicator during a long backend call, driven by follow-up actions rather than by a frozen screen.
 " @docs https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer
 CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
@@ -103,7 +103,7 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
     layout->ele( `VBox`
         )->tag( `ProgressIndicator`
             )->a( n = `percentValue` v = client->_bind( mv_percent )
-            )->a( n = `displayValue` v = |\{{ client->_bind( val = mv_percent path = abap_true ) }\} %|
+            )->a( n = `displayValue` v = |\{{ client->_bind_path( mv_percent ) }\} %|
             )->a( n = `showValue`    b = abap_true
             )->a( n = `state`        v = `Success` ).
 

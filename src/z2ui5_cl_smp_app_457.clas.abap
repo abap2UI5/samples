@@ -1,4 +1,4 @@
-" @keywords datepicker datevalue javascript date object iso
+" @keywords datepicker datevalue javascript date object iso _bind_path
 " @summary The DatePicker's dateValue wants a JavaScript date object rather than a string - what that means for the binding of an ABAP date.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_457 DEFINITION PUBLIC.
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_smp_app_457 IMPLEMENTATION.
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `DatePicker`
             )->a( n = `displayFormat` v = `long`
-            )->a( n = `dateValue`     v = |\{ path: '{ client->_bind( val = date_iso path = abap_true ) }', | &&
+            )->a( n = `dateValue`     v = |\{ path: '{ client->_bind_path( date_iso ) }', | &&
                                         |formatter: 'Formatter.DateCreateObject' \}|
         )->tag( `Text`
             )->a( n = `text`  v = |Model value (unchanged string): { client->_bind( date_iso ) }|

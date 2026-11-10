@@ -339,7 +339,8 @@
     "leading",
     "zeros",
     "number",
-    "format"
+    "format",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/formatter"
@@ -385,7 +386,8 @@
     "regexp",
     "visible",
     "enabled",
-    "syntax"
+    "syntax",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/expression_binding"
@@ -1082,7 +1084,8 @@
     "webcam",
     "capture",
     "facing",
-    "mode"
+    "mode",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/device_capabilities/camera"
@@ -1323,7 +1326,8 @@
     "binding",
     "syntax",
     "dollar",
-    "brace"
+    "brace",
+    "_bind_path"
    ],
    "docs": []
   },
@@ -1514,7 +1518,8 @@
     "initial",
     "date",
     "00000000",
-    "sy-datum"
+    "sy-datum",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/formatter"
@@ -1534,7 +1539,8 @@
     "javascript",
     "date",
     "object",
-    "iso"
+    "iso",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/formatter"
@@ -1554,7 +1560,8 @@
     "javascript",
     "date",
     "object",
-    "iso"
+    "iso",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/formatter"
@@ -1574,7 +1581,8 @@
     "placeholder",
     "text",
     "status",
-    "expandinlineicons"
+    "expandinlineicons",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/formatter"
@@ -1665,7 +1673,8 @@
     "expandtolevel",
     "collapseall",
     "control_by_id",
-    "rowsettings"
+    "rowsettings",
+    "_bind_path"
    ],
    "docs": []
   },
@@ -2011,7 +2020,8 @@
     "field",
     "state",
     "central",
-    "model"
+    "model",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/translation_messages/message"
@@ -2825,7 +2835,8 @@
     "row",
     "delete",
     "multiselect",
-    "toolbar"
+    "toolbar",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/model/tables",
@@ -2989,7 +3000,8 @@
     "view",
     "nest_view_display",
     "re-render",
-    "refresh"
+    "refresh",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/nested_views",
@@ -3023,7 +3035,8 @@
     "nested",
     "repeat",
     "startindex",
-    "length"
+    "length",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/view/xml_templating"
@@ -3044,7 +3057,8 @@
     "long",
     "running",
     "backend",
-    "start_timer"
+    "start_timer",
+    "_bind_path"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/browser_interaction/timer"

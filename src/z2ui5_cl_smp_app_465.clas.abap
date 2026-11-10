@@ -78,7 +78,7 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
     page->tag( `MessageStrip`
         )->a( n = `text`     v = `The button toggles the popover via the whitelisted toggleBy method ` &&
                    `(follow_up_action with cs_event-control_by_id), anchored to the button's DOM ref ` &&
-                   `passed as $event.oSource.sId - open-if-closed, close-if-open, client-side after render.`
+                   `passed as $event.getSource().getId() - open-if-closed, close-if-open, client-side after render.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
         )->a( n = `class` v = `sapUiSmallMargin`
         )->tag( `Button`
             )->a( n = `press` v = client->_event( val = `TOGGLE`
-                                           arg = `$event.oSource.sId` )
+                                           arg = `$event.getSource().getId()` )
             )->a( n = `text`  v = `Toggle popover`
             )->a( n = `icon`  v = `sap-icon://email` ).
 

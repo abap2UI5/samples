@@ -1,4 +1,4 @@
-" @keywords dats tims conversion initial date 00000000 sy-datum
+" @keywords dats tims conversion initial date 00000000 sy-datum _bind_path
 " @summary ABAP DATS and TIMS strings in the view: the conversion in both directions, including what an initial 00000000 has to become.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_450 DEFINITION PUBLIC.
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
                 )->a( n = `text` v = `DATS 20260720`
             )->tag( `DatePicker`
                 )->a( n = `displayFormat` v = `long`
-                )->a( n = `dateValue`     v = |\{ path: '{ client->_bind( val = dats path = abap_true ) }', | &&
+                )->a( n = `dateValue`     v = |\{ path: '{ client->_bind_path( dats ) }', | &&
                                 |formatter: 'Formatter.DateAbapDateToDateObject' \}|
                 )->a( n = `editable`      b = abap_false
             )->tag( `Label`
@@ -90,15 +90,15 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
             )->tag( `DatePicker`
                 )->a( n = `displayFormat` v = `long`
                 )->a( n = `placeholder`   v = `no date`
-                )->a( n = `dateValue`     v = |\{ path: '{ client->_bind( val = dats_initial path = abap_true ) }', | &&
+                )->a( n = `dateValue`     v = |\{ path: '{ client->_bind_path( dats_initial ) }', | &&
                                 |formatter: 'Formatter.DateAbapDateToDateObject' \}|
                 )->a( n = `editable`      b = abap_false
             )->tag( `Label`
                 )->a( n = `text` v = `DATS 20260720 + TIMS 134501`
             )->ele( `DateTimePicker`
                 )->a( n = `editable`  v = `false`
-                )->a( n = `dateValue` v = |\{ parts: [\{path: '{ client->_bind( val = dats path = abap_true ) }'\}, | &&
-                                          |\{path: '{ client->_bind( val = tims path = abap_true ) }'\}], | &&
+                )->a( n = `dateValue` v = |\{ parts: [\{path: '{ client->_bind_path( dats ) }'\}, | &&
+                                          |\{path: '{ client->_bind_path( tims ) }'\}], | &&
                                           |formatter: 'Formatter.DateAbapDateTimeToDateObject' \}| ).
 
     client->view_display( view->stringify( ) ).
