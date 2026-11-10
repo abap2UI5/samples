@@ -883,7 +883,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Talk to the user` header = `Popover` sub = `Basic Example with Placement` keywords = `placement anchor button confirm cancel popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_026` )
       ( group = `Talk to the user` header = `Popover`
         sub = `Open from a Table Row (A)`
-        keywords = `list report dynamicpage row link details table popover slot cs_view focus control_by_id popover_display`
+        keywords = `list report dynamicpage row link details table popover slot cs_view focus control_by_id popover_display popover_close`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_052` )
       ( group = `Talk to the user` header = `Popover` sub = `Open Together with the View Build` keywords = `initial render one roundtrip anchor button popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_490` )

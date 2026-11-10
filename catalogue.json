@@ -2469,7 +2469,8 @@
     "cs_view",
     "focus",
     "control_by_id",
-    "popover_display"
+    "popover_display",
+    "popover_close"
    ],
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/popup_popover/popover"
