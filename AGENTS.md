@@ -1637,9 +1637,10 @@ handler runs".
 
 ### Retired in the framework, banned here
 
-> The former standalone XML builder `z2ui5_cl_util_xml` is retired in the
-> framework (obsolete package, no new consumers) and is no longer used by any
-> sample — do not use it in new samples.
+> The former standalone XML builder `z2ui5_cl_util_xml` is no part of the
+> framework any more: it left abap2UI5 with the other `z2ui5_cl_util*` classes
+> on 2026-11-02 and ships in abap2UI5-ext. No sample uses it, and a sample
+> must not depend on it — do not use it in new samples.
 
 > **The `z2ui5_cl_pop_*` helper popups are obsolete.** They live in the
 > framework's obsolete package (`src/99`) and must not be used any more: never

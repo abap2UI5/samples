@@ -8,5 +8,6 @@
   "z2ui5_cl_app_xxx": "the placeholder class name in the app template snippet",
   "z2ui5_cl_smp_context": "the shared helper class, removed with src/00/01 on 2026-08-20 - the passage is about its absence and about why a sample must not reach for one",
   "z2ui5_cx_smp_error": "its exception class, removed in the same change and for the same reason",
-  "z2ui5_cl_smp_app_324": "the last app of the testing package src/00/98, deleted with it when the tree was flattened on 2026-09-22 - the passage in AGENTS.md §2 is the record of that deletion"
+  "z2ui5_cl_smp_app_324": "the last app of the testing package src/00/98, deleted with it when the tree was flattened on 2026-09-22 - the passage in AGENTS.md §2 is the record of that deletion",
+  "z2ui5_cl_util_xml": "the former standalone XML builder, moved out of abap2UI5 into abap2UI5-ext on 2026-11-02 - AGENTS.md names it so no sample reaches for it"
 }
