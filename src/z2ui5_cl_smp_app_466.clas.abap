@@ -1,4 +1,4 @@
-" @keywords icon glyph placeholder text status expandinlineicons
+" @keywords icon glyph placeholder text status expandinlineicons _bind_path
 " @summary Puts icons inside a text through placeholders that UI5 expands, so a status line can carry a glyph without its own control.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_466 DEFINITION PUBLIC.
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_smp_app_466 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`                v = |\{ path: '{ client->_bind( val = status_text path = abap_true ) }', | &&
+        )->a( n = `text`                v = |\{ path: '{ client->_bind_path( status_text ) }', | &&
                               |formatter: 'Formatter.expandInlineIcons' \}|
         )->a( n = `type`                v = `Success`
         )->a( n = `showIcon`            b = abap_true

@@ -1,4 +1,4 @@
-" @keywords xml templating xmlpreprocessor template:repeat meta model metamodel metadata driven dynamic columns nested view nest_view_display re-render refresh
+" @keywords xml templating xmlpreprocessor template:repeat meta model metamodel metadata driven dynamic columns nested view nest_view_display re-render refresh _bind_path
 " @summary XML templating inside a nested view: the columns come from a layout table via template:repeat, and a change to that table re-renders only the nested view with nest_view_display while the main view stays on screen.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/nested_views https://abap2ui5.github.io/docs/cookbook/view/xml_templating
 CLASS z2ui5_cl_smp_app_176 DEFINITION PUBLIC.
@@ -118,7 +118,7 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
     " the template model is the view model, so the list the repeat runs over
     " is a bound attribute - its path is composed from the bind call, never
     " written by hand
-    DATA(layout_path) = |\{template>{ client->_bind( val = mt_layout path = abap_true ) }\}|.
+    DATA(layout_path) = |\{template>{ client->_bind_path( mt_layout ) }\}|.
 
     DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`

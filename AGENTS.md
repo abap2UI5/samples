@@ -1608,7 +1608,7 @@ raw binding-info string) is NOT part of the serialized model — the frontend
 receives no data for it and typed/object properties crash on the missing
 value (human find 2026-07-18 in `Z2UI5_CL_SMP_APP_456`/`_457`). Compose raw
 binding-info strings with the bare path from
-`client->_bind( val = x path = abap_true )`.
+`client->_bind_path( x )`.
 
 **Always `_bind( )`, never `_bind_edit( )`.** Both bind into the same root
 model — the split between them disappeared with the `XX/` view-model node — so

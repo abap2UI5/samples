@@ -65,7 +65,7 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
         )->a( n = `submit`      v = client->_event( val = `EVENT_PROPERTY_VALUE` arg = `${$parameters>/value}` ) ).
 
     page->tag( `Button`
-        )->a( n = `press` v = client->_event( val = `PARENT_PROPERTY_ID` arg = `$event.oSource.oParent.sId` )
+        )->a( n = `press` v = client->_event( val = `PARENT_PROPERTY_ID` arg = `$event.getSource().getParent().getId()` )
         )->a( n = `text`  v = `PARENT_PROPERTY_ID` ).
 
     client->view_display( view->stringify( ) ).

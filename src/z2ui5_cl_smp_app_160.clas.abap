@@ -139,9 +139,9 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
                 )->a( n = `value`    v = `{PL_TOTAL}`
                 )->a( n = `submit`   v = client->_event( val = `PL_TOTAL_CHANGE`
                                                           t_arg = VALUE #( ( `${$source>/id}` )
-                                                                           ( `$event.oSource.sId` )
+                                                                           ( `$event.getSource().getId()` )
                                                                            ( `${INDEX}` )
-                                                                           ( `$event.oSource.oParent.sId` )
+                                                                           ( `$event.getSource().getParent().getId()` )
                                                                            ( `${$parameters>/value}` ) ) ) ).
 
     columns->ele( n = `Column` ns = `table`

@@ -213,7 +213,7 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
         )->ele( `ColumnListItem`
             )->a( n = `type`  v = `Active`
             )->a( n = `press` v = client->_event( val = `DETAILS`
-                                                  arg = `$event.oSource.getBindingContext().getPath().split('/').pop()` )
+                                                  arg = `$event.getSource().getBindingContext().getPath().split('/').pop()` )
             )->ele( `cells`
                 )->tag( `CheckBox`
                     )->a( n = `selected` v = `{SELECTED}`

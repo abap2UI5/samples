@@ -1,4 +1,4 @@
-" @keywords planningcalendar appointment javascript date object iso
+" @keywords planningcalendar appointment javascript date object iso _bind_path
 " @summary Appointments in a PlanningCalendar: start and end as date objects, which is what the control binds against.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_456 DEFINITION PUBLIC.
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
     " data and the formatter passes a non-Date into the object property
     page->ele( `PlanningCalendar`
         )->a( n = `rows`      v = client->_bind( t_people )
-        )->a( n = `startDate` v = |\{ path: '{ client->_bind( val = start_date path = abap_true ) }', | &&
+        )->a( n = `startDate` v = |\{ path: '{ client->_bind_path( start_date ) }', | &&
                     |formatter: 'Formatter.DateCreateObject' \}|
         )->a( n = `id`        v = `PC1`
         )->a( n = `class`     v = `sapUiSmallMargin`

@@ -1,4 +1,4 @@
-" @keywords xml templating xmlpreprocessor template:repeat template:if template:elseif template:with meta model metamodel metadata driven dynamic columns form nested repeat startindex length
+" @keywords xml templating xmlpreprocessor template:repeat template:if template:elseif template:with meta model metamodel metadata driven dynamic columns form nested repeat startindex length _bind_path
 " @summary XML templating driven by a meta model: table columns built with template:repeat, a form generated from a field catalogue with nested template:repeat, template:with and template:if/elseif/else, and a template:if that re-renders on a switch.
 " @docs https://abap2ui5.github.io/docs/cookbook/view/xml_templating
 "! The view is expanded by the UI5 XMLPreprocessor before its controls exist.
@@ -83,10 +83,10 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
     " the template model is the view model, so what the repeat, the with and
     " the if read are bound attributes - their paths are composed from the
     " bind call, never written by hand
-    DATA(layout_path) = |\{template>{ client->_bind( val = mt_layout path = abap_true ) }\}|.
-    DATA(flag_path)   = |\{template>{ client->_bind( val = mv_flag path = abap_true ) }\}|.
-    DATA(meta_path)   = |template>{ client->_bind( val = ms_meta path = abap_true ) }|.
-    DATA(detail_path) = |\{{ client->_bind( val = ms_detail path = abap_true ) }\}|.
+    DATA(layout_path) = |\{template>{ client->_bind_path( mt_layout ) }\}|.
+    DATA(flag_path)   = |\{template>{ client->_bind_path( mv_flag ) }\}|.
+    DATA(meta_path)   = |template>{ client->_bind_path( ms_meta ) }|.
+    DATA(detail_path) = |\{{ client->_bind_path( ms_detail ) }\}|.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`

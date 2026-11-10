@@ -738,9 +738,9 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         keywords = `rtti generic view runtime columns get_components describe_by_data no field name itab structure column cell binding`
         intro = `How an ABAP field becomes something a user reads and edits: binding an attribute, the types that convert it, formatters, and views built from data rather than written out.`
         path = `src` app = `z2ui5_cl_smp_app_497` )
-      ( group = `Get your data on screen` header = `Binding` sub = `Currency Amounts (sap.ui.model.type.Currency)` keywords = `amount decimals leading zeros number format` intro = `` path = `src` app = `z2ui5_cl_smp_app_067` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Currency Amounts (sap.ui.model.type.Currency)` keywords = `amount decimals leading zeros number format _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_067` )
       ( group = `Get your data on screen` header = `Binding` sub = `Dynamic Table Typed at Runtime (RTTI)` keywords = `generic data reference create data ddic dynamic itab rtti handle selkz` intro = `` path = `src` app = `z2ui5_cl_smp_app_061` )
-      ( group = `Get your data on screen` header = `Binding` sub = `Expression Binding, Types and Composite Parts` keywords = `formatter parts conditional regexp visible enabled syntax` intro = `` path = `src` app = `z2ui5_cl_smp_app_027` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Expression Binding, Types and Composite Parts` keywords = `formatter parts conditional regexp visible enabled syntax _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_027` )
       ( group = `Get your data on screen` header = `Binding` sub = `Model setSizeLimit for Large Tables (A)` keywords = `combobox jsonmodel size limit large itab 100 entries set_size_limit` intro = `` path = `src` app = `z2ui5_cl_smp_app_071` )
       ( group = `Get your data on screen` header = `Binding`
         sub = `Omit Initial Values`
@@ -760,19 +760,19 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Get your data on screen` header = `Binding` sub = `Single Table Cell (tab_index)` keywords = `cell input internal table row field level` intro = `` path = `src` app = `z2ui5_cl_smp_app_144` )
       ( group = `Get your data on screen` header = `Binding` sub = `Structure Fields and INCLUDEs` keywords = `structure component include flat form level` intro = `` path = `src` app = `z2ui5_cl_smp_app_166` )
       ( group = `Get your data on screen` header = `Binding` sub = `Types for Integer, Decimal, Date and Time` keywords = `type conversion sum amount number field` intro = `` path = `src` app = `z2ui5_cl_smp_app_047` )
-      ( group = `Get your data on screen` header = `Formatter` sub = `ABAP Date and Time Strings (DATS/TIMS)` keywords = `dats tims conversion initial date 00000000 sy-datum` intro = `` path = `src` app = `z2ui5_cl_smp_app_450` )
-      ( group = `Get your data on screen` header = `Formatter` sub = `Date Object for the DatePicker` keywords = `datepicker datevalue javascript date object iso` intro = `` path = `src` app = `z2ui5_cl_smp_app_457` )
-      ( group = `Get your data on screen` header = `Formatter` sub = `Date Objects for the PlanningCalendar` keywords = `planningcalendar appointment javascript date object iso` intro = `` path = `src` app = `z2ui5_cl_smp_app_456` )
-      ( group = `Get your data on screen` header = `Formatter` sub = `Inline Icons in a Text` keywords = `icon glyph placeholder text status expandinlineicons` intro = `` path = `src` app = `z2ui5_cl_smp_app_466` )
+      ( group = `Get your data on screen` header = `Formatter` sub = `ABAP Date and Time Strings (DATS/TIMS)` keywords = `dats tims conversion initial date 00000000 sy-datum _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_450` )
+      ( group = `Get your data on screen` header = `Formatter` sub = `Date Object for the DatePicker` keywords = `datepicker datevalue javascript date object iso _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_457` )
+      ( group = `Get your data on screen` header = `Formatter` sub = `Date Objects for the PlanningCalendar` keywords = `planningcalendar appointment javascript date object iso _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_456` )
+      ( group = `Get your data on screen` header = `Formatter` sub = `Inline Icons in a Text` keywords = `icon glyph placeholder text status expandinlineicons _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_466` )
       ( group = `Get your data on screen` header = `Formatter` sub = `When Not to Use One: Compute in ABAP` keywords = `no formatter computed backend thin frontend prepare` intro = `` path = `src` app = `z2ui5_cl_smp_app_453` )
       ( group = `Get your data on screen` header = `Templating`
         sub = `Dynamic Content in a Nested View`
-        keywords = `xml templating xmlpreprocessor template:repeat meta model metamodel metadata driven dynamic columns nested view nest_view_display re-render refresh`
+        keywords = `xml templating xmlpreprocessor template:repeat meta model metamodel metadata driven dynamic columns nested view nest_view_display re-render refresh _bind_path`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_176` )
       ( group = `Get your data on screen` header = `Templating`
         sub = `Metadata-Driven Table and Form`
-        keywords = `xml templating xmlpreprocessor template:repeat template:if template:elseif template:with meta model metamodel metadata driven dynamic columns form nested repeat startindex length`
+        keywords = `xml templating xmlpreprocessor template:repeat template:if template:elseif template:with meta model metamodel metadata driven dynamic columns form nested repeat startindex length _bind_path`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_173` )
       ( group = `Show many rows` header = `Grid Table`
@@ -782,7 +782,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         path = `src` app = `z2ui5_cl_smp_app_547` )
       ( group = `Show many rows` header = `Grid Table`
         sub = `Collapsible Subtotals in a TreeTable (A)`
-        keywords = `tree table treetable subtotal grand total group sum currency hierarchy collapse expand arraynames expandtolevel collapseall control_by_id rowsettings`
+        keywords = `tree table treetable subtotal grand total group sum currency hierarchy collapse expand arraynames expandtolevel collapseall control_by_id rowsettings _bind_path`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_545` )
       ( group = `Show many rows` header = `Grid Table`
@@ -808,7 +808,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_539` )
       ( group = `Show many rows` header = `Table` sub = `Drag and Drop Rows (A)` keywords = `dnd dragdropinfo reorder rows move` intro = `` path = `src` app = `z2ui5_cl_smp_app_459` )
-      ( group = `Show many rows` header = `Table` sub = `Editable Cells, Add and Delete Rows` keywords = `edit input add row delete multiselect toolbar` intro = `` path = `src` app = `z2ui5_cl_smp_app_011` )
+      ( group = `Show many rows` header = `Table` sub = `Editable Cells, Add and Delete Rows` keywords = `edit input add row delete multiselect toolbar _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_011` )
       ( group = `Show many rows` header = `Table` sub = `Filter Rows in the Backend` keywords = `filter server side form growing where` intro = `` path = `src` app = `z2ui5_cl_smp_app_045` )
       ( group = `Show many rows` header = `Table` sub = `Large Table with Growing and ScrollContainer` keywords = `growing 10000 rows sticky toolbar sort performance` intro = `` path = `src` app = `z2ui5_cl_smp_app_006` )
       ( group = `Show many rows` header = `Table`
@@ -846,7 +846,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Talk to the user` header = `Event` sub = `Link with preventDefault` keywords = `link href default action check_prevent_default` intro = `` path = `src` app = `z2ui5_cl_smp_app_472` )
       ( group = `Talk to the user` header = `Event`
         sub = `Literal Arguments (check_arg_literal)`
-        keywords = `event argument literal quoted expression evaluated check_arg_literal t_arg data binding syntax dollar brace`
+        keywords = `event argument literal quoted expression evaluated check_arg_literal t_arg data binding syntax dollar brace _bind_path`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_506` )
       ( group = `Talk to the user` header = `Event`
@@ -856,7 +856,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         path = `src` app = `z2ui5_cl_smp_app_505` )
       ( group = `Talk to the user` header = `Menu` sub = `Full Path of the Selected Item (A)` keywords = `menuitem nested submenu textpath controller path control_global` intro = `` path = `src` app = `z2ui5_cl_smp_app_473` )
       ( group = `Talk to the user` header = `Menu` sub = `Menu as Popover with core:require` keywords = `menu menuitem popover button messagetoast require module popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_163` )
-      ( group = `Talk to the user` header = `Message` sub = `Message Model and MessageManager (C)` keywords = `messagemanager validation target field state central model` intro = `` path = `src` app = `z2ui5_cl_smp_app_467` )
+      ( group = `Talk to the user` header = `Message` sub = `Message Model and MessageManager (C)` keywords = `messagemanager validation target field state central model _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_467` )
       ( group = `Talk to the user` header = `Message`
         sub = `MessageBox for Any Data`
         keywords = `messagebox details table structure tree object reference escape limit action onclose message_box_display`
@@ -883,7 +883,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Talk to the user` header = `Popover` sub = `Basic Example with Placement` keywords = `placement anchor button confirm cancel popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_026` )
       ( group = `Talk to the user` header = `Popover`
         sub = `Open from a Table Row (A)`
-        keywords = `list report dynamicpage row link details table popover slot cs_view focus control_by_id popover_display`
+        keywords = `list report dynamicpage row link details table popover slot cs_view focus control_by_id popover_display popover_close`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_052` )
       ( group = `Talk to the user` header = `Popover` sub = `Open Together with the View Build` keywords = `initial render one roundtrip anchor button popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_490` )
@@ -955,7 +955,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         path = `src` app = `z2ui5_cl_smp_app_098` )
       ( group = `Move through the app` header = `Scroll` sub = `Scroll a Control into View (A)` keywords = `scroll_into_view control id validation jump` intro = `` path = `src` app = `z2ui5_cl_smp_app_363` )
       ( group = `Move through the app` header = `Scroll` sub = `Scroll to a Pixel Position (A)` keywords = `position pixel scroll_to restore refresh toolbar` intro = `` path = `src` app = `z2ui5_cl_smp_app_362` )
-      ( group = `Move through the app` header = `Timer` sub = `Progress Indicator during a Backend Call (A)` keywords = `progressindicator busy wait long running backend start_timer` intro = `` path = `src` app = `z2ui5_cl_smp_app_064` )
+      ( group = `Move through the app` header = `Timer` sub = `Progress Indicator during a Backend Call (A)` keywords = `progressindicator busy wait long running backend start_timer _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_064` )
       ( group = `Move through the app` header = `Timer` sub = `Refresh the View Every n Seconds (A)` keywords = `interval polling auto refresh follow_up_action seconds start_timer` intro = `` path = `src` app = `z2ui5_cl_smp_app_028` )
       ( group = `Reach outside the view` header = `Browser`
         sub = `Copy to Clipboard (A)`
@@ -1017,7 +1017,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Reach outside the view` header = `CSS` sub = `FlexBox Layouts with Custom Classes` keywords = `flexbox layout responsive navigation tile panel popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_255` )
       ( group = `Reach outside the view` header = `CSS` sub = `Ship Your Own CSS with the View` keywords = `style stylesheet inline html class own design` intro = `` path = `src` app = `z2ui5_cl_smp_app_050` )
       ( group = `Reach outside the view` header = `CSS` sub = `Style by Data with CustomData writeToDom` keywords = `customdata writetodom data attribute selector marker test anchor` intro = `` path = `src` app = `z2ui5_cl_smp_app_535` )
-      ( group = `Reach outside the view` header = `Device` sub = `Camera, Take Photos (C)` keywords = `camera photo picture webcam capture facing mode` intro = `` path = `src` app = `z2ui5_cl_smp_app_306` )
+      ( group = `Reach outside the view` header = `Device` sub = `Camera, Take Photos (C)` keywords = `camera photo picture webcam capture facing mode _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_306` )
       ( group = `Reach outside the view` header = `Device`
         sub = `Device Model: Phone, Tablet, Desktop (A)`
         keywords = `sap.ui.device responsive orientation resize media model popup_close popup_display`

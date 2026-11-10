@@ -1,4 +1,4 @@
-" @keywords camera photo picture webcam capture facing mode
+" @keywords camera photo picture webcam capture facing mode _bind_path
 " @summary Takes a photo with the device camera, front or back, and hands the picture to the backend.
 " @docs https://abap2ui5.github.io/docs/cookbook/device_capabilities/camera
 CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
@@ -103,8 +103,7 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
             )->a( n = `labelFor`    v = `ComboFacingMode`
         )->ele( `ComboBox`
             )->a( n = `selectedKey` v = client->_bind( facing_mode )
-            )->a( n = `items`       v = |\{path:'{ client->_bind( val  = facing_modes
-                    path        = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
+            )->a( n = `items`       v = |\{path:'{ client->_bind_path( facing_modes ) }', sorter: \{ path: 'TEXT' \} \}|
             )->a( n = `id`   v = `ComboFacingMode`
             )->tag( n = `Item` ns = `core`
                 )->a( n = `key`  v = `{KEY}`
@@ -117,8 +116,7 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
             )->a( n = `labelFor`    v = `ComboDevice`
         )->ele( n = `CameraSelector` ns = `z2ui5`
             )->a( n = `selectedKey` v = client->_bind( device )
-            )->a( n = `items`       v = |\{path:'{ client->_bind( val  = devices
-           path        = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
+            )->a( n = `items`       v = |\{path:'{ client->_bind_path( devices ) }', sorter: \{ path: 'TEXT' \} \}|
             )->a( n = `id`   v = `ComboDevice`
             )->tag( n = `Item` ns = `core`
                 )->a( n = `key`  v = `{KEY}`

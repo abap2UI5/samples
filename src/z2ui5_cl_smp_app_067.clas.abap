@@ -1,4 +1,4 @@
-" @keywords amount decimals leading zeros number format
+" @keywords amount decimals leading zeros number format _bind_path
 " @summary Formats amounts with sap.ui.model.type.Currency, so decimals and leading zeros follow the currency rather than the ABAP field.
 " @docs https://abap2ui5.github.io/docs/cookbook/model/formatter
 CLASS z2ui5_cl_smp_app_067 DEFINITION PUBLIC.
@@ -78,59 +78,35 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `One field`
             )->tag( `Input`
-                )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind(
-                                                 val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
+                )->a( n = `value` v = |\{ parts: [ '{ client->_bind_path( amount ) }', '{ client->_bind_path( currency ) }'],  type: 'sap.ui.model.type.Currency' \}|
             )->tag( `Label`
                 )->a( n = `text` v = `Two field`
             )->tag( `Input`
-                )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind(
-                                                 val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showMeasure: false\}  \}|
+                )->a( n = `value` v = |\{ parts: [ '{ client->_bind_path( amount ) }', '{ client->_bind_path( currency ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showMeasure: false\}  \}|
             )->tag( `Input`
-                )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind(
-                                                 val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}|
+                )->a( n = `value` v = |\{ parts: [ '{ client->_bind_path( amount ) }', '{ client->_bind_path( currency ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}|
             )->tag( `Label`
                 )->a( n = `text` v = `Default`
             )->tag( `Text`
-                )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind(
-                                                 val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
+                )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }', '{ client->_bind_path( currency ) }'],  type: 'sap.ui.model.type.Currency' \}|
             )->tag( `Label`
                 )->a( n = `text` v = `preserveDecimals:false`
             )->tag( `Text`
-                )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
-                                                      path = abap_true ) }', '| && client->_bind(
-                                                         val  = currency
-                                                         path = abap_true ) &&
+                )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }', '| && client->_bind_path( currency ) &&
                      |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ preserveDecimals : false \} \}|
             )->tag( `Label`
                 )->a( n = `text` v = `currencyCode:false`
             )->tag( `Text`
-                )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
-                                                      path = abap_true ) }', '| && client->_bind(
-                                                         val  = currency
-                                                         path = abap_true ) &&
+                )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }', '| && client->_bind_path( currency ) &&
                          |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ currencyCode : false \} \}|
             )->tag( `Label`
                 )->a( n = `text` v = `style:'short'`
             )->tag( `Text`
-                )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind(
-                                                 val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}|
+                )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }', '{ client->_bind_path( currency ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}|
             )->tag( `Label`
                 )->a( n = `text` v = `style:'long'`
             )->tag( `Text`
-                )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind(
-                                                 val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
+                )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }', '{ client->_bind_path( currency ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
             )->tag( `Label`
                 )->a( n = `text` v = `event`
             )->tag( `Button`
@@ -156,9 +132,7 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
             )->tag( `Label`
                 )->a( n = `text` v = `Without leading Zeros`
             )->tag( `Text`
-                )->a( n = `text` v = |\{path : '{ client->_bind(
-                            val  = numeric
-                            path = abap_true ) }', type : 'sap.ui.model.odata.type.String', constraints : \{  isDigitSequence : true \} \}| ).
+                )->a( n = `text` v = |\{path : '{ client->_bind_path( numeric ) }', type : 'sap.ui.model.odata.type.String', constraints : \{  isDigitSequence : true \} \}| ).
 
     client->view_display( page->stringify( ) ).
 

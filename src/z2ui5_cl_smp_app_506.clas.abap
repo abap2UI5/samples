@@ -1,4 +1,4 @@
-" @keywords event argument literal quoted expression evaluated check_arg_literal t_arg data binding syntax dollar brace
+" @keywords event argument literal quoted expression evaluated check_arg_literal t_arg data binding syntax dollar brace _bind_path
 " @summary An event argument that starts with $ or { is live UI5 expression syntax and gets resolved on the client - check_arg_literal sends it as the text it is.
 "! Every argument of an _event( ) wire is written into the view. One that
 "! starts with `$` or `{` is written RAW, as live UI5 expression syntax -
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_smp_app_506 IMPLEMENTATION.
       price    = `1299.00`.
       " the argument both wires start with: the client-side spelling of the
       " bound price, composed from the bind so the path is a registered one
-      argument = |$\{{ client->_bind( val = price path = abap_true ) }\}|.
+      argument = |$\{{ client->_bind_path( price ) }\}|.
       raw_arg  = `-`.
       lit_arg  = `-`.
       view_display( ).
@@ -126,7 +126,7 @@ CLASS z2ui5_cl_smp_app_506 IMPLEMENTATION.
     " the raw wire is kept on the binding shape the sample starts with: any
     " other text typed above is only sent through the literal wire, because
     " an argument that is not valid expression syntax would break the view
-    DATA(raw_expr) = |$\{{ client->_bind( val = price path = abap_true ) }\}|.
+    DATA(raw_expr) = |$\{{ client->_bind_path( price ) }\}|.
     form->tag( `Label`
         )->a( n = `text` v = `Raw - resolved on the client` ).
     form->tag( `Button`

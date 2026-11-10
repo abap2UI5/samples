@@ -1,4 +1,4 @@
-" @keywords list report dynamicpage row link details table popover slot cs_view focus control_by_id popover_display
+" @keywords list report dynamicpage row link details table popover slot cs_view focus control_by_id popover_display popover_close
 " @summary Opens a Popover from a table row - which row was pressed, how its record reaches the popover, and how a frontend action is aimed at the popover slot.
 " @docs https://abap2ui5.github.io/docs/cookbook/popup_popover/popover
 CLASS z2ui5_cl_smp_app_052 DEFINITION PUBLIC.
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
             )->tag( `ToolbarSpacer`
             )->tag( `Button`
                 )->a( n = `id`    v = `btn_details`
-                )->a( n = `press` v = client->_event( `BUTTON_DETAILS` )
+                )->a( n = `press` v = client->follow_up_action( val = client->cs_event-popover_close )
                 )->a( n = `text`  v = `details`
                 )->a( n = `type`  v = `Emphasized` ).
 
@@ -172,16 +172,12 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
       view_display( ).
     ENDIF.
 
-    CASE client->get_event( ).
+    IF client->check_on_event( `POPOVER_DETAIL` ).
 
-      WHEN `BUTTON_DETAILS`.
-        client->popover_destroy( ).
-
-      WHEN `POPOVER_DETAIL`.
-        mv_check_popover = abap_true.
-        mv_product       = client->get_event_arg( 2 ).
-        popover_display( client->get_event_arg( ) ).
-    ENDCASE.
+      mv_check_popover = abap_true.
+      mv_product       = client->get_event_arg( 2 ).
+      popover_display( client->get_event_arg( ) ).
+    ENDIF.
 
   ENDMETHOD.
 
