@@ -1369,7 +1369,9 @@ in the order init, navigated, event:
 
 ```abap
 IF client->check_on_init( ).
-  " only what must happen ONCE - seed the model, seed a control-state flag
+  " what must happen ONCE - seed the model, seed a control-state flag
+  model_init( ).
+  view_display( ).
 ELSEIF client->check_on_navigated( ).
   view_display( ).
 ELSEIF client->check_on_event( ).
@@ -1377,9 +1379,15 @@ ELSEIF client->check_on_event( ).
 ENDIF.
 ```
 
+**The init branch displays too.** The chain runs exactly one branch per
+roundtrip, and on the first one that is the init branch - the `ELSEIF
+check_on_navigated( )` below it is skipped, so an init branch that only seeds
+leaves the first start without a view.
+
 **`check_on_init( )` true implies `check_on_navigated( )` true** (the guide
 says why), so an init branch whose only statement is `view_display( )` has an
-`ELSEIF` twin doing exactly the same thing, and
+`ELSEIF` twin doing exactly the same thing (the linter's
+`redundant-init-display`), and
 `IF check_on_init( ) OR check_on_navigated( ).` says the same redundancy in one
 line. An app with nothing to seed drops the init branch entirely and dispatches
 on `check_on_navigated( )` and `check_on_event( )` alone.
