@@ -41,66 +41,6 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    IF client->check_on_event( `OPEN_POPUP` ).
-      popup_display( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD device_form.
-
-    DATA(form) = parent->ele( n = `SimpleForm` ns = `form`
-        )->a( n = `layout`   v = `ResponsiveGridLayout`
-        )->a( n = `editable` b = abap_false ).
-
-    " a readable label per system type instead of the raw booleans
-    form->tag( `Label`
-        )->a( n = `text` v = `System type` ).
-
-    form->ele( `ObjectStatus`
-        )->a( n = `state` v = `Information`
-        )->a( n = `text`  v = `{= ${device>/system/phone} ? 'Phone' : (${device>/system/tablet} ? 'Tablet' : (${device>/system/desktop} ? 'Desktop' : 'Other')) }` ).
-
-    form->tag( `Label`
-        )->a( n = `text` v = `Orientation` ).
-
-    form->ele( `ObjectStatus`
-        )->a( n = `text` v = `{= ${device>/orientation/landscape} ? 'Landscape' : 'Portrait' }` ).
-
-    " resize/width and resize/height are updated live by UI5
-    form->tag( `Label`
-        )->a( n = `text` v = `Window size` ).
-
-    form->ele( `ObjectStatus`
-        )->a( n = `text` v = `{device>/resize/width} x {device>/resize/height} px` ).
-
-    form->tag( `Label`
-        )->a( n = `text` v = `Touch support` ).
-
-    form->ele( `ObjectStatus`
-        )->a( n = `state` v = `{= ${device>/support/touch} ? 'Success' : 'None' }`
-        )->a( n = `text`  v = `{= ${device>/support/touch} ? 'Yes' : 'No' }` ).
-
-    form->tag( `Label`
-        )->a( n = `text` v = `Browser` ).
-
-    form->tag( `Text`
-        )->a( n = `text` v = `{device>/browser/name} {device>/browser/version}` ).
-
-    form->tag( `Label`
-        )->a( n = `text` v = `Operating system` ).
-
-    form->tag( `Text`
-        )->a( n = `text` v = `{device>/os/name} {device>/os/version}` ).
-
-    result = form.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -168,6 +108,66 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
         )->a( n = `class` v = `sapUiSmallMargin` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->check_on_event( `OPEN_POPUP` ).
+      popup_display( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD device_form.
+
+    DATA(form) = parent->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `layout`   v = `ResponsiveGridLayout`
+        )->a( n = `editable` b = abap_false ).
+
+    " a readable label per system type instead of the raw booleans
+    form->tag( `Label`
+        )->a( n = `text` v = `System type` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `state` v = `Information`
+        )->a( n = `text`  v = `{= ${device>/system/phone} ? 'Phone' : (${device>/system/tablet} ? 'Tablet' : (${device>/system/desktop} ? 'Desktop' : 'Other')) }` ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `Orientation` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `text` v = `{= ${device>/orientation/landscape} ? 'Landscape' : 'Portrait' }` ).
+
+    " resize/width and resize/height are updated live by UI5
+    form->tag( `Label`
+        )->a( n = `text` v = `Window size` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `text` v = `{device>/resize/width} x {device>/resize/height} px` ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `Touch support` ).
+
+    form->ele( `ObjectStatus`
+        )->a( n = `state` v = `{= ${device>/support/touch} ? 'Success' : 'None' }`
+        )->a( n = `text`  v = `{= ${device>/support/touch} ? 'Yes' : 'No' }` ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `Browser` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = `{device>/browser/name} {device>/browser/version}` ).
+
+    form->tag( `Label`
+        )->a( n = `text` v = `Operating system` ).
+
+    form->tag( `Text`
+        )->a( n = `text` v = `{device>/os/name} {device>/os/version}` ).
+
+    result = form.
 
   ENDMETHOD.
 

@@ -44,34 +44,9 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
 
     ELSEIF client->check_on_navigated( ).
       view_display( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE abap_true.
-
-      WHEN client->check_on_event( `STATIC` ).
-        client->message_toast_display( |data( "mySuperExtraData" ) = { client->get_event_arg( ) }| ).
-
-      WHEN client->check_on_event( `BOUND` ).
-        client->message_toast_display( |data( "coords" ) = { client->get_event_arg( ) }| ).
-
-      WHEN client->check_on_event( `ALL` ).
-        " data( ) without a key answers a plain object - an object argument
-        " reaches the backend as its JSON text
-        client->message_toast_display( |data( ) = { client->get_event_arg( ) }| ).
-
-      WHEN client->check_on_event( `SELECT` ).
-        " the answer is not looked up in t_questions - it arrives as the
-        " custom data of the list item the user selected
-        answer = client->get_event_arg( ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -158,6 +133,31 @@ CLASS z2ui5_cl_smp_app_536 IMPLEMENTATION.
         )->a( n = `class` v = `sapUiResponsiveMargin` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE abap_true.
+
+      WHEN client->check_on_event( `STATIC` ).
+        client->message_toast_display( |data( "mySuperExtraData" ) = { client->get_event_arg( ) }| ).
+
+      WHEN client->check_on_event( `BOUND` ).
+        client->message_toast_display( |data( "coords" ) = { client->get_event_arg( ) }| ).
+
+      WHEN client->check_on_event( `ALL` ).
+        " data( ) without a key answers a plain object - an object argument
+        " reaches the backend as its JSON text
+        client->message_toast_display( |data( ) = { client->get_event_arg( ) }| ).
+
+      WHEN client->check_on_event( `SELECT` ).
+        " the answer is not looked up in t_questions - it arrives as the
+        " custom data of the list item the user selected
+        answer = client->get_event_arg( ).
+
+    ENDCASE.
 
   ENDMETHOD.
 

@@ -21,8 +21,8 @@ CLASS z2ui5_cl_smp_app_510 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS nest_display
       IMPORTING
         slot TYPE string.
@@ -46,6 +46,76 @@ CLASS z2ui5_cl_smp_app_510 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
+
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Nested View - Destroy and Target a Slot`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Show and destroy the two nested views, then send the focus into one of them: the ` &&
+                   `view parameter of follow_up_action decides which slot the id lookup is scoped to - ` &&
+                   `a slot that is not open finds nothing.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    page->ele( `HBox`
+        )->a( n = `wrap`  v = `Wrap`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Button`
+            )->a( n = `text`  v = `show nested view 1`
+            )->a( n = `press` v = client->_event( `NEST_SHOW` )
+        )->tag( `Button`
+            )->a( n = `text`  v = `destroy nested view 1`
+            )->a( n = `press` v = client->_event( `NEST_DESTROY` )
+        )->tag( `Button`
+            )->a( n = `text`  v = `focus the input in slot nested`
+            )->a( n = `press` v = client->_event( `FOCUS_NEST` )
+        )->tag( `ToolbarSpacer`
+            )->a( n = `width` v = `1rem`
+        )->tag( `Button`
+            )->a( n = `text`  v = `show nested view 2`
+            )->a( n = `press` v = client->_event( `NEST2_SHOW` )
+        )->tag( `Button`
+            )->a( n = `text`  v = `destroy nested view 2`
+            )->a( n = `press` v = client->_event( `NEST2_DESTROY` )
+        )->tag( `Button`
+            )->a( n = `text`  v = `focus the input in slot nested2`
+            )->a( n = `press` v = client->_event( `FOCUS_NEST2` ) ).
+
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = client->_bind( status )
+        )->a( n = `type`     v = `Success`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    " the two containers the nested views are inserted into - a VBox each,
+    " addItem inserts, removeAllItems clears before a repeated display
+    page->ele( `HBox`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `VBox`
+            )->a( n = `id`    v = `box_nest`
+            )->a( n = `width` v = `20rem`
+            )->a( n = `class` v = `sapUiSmallMarginEnd`
+        )->tag( `VBox`
+            )->a( n = `id`    v = `box_nest2`
+            )->a( n = `width` v = `20rem` ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -129,76 +199,6 @@ CLASS z2ui5_cl_smp_app_510 IMPLEMENTATION.
                                   method_destroy = `removeAllItems` ).
 
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD view_display.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-
-    DATA(page) = view->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Nested View - Destroy and Target a Slot`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
-
-    page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Show and destroy the two nested views, then send the focus into one of them: the ` &&
-                   `view parameter of follow_up_action decides which slot the id lookup is scoped to - ` &&
-                   `a slot that is not open finds nothing.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    page->ele( `HBox`
-        )->a( n = `wrap`  v = `Wrap`
-        )->a( n = `class` v = `sapUiSmallMargin`
-        )->tag( `Button`
-            )->a( n = `text`  v = `show nested view 1`
-            )->a( n = `press` v = client->_event( `NEST_SHOW` )
-        )->tag( `Button`
-            )->a( n = `text`  v = `destroy nested view 1`
-            )->a( n = `press` v = client->_event( `NEST_DESTROY` )
-        )->tag( `Button`
-            )->a( n = `text`  v = `focus the input in slot nested`
-            )->a( n = `press` v = client->_event( `FOCUS_NEST` )
-        )->tag( `ToolbarSpacer`
-            )->a( n = `width` v = `1rem`
-        )->tag( `Button`
-            )->a( n = `text`  v = `show nested view 2`
-            )->a( n = `press` v = client->_event( `NEST2_SHOW` )
-        )->tag( `Button`
-            )->a( n = `text`  v = `destroy nested view 2`
-            )->a( n = `press` v = client->_event( `NEST2_DESTROY` )
-        )->tag( `Button`
-            )->a( n = `text`  v = `focus the input in slot nested2`
-            )->a( n = `press` v = client->_event( `FOCUS_NEST2` ) ).
-
-    page->tag( `MessageStrip`
-        )->a( n = `text`     v = client->_bind( status )
-        )->a( n = `type`     v = `Success`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    " the two containers the nested views are inserted into - a VBox each,
-    " addItem inserts, removeAllItems clears before a repeated display
-    page->ele( `HBox`
-        )->a( n = `class` v = `sapUiSmallMargin`
-        )->tag( `VBox`
-            )->a( n = `id`    v = `box_nest`
-            )->a( n = `width` v = `20rem`
-            )->a( n = `class` v = `sapUiSmallMarginEnd`
-        )->tag( `VBox`
-            )->a( n = `id`    v = `box_nest2`
-            )->a( n = `width` v = `20rem` ).
-
-    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

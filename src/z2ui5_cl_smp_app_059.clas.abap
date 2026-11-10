@@ -26,10 +26,10 @@ CLASS z2ui5_cl_smp_app_059 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
+    METHODS view_display.
     METHODS set_data.
     METHODS set_search.
-    METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -51,61 +51,6 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    IF client->check_on_event( `BUTTON_SEARCH` ).
-
-      set_data( ).
-      set_search( ).
-
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD set_search.
-
-    " a typed contains-search over the columns the table shows - the search
-    " string is compared uppercase against uppercase, so it matches whatever
-    " the user typed
-    DATA(lv_search) = to_upper( mv_field ).
-    IF lv_search IS INITIAL.
-      RETURN.
-    ENDIF.
-
-    DATA(lt_all) = mt_table.
-    mt_table = VALUE #( ).
-
-    LOOP AT lt_all INTO DATA(ls_row).
-      IF to_upper( ls_row-product )          CS lv_search
-      OR to_upper( ls_row-create_date )      CS lv_search
-      OR to_upper( ls_row-create_by )        CS lv_search
-      OR to_upper( ls_row-storage_location ) CS lv_search OR |{ ls_row-quantity }| CS lv_search.
-        INSERT ls_row INTO TABLE mt_table.
-      ENDIF.
-    ENDLOOP.
-
-  ENDMETHOD.
-
-
-  METHOD set_data.
-
-    mt_table = VALUE #( ).
-    DO 1000 TIMES.
-      INSERT LINES OF VALUE ty_t_table(
-          ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
-          ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
-          ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-          ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
-          ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-          ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
-          ) INTO TABLE mt_table.
-
-    ENDDO.
 
   ENDMETHOD.
 
@@ -192,6 +137,61 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
     " abap2ui5lint-enable live-event-roundtrip
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->check_on_event( `BUTTON_SEARCH` ).
+
+      set_data( ).
+      set_search( ).
+
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD set_search.
+
+    " a typed contains-search over the columns the table shows - the search
+    " string is compared uppercase against uppercase, so it matches whatever
+    " the user typed
+    DATA(lv_search) = to_upper( mv_field ).
+    IF lv_search IS INITIAL.
+      RETURN.
+    ENDIF.
+
+    DATA(lt_all) = mt_table.
+    mt_table = VALUE #( ).
+
+    LOOP AT lt_all INTO DATA(ls_row).
+      IF to_upper( ls_row-product )          CS lv_search
+      OR to_upper( ls_row-create_date )      CS lv_search
+      OR to_upper( ls_row-create_by )        CS lv_search
+      OR to_upper( ls_row-storage_location ) CS lv_search OR |{ ls_row-quantity }| CS lv_search.
+        INSERT ls_row INTO TABLE mt_table.
+      ENDIF.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD set_data.
+
+    mt_table = VALUE #( ).
+    DO 1000 TIMES.
+      INSERT LINES OF VALUE ty_t_table(
+          ( product = `table`    create_date = `01.01.2023` create_by = `Peter`  storage_location = `AREA_001` quantity = 400 )
+          ( product = `chair`    create_date = `01.01.2022` create_by = `James`  storage_location = `AREA_001` quantity = 123 )
+          ( product = `sofa`     create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+          ( product = `computer` create_date = `27.01.2023` create_by = `Theo`   storage_location = `AREA_001` quantity = 200 )
+          ( product = `printer`  create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+          ( product = `table2`   create_date = `01.01.2023` create_by = `Julia`  storage_location = `AREA_001` quantity = 110 )
+          ) INTO TABLE mt_table.
+
+    ENDDO.
 
   ENDMETHOD.
 ENDCLASS.

@@ -24,8 +24,8 @@ CLASS z2ui5_cl_smp_app_506 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -51,31 +51,6 @@ CLASS z2ui5_cl_smp_app_506 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `RAW`.
-        " what the client resolved: `${/PRICE}` names the bound price, so
-        " its value arrives, not the text
-        raw_arg = client->get_event_arg( ).
-
-      WHEN `LITERAL`.
-        " the same argument, quoted by check_arg_literal: the text arrives
-        lit_arg = client->get_event_arg( ).
-
-      WHEN `REBUILD`.
-        " the argument is written into the view at render time, so a new
-        " text needs a new view - the two wires below carry it from then on
-        raw_arg = `-`.
-        lit_arg = `-`.
-        view_display( ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -148,6 +123,31 @@ CLASS z2ui5_cl_smp_app_506 IMPLEMENTATION.
         )->a( n = `text` v = client->_bind( lit_arg ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `RAW`.
+        " what the client resolved: `${/PRICE}` names the bound price, so
+        " its value arrives, not the text
+        raw_arg = client->get_event_arg( ).
+
+      WHEN `LITERAL`.
+        " the same argument, quoted by check_arg_literal: the text arrives
+        lit_arg = client->get_event_arg( ).
+
+      WHEN `REBUILD`.
+        " the argument is written into the view at render time, so a new
+        " text needs a new view - the two wires below carry it from then on
+        raw_arg = `-`.
+        lit_arg = `-`.
+        view_display( ).
+
+    ENDCASE.
 
   ENDMETHOD.
 

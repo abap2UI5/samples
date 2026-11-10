@@ -45,9 +45,9 @@ CLASS z2ui5_cl_smp_app_504 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
-    METHODS refused_apply.
     METHODS view_display.
+    METHODS refused_apply.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -71,115 +71,6 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    t_row = VALUE #(
-      ( product = `Notebook 15"` price = '1299.00' currency = `EUR` stock = 12 price_state = `None` stock_state = `None`
-        t_item = VALUE #( ( name = `SSD 1 TB`  qty = 1 qty_state = `None` )
-                          ( name = `RAM 16 GB` qty = 2 qty_state = `None` ) ) )
-      ( product = `Monitor 27"`  price = '349.90'  currency = `EUR` stock = 5  price_state = `None` stock_state = `None`
-        t_item = VALUE #( ( name = `HDMI cable` qty = 1 qty_state = `None` ) ) )
-      ( product = `USB-C Dock`   price = '189.00'  currency = `EUR` stock = 40 price_state = `None` stock_state = `None`
-        t_item = VALUE #( ( name = `Power supply` qty = 1 qty_state = `None` ) ) ) ).
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD refused_apply.
-
-    FIELD-SYMBOLS <s_row>  TYPE ty_s_row.
-    FIELD-SYMBOLS <s_item> TYPE ty_s_item.
-
-    " every roundtrip starts clean: a cell the user has corrected since is
-    " not in this roundtrip's trace any more, so its state goes back to None
-    LOOP AT t_row ASSIGNING <s_row>.
-      <s_row>-price_state = `None`.
-      <s_row>-stock_state = `None`.
-      <s_row>-price_text  = ``.
-      <s_row>-stock_text  = ``.
-      LOOP AT <s_row>-t_item ASSIGNING <s_item>.
-        <s_item>-qty_state = `None`.
-        <s_item>-qty_text  = ``.
-      ENDLOOP.
-    ENDLOOP.
-
-    DATA(t_skipped) = client->get( )-t_model_skipped.
-    report = ``.
-    LOOP AT t_skipped INTO DATA(s_skipped).
-
-      " name is the bound attribute as the class declares it - T_ROW for a
-      " top-level cell, T_ROW-T_ITEM for a cell of the nested table; row is
-      " the 1-based index in THAT table, row_parent the owning row above it
-      CASE s_skipped-name.
-
-        WHEN `T_ROW`.
-          READ TABLE t_row ASSIGNING <s_row> INDEX s_skipped-row.
-          IF sy-subrc <> 0.
-            CONTINUE.
-          ENDIF.
-
-          CASE s_skipped-field.
-            WHEN `PRICE`.
-              <s_row>-price_state = `Error`.
-              <s_row>-price_text  = |'{ s_skipped-value }' is not a valid price - the stored value { <s_row>-price } stands|.
-            WHEN `STOCK`.
-              <s_row>-stock_state = `Error`.
-              <s_row>-stock_text  = |'{ s_skipped-value }' is not a whole number - the stored value { <s_row>-stock } stands|.
-          ENDCASE.
-
-        WHEN `T_ROW-T_ITEM`.
-          READ TABLE t_row ASSIGNING <s_row> INDEX s_skipped-row_parent.
-          IF sy-subrc <> 0.
-            CONTINUE.
-          ENDIF.
-
-          READ TABLE <s_row>-t_item ASSIGNING <s_item> INDEX s_skipped-row.
-          IF sy-subrc <> 0.
-            CONTINUE.
-          ENDIF.
-
-          <s_item>-qty_state = `Error`.
-          <s_item>-qty_text  = |'{ s_skipped-value }' is not a quantity - the stored value { <s_item>-qty } stands|.
-
-      ENDCASE.
-
-      report = |{ report }{ s_skipped-name } row { s_skipped-row } field { s_skipped-field }: '{ s_skipped-value }' refused. |.
-    ENDLOOP.
-
-    report_text = COND #( WHEN report IS INITIAL
-                          THEN `Every cell of the last roundtrip converted.`
-                          ELSE report ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `SAVE`.
-        " a save that would silently drop the refused cells is the failure
-        " this trace exists for - so a roundtrip with a trace is no save
-        IF report IS INITIAL.
-          client->message_toast_display( `saved - every cell converted` ).
-        ELSE.
-          client->message_box_display( text = |Not saved. { report }|
-                                       type = `error` ).
-        ENDIF.
-
-      WHEN `RESET`.
-        " reading the trace pushes no model: the browser goes on showing
-        " the refused text until the app writes something. A re-render
-        " with the seed data is that write
-        on_init( ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -291,6 +182,115 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `SAVE`.
+        " a save that would silently drop the refused cells is the failure
+        " this trace exists for - so a roundtrip with a trace is no save
+        IF report IS INITIAL.
+          client->message_toast_display( `saved - every cell converted` ).
+        ELSE.
+          client->message_box_display( text = |Not saved. { report }|
+                                       type = `error` ).
+        ENDIF.
+
+      WHEN `RESET`.
+        " reading the trace pushes no model: the browser goes on showing
+        " the refused text until the app writes something. A re-render
+        " with the seed data is that write
+        on_init( ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    t_row = VALUE #(
+      ( product = `Notebook 15"` price = '1299.00' currency = `EUR` stock = 12 price_state = `None` stock_state = `None`
+        t_item = VALUE #( ( name = `SSD 1 TB`  qty = 1 qty_state = `None` )
+                          ( name = `RAM 16 GB` qty = 2 qty_state = `None` ) ) )
+      ( product = `Monitor 27"`  price = '349.90'  currency = `EUR` stock = 5  price_state = `None` stock_state = `None`
+        t_item = VALUE #( ( name = `HDMI cable` qty = 1 qty_state = `None` ) ) )
+      ( product = `USB-C Dock`   price = '189.00'  currency = `EUR` stock = 40 price_state = `None` stock_state = `None`
+        t_item = VALUE #( ( name = `Power supply` qty = 1 qty_state = `None` ) ) ) ).
+
+    view_display( ).
+
+  ENDMETHOD.
+
+
+  METHOD refused_apply.
+
+    FIELD-SYMBOLS <s_row>  TYPE ty_s_row.
+    FIELD-SYMBOLS <s_item> TYPE ty_s_item.
+
+    " every roundtrip starts clean: a cell the user has corrected since is
+    " not in this roundtrip's trace any more, so its state goes back to None
+    LOOP AT t_row ASSIGNING <s_row>.
+      <s_row>-price_state = `None`.
+      <s_row>-stock_state = `None`.
+      <s_row>-price_text  = ``.
+      <s_row>-stock_text  = ``.
+      LOOP AT <s_row>-t_item ASSIGNING <s_item>.
+        <s_item>-qty_state = `None`.
+        <s_item>-qty_text  = ``.
+      ENDLOOP.
+    ENDLOOP.
+
+    DATA(t_skipped) = client->get( )-t_model_skipped.
+    report = ``.
+    LOOP AT t_skipped INTO DATA(s_skipped).
+
+      " name is the bound attribute as the class declares it - T_ROW for a
+      " top-level cell, T_ROW-T_ITEM for a cell of the nested table; row is
+      " the 1-based index in THAT table, row_parent the owning row above it
+      CASE s_skipped-name.
+
+        WHEN `T_ROW`.
+          READ TABLE t_row ASSIGNING <s_row> INDEX s_skipped-row.
+          IF sy-subrc <> 0.
+            CONTINUE.
+          ENDIF.
+
+          CASE s_skipped-field.
+            WHEN `PRICE`.
+              <s_row>-price_state = `Error`.
+              <s_row>-price_text  = |'{ s_skipped-value }' is not a valid price - the stored value { <s_row>-price } stands|.
+            WHEN `STOCK`.
+              <s_row>-stock_state = `Error`.
+              <s_row>-stock_text  = |'{ s_skipped-value }' is not a whole number - the stored value { <s_row>-stock } stands|.
+          ENDCASE.
+
+        WHEN `T_ROW-T_ITEM`.
+          READ TABLE t_row ASSIGNING <s_row> INDEX s_skipped-row_parent.
+          IF sy-subrc <> 0.
+            CONTINUE.
+          ENDIF.
+
+          READ TABLE <s_row>-t_item ASSIGNING <s_item> INDEX s_skipped-row.
+          IF sy-subrc <> 0.
+            CONTINUE.
+          ENDIF.
+
+          <s_item>-qty_state = `Error`.
+          <s_item>-qty_text  = |'{ s_skipped-value }' is not a quantity - the stored value { <s_item>-qty } stands|.
+
+      ENDCASE.
+
+      report = |{ report }{ s_skipped-name } row { s_skipped-row } field { s_skipped-field }: '{ s_skipped-value }' refused. |.
+    ENDLOOP.
+
+    report_text = COND #( WHEN report IS INITIAL
+                          THEN `Every cell of the last roundtrip converted.`
+                          ELSE report ).
 
   ENDMETHOD.
 

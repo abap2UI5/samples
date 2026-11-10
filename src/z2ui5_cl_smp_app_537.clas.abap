@@ -50,21 +50,6 @@ CLASS z2ui5_cl_smp_app_537 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event_row.
-
-    " every argument arrives as a string: the number the expression computed
-    " as its digits, the result of the comparison as abap_true or empty -
-    " so it is compared like an abap_bool, never asked IS INITIAL
-    DATA(is_laptop) = COND string( WHEN client->get_event_arg( 3 ) = abap_true THEN `yes` ELSE `no` ).
-
-    client->message_box_display( |Product: { client->get_event_arg( 1 ) }\n| &&
-                                 |Quantity * 10: { client->get_event_arg( 2 ) }\n| &&
-                                 |Is a laptop: { is_laptop }\n| &&
-                                 |Delivery (formatted in the browser): { client->get_event_arg( 4 ) }| ).
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -151,6 +136,21 @@ CLASS z2ui5_cl_smp_app_537 IMPLEMENTATION.
                                               arg = `{ product: 'Notebook', quantity: 3, express: true, tags: ['new', 'sale'] }` ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event_row.
+
+    " every argument arrives as a string: the number the expression computed
+    " as its digits, the result of the comparison as abap_true or empty -
+    " so it is compared like an abap_bool, never asked IS INITIAL
+    DATA(is_laptop) = COND string( WHEN client->get_event_arg( 3 ) = abap_true THEN `yes` ELSE `no` ).
+
+    client->message_box_display( |Product: { client->get_event_arg( 1 ) }\n| &&
+                                 |Quantity * 10: { client->get_event_arg( 2 ) }\n| &&
+                                 |Is a laptop: { is_laptop }\n| &&
+                                 |Delivery (formatted in the browser): { client->get_event_arg( 4 ) }| ).
 
   ENDMETHOD.
 

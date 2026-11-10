@@ -23,8 +23,8 @@ CLASS z2ui5_cl_smp_app_028 DEFINITION PUBLIC.
     DATA client  TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS start_timer.
 
   PRIVATE SECTION.
@@ -44,58 +44,6 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    counter = 1.
-    running = abap_true.
-    t_tab = VALUE #(
-        ( title = |entry{ counter }|
-          info  = `completed`
-          descr = `this is a description`
-          icon  = `sap-icon://account` ) ).
-
-    start_timer( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `TIMER_FINISHED`.
-        counter = counter + 1.
-        INSERT VALUE #(
-            title = |entry{ counter }|
-            info  = `completed`
-            descr = `this is a description`
-            icon  = `sap-icon://account` )
-          INTO TABLE t_tab.
-
-        IF counter < 3.
-          start_timer( ).
-        ELSE.
-          running = abap_false.
-          client->message_toast_display( `timer deactivated` ).
-        ENDIF.
-
-      WHEN `RESTART`.
-        on_init( ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD start_timer.
-
-    client->follow_up_action(
-        val   = z2ui5_if_client=>cs_event-start_timer
-        t_arg = VALUE #( ( `TIMER_FINISHED` ) ( `2000` ) ) ).
 
   ENDMETHOD.
 
@@ -142,6 +90,58 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
                 )->a( n = `press`   v = client->_event( `RESTART` ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `TIMER_FINISHED`.
+        counter = counter + 1.
+        INSERT VALUE #(
+            title = |entry{ counter }|
+            info  = `completed`
+            descr = `this is a description`
+            icon  = `sap-icon://account` )
+          INTO TABLE t_tab.
+
+        IF counter < 3.
+          start_timer( ).
+        ELSE.
+          running = abap_false.
+          client->message_toast_display( `timer deactivated` ).
+        ENDIF.
+
+      WHEN `RESTART`.
+        on_init( ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    counter = 1.
+    running = abap_true.
+    t_tab = VALUE #(
+        ( title = |entry{ counter }|
+          info  = `completed`
+          descr = `this is a description`
+          icon  = `sap-icon://account` ) ).
+
+    start_timer( ).
+
+  ENDMETHOD.
+
+
+  METHOD start_timer.
+
+    client->follow_up_action(
+        val   = z2ui5_if_client=>cs_event-start_timer
+        t_arg = VALUE #( ( `TIMER_FINISHED` ) ( `2000` ) ) ).
 
   ENDMETHOD.
 

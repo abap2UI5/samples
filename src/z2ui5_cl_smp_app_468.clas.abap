@@ -22,13 +22,13 @@ CLASS z2ui5_cl_smp_app_468 DEFINITION PUBLIC.
 
     DATA input   TYPE string.
     DATA routing TYPE abap_bool.
+    DATA counter TYPE i.
 
   PROTECTED SECTION.
-    DATA counter TYPE i.
-    DATA client  TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -46,34 +46,6 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `INC`.
-        counter = counter + 1.
-        view_display( ).
-
-      WHEN `GO_DETAIL`.
-        client->nav_app_call( NEW z2ui5_cl_smp_app_469( ) ).
-
-      WHEN `ROUTING`.
-        " the mode is remembered on the app, so switching it is one action:
-        " DEFAULT leaves the hash alone from now on - Back/Forward leave the
-        " page, the framework default - and FRESH puts the class back in
-        client->follow_up_action( val   = client->cs_event-hash_routing
-                                  t_arg = VALUE #( ( COND #( WHEN routing = abap_true
-                                                             THEN client->cs_nav_mode-fresh
-                                                             ELSE client->cs_nav_mode-default ) ) ) ).
-        client->message_toast_display( COND #( WHEN routing = abap_true
-                                               THEN `routing mode fresh - the URL carries the class`
-                                               ELSE `routing mode default - the URL is left untouched` ) ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -126,7 +98,7 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
         )->a( n = `text` v = `and raise a counter` ).
     form->tag( `Button`
         )->a( n = `press` v = client->_event( `INC` )
-        )->a( n = `text`  t = |increment ({ counter })| ).
+        )->a( n = `text`  v = |increment ({ client->_bind( counter ) })| ).
 
     form->tag( `Label`
         )->a( n = `text` v = `2. Navigate forward` ).
@@ -151,6 +123,33 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `INC`.
+        counter = counter + 1.
+
+      WHEN `GO_DETAIL`.
+        client->nav_app_call( NEW z2ui5_cl_smp_app_469( ) ).
+
+      WHEN `ROUTING`.
+        " the mode is remembered on the app, so switching it is one action:
+        " DEFAULT leaves the hash alone from now on - Back/Forward leave the
+        " page, the framework default - and FRESH puts the class back in
+        client->follow_up_action( val   = client->cs_event-hash_routing
+                                  t_arg = VALUE #( ( COND #( WHEN routing = abap_true
+                                                             THEN client->cs_nav_mode-fresh
+                                                             ELSE client->cs_nav_mode-default ) ) ) ).
+        client->message_toast_display( COND #( WHEN routing = abap_true
+                                               THEN `routing mode fresh - the URL carries the class`
+                                               ELSE `routing mode default - the URL is left untouched` ) ).
+
+    ENDCASE.
 
   ENDMETHOD.
 

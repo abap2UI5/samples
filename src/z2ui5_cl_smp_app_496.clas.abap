@@ -69,29 +69,6 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD tabs_init.
-
-    t_tab = VALUE #(
-      ( name  = `Error`
-        descr = `The last uncaught exception with its call stack - the same one the error popup shows.` )
-      ( name  = `Log`
-        descr = `What the frontend did since the app started: roundtrips, frontend actions, events.` )
-      ( name  = `Previous Request`
-        descr = `The JSON this browser sent last - your event, the changed model, the app state.` )
-      ( name  = `Response`
-        descr = `The JSON the backend sent back - the new view, the new model, the follow-up actions.` )
-      ( name  = `Source Code`
-        descr = `The ABAP class behind the running app, with an ADT jump link in the dialog footer.` )
-      ( name  = `View`
-        descr = `The XML view your ABAP built - what z2ui5_cl_ui5_view_builder stringified into the response.` )
-      ( name  = `View Model`
-        descr = `The model behind that view: every bound attribute of this class with its live value.` )
-      ( name  = `Popup, Popover, Nest1, Nest2`
-        descr = `The same two tabs - view and model - for each of the other view slots of the app.` ) ).
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -151,6 +128,29 @@ CLASS z2ui5_cl_smp_app_496 IMPLEMENTATION.
             )->a( n = `description` v = `{DESCR}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD tabs_init.
+
+    t_tab = VALUE #(
+      ( name  = `Error`
+        descr = `The last uncaught exception with its call stack - the same one the error popup shows.` )
+      ( name  = `Log`
+        descr = `What the frontend did since the app started: roundtrips, frontend actions, events.` )
+      ( name  = `Previous Request`
+        descr = `The JSON this browser sent last - your event, the changed model, the app state.` )
+      ( name  = `Response`
+        descr = `The JSON the backend sent back - the new view, the new model, the follow-up actions.` )
+      ( name  = `Source Code`
+        descr = `The ABAP class behind the running app, with an ADT jump link in the dialog footer.` )
+      ( name  = `View`
+        descr = `The XML view your ABAP built - what z2ui5_cl_ui5_view_builder stringified into the response.` )
+      ( name  = `View Model`
+        descr = `The model behind that view: every bound attribute of this class with its live value.` )
+      ( name  = `Popup, Popover, Nest1, Nest2`
+        descr = `The same two tabs - view and model - for each of the other view slots of the app.` ) ).
 
   ENDMETHOD.
 ENDCLASS.

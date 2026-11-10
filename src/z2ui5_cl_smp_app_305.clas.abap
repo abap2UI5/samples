@@ -23,6 +23,27 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_305 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+      t_tab = VALUE #(
+          ( title = `entry 01`  value = `red` )
+          ( title = `entry 02`  value = `blue` )
+          ( title = `entry 03`  value = `green` )
+          ( title = `entry 04`  value = `yellow` )
+          ( title = `entry 05`  value = `orange` )
+          ( title = `entry 06`  value = `grey` ) ).
+
+      set_view( ).
+    ELSEIF client->check_on_navigated( ).
+      set_view( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD set_view.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -110,27 +131,6 @@ CLASS z2ui5_cl_smp_app_305 IMPLEMENTATION.
                     )->a( n = `value`   v = `{VALUE}` ).
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF client->check_on_init( ).
-      t_tab = VALUE #(
-          ( title = `entry 01`  value = `red` )
-          ( title = `entry 02`  value = `blue` )
-          ( title = `entry 03`  value = `green` )
-          ( title = `entry 04`  value = `yellow` )
-          ( title = `entry 05`  value = `orange` )
-          ( title = `entry 06`  value = `grey` ) ).
-
-      set_view( ).
-    ELSEIF client->check_on_navigated( ).
-      set_view( ).
-    ENDIF.
 
   ENDMETHOD.
 

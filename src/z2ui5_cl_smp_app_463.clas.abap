@@ -58,22 +58,6 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    IF client->get_event( ) = `SHOW_MODEL`.
-      " the bound inputs have already written the edits back into
-      " t_nodes before on_event runs - read the (possibly renamed) roots
-      " back and echo them, proving the round-trip
-      DATA(lv_roots) = ``.
-      LOOP AT t_nodes INTO DATA(ls_node).
-        lv_roots = |{ lv_roots }{ COND #( WHEN sy-tabix > 1 THEN `, ` ) }{ ls_node-text }|.
-      ENDLOOP.
-      client->message_toast_display( |Root nodes now: { lv_roots }| ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -122,6 +106,22 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
     page->tag( n = `Tree` ns = `z2ui5` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->get_event( ) = `SHOW_MODEL`.
+      " the bound inputs have already written the edits back into
+      " t_nodes before on_event runs - read the (possibly renamed) roots
+      " back and echo them, proving the round-trip
+      DATA(lv_roots) = ``.
+      LOOP AT t_nodes INTO DATA(ls_node).
+        lv_roots = |{ lv_roots }{ COND #( WHEN sy-tabix > 1 THEN `, ` ) }{ ls_node-text }|.
+      ENDLOOP.
+      client->message_toast_display( |Root nodes now: { lv_roots }| ).
+    ENDIF.
 
   ENDMETHOD.
 

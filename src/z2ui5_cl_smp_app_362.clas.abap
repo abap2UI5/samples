@@ -18,9 +18,9 @@ CLASS z2ui5_cl_smp_app_362 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
+    METHODS model_init.
     METHODS restore_scroll.
 
   PRIVATE SECTION.
@@ -34,80 +34,13 @@ CLASS z2ui5_cl_smp_app_362 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    DO 100 TIMES.
-      INSERT VALUE #( title = |Row { sy-index }|
-                      value = `red`
-                      info  = `completed`
-                      descr = `this is a description` )
-             INTO TABLE t_tab.
-    ENDDO.
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    " The SCROLL_TO client event sets scrollTop / scrollLeft by pixel.
-    " args: ( control-id, scrollTop, scrollLeft, behavior )
-    " behavior is one of: "auto" (default, instant), "smooth", "instant".
-    CASE client->get_event( ).
-      WHEN `SCROLL_TOP`.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-scroll_to
-            t_arg = VALUE #( ( `id_page` ) ( `0` ) ( `0` ) ( `smooth` ) ) ).
-      WHEN `SCROLL_MIDDLE`.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-scroll_to
-            t_arg = VALUE #( ( `id_page` ) ( `1500` ) ( `0` ) ( `smooth` ) ) ).
-      WHEN `SCROLL_BOTTOM`.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-scroll_to
-            t_arg = VALUE #( ( `id_page` ) ( `99999` ) ( `0` ) ( `smooth` ) ) ).
-      WHEN `SCROLL_JUMP`.
-        " Same target as middle but without smooth - instant snap.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-scroll_to
-            t_arg = VALUE #( ( `id_page` ) ( `1500` ) ( `0` ) ) ).
-      WHEN `REFRESH`.
-        " The redraw of the view resets the scroll position.
-        " The current scroll info comes in on every roundtrip via
-        " client->get( )-s_scroll, so we push it back via SCROLL_TO and
-        " the user lands at the exact same spot after the redraw.
-        view_display( ).
-        restore_scroll( ).
-        client->message_toast_display( `Table refreshed, scroll preserved` ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD restore_scroll.
-
-    DATA(scroll) = client->get( )-s_scroll-main.
-
-    IF scroll-id IS INITIAL.
-      RETURN.
-    ENDIF.
-
-    client->follow_up_action(
-        val   = z2ui5_if_client=>cs_event-scroll_to
-        t_arg = VALUE #( ( scroll-id )
-                         ( |{ scroll-y }| )
-                         ( |{ scroll-x }| ) ) ).
 
   ENDMETHOD.
 
@@ -185,6 +118,72 @@ CLASS z2ui5_cl_smp_app_362 IMPLEMENTATION.
                 )->a( n = `type`  v = `Emphasized` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    " The SCROLL_TO client event sets scrollTop / scrollLeft by pixel.
+    " args: ( control-id, scrollTop, scrollLeft, behavior )
+    " behavior is one of: "auto" (default, instant), "smooth", "instant".
+    CASE client->get_event( ).
+      WHEN `SCROLL_TOP`.
+        client->follow_up_action(
+            val   = z2ui5_if_client=>cs_event-scroll_to
+            t_arg = VALUE #( ( `id_page` ) ( `0` ) ( `0` ) ( `smooth` ) ) ).
+      WHEN `SCROLL_MIDDLE`.
+        client->follow_up_action(
+            val   = z2ui5_if_client=>cs_event-scroll_to
+            t_arg = VALUE #( ( `id_page` ) ( `1500` ) ( `0` ) ( `smooth` ) ) ).
+      WHEN `SCROLL_BOTTOM`.
+        client->follow_up_action(
+            val   = z2ui5_if_client=>cs_event-scroll_to
+            t_arg = VALUE #( ( `id_page` ) ( `99999` ) ( `0` ) ( `smooth` ) ) ).
+      WHEN `SCROLL_JUMP`.
+        " Same target as middle but without smooth - instant snap.
+        client->follow_up_action(
+            val   = z2ui5_if_client=>cs_event-scroll_to
+            t_arg = VALUE #( ( `id_page` ) ( `1500` ) ( `0` ) ) ).
+      WHEN `REFRESH`.
+        " The redraw of the view resets the scroll position.
+        " The current scroll info comes in on every roundtrip via
+        " client->get( )-s_scroll, so we push it back via SCROLL_TO and
+        " the user lands at the exact same spot after the redraw.
+        view_display( ).
+        restore_scroll( ).
+        client->message_toast_display( `Table refreshed, scroll preserved` ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD restore_scroll.
+
+    DATA(scroll) = client->get( )-s_scroll-main.
+
+    IF scroll-id IS INITIAL.
+      RETURN.
+    ENDIF.
+
+    client->follow_up_action(
+        val   = z2ui5_if_client=>cs_event-scroll_to
+        t_arg = VALUE #( ( scroll-id )
+                         ( |{ scroll-y }| )
+                         ( |{ scroll-x }| ) ) ).
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    DO 100 TIMES.
+      INSERT VALUE #( title = |Row { sy-index }|
+                      value = `red`
+                      info  = `completed`
+                      descr = `this is a description` )
+             INTO TABLE t_tab.
+    ENDDO.
 
   ENDMETHOD.
 ENDCLASS.

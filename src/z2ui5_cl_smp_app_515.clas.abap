@@ -39,45 +39,6 @@ CLASS z2ui5_cl_smp_app_515 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD busy_call.
-
-    " sap.ui.core.BusyIndicator renders nothing of its own and has no id, so
-    " control_by_id cannot address it - control_global is the only wire that
-    " reaches a singleton like this one. t_arg is positional: the object, the
-    " method, then its arguments. show( ) takes the delay in milliseconds
-    " before the spinner appears; hide( ) takes none.
-    client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global
-                              t_arg = COND #( WHEN arg IS INITIAL
-                                              THEN VALUE #( ( `BUSY_INDICATOR` ) ( method ) )
-                                              ELSE VALUE #( ( `BUSY_INDICATOR` ) ( method ) ( arg ) ) ) ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `START`.
-        " The indicator blocks the whole screen, so nothing the user does can
-        " take it away again - something in this response has to. A client
-        " timer is what fills the gap here; a real app would hide it in the
-        " handler of whatever it was waiting for.
-        status = `Running - the BusyIndicator is up, the timer takes it away.`.
-        busy_call( method = `show`
-                   arg    = `0` ).
-        client->follow_up_action( val   = z2ui5_if_client=>cs_event-start_timer
-                                  t_arg = VALUE #( ( `FINISHED` ) ( `2500` ) ) ).
-
-      WHEN `FINISHED`.
-        status = `Done - hide( ) was called from the timer's handler.`.
-        busy_call( `hide` ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -116,6 +77,45 @@ CLASS z2ui5_cl_smp_app_515 IMPLEMENTATION.
             )->a( n = `class` v = `sapUiSmallMarginTop` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `START`.
+        " The indicator blocks the whole screen, so nothing the user does can
+        " take it away again - something in this response has to. A client
+        " timer is what fills the gap here; a real app would hide it in the
+        " handler of whatever it was waiting for.
+        status = `Running - the BusyIndicator is up, the timer takes it away.`.
+        busy_call( method = `show`
+                   arg    = `0` ).
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-start_timer
+                                  t_arg = VALUE #( ( `FINISHED` ) ( `2500` ) ) ).
+
+      WHEN `FINISHED`.
+        status = `Done - hide( ) was called from the timer's handler.`.
+        busy_call( `hide` ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD busy_call.
+
+    " sap.ui.core.BusyIndicator renders nothing of its own and has no id, so
+    " control_by_id cannot address it - control_global is the only wire that
+    " reaches a singleton like this one. t_arg is positional: the object, the
+    " method, then its arguments. show( ) takes the delay in milliseconds
+    " before the spinner appears; hide( ) takes none.
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global
+                              t_arg = COND #( WHEN arg IS INITIAL
+                                              THEN VALUE #( ( `BUSY_INDICATOR` ) ( method ) )
+                                              ELSE VALUE #( ( `BUSY_INDICATOR` ) ( method ) ( arg ) ) ) ).
 
   ENDMETHOD.
 

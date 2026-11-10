@@ -9,8 +9,8 @@ CLASS z2ui5_cl_smp_app_008 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -26,29 +26,6 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `BUTTON_MESSAGE_BOX_SY`.
-        " only the message key - message_box_display( ) reads the text from
-        " T100 itself, exactly as it does for the BAPIRET2 structure below
-        DATA(ls_msg_sy) = VALUE symsg( msgty = `I` msgid = `NET` msgno = `001` ).
-        client->message_box_display( ls_msg_sy ).
-      WHEN `BUTTON_MESSAGE_BOX_BAPIRET`.
-        DATA(ls_msg_bapiret) = VALUE bapiret2( id = `NET` number = `001` ).
-        client->message_box_display( ls_msg_bapiret ).
-      WHEN `BUTTON_MESSAGE_BOX_CX_ROOT`.
-        TRY.
-            DATA(lv_val) = 1 / 0.
-            client->message_box_display( |{ lv_val }| ).
-          CATCH cx_root INTO DATA(x).
-            client->message_box_display( x ).
-        ENDTRY.
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -95,6 +72,29 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
                         )->a( n = `text`  v = `CX_ROOT` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `BUTTON_MESSAGE_BOX_SY`.
+        " only the message key - message_box_display( ) reads the text from
+        " T100 itself, exactly as it does for the BAPIRET2 structure below
+        DATA(ls_msg_sy) = VALUE symsg( msgty = `I` msgid = `NET` msgno = `001` ).
+        client->message_box_display( ls_msg_sy ).
+      WHEN `BUTTON_MESSAGE_BOX_BAPIRET`.
+        DATA(ls_msg_bapiret) = VALUE bapiret2( id = `NET` number = `001` ).
+        client->message_box_display( ls_msg_bapiret ).
+      WHEN `BUTTON_MESSAGE_BOX_CX_ROOT`.
+        TRY.
+            DATA(lv_val) = 1 / 0.
+            client->message_box_display( |{ lv_val }| ).
+          CATCH cx_root INTO DATA(x).
+            client->message_box_display( x ).
+        ENDTRY.
+    ENDCASE.
 
   ENDMETHOD.
 

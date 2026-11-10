@@ -71,8 +71,8 @@ CLASS z2ui5_cl_smp_app_544 DEFINITION PUBLIC.
     DATA t_unit_fields  TYPE string_table.
     DATA kind_column    TYPE string.
 
-    METHODS on_init.
     METHODS view_display.
+    METHODS model_init.
     METHODS rows_group.
 
     "! Adds the row to the sum of its units on the given level
@@ -110,7 +110,8 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `GROUP` ).
@@ -120,31 +121,115 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_init.
+  METHOD view_display.
 
-    t_sales = VALUE #(
-        ( region = `EMEA`     country = `Germany`     category = `Hardware` product = `Notebook`         quantity = 10 amount = `12000.00` currency = `EUR` )
-        ( region = `APAC`     country = `Japan`       category = `Software` product = `Antivirus`        quantity = 50 amount = `2500.00`  currency = `USD` )
-        ( region = `EMEA`     country = `Switzerland` category = `Hardware` product = `Monitor`          quantity = 8  amount = `2400.00`  currency = `CHF` )
-        ( region = `Americas` country = `USA`         category = `Hardware` product = `Server`           quantity = 2  amount = `18000.00` currency = `USD` )
-        ( region = `EMEA`     country = `Germany`     category = `Software` product = `Office Suite`     quantity = 25 amount = `4500.00`  currency = `EUR` )
-        ( region = `Americas` country = `Canada`      category = `Hardware` product = `Monitor`          quantity = 5  amount = `1500.00`  currency = `CAD` )
-        ( region = `EMEA`     country = `France`      category = `Hardware` product = `Notebook`         quantity = 6  amount = `7200.00`  currency = `EUR` )
-        ( region = `APAC`     country = `Australia`   category = `Services` product = `Training`         quantity = 2  amount = `3000.00`  currency = `USD` )
-        ( region = `EMEA`     country = `Switzerland` category = `Services` product = `Installation`     quantity = 3  amount = `1350.00`  currency = `CHF` )
-        ( region = `Americas` country = `USA`         category = `Services` product = `Support Contract` quantity = 12 amount = `6000.00`  currency = `USD` )
-        ( region = `APAC`     country = `Japan`       category = `Hardware` product = `Notebook`         quantity = 4  amount = `4800.00`  currency = `USD` )
-        ( region = `Americas` country = `Canada`      category = `Software` product = `Office Suite`     quantity = 40 amount = `7600.00`  currency = `CAD` ) ).
+    DATA t_layout TYPE STANDARD TABLE OF ty_s_column WITH EMPTY KEY.
 
-    " the order of this list is the order of the groups, the first ticked
-    " column outermost
-    t_columns = VALUE #(
-        ( name = `REGION`   label = `Region`   selected = abap_true )
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core`   v = `sap.ui.core`
+            )->a( n = `xmlns:table`  v = `sap.ui.table` ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Grid Table - Subtotals and Grand Total per Currency`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Tick the columns to group by: the backend sorts the rows by them, inserts a subtotal row after ` &&
+                   `each group and a grand total at the end. Amounts are summed per currency, so a group in two currencies ` &&
+                   `gets two subtotal rows. Each cell writes its row kind into the DOM (CustomData writeToDom), and the ` &&
+                   `style below colours the whole row from it.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    " a grid table row takes no CSS class from its data, so every cell carries
+    " the row kind as data-rowkind, and :has( ) lifts it to the row. The
+    " theme parameters are CSS variables only on newer releases - the colour
+    " after the comma is the fallback for the ones without
+    page->tag( n = `HTML` ns = `core`
+        )->a( n = `content` v = `<style>` && |\n| &&
+                         `.sapUiTable tr:has([data-rowkind="S"]) > td \{ background-color: var(--sapInformationBackground, #f5faff); \}` && |\n| &&
+                         `.sapUiTable tr:has([data-rowkind="T"]) > td \{ background-color: var(--sapWarningBackground, #fef7f1); \}` && |\n| &&
+                         `[data-rowkind="S"], [data-rowkind="T"] \{ font-weight: bold; \}` && |\n| &&
+                         `</style>` ).
+
+    DATA(table) = page->ele( n = `Table` ns = `table`
+        )->a( n = `rows`            v = client->_bind( t_rows )
+        )->a( n = `selectionMode`   v = `None`
+        )->a( n = `visibleRowCount` v = client->_bind( visible_rows )
+        )->a( n = `class`           v = `sapUiSmallMarginBeginEnd` ).
+
+    table->ele( n = `extension` ns = `table`
+        )->ele( `OverflowToolbar`
+            )->tag( `Title`
+                )->a( n = `text` v = `Sales`
+            )->tag( `ToolbarSpacer`
+            )->tag( `Label`
+                )->a( n = `text` v = `Group by:`
+            )->ele( `HBox`
+                )->a( n = `items` v = client->_bind( t_columns )
+                )->tag( `CheckBox`
+                    )->a( n = `text`     v = `{LABEL}`
+                    )->a( n = `selected` v = `{SELECTED}`
+                    )->a( n = `select`   v = client->_event( `GROUP` ) ).
+
+    " the bar at the start of the row, in the colour of the row
+    table->ele( n = `rowSettingsTemplate` ns = `table`
+        )->tag( n = `RowSettings` ns = `table`
+            )->a( n = `highlight` v = |\{= $\{KIND\} === '{ cs_kind-total }' ? 'Warning' : $\{KIND\} === '{ cs_kind-subtotal }' ? 'Information' : 'None' \}| ).
+
+    " no sortProperty and no filterProperty: sorting in the browser would tear
+    " the subtotals from their groups
+    t_layout = VALUE #(
+        ( name = `REGION`   label = `Region`   selected = abap_false )
         ( name = `COUNTRY`  label = `Country`  selected = abap_false )
-        ( name = `CATEGORY` label = `Category` selected = abap_false ) ).
+        ( name = `CATEGORY` label = `Category` selected = abap_false )
+        ( name = `PRODUCT`  label = `Product`  selected = abap_false )
+        ( name = `QUANTITY` label = `Quantity` selected = abap_false )
+        ( name = `AMOUNT`   label = `Amount`   selected = abap_false )
+        ( name = `CURRENCY` label = `Currency` selected = abap_false ) ).
 
-    rows_group( ).
-    view_display( ).
+    DATA(columns) = table->ele( n = `columns` ns = `table` ).
+    LOOP AT t_layout INTO DATA(s_layout).
+
+      DATA(text) = |\{{ s_layout-name }\}|.
+      DATA(align) = `Begin`.
+      CASE s_layout-name.
+        WHEN `PRODUCT`.
+          text = |\{= $\{KIND\} === '{ cs_kind-total }' ? 'Total' : $\{KIND\} === '{ cs_kind-subtotal }' ? 'Subtotal' : $\{PRODUCT\} \}|.
+        WHEN `QUANTITY`.
+          align = `End`.
+        WHEN `AMOUNT`.
+          text  = `{ parts: ['AMOUNT', 'CURRENCY'], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }`.
+          align = `End`.
+      ENDCASE.
+
+      DATA(column) = columns->ele( n = `Column` ns = `table`
+          )->a( n = `width` v = `10rem` ).
+      column->tag( `Label` )->a( n = `text` t = s_layout-label ).
+
+      " writeToDom renders data-rowkind="S" on the cell's own element. It only
+      " writes a string, so the expression turns an empty kind into I, an item
+      column->ele( n = `template` ns = `table`
+          )->ele( `Text`
+              )->a( n = `text`      v = text
+              )->a( n = `textAlign` v = align
+              )->a( n = `wrapping`  b = abap_false
+              )->ele( `customData`
+                  )->tag( n = `CustomData` ns = `core`
+                      )->a( n = `key`        v = `rowkind`
+                      )->a( n = `value`      v = |\{= $\{KIND\} === '{ cs_kind-total }' ? 'T' : $\{KIND\} === '{ cs_kind-subtotal }' ? 'S' : 'I' \}|
+                      )->a( n = `writeToDom` b = abap_true ).
+
+    ENDLOOP.
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -380,115 +465,30 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD view_display.
+  METHOD model_init.
 
-    DATA t_layout TYPE STANDARD TABLE OF ty_s_column WITH EMPTY KEY.
+    t_sales = VALUE #(
+        ( region = `EMEA`     country = `Germany`     category = `Hardware` product = `Notebook`         quantity = 10 amount = `12000.00` currency = `EUR` )
+        ( region = `APAC`     country = `Japan`       category = `Software` product = `Antivirus`        quantity = 50 amount = `2500.00`  currency = `USD` )
+        ( region = `EMEA`     country = `Switzerland` category = `Hardware` product = `Monitor`          quantity = 8  amount = `2400.00`  currency = `CHF` )
+        ( region = `Americas` country = `USA`         category = `Hardware` product = `Server`           quantity = 2  amount = `18000.00` currency = `USD` )
+        ( region = `EMEA`     country = `Germany`     category = `Software` product = `Office Suite`     quantity = 25 amount = `4500.00`  currency = `EUR` )
+        ( region = `Americas` country = `Canada`      category = `Hardware` product = `Monitor`          quantity = 5  amount = `1500.00`  currency = `CAD` )
+        ( region = `EMEA`     country = `France`      category = `Hardware` product = `Notebook`         quantity = 6  amount = `7200.00`  currency = `EUR` )
+        ( region = `APAC`     country = `Australia`   category = `Services` product = `Training`         quantity = 2  amount = `3000.00`  currency = `USD` )
+        ( region = `EMEA`     country = `Switzerland` category = `Services` product = `Installation`     quantity = 3  amount = `1350.00`  currency = `CHF` )
+        ( region = `Americas` country = `USA`         category = `Services` product = `Support Contract` quantity = 12 amount = `6000.00`  currency = `USD` )
+        ( region = `APAC`     country = `Japan`       category = `Hardware` product = `Notebook`         quantity = 4  amount = `4800.00`  currency = `USD` )
+        ( region = `Americas` country = `Canada`      category = `Software` product = `Office Suite`     quantity = 40 amount = `7600.00`  currency = `CAD` ) ).
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core`   v = `sap.ui.core`
-            )->a( n = `xmlns:table`  v = `sap.ui.table` ).
-    DATA(page) = view->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Grid Table - Subtotals and Grand Total per Currency`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
-
-    page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Tick the columns to group by: the backend sorts the rows by them, inserts a subtotal row after ` &&
-                   `each group and a grand total at the end. Amounts are summed per currency, so a group in two currencies ` &&
-                   `gets two subtotal rows. Each cell writes its row kind into the DOM (CustomData writeToDom), and the ` &&
-                   `style below colours the whole row from it.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    " a grid table row takes no CSS class from its data, so every cell carries
-    " the row kind as data-rowkind, and :has( ) lifts it to the row. The
-    " theme parameters are CSS variables only on newer releases - the colour
-    " after the comma is the fallback for the ones without
-    page->tag( n = `HTML` ns = `core`
-        )->a( n = `content` v = `<style>` && |\n| &&
-                         `.sapUiTable tr:has([data-rowkind="S"]) > td \{ background-color: var(--sapInformationBackground, #f5faff); \}` && |\n| &&
-                         `.sapUiTable tr:has([data-rowkind="T"]) > td \{ background-color: var(--sapWarningBackground, #fef7f1); \}` && |\n| &&
-                         `[data-rowkind="S"], [data-rowkind="T"] \{ font-weight: bold; \}` && |\n| &&
-                         `</style>` ).
-
-    DATA(table) = page->ele( n = `Table` ns = `table`
-        )->a( n = `rows`            v = client->_bind( t_rows )
-        )->a( n = `selectionMode`   v = `None`
-        )->a( n = `visibleRowCount` v = client->_bind( visible_rows )
-        )->a( n = `class`           v = `sapUiSmallMarginBeginEnd` ).
-
-    table->ele( n = `extension` ns = `table`
-        )->ele( `OverflowToolbar`
-            )->tag( `Title`
-                )->a( n = `text` v = `Sales`
-            )->tag( `ToolbarSpacer`
-            )->tag( `Label`
-                )->a( n = `text` v = `Group by:`
-            )->ele( `HBox`
-                )->a( n = `items` v = client->_bind( t_columns )
-                )->tag( `CheckBox`
-                    )->a( n = `text`     v = `{LABEL}`
-                    )->a( n = `selected` v = `{SELECTED}`
-                    )->a( n = `select`   v = client->_event( `GROUP` ) ).
-
-    " the bar at the start of the row, in the colour of the row
-    table->ele( n = `rowSettingsTemplate` ns = `table`
-        )->tag( n = `RowSettings` ns = `table`
-            )->a( n = `highlight` v = |\{= $\{KIND\} === '{ cs_kind-total }' ? 'Warning' : $\{KIND\} === '{ cs_kind-subtotal }' ? 'Information' : 'None' \}| ).
-
-    " no sortProperty and no filterProperty: sorting in the browser would tear
-    " the subtotals from their groups
-    t_layout = VALUE #(
-        ( name = `REGION`   label = `Region`   selected = abap_false )
+    " the order of this list is the order of the groups, the first ticked
+    " column outermost
+    t_columns = VALUE #(
+        ( name = `REGION`   label = `Region`   selected = abap_true )
         ( name = `COUNTRY`  label = `Country`  selected = abap_false )
-        ( name = `CATEGORY` label = `Category` selected = abap_false )
-        ( name = `PRODUCT`  label = `Product`  selected = abap_false )
-        ( name = `QUANTITY` label = `Quantity` selected = abap_false )
-        ( name = `AMOUNT`   label = `Amount`   selected = abap_false )
-        ( name = `CURRENCY` label = `Currency` selected = abap_false ) ).
+        ( name = `CATEGORY` label = `Category` selected = abap_false ) ).
 
-    DATA(columns) = table->ele( n = `columns` ns = `table` ).
-    LOOP AT t_layout INTO DATA(s_layout).
-
-      DATA(text) = |\{{ s_layout-name }\}|.
-      DATA(align) = `Begin`.
-      CASE s_layout-name.
-        WHEN `PRODUCT`.
-          text = |\{= $\{KIND\} === '{ cs_kind-total }' ? 'Total' : $\{KIND\} === '{ cs_kind-subtotal }' ? 'Subtotal' : $\{PRODUCT\} \}|.
-        WHEN `QUANTITY`.
-          align = `End`.
-        WHEN `AMOUNT`.
-          text  = `{ parts: ['AMOUNT', 'CURRENCY'], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }`.
-          align = `End`.
-      ENDCASE.
-
-      DATA(column) = columns->ele( n = `Column` ns = `table`
-          )->a( n = `width` v = `10rem` ).
-      column->tag( `Label` )->a( n = `text` t = s_layout-label ).
-
-      " writeToDom renders data-rowkind="S" on the cell's own element. It only
-      " writes a string, so the expression turns an empty kind into I, an item
-      column->ele( n = `template` ns = `table`
-          )->ele( `Text`
-              )->a( n = `text`      v = text
-              )->a( n = `textAlign` v = align
-              )->a( n = `wrapping`  b = abap_false
-              )->ele( `customData`
-                  )->tag( n = `CustomData` ns = `core`
-                      )->a( n = `key`        v = `rowkind`
-                      )->a( n = `value`      v = |\{= $\{KIND\} === '{ cs_kind-total }' ? 'T' : $\{KIND\} === '{ cs_kind-subtotal }' ? 'S' : 'I' \}|
-                      )->a( n = `writeToDom` b = abap_true ).
-
-    ENDLOOP.
-
-    client->view_display( view->stringify( ) ).
+    rows_group( ).
 
   ENDMETHOD.
 

@@ -12,8 +12,8 @@ CLASS z2ui5_cl_smp_app_472 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -32,28 +32,6 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `LINK_PRESS`.
-
-        IF block_navigation = abap_true.
-          last_press = `Link pressed - the browser did NOT follow the href, the backend decides what happens.`.
-        ELSE.
-          last_press = `Link pressed - the href was followed by the browser as usual.`.
-        ENDIF.
-
-      WHEN `TOGGLE`.
-        " the flag is part of the event registration, so the view has to be
-        " rebuilt for the change to reach the frontend
-        view_display( ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -113,6 +91,28 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
         )->a( n = `text` v = client->_bind( last_press ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `LINK_PRESS`.
+
+        IF block_navigation = abap_true.
+          last_press = `Link pressed - the browser did NOT follow the href, the backend decides what happens.`.
+        ELSE.
+          last_press = `Link pressed - the href was followed by the browser as usual.`.
+        ENDIF.
+
+      WHEN `TOGGLE`.
+        " the flag is part of the event registration, so the view has to be
+        " rebuilt for the change to reach the frontend
+        view_display( ).
+
+    ENDCASE.
 
   ENDMETHOD.
 

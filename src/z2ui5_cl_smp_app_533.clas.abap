@@ -35,11 +35,14 @@ CLASS z2ui5_cl_smp_app_533 IMPLEMENTATION.
     ELSEIF client->check_on_event( `NEXT` ).
 
       step = step + 1.
+      " the rebuild is the subject: each step is a new view, and the page
+      " transition only plays when a view is displayed
       view_display( ).
 
     ELSEIF client->check_on_event( `PREVIOUS` ).
 
       step = step - 1.
+      " as above, and the rebuilt view is what carries transition_back
       view_display( abap_true ).
 
     ELSEIF client->check_on_event( `DONE` ).

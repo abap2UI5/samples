@@ -11,8 +11,8 @@ CLASS z2ui5_cl_smp_app_012 DEFINITION PUBLIC.
     DATA client      TYPE REF TO z2ui5_if_client.
 
     METHODS on_navigation.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS popup_decide.
     METHODS popup_info.
 
@@ -22,60 +22,14 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
-  METHOD on_navigation.
+  METHOD z2ui5_if_app~main.
 
-    IF check_popup = abap_true.
-
-      check_popup = abap_false.
-      DATA(app) = CAST z2ui5_cl_smp_app_020( client->get_app_prev( ) ).
-      client->message_toast_display( |{ app->event } pressed| ).
+    me->client = client.
+    IF client->check_on_navigated( ).
+      on_navigation( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
     ENDIF.
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `BUTTON_POPUP_01`.
-        popup_decide( ).
-        client->view_destroy( ).
-      WHEN `POPUP_DECIDE_CONTINUE`.
-        client->popup_destroy( ).
-        view_display( ).
-        client->message_toast_display( `continue pressed` ).
-      WHEN `POPUP_DECIDE_CANCEL`.
-        client->popup_destroy( ).
-        view_display( ).
-        client->message_toast_display( `cancel pressed` ).
-      WHEN `BUTTON_POPUP_02`.
-        view_display( ).
-        popup_decide( ).
-      WHEN `BUTTON_POPUP_03`.
-        popup_info( ).
-      WHEN `BUTTON_POPUP_04`.
-        popup_decide( ).
-      WHEN `BUTTON_POPUP_05`.
-        check_popup = abap_true.
-        client->view_destroy( ).
-        client->nav_app_call( z2ui5_cl_smp_app_020=>factory(
-          i_text          = `(new app) this is a popup to decide, the text is sent from the previous app and the answer will be sent back`
-          i_cancel_text   = `Cancel`
-          i_cancel_event  = `POPUP_DECIDE_CANCEL`
-          i_confirm_text  = `Continue`
-          i_confirm_event = `POPUP_DECIDE_CONTINUE`
-          ) ).
-      WHEN `BUTTON_POPUP_06`.
-        check_popup = abap_true.
-        client->nav_app_call( z2ui5_cl_smp_app_020=>factory(
-          i_text          = `(new app) this is a popup to decide, the text is sent from the previous app and the answer will be sent back`
-          i_cancel_text   = `Cancel`
-          i_cancel_event  = `POPUP_DECIDE_CANCEL`
-          i_confirm_text  = `Continue`
-          i_confirm_event = `POPUP_DECIDE_CONTINUE` ) ).
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -153,6 +107,69 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `BUTTON_POPUP_01`.
+        popup_decide( ).
+        client->view_destroy( ).
+      WHEN `POPUP_DECIDE_CONTINUE`.
+        client->popup_destroy( ).
+        " BUTTON_POPUP_01 destroyed the view behind the popup - nothing is
+        " left for a model push to update, so the view is built again
+        view_display( ).
+        client->message_toast_display( `continue pressed` ).
+      WHEN `POPUP_DECIDE_CANCEL`.
+        client->popup_destroy( ).
+        " as above: the view may have been destroyed when the popup opened
+        view_display( ).
+        client->message_toast_display( `cancel pressed` ).
+      WHEN `BUTTON_POPUP_02`.
+        " the rebuild is the subject of this button: the background is
+        " rendered again while the popup opens
+        view_display( ).
+        popup_decide( ).
+      WHEN `BUTTON_POPUP_03`.
+        popup_info( ).
+      WHEN `BUTTON_POPUP_04`.
+        popup_decide( ).
+      WHEN `BUTTON_POPUP_05`.
+        check_popup = abap_true.
+        client->view_destroy( ).
+        client->nav_app_call( z2ui5_cl_smp_app_020=>factory(
+          i_text          = `(new app) this is a popup to decide, the text is sent from the previous app and the answer will be sent back`
+          i_cancel_text   = `Cancel`
+          i_cancel_event  = `POPUP_DECIDE_CANCEL`
+          i_confirm_text  = `Continue`
+          i_confirm_event = `POPUP_DECIDE_CONTINUE`
+          ) ).
+      WHEN `BUTTON_POPUP_06`.
+        check_popup = abap_true.
+        client->nav_app_call( z2ui5_cl_smp_app_020=>factory(
+          i_text          = `(new app) this is a popup to decide, the text is sent from the previous app and the answer will be sent back`
+          i_cancel_text   = `Cancel`
+          i_cancel_event  = `POPUP_DECIDE_CANCEL`
+          i_confirm_text  = `Continue`
+          i_confirm_event = `POPUP_DECIDE_CONTINUE` ) ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_navigation.
+
+    IF check_popup = abap_true.
+
+      check_popup = abap_false.
+      DATA(app) = CAST z2ui5_cl_smp_app_020( client->get_app_prev( ) ).
+      client->message_toast_display( |{ app->event } pressed| ).
+    ENDIF.
+
+    view_display( ).
+
+  ENDMETHOD.
+
+
   METHOD popup_decide.
 
     DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
@@ -198,18 +215,6 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
                 )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_navigated( ).
-      on_navigation( ).
-    ELSEIF client->check_on_event( ).
-      on_event( ).
-    ENDIF.
 
   ENDMETHOD.
 

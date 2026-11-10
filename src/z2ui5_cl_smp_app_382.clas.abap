@@ -14,8 +14,8 @@ CLASS z2ui5_cl_smp_app_382 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -34,44 +34,6 @@ CLASS z2ui5_cl_smp_app_382 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    title   = `abap2UI5`.
-    message = `This is a message box.`.
-    details = `These are additional details about the message.`.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    " every box names BOX_CLOSED as its onclose event: the button the user
-    " pressed comes back as the first event argument - the type's default
-    " (OK, CANCEL, CLOSE) or one of the custom actions
-    CASE client->get_event( ).
-      WHEN `BOX_CLOSED`.
-        client->message_toast_display( |Answer: { client->get_event_arg( ) }| ).
-      WHEN `CUSTOM`.
-        client->message_box_display(
-            text             = message
-            title            = title
-            type             = `information`
-            details          = details
-            actions          = VALUE #( ( `Approve` ) ( `Reject` ) )
-            emphasizedaction = `Approve`
-            onclose          = `BOX_CLOSED` ).
-      WHEN OTHERS.
-        client->message_box_display(
-            text    = message
-            title   = title
-            type    = client->get_event( )
-            details = details
-            onclose = `BOX_CLOSED` ).
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -153,6 +115,44 @@ CLASS z2ui5_cl_smp_app_382 IMPLEMENTATION.
                 )->a( n = `type`  v = `Emphasized` ).
 
     client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    " every box names BOX_CLOSED as its onclose event: the button the user
+    " pressed comes back as the first event argument - the type's default
+    " (OK, CANCEL, CLOSE) or one of the custom actions
+    CASE client->get_event( ).
+      WHEN `BOX_CLOSED`.
+        client->message_toast_display( |Answer: { client->get_event_arg( ) }| ).
+      WHEN `CUSTOM`.
+        client->message_box_display(
+            text             = message
+            title            = title
+            type             = `information`
+            details          = details
+            actions          = VALUE #( ( `Approve` ) ( `Reject` ) )
+            emphasizedaction = `Approve`
+            onclose          = `BOX_CLOSED` ).
+      WHEN OTHERS.
+        client->message_box_display(
+            text    = message
+            title   = title
+            type    = client->get_event( )
+            details = details
+            onclose = `BOX_CLOSED` ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    title   = `abap2UI5`.
+    message = `This is a message box.`.
+    details = `These are additional details about the message.`.
 
   ENDMETHOD.
 

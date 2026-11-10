@@ -37,6 +37,59 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_init( ).
+
+      t_tab = VALUE #(
+        ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
+
+      mv_layout = `OneColumn`.
+      view_display_master( ).
+      view_display_detail( ).
+
+    ELSEIF client->check_on_navigated( ).
+
+      " both views again: the detail is a nested view inside the master, so
+      " a re-displayed master without it would leave the mid column empty
+      view_display_master( ).
+      view_display_detail( ).
+
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `ROW_DELETE`.
+        DELETE t_tab2 WHERE uuid = client->get_event_arg( ).
+      WHEN `SELCHANGE`.
+        DATA(lt_sel) = t_tab.
+        DELETE lt_sel WHERE selected = abap_false.
+        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
+
+        IF sy-subrc = 0.
+
+          mv_row_id = mv_row_id + 1.
+          ls_sel-uuid = |{ mv_row_id }|.
+          INSERT ls_sel INTO TABLE t_tab2.
+        ENDIF.
+        mv_layout = `TwoColumnsMidExpanded`.
+    ENDCASE.
+
+  ENDMETHOD.
+
+
   METHOD view_display_detail.
 
     DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory(
@@ -143,59 +196,6 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
             )->a( n = `selected`    v = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_init( ).
-
-      t_tab = VALUE #(
-        ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
-
-      mv_layout = `OneColumn`.
-      view_display_master( ).
-      view_display_detail( ).
-
-    ELSEIF client->check_on_navigated( ).
-
-      " both views again: the detail is a nested view inside the master, so
-      " a re-displayed master without it would leave the mid column empty
-      view_display_master( ).
-      view_display_detail( ).
-
-    ELSEIF client->check_on_event( ).
-      on_event( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `ROW_DELETE`.
-        DELETE t_tab2 WHERE uuid = client->get_event_arg( ).
-      WHEN `SELCHANGE`.
-        DATA(lt_sel) = t_tab.
-        DELETE lt_sel WHERE selected = abap_false.
-        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-
-        IF sy-subrc = 0.
-
-          mv_row_id = mv_row_id + 1.
-          ls_sel-uuid = |{ mv_row_id }|.
-          INSERT ls_sel INTO TABLE t_tab2.
-        ENDIF.
-        mv_layout = `TwoColumnsMidExpanded`.
-    ENDCASE.
 
   ENDMETHOD.
 

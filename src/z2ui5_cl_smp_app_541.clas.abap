@@ -33,10 +33,10 @@ CLASS z2ui5_cl_smp_app_541 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
+    METHODS view_display.
     METHODS on_event.
     METHODS on_event_summarize.
-    METHODS view_display.
+    METHODS model_init.
 
     "! The provider seam: the rows in, the explanation out.
     "! @parameter t_rows | the rows to explain
@@ -57,7 +57,8 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
@@ -67,27 +68,129 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_init.
+  METHOD view_display.
 
-    t_orders = VALUE #(
-      ( id = `4711` customer = `Bike Corner`     region = `North` status = `Delivered` amount = 1200 )
-      ( id = `4712` customer = `City Cycles`     region = `South` status = `Open`      amount = 860 )
-      ( id = `4713` customer = `Mountain Outfit` region = `North` status = `Overdue`   amount = 2400 )
-      ( id = `4714` customer = `Velo Point`      region = `West`  status = `Delivered` amount = 640 )
-      ( id = `4715` customer = `Bike Corner`     region = `North` status = `Open`      amount = 1500 )
-      ( id = `4716` customer = `Urban Wheels`    region = `East`  status = `Delivered` amount = 9800 )
-      ( id = `4717` customer = `City Cycles`     region = `South` status = `Overdue`   amount = 720 )
-      ( id = `4718` customer = `Trail Masters`   region = `West`  status = `Delivered` amount = 1900 )
-      ( id = `4719` customer = `Velo Point`      region = `West`  status = `Open`      amount = 1100 )
-      ( id = `4720` customer = `Mountain Outfit` region = `North` status = `Delivered` amount = 1350 ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
 
-    LOOP AT t_orders REFERENCE INTO DATA(order).
-      order->state = SWITCH #( order->status WHEN `Delivered` THEN `Success`
-                                             WHEN `Overdue`   THEN `Error`
-                                             ELSE `Warning` ).
-    ENDLOOP.
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - AI - Explain This Data in a DynamicSideContent Panel`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    view_display( ).
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Explain This Data opens a panel beside the table and fills it with a short explanation ` &&
+                   `of the selected rows, or of all of them. One method turns rows into findings - here a deterministic ` &&
+                   `summary, in a real app the call to your language model.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    " on a narrow screen the panel falls below the table instead of hiding
+    DATA(side_content) = page->ele( n = `DynamicSideContent` ns = `layout`
+        )->a( n = `showSideContent`       v = client->_bind( panel_visible )
+        )->a( n = `sideContentVisibility` v = `AlwaysShow`
+        )->a( n = `sideContentFallDown`   v = `BelowM`
+        )->a( n = `containerQuery`        b = abap_true ).
+
+    DATA(tab) = side_content->ele( n = `mainContent` ns = `layout`
+        )->ele( `Table`
+            )->a( n = `items` v = client->_bind( t_orders )
+            )->a( n = `mode`  v = `MultiSelect` ).
+
+    tab->ele( `headerToolbar`
+        )->ele( `OverflowToolbar`
+            )->tag( `Title`
+                )->a( n = `text` v = `Sales Orders`
+            )->tag( `ToolbarSpacer`
+            )->tag( `Button`
+                )->a( n = `text`  v = `Explain This Data`
+                )->a( n = `icon`  v = `sap-icon://hint`
+                )->a( n = `type`  v = `Emphasized`
+                )->a( n = `press` v = client->_event( `EXPLAIN` ) ).
+
+    DATA(columns) = tab->ele( `columns` ).
+    columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Order` ).
+    columns->ele( `Column`
+        )->tag( `Text`
+            )->a( n = `text` v = `Customer` ).
+    columns->ele( `Column`
+        )->a( n = `minScreenWidth` v = `Tablet`
+        )->a( n = `demandPopin`    b = abap_true
+        )->tag( `Text`
+            )->a( n = `text` v = `Region` ).
+    columns->ele( `Column`
+        )->a( n = `minScreenWidth` v = `Tablet`
+        )->a( n = `demandPopin`    b = abap_true
+        )->tag( `Text`
+            )->a( n = `text` v = `Status` ).
+    columns->ele( `Column`
+        )->a( n = `hAlign` v = `End`
+        )->tag( `Text`
+            )->a( n = `text` v = `Amount` ).
+
+    DATA(cells) = tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->a( n = `selected` v = `{SELECTED}`
+            )->ele( `cells` ).
+    cells->tag( `Text`
+        )->a( n = `text` v = `{ID}` ).
+    cells->tag( `Text`
+        )->a( n = `text` v = `{CUSTOMER}` ).
+    cells->tag( `Text`
+        )->a( n = `text` v = `{REGION}` ).
+    cells->tag( `ObjectStatus`
+        )->a( n = `text`  v = `{STATUS}`
+        )->a( n = `state` v = `{STATE}` ).
+    cells->tag( `ObjectNumber`
+        )->a( n = `number` v = `{AMOUNT}`
+        )->a( n = `unit`   v = `EUR` ).
+
+    DATA(panel) = side_content->ele( n = `sideContent` ns = `layout`
+        )->ele( `VBox`
+            )->a( n = `busy`               v = client->_bind( busy )
+            )->a( n = `busyIndicatorDelay` v = `0`
+            )->a( n = `class`              v = `sapUiSmallMarginBeginEnd` ).
+
+    panel->ele( `Toolbar`
+        )->a( n = `style` v = `Clear`
+        )->tag( `Title`
+            )->a( n = `text` v = `Explanation`
+        )->tag( `ToolbarSpacer`
+        )->tag( `Button`
+            )->a( n = `icon`    v = `sap-icon://decline`
+            )->a( n = `tooltip` v = `Close`
+            )->a( n = `type`    v = `Transparent`
+            )->a( n = `press`   v = client->_event( `CLOSE` ) ).
+
+    panel->tag( `Text`
+        )->a( n = `text`  v = client->_bind( headline )
+        )->a( n = `class` v = `sapUiTinyMarginBottom` ).
+
+    panel->ele( `List`
+        )->a( n = `items`          v = client->_bind( t_findings )
+        )->a( n = `showSeparators` v = `Inner`
+        )->a( n = `noDataText`     v = `The explanation is on its way.`
+        )->ele( `items`
+            )->tag( `StandardListItem`
+                )->a( n = `title`       v = `{TITLE}`
+                )->a( n = `description` v = `{DESCRIPTION}`
+                )->a( n = `icon`        v = `{ICON}`
+                )->a( n = `wrapping`    b = abap_true ).
+
+    panel->tag( `Text`
+        )->a( n = `text`  v = `Written by the built-in rule-based provider - no language model involved.`
+        )->a( n = `class` v = `sapUiTinyMarginTop` ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -255,129 +358,25 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD view_display.
+  METHOD model_init.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    t_orders = VALUE #(
+      ( id = `4711` customer = `Bike Corner`     region = `North` status = `Delivered` amount = 1200 )
+      ( id = `4712` customer = `City Cycles`     region = `South` status = `Open`      amount = 860 )
+      ( id = `4713` customer = `Mountain Outfit` region = `North` status = `Overdue`   amount = 2400 )
+      ( id = `4714` customer = `Velo Point`      region = `West`  status = `Delivered` amount = 640 )
+      ( id = `4715` customer = `Bike Corner`     region = `North` status = `Open`      amount = 1500 )
+      ( id = `4716` customer = `Urban Wheels`    region = `East`  status = `Delivered` amount = 9800 )
+      ( id = `4717` customer = `City Cycles`     region = `South` status = `Overdue`   amount = 720 )
+      ( id = `4718` customer = `Trail Masters`   region = `West`  status = `Delivered` amount = 1900 )
+      ( id = `4719` customer = `Velo Point`      region = `West`  status = `Open`      amount = 1100 )
+      ( id = `4720` customer = `Mountain Outfit` region = `North` status = `Delivered` amount = 1350 ) ).
 
-    DATA(page) = view->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - AI - Explain This Data in a DynamicSideContent Panel`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
-
-    page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Explain This Data opens a panel beside the table and fills it with a short explanation ` &&
-                   `of the selected rows, or of all of them. One method turns rows into findings - here a deterministic ` &&
-                   `summary, in a real app the call to your language model.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    " on a narrow screen the panel falls below the table instead of hiding
-    DATA(side_content) = page->ele( n = `DynamicSideContent` ns = `layout`
-        )->a( n = `showSideContent`       v = client->_bind( panel_visible )
-        )->a( n = `sideContentVisibility` v = `AlwaysShow`
-        )->a( n = `sideContentFallDown`   v = `BelowM`
-        )->a( n = `containerQuery`        b = abap_true ).
-
-    DATA(tab) = side_content->ele( n = `mainContent` ns = `layout`
-        )->ele( `Table`
-            )->a( n = `items` v = client->_bind( t_orders )
-            )->a( n = `mode`  v = `MultiSelect` ).
-
-    tab->ele( `headerToolbar`
-        )->ele( `OverflowToolbar`
-            )->tag( `Title`
-                )->a( n = `text` v = `Sales Orders`
-            )->tag( `ToolbarSpacer`
-            )->tag( `Button`
-                )->a( n = `text`  v = `Explain This Data`
-                )->a( n = `icon`  v = `sap-icon://hint`
-                )->a( n = `type`  v = `Emphasized`
-                )->a( n = `press` v = client->_event( `EXPLAIN` ) ).
-
-    DATA(columns) = tab->ele( `columns` ).
-    columns->ele( `Column`
-        )->tag( `Text`
-            )->a( n = `text` v = `Order` ).
-    columns->ele( `Column`
-        )->tag( `Text`
-            )->a( n = `text` v = `Customer` ).
-    columns->ele( `Column`
-        )->a( n = `minScreenWidth` v = `Tablet`
-        )->a( n = `demandPopin`    b = abap_true
-        )->tag( `Text`
-            )->a( n = `text` v = `Region` ).
-    columns->ele( `Column`
-        )->a( n = `minScreenWidth` v = `Tablet`
-        )->a( n = `demandPopin`    b = abap_true
-        )->tag( `Text`
-            )->a( n = `text` v = `Status` ).
-    columns->ele( `Column`
-        )->a( n = `hAlign` v = `End`
-        )->tag( `Text`
-            )->a( n = `text` v = `Amount` ).
-
-    DATA(cells) = tab->ele( `items`
-        )->ele( `ColumnListItem`
-            )->a( n = `selected` v = `{SELECTED}`
-            )->ele( `cells` ).
-    cells->tag( `Text`
-        )->a( n = `text` v = `{ID}` ).
-    cells->tag( `Text`
-        )->a( n = `text` v = `{CUSTOMER}` ).
-    cells->tag( `Text`
-        )->a( n = `text` v = `{REGION}` ).
-    cells->tag( `ObjectStatus`
-        )->a( n = `text`  v = `{STATUS}`
-        )->a( n = `state` v = `{STATE}` ).
-    cells->tag( `ObjectNumber`
-        )->a( n = `number` v = `{AMOUNT}`
-        )->a( n = `unit`   v = `EUR` ).
-
-    DATA(panel) = side_content->ele( n = `sideContent` ns = `layout`
-        )->ele( `VBox`
-            )->a( n = `busy`               v = client->_bind( busy )
-            )->a( n = `busyIndicatorDelay` v = `0`
-            )->a( n = `class`              v = `sapUiSmallMarginBeginEnd` ).
-
-    panel->ele( `Toolbar`
-        )->a( n = `style` v = `Clear`
-        )->tag( `Title`
-            )->a( n = `text` v = `Explanation`
-        )->tag( `ToolbarSpacer`
-        )->tag( `Button`
-            )->a( n = `icon`    v = `sap-icon://decline`
-            )->a( n = `tooltip` v = `Close`
-            )->a( n = `type`    v = `Transparent`
-            )->a( n = `press`   v = client->_event( `CLOSE` ) ).
-
-    panel->tag( `Text`
-        )->a( n = `text`  v = client->_bind( headline )
-        )->a( n = `class` v = `sapUiTinyMarginBottom` ).
-
-    panel->ele( `List`
-        )->a( n = `items`          v = client->_bind( t_findings )
-        )->a( n = `showSeparators` v = `Inner`
-        )->a( n = `noDataText`     v = `The explanation is on its way.`
-        )->ele( `items`
-            )->tag( `StandardListItem`
-                )->a( n = `title`       v = `{TITLE}`
-                )->a( n = `description` v = `{DESCRIPTION}`
-                )->a( n = `icon`        v = `{ICON}`
-                )->a( n = `wrapping`    b = abap_true ).
-
-    panel->tag( `Text`
-        )->a( n = `text`  v = `Written by the built-in rule-based provider - no language model involved.`
-        )->a( n = `class` v = `sapUiTinyMarginTop` ).
-
-    client->view_display( view->stringify( ) ).
+    LOOP AT t_orders REFERENCE INTO DATA(order).
+      order->state = SWITCH #( order->status WHEN `Delivered` THEN `Success`
+                                             WHEN `Overdue`   THEN `Error`
+                                             ELSE `Warning` ).
+    ENDLOOP.
 
   ENDMETHOD.
 

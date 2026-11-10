@@ -20,55 +20,14 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_161 IMPLEMENTATION.
 
-  METHOD simple_popup1.
+  METHOD z2ui5_if_app~main.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core` ).
-
-    DATA(dialog) = popup->ele( `Dialog`
-        )->a( n = `afterClose` v = client->_event( `BTN_OK_1ND` )
-        )->ele( `content` ).
-
-    dialog->tag( `Button`
-        )->a( n = `press` v = client->_event( `GOTO_2ND` )
-        )->a( n = `text`  v = `Open 2nd popup` ).
-
-    dialog->end(
-        )->ele( `buttons`
-            )->tag( `Button`
-                )->a( n = `press` v = client->_event( `BTN_OK_1ND` )
-                )->a( n = `text`  v = `OK`
-                )->a( n = `type`  v = `Emphasized` ).
-
-    client->popup_display( popup->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD simple_popup2.
-
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core` ).
-
-    DATA(dialog) = popup->ele( `Dialog`
-        )->a( n = `afterClose` v = client->_event( `BTN_OK_2ND` )
-        )->ele( `content` ).
-
-    dialog->tag( `Label`
-        )->a( n = `text` v = `this is a second popup` ).
-
-    dialog->end(
-        )->ele( `buttons`
-            )->tag( `Button`
-                )->a( n = `press` v = client->_event( `BTN_OK_2ND` )
-                )->a( n = `text`  v = `GOTO 1ST POPUP`
-                )->a( n = `type`  v = `Emphasized` ).
-
-    client->popup_display( popup->stringify( ) ).
+    me->client = client.
+    IF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -124,14 +83,55 @@ CLASS z2ui5_cl_smp_app_161 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD simple_popup1.
 
-    me->client = client.
-    IF client->check_on_navigated( ).
-      view_display( ).
-      RETURN.
-    ENDIF.
-    on_event( ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
+
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `afterClose` v = client->_event( `BTN_OK_1ND` )
+        )->ele( `content` ).
+
+    dialog->tag( `Button`
+        )->a( n = `press` v = client->_event( `GOTO_2ND` )
+        )->a( n = `text`  v = `Open 2nd popup` ).
+
+    dialog->end(
+        )->ele( `buttons`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BTN_OK_1ND` )
+                )->a( n = `text`  v = `OK`
+                )->a( n = `type`  v = `Emphasized` ).
+
+    client->popup_display( popup->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD simple_popup2.
+
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core` ).
+
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `afterClose` v = client->_event( `BTN_OK_2ND` )
+        )->ele( `content` ).
+
+    dialog->tag( `Label`
+        )->a( n = `text` v = `this is a second popup` ).
+
+    dialog->end(
+        )->ele( `buttons`
+            )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BTN_OK_2ND` )
+                )->a( n = `text`  v = `GOTO 1ST POPUP`
+                )->a( n = `type`  v = `Emphasized` ).
+
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 

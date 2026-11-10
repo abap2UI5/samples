@@ -18,9 +18,8 @@ CLASS z2ui5_cl_smp_app_006 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS refresh_data.
 
   PRIVATE SECTION.
@@ -33,47 +32,13 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      refresh_data( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    refresh_data( ).
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    " the sorted table reaches the view with the model push - no re-render
-    " of the 10,000 rows is needed
-    CASE client->get_event( ).
-      WHEN `SORT_ASCENDING`.
-        SORT t_tab BY count ASCENDING.
-        client->message_toast_display( `sort ascending` ).
-      WHEN `SORT_DESCENDING`.
-        SORT t_tab BY count DESCENDING.
-        client->message_toast_display( `sort descending` ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD refresh_data.
-
-    t_tab = VALUE #( FOR i = 1 UNTIL i > 10000 (
-      count    = i
-      value    = `red`
-      descr    = `this is a description`
-      checkbox = abap_true ) ).
 
   ENDMETHOD.
 
@@ -155,6 +120,33 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
                     )->a( n = `text` v = `{COUNT}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    " the sorted table reaches the view with the model push - no re-render
+    " of the 10,000 rows is needed
+    CASE client->get_event( ).
+      WHEN `SORT_ASCENDING`.
+        SORT t_tab BY count ASCENDING.
+        client->message_toast_display( `sort ascending` ).
+      WHEN `SORT_DESCENDING`.
+        SORT t_tab BY count DESCENDING.
+        client->message_toast_display( `sort descending` ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD refresh_data.
+
+    t_tab = VALUE #( FOR i = 1 UNTIL i > 10000 (
+      count    = i
+      value    = `red`
+      descr    = `this is a description`
+      checkbox = abap_true ) ).
 
   ENDMETHOD.
 

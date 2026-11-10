@@ -30,23 +30,6 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    IF client->get_event( ) = `TOGGLE`.
-      " toggle the popover open/closed, anchored to the pressed button's DOM
-      " ref - the whitelisted toggleBy opens it if closed, closes it if open
-      " (the controller pattern oPopover.openBy(oButton) / oPopover.close()).
-      " t_arg is positional: id, method, anchor id (the view defaults to
-      " cs_view-main and can be omitted for a main-view control)
-      client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                                t_arg = VALUE #( ( `demoPopover` )
-                                                 ( `toggleBy` )
-                                                 ( client->get_event_arg( ) ) ) ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -92,6 +75,23 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
             )->a( n = `icon`  v = `sap-icon://email` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->get_event( ) = `TOGGLE`.
+      " toggle the popover open/closed, anchored to the pressed button's DOM
+      " ref - the whitelisted toggleBy opens it if closed, closes it if open
+      " (the controller pattern oPopover.openBy(oButton) / oPopover.close()).
+      " t_arg is positional: id, method, anchor id (the view defaults to
+      " cs_view-main and can be omitted for a main-view control)
+      client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
+                                t_arg = VALUE #( ( `demoPopover` )
+                                                 ( `toggleBy` )
+                                                 ( client->get_event_arg( ) ) ) ).
+    ENDIF.
 
   ENDMETHOD.
 

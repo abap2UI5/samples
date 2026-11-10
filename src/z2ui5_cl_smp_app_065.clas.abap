@@ -13,8 +13,8 @@ CLASS z2ui5_cl_smp_app_065 DEFINITION PUBLIC.
     DATA mv_count TYPE i.
     DATA client   TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS nest_view_display.
 
   PRIVATE SECTION.
@@ -34,30 +34,6 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-      WHEN `TEST`.
-        client->message_box_display( |input { mv_input_nest }| ).
-      WHEN `ALL`.
-        view_display( ).
-        nest_view_display( ).
-      WHEN `MAIN`.
-        view_display( ).
-      WHEN `NEST`.
-        nest_view_display( ).
-      WHEN `NEST_MODEL`.
-        " change only a nest-bound field, without re-rendering the nested XML.
-        " The main and nested views share one model and that model is pushed
-        " with every response, so the nested view picks the change up too.
-        " After "Rerender Main without nest" there is no nested view to reach.
-        mv_count      = mv_count + 1.
-        mv_input_nest = |nest model updated #{ mv_count }|.
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -103,6 +79,33 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
             )->a( n = `value` v = client->_bind( mv_input_main ) ).
 
     client->view_display( lo_view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `TEST`.
+        client->message_box_display( |input { mv_input_nest }| ).
+      WHEN `ALL`.
+        " the re-render is what this button shows - nothing bound changed
+        view_display( ).
+        nest_view_display( ).
+      WHEN `MAIN`.
+        " on purpose without nest_view_display( ): the rebuilt main view
+        " comes up without the nested one
+        view_display( ).
+      WHEN `NEST`.
+        nest_view_display( ).
+      WHEN `NEST_MODEL`.
+        " change only a nest-bound field, without re-rendering the nested XML.
+        " The main and nested views share one model and that model is pushed
+        " with every response, so the nested view picks the change up too.
+        " After "Rerender Main without nest" there is no nested view to reach.
+        mv_count      = mv_count + 1.
+        mv_input_nest = |nest model updated #{ mv_count }|.
+    ENDCASE.
 
   ENDMETHOD.
 

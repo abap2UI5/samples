@@ -13,8 +13,8 @@ CLASS z2ui5_cl_smp_app_189 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -22,18 +22,21 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
 
-  METHOD on_event.
+  METHOD z2ui5_if_app~main.
 
-    CASE client->get_event( ).
-      WHEN `one_enter`.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-set_focus
-            t_arg = VALUE #( ( `IdTwo` ) ) ).
-      WHEN `two_enter`.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-set_focus
-            t_arg = VALUE #( ( `IdThree` ) ) ).
-    ENDCASE.
+    me->client = client.
+    IF client->check_on_init( ).
+
+      view_display( ).
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-set_focus
+          t_arg = VALUE #( ( `IdOne` ) ) ).
+
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -85,21 +88,18 @@ CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD on_event.
 
-    me->client = client.
-    IF client->check_on_init( ).
-
-      view_display( ).
-      client->follow_up_action(
-          val   = z2ui5_if_client=>cs_event-set_focus
-          t_arg = VALUE #( ( `IdOne` ) ) ).
-
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-    ELSEIF client->check_on_event( ).
-      on_event( ).
-    ENDIF.
+    CASE client->get_event( ).
+      WHEN `one_enter`.
+        client->follow_up_action(
+            val   = z2ui5_if_client=>cs_event-set_focus
+            t_arg = VALUE #( ( `IdTwo` ) ) ).
+      WHEN `two_enter`.
+        client->follow_up_action(
+            val   = z2ui5_if_client=>cs_event-set_focus
+            t_arg = VALUE #( ( `IdThree` ) ) ).
+    ENDCASE.
 
   ENDMETHOD.
 

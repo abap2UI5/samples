@@ -10,15 +10,16 @@ CLASS z2ui5_cl_smp_app_471 DEFINITION PUBLIC.
       BEGIN OF ty_s_log,
         entry TYPE string,
       END OF ty_s_log.
-    DATA t_log TYPE STANDARD TABLE OF ty_s_log WITH EMPTY KEY.
+    DATA t_log       TYPE STANDARD TABLE OF ty_s_log WITH EMPTY KEY.
+    DATA toggle_text TYPE string.
 
   PROTECTED SECTION.
     DATA registered TYPE abap_bool.
     DATA client     TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
+    METHODS model_init.
     METHODS shortcuts_set
       IMPORTING
         event_save   TYPE string
@@ -34,70 +35,13 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    registered = abap_true.
-    shortcuts_set( event_save = `SAVE` event_delete = `DELETE` ).
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `SAVE`.
-        INSERT VALUE #( entry = `Ctrl+S - save triggered` ) INTO TABLE t_log.
-        client->message_toast_display( `Ctrl+S: save triggered` ).
-
-      WHEN `DELETE`.
-        INSERT VALUE #( entry = `Ctrl+D - delete triggered` ) INTO TABLE t_log.
-        client->message_toast_display( `Ctrl+D: delete triggered` ).
-
-      WHEN `TOGGLE_REGISTRATION`.
-        registered = xsdbool( registered = abap_false ).
-
-        IF registered = abap_true.
-          shortcuts_set( event_save = `SAVE` event_delete = `DELETE` ).
-        ELSE.
-          " an empty event name removes the binding again
-          shortcuts_set( event_save = `` event_delete = `` ).
-        ENDIF.
-        view_display( ).
-
-      WHEN `CLEAR`.
-        t_log = VALUE #( ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD shortcuts_set.
-
-    " one registration per key combination: t_arg is positional - the
-    " combination (spelled like in UI5: Ctrl+S, Ctrl+Shift+D, F2) and the name
-    " of the backend event it fires. Registering the same combination again
-    " rebinds it, an empty event name removes it. The registry lives in the
-    " frontend, so it survives every roundtrip until the app is left.
-    client->follow_up_action( val   = z2ui5_if_client=>cs_event-keyboard_shortcut
-                              t_arg = VALUE #( ( `Ctrl+S` )
-                                               ( event_save ) ) ).
-
-    client->follow_up_action( val   = z2ui5_if_client=>cs_event-keyboard_shortcut
-                              t_arg = VALUE #( ( `Ctrl+D` )
-                                               ( event_delete ) ) ).
 
   ENDMETHOD.
 
@@ -131,9 +75,7 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
         )->tag( `Button`
             )->a( n = `press`   v = client->_event( `TOGGLE_REGISTRATION` )
             )->a( n = `tooltip` v = `Register or unregister the keyboard shortcuts`
-            )->a( n = `text`    t = COND #( WHEN registered = abap_true
-                              THEN `Unregister the shortcuts`
-                              ELSE `Register the shortcuts` )
+            )->a( n = `text`    v = client->_bind( toggle_text )
             )->a( n = `icon`  v = `sap-icon://keyboard-and-mouse`
         )->tag( `Button`
             )->a( n = `press` v = client->_event( `SAVE` )
@@ -156,6 +98,65 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
             )->a( n = `title` v = `{ENTRY}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `SAVE`.
+        INSERT VALUE #( entry = `Ctrl+S - save triggered` ) INTO TABLE t_log.
+        client->message_toast_display( `Ctrl+S: save triggered` ).
+
+      WHEN `DELETE`.
+        INSERT VALUE #( entry = `Ctrl+D - delete triggered` ) INTO TABLE t_log.
+        client->message_toast_display( `Ctrl+D: delete triggered` ).
+
+      WHEN `TOGGLE_REGISTRATION`.
+        registered = xsdbool( registered = abap_false ).
+
+        IF registered = abap_true.
+          shortcuts_set( event_save = `SAVE` event_delete = `DELETE` ).
+          toggle_text = `Unregister the shortcuts`.
+        ELSE.
+          " an empty event name removes the binding again
+          shortcuts_set( event_save = `` event_delete = `` ).
+          toggle_text = `Register the shortcuts`.
+        ENDIF.
+
+      WHEN `CLEAR`.
+        t_log = VALUE #( ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD shortcuts_set.
+
+    " one registration per key combination: t_arg is positional - the
+    " combination (spelled like in UI5: Ctrl+S, Ctrl+Shift+D, F2) and the name
+    " of the backend event it fires. Registering the same combination again
+    " rebinds it, an empty event name removes it. The registry lives in the
+    " frontend, so it survives every roundtrip until the app is left.
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-keyboard_shortcut
+                              t_arg = VALUE #( ( `Ctrl+S` )
+                                               ( event_save ) ) ).
+
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-keyboard_shortcut
+                              t_arg = VALUE #( ( `Ctrl+D` )
+                                               ( event_delete ) ) ).
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    registered  = abap_true.
+    toggle_text = `Unregister the shortcuts`.
+    shortcuts_set( event_save = `SAVE` event_delete = `DELETE` ).
 
   ENDMETHOD.
 

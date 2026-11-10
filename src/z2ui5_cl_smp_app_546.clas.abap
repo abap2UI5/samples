@@ -22,10 +22,10 @@ CLASS z2ui5_cl_smp_app_546 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
+    METHODS view_display.
     METHODS on_order.
     METHODS on_details.
-    METHODS view_display.
+    METHODS model_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -38,7 +38,8 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `ORDER` ).
@@ -46,69 +47,6 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
     ELSEIF client->check_on_event( `DETAILS` ).
       on_details( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    DATA(t_adjective) = VALUE string_table( ( `Compact` ) ( `Classic` ) ( `Smart` ) ( `Ultra` ) ( `Eco` )
-                                            ( `Pro` ) ( `Mini` ) ( `Rugged` ) ( `Silent` ) ( `Wireless` ) ).
-    DATA(t_noun) = VALUE string_table( ( `Notebook` ) ( `Monitor` ) ( `Keyboard` ) ( `Mouse` ) ( `Printer` )
-                                       ( `Headset` ) ( `Router` ) ( `Webcam` ) ( `Speaker` ) ( `Docking Station` ) ).
-    DATA(t_category) = VALUE string_table( ( `Computers` ) ( `Displays` ) ( `Accessories` ) ( `Office` ) ( `Network` ) ).
-
-    DO 10000 TIMES.
-      DATA(index) = sy-index.
-      APPEND VALUE #(
-          id       = index
-          name     = |{ t_adjective[ ( index MOD 10 ) + 1 ] } { t_noun[ ( ( index DIV 10 ) MOD 10 ) + 1 ] } { index }|
-          category = t_category[ ( index MOD 5 ) + 1 ]
-          price    = ( ( index * 7919 ) MOD 100000 ) / 100
-          stock    = ( index * 31 ) MOD 500 ) TO t_product.
-    ENDDO.
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_details.
-
-    " the event names the row as the browser shows it - after a search or
-    " a sort that is a position in the server's order, not a row of
-    " t_product. _bind_tab_row( ) answers which row it is
-    DATA(position) = CONV i( client->get_event_arg( ) ) + 1.
-    DATA(row) = client->_bind_tab_row( val = t_product
-                                       row = position ).
-    IF row = 0.
-      RETURN.
-    ENDIF.
-
-    DATA(s_product) = t_product[ row ].
-    client->message_box_display( |{ s_product-name } - row { row } of the table, shown as row { position }: | &&
-                                 |{ s_product-category }, { s_product-price } EUR, { s_product-stock } in stock.| ).
-
-  ENDMETHOD.
-
-
-  METHOD on_order.
-
-    " the checkboxes the user ticked arrive in the rows they were ticked
-    " in - whatever the search and the sort showed - so the order runs
-    " over all 10,000 rows, the ones the browser never held included
-    DATA count TYPE i.
-    DATA total TYPE p LENGTH 15 DECIMALS 2.
-    LOOP AT t_product INTO DATA(s_product) WHERE selected = abap_true.
-      count = count + 1.
-      total = total + s_product-price.
-    ENDLOOP.
-
-    IF count = 0.
-      client->message_toast_display( `Tick a product first.` ).
-      RETURN.
-    ENDIF.
-    client->message_box_display( |{ count } product(s) ordered, { total } EUR in total.| ).
 
   ENDMETHOD.
 
@@ -236,6 +174,67 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
                 )->a( n = `press` v = client->_event( `ORDER` ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_details.
+
+    " the event names the row as the browser shows it - after a search or
+    " a sort that is a position in the server's order, not a row of
+    " t_product. _bind_tab_row( ) answers which row it is
+    DATA(position) = CONV i( client->get_event_arg( ) ) + 1.
+    DATA(row) = client->_bind_tab_row( val = t_product
+                                       row = position ).
+    IF row = 0.
+      RETURN.
+    ENDIF.
+
+    DATA(s_product) = t_product[ row ].
+    client->message_box_display( |{ s_product-name } - row { row } of the table, shown as row { position }: | &&
+                                 |{ s_product-category }, { s_product-price } EUR, { s_product-stock } in stock.| ).
+
+  ENDMETHOD.
+
+
+  METHOD on_order.
+
+    " the checkboxes the user ticked arrive in the rows they were ticked
+    " in - whatever the search and the sort showed - so the order runs
+    " over all 10,000 rows, the ones the browser never held included
+    DATA count TYPE i.
+    DATA total TYPE p LENGTH 15 DECIMALS 2.
+    LOOP AT t_product INTO DATA(s_product) WHERE selected = abap_true.
+      count = count + 1.
+      total = total + s_product-price.
+    ENDLOOP.
+
+    IF count = 0.
+      client->message_toast_display( `Tick a product first.` ).
+      RETURN.
+    ENDIF.
+    client->message_box_display( |{ count } product(s) ordered, { total } EUR in total.| ).
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    DATA(t_adjective) = VALUE string_table( ( `Compact` ) ( `Classic` ) ( `Smart` ) ( `Ultra` ) ( `Eco` )
+                                            ( `Pro` ) ( `Mini` ) ( `Rugged` ) ( `Silent` ) ( `Wireless` ) ).
+    DATA(t_noun) = VALUE string_table( ( `Notebook` ) ( `Monitor` ) ( `Keyboard` ) ( `Mouse` ) ( `Printer` )
+                                       ( `Headset` ) ( `Router` ) ( `Webcam` ) ( `Speaker` ) ( `Docking Station` ) ).
+    DATA(t_category) = VALUE string_table( ( `Computers` ) ( `Displays` ) ( `Accessories` ) ( `Office` ) ( `Network` ) ).
+
+    DO 10000 TIMES.
+      DATA(index) = sy-index.
+      APPEND VALUE #(
+          id       = index
+          name     = |{ t_adjective[ ( index MOD 10 ) + 1 ] } { t_noun[ ( ( index DIV 10 ) MOD 10 ) + 1 ] } { index }|
+          category = t_category[ ( index MOD 5 ) + 1 ]
+          price    = ( ( index * 7919 ) MOD 100000 ) / 100
+          stock    = ( index * 31 ) MOD 500 ) TO t_product.
+    ENDDO.
 
   ENDMETHOD.
 

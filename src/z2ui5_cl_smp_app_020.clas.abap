@@ -29,18 +29,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
 
-  METHOD factory.
-
-    result = NEW #( ).
-    result->text          = i_text.
-    result->cancel_text   = i_cancel_text.
-    result->cancel_event  = i_cancel_event.
-    result->confirm_text  = i_confirm_text.
-    result->confirm_event = i_confirm_event.
-
-  ENDMETHOD.
-
-
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
@@ -82,6 +70,18 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
       client->popup_destroy( ).
       client->nav_app_leave( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD factory.
+
+    result = NEW #( ).
+    result->text          = i_text.
+    result->cancel_text   = i_cancel_text.
+    result->cancel_event  = i_cancel_event.
+    result->confirm_text  = i_confirm_text.
+    result->confirm_event = i_confirm_event.
 
   ENDMETHOD.
 

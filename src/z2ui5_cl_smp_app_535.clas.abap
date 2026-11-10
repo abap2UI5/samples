@@ -50,16 +50,6 @@ CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD status_next.
-
-    status = SWITCH #( status
-        WHEN `new`     THEN `shipped`
-        WHEN `shipped` THEN `delayed`
-        ELSE `new` ).
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -208,6 +198,16 @@ CLASS z2ui5_cl_smp_app_535 IMPLEMENTATION.
                     )->a( n = `text` v = `{STATUS}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD status_next.
+
+    status = SWITCH #( status
+        WHEN `new`     THEN `shipped`
+        WHEN `shipped` THEN `delayed`
+        ELSE `new` ).
 
   ENDMETHOD.
 

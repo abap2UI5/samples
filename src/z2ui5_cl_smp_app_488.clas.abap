@@ -44,39 +44,6 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_navigation.
-
-    DATA(ls_get) = client->get( ).
-    returned_event = ls_get-event.
-
-    CASE returned_event.
-
-      WHEN `DATA_CONFIRMED`.
-
-        " the payload handed over by nav_app_leave( r_data = ... ) arrives as a
-        " generic data reference - the receiver decides the type
-        ASSIGN ls_get-r_event_data->* TO FIELD-SYMBOL(<s_result>).
-
-        IF <s_result> IS ASSIGNED.
-
-          s_result = <s_result>.
-          client->message_toast_display( |Returned event { returned_event }, | &&
-                                         |product { s_result-product }, quantity { s_result-quantity }| ).
-
-        ENDIF.
-
-      WHEN `DATA_CANCELLED`.
-
-        s_result = VALUE #( ).
-        client->message_toast_display( `Returned event DATA_CANCELLED, no data passed` ).
-
-    ENDCASE.
-
-    view_display( ).
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -135,6 +102,41 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
         )->a( n = `value`   v = client->_bind( s_result-quantity ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_navigation.
+
+    DATA(ls_get) = client->get( ).
+    returned_event = ls_get-event.
+
+    CASE returned_event.
+
+      WHEN `DATA_CONFIRMED`.
+
+        " the payload handed over by nav_app_leave( r_data = ... ) arrives as a
+        " generic data reference - the receiver decides the type
+        ASSIGN ls_get-r_event_data->* TO FIELD-SYMBOL(<s_result>).
+
+        IF <s_result> IS ASSIGNED.
+
+          s_result = <s_result>.
+          client->message_toast_display( |Returned event { returned_event }, | &&
+                                         |product { s_result-product }, quantity { s_result-quantity }| ).
+
+        ENDIF.
+
+      WHEN `DATA_CANCELLED`.
+
+        s_result = VALUE #( ).
+        client->message_toast_display( `Returned event DATA_CANCELLED, no data passed` ).
+
+    ENDCASE.
+
+    " not an event path: back from the called app the view slot is this
+    " app's again and has to be filled
+    view_display( ).
 
   ENDMETHOD.
 

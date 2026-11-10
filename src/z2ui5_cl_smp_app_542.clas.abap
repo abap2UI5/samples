@@ -18,9 +18,9 @@ CLASS z2ui5_cl_smp_app_542 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
+    METHODS model_init.
 
     METHODS csv_build
       RETURNING
@@ -65,7 +65,8 @@ CLASS z2ui5_cl_smp_app_542 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      model_init( ).
+      view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( ).
@@ -75,18 +76,92 @@ CLASS z2ui5_cl_smp_app_542 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_init.
+  METHOD view_display.
 
-    " the second and third name hold the separator and quotes on purpose -
-    " the CSV has to escape them
-    t_products = VALUE #(
-        ( id = `P-001` name = `Notebook Basic 15`  quantity = 3  price = `956.00` )
-        ( id = `P-002` name = `Cable "USB-C"; 2 m` quantity = 25 price = `9.90` )
-        ( id = `P-003` name = `Monitor 27"`        quantity = 4  price = `289.00` )
-        ( id = `P-004` name = `Wireless Mouse`     quantity = 12 price = `24.50` ) ).
-    note = `Stock list exported from abap2UI5.`.
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    view_display( ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - File - ZIP and CSV Download with cl_abap_zip`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Download CSV turns the table into a CSV file in plain ABAP - separator ;, values with a ` &&
+                   `separator or a quote enclosed in quotes, CRLF line ends - encoded as UTF-8. Download ZIP packs that CSV ` &&
+                   `and the note as note.txt into one archive with cl_abap_zip. Both reach the browser via download_b64_file.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    DATA(table) = page->ele( `Table`
+        )->a( n = `items` v = client->_bind( t_products )
+        )->a( n = `class` v = `sapUiSmallMargin` ).
+
+    table->ele( `headerToolbar`
+        )->ele( `OverflowToolbar`
+            )->tag( `Title`
+                )->a( n = `text` v = `Products - edit a cell, then download` ).
+
+    table->ele( `columns`
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `ID`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Name`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Quantity`
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Price` ).
+
+    table->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+                )->tag( `Input`
+                    )->a( n = `value` v = `{ID}`
+                )->tag( `Input`
+                    )->a( n = `value` v = `{NAME}`
+                )->tag( `Input`
+                    )->a( n = `value` v = `{QUANTITY}`
+                )->tag( `Input`
+                    )->a( n = `value` v = `{PRICE}` ).
+
+    page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Label`
+            )->a( n = `text`     v = `Note (note.txt in the ZIP)`
+            )->a( n = `labelFor` v = `note`
+        )->tag( `TextArea`
+            )->a( n = `id`    v = `note`
+            )->a( n = `value` v = client->_bind( note )
+            )->a( n = `rows`  v = `3`
+            )->a( n = `width` v = `100%` ).
+
+    page->ele( `footer`
+        )->ele( `OverflowToolbar`
+            )->tag( `ToolbarSpacer`
+            )->tag( `Button`
+                )->a( n = `text`  v = `Download CSV`
+                )->a( n = `icon`  v = `sap-icon://download`
+                )->a( n = `press` v = client->_event( `DOWNLOAD_CSV` )
+            )->tag( `Button`
+                )->a( n = `text`  v = `Download ZIP`
+                )->a( n = `icon`  v = `sap-icon://attachment-zip-file`
+                )->a( n = `type`  v = `Emphasized`
+                )->a( n = `press` v = client->_event( `DOWNLOAD_ZIP` ) ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -210,92 +285,16 @@ CLASS z2ui5_cl_smp_app_542 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD view_display.
+  METHOD model_init.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-
-    DATA(page) = view->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - File - ZIP and CSV Download with cl_abap_zip`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
-
-    page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Download CSV turns the table into a CSV file in plain ABAP - separator ;, values with a ` &&
-                   `separator or a quote enclosed in quotes, CRLF line ends - encoded as UTF-8. Download ZIP packs that CSV ` &&
-                   `and the note as note.txt into one archive with cl_abap_zip. Both reach the browser via download_b64_file.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    DATA(table) = page->ele( `Table`
-        )->a( n = `items` v = client->_bind( t_products )
-        )->a( n = `class` v = `sapUiSmallMargin` ).
-
-    table->ele( `headerToolbar`
-        )->ele( `OverflowToolbar`
-            )->tag( `Title`
-                )->a( n = `text` v = `Products - edit a cell, then download` ).
-
-    table->ele( `columns`
-        )->ele( `Column`
-            )->tag( `Text`
-                )->a( n = `text` v = `ID`
-        )->end(
-        )->ele( `Column`
-            )->tag( `Text`
-                )->a( n = `text` v = `Name`
-        )->end(
-        )->ele( `Column`
-            )->tag( `Text`
-                )->a( n = `text` v = `Quantity`
-        )->end(
-        )->ele( `Column`
-            )->tag( `Text`
-                )->a( n = `text` v = `Price` ).
-
-    table->ele( `items`
-        )->ele( `ColumnListItem`
-            )->ele( `cells`
-                )->tag( `Input`
-                    )->a( n = `value` v = `{ID}`
-                )->tag( `Input`
-                    )->a( n = `value` v = `{NAME}`
-                )->tag( `Input`
-                    )->a( n = `value` v = `{QUANTITY}`
-                )->tag( `Input`
-                    )->a( n = `value` v = `{PRICE}` ).
-
-    page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin`
-        )->tag( `Label`
-            )->a( n = `text`     v = `Note (note.txt in the ZIP)`
-            )->a( n = `labelFor` v = `note`
-        )->tag( `TextArea`
-            )->a( n = `id`    v = `note`
-            )->a( n = `value` v = client->_bind( note )
-            )->a( n = `rows`  v = `3`
-            )->a( n = `width` v = `100%` ).
-
-    page->ele( `footer`
-        )->ele( `OverflowToolbar`
-            )->tag( `ToolbarSpacer`
-            )->tag( `Button`
-                )->a( n = `text`  v = `Download CSV`
-                )->a( n = `icon`  v = `sap-icon://download`
-                )->a( n = `press` v = client->_event( `DOWNLOAD_CSV` )
-            )->tag( `Button`
-                )->a( n = `text`  v = `Download ZIP`
-                )->a( n = `icon`  v = `sap-icon://attachment-zip-file`
-                )->a( n = `type`  v = `Emphasized`
-                )->a( n = `press` v = client->_event( `DOWNLOAD_ZIP` ) ).
-
-    client->view_display( view->stringify( ) ).
+    " the second and third name hold the separator and quotes on purpose -
+    " the CSV has to escape them
+    t_products = VALUE #(
+        ( id = `P-001` name = `Notebook Basic 15`  quantity = 3  price = `956.00` )
+        ( id = `P-002` name = `Cable "USB-C"; 2 m` quantity = 25 price = `9.90` )
+        ( id = `P-003` name = `Monitor 27"`        quantity = 4  price = `289.00` )
+        ( id = `P-004` name = `Wireless Mouse`     quantity = 12 price = `24.50` ) ).
+    note = `Stock list exported from abap2UI5.`.
 
   ENDMETHOD.
 

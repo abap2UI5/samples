@@ -78,6 +78,24 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
 
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+      model_init( ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `CHANGE_FLAG` ).
+      " a template:if is evaluated once, while the view is expanded - the
+      " changed flag reaches it only through a rebuild
+      view_display( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD view_display.
 
     " the template model is the view model, so what the repeat, the with and
@@ -259,22 +277,6 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
                          city   = `Walldorf`
                          age    = 26
                          active = abap_true ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF client->check_on_init( ).
-      model_init( ).
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-    ELSEIF client->check_on_event( `CHANGE_FLAG` ).
-      view_display( ).
-    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

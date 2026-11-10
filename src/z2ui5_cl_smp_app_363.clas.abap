@@ -13,8 +13,8 @@ CLASS z2ui5_cl_smp_app_363 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -30,40 +30,6 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    DATA(target) = client->get_event( ).
-    DATA(behavior) = `smooth`.
-    DATA(block) = `start`.
-
-    CASE target.
-      WHEN `JUMP_BOTTOM`.
-        target = `bottom_input`.
-      WHEN `JUMP_MIDDLE`.
-        target = `middle_input`.
-        block  = `center`.
-      WHEN `JUMP_TOP`.
-        target = `top_input`.
-      WHEN `VALIDATE`.
-        IF field_02 IS INITIAL.
-          target = `middle_input`.
-          block  = `center`.
-          client->message_toast_display( `Middle field is required` ).
-        ELSE.
-          client->message_toast_display( `All fields ok` ).
-          RETURN.
-        ENDIF.
-      WHEN OTHERS.
-        RETURN.
-    ENDCASE.
-
-    client->follow_up_action(
-        val   = z2ui5_if_client=>cs_event-scroll_into_view
-        t_arg = VALUE #( ( target ) ( behavior ) ( block ) ) ).
 
   ENDMETHOD.
 
@@ -146,6 +112,40 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
                 )->a( n = `type`  v = `Emphasized` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    DATA(target) = client->get_event( ).
+    DATA(behavior) = `smooth`.
+    DATA(block) = `start`.
+
+    CASE target.
+      WHEN `JUMP_BOTTOM`.
+        target = `bottom_input`.
+      WHEN `JUMP_MIDDLE`.
+        target = `middle_input`.
+        block  = `center`.
+      WHEN `JUMP_TOP`.
+        target = `top_input`.
+      WHEN `VALIDATE`.
+        IF field_02 IS INITIAL.
+          target = `middle_input`.
+          block  = `center`.
+          client->message_toast_display( `Middle field is required` ).
+        ELSE.
+          client->message_toast_display( `All fields ok` ).
+          RETURN.
+        ENDIF.
+      WHEN OTHERS.
+        RETURN.
+    ENDCASE.
+
+    client->follow_up_action(
+        val   = z2ui5_if_client=>cs_event-scroll_into_view
+        t_arg = VALUE #( ( target ) ( behavior ) ( block ) ) ).
 
   ENDMETHOD.
 

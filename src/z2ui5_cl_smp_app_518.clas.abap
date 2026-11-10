@@ -30,37 +30,11 @@ CLASS z2ui5_cl_smp_app_518 IMPLEMENTATION.
     ELSEIF client->check_on_event( `FONT_REGISTERED` ).
 
       font_registered = abap_true.
+      " the TNT icon is a control the first view deliberately left out
+      " (see font_register) - adding it takes a new view, not a model push
       view_display( ).
 
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD font_register.
-
-    " A normal UI5 app does this in its Component's init. An abap2UI5 app has
-    " no Component of its own, and IconPool is a module SINGLETON rather than
-    " a control, so no other wire reaches it. t_arg is positional: the font
-    " family and the font URI - a module path in every real use, resolved
-    " through sap.ui.require.toUrl, so the registration survives a different
-    " mount point.
-    "
-    " Issue it from the init branch: the collection is registered once per
-    " session, so a repeat call costs nothing but says the wrong thing.
-    client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global
-                              t_arg = VALUE #( ( `ICON_POOL` )
-                                               ( `registerFont` )
-                                               ( `SAP-icons-TNT` )
-                                               ( `sap/tnt/themes/base/fonts/` ) ) ).
-
-    " A follow-up action runs AFTER the view of the same roundtrip has
-    " rendered, so a TNT icon in that view would be drawn while the
-    " collection is still unknown - empty, and UI5 logs an error for it. The
-    " timer queues one roundtrip behind the registration, and only the view
-    " that roundtrip displays carries the icon.
-    client->follow_up_action( val   = z2ui5_if_client=>cs_event-start_timer
-                              t_arg = VALUE #( ( `FONT_REGISTERED` ) ( `0` ) ) ).
 
   ENDMETHOD.
 
@@ -112,6 +86,34 @@ CLASS z2ui5_cl_smp_app_518 IMPLEMENTATION.
     ENDIF.
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD font_register.
+
+    " A normal UI5 app does this in its Component's init. An abap2UI5 app has
+    " no Component of its own, and IconPool is a module SINGLETON rather than
+    " a control, so no other wire reaches it. t_arg is positional: the font
+    " family and the font URI - a module path in every real use, resolved
+    " through sap.ui.require.toUrl, so the registration survives a different
+    " mount point.
+    "
+    " Issue it from the init branch: the collection is registered once per
+    " session, so a repeat call costs nothing but says the wrong thing.
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global
+                              t_arg = VALUE #( ( `ICON_POOL` )
+                                               ( `registerFont` )
+                                               ( `SAP-icons-TNT` )
+                                               ( `sap/tnt/themes/base/fonts/` ) ) ).
+
+    " A follow-up action runs AFTER the view of the same roundtrip has
+    " rendered, so a TNT icon in that view would be drawn while the
+    " collection is still unknown - empty, and UI5 logs an error for it. The
+    " timer queues one roundtrip behind the registration, and only the view
+    " that roundtrip displays carries the icon.
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-start_timer
+                              t_arg = VALUE #( ( `FONT_REGISTERED` ) ( `0` ) ) ).
 
   ENDMETHOD.
 

@@ -36,55 +36,20 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
 
-  METHOD popover_display.
+  METHOD z2ui5_if_app~main.
 
-    DATA(lo_popover) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core`
-            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
+    me->client = client.
+    IF client->check_on_init( ).
+      view_display( ).
+      set_data( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `POPOVER_DETAIL` ).
 
-    DATA(popover) = lo_popover->ele( `Popover`
-        )->a( n = `title`        t = |abap2UI5 - Popover - { mv_product }|
-        )->a( n = `placement`    v = `Right`
-        )->a( n = `contentWidth` v = `20rem` ).
-
-    popover->ele( n = `SimpleForm` ns = `form`
-        )->a( n = `layout`   v = `ColumnLayout`
-        )->a( n = `editable` b = abap_false
-        )->ele( n = `content` ns = `form`
-            )->tag( `Label`
-                )->a( n = `text` v = `Product`
-            )->tag( `Text`
-                )->a( n = `text` t = mv_product
-            )->tag( `Label`
-                )->a( n = `text` v = `info2`
-            )->tag( `Text`
-                )->a( n = `text` v = `this is a text`
-            )->tag( `Label`
-                )->a( n = `text` v = `info3`
-            )->tag( `Text`
-                )->a( n = `text` v = `this is a text`
-            )->tag( `Text`
-                )->a( n = `text` v = `this is a text` ).
-
-    popover->ele( `footer`
-        )->ele( `OverflowToolbar`
-            )->tag( `ToolbarSpacer`
-            )->tag( `Button`
-                )->a( n = `id`    v = `btn_details`
-                )->a( n = `press` v = client->follow_up_action( val = client->cs_event-popover_close )
-                )->a( n = `text`  v = `details`
-                )->a( n = `type`  v = `Emphasized` ).
-
-    client->popover_display( xml = lo_popover->stringify( ) by_id = id ).
-
-    " a frontend action aimed at the popover: the view parameter scopes the
-    " id lookup to the popover slot (cs_view-popover), so the focus lands on
-    " the button INSIDE the popover and Enter confirms it straight away
-    client->follow_up_action( val   = client->cs_event-control_by_id
-                              view  = client->cs_view-popover
-                              t_arg = VALUE #( ( `btn_details` ) ( `focus` ) ) ).
+      mv_check_popover = abap_true.
+      mv_product       = client->get_event_arg( 2 ).
+      popover_display( client->get_event_arg( ) ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -159,25 +124,55 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD popover_display.
 
-    me->client = client.
+    DATA(lo_popover) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    IF client->check_on_init( ).
+    DATA(popover) = lo_popover->ele( `Popover`
+        )->a( n = `title`        t = |abap2UI5 - Popover - { mv_product }|
+        )->a( n = `placement`    v = `Right`
+        )->a( n = `contentWidth` v = `20rem` ).
 
-      view_display( ).
-      set_data( ).
-      RETURN.
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
-    ENDIF.
+    popover->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `layout`   v = `ColumnLayout`
+        )->a( n = `editable` b = abap_false
+        )->ele( n = `content` ns = `form`
+            )->tag( `Label`
+                )->a( n = `text` v = `Product`
+            )->tag( `Text`
+                )->a( n = `text` t = mv_product
+            )->tag( `Label`
+                )->a( n = `text` v = `info2`
+            )->tag( `Text`
+                )->a( n = `text` v = `this is a text`
+            )->tag( `Label`
+                )->a( n = `text` v = `info3`
+            )->tag( `Text`
+                )->a( n = `text` v = `this is a text`
+            )->tag( `Text`
+                )->a( n = `text` v = `this is a text` ).
 
-    IF client->check_on_event( `POPOVER_DETAIL` ).
+    popover->ele( `footer`
+        )->ele( `OverflowToolbar`
+            )->tag( `ToolbarSpacer`
+            )->tag( `Button`
+                )->a( n = `id`    v = `btn_details`
+                )->a( n = `press` v = client->follow_up_action( val = client->cs_event-popover_close )
+                )->a( n = `text`  v = `details`
+                )->a( n = `type`  v = `Emphasized` ).
 
-      mv_check_popover = abap_true.
-      mv_product       = client->get_event_arg( 2 ).
-      popover_display( client->get_event_arg( ) ).
-    ENDIF.
+    client->popover_display( xml = lo_popover->stringify( ) by_id = id ).
+
+    " a frontend action aimed at the popover: the view parameter scopes the
+    " id lookup to the popover slot (cs_view-popover), so the focus lands on
+    " the button INSIDE the popover and Enter confirms it straight away
+    client->follow_up_action( val   = client->cs_event-control_by_id
+                              view  = client->cs_view-popover
+                              t_arg = VALUE #( ( `btn_details` ) ( `focus` ) ) ).
 
   ENDMETHOD.
 

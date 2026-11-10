@@ -8,8 +8,8 @@ CLASS z2ui5_cl_smp_app_163 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
     METHODS view_menu.
 
   PRIVATE SECTION.
@@ -17,6 +17,54 @@ ENDCLASS.
 
 
 CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
+
+    view           = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Menu - Menu as Popover with core:require`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `id`             v = `page_main` ).
+
+    view->tag( `MessageStrip`
+        )->a( n = `text`     v = `This sample opens a Menu as a popover anchored to a button; choosing an ` &&
+                   `item shows the selected action in a MessageToast.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    DATA(vbox) = view->ele( `VBox` ).
+
+    vbox->tag( `Button`
+        )->a( n = `press` v = client->_event( `OPEN_MENU` )
+        )->a( n = `text`  v = `Open Menu`
+        )->a( n = `id`    v = `menuButton`
+        )->a( n = `class` v = `sapUiSmallMargin` ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
 
   METHOD on_event.
 
@@ -69,54 +117,6 @@ CLASS z2ui5_cl_smp_app_163 IMPLEMENTATION.
     " abap2ui5lint-enable binding-for-event
 
     client->popover_display( xml = menu_view->stringify( ) by_id = `menuButton` ).
-
-  ENDMETHOD.
-
-
-  METHOD view_display.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-
-    view           = view->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Menu - Menu as Popover with core:require`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-            )->a( n = `id`             v = `page_main` ).
-
-    view->tag( `MessageStrip`
-        )->a( n = `text`     v = `This sample opens a Menu as a popover anchored to a button; choosing an ` &&
-                   `item shows the selected action in a MessageToast.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    DATA(vbox) = view->ele( `VBox` ).
-
-    vbox->tag( `Button`
-        )->a( n = `press` v = client->_event( `OPEN_MENU` )
-        )->a( n = `text`  v = `Open Menu`
-        )->a( n = `id`    v = `menuButton`
-        )->a( n = `class` v = `sapUiSmallMargin` ).
-
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_navigated( ).
-      view_display( ).
-    ELSEIF client->check_on_event( ).
-      on_event( ).
-    ENDIF.
 
   ENDMETHOD.
 

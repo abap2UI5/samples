@@ -46,41 +46,6 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `FILE_ADDED`.
-        " The companion hands over ONE file per roundtrip - several files
-        " picked at once arrive one after the other, each waiting for the
-        " previous response. fileData is a base64 DATA URL, so the payload
-        " starts after the comma.
-        IF file_name IS NOT INITIAL.
-          DATA(payload) = substring_after( val = file_data
-                                           sub = `,` ).
-          " the decoded length, so the sample shows the bytes ABAP actually
-          " received rather than the base64 text: three bytes per four
-          " characters, less the one or two `=` that pad the last group
-          DATA(padding) = COND i( WHEN payload CP `*==` THEN 2
-                                  WHEN payload CP `*=`  THEN 1
-                                  ELSE 0 ).
-          INSERT VALUE #( name  = file_name
-                          type  = file_type
-                          size  = file_size
-                          bytes = strlen( payload ) * 3 / 4 - padding ) INTO TABLE t_received.
-        ENDIF.
-
-      WHEN `FILE_REMOVED`.
-        DELETE t_received WHERE name = removed.
-
-      WHEN `CLEAR`.
-        t_received = VALUE #( ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -168,6 +133,41 @@ CLASS z2ui5_cl_smp_app_517 IMPLEMENTATION.
                     )->a( n = `number` v = `{BYTES}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `FILE_ADDED`.
+        " The companion hands over ONE file per roundtrip - several files
+        " picked at once arrive one after the other, each waiting for the
+        " previous response. fileData is a base64 DATA URL, so the payload
+        " starts after the comma.
+        IF file_name IS NOT INITIAL.
+          DATA(payload) = substring_after( val = file_data
+                                           sub = `,` ).
+          " the decoded length, so the sample shows the bytes ABAP actually
+          " received rather than the base64 text: three bytes per four
+          " characters, less the one or two `=` that pad the last group
+          DATA(padding) = COND i( WHEN payload CP `*==` THEN 2
+                                  WHEN payload CP `*=`  THEN 1
+                                  ELSE 0 ).
+          INSERT VALUE #( name  = file_name
+                          type  = file_type
+                          size  = file_size
+                          bytes = strlen( payload ) * 3 / 4 - padding ) INTO TABLE t_received.
+        ENDIF.
+
+      WHEN `FILE_REMOVED`.
+        DELETE t_received WHERE name = removed.
+
+      WHEN `CLEAR`.
+        t_received = VALUE #( ).
+
+    ENDCASE.
 
   ENDMETHOD.
 

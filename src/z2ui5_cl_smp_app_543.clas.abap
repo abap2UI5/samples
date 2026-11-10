@@ -21,8 +21,8 @@ CLASS z2ui5_cl_smp_app_543 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -41,49 +41,6 @@ CLASS z2ui5_cl_smp_app_543 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    bin = `A-01-03`.
-    view_display( ).
-
-    " SAVE is the one event of this app that may wait for the network: while
-    " the backend cannot be reached it is kept in the browser - with what was
-    " typed - and sent once it can, in the order it was made. &1 in the toast
-    " is how many wait. Every other event (CLEAR here) fails as usual.
-    client->follow_up_action( val   = client->cs_event-offline_queue
-                              t_arg = VALUE #( ( `Saved offline - &1 waiting, sent when the network is back` )
-                                               ( `SAVE` ) ) ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `SAVE`.
-        " a queued SAVE arrives here late, but like any other: the app checks
-        " what it would check anyway
-        IF material IS INITIAL OR quantity IS INITIAL.
-          client->message_box_display( text = `Material and quantity are required.` type = `error` ).
-          RETURN.
-        ENDIF.
-        INSERT VALUE #( pos      = lines( t_counts ) + 1
-                        bin      = bin
-                        material = material
-                        quantity = quantity ) INTO TABLE t_counts.
-        CLEAR material.
-        CLEAR quantity.
-        client->message_toast_display( |Counted - { lines( t_counts ) } entries| ).
-
-      WHEN `CLEAR`.
-        CLEAR t_counts.
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -177,6 +134,49 @@ CLASS z2ui5_cl_smp_app_543 IMPLEMENTATION.
                     )->a( n = `text` v = `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `SAVE`.
+        " a queued SAVE arrives here late, but like any other: the app checks
+        " what it would check anyway
+        IF material IS INITIAL OR quantity IS INITIAL.
+          client->message_box_display( text = `Material and quantity are required.` type = `error` ).
+          RETURN.
+        ENDIF.
+        INSERT VALUE #( pos      = lines( t_counts ) + 1
+                        bin      = bin
+                        material = material
+                        quantity = quantity ) INTO TABLE t_counts.
+        CLEAR material.
+        CLEAR quantity.
+        client->message_toast_display( |Counted - { lines( t_counts ) } entries| ).
+
+      WHEN `CLEAR`.
+        CLEAR t_counts.
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    bin = `A-01-03`.
+    view_display( ).
+
+    " SAVE is the one event of this app that may wait for the network: while
+    " the backend cannot be reached it is kept in the browser - with what was
+    " typed - and sent once it can, in the order it was made. &1 in the toast
+    " is how many wait. Every other event (CLEAR here) fails as usual.
+    client->follow_up_action( val   = client->cs_event-offline_queue
+                              t_arg = VALUE #( ( `Saved offline - &1 waiting, sent when the network is back` )
+                                               ( `SAVE` ) ) ).
 
   ENDMETHOD.
 

@@ -33,16 +33,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
 
-  METHOD factory.
-
-    result         = NEW #( ).
-    result->t_table = t_table.
-    result->row_id  = row_id.
-    result->edit    = edit.
-
-  ENDMETHOD.
-
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -58,15 +48,6 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    " the one row the dialog edits; an add starts from an empty row that
-    " already carries the id the caller handed over
-    s_row = VALUE #( t_table[ row_id = row_id ] DEFAULT VALUE #( row_id = row_id ) ).
 
   ENDMETHOD.
 
@@ -94,6 +75,25 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
         leave( ).
 
     ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD factory.
+
+    result         = NEW #( ).
+    result->t_table = t_table.
+    result->row_id  = row_id.
+    result->edit    = edit.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    " the one row the dialog edits; an add starts from an empty row that
+    " already carries the id the caller handed over
+    s_row = VALUE #( t_table[ row_id = row_id ] DEFAULT VALUE #( row_id = row_id ) ).
 
   ENDMETHOD.
 

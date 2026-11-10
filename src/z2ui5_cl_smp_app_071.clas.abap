@@ -79,16 +79,6 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD combo_fill.
-
-    t_combo = VALUE #( ).
-    DO combo_number TIMES.
-      INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
-    ENDDO.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -142,6 +132,16 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
                     )->a( n = `text` v = `{TEXT}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD combo_fill.
+
+    t_combo = VALUE #( ).
+    DO combo_number TIMES.
+      INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
+    ENDDO.
 
   ENDMETHOD.
 

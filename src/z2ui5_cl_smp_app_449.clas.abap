@@ -30,21 +30,6 @@ CLASS z2ui5_cl_smp_app_449 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    IF client->get_event( ) = `OPEN`.
-      " open the popup-mode PDFViewer via the whitelisted open method -
-      " the viewer brings its own dialog and close button.
-      " t_arg is positional: id, method (the view defaults to cs_view-main
-      " and can be omitted for a main-view control)
-      client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                                t_arg = VALUE #( ( `demoPdf` )
-                                                 ( `open` ) ) ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -84,6 +69,21 @@ CLASS z2ui5_cl_smp_app_449 IMPLEMENTATION.
             )->a( n = `icon`  v = `sap-icon://pdf-attachment` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->get_event( ) = `OPEN`.
+      " open the popup-mode PDFViewer via the whitelisted open method -
+      " the viewer brings its own dialog and close button.
+      " t_arg is positional: id, method (the view defaults to cs_view-main
+      " and can be omitted for a main-view control)
+      client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
+                                t_arg = VALUE #( ( `demoPdf` )
+                                                 ( `open` ) ) ).
+    ENDIF.
 
   ENDMETHOD.
 

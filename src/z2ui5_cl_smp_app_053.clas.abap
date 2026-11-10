@@ -50,18 +50,6 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_event.
-
-    CASE client->get_event( ).
-
-      WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
-        set_data( ).
-        set_search( ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -133,6 +121,18 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
         )->a( n = `text` v = `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+
+      WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
+        set_data( ).
+        set_search( ).
+    ENDCASE.
 
   ENDMETHOD.
 

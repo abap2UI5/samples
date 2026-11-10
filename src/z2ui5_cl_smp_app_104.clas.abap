@@ -52,6 +52,39 @@ ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_init( ).
+
+      t_tab = VALUE #(
+        ( title = `Class 1`  info = `z2ui5_cl_smp_app_105` descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Class 2`  info = `z2ui5_cl_smp_app_112` descr = `this is a description` icon = `sap-icon://account` ) ).
+
+      layout = `OneColumn`.
+      view_display_master( ).
+
+    ELSEIF client->check_on_navigated( ).
+
+      " the embedded view again: it is nested inside the master, so a
+      " re-displayed master alone would leave the mid column empty - the
+      " sub-app instance is kept, and with it what was typed into it
+      view_display_master( ).
+
+      IF app_sub IS BOUND.
+        view_display_sub( ).
+      ENDIF.
+
+    ELSEIF client->check_on_event( `SELCHANGE` ).
+      on_event_selchange( ).
+    ELSEIF client->check_on_event( ).
+      " every other event was raised inside the embedded app - it handles it
+      on_event_sub( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD on_event_sub.
 
     IF app_sub IS BOUND.
@@ -203,39 +236,6 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
     layout = `TwoColumnsMidExpanded`.
     on_init_sub( ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_init( ).
-
-      t_tab = VALUE #(
-        ( title = `Class 1`  info = `z2ui5_cl_smp_app_105` descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `Class 2`  info = `z2ui5_cl_smp_app_112` descr = `this is a description` icon = `sap-icon://account` ) ).
-
-      layout = `OneColumn`.
-      view_display_master( ).
-
-    ELSEIF client->check_on_navigated( ).
-
-      " the embedded view again: it is nested inside the master, so a
-      " re-displayed master alone would leave the mid column empty - the
-      " sub-app instance is kept, and with it what was typed into it
-      view_display_master( ).
-
-      IF app_sub IS BOUND.
-        view_display_sub( ).
-      ENDIF.
-
-    ELSEIF client->check_on_event( `SELCHANGE` ).
-      on_event_selchange( ).
-    ELSEIF client->check_on_event( ).
-      " every other event was raised inside the embedded app - it handles it
-      on_event_sub( ).
-    ENDIF.
 
   ENDMETHOD.
 

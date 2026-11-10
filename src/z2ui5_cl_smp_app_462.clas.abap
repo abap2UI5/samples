@@ -60,6 +60,41 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
+
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Tree - Inside a Dialog`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
+
+    page->tag( `MessageStrip`
+        )->a( n = `text` v = `The button opens a Dialog whose content is a sap.m.Tree over a nested ABAP ` &&
+                   `table. Expand some nodes, close and reopen: the z2ui5.cc.Tree companion ` &&
+                   `preserves the expand state across the roundtrips.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
+
+    page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin`
+        )->tag( `Button`
+            )->a( n = `press` v = client->_event( `OPEN_POPUP` )
+            )->a( n = `text`  v = `Open tree popup`
+            )->a( n = `icon`  v = `sap-icon://tree` ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
   METHOD on_event.
 
     CASE client->get_event( ).
@@ -109,41 +144,6 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
             )->a( n = `text`  v = `Close` ).
 
     client->popup_display( popup->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD view_display.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `displayBlock` v = `true`
-            )->a( n = `height`       v = `100%`
-            )->a( n = `xmlns`        v = `sap.m`
-            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-
-    DATA(page) = view->ele( `Shell`
-        )->ele( `Page`
-            )->a( n = `title`          v = `abap2UI5 - Tree - Inside a Dialog`
-            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
-
-    page->tag( `MessageStrip`
-        )->a( n = `text` v = `The button opens a Dialog whose content is a sap.m.Tree over a nested ABAP ` &&
-                   `table. Expand some nodes, close and reopen: the z2ui5.cc.Tree companion ` &&
-                   `preserves the expand state across the roundtrips.`
-        )->a( n = `type`     v = `Information`
-        )->a( n = `showIcon` b = abap_true
-        )->a( n = `class`    v = `sapUiSmallMargin` ).
-
-    page->ele( `VBox`
-        )->a( n = `class` v = `sapUiSmallMargin`
-        )->tag( `Button`
-            )->a( n = `press` v = client->_event( `OPEN_POPUP` )
-            )->a( n = `text`  v = `Open tree popup`
-            )->a( n = `icon`  v = `sap-icon://tree` ).
-
-    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

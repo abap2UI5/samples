@@ -19,9 +19,9 @@ CLASS z2ui5_cl_smp_app_160 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS model_init.
-    METHODS on_event.
     METHODS view_display.
+    METHODS on_event.
+    METHODS model_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -39,35 +39,6 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
       view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD model_init.
-
-    mt_output = VALUE #( ).
-
-    DO 10 TIMES.
-      INSERT VALUE #( index = sy-index
-                      set_sk = `Test`
-                      matnr  = `1234567`
-                      pl_total = sy-index * 10
-                      per_cent_total = sy-index ) INTO TABLE mt_output.
-    ENDDO.
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    IF client->check_on_event( `PL_TOTAL_CHANGE` ).
-      client->message_box_display(
-        |Id of Input via source object: { client->get_event_arg( ) }\n| &&
-        |Id of Input via event.oSource.sId: { client->get_event_arg( 2 ) }\n| &&
-        |Value of same row, index: { client->get_event_arg( 3 ) }\n| &&
-        |Id of parent (row) via event.oSource.oParent.sId: { client->get_event_arg( 4 ) }\n| &&
-        |Attribute of parameters.value: { client->get_event_arg( 5 ) }| ).
     ENDIF.
 
   ENDMETHOD.
@@ -155,6 +126,35 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
                 )->a( n = `text` v = `{PER_CENT_TOTAL} %` ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->check_on_event( `PL_TOTAL_CHANGE` ).
+      client->message_box_display(
+        |Id of Input via source object: { client->get_event_arg( ) }\n| &&
+        |Id of Input via event.oSource.sId: { client->get_event_arg( 2 ) }\n| &&
+        |Value of same row, index: { client->get_event_arg( 3 ) }\n| &&
+        |Id of parent (row) via event.oSource.oParent.sId: { client->get_event_arg( 4 ) }\n| &&
+        |Attribute of parameters.value: { client->get_event_arg( 5 ) }| ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD model_init.
+
+    mt_output = VALUE #( ).
+
+    DO 10 TIMES.
+      INSERT VALUE #( index = sy-index
+                      set_sk = `Test`
+                      matnr  = `1234567`
+                      pl_total = sy-index * 10
+                      per_cent_total = sy-index ) INTO TABLE mt_output.
+    ENDDO.
 
   ENDMETHOD.
 
