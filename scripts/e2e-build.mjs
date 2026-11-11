@@ -18,6 +18,7 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { ROOT, resolveA2UI5, patchFollowUpAction, transpiledDir } from './lib/e2e.mjs';
+import { parseJsonc } from './lib/jsonc.mjs';
 
 const A2 = resolveA2UI5();
 if (!A2) {
@@ -57,7 +58,8 @@ console.log(`e2e-build: ${patchFollowUpAction(downport)} view-wired follow_up_ac
 
 // 3. downport the copy with the framework's full 702 rule set (the inline
 //    declarations can only be split when the types resolve); three passes settle it
-const cfg = JSON.parse(fs.readFileSync(path.join(A2, '.github/abaplint/abap_702.jsonc'), 'utf8'));
+// a .jsonc that carries comments since abap2UI5#2950 - lib/jsonc.mjs
+const cfg = parseJsonc(fs.readFileSync(path.join(A2, '.github/abaplint/abap_702.jsonc'), 'utf8'));
 cfg.global = { files: '/node/downport/**/*.*' };
 fs.writeFileSync(path.join(A2, 'e2e-downport.jsonc'), JSON.stringify(cfg, null, 2));
 console.log('e2e-build: downporting to v702 ...');
