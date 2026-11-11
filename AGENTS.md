@@ -612,6 +612,25 @@ stale.
 `npm run catalogue` for this file alone); change the facts on the classes, as
 always (§4).
 
+### `scripts/lib/exercises.json` — the lessons' exercises
+
+One exercise per sample of the learning path's first stage (*Start here*,
+Basics I–VII), for the playground's lesson bar: a **task** in a sentence or
+two, a **hint**, and a **check** — patterns the rebuilt view XML must match
+(`view`), patterns the ABAP must match (`source`) or no longer match
+(`sourceNot`), and the least number of unit tests that must run green
+(`tests`). The playground (abap2UI5/playground, `writeLessons( )` in
+`tools/build-site.mjs`) reads it from the commit it pins and shows the task
+under "Lesson n of 7", with **Check** and **Hint** beside it.
+
+Editorial, like `learning-path.json` beside it, and kept out of
+`catalogue.json` on purpose: that file's shape is a published contract
+(`check-catalogue-contract.mjs`). `npm run check:exercises` (in
+`npm run check`) holds it to one exercise per Start-here class and none for
+any other, patterns that compile, and a sample that does not already pass its
+own source checks. **A change to a Start-here sample can break its exercise**
+— a renamed attribute or event in a pattern — and that gate is where it shows.
+
 ---
 
 ## 4. The overview is ALWAYS (re)generated — schema & rules

@@ -1,0 +1,78 @@
+{
+ "_comment": [
+  "One exercise per lesson of the learning path's first stage (Start here), for the",
+  "playground's lesson bar: a task in a sentence or two, a hint, and how the playground",
+  "decides the task is done. Editorial, like learning-path.json beside it - which is why",
+  "it is not in catalogue.json, whose shape is a published contract (check-catalogue-",
+  "contract.mjs). The playground reads this file from the commit it pins.",
+  "",
+  "A check is the conjunction of:",
+  "  view        patterns the view XML must match (the XML the abap2UI5 linter rebuilds",
+  "              from the builder chain - what the playground's View tab shows),",
+  "  source      patterns the ABAP of the open files must match,",
+  "  sourceNot   patterns it must no longer match,",
+  "  tests       the least number of unit tests that ran in the last Run, all passing.",
+  "Every pattern is a JavaScript regular expression, matched case-insensitively.",
+  "",
+  "scripts/check-exercises.mjs holds this file to: one exercise per Start-here class and",
+  "none for any other, every pattern compiles, and the sample as committed does NOT",
+  "already pass its source checks - an exercise that is solved before it starts teaches",
+  "nothing."
+ ],
+ "exercises": {
+  "z2ui5_cl_smp_app_493": {
+   "task": "Greet yourself: make the Title say Hello and your name instead of Hello World, and add a Text under it that says what you are learning.",
+   "hint": "The title is the page->tag( `Title` ) call. A Text is one more page->tag( `Text` )->a( n = `text` v = `...` ) below it.",
+   "check": {
+    "view": ["<Title\\b[^>]*\\btext=\"Hello (?!World\")[^\"]+\"", "<Text\\b[^>]*\\btext=\"[^\"]+\""]
+   }
+  },
+  "z2ui5_cl_smp_app_494": {
+   "task": "Change what Greet writes back: make it say Good morning and the name, then Run and press Greet.",
+   "hint": "GREETING is set in the GREET branch of main( ) - one string template.",
+   "check": {
+    "source": ["greeting\\s*=\\s*\\|\\s*Good morning"],
+    "sourceNot": ["greeting\\s*=\\s*\\|Hello \\{ name \\}!\\|"]
+   }
+  },
+  "z2ui5_cl_smp_app_495": {
+   "task": "Add a third button, Clear, with an event of its own that empties the list of calls.",
+   "hint": "A button with press = client->_event( `CLEAR` ) in the HBox, and in main( ) an ELSEIF client->check_on_event( `CLEAR` ) that does CLEAR t_log.",
+   "check": {
+    "view": ["<Button\\b[^>]*\\btext=\"Clear\""],
+    "source": ["check_on_event\\(\\s*`CLEAR`\\s*\\)", "CLEAR\\s+t_log\\s*\\."]
+   }
+  },
+  "z2ui5_cl_smp_app_004": {
+   "task": "Add a fifth button to the main view that shows a message toast: an event BUTTON_HELLO, and a WHEN branch for it in on_event( ).",
+   "hint": "Copy one of the Button blocks with its press = client->_event( `...` ), and in on_event( ) add WHEN `BUTTON_HELLO`. client->message_toast_display( `...` ).",
+   "check": {
+    "view": ["BUTTON_HELLO"],
+    "source": ["WHEN\\s+`BUTTON_HELLO`", "message_toast_display\\("]
+   }
+  },
+  "z2ui5_cl_smp_app_496": {
+   "task": "Add a second Input to the form, bound to a new public attribute. Run, type into it, press Send, and find what you typed under Previous Request (Ctrl+F12).",
+   "hint": "DATA comment TYPE string. in the PUBLIC SECTION, then a Label and an Input with value = client->_bind( comment ) in the form's content.",
+   "check": {
+    "view": ["<Input\\b[\\s\\S]*<Input\\b"]
+   }
+  },
+  "z2ui5_cl_smp_app_503": {
+   "task": "Add a fifth test to the test class: 200 net at 10 percent is 220 gross. Run - the Tests tab has to show five tests, all green.",
+   "hint": "One more METHODS ... FOR TESTING in the definition, and an implementation with cl_abap_unit_assert=>assert_equals( exp = 220 act = cut->gross_amount( net = 200 percent = 10 ) ).",
+   "check": {
+    "source": ["exp\\s*=\\s*220\\b"],
+    "tests": 5
+   }
+  },
+  "z2ui5_cl_smp_app_519": {
+   "task": "Give the Greet button a tooltip that is a text symbol of its own, 004, the way the other three are.",
+   "hint": "Read 'Say hello'(004) into a variable like greet, and add )->a( n = `tooltip` t = <variable> to the Button.",
+   "check": {
+    "view": ["<Button\\b[^>]*\\btooltip=\"[^\"]+\""],
+    "source": ["'[^']+'\\(004\\)"]
+   }
+  }
+ }
+}
