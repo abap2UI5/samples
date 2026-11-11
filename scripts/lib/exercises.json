@@ -13,6 +13,10 @@
   "  sourceNot   patterns it must no longer match,",
   "  tests       the least number of unit tests that ran in the last Run, all passing.",
   "Every pattern is a JavaScript regular expression, matched case-insensitively.",
+  "A view pattern sees only what the linter can rebuild: an attribute set from a",
+  "variable (t = greet, a text symbol read into it) is not in that XML, and an event",
+  "is written without its name (press=\".eB()\"), so a task about either is checked",
+  "on the source.",
   "",
   "scripts/check-exercises.mjs holds this file to: one exercise per Start-here class and",
   "none for any other, every pattern compiles, and the sample as committed does NOT",
@@ -47,8 +51,7 @@
    "task": "Add a fifth button to the main view that shows a message toast: an event BUTTON_HELLO, and a WHEN branch for it in on_event( ).",
    "hint": "Copy one of the Button blocks with its press = client->_event( `...` ), and in on_event( ) add WHEN `BUTTON_HELLO`. client->message_toast_display( `...` ).",
    "check": {
-    "view": ["BUTTON_HELLO"],
-    "source": ["WHEN\\s+`BUTTON_HELLO`", "message_toast_display\\("]
+    "source": ["_event\\(\\s*`BUTTON_HELLO`\\s*\\)", "WHEN\\s+`BUTTON_HELLO`", "message_toast_display\\("]
    }
   },
   "z2ui5_cl_smp_app_496": {
@@ -70,8 +73,7 @@
    "task": "Give the Greet button a tooltip that is a text symbol of its own, 004, the way the other three are.",
    "hint": "Read 'Say hello'(004) into a variable like greet, and add )->a( n = `tooltip` t = <variable> to the Button.",
    "check": {
-    "view": ["<Button\\b[^>]*\\btooltip=\"[^\"]+\""],
-    "source": ["'[^']+'\\(004\\)"]
+    "source": ["'[^']+'\\(004\\)", "n\\s*=\\s*`tooltip`\\s+t\\s*="]
    }
   }
  }
