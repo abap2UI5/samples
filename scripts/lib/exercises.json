@@ -13,6 +13,9 @@
   "  sourceNot   patterns it must no longer match,",
   "  tests       the least number of unit tests that ran in the last Run, all passing.",
   "Every pattern is a JavaScript regular expression, matched case-insensitively.",
+  "A view pattern sees only what the linter can rebuild: an attribute set from a",
+  "variable (t = greet, a text symbol read into it) is not in that XML, so a task",
+  "about one is checked on the source.",
   "",
   "scripts/check-exercises.mjs holds this file to: one exercise per Start-here class and",
   "none for any other, every pattern compiles, and the sample as committed does NOT",
@@ -70,8 +73,7 @@
    "task": "Give the Greet button a tooltip that is a text symbol of its own, 004, the way the other three are.",
    "hint": "Read 'Say hello'(004) into a variable like greet, and add )->a( n = `tooltip` t = <variable> to the Button.",
    "check": {
-    "view": ["<Button\\b[^>]*\\btooltip=\"[^\"]+\""],
-    "source": ["'[^']+'\\(004\\)"]
+    "source": ["'[^']+'\\(004\\)", "n\\s*=\\s*`tooltip`\\s+t\\s*="]
    }
   }
  }
