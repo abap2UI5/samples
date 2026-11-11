@@ -34,8 +34,10 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `BUTTON` ).
-      " the roundtrip IS the demo: the edited amounts travel back and re-render
-      view_display( ).
+      " the roundtrip is the point of this button: the edited values travel
+      " to the server and come back, and every formatter above renders them
+      " again from the model - no view_display( ) needed
+      client->message_toast_display( |Amount { amount }, currency { currency }| ).
     ENDIF.
 
   ENDMETHOD.
