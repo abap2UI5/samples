@@ -11,7 +11,7 @@ CLASS z2ui5_cl_smp_app_144 DEFINITION PUBLIC.
         title TYPE string,
         value TYPE string,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -26,16 +26,26 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+        DATA temp1 LIKE t_tab.
+        DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-        t_tab = VALUE #( BASE t_tab
-            ( title = `entry 01`  value = `red` )
-            ( title = `entry 02`  value = `blue` ) ).
+        
+        CLEAR temp1.
+        temp1 = t_tab.
+        
+        temp2-title = `entry 01`.
+        temp2-value = `red`.
+        INSERT temp2 INTO TABLE temp1.
+        temp2-title = `entry 02`.
+        temp2-value = `blue`.
+        INSERT temp2 INTO TABLE temp1.
+        t_tab = temp1.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -44,13 +54,27 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp3 LIKE LINE OF t_tab.
+    DATA lr_row LIKE REF TO temp3.
+      DATA lv_tabix LIKE sy-tabix.
+    FIELD-SYMBOLS <temp4> LIKE LINE OF t_tab.
+    DATA temp5 LIKE sy-tabix.
+    FIELD-SYMBOLS <temp6> LIKE LINE OF t_tab.
+    DATA temp7 LIKE sy-tabix.
+    FIELD-SYMBOLS <temp8> LIKE LINE OF t_tab.
+    DATA temp9 LIKE sy-tabix.
+    FIELD-SYMBOLS <temp10> LIKE LINE OF t_tab.
+    DATA temp11 LIKE sy-tabix.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - Single Table Cell (tab_index)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -63,8 +87,11 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    LOOP AT t_tab REFERENCE INTO DATA(lr_row).
-      DATA(lv_tabix) = sy-tabix.
+    
+    
+    LOOP AT t_tab REFERENCE INTO lr_row.
+      
+      lv_tabix = sy-tabix.
       page->tag( `Input`
           )->a( n = `value` v = client->_bind( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).
       page->tag( `Input`
@@ -97,14 +124,46 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
                     )->tag( `Input`
                         )->a( n = `value` v = `{VALUE}` ).
 
+    
+    
+    temp5 = sy-tabix.
+    READ TABLE t_tab INDEX 1 ASSIGNING <temp4>.
+    sy-tabix = temp5.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).
+        )->a( n = `value` v = client->_bind( val = <temp4>-title tab = t_tab tab_index = 1 ) ).
+    
+    
+    temp7 = sy-tabix.
+    READ TABLE t_tab INDEX 1 ASSIGNING <temp6>.
+    sy-tabix = temp7.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = t_tab[ 1 ]-value tab = t_tab tab_index = 1 ) ).
+        )->a( n = `value` v = client->_bind( val = <temp6>-value tab = t_tab tab_index = 1 ) ).
+    
+    
+    temp9 = sy-tabix.
+    READ TABLE t_tab INDEX 2 ASSIGNING <temp8>.
+    sy-tabix = temp9.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = t_tab[ 2 ]-title tab = t_tab tab_index = 2 ) ).
+        )->a( n = `value` v = client->_bind( val = <temp8>-title tab = t_tab tab_index = 2 ) ).
+    
+    
+    temp11 = sy-tabix.
+    READ TABLE t_tab INDEX 2 ASSIGNING <temp10>.
+    sy-tabix = temp11.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
     page->tag( `Input`
-        )->a( n = `value` v = client->_bind( val = t_tab[ 2 ]-value tab = t_tab tab_index = 2 ) ).
+        )->a( n = `value` v = client->_bind( val = <temp10>-value tab = t_tab tab_index = 2 ) ).
 
     client->view_display( view->stringify( ) ).
 

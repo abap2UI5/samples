@@ -25,7 +25,7 @@ CLASS z2ui5_cl_smp_app_505 DEFINITION PUBLIC.
         created      TYPE d,
         created_text TYPE string,
       END OF ty_s_row.
-    DATA t_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_row TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
     DATA last_sort TYPE string.
 
@@ -46,12 +46,12 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -60,7 +60,14 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    DATA temp2 TYPE z2ui5_if_client=>ty_s_event_control.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA col_date TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -68,7 +75,8 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Event - Prevent Default per Column`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -83,7 +91,15 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->ele( n = `Table` ns = `table`
+    
+    CLEAR temp1.
+    INSERT `${$parameters>/column}.getSortProperty()` INTO TABLE temp1.
+    INSERT `${$parameters>/sortOrder}` INTO TABLE temp1.
+    
+    CLEAR temp2.
+    temp2-prevent_default_expr = `${$parameters>/column}.getId().indexOf('COL_DATE') >= 0`.
+    
+    tab = page->ele( n = `Table` ns = `table`
         )->a( n = `rows`               v = client->_bind( t_row )
         )->a( n = `selectionMode`      v = `None`
         )->a( n = `visibleRowCount`    v = `5`
@@ -92,16 +108,16 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
         " whose id contains COL_DATE loses its built-in sort. Every firing
         " still rounds trips with the sort property and the requested order
         )->a( n = `sort`               v = client->_event( val    = `SORT`
-                                                            t_arg  = VALUE #( ( `${$parameters>/column}.getSortProperty()` )
-                                                                              ( `${$parameters>/sortOrder}` ) )
-                                                            s_ctrl = VALUE #( prevent_default_expr = `${$parameters>/column}.getId().indexOf('COL_DATE') >= 0` ) ) ).
+                                                            t_arg  = temp1
+                                                            s_ctrl = temp2 ) ).
 
     tab->ele( n = `extension` ns = `table`
         )->ele( `OverflowToolbar`
             )->tag( `Title`
                 )->a( n = `text` v = `Products` ).
 
-    DATA(columns) = tab->ele( n = `columns` ns = `table` ).
+    
+    columns = tab->ele( n = `columns` ns = `table` ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `id`           v = `COL_PRODUCT`
@@ -123,7 +139,8 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
                 )->a( n = `text` v = `{STOCK}` ).
 
     " abap2ui5lint-disable-next-line unresolved-attribute-value -- its sortOrder (below) is the SortOrder the client's sort event reported
-    DATA(col_date) = columns->ele( n = `Column` ns = `table`
+    
+    col_date = columns->ele( n = `Column` ns = `table`
         )->a( n = `id`           v = `COL_DATE`
         )->a( n = `sortProperty` v = `CREATED_TEXT` ).
 
@@ -154,12 +171,14 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
 
 
   METHOD on_event.
+      DATA property TYPE string.
 
-    IF client->check_on_event( `SORT` ).
+    IF client->check_on_event( `SORT` ) IS NOT INITIAL.
 
       " the same event for every column: the sort property and the order
       " the user asked for ride as arguments
-      DATA(property) = client->get_event_arg( ).
+      
+      property = client->get_event_arg( ).
       sort_order     = client->get_event_arg( 2 ).
 
       IF property = `CREATED_TEXT`.
@@ -190,15 +209,43 @@ CLASS z2ui5_cl_smp_app_505 IMPLEMENTATION.
 
     " the display text is what the column shows - day first, which sorts
     " wrong as text; the real date next to it is what the backend sorts by
-    t_row = VALUE #(
-      ( product = `Notebook 15"` stock = 12 created = `20260115` )
-      ( product = `Monitor 27"`  stock = 5  created = `20251203` )
-      ( product = `USB-C Dock`   stock = 40 created = `20260302` )
-      ( product = `Keyboard`     stock = 71 created = `20250928` )
-      ( product = `Headset`      stock = 9  created = `20260107` ) ).
+    DATA temp3 LIKE t_row.
+    DATA temp4 LIKE LINE OF temp3.
+    DATA temp5 LIKE LINE OF t_row.
+    DATA row LIKE REF TO temp5.
+      DATA temp6 TYPE string.
+      DATA created LIKE temp6.
+    CLEAR temp3.
+    
+    temp4-product = `Notebook 15"`.
+    temp4-stock = 12.
+    temp4-created = `20260115`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `Monitor 27"`.
+    temp4-stock = 5.
+    temp4-created = `20251203`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `USB-C Dock`.
+    temp4-stock = 40.
+    temp4-created = `20260302`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `Keyboard`.
+    temp4-stock = 71.
+    temp4-created = `20250928`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product = `Headset`.
+    temp4-stock = 9.
+    temp4-created = `20260107`.
+    INSERT temp4 INTO TABLE temp3.
+    t_row = temp3.
 
-    LOOP AT t_row REFERENCE INTO DATA(row).
-      DATA(created) = CONV string( row->created ).
+    
+    
+    LOOP AT t_row REFERENCE INTO row.
+      
+      temp6 = row->created.
+      
+      created = temp6.
       row->created_text = |{ created+6(2) }.{ created+4(2) }.{ created(4) }|.
     ENDLOOP.
 

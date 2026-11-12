@@ -23,7 +23,7 @@ CLASS z2ui5_cl_smp_app_047 DEFINITION PUBLIC.
     DATA date    TYPE d.
     DATA time    TYPE t.
 
-    DATA mt_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -37,45 +37,71 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+    DATA t_skipped TYPE z2ui5_if_client=>ty_t_model_skip.
+      FIELD-SYMBOLS <temp1> LIKE LINE OF t_skipped.
+      DATA temp2 LIKE sy-tabix.
+      DATA temp3 LIKE mt_tab.
+      DATA temp4 LIKE LINE OF temp3.
+          DATA temp5 TYPE i.
+          DATA temp6 LIKE dec_sum.
 
     me->client = client.
 
     " text typed into an Input bound to TYPE i or p does not dump: the framework
     " keeps the old number and names the field in t_model_skipped - so the
     " sum would silently use a value the screen no longer shows
-    DATA(t_skipped) = client->get( )-t_model_skipped.
+    
+    t_skipped = client->get( )-t_model_skipped.
     IF t_skipped IS NOT INITIAL.
-      client->message_box_display( text = |'{ t_skipped[ 1 ]-value }' is no number this field can hold - it keeps its old value.|
+      
+      
+      temp2 = sy-tabix.
+      READ TABLE t_skipped INDEX 1 ASSIGNING <temp1>.
+      sy-tabix = temp2.
+      IF sy-subrc <> 0.
+        ASSERT 1 = 0.
+      ENDIF.
+      client->message_box_display( text = |'{ <temp1>-value }' is no number this field can hold - it keeps its old value.|
                                    type = `error` ).
       RETURN.
     ENDIF.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       date = sy-datum.
       time = sy-uzeit.
       dec1 = - 1 / 3.
       dec2 = 2 / 3.
-      mt_tab = VALUE #( ( date = sy-datum time = sy-uzeit ) ).
+      
+      CLEAR temp3.
+      
+      temp4-date = sy-datum.
+      temp4-time = sy-uzeit.
+      INSERT temp4 INTO TABLE temp3.
+      mt_tab = temp3.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `BUTTON_INT` ).
+    ELSEIF client->check_on_event( `BUTTON_INT` ) IS NOT INITIAL.
       " both summands are typed by the user - their sum can leave the range
       " of TYPE i even when each of them fits
       TRY.
           int_sum = int1 + int2.
         CATCH cx_sy_arithmetic_overflow cx_sy_conversion_overflow.
-          int_sum = VALUE #( ).
+          
+          CLEAR temp5.
+          int_sum = temp5.
           client->message_box_display( text = `The sum does not fit TYPE i.`
                                        type = `error` ).
       ENDTRY.
-    ELSEIF client->check_on_event( `BUTTON_DEC` ).
+    ELSEIF client->check_on_event( `BUTTON_DEC` ) IS NOT INITIAL.
       TRY.
           dec_sum = dec1 + dec2.
         CATCH cx_sy_arithmetic_overflow cx_sy_conversion_overflow.
-          dec_sum = VALUE #( ).
+          
+          CLEAR temp6.
+          dec_sum = temp6.
           client->message_box_display( text = `The sum does not fit TYPE p LENGTH 10 DECIMALS 4.`
                                        type = `error` ).
       ENDTRY.
@@ -86,7 +112,9 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    page = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -145,7 +173,8 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
             )->tag( `Input`
                 )->a( n = `value` v = client->_bind( time ) ).
 
-    DATA(tab) = page->ele( `ScrollContainer`
+    
+    tab = page->ele( `ScrollContainer`
         )->a( n = `height`   v = `70%`
         )->a( n = `vertical` b = abap_true
         )->ele( `Table`

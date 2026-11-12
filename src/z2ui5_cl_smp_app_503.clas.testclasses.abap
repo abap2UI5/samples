@@ -18,7 +18,7 @@ CLASS ltcl_gross_amount IMPLEMENTATION.
 
     " the app class instantiated like any other class - the test needs no
     " client, no HTTP handler and no frontend to build one
-    cut = NEW #( ).
+    CREATE OBJECT cut.
 
   ENDMETHOD.
 

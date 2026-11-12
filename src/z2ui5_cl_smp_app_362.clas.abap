@@ -13,7 +13,7 @@ CLASS z2ui5_cl_smp_app_362 DEFINITION PUBLIC.
         descr TYPE string,
         info  TYPE string,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -33,12 +33,12 @@ CLASS z2ui5_cl_smp_app_362 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -47,13 +47,17 @@ CLASS z2ui5_cl_smp_app_362 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Scroll - Scroll to a Pixel Position`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -64,7 +68,8 @@ CLASS z2ui5_cl_smp_app_362 IMPLEMENTATION.
         )->a( n = `text` v = `Toolbar buttons scroll the page to a specific pixel position. Refresh keeps the current position by reading client->get( )-s_scroll-main and pushing it back via SCROLL_TO.`
         )->a( n = `type` v = `Information` ).
 
-    DATA(table) = page->ele( `Table`
+    
+    table = page->ele( `Table`
         )->a( n = `items`      v = client->_bind( t_tab )
         )->a( n = `headerText` v = `100 entries`
         )->a( n = `sticky`     v = `ColumnHeaders,HeaderToolbar` ).
@@ -123,28 +128,55 @@ CLASS z2ui5_cl_smp_app_362 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE string_table.
+        DATA temp3 TYPE string_table.
+        DATA temp5 TYPE string_table.
+        DATA temp7 TYPE string_table.
 
     " The SCROLL_TO client event sets scrollTop / scrollLeft by pixel.
     " args: ( control-id, scrollTop, scrollLeft, behavior )
     " behavior is one of: "auto" (default, instant), "smooth", "instant".
     CASE client->get_event( ).
       WHEN `SCROLL_TOP`.
+        
+        CLEAR temp1.
+        INSERT `id_page` INTO TABLE temp1.
+        INSERT `0` INTO TABLE temp1.
+        INSERT `0` INTO TABLE temp1.
+        INSERT `smooth` INTO TABLE temp1.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-scroll_to
-            t_arg = VALUE #( ( `id_page` ) ( `0` ) ( `0` ) ( `smooth` ) ) ).
+            t_arg = temp1 ).
       WHEN `SCROLL_MIDDLE`.
+        
+        CLEAR temp3.
+        INSERT `id_page` INTO TABLE temp3.
+        INSERT `1500` INTO TABLE temp3.
+        INSERT `0` INTO TABLE temp3.
+        INSERT `smooth` INTO TABLE temp3.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-scroll_to
-            t_arg = VALUE #( ( `id_page` ) ( `1500` ) ( `0` ) ( `smooth` ) ) ).
+            t_arg = temp3 ).
       WHEN `SCROLL_BOTTOM`.
+        
+        CLEAR temp5.
+        INSERT `id_page` INTO TABLE temp5.
+        INSERT `99999` INTO TABLE temp5.
+        INSERT `0` INTO TABLE temp5.
+        INSERT `smooth` INTO TABLE temp5.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-scroll_to
-            t_arg = VALUE #( ( `id_page` ) ( `99999` ) ( `0` ) ( `smooth` ) ) ).
+            t_arg = temp5 ).
       WHEN `SCROLL_JUMP`.
         " Same target as middle but without smooth - instant snap.
+        
+        CLEAR temp7.
+        INSERT `id_page` INTO TABLE temp7.
+        INSERT `1500` INTO TABLE temp7.
+        INSERT `0` INTO TABLE temp7.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-scroll_to
-            t_arg = VALUE #( ( `id_page` ) ( `1500` ) ( `0` ) ) ).
+            t_arg = temp7 ).
       WHEN `REFRESH`.
         " The redraw of the view resets the scroll position.
         " The current scroll info comes in on every roundtrip via
@@ -160,28 +192,43 @@ CLASS z2ui5_cl_smp_app_362 IMPLEMENTATION.
 
   METHOD restore_scroll.
 
-    DATA(scroll) = client->get( )-s_scroll-main.
+    DATA scroll TYPE z2ui5_if_client=>ty_s_get-s_scroll-main.
+    DATA temp9 TYPE string_table.
+    DATA temp1 LIKE LINE OF temp9.
+    DATA temp2 LIKE LINE OF temp9.
+    scroll = client->get( )-s_scroll-main.
 
     IF scroll-id IS INITIAL.
       RETURN.
     ENDIF.
 
+    
+    CLEAR temp9.
+    INSERT scroll-id INTO TABLE temp9.
+    
+    temp1 = |{ scroll-y }|.
+    INSERT temp1 INTO TABLE temp9.
+    
+    temp2 = |{ scroll-x }|.
+    INSERT temp2 INTO TABLE temp9.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-scroll_to
-        t_arg = VALUE #( ( scroll-id )
-                         ( |{ scroll-y }| )
-                         ( |{ scroll-x }| ) ) ).
+        t_arg = temp9 ).
 
   ENDMETHOD.
 
 
   METHOD model_init.
+      DATA temp11 TYPE z2ui5_cl_smp_app_362=>ty_s_row.
 
     DO 100 TIMES.
-      INSERT VALUE #( title = |Row { sy-index }|
-                      value = `red`
-                      info  = `completed`
-                      descr = `this is a description` )
+      
+      CLEAR temp11.
+      temp11-title = |Row { sy-index }|.
+      temp11-value = `red`.
+      temp11-info = `completed`.
+      temp11-descr = `this is a description`.
+      INSERT temp11
              INTO TABLE t_tab.
     ENDDO.
 

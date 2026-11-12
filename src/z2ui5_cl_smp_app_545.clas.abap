@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_545 DEFINITION PUBLIC.
         amount   TYPE p LENGTH 15 DECIMALS 2,
         currency TYPE string,
       END OF ty_s_sale.
-    TYPES ty_t_sales TYPE STANDARD TABLE OF ty_s_sale WITH EMPTY KEY.
+    TYPES ty_t_sales TYPE STANDARD TABLE OF ty_s_sale WITH DEFAULT KEY.
     TYPES:
       BEGIN OF ty_s_node,
         name     TYPE string,
@@ -27,19 +27,19 @@ CLASS z2ui5_cl_smp_app_545 DEFINITION PUBLIC.
     TYPES BEGIN OF ty_s_country.
         INCLUDE TYPE ty_s_node.
     TYPES:
-        nodes TYPE STANDARD TABLE OF ty_s_node WITH EMPTY KEY,
+        nodes TYPE STANDARD TABLE OF ty_s_node WITH DEFAULT KEY,
       END OF ty_s_country.
     TYPES BEGIN OF ty_s_region.
         INCLUDE TYPE ty_s_node.
     TYPES:
-        nodes TYPE STANDARD TABLE OF ty_s_country WITH EMPTY KEY,
+        nodes TYPE STANDARD TABLE OF ty_s_country WITH DEFAULT KEY,
       END OF ty_s_region.
     TYPES BEGIN OF ty_s_total.
         INCLUDE TYPE ty_s_node.
     TYPES:
-        nodes TYPE STANDARD TABLE OF ty_s_region WITH EMPTY KEY,
+        nodes TYPE STANDARD TABLE OF ty_s_region WITH DEFAULT KEY,
       END OF ty_s_total.
-    TYPES ty_t_tree TYPE STANDARD TABLE OF ty_s_total WITH EMPTY KEY.
+    TYPES ty_t_tree TYPE STANDARD TABLE OF ty_s_total WITH DEFAULT KEY.
 
     CONSTANTS:
       BEGIN OF cs_kind,
@@ -76,21 +76,32 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp10 TYPE string_table.
+      DATA temp12 TYPE string_table.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `EXPAND` ).
+    ELSEIF client->check_on_event( `EXPAND` ) IS NOT INITIAL.
       " three levels below the grand totals: regions, countries, sales
+      
+      CLEAR temp10.
+      INSERT `tree` INTO TABLE temp10.
+      INSERT `expandToLevel` INTO TABLE temp10.
+      INSERT `3` INTO TABLE temp10.
       client->follow_up_action( val   = client->cs_event-control_by_id
-                                t_arg = VALUE #( ( `tree` ) ( `expandToLevel` ) ( `3` ) ) ).
-    ELSEIF client->check_on_event( `COLLAPSE` ).
+                                t_arg = temp10 ).
+    ELSEIF client->check_on_event( `COLLAPSE` ) IS NOT INITIAL.
+      
+      CLEAR temp12.
+      INSERT `tree` INTO TABLE temp12.
+      INSERT `collapseAll` INTO TABLE temp12.
       client->follow_up_action( val   = client->cs_event-control_by_id
-                                t_arg = VALUE #( ( `tree` ) ( `collapseAll` ) ) ).
+                                t_arg = temp12 ).
     ENDIF.
 
   ENDMETHOD.
@@ -98,14 +109,19 @@ CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - Collapsible Subtotals in a TreeTable`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -122,7 +138,8 @@ CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
 
     " arrayNames tells the JSON model which component holds the children;
     " the first level - the grand totals - starts expanded
-    DATA(table) = page->ele( n = `TreeTable` ns = `table`
+    
+    table = page->ele( n = `TreeTable` ns = `table`
         )->a( n = `id`              v = `tree`
         )->a( n = `rows`            v = |\{ path: '{ client->_bind_path( t_tree ) }', | &&
                                         |parameters: \{ arrayNames: ['NODES'], numberOfExpandedLevels: 1 \} \}|
@@ -151,7 +168,8 @@ CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
 
     " no sortProperty and no filterProperty: the sums belong to the tree as
     " the backend built it
-    DATA(columns) = table->ele( n = `columns` ns = `table` ).
+    
+    columns = table->ele( n = `columns` ns = `table` ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width` v = `18rem`
@@ -199,38 +217,62 @@ CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
     FIELD-SYMBOLS <total>   TYPE ty_s_total.
     FIELD-SYMBOLS <region>  TYPE ty_s_region.
     FIELD-SYMBOLS <country> TYPE ty_s_country.
+    DATA s_sale LIKE LINE OF t_sorted.
+        DATA temp14 TYPE z2ui5_cl_smp_app_545=>ty_s_total.
+        DATA temp15 TYPE z2ui5_cl_smp_app_545=>ty_s_region.
+        DATA temp16 TYPE z2ui5_cl_smp_app_545=>ty_s_country.
+      DATA temp17 TYPE z2ui5_cl_smp_app_545=>ty_s_node.
 
     t_sorted = t_sales.
     SORT t_sorted STABLE BY currency.
 
-    LOOP AT t_sorted INTO DATA(s_sale).
+    
+    LOOP AT t_sorted INTO s_sale.
 
       READ TABLE result ASSIGNING <total> WITH KEY currency = s_sale-currency.
       IF sy-subrc <> 0.
-        APPEND VALUE #( name = `Grand Total` currency = s_sale-currency kind = cs_kind-total ) TO result ASSIGNING <total>.
+        
+        CLEAR temp14.
+        temp14-name = `Grand Total`.
+        temp14-currency = s_sale-currency.
+        temp14-kind = cs_kind-total.
+        APPEND temp14 TO result ASSIGNING <total>.
       ENDIF.
       <total>-quantity = <total>-quantity + s_sale-quantity.
       <total>-amount   = <total>-amount + s_sale-amount.
 
       READ TABLE <total>-nodes ASSIGNING <region> WITH KEY name = s_sale-region.
       IF sy-subrc <> 0.
-        APPEND VALUE #( name = s_sale-region currency = s_sale-currency kind = cs_kind-subtotal ) TO <total>-nodes ASSIGNING <region>.
+        
+        CLEAR temp15.
+        temp15-name = s_sale-region.
+        temp15-currency = s_sale-currency.
+        temp15-kind = cs_kind-subtotal.
+        APPEND temp15 TO <total>-nodes ASSIGNING <region>.
       ENDIF.
       <region>-quantity = <region>-quantity + s_sale-quantity.
       <region>-amount   = <region>-amount + s_sale-amount.
 
       READ TABLE <region>-nodes ASSIGNING <country> WITH KEY name = s_sale-country.
       IF sy-subrc <> 0.
-        APPEND VALUE #( name = s_sale-country currency = s_sale-currency kind = cs_kind-subtotal ) TO <region>-nodes ASSIGNING <country>.
+        
+        CLEAR temp16.
+        temp16-name = s_sale-country.
+        temp16-currency = s_sale-currency.
+        temp16-kind = cs_kind-subtotal.
+        APPEND temp16 TO <region>-nodes ASSIGNING <country>.
       ENDIF.
       <country>-quantity = <country>-quantity + s_sale-quantity.
       <country>-amount   = <country>-amount + s_sale-amount.
 
-      APPEND VALUE #( name     = s_sale-product
-                      quantity = s_sale-quantity
-                      amount   = s_sale-amount
-                      currency = s_sale-currency
-                      kind     = `` ) TO <country>-nodes.
+      
+      CLEAR temp17.
+      temp17-name = s_sale-product.
+      temp17-quantity = s_sale-quantity.
+      temp17-amount = s_sale-amount.
+      temp17-currency = s_sale-currency.
+      temp17-kind = ``.
+      APPEND temp17 TO <country>-nodes.
 
     ENDLOOP.
 
@@ -239,27 +281,109 @@ CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
 
   METHOD model_init.
 
-    DATA(t_sales) = VALUE ty_t_sales(
-        ( region = `EMEA`     country = `Germany`     product = `Notebook`         quantity = 10 amount = `12000.00` currency = `EUR` )
-        ( region = `APAC`     country = `Japan`       product = `Antivirus`        quantity = 50 amount = `2500.00`  currency = `USD` )
-        ( region = `EMEA`     country = `Switzerland` product = `Monitor`          quantity = 8  amount = `2400.00`  currency = `CHF` )
-        ( region = `Americas` country = `USA`         product = `Server`           quantity = 2  amount = `18000.00` currency = `USD` )
-        ( region = `EMEA`     country = `Germany`     product = `Office Suite`     quantity = 25 amount = `4500.00`  currency = `EUR` )
-        ( region = `Americas` country = `Canada`      product = `Monitor`          quantity = 5  amount = `1500.00`  currency = `CAD` )
-        ( region = `EMEA`     country = `France`      product = `Notebook`         quantity = 6  amount = `7200.00`  currency = `EUR` )
-        ( region = `APAC`     country = `Australia`   product = `Training`         quantity = 2  amount = `3000.00`  currency = `USD` )
-        ( region = `EMEA`     country = `Switzerland` product = `Installation`     quantity = 3  amount = `1350.00`  currency = `CHF` )
-        ( region = `Americas` country = `USA`         product = `Support Contract` quantity = 12 amount = `6000.00`  currency = `USD` )
-        ( region = `APAC`     country = `Japan`       product = `Notebook`         quantity = 4  amount = `4800.00`  currency = `USD` )
-        ( region = `Americas` country = `Canada`      product = `Office Suite`     quantity = 40 amount = `7600.00`  currency = `CAD` ) ).
+    DATA temp18 TYPE ty_t_sales.
+    DATA temp19 LIKE LINE OF temp18.
+    DATA t_sales LIKE temp18.
+    DATA s_total LIKE LINE OF t_tree.
+      DATA s_region LIKE LINE OF s_total-nodes.
+    CLEAR temp18.
+    
+    temp19-region = `EMEA`.
+    temp19-country = `Germany`.
+    temp19-product = `Notebook`.
+    temp19-quantity = 10.
+    temp19-amount = `12000.00`.
+    temp19-currency = `EUR`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `APAC`.
+    temp19-country = `Japan`.
+    temp19-product = `Antivirus`.
+    temp19-quantity = 50.
+    temp19-amount = `2500.00`.
+    temp19-currency = `USD`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `EMEA`.
+    temp19-country = `Switzerland`.
+    temp19-product = `Monitor`.
+    temp19-quantity = 8.
+    temp19-amount = `2400.00`.
+    temp19-currency = `CHF`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `Americas`.
+    temp19-country = `USA`.
+    temp19-product = `Server`.
+    temp19-quantity = 2.
+    temp19-amount = `18000.00`.
+    temp19-currency = `USD`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `EMEA`.
+    temp19-country = `Germany`.
+    temp19-product = `Office Suite`.
+    temp19-quantity = 25.
+    temp19-amount = `4500.00`.
+    temp19-currency = `EUR`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `Americas`.
+    temp19-country = `Canada`.
+    temp19-product = `Monitor`.
+    temp19-quantity = 5.
+    temp19-amount = `1500.00`.
+    temp19-currency = `CAD`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `EMEA`.
+    temp19-country = `France`.
+    temp19-product = `Notebook`.
+    temp19-quantity = 6.
+    temp19-amount = `7200.00`.
+    temp19-currency = `EUR`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `APAC`.
+    temp19-country = `Australia`.
+    temp19-product = `Training`.
+    temp19-quantity = 2.
+    temp19-amount = `3000.00`.
+    temp19-currency = `USD`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `EMEA`.
+    temp19-country = `Switzerland`.
+    temp19-product = `Installation`.
+    temp19-quantity = 3.
+    temp19-amount = `1350.00`.
+    temp19-currency = `CHF`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `Americas`.
+    temp19-country = `USA`.
+    temp19-product = `Support Contract`.
+    temp19-quantity = 12.
+    temp19-amount = `6000.00`.
+    temp19-currency = `USD`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `APAC`.
+    temp19-country = `Japan`.
+    temp19-product = `Notebook`.
+    temp19-quantity = 4.
+    temp19-amount = `4800.00`.
+    temp19-currency = `USD`.
+    INSERT temp19 INTO TABLE temp18.
+    temp19-region = `Americas`.
+    temp19-country = `Canada`.
+    temp19-product = `Office Suite`.
+    temp19-quantity = 40.
+    temp19-amount = `7600.00`.
+    temp19-currency = `CAD`.
+    INSERT temp19 INTO TABLE temp18.
+    
+    t_sales = temp18.
 
     t_tree = tree_build( t_sales ).
 
     " room for every node, so expanding all scrolls nothing out of sight
     visible_rows = lines( t_sales ).
-    LOOP AT t_tree INTO DATA(s_total).
+    
+    LOOP AT t_tree INTO s_total.
       visible_rows = visible_rows + 1.
-      LOOP AT s_total-nodes INTO DATA(s_region).
+      
+      LOOP AT s_total-nodes INTO s_region.
         visible_rows = visible_rows + 1 + lines( s_region-nodes ).
       ENDLOOP.
     ENDLOOP.

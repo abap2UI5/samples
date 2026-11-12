@@ -18,7 +18,7 @@ CLASS z2ui5_cl_smp_app_508 DEFINITION PUBLIC.
         product TYPE string,
         stock   TYPE i,
       END OF ty_s_row.
-    DATA t_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_row TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
     DATA quantity TYPE i.
 
@@ -34,18 +34,32 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_508 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_row.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       quantity = 120.
-      t_row    = VALUE #( ( product = `Monitor 27"`  stock = 5 )
-                          ( product = `Headset`      stock = 9 )
-                          ( product = `Keyboard`     stock = 71 )
-                          ( product = `Notebook 15"` stock = 12 ) ).
+      
+      CLEAR temp1.
+      
+      temp2-product = `Monitor 27"`.
+      temp2-stock = 5.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Headset`.
+      temp2-stock = 9.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Keyboard`.
+      temp2-stock = 71.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Notebook 15"`.
+      temp2-stock = 12.
+      INSERT temp2 INTO TABLE temp1.
+      t_row    = temp1.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -54,7 +68,10 @@ CLASS z2ui5_cl_smp_app_508 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -62,7 +79,8 @@ CLASS z2ui5_cl_smp_app_508 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Binding - Path Only (_bind_path)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -77,7 +95,8 @@ CLASS z2ui5_cl_smp_app_508 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+    
+    form = page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `One attribute, two spellings`
         )->a( n = `editable` b = abap_true
         )->ele( n = `content` ns = `form` ).

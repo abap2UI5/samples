@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_547 DEFINITION PUBLIC.
         amount   TYPE p LENGTH 10 DECIMALS 2,
         created  TYPE d,
       END OF ty_s_order.
-    TYPES ty_t_order TYPE STANDARD TABLE OF ty_s_order WITH EMPTY KEY.
+    TYPES ty_t_order TYPE STANDARD TABLE OF ty_s_order WITH DEFAULT KEY.
 
     "! all 10,000 rows - they stay here, the browser gets a window of them
     DATA t_order TYPE ty_t_order.
@@ -36,12 +36,12 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `OPEN` ).
+    ELSEIF client->check_on_event( `OPEN` ) IS NOT INITIAL.
       on_open( ).
     ENDIF.
 
@@ -50,14 +50,22 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA total TYPE string.
+    DATA temp1 TYPE z2ui5_if_client=>ty_t_bind_tab_sort.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - 10,000 Rows, Column Sort and Filter on Server`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -75,15 +83,22 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " the window state the server sends along: the rows the filter lets through
-    DATA(total) = |\{/__WINDOW{ client->_bind_path( t_order ) }/TOTAL\}|.
+    
+    total = |\{/__WINDOW{ client->_bind_path( t_order ) }/TOTAL\}|.
 
     " t_sort: the app's own order, the newest first - the column menu sorts
     " anew on the server, and a render with the same t_sort keeps that
-    DATA(table) = page->ele( n = `Table` ns = `table`
+    
+    CLEAR temp1.
+    
+    temp2-path = `CREATED`.
+    temp2-descending = abap_true.
+    INSERT temp2 INTO TABLE temp1.
+    
+    table = page->ele( n = `Table` ns = `table`
         )->a( n = `rows`            v = client->window_bind_tab( val    = t_order
                                                                  window = 100
-                                                                 t_sort = VALUE #( ( path       = `CREATED`
-                                                                                     descending = abap_true ) ) )
+                                                                 t_sort = temp1 )
         )->a( n = `selectionMode`   v = `None`
         )->a( n = `visibleRowCount` v = `15`
         )->a( n = `class`           v = `sapUiSmallMarginBeginEnd` ).
@@ -99,7 +114,8 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
     " sortProperty and filterProperty switch the column menu on - the
     " binding sends what the user picks to the server
-    DATA(columns) = table->ele( n = `columns` ns = `table` ).
+    
+    columns = table->ele( n = `columns` ns = `table` ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `6rem`
@@ -168,13 +184,29 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
     " the link names the row as the grid shows it - sorted and filtered by
     " the server, so a position, not a row of t_order: window_get_row( )
     " answers which row it is
-    DATA(row) = client->window_get_row( val = t_order
-                                        row = CONV i( client->get_event_arg( ) ) + 1 ).
+    DATA temp3 TYPE i.
+    DATA row TYPE i.
+    DATA s_order LIKE LINE OF t_order.
+    FIELD-SYMBOLS <temp1> LIKE LINE OF t_order.
+    DATA temp2 LIKE sy-tabix.
+    temp3 = client->get_event_arg( ).
+    
+    row = client->window_get_row( val = t_order
+                                        row = temp3 + 1 ).
     IF row = 0.
       RETURN.
     ENDIF.
 
-    DATA(s_order) = t_order[ row ].
+    
+    
+    
+    temp2 = sy-tabix.
+    READ TABLE t_order INDEX row ASSIGNING <temp1>.
+    sy-tabix = temp2.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
+    s_order = <temp1>.
     client->message_box_display( |Order { s_order-id }: { s_order-customer }, { s_order-city }, | &&
                                  |{ s_order-status }, { s_order-amount } EUR.| ).
 
@@ -183,21 +215,98 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
   METHOD model_init.
 
-    DATA(t_customer) = VALUE string_table( ( `Adler GmbH` ) ( `Berger AG` ) ( `Calder Ltd` ) ( `Dumont SA` ) ( `Eriksen AB` )
-                                           ( `Ferrari Srl` ) ( `Garcia SL` ) ( `Hansen A/S` ) ( `Ivanov OOO` ) ( `Jansen BV` ) ).
-    DATA(t_city) = VALUE string_table( ( `Berlin` ) ( `Zurich` ) ( `London` ) ( `Paris` ) ( `Stockholm` )
-                                       ( `Milan` ) ( `Madrid` ) ( `Copenhagen` ) ( `Vienna` ) ( `Amsterdam` ) ).
-    DATA(t_status) = VALUE string_table( ( `New` ) ( `In Process` ) ( `Shipped` ) ( `Delivered` ) ).
-    DATA(start) = CONV d( `20250101` ).
+    DATA temp4 TYPE string_table.
+    DATA t_customer LIKE temp4.
+    DATA temp6 TYPE string_table.
+    DATA t_city LIKE temp6.
+    DATA temp8 TYPE string_table.
+    DATA t_status LIKE temp8.
+    DATA temp10 TYPE d.
+    DATA start LIKE temp10.
+      DATA index LIKE sy-index.
+      DATA temp11 TYPE z2ui5_cl_smp_app_547=>ty_s_order.
+      FIELD-SYMBOLS <temp3> LIKE LINE OF t_customer.
+      DATA temp5 LIKE sy-tabix.
+      FIELD-SYMBOLS <temp6> LIKE LINE OF t_city.
+      DATA temp7 LIKE sy-tabix.
+      FIELD-SYMBOLS <temp8> LIKE LINE OF t_status.
+      DATA temp9 LIKE sy-tabix.
+    CLEAR temp4.
+    INSERT `Adler GmbH` INTO TABLE temp4.
+    INSERT `Berger AG` INTO TABLE temp4.
+    INSERT `Calder Ltd` INTO TABLE temp4.
+    INSERT `Dumont SA` INTO TABLE temp4.
+    INSERT `Eriksen AB` INTO TABLE temp4.
+    INSERT `Ferrari Srl` INTO TABLE temp4.
+    INSERT `Garcia SL` INTO TABLE temp4.
+    INSERT `Hansen A/S` INTO TABLE temp4.
+    INSERT `Ivanov OOO` INTO TABLE temp4.
+    INSERT `Jansen BV` INTO TABLE temp4.
+    
+    t_customer = temp4.
+    
+    CLEAR temp6.
+    INSERT `Berlin` INTO TABLE temp6.
+    INSERT `Zurich` INTO TABLE temp6.
+    INSERT `London` INTO TABLE temp6.
+    INSERT `Paris` INTO TABLE temp6.
+    INSERT `Stockholm` INTO TABLE temp6.
+    INSERT `Milan` INTO TABLE temp6.
+    INSERT `Madrid` INTO TABLE temp6.
+    INSERT `Copenhagen` INTO TABLE temp6.
+    INSERT `Vienna` INTO TABLE temp6.
+    INSERT `Amsterdam` INTO TABLE temp6.
+    
+    t_city = temp6.
+    
+    CLEAR temp8.
+    INSERT `New` INTO TABLE temp8.
+    INSERT `In Process` INTO TABLE temp8.
+    INSERT `Shipped` INTO TABLE temp8.
+    INSERT `Delivered` INTO TABLE temp8.
+    
+    t_status = temp8.
+    
+    temp10 = `20250101`.
+    
+    start = temp10.
 
     DO 10000 TIMES.
-      DATA(index) = sy-index.
-      APPEND VALUE #( id       = index
-                      customer = t_customer[ ( ( index * 7 ) MOD 10 ) + 1 ]
-                      city     = t_city[ ( ( index * 3 ) MOD 10 ) + 1 ]
-                      status   = t_status[ ( index MOD 4 ) + 1 ]
-                      amount   = ( ( index * 6151 ) MOD 500000 ) / 100
-                      created  = start + ( ( index * 13 ) MOD 365 ) ) TO t_order.
+      
+      index = sy-index.
+      
+      CLEAR temp11.
+      temp11-id = index.
+      
+      
+      temp5 = sy-tabix.
+      READ TABLE t_customer INDEX ( ( index * 7 ) MOD 10 ) + 1 ASSIGNING <temp3>.
+      sy-tabix = temp5.
+      IF sy-subrc <> 0.
+        ASSERT 1 = 0.
+      ENDIF.
+      temp11-customer = <temp3>.
+      
+      
+      temp7 = sy-tabix.
+      READ TABLE t_city INDEX ( ( index * 3 ) MOD 10 ) + 1 ASSIGNING <temp6>.
+      sy-tabix = temp7.
+      IF sy-subrc <> 0.
+        ASSERT 1 = 0.
+      ENDIF.
+      temp11-city = <temp6>.
+      
+      
+      temp9 = sy-tabix.
+      READ TABLE t_status INDEX ( index MOD 4 ) + 1 ASSIGNING <temp8>.
+      sy-tabix = temp9.
+      IF sy-subrc <> 0.
+        ASSERT 1 = 0.
+      ENDIF.
+      temp11-status = <temp8>.
+      temp11-amount = ( ( index * 6151 ) MOD 500000 ) / 100.
+      temp11-created = start + ( ( index * 13 ) MOD 365 ).
+      APPEND temp11 TO t_order.
     ENDDO.
 
   ENDMETHOD.

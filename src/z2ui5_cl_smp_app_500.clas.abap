@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_500 DEFINITION PUBLIC.
         cityfrom TYPE string,
         cityto   TYPE string,
       END OF ty_s_row.
-    TYPES ty_t_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    TYPES ty_t_row TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
     DATA t_table TYPE ty_t_row.
 
   PROTECTED SECTION.
@@ -37,15 +37,15 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       " the popup app handed control back - take what it edited, then
       " re-display, because the view slot is this app's again
       read_back_from_popup( ).
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -54,14 +54,18 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popup - Edit a Row in a Second App`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -75,7 +79,8 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(table) = page->ele( `Table`
+    
+    table = page->ele( `Table`
         )->a( n = `items`   v = client->_bind( t_table )
         )->a( n = `growing` b = abap_true
         )->a( n = `width`   v = `auto` ).
@@ -145,14 +150,17 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE i.
 
     CASE client->get_event( ).
 
       WHEN `ROW_SELECT`.
         " the row press carries its ROW_ID, so the popup app is handed the
         " row to edit rather than a screen position
+        
+        temp1 = client->get_event_arg( ).
         client->nav_app_call( z2ui5_cl_smp_app_501=>factory( t_table = t_table
-                                                             row_id  = CONV #( client->get_event_arg( ) )
+                                                             row_id  = temp1
                                                              edit    = abap_true ) ).
 
       WHEN `BUTTON_ADD`.
@@ -177,20 +185,45 @@ CLASS z2ui5_cl_smp_app_500 IMPLEMENTATION.
 
   METHOD on_init.
 
-    t_table = VALUE #( ( row_id = 1 carrid = `LH` connid = `0400` cityfrom = `FRANKFURT` cityto = `NEW YORK` )
-                       ( row_id = 2 carrid = `UA` connid = `0941` cityfrom = `FRANKFURT` cityto = `SAN FRANCISCO` )
-                       ( row_id = 3 carrid = `AA` connid = `0017` cityfrom = `NEW YORK`  cityto = `SAN FRANCISCO` ) ).
+    DATA temp2 TYPE z2ui5_cl_smp_app_500=>ty_t_row.
+    DATA temp3 LIKE LINE OF temp2.
+    CLEAR temp2.
+    
+    temp3-row_id = 1.
+    temp3-carrid = `LH`.
+    temp3-connid = `0400`.
+    temp3-cityfrom = `FRANKFURT`.
+    temp3-cityto = `NEW YORK`.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-row_id = 2.
+    temp3-carrid = `UA`.
+    temp3-connid = `0941`.
+    temp3-cityfrom = `FRANKFURT`.
+    temp3-cityto = `SAN FRANCISCO`.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-row_id = 3.
+    temp3-carrid = `AA`.
+    temp3-connid = `0017`.
+    temp3-cityfrom = `NEW YORK`.
+    temp3-cityto = `SAN FRANCISCO`.
+    INSERT temp3 INTO TABLE temp2.
+    t_table = temp2.
     next_id = 4.
 
   ENDMETHOD.
 
 
   METHOD read_back_from_popup.
+        DATA temp4 TYPE REF TO z2ui5_cl_smp_app_501.
+        DATA app LIKE temp4.
 
     " get_app_prev( ) hands over the INSTANCE that was called, so its edited
     " table is read straight off it - no payload has to travel back
     TRY.
-        DATA(app) = CAST z2ui5_cl_smp_app_501( client->get_app_prev( ) ).
+        
+        temp4 ?= client->get_app_prev( ).
+        
+        app = temp4.
         t_table = app->t_table.
 
       CATCH cx_root ##NO_HANDLER.

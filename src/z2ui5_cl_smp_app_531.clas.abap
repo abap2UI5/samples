@@ -28,25 +28,41 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_531 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 TYPE REF TO z2ui5_cl_smp_app_533.
+      DATA temp2 TYPE string.
+      DATA mode LIKE temp2.
+      DATA temp3 TYPE string_table.
 
     me->client = client.
 
     " this app names no transition of its own: a way back TO it plays what
     " the page being left arrived with
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( `GO` ).
+    ELSEIF client->check_on_event( `GO` ) IS NOT INITIAL.
       client->nav_app_call( z2ui5_cl_smp_app_532=>factory( transition = client->get_event_arg( ) level = 1 ) ).
 
-    ELSEIF client->check_on_event( `WIZARD` ).
-      client->nav_app_call( NEW z2ui5_cl_smp_app_533( ) ).
+    ELSEIF client->check_on_event( `WIZARD` ) IS NOT INITIAL.
+      
+      CREATE OBJECT temp1 TYPE z2ui5_cl_smp_app_533.
+      client->nav_app_call( temp1 ).
 
-    ELSEIF client->check_on_event( `ROUTING` ).
+    ELSEIF client->check_on_event( `ROUTING` ) IS NOT INITIAL.
 
       " the Switch wrote the new state before main( ) ran
-      DATA(mode) = COND string( WHEN routing = abap_true THEN client->cs_nav_mode-keep ELSE client->cs_nav_mode-default ).
-      client->follow_up_action( val = client->cs_event-hash_routing t_arg = VALUE #( ( mode ) ) ).
+      
+      IF routing = abap_true.
+        temp2 = client->cs_nav_mode-keep.
+      ELSE.
+        temp2 = client->cs_nav_mode-default.
+      ENDIF.
+      
+      mode = temp2.
+      
+      CLEAR temp3.
+      INSERT mode INTO TABLE temp3.
+      client->follow_up_action( val = client->cs_event-hash_routing t_arg = temp3 ).
 
     ENDIF.
 
@@ -55,13 +71,23 @@ CLASS z2ui5_cl_smp_app_531 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA content TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA buttons TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp5 TYPE string_table.
+    DATA t_transition LIKE temp5.
+    DATA transition LIKE LINE OF t_transition.
+      DATA temp7 TYPE string.
+      DATA name LIKE temp7.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Navigation - Page Transitions (view_display transition)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -75,25 +101,39 @@ CLASS z2ui5_cl_smp_app_531 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(content) = page->ele( `VBox`
+    
+    content = page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin` ).
 
     content->tag( `Title`
         )->a( n = `text`  v = `view_display( transition = ... )`
         )->a( n = `level` v = `H2` ).
 
-    DATA(buttons) = content->ele( `HBox`
+    
+    buttons = content->ele( `HBox`
         )->a( n = `wrap`  v = `Wrap`
         )->a( n = `class` v = `sapUiSmallMarginTop` ).
     " the five cs_transition names, and none at all to compare with
-    DATA(t_transition) = VALUE string_table( ( client->cs_transition-slide )
-                                             ( client->cs_transition-base_slide )
-                                             ( client->cs_transition-fade )
-                                             ( client->cs_transition-flip )
-                                             ( client->cs_transition-show )
-                                             ( `` ) ).
-    LOOP AT t_transition INTO DATA(transition).
-      DATA(name) = COND string( WHEN transition IS INITIAL THEN `none` ELSE transition ).
+    
+    CLEAR temp5.
+    INSERT client->cs_transition-slide INTO TABLE temp5.
+    INSERT client->cs_transition-base_slide INTO TABLE temp5.
+    INSERT client->cs_transition-fade INTO TABLE temp5.
+    INSERT client->cs_transition-flip INTO TABLE temp5.
+    INSERT client->cs_transition-show INTO TABLE temp5.
+    INSERT `` INTO TABLE temp5.
+    
+    t_transition = temp5.
+    
+    LOOP AT t_transition INTO transition.
+      
+      IF transition IS INITIAL.
+        temp7 = `none`.
+      ELSE.
+        temp7 = transition.
+      ENDIF.
+      
+      name = temp7.
       buttons->tag( `Button`
           )->a( n = `id`    t = |go-{ name }|
           )->a( n = `text`  t = name

@@ -15,7 +15,7 @@ CLASS z2ui5_cl_smp_app_028 DEFINITION PUBLIC.
         info     TYPE string,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab   TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab   TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
     DATA running TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -36,12 +36,12 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -50,14 +50,17 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Timer - Refresh the View Every n Seconds`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -95,16 +98,19 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE z2ui5_cl_smp_app_028=>ty_s_row.
 
     CASE client->get_event( ).
 
       WHEN `TIMER_FINISHED`.
         counter = counter + 1.
-        INSERT VALUE #(
-            title = |entry{ counter }|
-            info  = `completed`
-            descr = `this is a description`
-            icon  = `sap-icon://account` )
+        
+        CLEAR temp1.
+        temp1-title = |entry{ counter }|.
+        temp1-info = `completed`.
+        temp1-descr = `this is a description`.
+        temp1-icon = `sap-icon://account`.
+        INSERT temp1
           INTO TABLE t_tab.
 
         IF counter < 3.
@@ -123,14 +129,20 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
 
 
   METHOD on_init.
+    DATA temp2 LIKE t_tab.
+    DATA temp3 LIKE LINE OF temp2.
 
     counter = 1.
     running = abap_true.
-    t_tab = VALUE #(
-        ( title = |entry{ counter }|
-          info  = `completed`
-          descr = `this is a description`
-          icon  = `sap-icon://account` ) ).
+    
+    CLEAR temp2.
+    
+    temp3-title = |entry{ counter }|.
+    temp3-info = `completed`.
+    temp3-descr = `this is a description`.
+    temp3-icon = `sap-icon://account`.
+    INSERT temp3 INTO TABLE temp2.
+    t_tab = temp2.
 
     start_timer( ).
 
@@ -139,9 +151,13 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
 
   METHOD start_timer.
 
+    DATA temp4 TYPE string_table.
+    CLEAR temp4.
+    INSERT `TIMER_FINISHED` INTO TABLE temp4.
+    INSERT `2000` INTO TABLE temp4.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-start_timer
-        t_arg = VALUE #( ( `TIMER_FINISHED` ) ( `2000` ) ) ).
+        t_arg = temp4 ).
 
   ENDMETHOD.
 
