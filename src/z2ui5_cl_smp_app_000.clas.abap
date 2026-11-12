@@ -777,7 +777,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         path = `src` app = `z2ui5_cl_smp_app_173` )
       ( group = `Show many rows` header = `Grid Table`
         sub = `10,000 Rows, Column Sort and Filter on Server`
-        keywords = `large table window windowed _bind_tab t_sort _bind_tab_row _bind_path link grid table scrolling lazy loading server sort server filter column menu sortproperty filterproperty big data 10000 rows performance`
+        keywords = `large table window windowed window_bind_tab t_sort window_get_row _bind_path link grid table scrolling lazy loading server sort server filter column menu sortproperty filterproperty big data 10000 rows performance`
         intro = `Internal tables on screen - the responsive table, the grid table for large sets, lists and trees - with growing, selection, editing and everything a row can carry.`
         path = `src` app = `z2ui5_cl_smp_app_547` )
       ( group = `Show many rows` header = `Grid Table`
@@ -799,7 +799,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Show many rows` header = `List` sub = `StandardListItem, Highlight and Events` keywords = `sap.m.list standardlistitem highlight infostate press selection` intro = `` path = `src` app = `z2ui5_cl_smp_app_048` )
       ( group = `Show many rows` header = `Table`
         sub = `10,000 Rows in Windows, Server Search and Sort (A)`
-        keywords = `large table window windowed _bind_tab _bind_tab_row _bind_path row press details growing paging lazy loading server sort server filter search binding_call follow_up_action big data 10000 rows performance selection`
+        keywords = `large table window windowed window_bind_tab window_get_row _bind_path row press details growing paging lazy loading server sort server filter search binding_call follow_up_action big data 10000 rows performance selection`
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_546` )
       ( group = `Show many rows` header = `Table`

@@ -1,5 +1,5 @@
-" @keywords large table window windowed _bind_tab _bind_tab_row _bind_path row press details growing paging lazy loading server sort server filter search binding_call follow_up_action big data 10000 rows performance selection
-" @summary 10,000 products in a growing sap.m.Table with _bind_tab( ): 200 rows at a time in the browser, search and sort on the server over all rows, the selection back in its own row.
+" @keywords large table window windowed window_bind_tab window_get_row _bind_path row press details growing paging lazy loading server sort server filter search binding_call follow_up_action big data 10000 rows performance selection
+" @summary 10,000 products in a growing sap.m.Table with window_bind_tab( ): 200 rows at a time in the browser, search and sort on the server over all rows, the selection back in its own row.
 CLASS z2ui5_cl_smp_app_546 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -66,11 +66,11 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `The table is bound with _bind_tab( val = t_product window = 200 ): the 10,000 rows stay in ` &&
+        )->a( n = `text`     v = `The table is bound with window_bind_tab( val = t_product window = 200 ): the 10,000 rows stay in ` &&
                    `the app, the browser gets 200 of them and asks the server for the next 200 when More reaches ` &&
                    `the end - without calling the app. The search and the two sort buttons are binding calls, and ` &&
                    `the binding hands them to the server, which sorts and filters all rows. Press a row: the app ` &&
-                   `finds it in its own table with _bind_tab_row( ). Tick some products and order them.`
+                   `finds it in its own table with window_get_row( ). Tick some products and order them.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -80,8 +80,8 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
 
     DATA(table) = page->ele( `Table`
         )->a( n = `id`               v = `products`
-        )->a( n = `items`            v = client->_bind_tab( val    = t_product
-                                                            window = 200 )
+        )->a( n = `items`            v = client->window_bind_tab( val    = t_product
+                                                                  window = 200 )
         )->a( n = `growing`          v = `true`
         )->a( n = `growingThreshold` v = `50`
         )->a( n = `class`            v = `sapUiSmallMarginBeginEnd` ).
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
             )->tag( `Title`
                 )->a( n = `text` v = `Products`
             )->tag( `ObjectNumber`
-                " abap2ui5lint-disable-next-line unknown-binding-path -- /__WINDOW is the window state the framework sends next to a table bound with _bind_tab( )
+                " abap2ui5lint-disable-next-line unknown-binding-path -- /__WINDOW is the window state the framework sends next to a table bound with window_bind_tab( )
                 )->a( n = `number` v = total
                 )->a( n = `unit`   v = `rows`
             )->tag( `ToolbarSpacer`
@@ -182,10 +182,10 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
 
     " the event names the row as the browser shows it - after a search or
     " a sort that is a position in the server's order, not a row of
-    " t_product. _bind_tab_row( ) answers which row it is
+    " t_product. window_get_row( ) answers which row it is
     DATA(position) = CONV i( client->get_event_arg( ) ) + 1.
-    DATA(row) = client->_bind_tab_row( val = t_product
-                                       row = position ).
+    DATA(row) = client->window_get_row( val = t_product
+                                        row = position ).
     IF row = 0.
       RETURN.
     ENDIF.
