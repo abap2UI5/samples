@@ -263,7 +263,7 @@
       "try": true,
       "when": false
     },
-    // The overview app is generated (npm run overview) - its render method is
+    // The overview app is generated (npm run launchpad) - its render method is
     // one long emit, and shortening it means changing the generator's output
     // shape, not the repository's code.
     "method_length": {
