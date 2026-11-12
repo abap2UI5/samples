@@ -1,5 +1,5 @@
-" @keywords large table window windowed _bind_tab t_sort _bind_tab_row _bind_path link grid table scrolling lazy loading server sort server filter column menu sortproperty filterproperty big data 10000 rows performance
-" @summary 10,000 orders in a sap.ui.table.Table with _bind_tab( ): the newest first, the browser holds 100 rows and fetches more as the user scrolls, and the column menu sorts and filters all rows on the server.
+" @keywords large table window windowed window_bind_tab t_sort window_get_row _bind_path link grid table scrolling lazy loading server sort server filter column menu sortproperty filterproperty big data 10000 rows performance
+" @summary 10,000 orders in a sap.ui.table.Table with window_bind_tab( ): the newest first, the browser holds 100 rows and fetches more as the user scrolls, and the column menu sorts and filters all rows on the server.
 CLASS z2ui5_cl_smp_app_547 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -64,12 +64,12 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `The table is bound with _bind_tab( val = t_order window = 100 ): the 10,000 orders stay in ` &&
+        )->a( n = `text`     v = `The table is bound with window_bind_tab( val = t_order window = 100 ): the 10,000 orders stay in ` &&
                    `the app and the browser holds 100 of them, the newest first - the order the app passes in ` &&
                    `t_sort. Scroll down and the binding fetches the next ` &&
                    `window from the server - without calling the app. Sort or filter a column from its menu: the ` &&
                    `server sorts and filters all 10,000 rows and sends the first window of the result. An order number ` &&
-                   `opens the order the grid shows there - _bind_tab_row( ) finds it in the table.`
+                   `opens the order the grid shows there - window_get_row( ) finds it in the table.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
@@ -80,10 +80,10 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
     " t_sort: the app's own order, the newest first - the column menu sorts
     " anew on the server, and a render with the same t_sort keeps that
     DATA(table) = page->ele( n = `Table` ns = `table`
-        )->a( n = `rows`            v = client->_bind_tab( val    = t_order
-                                                           window = 100
-                                                           t_sort = VALUE #( ( path       = `CREATED`
-                                                                               descending = abap_true ) ) )
+        )->a( n = `rows`            v = client->window_bind_tab( val    = t_order
+                                                                 window = 100
+                                                                 t_sort = VALUE #( ( path       = `CREATED`
+                                                                                     descending = abap_true ) ) )
         )->a( n = `selectionMode`   v = `None`
         )->a( n = `visibleRowCount` v = `15`
         )->a( n = `class`           v = `sapUiSmallMarginBeginEnd` ).
@@ -93,7 +93,7 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
             )->tag( `Title`
                 )->a( n = `text` v = `Orders`
             )->tag( `ObjectNumber`
-                " abap2ui5lint-disable-next-line unknown-binding-path -- /__WINDOW is the window state the framework sends next to a table bound with _bind_tab( )
+                " abap2ui5lint-disable-next-line unknown-binding-path -- /__WINDOW is the window state the framework sends next to a table bound with window_bind_tab( )
                 )->a( n = `number` v = total
                 )->a( n = `unit`   v = `rows` ).
 
@@ -166,10 +166,10 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
   METHOD on_open.
 
     " the link names the row as the grid shows it - sorted and filtered by
-    " the server, so a position, not a row of t_order: _bind_tab_row( )
+    " the server, so a position, not a row of t_order: window_get_row( )
     " answers which row it is
-    DATA(row) = client->_bind_tab_row( val = t_order
-                                       row = CONV i( client->get_event_arg( ) ) + 1 ).
+    DATA(row) = client->window_get_row( val = t_order
+                                        row = CONV i( client->get_event_arg( ) ) + 1 ).
     IF row = 0.
       RETURN.
     ENDIF.
