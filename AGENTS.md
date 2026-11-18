@@ -619,7 +619,7 @@ Basics I–VII), for the playground's lesson bar: a **task** in a sentence or
 two, a **hint**, and a **check** — patterns the rebuilt view XML must match
 (`view`), patterns the ABAP must match (`source`) or no longer match
 (`sourceNot`), and the least number of unit tests that must run green
-(`tests`). The playground (abap2UI5/playground, `writeLessons( )` in
+(`tests`). The playground (abap2UI5/browser-playground, `writeLessons( )` in
 `tools/build-site.mjs`) reads it from the commit it pins and shows the task
 under "Lesson n of 7", with **Check** and **Hint** beside it.
 
@@ -1658,7 +1658,7 @@ handler runs".
 
 > The former standalone XML builder `z2ui5_cl_util_xml` is no part of the
 > framework any more: it left abap2UI5 with the other `z2ui5_cl_util*` classes
-> on 2026-11-02 and ships in abap2UI5-ext. No sample uses it, and a sample
+> on 2026-11-02 and ships in abap2UI5-obsolet. No sample uses it, and a sample
 > must not depend on it — do not use it in new samples.
 
 > **The `z2ui5_cl_pop_*` helper popups are obsolete.** They live in the
@@ -2009,7 +2009,7 @@ new/edited samples stay consistent:
 
 ## The catalogue — published from the playground
 
-**https://abap2ui5.github.io/playground/samples/** — every sample of this
+**https://abap2ui5.github.io/browser-playground/samples/** — every sample of this
 repository, of `samples-controls` and of `samples-stack`, searchable, for
 somebody who has not installed anything yet. This repository used to publish
 its own page for that (`web/`, on its own GitHub Pages); it was retired
