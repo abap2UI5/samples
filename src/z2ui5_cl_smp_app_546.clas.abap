@@ -1,5 +1,5 @@
-" @keywords large table window windowed window_bind_tab window_get_row _bind_path row press details growing paging lazy loading server sort server filter search binding_call follow_up_action big data 10000 rows performance selection
-" @summary 10,000 products in a growing sap.m.Table with window_bind_tab( ): 200 rows at a time in the browser, search and sort on the server over all rows, the selection back in its own row.
+" @keywords large table window windowed window_bind_tab ty_s_window_request r_event_data _bind_path row press details growing paging lazy loading skip top odata server sort server filter search binding_call follow_up_action 10000 rows selection
+" @summary 10,000 products in a growing sap.m.Table with window_bind_tab( ): the app loads 200 rows at a time, and searches and sorts itself when the binding asks - like an OData service.
 CLASS z2ui5_cl_smp_app_546 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -16,16 +16,37 @@ CLASS z2ui5_cl_smp_app_546 DEFINITION PUBLIC.
       END OF ty_s_product.
     TYPES ty_t_product TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
 
-    "! all 10,000 rows - they stay here, the browser gets a window of them
+    "! the rows loaded so far - exactly what the browser shows
     DATA t_product TYPE ty_t_product.
+    "! how many rows the search lets through - the length the table shows
+    DATA total TYPE i.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+    "! the "database": 10,000 rows - in a real app a SELECT reads windows of a table
+    DATA t_db TYPE ty_t_product.
+    "! the order and the search the binding asked for last
+    DATA t_sort TYPE z2ui5_if_client=>ty_t_bind_tab_sort.
+    DATA t_filter TYPE z2ui5_if_client=>ty_t_bind_tab_filter.
 
     METHODS view_display.
     METHODS on_order.
     METHODS on_details.
+    METHODS on_rows.
     METHODS model_init.
+    "! rows skip + 1 to skip + top in the order and the search asked for -
+    "! a SELECT ... ORDER BY ... WHERE ... OFFSET skip UP TO top ROWS
+    METHODS load
+      IMPORTING
+        skip TYPE i
+        top  TYPE i.
+    "! the ticked checkboxes of the loaded rows back into the database rows
+    METHODS selection_save.
+    METHODS check_match
+      IMPORTING
+        s_product     TYPE ty_s_product
+      RETURNING
+        VALUE(result) TYPE abap_bool.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -39,9 +60,13 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       model_init( ).
+      load( skip = 0
+            top  = 200 ).
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
+    ELSEIF client->check_on_event( `ROWS` ).
+      on_rows( ).
     ELSEIF client->check_on_event( `ORDER` ).
       on_order( ).
     ELSEIF client->check_on_event( `DETAILS` ).
@@ -66,21 +91,21 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `The table is bound with window_bind_tab( val = t_product window = 200 ): the 10,000 rows stay in ` &&
-                   `the app, the browser gets 200 of them and asks the server for the next 200 when More reaches ` &&
-                   `the end - without calling the app. The search and the two sort buttons are binding calls, and ` &&
-                   `the binding hands them to the server, which sorts and filters all rows. Press a row: the app ` &&
-                   `finds it in its own table with window_get_row( ). Tick some products and order them.`
+        )->a( n = `text`     v = `The table is bound with window_bind_tab( val = t_product total = total event = 'ROWS' ` &&
+                   `window = 200 ): the app loads 200 of the 10,000 products and says how many there are. When More ` &&
+                   `reaches the end, or the search or a sort button changes the binding, the event ROWS arrives with ` &&
+                   `the request in get( )-r_event_data - the app loads the next rows, or the first rows of the new ` &&
+                   `order, like an OData service answering $skip, $top, $orderby and $filter. A pressed row is the ` &&
+                   `row of t_product with that index. Tick some products and order them.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    " the window state the server sends along: the rows the search lets through
-    DATA(total) = |\{/__WINDOW{ client->_bind_path( t_product ) }/TOTAL\}|.
-
     DATA(table) = page->ele( `Table`
         )->a( n = `id`               v = `products`
         )->a( n = `items`            v = client->window_bind_tab( val    = t_product
+                                                                  total  = total
+                                                                  event  = `ROWS`
                                                                   window = 200 )
         )->a( n = `growing`          v = `true`
         )->a( n = `growingThreshold` v = `50`
@@ -91,8 +116,7 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
             )->tag( `Title`
                 )->a( n = `text` v = `Products`
             )->tag( `ObjectNumber`
-                " abap2ui5lint-disable-next-line unknown-binding-path -- /__WINDOW is the window state the framework sends next to a table bound with window_bind_tab( )
-                )->a( n = `number` v = total
+                )->a( n = `number` v = client->_bind( total )
                 )->a( n = `unit`   v = `rows`
             )->tag( `ToolbarSpacer`
             )->tag( `SearchField`
@@ -178,20 +202,100 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_details.
+  METHOD on_rows.
 
-    " the event names the row as the browser shows it - after a search or
-    " a sort that is a position in the server's order, not a row of
-    " t_product. window_get_row( ) answers which row it is
-    DATA(position) = CONV i( client->get_event_arg( ) ) + 1.
-    DATA(row) = client->window_get_row( val = t_product
-                                        row = position ).
-    IF row = 0.
+    " the request of the list binding: more rows, or the first rows of a
+    " new search or sort - SORT and FILTER carry the whole state of both
+    FIELD-SYMBOLS <request> TYPE z2ui5_if_client=>ty_s_window_request.
+    DATA(r_request) = client->get( )-r_event_data.
+    ASSIGN r_request->* TO <request>.
+
+    selection_save( ).
+    IF <request>-reason = z2ui5_if_client=>cs_window_reason-more.
+      load( skip = lines( t_product )
+            top  = <request>-top ).
       RETURN.
     ENDIF.
 
-    DATA(s_product) = t_product[ row ].
-    client->message_box_display( |{ s_product-name } - row { row } of the table, shown as row { position }: | &&
+    t_sort   = <request>-t_sort.
+    t_filter = <request>-t_filter.
+    load( skip = 0
+          top  = <request>-top ).
+
+  ENDMETHOD.
+
+
+  METHOD load.
+
+    DATA t_hit TYPE ty_t_product.
+
+    " WHERE: the search
+    LOOP AT t_db INTO DATA(s_db).
+      IF check_match( s_db ) = abap_true.
+        APPEND s_db TO t_hit.
+      ENDIF.
+    ENDLOOP.
+    total = lines( t_hit ).
+
+    " ORDER BY: the sort button pressed last
+    DATA(s_sort) = VALUE #( t_sort[ 1 ] OPTIONAL ).
+    IF s_sort-path IS NOT INITIAL.
+      IF s_sort-descending = abap_true.
+        SORT t_hit BY (s_sort-path) DESCENDING.
+      ELSE.
+        SORT t_hit BY (s_sort-path) ASCENDING.
+      ENDIF.
+    ENDIF.
+
+    " OFFSET skip UP TO top ROWS
+    IF skip = 0.
+      CLEAR t_product.
+    ENDIF.
+    LOOP AT t_hit INTO s_db FROM skip + 1.
+      IF lines( t_product ) >= skip + top.
+        EXIT.
+      ENDIF.
+      APPEND s_db TO t_product.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD check_match.
+
+    " the search field sends one condition: NAME Contains the query
+    result = abap_true.
+    LOOP AT t_filter INTO DATA(s_filter) WHERE path = `NAME` AND value1 IS NOT INITIAL.
+      IF to_upper( s_product-name ) NS to_upper( s_filter-value1 ).
+        result = abap_false.
+        RETURN.
+      ENDIF.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD selection_save.
+
+    " the database row of a product is its id - the rows were built that way
+    LOOP AT t_product INTO DATA(s_product).
+      t_db[ s_product-id ]-selected = s_product-selected.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD on_details.
+
+    " the event names the row as the browser shows it - and t_product IS
+    " what the browser shows, so the position is the row
+    DATA(position) = CONV i( client->get_event_arg( ) ) + 1.
+    IF position > lines( t_product ).
+      RETURN.
+    ENDIF.
+
+    DATA(s_product) = t_product[ position ].
+    client->message_box_display( |{ s_product-name } - row { position } of the list: | &&
                                  |{ s_product-category }, { s_product-price } EUR, { s_product-stock } in stock.| ).
 
   ENDMETHOD.
@@ -199,21 +303,22 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
 
   METHOD on_order.
 
-    " the checkboxes the user ticked arrive in the rows they were ticked
-    " in - whatever the search and the sort showed - so the order runs
-    " over all 10,000 rows, the ones the browser never held included
+    " the checkboxes of the loaded rows are saved into the database rows
+    " each time the app loads others - so the order runs over every row
+    " the user ticked, whatever the search and the sort showed since
     DATA count TYPE i.
-    DATA total TYPE p LENGTH 15 DECIMALS 2.
-    LOOP AT t_product INTO DATA(s_product) WHERE selected = abap_true.
+    DATA amount TYPE p LENGTH 15 DECIMALS 2.
+    selection_save( ).
+    LOOP AT t_db INTO DATA(s_product) WHERE selected = abap_true.
       count = count + 1.
-      total = total + s_product-price.
+      amount = amount + s_product-price.
     ENDLOOP.
 
     IF count = 0.
       client->message_toast_display( `Tick a product first.` ).
       RETURN.
     ENDIF.
-    client->message_box_display( |{ count } product(s) ordered, { total } EUR in total.| ).
+    client->message_box_display( |{ count } product(s) ordered, { amount } EUR in total.| ).
 
   ENDMETHOD.
 
@@ -233,7 +338,7 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
           name     = |{ t_adjective[ ( index MOD 10 ) + 1 ] } { t_noun[ ( ( index DIV 10 ) MOD 10 ) + 1 ] } { index }|
           category = t_category[ ( index MOD 5 ) + 1 ]
           price    = ( ( index * 7919 ) MOD 100000 ) / 100
-          stock    = ( index * 31 ) MOD 500 ) TO t_product.
+          stock    = ( index * 31 ) MOD 500 ) TO t_db.
     ENDDO.
 
   ENDMETHOD.

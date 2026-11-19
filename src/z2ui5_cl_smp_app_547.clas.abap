@@ -1,5 +1,5 @@
-" @keywords large table window windowed window_bind_tab t_sort window_get_row _bind_path link grid table scrolling lazy loading server sort server filter column menu sortproperty filterproperty big data 10000 rows performance
-" @summary 10,000 orders in a sap.ui.table.Table with window_bind_tab( ): the newest first, the browser holds 100 rows and fetches more as the user scrolls, and the column menu sorts and filters all rows on the server.
+" @keywords large table window windowed window_bind_tab ty_s_window_request r_event_data cs_window_reason link grid table scrolling lazy loading skip top odata server sort server filter column menu sortproperty filterproperty 10000 rows
+" @summary 10,000 orders in a sap.ui.table.Table with window_bind_tab( ): the app loads 100 rows at a time as the user scrolls, the newest first, and sorts and filters itself when the column menu asks - like an OData service.
 CLASS z2ui5_cl_smp_app_547 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -16,15 +16,42 @@ CLASS z2ui5_cl_smp_app_547 DEFINITION PUBLIC.
       END OF ty_s_order.
     TYPES ty_t_order TYPE STANDARD TABLE OF ty_s_order WITH EMPTY KEY.
 
-    "! all 10,000 rows - they stay here, the browser gets a window of them
+    "! the rows loaded so far - exactly what the grid shows
     DATA t_order TYPE ty_t_order.
+    "! how many rows the filter lets through - the length of the scrollbar
+    DATA total TYPE i.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+    "! the "database": 10,000 rows - in a real app a SELECT reads windows of a table
+    DATA t_db TYPE ty_t_order.
+    "! the order and the filter of the column menu - the app's own order first
+    DATA t_sort TYPE z2ui5_if_client=>ty_t_bind_tab_sort.
+    DATA t_filter TYPE z2ui5_if_client=>ty_t_bind_tab_filter.
 
     METHODS view_display.
     METHODS on_open.
+    METHODS on_rows.
     METHODS model_init.
+    "! rows skip + 1 to skip + top in the order and the filter asked for -
+    "! a SELECT ... WHERE ... ORDER BY ... OFFSET skip UP TO top ROWS
+    METHODS load
+      IMPORTING
+        skip TYPE i
+        top  TYPE i.
+    "! the conditions of one group ORed, the groups ANDed - the way the
+    "! column menu combines them
+    METHODS check_match
+      IMPORTING
+        s_order       TYPE ty_s_order
+      RETURNING
+        VALUE(result) TYPE abap_bool.
+    METHODS check_condition
+      IMPORTING
+        s_order       TYPE ty_s_order
+        s_filter      TYPE z2ui5_if_client=>ty_s_bind_tab_filter
+      RETURNING
+        VALUE(result) TYPE abap_bool.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -38,9 +65,15 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       model_init( ).
+      " the app's own order: the newest first
+      t_sort = VALUE #( ( path = `CREATED` descending = abap_true ) ).
+      load( skip = 0
+            top  = 100 ).
       view_display( ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
+    ELSEIF client->check_on_event( `ROWS` ).
+      on_rows( ).
     ELSEIF client->check_on_event( `OPEN` ).
       on_open( ).
     ENDIF.
@@ -64,26 +97,21 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `The table is bound with window_bind_tab( val = t_order window = 100 ): the 10,000 orders stay in ` &&
-                   `the app and the browser holds 100 of them, the newest first - the order the app passes in ` &&
-                   `t_sort. Scroll down and the binding fetches the next ` &&
-                   `window from the server - without calling the app. Sort or filter a column from its menu: the ` &&
-                   `server sorts and filters all 10,000 rows and sends the first window of the result. An order number ` &&
-                   `opens the order the grid shows there - window_get_row( ) finds it in the table.`
+        )->a( n = `text`     v = `The table is bound with window_bind_tab( val = t_order total = total event = 'ROWS' ` &&
+                   `window = 100 ): the app loads 100 of the 10,000 orders, the newest first, and says how many there ` &&
+                   `are. Scroll down, or sort or filter a column from its menu, and the event ROWS arrives with the ` &&
+                   `request in get( )-r_event_data: the app loads the next rows, or the first rows in the new order - ` &&
+                   `like an OData service answering $skip, $top, $orderby and $filter. An order number opens the ` &&
+                   `order the grid shows there: the row of t_order with that index.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    " the window state the server sends along: the rows the filter lets through
-    DATA(total) = |\{/__WINDOW{ client->_bind_path( t_order ) }/TOTAL\}|.
-
-    " t_sort: the app's own order, the newest first - the column menu sorts
-    " anew on the server, and a render with the same t_sort keeps that
     DATA(table) = page->ele( n = `Table` ns = `table`
         )->a( n = `rows`            v = client->window_bind_tab( val    = t_order
-                                                                 window = 100
-                                                                 t_sort = VALUE #( ( path       = `CREATED`
-                                                                                     descending = abap_true ) ) )
+                                                                 total  = total
+                                                                 event  = `ROWS`
+                                                                 window = 100 )
         )->a( n = `selectionMode`   v = `None`
         )->a( n = `visibleRowCount` v = `15`
         )->a( n = `class`           v = `sapUiSmallMarginBeginEnd` ).
@@ -93,12 +121,11 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
             )->tag( `Title`
                 )->a( n = `text` v = `Orders`
             )->tag( `ObjectNumber`
-                " abap2ui5lint-disable-next-line unknown-binding-path -- /__WINDOW is the window state the framework sends next to a table bound with window_bind_tab( )
-                )->a( n = `number` v = total
+                )->a( n = `number` v = client->_bind( total )
                 )->a( n = `unit`   v = `rows` ).
 
     " sortProperty and filterProperty switch the column menu on - the
-    " binding sends what the user picks to the server
+    " binding sends what the user picks to the app (event ROWS)
     DATA(columns) = table->ele( n = `columns` ns = `table` ).
 
     columns->ele( n = `Column` ns = `table`
@@ -163,18 +190,134 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_open.
+  METHOD on_rows.
 
-    " the link names the row as the grid shows it - sorted and filtered by
-    " the server, so a position, not a row of t_order: window_get_row( )
-    " answers which row it is
-    DATA(row) = client->window_get_row( val = t_order
-                                        row = CONV i( client->get_event_arg( ) ) + 1 ).
-    IF row = 0.
+    " the request of the list binding: more rows as the user scrolls, or
+    " the first rows of a new sort or filter - SORT and FILTER carry the
+    " whole state of the column menu
+    FIELD-SYMBOLS <request> TYPE z2ui5_if_client=>ty_s_window_request.
+    DATA(r_request) = client->get( )-r_event_data.
+    ASSIGN r_request->* TO <request>.
+
+    IF <request>-reason = z2ui5_if_client=>cs_window_reason-more.
+      load( skip = lines( t_order )
+            top  = <request>-top ).
       RETURN.
     ENDIF.
 
-    DATA(s_order) = t_order[ row ].
+    t_sort   = <request>-t_sort.
+    t_filter = <request>-t_filter.
+    load( skip = 0
+          top  = <request>-top ).
+
+  ENDMETHOD.
+
+
+  METHOD load.
+
+    DATA t_hit TYPE ty_t_order.
+
+    " WHERE: the filter of the column menu
+    LOOP AT t_db INTO DATA(s_db).
+      IF check_match( s_db ) = abap_true.
+        APPEND s_db TO t_hit.
+      ENDIF.
+    ENDLOOP.
+    total = lines( t_hit ).
+
+    " ORDER BY: the column sorted last
+    DATA(s_sort) = VALUE #( t_sort[ 1 ] OPTIONAL ).
+    IF s_sort-path IS NOT INITIAL.
+      IF s_sort-descending = abap_true.
+        SORT t_hit BY (s_sort-path) DESCENDING.
+      ELSE.
+        SORT t_hit BY (s_sort-path) ASCENDING.
+      ENDIF.
+    ENDIF.
+
+    " OFFSET skip UP TO top ROWS
+    IF skip = 0.
+      CLEAR t_order.
+    ENDIF.
+    LOOP AT t_hit INTO s_db FROM skip + 1.
+      IF lines( t_order ) >= skip + top.
+        EXIT.
+      ENDIF.
+      APPEND s_db TO t_order.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD check_match.
+
+    DATA group TYPE i.
+    DATA hit TYPE abap_bool.
+
+    result = abap_true.
+    LOOP AT t_filter INTO DATA(s_filter).
+      IF s_filter-group <> group.
+        IF group IS NOT INITIAL AND hit = abap_false.
+          result = abap_false.
+          RETURN.
+        ENDIF.
+        group = s_filter-group.
+        hit = abap_false.
+      ENDIF.
+      IF hit = abap_false.
+        hit = check_condition( s_order  = s_order
+                               s_filter = s_filter ).
+      ENDIF.
+    ENDLOOP.
+    IF group IS NOT INITIAL AND hit = abap_false.
+      result = abap_false.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD check_condition.
+
+    FIELD-SYMBOLS <cell> TYPE any.
+
+    ASSIGN COMPONENT s_filter-path OF STRUCTURE s_order TO <cell>.
+    IF sy-subrc <> 0.
+      RETURN.
+    ENDIF.
+
+    " the column menu sends text: compared as the grid shows it, without
+    " regard to case
+    DATA(text) = to_upper( |{ <cell> }| ).
+    DATA(value) = to_upper( s_filter-value1 ).
+    CASE s_filter-operator.
+      WHEN `Contains`.
+        result = xsdbool( text CS value ).
+      WHEN `StartsWith`.
+        result = xsdbool( text CP |{ value }*| ).
+      WHEN `EndsWith`.
+        result = xsdbool( text CP |*{ value }| ).
+      WHEN `EQ`.
+        result = xsdbool( text = value ).
+      WHEN `NE`.
+        result = xsdbool( text <> value ).
+      WHEN OTHERS.
+        " an operator this sample does not offer lets the row through
+        result = abap_true.
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_open.
+
+    " the link names the row as the grid shows it - and t_order IS what
+    " the grid shows, so the position is the row
+    DATA(position) = CONV i( client->get_event_arg( ) ) + 1.
+    IF position > lines( t_order ).
+      RETURN.
+    ENDIF.
+
+    DATA(s_order) = t_order[ position ].
     client->message_box_display( |Order { s_order-id }: { s_order-customer }, { s_order-city }, | &&
                                  |{ s_order-status }, { s_order-amount } EUR.| ).
 
@@ -197,7 +340,7 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
                       city     = t_city[ ( ( index * 3 ) MOD 10 ) + 1 ]
                       status   = t_status[ ( index MOD 4 ) + 1 ]
                       amount   = ( ( index * 6151 ) MOD 500000 ) / 100
-                      created  = start + ( ( index * 13 ) MOD 365 ) ) TO t_order.
+                      created  = start + ( ( index * 13 ) MOD 365 ) ) TO t_db.
     ENDDO.
 
   ENDMETHOD.
