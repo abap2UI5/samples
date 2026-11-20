@@ -1661,12 +1661,12 @@ handler runs".
 > on 2026-11-02 and ships in abap2UI5-obsolet. No sample uses it, and a sample
 > must not depend on it — do not use it in new samples.
 
-> **The `z2ui5_cl_pop_*` helper popups are obsolete.** They live in the
-> framework's obsolete package (`src/99`) and must not be used any more: never
-> reference one from a sample, and never create a sample demonstrating one
-> (human decision 2026-08-12; the last two usages — `z2ui5_cl_pop_to_confirm`
-> in `Z2UI5_CL_SMP_APP_279`, `z2ui5_cl_pop_image_editor` in
-> `Z2UI5_CL_SMP_APP_306` — were removed the same day). A sample that needs a dialog builds it itself with
+> **The `z2ui5_cl_pop_*` helper popups are obsolete.** They left the framework
+> for the extension repository (abap2UI5/frontend) with the rest of `src/99`
+> and must not be used any more: never reference one from a sample, and never
+> create a sample demonstrating one (human decision 2026-08-12; the last two
+> usages - the confirm popup in `Z2UI5_CL_SMP_APP_279` and the image editor
+> popup in `Z2UI5_CL_SMP_APP_306` - were removed the same day). A sample that needs a dialog builds it itself with
 > `z2ui5_cl_ui5_view_builder=>factory( )` with a `core:FragmentDefinition`
 > root + `client->popup_display( )`.
 
