@@ -41,10 +41,10 @@ CLASS z2ui5_cl_smp_app_532 IMPLEMENTATION.
     " arriving - opened, back from a deeper page or the popup app, or restored
     " by the browser buttons: the page names its transition every time, the
     " framework finds the direction
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( abap_true ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -54,21 +54,44 @@ CLASS z2ui5_cl_smp_app_532 IMPLEMENTATION.
   METHOD view_display.
 
     " one color per level, so the two pages can be told apart while they move
-    DATA(color) = SWITCH string( level MOD 4
-                                 WHEN 1 THEN `#0a6ed1`
-                                 WHEN 2 THEN `#e9730c`
-                                 WHEN 3 THEN `#107e3e`
-                                 ELSE `#bb0000` ).
-    DATA(name) = COND string( WHEN transition IS INITIAL THEN `no transition` ELSE transition ).
+    DATA temp1 TYPE string.
+    DATA color LIKE temp1.
+    DATA temp2 TYPE string.
+    DATA name LIKE temp2.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA content TYPE REF TO z2ui5_cl_ui5_view_builder.
+    CASE level MOD 4.
+      WHEN 1.
+        temp1 = `#0a6ed1`.
+      WHEN 2.
+        temp1 = `#e9730c`.
+      WHEN 3.
+        temp1 = `#107e3e`.
+      WHEN OTHERS.
+        temp1 = `#bb0000`.
+    ENDCASE.
+    
+    color = temp1.
+    
+    IF transition IS INITIAL.
+      temp2 = `no transition`.
+    ELSE.
+      temp2 = transition.
+    ENDIF.
+    
+    name = temp2.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:core`   v = `sap.ui.core` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          t = |abap2UI5 - Page { level } - { name }|
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -82,7 +105,8 @@ CLASS z2ui5_cl_smp_app_532 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(content) = page->ele( `VBox`
+    
+    content = page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin` ).
 
     content->tag( n = `Icon` ns = `core`
@@ -127,6 +151,7 @@ CLASS z2ui5_cl_smp_app_532 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp3 TYPE REF TO z2ui5_cl_smp_app_534.
 
     CASE client->get_event( ).
 
@@ -141,7 +166,9 @@ CLASS z2ui5_cl_smp_app_532 IMPLEMENTATION.
         client->nav_app_leave( factory( transition = transition level = level ) ).
 
       WHEN `POPUP`.
-        client->nav_app_call( NEW z2ui5_cl_smp_app_534( ) ).
+        
+        CREATE OBJECT temp3 TYPE z2ui5_cl_smp_app_534.
+        client->nav_app_call( temp3 ).
 
     ENDCASE.
 
@@ -150,7 +177,7 @@ CLASS z2ui5_cl_smp_app_532 IMPLEMENTATION.
 
   METHOD factory.
 
-    result = NEW #( ).
+    CREATE OBJECT result.
     result->transition = transition.
     result->level      = level.
 

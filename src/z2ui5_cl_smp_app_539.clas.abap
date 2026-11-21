@@ -15,7 +15,7 @@ CLASS z2ui5_cl_smp_app_539 DEFINITION PUBLIC.
         price      TYPE string,
         currency   TYPE string,
       END OF ty_s_product.
-    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
+    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH DEFAULT KEY.
 
     " the CopyProvider's options, bound - a change needs no roundtrip
     DATA copy_sparse     TYPE abap_bool.
@@ -40,12 +40,12 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `INSPECT` ).
+    ELSEIF client->check_on_event( `INSPECT` ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -54,7 +54,12 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    DATA inspect TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock`  v = `true`
             )->a( n = `height`        v = `100%`
@@ -65,7 +70,8 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
             )->a( n = `xmlns:app`     v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1`
             " the CopyProvider's extractData callback ships with the framework
             )->a( n = `core:require`  v = `{Clipboard: 'z2ui5/model/clipboard'}` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Table - Copy Options of the CopyProvider (UI5 1.119+)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -80,7 +86,8 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(table) = page->ele( `Table`
+    
+    table = page->ele( `Table`
         )->a( n = `id`    v = `products`
         )->a( n = `mode`  v = `MultiSelect`
         )->a( n = `items` v = client->_bind( t_products )
@@ -94,6 +101,11 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
             )->a( n = `copySparse`     v = client->_bind( copy_sparse )
             )->a( n = `copyPreference` v = client->_bind( copy_preference ) ).
 
+    
+    CLEAR temp1.
+    INSERT `copyProvider` INTO TABLE temp1.
+    INSERT `copySelectionData` INTO TABLE temp1.
+    INSERT `X` INTO TABLE temp1.
     table->ele( `headerToolbar`
         )->ele( `OverflowToolbar`
             )->tag( `Title`
@@ -123,7 +135,7 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
                 )->a( n = `text`    v = `Copy`
                 )->a( n = `tooltip` v = `Copy`
                 )->a( n = `press`   v = client->follow_up_action( val   = client->cs_event-control_by_id
-                                                                  t_arg = VALUE #( ( `copyProvider` ) ( `copySelectionData` ) ( `X` ) ) ) ).
+                                                                  t_arg = temp1 ) ).
 
     " several fields per column: app:bindings lists them, app:template is
     " the formatted text/html variant (a formatMessage pattern)
@@ -171,7 +183,8 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
                     )->a( n = `number` v = `{PRICE}`
                     )->a( n = `unit`   v = `{CURRENCY}` ).
 
-    DATA(inspect) = page->ele( `VBox`
+    
+    inspect = page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin` ).
     inspect->tag( `TextArea`
         )->a( n = `value`       v = client->_bind( clipboard_text )
@@ -192,12 +205,19 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
 
     " the clipboard's text format is a spreadsheet's: a tab between two
     " cells, a line break between two rows
-    SPLIT clipboard_text AT cl_abap_char_utilities=>newline INTO TABLE DATA(t_line).
+    DATA t_line TYPE STANDARD TABLE OF string WITH DEFAULT KEY.
+    DATA cells TYPE i.
+    DATA line LIKE LINE OF t_line.
+      DATA t_cell TYPE STANDARD TABLE OF string WITH DEFAULT KEY.
+    SPLIT clipboard_text AT cl_abap_char_utilities=>newline INTO TABLE t_line.
     DELETE t_line WHERE table_line IS INITIAL.
 
-    DATA(cells) = 0.
-    LOOP AT t_line INTO DATA(line).
-      SPLIT line AT cl_abap_char_utilities=>horizontal_tab INTO TABLE DATA(t_cell).
+    
+    cells = 0.
+    
+    LOOP AT t_line INTO line.
+      
+      SPLIT line AT cl_abap_char_utilities=>horizontal_tab INTO TABLE t_cell.
       cells = cells + lines( t_cell ).
     ENDLOOP.
 
@@ -207,15 +227,62 @@ CLASS z2ui5_cl_smp_app_539 IMPLEMENTATION.
 
 
   METHOD model_init.
+    DATA temp3 LIKE t_products.
+    DATA temp4 LIKE LINE OF temp3.
 
     copy_preference = `Cells`.
-    t_products = VALUE #(
-        ( product_id = `HT-1000` name = `Notebook Basic 15`        supplier = `Very Best Screens` quantity = `10` uom = `PC` price = `956.00`  currency = `EUR` )
-        ( product_id = `HT-1001` name = `Notebook Basic 17`        supplier = `Very Best Screens` quantity = `20` uom = `PC` price = `1249.00` currency = `EUR` )
-        ( product_id = `HT-1007` name = `ITelO Vault`              supplier = `Technocom`         quantity = `15` uom = `PC` price = `299.00`  currency = `EUR` )
-        ( product_id = `HT-1010` name = `Notebook Professional 15` supplier = `Very Best Screens` quantity = `16` uom = `PC` price = `1999.00` currency = `EUR` )
-        ( product_id = `HT-1063` name = `Ergonomic Keyboard`       supplier = `Titanium`          quantity = `50` uom = `PC` price = `14.00`   currency = `EUR` )
-        ( product_id = `HT-1070` name = `Photo Scan`               supplier = `Red Point Stores`  quantity = `8`  uom = `PC` price = `129.00`  currency = `EUR` ) ).
+    
+    CLEAR temp3.
+    
+    temp4-product_id = `HT-1000`.
+    temp4-name = `Notebook Basic 15`.
+    temp4-supplier = `Very Best Screens`.
+    temp4-quantity = `10`.
+    temp4-uom = `PC`.
+    temp4-price = `956.00`.
+    temp4-currency = `EUR`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1001`.
+    temp4-name = `Notebook Basic 17`.
+    temp4-supplier = `Very Best Screens`.
+    temp4-quantity = `20`.
+    temp4-uom = `PC`.
+    temp4-price = `1249.00`.
+    temp4-currency = `EUR`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1007`.
+    temp4-name = `ITelO Vault`.
+    temp4-supplier = `Technocom`.
+    temp4-quantity = `15`.
+    temp4-uom = `PC`.
+    temp4-price = `299.00`.
+    temp4-currency = `EUR`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1010`.
+    temp4-name = `Notebook Professional 15`.
+    temp4-supplier = `Very Best Screens`.
+    temp4-quantity = `16`.
+    temp4-uom = `PC`.
+    temp4-price = `1999.00`.
+    temp4-currency = `EUR`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1063`.
+    temp4-name = `Ergonomic Keyboard`.
+    temp4-supplier = `Titanium`.
+    temp4-quantity = `50`.
+    temp4-uom = `PC`.
+    temp4-price = `14.00`.
+    temp4-currency = `EUR`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1070`.
+    temp4-name = `Photo Scan`.
+    temp4-supplier = `Red Point Stores`.
+    temp4-quantity = `8`.
+    temp4-uom = `PC`.
+    temp4-price = `129.00`.
+    temp4-currency = `EUR`.
+    INSERT temp4 INTO TABLE temp3.
+    t_products = temp3.
 
   ENDMETHOD.
 

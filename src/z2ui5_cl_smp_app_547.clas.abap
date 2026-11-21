@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_547 DEFINITION PUBLIC.
         amount   TYPE p LENGTH 10 DECIMALS 2,
         created  TYPE d,
       END OF ty_s_order.
-    TYPES ty_t_order TYPE STANDARD TABLE OF ty_s_order WITH EMPTY KEY.
+    TYPES ty_t_order TYPE STANDARD TABLE OF ty_s_order WITH DEFAULT KEY.
 
     "! the rows loaded so far - exactly what the grid shows
     DATA t_order TYPE ty_t_order.
@@ -60,21 +60,29 @@ ENDCLASS.
 CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 TYPE z2ui5_if_client=>ty_t_bind_tab_sort.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       " the app's own order: the newest first
-      t_sort = VALUE #( ( path = `CREATED` descending = abap_true ) ).
+      
+      CLEAR temp1.
+      
+      temp2-path = `CREATED`.
+      temp2-descending = abap_true.
+      INSERT temp2 INTO TABLE temp1.
+      t_sort = temp1.
       load( skip = 0
             top  = 100 ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `ROWS` ).
+    ELSEIF client->check_on_event( `ROWS` ) IS NOT INITIAL.
       on_rows( ).
-    ELSEIF client->check_on_event( `OPEN` ).
+    ELSEIF client->check_on_event( `OPEN` ) IS NOT INITIAL.
       on_open( ).
     ENDIF.
 
@@ -83,14 +91,19 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - 10,000 Rows, Column Sort and Filter on Server`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -107,7 +120,8 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(table) = page->ele( n = `Table` ns = `table`
+    
+    table = page->ele( n = `Table` ns = `table`
         )->a( n = `rows`            v = client->window_bind_tab( val    = t_order
                                                                  total  = total
                                                                  event  = `ROWS`
@@ -126,7 +140,8 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
     " sortProperty and filterProperty switch the column menu on - the
     " binding sends what the user picks to the app (event ROWS)
-    DATA(columns) = table->ele( n = `columns` ns = `table` ).
+    
+    columns = table->ele( n = `columns` ns = `table` ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `6rem`
@@ -196,7 +211,8 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
     " the first rows of a new sort or filter - SORT and FILTER carry the
     " whole state of the column menu
     FIELD-SYMBOLS <request> TYPE z2ui5_if_client=>ty_s_window_request.
-    DATA(r_request) = client->get( )-r_event_data.
+    DATA r_request TYPE REF TO data.
+    r_request = client->get( )-r_event_data.
     ASSIGN r_request->* TO <request>.
 
     IF <request>-reason = z2ui5_if_client=>cs_window_reason-more.
@@ -218,7 +234,11 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
     DATA t_hit TYPE ty_t_order.
 
     " WHERE: the filter of the column menu
-    LOOP AT t_db INTO DATA(s_db).
+    DATA s_db LIKE LINE OF t_db.
+    DATA temp3 TYPE z2ui5_if_client=>ty_s_bind_tab_sort.
+    DATA temp4 TYPE z2ui5_if_client=>ty_s_bind_tab_sort.
+    DATA s_sort LIKE temp3.
+    LOOP AT t_db INTO s_db.
       IF check_match( s_db ) = abap_true.
         APPEND s_db TO t_hit.
       ENDIF.
@@ -226,7 +246,15 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
     total = lines( t_hit ).
 
     " ORDER BY: the column sorted last
-    DATA(s_sort) = VALUE #( t_sort[ 1 ] OPTIONAL ).
+    
+    CLEAR temp3.
+    
+    READ TABLE t_sort INTO temp4 INDEX 1.
+    IF sy-subrc = 0.
+      temp3 = temp4.
+    ENDIF.
+    
+    s_sort = temp3.
     IF s_sort-path IS NOT INITIAL.
       IF s_sort-descending = abap_true.
         SORT t_hit BY (s_sort-path) DESCENDING.
@@ -253,9 +281,11 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
     DATA group TYPE i.
     DATA hit TYPE abap_bool.
+    DATA s_filter LIKE LINE OF t_filter.
 
     result = abap_true.
-    LOOP AT t_filter INTO DATA(s_filter).
+    
+    LOOP AT t_filter INTO s_filter.
       IF s_filter-group <> group.
         IF group IS NOT INITIAL AND hit = abap_false.
           result = abap_false.
@@ -279,6 +309,13 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
   METHOD check_condition.
 
     FIELD-SYMBOLS <cell> TYPE any.
+    DATA text TYPE string.
+    DATA value TYPE string.
+        DATA temp1 TYPE xsdboolean.
+        DATA temp2 TYPE xsdboolean.
+        DATA temp3 TYPE xsdboolean.
+        DATA temp4 TYPE xsdboolean.
+        DATA temp5 TYPE xsdboolean.
 
     ASSIGN COMPONENT s_filter-path OF STRUCTURE s_order TO <cell>.
     IF sy-subrc <> 0.
@@ -287,19 +324,31 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
     " the column menu sends text: compared as the grid shows it, without
     " regard to case
-    DATA(text) = to_upper( |{ <cell> }| ).
-    DATA(value) = to_upper( s_filter-value1 ).
+    
+    text = to_upper( |{ <cell> }| ).
+    
+    value = to_upper( s_filter-value1 ).
     CASE s_filter-operator.
       WHEN `Contains`.
-        result = xsdbool( text CS value ).
+        
+        temp1 = boolc( text CS value ).
+        result = temp1.
       WHEN `StartsWith`.
-        result = xsdbool( text CP |{ value }*| ).
+        
+        temp2 = boolc( text CP |{ value }*| ).
+        result = temp2.
       WHEN `EndsWith`.
-        result = xsdbool( text CP |*{ value }| ).
+        
+        temp3 = boolc( text CP |*{ value }| ).
+        result = temp3.
       WHEN `EQ`.
-        result = xsdbool( text = value ).
+        
+        temp4 = boolc( text = value ).
+        result = temp4.
       WHEN `NE`.
-        result = xsdbool( text <> value ).
+        
+        temp5 = boolc( text <> value ).
+        result = temp5.
       WHEN OTHERS.
         " an operator this sample does not offer lets the row through
         result = abap_true.
@@ -312,12 +361,28 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
     " the link names the row as the grid shows it - and t_order IS what
     " the grid shows, so the position is the row
-    DATA(position) = CONV i( client->get_event_arg( ) ) + 1.
+    DATA temp5 TYPE i.
+    DATA position TYPE i.
+    DATA s_order LIKE LINE OF t_order.
+    FIELD-SYMBOLS <temp1> LIKE LINE OF t_order.
+    DATA temp2 LIKE sy-tabix.
+    temp5 = client->get_event_arg( ).
+    
+    position = temp5 + 1.
     IF position > lines( t_order ).
       RETURN.
     ENDIF.
 
-    DATA(s_order) = t_order[ position ].
+    
+    
+    
+    temp2 = sy-tabix.
+    READ TABLE t_order INDEX position ASSIGNING <temp1>.
+    sy-tabix = temp2.
+    IF sy-subrc <> 0.
+      ASSERT 1 = 0.
+    ENDIF.
+    s_order = <temp1>.
     client->message_box_display( |Order { s_order-id }: { s_order-customer }, { s_order-city }, | &&
                                  |{ s_order-status }, { s_order-amount } EUR.| ).
 
@@ -326,21 +391,98 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
   METHOD model_init.
 
-    DATA(t_customer) = VALUE string_table( ( `Adler GmbH` ) ( `Berger AG` ) ( `Calder Ltd` ) ( `Dumont SA` ) ( `Eriksen AB` )
-                                           ( `Ferrari Srl` ) ( `Garcia SL` ) ( `Hansen A/S` ) ( `Ivanov OOO` ) ( `Jansen BV` ) ).
-    DATA(t_city) = VALUE string_table( ( `Berlin` ) ( `Zurich` ) ( `London` ) ( `Paris` ) ( `Stockholm` )
-                                       ( `Milan` ) ( `Madrid` ) ( `Copenhagen` ) ( `Vienna` ) ( `Amsterdam` ) ).
-    DATA(t_status) = VALUE string_table( ( `New` ) ( `In Process` ) ( `Shipped` ) ( `Delivered` ) ).
-    DATA(start) = CONV d( `20250101` ).
+    DATA temp6 TYPE string_table.
+    DATA t_customer LIKE temp6.
+    DATA temp8 TYPE string_table.
+    DATA t_city LIKE temp8.
+    DATA temp10 TYPE string_table.
+    DATA t_status LIKE temp10.
+    DATA temp12 TYPE d.
+    DATA start LIKE temp12.
+      DATA index LIKE sy-index.
+      DATA temp13 TYPE z2ui5_cl_smp_app_547=>ty_s_order.
+      FIELD-SYMBOLS <temp3> LIKE LINE OF t_customer.
+      DATA temp4 LIKE sy-tabix.
+      FIELD-SYMBOLS <temp5> LIKE LINE OF t_city.
+      DATA temp7 LIKE sy-tabix.
+      FIELD-SYMBOLS <temp8> LIKE LINE OF t_status.
+      DATA temp9 LIKE sy-tabix.
+    CLEAR temp6.
+    INSERT `Adler GmbH` INTO TABLE temp6.
+    INSERT `Berger AG` INTO TABLE temp6.
+    INSERT `Calder Ltd` INTO TABLE temp6.
+    INSERT `Dumont SA` INTO TABLE temp6.
+    INSERT `Eriksen AB` INTO TABLE temp6.
+    INSERT `Ferrari Srl` INTO TABLE temp6.
+    INSERT `Garcia SL` INTO TABLE temp6.
+    INSERT `Hansen A/S` INTO TABLE temp6.
+    INSERT `Ivanov OOO` INTO TABLE temp6.
+    INSERT `Jansen BV` INTO TABLE temp6.
+    
+    t_customer = temp6.
+    
+    CLEAR temp8.
+    INSERT `Berlin` INTO TABLE temp8.
+    INSERT `Zurich` INTO TABLE temp8.
+    INSERT `London` INTO TABLE temp8.
+    INSERT `Paris` INTO TABLE temp8.
+    INSERT `Stockholm` INTO TABLE temp8.
+    INSERT `Milan` INTO TABLE temp8.
+    INSERT `Madrid` INTO TABLE temp8.
+    INSERT `Copenhagen` INTO TABLE temp8.
+    INSERT `Vienna` INTO TABLE temp8.
+    INSERT `Amsterdam` INTO TABLE temp8.
+    
+    t_city = temp8.
+    
+    CLEAR temp10.
+    INSERT `New` INTO TABLE temp10.
+    INSERT `In Process` INTO TABLE temp10.
+    INSERT `Shipped` INTO TABLE temp10.
+    INSERT `Delivered` INTO TABLE temp10.
+    
+    t_status = temp10.
+    
+    temp12 = `20250101`.
+    
+    start = temp12.
 
     DO 10000 TIMES.
-      DATA(index) = sy-index.
-      APPEND VALUE #( id       = index
-                      customer = t_customer[ ( ( index * 7 ) MOD 10 ) + 1 ]
-                      city     = t_city[ ( ( index * 3 ) MOD 10 ) + 1 ]
-                      status   = t_status[ ( index MOD 4 ) + 1 ]
-                      amount   = ( ( index * 6151 ) MOD 500000 ) / 100
-                      created  = start + ( ( index * 13 ) MOD 365 ) ) TO t_db.
+      
+      index = sy-index.
+      
+      CLEAR temp13.
+      temp13-id = index.
+      
+      
+      temp4 = sy-tabix.
+      READ TABLE t_customer INDEX ( ( index * 7 ) MOD 10 ) + 1 ASSIGNING <temp3>.
+      sy-tabix = temp4.
+      IF sy-subrc <> 0.
+        ASSERT 1 = 0.
+      ENDIF.
+      temp13-customer = <temp3>.
+      
+      
+      temp7 = sy-tabix.
+      READ TABLE t_city INDEX ( ( index * 3 ) MOD 10 ) + 1 ASSIGNING <temp5>.
+      sy-tabix = temp7.
+      IF sy-subrc <> 0.
+        ASSERT 1 = 0.
+      ENDIF.
+      temp13-city = <temp5>.
+      
+      
+      temp9 = sy-tabix.
+      READ TABLE t_status INDEX ( index MOD 4 ) + 1 ASSIGNING <temp8>.
+      sy-tabix = temp9.
+      IF sy-subrc <> 0.
+        ASSERT 1 = 0.
+      ENDIF.
+      temp13-status = <temp8>.
+      temp13-amount = ( ( index * 6151 ) MOD 500000 ) / 100.
+      temp13-created = start + ( ( index * 13 ) MOD 365 ).
+      APPEND temp13 TO t_db.
     ENDDO.
 
   ENDMETHOD.

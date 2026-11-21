@@ -12,7 +12,7 @@ CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
         value TYPE string,
         descr TYPE string,
       END OF ty_s_suggestion.
-    TYPES ty_t_suggestion TYPE STANDARD TABLE OF ty_s_suggestion WITH EMPTY KEY.
+    TYPES ty_t_suggestion TYPE STANDARD TABLE OF ty_s_suggestion WITH DEFAULT KEY.
 
     TYPES:
       BEGIN OF ty_s_city,
@@ -28,7 +28,7 @@ CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
         name     TYPE string,
         lastname TYPE string,
       END OF ty_s_employee.
-    TYPES ty_t_employee TYPE STANDARD TABLE OF ty_s_employee WITH EMPTY KEY.
+    TYPES ty_t_employee TYPE STANDARD TABLE OF ty_s_employee WITH DEFAULT KEY.
 
     DATA:
       BEGIN OF s_screen,
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
 
     DATA t_suggestion     TYPE ty_t_suggestion.
     DATA t_suggestion_sel TYPE ty_t_suggestion.
-    DATA t_cities         TYPE STANDARD TABLE OF ty_s_city WITH EMPTY KEY.
+    DATA t_cities         TYPE STANDARD TABLE OF ty_s_city WITH DEFAULT KEY.
     DATA t_employees_sel  TYPE ty_t_employee.
 
   PROTECTED SECTION.
@@ -64,12 +64,12 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -78,7 +78,10 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA form TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -87,7 +90,8 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
             )->a( n = `xmlns:core`   v = `sap.ui.core`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popup - Value Help: Suggestions and F4 Dialog`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -100,7 +104,8 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->ele( n = `Grid` ns = `layout`
+    
+    form = page->ele( n = `Grid` ns = `layout`
         )->a( n = `defaultSpan` v = `L7 M7 S7`
         )->ele( n = `content` ns = `layout`
             )->ele( n = `SimpleForm` ns = `form`
@@ -173,13 +178,25 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE z2ui5_cl_smp_app_009=>ty_t_employee.
+        DATA t_chosen_employee LIKE t_employees_sel.
+          FIELD-SYMBOLS <temp2> LIKE LINE OF t_chosen_employee.
+          DATA temp3 LIKE sy-tabix.
+          FIELD-SYMBOLS <temp4> LIKE LINE OF t_chosen_employee.
+          DATA temp5 LIKE sy-tabix.
+        DATA t_chosen_color LIKE t_suggestion_sel.
+          FIELD-SYMBOLS <temp6> LIKE LINE OF t_chosen_color.
+          DATA temp7 LIKE sy-tabix.
+        DATA temp8 LIKE s_screen.
 
     CASE client->get_event( ).
       WHEN `POPUP_TABLE_VALUE`.
         t_suggestion_sel = t_suggestion.
         popup_value_suggestion( ).
       WHEN `POPUP_TABLE_VALUE_CUSTOM`.
-        t_employees_sel = VALUE #( ).
+        
+        CLEAR temp1.
+        t_employees_sel = temp1.
         popup_value_employee( ).
       WHEN `SEARCH`.
         t_employees_sel = t_employees.
@@ -191,13 +208,30 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
       WHEN `POPUP_TABLE_VALUE_CUSTOM_CONTINUE`.
         " the selection is counted on a copy - deleting from the bound table
         " itself emptied the open popup's list when nothing was selected
-        DATA(t_chosen_employee) = t_employees_sel.
+        
+        t_chosen_employee = t_employees_sel.
         DELETE t_chosen_employee WHERE selkz = abap_false.
 
         IF lines( t_chosen_employee ) = 1.
 
-          s_screen-name     = t_chosen_employee[ 1 ]-name.
-          s_screen-lastname = t_chosen_employee[ 1 ]-lastname.
+          
+          
+          temp3 = sy-tabix.
+          READ TABLE t_chosen_employee INDEX 1 ASSIGNING <temp2>.
+          sy-tabix = temp3.
+          IF sy-subrc <> 0.
+            ASSERT 1 = 0.
+          ENDIF.
+          s_screen-name     = <temp2>-name.
+          
+          
+          temp5 = sy-tabix.
+          READ TABLE t_chosen_employee INDEX 1 ASSIGNING <temp4>.
+          sy-tabix = temp5.
+          IF sy-subrc <> 0.
+            ASSERT 1 = 0.
+          ENDIF.
+          s_screen-lastname = <temp4>-lastname.
           client->message_toast_display( `value selected` ).
           client->popup_destroy( ).
 
@@ -205,12 +239,21 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
           client->message_toast_display( `please select exactly one employee` ).
         ENDIF.
       WHEN `POPUP_TABLE_VALUE_CONTINUE`.
-        DATA(t_chosen_color) = t_suggestion_sel.
+        
+        t_chosen_color = t_suggestion_sel.
         DELETE t_chosen_color WHERE selkz = abap_false.
 
         IF lines( t_chosen_color ) = 1.
 
-          s_screen-color_02 = t_chosen_color[ 1 ]-value.
+          
+          
+          temp7 = sy-tabix.
+          READ TABLE t_chosen_color INDEX 1 ASSIGNING <temp6>.
+          sy-tabix = temp7.
+          IF sy-subrc <> 0.
+            ASSERT 1 = 0.
+          ENDIF.
+          s_screen-color_02 = <temp6>-value.
           client->message_toast_display( `value selected` ).
           client->popup_destroy( ).
 
@@ -220,7 +263,9 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
       WHEN `BUTTON_SEND`.
         client->message_box_display( `success - values sent to the server` ).
       WHEN `BUTTON_CLEAR`.
-        s_screen = VALUE #( ).
+        
+        CLEAR temp8.
+        s_screen = temp8.
         client->message_box_display( `View initialized` ).
     ENDCASE.
 
@@ -229,13 +274,18 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
   METHOD popup_value_suggestion.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA dialog TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
-    DATA(dialog) = popup->ele( `Dialog`
+    
+    dialog = popup->ele( `Dialog`
         )->a( n = `title` v = `abap2UI5 - Value Help` ).
-    DATA(tab) = dialog->ele( `Table`
+    
+    tab = dialog->ele( `Table`
         )->a( n = `items` v = client->_bind( t_suggestion_sel )
         )->a( n = `mode`  v = `SingleSelectLeft` ).
 
@@ -272,12 +322,16 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
   METHOD popup_value_employee.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA dialog TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core`
             )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
-    DATA(dialog) = popup->ele( `Dialog`
+    
+    dialog = popup->ele( `Dialog`
         )->a( n = `title` v = `abap2UI5 - Value Help` ).
 
     dialog->ele( n = `SimpleForm` ns = `form`
@@ -298,7 +352,8 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
             )->a( n = `press` v = client->_event( `SEARCH` )
             )->a( n = `text`  v = `search...` ).
 
-    DATA(tab) = dialog->ele( `Table`
+    
+    tab = dialog->ele( `Table`
         )->a( n = `items`      v = client->_bind( t_employees_sel )
         )->a( n = `headerText` v = `Employees`
         )->a( n = `mode`       v = `SingleSelectLeft` ).
@@ -351,31 +406,107 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
   METHOD model_init.
 
-    t_suggestion = VALUE #(
-        ( descr = `this is the color Green`  value = `GREEN` )
-        ( descr = `this is the color Blue`   value = `BLUE` )
-        ( descr = `this is the color Black`  value = `BLACK` )
-        ( descr = `this is the color Grey`   value = `GREY` )
-        ( descr = `this is the color Blue2`  value = `BLUE2` )
-        ( descr = `this is the color Blue3`  value = `BLUE3` ) ).
+    DATA temp9 TYPE z2ui5_cl_smp_app_009=>ty_t_suggestion.
+    DATA temp10 LIKE LINE OF temp9.
+    DATA temp11 LIKE t_cities.
+    DATA temp12 LIKE LINE OF temp11.
+    DATA temp13 TYPE z2ui5_cl_smp_app_009=>ty_t_employee.
+    DATA temp14 LIKE LINE OF temp13.
+    CLEAR temp9.
+    
+    temp10-descr = `this is the color Green`.
+    temp10-value = `GREEN`.
+    INSERT temp10 INTO TABLE temp9.
+    temp10-descr = `this is the color Blue`.
+    temp10-value = `BLUE`.
+    INSERT temp10 INTO TABLE temp9.
+    temp10-descr = `this is the color Black`.
+    temp10-value = `BLACK`.
+    INSERT temp10 INTO TABLE temp9.
+    temp10-descr = `this is the color Grey`.
+    temp10-value = `GREY`.
+    INSERT temp10 INTO TABLE temp9.
+    temp10-descr = `this is the color Blue2`.
+    temp10-value = `BLUE2`.
+    INSERT temp10 INTO TABLE temp9.
+    temp10-descr = `this is the color Blue3`.
+    temp10-value = `BLUE3`.
+    INSERT temp10 INTO TABLE temp9.
+    t_suggestion = temp9.
 
-    t_cities = VALUE #(
-        ( value = `London` descr = `London` )
-        ( value = `Paris`  descr = `Paris` )
-        ( value = `Rome`   descr = `Rome` ) ).
+    
+    CLEAR temp11.
+    
+    temp12-value = `London`.
+    temp12-descr = `London`.
+    INSERT temp12 INTO TABLE temp11.
+    temp12-value = `Paris`.
+    temp12-descr = `Paris`.
+    INSERT temp12 INTO TABLE temp11.
+    temp12-value = `Rome`.
+    temp12-descr = `Rome`.
+    INSERT temp12 INTO TABLE temp11.
+    t_cities = temp11.
 
-    t_employees = VALUE #(
-        ( city = `London` name = `Tom`       lastname = `lastname1`  nr = `00001` )
-        ( city = `London` name = `Tom2`      lastname = `lastname2`  nr = `00002` )
-        ( city = `London` name = `Tom3`      lastname = `lastname3`  nr = `00003` )
-        ( city = `London` name = `Tom4`      lastname = `lastname4`  nr = `00004` )
-        ( city = `Rome`   name = `Michaela1` lastname = `lastname5`  nr = `00005` )
-        ( city = `Rome`   name = `Michaela2` lastname = `lastname6`  nr = `00006` )
-        ( city = `Rome`   name = `Michaela3` lastname = `lastname7`  nr = `00007` )
-        ( city = `Rome`   name = `Michaela4` lastname = `lastname8`  nr = `00008` )
-        ( city = `Paris`  name = `Hermine1`  lastname = `lastname9`  nr = `00009` )
-        ( city = `Paris`  name = `Hermine2`  lastname = `lastname10` nr = `00010` )
-        ( city = `Paris`  name = `Hermine3`  lastname = `lastname11` nr = `00011` ) ).
+    
+    CLEAR temp13.
+    
+    temp14-city = `London`.
+    temp14-name = `Tom`.
+    temp14-lastname = `lastname1`.
+    temp14-nr = `00001`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-city = `London`.
+    temp14-name = `Tom2`.
+    temp14-lastname = `lastname2`.
+    temp14-nr = `00002`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-city = `London`.
+    temp14-name = `Tom3`.
+    temp14-lastname = `lastname3`.
+    temp14-nr = `00003`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-city = `London`.
+    temp14-name = `Tom4`.
+    temp14-lastname = `lastname4`.
+    temp14-nr = `00004`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-city = `Rome`.
+    temp14-name = `Michaela1`.
+    temp14-lastname = `lastname5`.
+    temp14-nr = `00005`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-city = `Rome`.
+    temp14-name = `Michaela2`.
+    temp14-lastname = `lastname6`.
+    temp14-nr = `00006`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-city = `Rome`.
+    temp14-name = `Michaela3`.
+    temp14-lastname = `lastname7`.
+    temp14-nr = `00007`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-city = `Rome`.
+    temp14-name = `Michaela4`.
+    temp14-lastname = `lastname8`.
+    temp14-nr = `00008`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-city = `Paris`.
+    temp14-name = `Hermine1`.
+    temp14-lastname = `lastname9`.
+    temp14-nr = `00009`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-city = `Paris`.
+    temp14-name = `Hermine2`.
+    temp14-lastname = `lastname10`.
+    temp14-nr = `00010`.
+    INSERT temp14 INTO TABLE temp13.
+    temp14-city = `Paris`.
+    temp14-name = `Hermine3`.
+    temp14-lastname = `lastname11`.
+    temp14-nr = `00011`.
+    INSERT temp14 INTO TABLE temp13.
+    t_employees = temp13.
 
   ENDMETHOD.
 
