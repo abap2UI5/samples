@@ -210,8 +210,8 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
     device_os_version      = ls_get-s_device-os-version.
     device_systemtype      = ls_get-s_device-system.
     device_orientation     = ls_get-s_device-orientation.
-    device_height          = CONV string( ls_get-s_device-resize-height ).
-    device_width           = CONV string( ls_get-s_device-resize-width ).
+    device_height          = ls_get-s_device-resize-height.
+    device_width           = ls_get-s_device-resize-width.
     device_phone           = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-phone ).
     device_desktop         = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-desktop ).
     device_tablet          = xsdbool( ls_get-s_device-system = z2ui5_if_client=>cs_device-system-tablet ).
