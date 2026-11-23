@@ -62,7 +62,7 @@
   }
  ],
  "counts": {
-  "samples": 135,
+  "samples": 134,
   "categories": 25,
   "stages": 6
  },
@@ -965,27 +965,6 @@
    "docs": [
     "https://abap2ui5.github.io/docs/cookbook/event_navigation/frontend"
    ]
-  },
-  {
-   "class": "z2ui5_cl_smp_app_548",
-   "file": "src/z2ui5_cl_smp_app_548.clas.abap",
-   "category": "CSS",
-   "stage": "beyond",
-   "title": "CSS",
-   "description": "Calculator Built from a Grid and a Stylesheet",
-   "summary": "A pocket calculator from standard controls: a layout Grid of four columns sets out the keypad, and a stylesheet shipped with the view makes the keys and the display large.",
-   "keywords": [
-    "calculator",
-    "grid",
-    "layout",
-    "griddata",
-    "span",
-    "style",
-    "stylesheet",
-    "keypad",
-    "buttons"
-   ],
-   "docs": []
   },
   {
    "class": "z2ui5_cl_smp_app_305",

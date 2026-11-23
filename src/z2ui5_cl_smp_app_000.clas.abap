@@ -1,5 +1,5 @@
 " @keywords overview launchpad catalogue index all samples search start tiles
-" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 135 are reached from.
+" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other 134 are reached from.
 CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -1009,7 +1009,6 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         intro = ``
         path = `src` app = `z2ui5_cl_smp_app_515` )
       ( group = `Reach outside the view` header = `Control Behaviour` sub = `Wizard with Steps (A)` keywords = `wizard step branching discardprogress setnextstep control_by_id` intro = `` path = `src` app = `z2ui5_cl_smp_app_202` )
-      ( group = `Reach outside the view` header = `CSS` sub = `Calculator Built from a Grid and a Stylesheet` keywords = `calculator grid layout griddata span style stylesheet keypad buttons` intro = `` path = `src` app = `z2ui5_cl_smp_app_548` )
       ( group = `Reach outside the view` header = `CSS` sub = `Color Table Cells from the Backend` keywords = `color background conditional formatting style data attribute` intro = `` path = `src` app = `z2ui5_cl_smp_app_305` )
       ( group = `Reach outside the view` header = `CSS` sub = `FlexBox Layouts with Custom Classes` keywords = `flexbox layout responsive navigation tile panel popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_255` )
       ( group = `Reach outside the view` header = `CSS` sub = `Ship Your Own CSS with the View` keywords = `style stylesheet inline html class own design` intro = `` path = `src` app = `z2ui5_cl_smp_app_050` )

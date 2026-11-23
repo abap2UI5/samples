@@ -3,7 +3,7 @@
 
 # The sample catalogue
 
-Every app in this repository — 146 of them — with what it shows and a link
+Every app in this repository — 145 of them — with what it shows and a link
 to its source. This is the [overview app](src/z2ui5_cl_smp_app_000.clas.abap)
 as a page you can read here, before installing anything.
 
@@ -13,7 +13,7 @@ nothing in it is stripped from `702`.
 **To run one:** install [abap2UI5](https://github.com/abap2UI5/abap2UI5), pull
 this repository with [abapGit](https://abapgit.org), then open
 `<your endpoint>?app_start=<the class in the right-hand column>`. Or run
-`Z2UI5_CL_SMP_APP_000` and click through the 135 samples below —
+`Z2UI5_CL_SMP_APP_000` and click through the 134 samples below —
 that is the same list, in the app.
 
 **To read one:** click the class. Every sample is a single class, so the link
@@ -28,10 +28,10 @@ New to abap2UI5? Start at [Basics](#basics), then the
 
 ## The learning path
 
-The **135 ready-to-run samples** the README leads with, and the
+The **134 ready-to-run samples** the README leads with, and the
 overview app lists: cloud-ready, downportable, plain OpenUI5 1.71. Each adds
 one idea. With the 10 helper apps they call and the
-overview app itself, that is 146 apps on every branch.
+overview app itself, that is 145 apps on every branch.
 
 [AI](#ai) · [Basics](#basics) · [Binding](#binding) · [Browser](#browser) · [Control Behaviour](#control-behaviour) · [CSS](#css) · [Device](#device) · [Event](#event) · [File](#file) · [Focus](#focus) · [Formatter](#formatter) · [Grid Table](#grid-table) · [Hash](#hash) · [List](#list) · [Menu](#menu) · [Message](#message) · [Navigation](#navigation) · [Nested View](#nested-view) · [Popover](#popover) · [Popup](#popup) · [Scroll](#scroll) · [Table](#table) · [Templating](#templating) · [Timer](#timer) · [Tree](#tree)
 
@@ -103,7 +103,6 @@ overview app itself, that is 146 apps on every branch.
 
 | Sample | Class |
 |---|---|
-| Calculator Built from a Grid and a Stylesheet<br>A pocket calculator from standard controls: a layout Grid of four columns sets out the keypad, and a stylesheet shipped with the view makes the keys and the display large.<br><sub>calculator grid layout griddata span style stylesheet keypad buttons</sub> | [`Z2UI5_CL_SMP_APP_548`](src/z2ui5_cl_smp_app_548.clas.abap) |
 | Color Table Cells from the Backend<br>Colours single table cells from the backend: the row carries its colour as custom data and a stylesheet turns it into a background.<br><sub>color background conditional formatting style data attribute</sub> | [`Z2UI5_CL_SMP_APP_305`](src/z2ui5_cl_smp_app_305.clas.abap) |
 | FlexBox Layouts with Custom Classes<br>Lays a page out with FlexBox and custom CSS classes - tiles, panels and a QuickView popover, all from the view chain.<br><sub>flexbox layout responsive navigation tile panel popover_display</sub><br><sub>docs: [cookbook/view/definition](https://abap2ui5.github.io/docs/cookbook/view/definition)</sub> | [`Z2UI5_CL_SMP_APP_255`](src/z2ui5_cl_smp_app_255.clas.abap) |
 | Ship Your Own CSS with the View<br>Ships a stylesheet with the view, so an app can carry its own design without a change to the UI5 theme.<br><sub>style stylesheet inline html class own design</sub><br><sub>docs: [cookbook/view/definition](https://abap2ui5.github.io/docs/cookbook/view/definition)</sub> | [`Z2UI5_CL_SMP_APP_050`](src/z2ui5_cl_smp_app_050.clas.abap) |
