@@ -15,7 +15,7 @@ CLASS z2ui5_cl_smp_app_421 DEFINITION PUBLIC.
         checkbox    TYPE abap_bool,
         description TYPE string,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
     DATA focuscolumn TYPE string.
     DATA focusrow    TYPE string.
@@ -51,11 +51,11 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -64,14 +64,23 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA tab TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA items TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 LIKE LINE OF t_tab.
+    DATA row LIKE REF TO temp1.
+      DATA index LIKE sy-tabix.
+      DATA i TYPE i.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Focus - Focus a Table Cell by Column and Row`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -87,7 +96,8 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->ele( `Table`
+    
+    tab = page->ele( `Table`
         )->ele( `headerToolbar`
             )->ele( `OverflowToolbar`
                 )->tag( `Title`
@@ -150,12 +160,17 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
     " A bound template would clone the cells under randomly generated ids.
     " Each cell binds its own row component (tab / tab_index), so the model
     " keeps the table's array shape while the view addresses single rows.
-    DATA(items) = tab->ele( `items` ).
+    
+    items = tab->ele( `items` ).
 
-    LOOP AT t_tab REFERENCE INTO DATA(row).
+    
+    
+    LOOP AT t_tab REFERENCE INTO row.
 
-      DATA(index) = sy-tabix.
-      DATA(i)     = index - 1.
+      
+      index = sy-tabix.
+      
+      i     = index - 1.
 
       items->ele( `ColumnListItem`
           )->ele( `cells`
@@ -207,13 +222,53 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
 
   METHOD on_init.
 
-    t_tab = VALUE #(
-        ( index = 0 title = `entry 01` value = `red`    info = `completed` description = `this is a description` checkbox = abap_true )
-        ( index = 1 title = `entry 02` value = `blue`   info = `completed` description = `this is a description` checkbox = abap_true )
-        ( index = 2 title = `entry 03` value = `green`  info = `completed` description = `this is a description` checkbox = abap_true )
-        ( index = 3 title = `entry 04` value = `orange` info = `completed` description = ``                     checkbox = abap_true )
-        ( index = 4 title = `entry 05` value = `grey`   info = `completed` description = `this is a description` checkbox = abap_true )
-        ( index = 5 title = ``         value = ``       info = ``          description = ``                     checkbox = abap_false ) ).
+    DATA temp2 LIKE t_tab.
+    DATA temp3 LIKE LINE OF temp2.
+    CLEAR temp2.
+    
+    temp3-index = 0.
+    temp3-title = `entry 01`.
+    temp3-value = `red`.
+    temp3-info = `completed`.
+    temp3-description = `this is a description`.
+    temp3-checkbox = abap_true.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-index = 1.
+    temp3-title = `entry 02`.
+    temp3-value = `blue`.
+    temp3-info = `completed`.
+    temp3-description = `this is a description`.
+    temp3-checkbox = abap_true.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-index = 2.
+    temp3-title = `entry 03`.
+    temp3-value = `green`.
+    temp3-info = `completed`.
+    temp3-description = `this is a description`.
+    temp3-checkbox = abap_true.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-index = 3.
+    temp3-title = `entry 04`.
+    temp3-value = `orange`.
+    temp3-info = `completed`.
+    temp3-description = ``.
+    temp3-checkbox = abap_true.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-index = 4.
+    temp3-title = `entry 05`.
+    temp3-value = `grey`.
+    temp3-info = `completed`.
+    temp3-description = `this is a description`.
+    temp3-checkbox = abap_true.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-index = 5.
+    temp3-title = ``.
+    temp3-value = ``.
+    temp3-info = ``.
+    temp3-description = ``.
+    temp3-checkbox = abap_false.
+    INSERT temp3 INTO TABLE temp2.
+    t_tab = temp2.
 
     default_focus( ).
     view_display( ).
@@ -223,19 +278,25 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
 
 
   METHOD focus.
+    DATA temp4 TYPE string_table.
 
     focusid = |{ focuscolumn }_{ focusrow }|.
 
+    
+    CLEAR temp4.
+    INSERT focusid INTO TABLE temp4.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-set_focus
-        t_arg = VALUE #( ( focusid ) ) ).
+        t_arg = temp4 ).
 
   ENDMETHOD.
 
 
   METHOD read_focus.
 
-    SPLIT client->get( )-s_focus-id AT `_` INTO DATA(col) DATA(row).
+    DATA col TYPE string.
+    DATA row TYPE string.
+    SPLIT client->get( )-s_focus-id AT `_` INTO col row.
 
     IF row IS NOT INITIAL
         AND row CO `0123456789`
@@ -254,23 +315,40 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
 
   METHOD next_focus.
 
-    focuscolumn = SWITCH #( focuscolumn
-                            WHEN cs_column-title    THEN cs_column-color
-                            WHEN cs_column-color    THEN cs_column-info
-                            WHEN cs_column-info     THEN cs_column-checkbox
-                            WHEN cs_column-checkbox THEN cs_column-description
-                            ELSE cs_column-title ).
+    DATA temp6 TYPE string.
+          DATA temp7 TYPE i.
+          DATA nextrow TYPE i.
+      DATA temp8 LIKE sy-subrc.
+    CASE focuscolumn.
+      WHEN cs_column-title.
+        temp6 = cs_column-color.
+      WHEN cs_column-color.
+        temp6 = cs_column-info.
+      WHEN cs_column-info.
+        temp6 = cs_column-checkbox.
+      WHEN cs_column-checkbox.
+        temp6 = cs_column-description.
+      WHEN OTHERS.
+        temp6 = cs_column-title.
+    ENDCASE.
+    focuscolumn = temp6.
 
     IF focuscolumn = cs_column-title.
 
       " focusrow is what the user typed into the Row Index input - a Number
       " input still lets 99999999999 through, which does not fit TYPE i
       TRY.
-          DATA(nextrow) = CONV i( focusrow ) + 1.
+          
+          temp7 = focusrow.
+          
+          nextrow = temp7 + 1.
         CATCH cx_sy_conversion_error cx_sy_arithmetic_error.
           nextrow = 0.
       ENDTRY.
-      IF line_exists( t_tab[ nextrow + 1 ] ).
+      
+      READ TABLE t_tab INDEX nextrow + 1 TRANSPORTING NO FIELDS.
+      temp8 = sy-subrc.
+      IF temp8 = 0.
         focusrow = |{ nextrow }|.
       ELSE.
         focusrow = `0`.

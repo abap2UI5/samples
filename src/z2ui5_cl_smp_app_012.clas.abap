@@ -25,9 +25,9 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       on_navigation( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -36,7 +36,10 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA grid TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -44,7 +47,8 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Popup - Ways to Open a Dialog`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -57,7 +61,8 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(grid) = page->ele( n = `Grid` ns = `layout`
+    
+    grid = page->ele( n = `Grid` ns = `layout`
         )->a( n = `defaultSpan` v = `L7 M12 S12`
         )->ele( n = `content` ns = `layout`
             )->ele( n = `SimpleForm` ns = `form`
@@ -157,11 +162,16 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
 
   METHOD on_navigation.
+      DATA temp1 TYPE REF TO z2ui5_cl_smp_app_020.
+      DATA app LIKE temp1.
 
     IF check_popup = abap_true.
 
       check_popup = abap_false.
-      DATA(app) = CAST z2ui5_cl_smp_app_020( client->get_app_prev( ) ).
+      
+      temp1 ?= client->get_app_prev( ).
+      
+      app = temp1.
       client->message_toast_display( |{ app->event } pressed| ).
     ENDIF.
 
@@ -172,7 +182,8 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
   METHOD popup_decide.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
@@ -198,7 +209,8 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
   METHOD popup_info.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA popup TYPE REF TO z2ui5_cl_ui5_view_builder.
+    popup = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `FragmentDefinition` ns = `core`
             )->a( n = `xmlns`      v = `sap.m`
             )->a( n = `xmlns:core` v = `sap.ui.core` ).
