@@ -57,9 +57,9 @@ CLASS z2ui5_cl_smp_app_501 IMPLEMENTATION.
     CASE client->get_event( ).
 
       WHEN `POPUP_EDIT`.
-        DATA(row) = REF #( t_table[ row_id = row_id ] OPTIONAL ).
-        IF row IS BOUND.
-          row->* = s_row.
+        ASSIGN t_table[ row_id = row_id ] TO FIELD-SYMBOL(<row>).
+        IF <row> IS ASSIGNED.
+          <row> = s_row.
         ENDIF.
         leave( ).
 
