@@ -232,7 +232,7 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
     " WHERE: the search
     LOOP AT t_db INTO DATA(s_db).
       IF check_match( s_db ) = abap_true.
-        APPEND s_db TO t_hit.
+        INSERT s_db INTO TABLE t_hit.
       ENDIF.
     ENDLOOP.
     total = lines( t_hit ).
@@ -255,7 +255,7 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
       IF lines( t_product ) >= skip + top.
         EXIT.
       ENDIF.
-      APPEND s_db TO t_product.
+      INSERT s_db INTO TABLE t_product.
     ENDLOOP.
 
   ENDMETHOD.
@@ -333,12 +333,12 @@ CLASS z2ui5_cl_smp_app_546 IMPLEMENTATION.
 
     DO 10000 TIMES.
       DATA(index) = sy-index.
-      APPEND VALUE #(
+      INSERT VALUE #(
           id       = index
           name     = |{ t_adjective[ ( index MOD 10 ) + 1 ] } { t_noun[ ( ( index DIV 10 ) MOD 10 ) + 1 ] } { index }|
           category = t_category[ ( index MOD 5 ) + 1 ]
           price    = ( ( index * 7919 ) MOD 100000 ) / 100
-          stock    = ( index * 31 ) MOD 500 ) TO t_db.
+          stock    = ( index * 31 ) MOD 500 ) INTO TABLE t_db.
     ENDDO.
 
   ENDMETHOD.

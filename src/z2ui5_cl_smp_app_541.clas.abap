@@ -272,6 +272,7 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
     DATA overdue_amount TYPE i.
     DATA strongest_share TYPE p LENGTH 16 DECIMALS 0.
     DATA outliers TYPE string.
+    FIELD-SYMBOLS <region> TYPE ty_s_region.
 
     IF t_rows IS INITIAL.
       result = VALUE #( ( title = `Nothing to explain` description = `The table holds no rows.` icon = `sap-icon://hint` ) ).
@@ -297,8 +298,9 @@ CLASS z2ui5_cl_smp_app_541 IMPLEMENTATION.
         overdue_amount = overdue_amount + row-amount.
       ENDIF.
 
-      READ TABLE t_regions ASSIGNING FIELD-SYMBOL(<region>) WITH TABLE KEY region = row-region.
-      IF sy-subrc = 0.
+      UNASSIGN <region>.
+      ASSIGN t_regions[ region = row-region ] TO <region>.
+      IF <region> IS ASSIGNED.
         <region>-amount = <region>-amount + row-amount.
       ELSE.
         INSERT VALUE #( region = row-region amount = row-amount ) INTO TABLE t_regions.

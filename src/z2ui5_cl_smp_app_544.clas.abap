@@ -239,7 +239,7 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
     DATA t_group_by TYPE string_table.
 
     LOOP AT t_columns INTO DATA(s_column) WHERE selected = abap_true.
-      APPEND s_column-name TO t_group_by.
+      INSERT s_column-name INTO TABLE t_group_by.
     ENDLOOP.
 
     t_rows = t_sales.
@@ -276,8 +276,8 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
     t_unit_fields  = VALUE #( ).
     kind_column    = to_upper( kind_field ).
 
-    READ TABLE rows INDEX 1 ASSIGNING <row>.
-    IF sy-subrc <> 0.
+    ASSIGN rows[ 1 ] TO <row>.
+    IF <row> IS NOT ASSIGNED.
       RETURN.
     ENDIF.
 
@@ -287,7 +287,7 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
       field = to_upper( field ).
       ASSIGN COMPONENT field OF STRUCTURE <row> TO <field>.
       IF sy-subrc = 0 AND NOT line_exists( t_group_fields[ table_line = field ] ).
-        APPEND field TO t_group_fields.
+        INSERT field INTO TABLE t_group_fields.
       ENDIF.
     ENDLOOP.
     IF t_group_fields IS INITIAL.
@@ -298,22 +298,22 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
       field = to_upper( field ).
       ASSIGN COMPONENT field OF STRUCTURE <row> TO <field>.
       IF sy-subrc = 0 AND NOT line_exists( t_group_fields[ table_line = field ] ).
-        APPEND field TO t_value_fields.
+        INSERT field INTO TABLE t_value_fields.
       ENDIF.
     ENDLOOP.
     LOOP AT unit_fields INTO field.
       field = to_upper( field ).
       ASSIGN COMPONENT field OF STRUCTURE <row> TO <field>.
       IF sy-subrc = 0.
-        APPEND field TO t_unit_fields.
+        INSERT field INTO TABLE t_unit_fields.
       ENDIF.
     ENDLOOP.
 
     LOOP AT t_group_fields INTO field.
-      APPEND VALUE #( name = field ) TO t_order.
+      INSERT VALUE #( name = field ) INTO TABLE t_order.
     ENDLOOP.
     LOOP AT t_unit_fields INTO field.
-      APPEND VALUE #( name = field ) TO t_order.
+      INSERT VALUE #( name = field ) INTO TABLE t_order.
     ENDLOOP.
     SORT rows STABLE BY (t_order).
 
@@ -326,7 +326,7 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
 
     LOOP AT rows ASSIGNING <row>.
       DATA(index) = sy-tabix.
-      APPEND <row> TO <grouped>.
+      INSERT <row> INTO TABLE <grouped>.
       DO levels + 1 TIMES.
         sum_add( EXPORTING row   = <row>
                            level = sy-index - 1
@@ -336,8 +336,9 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
       " the groups this row closes: every level deeper than the grouping
       " columns the next row still shares - after the last row all of them,
       " down to the grand total
-      READ TABLE rows INDEX index + 1 ASSIGNING <next>.
-      IF sy-subrc = 0.
+      UNASSIGN <next>.
+      ASSIGN rows[ index + 1 ] TO <next>.
+      IF <next> IS ASSIGNED.
         kept = groups_common( left = <row> right = <next> ).
       ELSE.
         kept = -1.
@@ -349,7 +350,7 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
           UNASSIGN <sum>.
           ASSIGN s_sum-row->* TO <sum>.
           IF <sum> IS ASSIGNED.
-            APPEND <sum> TO <grouped>.
+            INSERT <sum> INTO TABLE <grouped>.
           ENDIF.
         ENDLOOP.
         DELETE t_sums WHERE level = level.
@@ -392,7 +393,7 @@ CLASS z2ui5_cl_smp_app_544 IMPLEMENTATION.
       " the units and the grouping columns of this level
       t_keys = t_unit_fields.
       LOOP AT t_group_fields INTO field TO level.
-        APPEND field TO t_keys.
+        INSERT field INTO TABLE t_keys.
       ENDLOOP.
       LOOP AT t_keys INTO field.
         ASSIGN COMPONENT field OF STRUCTURE row TO <source>.

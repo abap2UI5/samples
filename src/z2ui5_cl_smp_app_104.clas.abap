@@ -213,9 +213,9 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
     DATA(t_sel) = t_tab.
     DELETE t_sel WHERE selected = abap_false.
-    READ TABLE t_sel INTO DATA(s_sel) INDEX 1.
+    DATA(s_sel) = VALUE #( t_sel[ 1 ] OPTIONAL ).
 
-    IF sy-subrc <> 0.
+    IF s_sel IS INITIAL.
       RETURN.
     ENDIF.
 

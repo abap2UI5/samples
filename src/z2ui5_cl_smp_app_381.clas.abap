@@ -339,10 +339,10 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
     " The two numbers travel unquoted, so anything but digits would break the
     " object - a typo in the form then costs the OPTIONS, not the toast
     IF duration IS NOT INITIAL AND duration CO `0123456789`.
-      APPEND |"duration":{ duration }| TO t_opt.
+      INSERT |"duration":{ duration }| INTO TABLE t_opt.
     ENDIF.
     IF animation_duration IS NOT INITIAL AND animation_duration CO `0123456789`.
-      APPEND |"animationDuration":{ animation_duration }| TO t_opt.
+      INSERT |"animationDuration":{ animation_duration }| INTO TABLE t_opt.
     ENDIF.
     LOOP AT VALUE ty_t_opt( ( name = `width`                   val = width )
                             ( name = `my`                      val = my )
@@ -351,31 +351,31 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
                             ( name = `collision`               val = collision )
                             ( name = `animationTimingFunction` val = animation_timing ) ) INTO DATA(s_opt).
       IF s_opt-val IS NOT INITIAL.
-        APPEND |"{ s_opt-name }":"{ json_escape( s_opt-val ) }"| TO t_opt.
+        INSERT |"{ s_opt-name }":"{ json_escape( s_opt-val ) }"| INTO TABLE t_opt.
       ENDIF.
     ENDLOOP.
-    APPEND |"autoClose":{ COND string( WHEN autoclose = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
-    APPEND |"closeOnBrowserNavigation":{ COND string( WHEN close_on_navigation = abap_true THEN `true` ELSE `false` ) }| TO t_opt.
+    INSERT |"autoClose":{ COND string( WHEN autoclose = abap_true THEN `true` ELSE `false` ) }| INTO TABLE t_opt.
+    INSERT |"closeOnBrowserNavigation":{ COND string( WHEN close_on_navigation = abap_true THEN `true` ELSE `false` ) }| INTO TABLE t_opt.
 
     " `of` is the element the toast docks to - my/at are read relative to it
     " instead of to the window. It travels as a jQuery selector, so the
     " anchor is a DOM node with an id the backend can spell: the core:HTML
     " box in the view below, not a control whose id UI5 prefixes at runtime
     IF dock_to_anchor = abap_true.
-      APPEND |"of":"#toastAnchor"| TO t_opt.
+      INSERT |"of":"#toastAnchor"| INTO TABLE t_opt.
     ENDIF.
 
     " `class` is the one entry here that is NO MessageToast option: the
     " frontend puts the classes on the DOM node of the toast, which carries
     " no id to address it by. It rides in the same object
     IF css_class IS NOT INITIAL.
-      APPEND |"class":"{ json_escape( css_class ) }"| TO t_opt.
+      INSERT |"class":"{ json_escape( css_class ) }"| INTO TABLE t_opt.
     ENDIF.
 
     " onClose is a BACKEND event name here, not a JS callback: the frontend
     " turns it into the round-trip that reaches on_event below
     IF notify_close = abap_true.
-      APPEND |"onClose":"TOAST_CLOSED"| TO t_opt.
+      INSERT |"onClose":"TOAST_CLOSED"| INTO TABLE t_opt.
     ENDIF.
 
     LOOP AT t_opt INTO DATA(option).

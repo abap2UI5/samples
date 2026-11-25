@@ -76,9 +76,9 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
-        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
+        DATA(ls_sel) = VALUE #( lt_sel[ 1 ] OPTIONAL ).
 
-        IF sy-subrc = 0.
+        IF ls_sel IS NOT INITIAL.
 
           mv_row_id = mv_row_id + 1.
           ls_sel-uuid = |{ mv_row_id }|.

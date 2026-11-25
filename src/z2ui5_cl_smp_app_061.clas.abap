@@ -48,7 +48,7 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
       " sy IS a SYST, so the rows are filled by component name - the only
       " way to write a structure whose type exists at runtime alone
       DO 3 TIMES.
-        APPEND INITIAL LINE TO <tab> ASSIGNING FIELD-SYMBOL(<row>).
+        INSERT INITIAL LINE INTO TABLE <tab> ASSIGNING FIELD-SYMBOL(<row>).
         MOVE-CORRESPONDING sy TO <row>.
       ENDDO.
 

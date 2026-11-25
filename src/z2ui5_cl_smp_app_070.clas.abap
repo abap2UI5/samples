@@ -394,7 +394,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
         ENDDO.
 
         IF to_upper( lv_row ) CS lv_search.
-          APPEND lr_row->* TO mt_table.
+          INSERT lr_row->* INTO TABLE mt_table.
         ENDIF.
       ENDLOOP.
     ENDIF.

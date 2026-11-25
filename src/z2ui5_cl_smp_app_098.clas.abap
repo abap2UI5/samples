@@ -92,9 +92,9 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
-        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
+        DATA(ls_sel) = VALUE #( lt_sel[ 1 ] OPTIONAL ).
 
-        IF sy-subrc = 0 AND NOT line_exists( t_tab2[ title = ls_sel-title ] ).
+        IF ls_sel IS NOT INITIAL AND NOT line_exists( t_tab2[ title = ls_sel-title ] ).
           INSERT ls_sel INTO TABLE t_tab2.
         ENDIF.
         mv_layout = `TwoColumnsMidExpanded`.
