@@ -41,10 +41,13 @@ sh('node node/setup/fetch-deps.mjs');
 //    interface z2ui5_cl_ui5_user_exit still implements
 fs.rmSync(downport, { recursive: true, force: true });
 fs.cpSync(path.join(A2, 'src'), downport, { recursive: true });
-for (const f of fs.readdirSync(path.join(A2, 'src/99'))) {
-  if (/^z2ui5_if_exit\.intf\./.test(f)) fs.copyFileSync(path.join(A2, 'src/99', f), path.join(downport, f));
+//    (an older pin only - src/99 left the core with 1.151.0, z2ui5_if_exit was deleted)
+if (fs.existsSync(path.join(A2, 'src/99'))) {
+  for (const f of fs.readdirSync(path.join(A2, 'src/99'))) {
+    if (/^z2ui5_if_exit\.intf\./.test(f)) fs.copyFileSync(path.join(A2, 'src/99', f), path.join(downport, f));
+  }
+  fs.rmSync(path.join(downport, '99'), { recursive: true, force: true });
 }
-fs.rmSync(path.join(downport, '99'), { recursive: true, force: true });
 
 // 2. the samples
 let samples = 0;

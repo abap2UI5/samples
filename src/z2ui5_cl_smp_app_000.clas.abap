@@ -1054,14 +1054,16 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD block_widths.
 
+    FIELD-SYMBOLS <block> LIKE LINE OF result.
+
     LOOP AT t_catalog INTO DATA(tile).
 
       DATA(base) = header_base( tile-header ).
-      READ TABLE result ASSIGNING FIELD-SYMBOL(<block>)
-        WITH KEY group = tile-group
-                 base  = base.
+      UNASSIGN <block>.
+      ASSIGN result[ group = tile-group
+                     base  = base ] TO <block>.
 
-      IF sy-subrc <> 0.
+      IF <block> IS NOT ASSIGNED.
         INSERT VALUE #( group = tile-group
                         base  = base ) INTO TABLE result ASSIGNING <block>.
       ENDIF.

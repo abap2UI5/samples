@@ -255,8 +255,9 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
       CASE s_skipped-name.
 
         WHEN `T_ROW`.
-          READ TABLE t_row ASSIGNING <s_row> INDEX s_skipped-row.
-          IF sy-subrc <> 0.
+          UNASSIGN <s_row>.
+          ASSIGN t_row[ s_skipped-row ] TO <s_row>.
+          IF <s_row> IS NOT ASSIGNED.
             CONTINUE.
           ENDIF.
 
@@ -270,13 +271,15 @@ CLASS z2ui5_cl_smp_app_504 IMPLEMENTATION.
           ENDCASE.
 
         WHEN `T_ROW-T_ITEM`.
-          READ TABLE t_row ASSIGNING <s_row> INDEX s_skipped-row_parent.
-          IF sy-subrc <> 0.
+          UNASSIGN <s_row>.
+          ASSIGN t_row[ s_skipped-row_parent ] TO <s_row>.
+          IF <s_row> IS NOT ASSIGNED.
             CONTINUE.
           ENDIF.
 
-          READ TABLE <s_row>-t_item ASSIGNING <s_item> INDEX s_skipped-row.
-          IF sy-subrc <> 0.
+          UNASSIGN <s_item>.
+          ASSIGN <s_row>-t_item[ s_skipped-row ] TO <s_item>.
+          IF <s_item> IS NOT ASSIGNED.
             CONTINUE.
           ENDIF.
 

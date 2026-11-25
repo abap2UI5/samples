@@ -220,7 +220,7 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
     " WHERE: the filter of the column menu
     LOOP AT t_db INTO DATA(s_db).
       IF check_match( s_db ) = abap_true.
-        APPEND s_db TO t_hit.
+        INSERT s_db INTO TABLE t_hit.
       ENDIF.
     ENDLOOP.
     total = lines( t_hit ).
@@ -243,7 +243,7 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
       IF lines( t_order ) >= skip + top.
         EXIT.
       ENDIF.
-      APPEND s_db TO t_order.
+      INSERT s_db INTO TABLE t_order.
     ENDLOOP.
 
   ENDMETHOD.
@@ -335,12 +335,12 @@ CLASS z2ui5_cl_smp_app_547 IMPLEMENTATION.
 
     DO 10000 TIMES.
       DATA(index) = sy-index.
-      APPEND VALUE #( id       = index
+      INSERT VALUE #( id       = index
                       customer = t_customer[ ( ( index * 7 ) MOD 10 ) + 1 ]
                       city     = t_city[ ( ( index * 3 ) MOD 10 ) + 1 ]
                       status   = t_status[ ( index MOD 4 ) + 1 ]
                       amount   = ( ( index * 6151 ) MOD 500000 ) / 100
-                      created  = start + ( ( index * 13 ) MOD 365 ) ) TO t_db.
+                      created  = start + ( ( index * 13 ) MOD 365 ) ) INTO TABLE t_db.
     ENDDO.
 
   ENDMETHOD.

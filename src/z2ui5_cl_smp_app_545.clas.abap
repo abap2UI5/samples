@@ -205,32 +205,37 @@ CLASS z2ui5_cl_smp_app_545 IMPLEMENTATION.
 
     LOOP AT t_sorted INTO DATA(s_sale).
 
-      READ TABLE result ASSIGNING <total> WITH KEY currency = s_sale-currency.
-      IF sy-subrc <> 0.
-        APPEND VALUE #( name = `Grand Total` currency = s_sale-currency kind = cs_kind-total ) TO result ASSIGNING <total>.
+      " a failed ASSIGN leaves the field symbol on the previous round's node,
+      " so it is unassigned first and IS ASSIGNED tells found from not found
+      UNASSIGN <total>.
+      ASSIGN result[ currency = s_sale-currency ] TO <total>.
+      IF <total> IS NOT ASSIGNED.
+        INSERT VALUE #( name = `Grand Total` currency = s_sale-currency kind = cs_kind-total ) INTO TABLE result ASSIGNING <total>.
       ENDIF.
       <total>-quantity = <total>-quantity + s_sale-quantity.
       <total>-amount   = <total>-amount + s_sale-amount.
 
-      READ TABLE <total>-nodes ASSIGNING <region> WITH KEY name = s_sale-region.
-      IF sy-subrc <> 0.
-        APPEND VALUE #( name = s_sale-region currency = s_sale-currency kind = cs_kind-subtotal ) TO <total>-nodes ASSIGNING <region>.
+      UNASSIGN <region>.
+      ASSIGN <total>-nodes[ name = s_sale-region ] TO <region>.
+      IF <region> IS NOT ASSIGNED.
+        INSERT VALUE #( name = s_sale-region currency = s_sale-currency kind = cs_kind-subtotal ) INTO TABLE <total>-nodes ASSIGNING <region>.
       ENDIF.
       <region>-quantity = <region>-quantity + s_sale-quantity.
       <region>-amount   = <region>-amount + s_sale-amount.
 
-      READ TABLE <region>-nodes ASSIGNING <country> WITH KEY name = s_sale-country.
-      IF sy-subrc <> 0.
-        APPEND VALUE #( name = s_sale-country currency = s_sale-currency kind = cs_kind-subtotal ) TO <region>-nodes ASSIGNING <country>.
+      UNASSIGN <country>.
+      ASSIGN <region>-nodes[ name = s_sale-country ] TO <country>.
+      IF <country> IS NOT ASSIGNED.
+        INSERT VALUE #( name = s_sale-country currency = s_sale-currency kind = cs_kind-subtotal ) INTO TABLE <region>-nodes ASSIGNING <country>.
       ENDIF.
       <country>-quantity = <country>-quantity + s_sale-quantity.
       <country>-amount   = <country>-amount + s_sale-amount.
 
-      APPEND VALUE #( name     = s_sale-product
+      INSERT VALUE #( name     = s_sale-product
                       quantity = s_sale-quantity
                       amount   = s_sale-amount
                       currency = s_sale-currency
-                      kind     = `` ) TO <country>-nodes.
+                      kind     = `` ) INTO TABLE <country>-nodes.
 
     ENDLOOP.
 

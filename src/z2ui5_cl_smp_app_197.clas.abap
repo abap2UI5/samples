@@ -147,7 +147,7 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
 
     LOOP AT json_get_values( json = client->get_event_arg( )
                              name = `key` ) INTO DATA(lv_key).
-      APPEND VALUE #( sign = `I` option = `EQ` low = lv_key ) TO t_range.
+      INSERT VALUE #( sign = `I` option = `EQ` low = lv_key ) INTO TABLE t_range.
     ENDLOOP.
 
     " an empty selection is no filter at all - the list closed with every

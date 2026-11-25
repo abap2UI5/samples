@@ -93,8 +93,16 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
         mv_percent = 0.
       ENDIF.
 
-      " the long-running backend step this bar reports on
-      WAIT UP TO 2 SECONDS.
+      " the long-running backend step this bar reports on: two seconds of
+      " work, as a busy loop - WAIT is no statement of ABAP Cloud
+      GET TIME STAMP FIELD DATA(lv_start).
+      DO.
+        GET TIME STAMP FIELD DATA(lv_now).
+        IF cl_abap_tstmp=>subtract( tstmp1 = lv_now
+                                    tstmp2 = lv_start ) >= 2.
+          EXIT.
+        ENDIF.
+      ENDDO.
       mv_percent = mv_percent + 25.
 
       IF mv_percent < 100.
