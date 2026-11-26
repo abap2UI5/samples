@@ -12,7 +12,7 @@ CLASS z2ui5_cl_smp_app_514 DEFINITION PUBLIC.
         text  TYPE string,
       END OF ty_s_page.
 
-    DATA t_pages TYPE STANDARD TABLE OF ty_s_page WITH EMPTY KEY.
+    DATA t_pages TYPE STANDARD TABLE OF ty_s_page WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -36,12 +36,12 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -50,14 +50,17 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
             )->a( n = `xmlns`        v = `sap.m`
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Control Behaviour - Aggregation Item by Index`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -125,6 +128,8 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE i.
+        DATA active TYPE string.
 
     CASE client->get_event( ).
 
@@ -133,14 +138,21 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
 
       WHEN `NEXT`.
         " wrap around at the end - the count is ABAP's, not the carousel's
-        page_show( COND #( WHEN current >= lines( t_pages ) THEN 1 ELSE current + 1 ) ).
+        
+        IF current >= lines( t_pages ).
+          temp1 = 1.
+        ELSE.
+          temp1 = current + 1.
+        ENDIF.
+        page_show( temp1 ).
 
       WHEN `LAST`.
         page_show( lines( t_pages ) ).
 
       WHEN `PAGE_CHANGED`.
         " swiped or jumped - activePages is 0-based, current counts from 1
-        DATA(active) = client->get_event_arg( ).
+        
+        active = client->get_event_arg( ).
         IF active CO `0123456789` AND active IS NOT INITIAL.
           current = active + 1.
         ENDIF.
@@ -151,6 +163,8 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
 
 
   METHOD page_show.
+    DATA temp2 TYPE string_table.
+    DATA temp1 LIKE LINE OF temp2.
 
     current = index.
     " A page of this carousel is a CLONE of the aggregation template, and a
@@ -160,20 +174,38 @@ CLASS z2ui5_cl_smp_app_514 IMPLEMENTATION.
     " `<control id>/<aggregation>/<index>`, 0-based - which the frontend
     " resolves against the live aggregation. It is the equivalent of the UI5
     " controller idiom oCarousel.setActivePage( oCarousel.getPages()[ i ] ).
+    
+    CLEAR temp2.
+    INSERT `demoCarousel` INTO TABLE temp2.
+    INSERT `setActivePage` INTO TABLE temp2.
+    
+    temp1 = |demoCarousel/pages/{ index - 1 }|.
+    INSERT temp1 INTO TABLE temp2.
     client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                              t_arg = VALUE #( ( `demoCarousel` )
-                                               ( `setActivePage` )
-                                               ( |demoCarousel/pages/{ index - 1 }| ) ) ).
+                              t_arg = temp2 ).
 
   ENDMETHOD.
 
 
   METHOD model_init.
 
-    t_pages = VALUE #( ( title = `Bicycle`  text = `The first page of the carousel.` )
-                       ( title = `Car`      text = `The second page - and the one the buttons below jump to.` )
-                       ( title = `Train`    text = `The third page.` )
-                       ( title = `Aircraft` text = `The fourth and last page.` ) ).
+    DATA temp4 LIKE t_pages.
+    DATA temp5 LIKE LINE OF temp4.
+    CLEAR temp4.
+    
+    temp5-title = `Bicycle`.
+    temp5-text = `The first page of the carousel.`.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-title = `Car`.
+    temp5-text = `The second page - and the one the buttons below jump to.`.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-title = `Train`.
+    temp5-text = `The third page.`.
+    INSERT temp5 INTO TABLE temp4.
+    temp5-title = `Aircraft`.
+    temp5-text = `The fourth and last page.`.
+    INSERT temp5 INTO TABLE temp4.
+    t_pages = temp4.
     current = 1.
 
   ENDMETHOD.

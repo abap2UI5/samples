@@ -14,7 +14,7 @@ CLASS z2ui5_cl_smp_app_160 DEFINITION PUBLIC.
         pl_total       TYPE i,
         per_cent_total TYPE p LENGTH 2 DECIMALS 1,
       END OF ty_s_output.
-    DATA mt_output TYPE STANDARD TABLE OF ty_s_output WITH EMPTY KEY.
+    DATA mt_output TYPE STANDARD TABLE OF ty_s_output WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -32,12 +32,12 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -46,7 +46,12 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA table TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA columns TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA temp1 TYPE string_table.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -54,7 +59,8 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Grid Table - Events on Cell Level`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -70,14 +76,16 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
     page->tag( `Text`
         )->a( n = `text` v = `Make an input and press ENTER` ).
 
-    DATA(table) = page->ele( `FlexBox`
+    
+    table = page->ele( `FlexBox`
         )->a( n = `height` v = `85vh`
         )->ele( n = `Table` ns = `table`
             )->a( n = `rows`               v = client->_bind( mt_output )
             )->a( n = `alternateRowColors` v = `true`
             )->a( n = `selectionMode`      v = `None` ).
 
-    DATA(columns) = table->ele( n = `columns` ns = `table` ).
+    
+    columns = table->ele( n = `columns` ns = `table` ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `5.2rem`
@@ -97,6 +105,13 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
         )->ele( n = `template` ns = `table`
             )->tag( `Text`
                 )->a( n = `text` v = `{MATNR}` ).
+    
+    CLEAR temp1.
+    INSERT `${$source>/id}` INTO TABLE temp1.
+    INSERT `$event.getSource().getId()` INTO TABLE temp1.
+    INSERT `${INDEX}` INTO TABLE temp1.
+    INSERT `$event.getSource().getParent().getId()` INTO TABLE temp1.
+    INSERT `${$parameters>/value}` INTO TABLE temp1.
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `5rem`
         )->a( n = `sortProperty`   v = `PL_TOTAL`
@@ -109,11 +124,7 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
                 )->a( n = `editable` b = abap_true
                 )->a( n = `value`    v = `{PL_TOTAL}`
                 )->a( n = `submit`   v = client->_event( val = `PL_TOTAL_CHANGE`
-                                                          t_arg = VALUE #( ( `${$source>/id}` )
-                                                                           ( `$event.getSource().getId()` )
-                                                                           ( `${INDEX}` )
-                                                                           ( `$event.getSource().getParent().getId()` )
-                                                                           ( `${$parameters>/value}` ) ) ) ).
+                                                          t_arg = temp1 ) ).
 
     columns->ele( n = `Column` ns = `table`
         )->a( n = `width`          v = `4rem`
@@ -132,7 +143,7 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `PL_TOTAL_CHANGE` ).
+    IF client->check_on_event( `PL_TOTAL_CHANGE` ) IS NOT INITIAL.
       client->message_box_display(
         |Id of Input via source object: { client->get_event_arg( ) }\n| &&
         |Id of Input via event.oSource.sId: { client->get_event_arg( 2 ) }\n| &&
@@ -146,14 +157,20 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
   METHOD model_init.
 
-    mt_output = VALUE #( ).
+    DATA temp3 LIKE mt_output.
+      DATA temp4 TYPE z2ui5_cl_smp_app_160=>ty_s_output.
+    CLEAR temp3.
+    mt_output = temp3.
 
     DO 10 TIMES.
-      INSERT VALUE #( index = sy-index
-                      set_sk = `Test`
-                      matnr  = `1234567`
-                      pl_total = sy-index * 10
-                      per_cent_total = sy-index ) INTO TABLE mt_output.
+      
+      CLEAR temp4.
+      temp4-index = sy-index.
+      temp4-set_sk = `Test`.
+      temp4-matnr = `1234567`.
+      temp4-pl_total = sy-index * 10.
+      temp4-per_cent_total = sy-index.
+      INSERT temp4 INTO TABLE mt_output.
     ENDDO.
 
   ENDMETHOD.
