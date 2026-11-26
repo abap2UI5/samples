@@ -1,0 +1,84 @@
+name: build-rename
+
+# Renames every object to a chosen name and pushes the result to the branch
+# rename_<name> - ready to pull with abapGit for a parallel installation in
+# the same SAP system, the mechanism abap2UI5 itself has (its build-rename
+# workflow, https://abap2ui5.github.io/docs/advanced/renaming.html). The name
+# is a customer name (ZMYUI5: z2ui5_cl_... becomes zmyui5_cl_..., branch
+# rename_zmyui5) or a registered namespace (/CA2UI5/: z2ui5_cl_... becomes
+# /ca2ui5/cl_..., branch rename_ca2ui5) - at most 10 characters either way.
+#
+# Every reference to abap2UI5 is renamed with the same name, so the branch
+# runs on an abap2UI5 renamed by its own build-rename workflow: rename
+# abap2UI5, the sample repositories and every addon of the installation with
+# the same name. The work is scripts/rename.mjs, the same file `npm run
+# rename` runs in CI with the longest name allowed.
+# Re-running with the same name updates the branch to the current main state;
+# without content changes nothing is pushed. The main commit is carried as
+# second parent so GitHub shows the branch as "ahead" instead of "behind" main.
+
+on:
+  workflow_dispatch:
+    inputs:
+      namespace:
+        description: "New name: ZMYUI5 (max. 10 characters) or a registered namespace /CA2UI5/ (max. 10 with both slashes) - the name the abap2UI5 installation was renamed to"
+        required: true
+        type: string
+        default: znamespace
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-rename-${{ inputs.namespace }}
+  cancel-in-progress: false
+
+jobs:
+  build-rename:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      NAMESPACE: ${{ inputs.namespace }}
+    steps:
+    # the shape of the input decides the branch name; its length and the
+    # longest name allowed are checked by rename.mjs
+    - name: Derive branch name
+      run: |
+        ns=$(printf '%s' "$NAMESPACE" | tr '[:upper:]' '[:lower:]')
+        if ! printf '%s' "$ns" | grep -Eq '^([a-z][a-z0-9_]{0,9}|/[a-z0-9][a-z0-9_]{0,7}/)$'; then
+          echo "::error::Invalid name '$NAMESPACE' (a customer name: letter + letters/digits/underscore, max. 10 characters, e.g. ZMYUI5 - or a namespace with both slashes, max. 10 characters, e.g. /CA2UI5/)"
+          exit 1
+        fi
+        echo "BRANCH=rename_$(printf '%s' "$ns" | tr -d '/')" >> "$GITHUB_ENV"
+
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        node-version: '22'
+        cache: 'npm'
+    - run: npm ci
+
+    # the renamed src/ plus .abapgit.xml and LICENSE in .github/out/<branch>
+    - name: Rename to ${{ inputs.namespace }}
+      run: node scripts/rename.mjs --name "$NAMESPACE" --out ".github/out/$BRANCH"
+
+    - name: Push renamed branch
+      run: |
+        b="$BRANCH"
+        git config user.name 'github-actions[bot]'
+        git config user.email 'github-actions[bot]@users.noreply.github.com'
+        git fetch origin "$b" --depth 1 2>/dev/null || true
+        parent=$(git rev-parse -q --verify "refs/remotes/origin/$b" || true)
+        index="$RUNNER_TEMP/index-$b"
+        rm -f "$index"
+        (cd ".github/out/$b" && GIT_DIR="$GITHUB_WORKSPACE/.git" GIT_WORK_TREE=. GIT_INDEX_FILE="$index" git add -A)
+        tree=$(GIT_INDEX_FILE="$index" git write-tree)
+        if [ -n "$parent" ] && [ "$(git rev-parse "$parent^{tree}")" = "$tree" ]; then
+          echo "$b: no changes"
+          exit 0
+        fi
+        commit=$(git commit-tree "$tree" ${parent:+-p "$parent"} -p "$GITHUB_SHA" -m "build: $b from $GITHUB_SHA")
+        git push origin "$commit:refs/heads/$b"
+        echo "$b: pushed $commit"

@@ -8,3 +8,9 @@ output
 
 # the browser smoke (E2E.md): the abap2UI5 clone `npm run e2e:setup` writes
 .abap2UI5/
+
+# npm run rename: the renamed tree, the clones it renames along, its config
+.github/out/
+.github/abaplint/output/
+.github/abaplint/rename-deps/
+.github/abaplint/rename_run.json

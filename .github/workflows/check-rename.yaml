@@ -1,9 +1,12 @@
 name: check-rename
 
-# Smoke test that the basic samples (and the abap2UI5 framework they
-# reference) can be renamed from the z2ui5 namespace to another one for a
-# parallel installation - runs the abaplint rename with the checked-in
-# config .github/abaplint/rename_test.jsonc and syntax-checks the result.
+# npm run rename (scripts/rename.mjs, the file every renameable repository of
+# the abap2UI5 ecosystem shares): the namespace rename with the longest name
+# abap2UI5 allows (10 characters), abap2UI5 renamed along - the renamed
+# samples must lint against the renamed framework, every new name must fit
+# its object type, and no literal may name a renamed object. The literals
+# that cannot be derived yet are listed in package.json config.renameLiterals
+# with their reason, and every run prints them.
 
 on:
   pull_request:

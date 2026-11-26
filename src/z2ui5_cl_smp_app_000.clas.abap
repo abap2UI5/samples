@@ -61,21 +61,23 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
     " the three sample repositories, in the order the header renders them -
     " each one is installed on its own, so the header asks per entry whether
-    " its overview app is on THIS system
+    " its overview app is on THIS system. Like every class name of this app
+    " without the z2ui5_ prefix - own_prefix( ) puts the installation's in
+    " front, see there
     CONSTANTS:
       BEGIN OF cs_class,
-        samples      TYPE string VALUE `z2ui5_cl_smp_app_000`,
-        controls     TYPE string VALUE `z2ui5_cl_smpc_app_000`,
+        samples      TYPE string VALUE `cl_smp_app_000`,
+        controls     TYPE string VALUE `cl_smpc_app_000`,
         " the overview app of samples-controls before its 2026-08 rename to
         " the three-digit number scheme - an installation that predates it
         " still answers to this name (the dmo-era name is older still and no
         " longer tried)
-        controls_old TYPE string VALUE `z2ui5_cl_smpc_app_overview`,
-        stack        TYPE string VALUE `z2ui5_cl_smps_app_000`,
+        controls_old TYPE string VALUE `cl_smpc_app_overview`,
+        stack        TYPE string VALUE `cl_smps_app_000`,
         " the overview app of samples-stack before its 2026-08 rename to
         " three-digit app numbers - an installation that predates it still
         " answers to this name
-        stack_old    TYPE string VALUE `z2ui5_cl_smps_app_00`,
+        stack_old    TYPE string VALUE `cl_smps_app_00`,
       END OF cs_class.
 
     CONSTANTS:
@@ -168,6 +170,10 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         val           TYPE string
       RETURNING
         VALUE(result) TYPE abap_bool.
+    " the prefix this installation's classes carry - see the method
+    METHODS own_prefix
+      RETURNING
+        VALUE(result) TYPE string.
     METHODS get_catalog
       RETURNING
         VALUE(result) TYPE ty_t_tile.
@@ -261,7 +267,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     DATA li_app TYPE REF TO z2ui5_if_app.
 
-    DATA(name) = to_upper( classname ).
+    " a tile and a header button name the class without the prefix
+    DATA(name) = to_upper( |{ own_prefix( ) }{ classname }| ).
 
     TRY.
         CREATE OBJECT li_app TYPE (name).
@@ -414,7 +421,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
           )->a( n = `src`     v = `sap-icon://source-code`
           )->a( n = `size`    v = `0.875rem`
           )->a( n = `class`   v = `sapUiTinyMarginBegin`
-          )->a( n = `tooltip` t = |{ tile-app } - show the ABAP source on GitHub|
+          )->a( n = `tooltip` t = |{ own_prefix( ) }{ tile-app } - show the ABAP source on GitHub|
           )->a( n = `press`   v = open_url( source_url( tile ) ) ).
 
     ENDLOOP.
@@ -553,10 +560,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
       color = cs_color-active.
 
-      IF class IS NOT INITIAL AND class_installed( class ) = abap_true.
+      IF class IS NOT INITIAL AND class_installed( own_prefix( ) && class ) = abap_true.
         target = class.
 
-      ELSEIF class_old IS NOT INITIAL AND class_installed( class_old ) = abap_true.
+      ELSEIF class_old IS NOT INITIAL AND class_installed( own_prefix( ) && class_old ) = abap_true.
         target = class_old.
 
       ENDIF.
@@ -672,7 +679,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD source_url.
 
-    result = |{ cs_url-samples }/blob/main/{ tile-path }/{ tile-app }.clas.abap|.
+    " GitHub holds the class under its name in this repository
+    result = |{ cs_url-samples }/blob/main/{ tile-path }/z2ui5_{ tile-app }.clas.abap|.
 
   ENDMETHOD.
 
@@ -711,6 +719,19 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD own_prefix.
+
+    " z2ui5_ - or, in an installation renamed into another namespace (npm run
+    " rename), the customer name or namespace that took its place: the part of
+    " this class's own name in front of CL_SMP_APP_000. Every class name this
+    " app starts or looks up is written without it, because the rename
+    " rewrites references and never a literal.
+    DATA(name) = substring_after( val = cl_abap_classdescr=>get_class_name( me ) sub = `=` ).
+    result = to_lower( substring_before( val = name sub = `CL_SMP_APP_000` ) ).
+
+  ENDMETHOD.
+
+
   METHOD get_catalog.
 
     result = VALUE #(
@@ -718,317 +739,273 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         sub = `Hello World, the Smallest App`
         keywords = `hello world smallest first app minimal start here template`
         intro = `The ones to read first, in order. One class, one view, one roundtrip - the shape every other sample in this repository grows from, plus the developer tools you will open when something does not render.`
-        path = `src` app = `z2ui5_cl_smp_app_493` )
-      ( group = `Start here` header = `Basics II` sub = `Data Binding: Input and Button` keywords = `binding _bind model attribute value input button roundtrip messagebox serialize` intro = `` path = `src` app = `z2ui5_cl_smp_app_494` )
+        path = `src` app = `cl_smp_app_493` )
+      ( group = `Start here` header = `Basics II` sub = `Data Binding: Input and Button` keywords = `binding _bind model attribute value input button roundtrip messagebox serialize` intro = `` path = `src` app = `cl_smp_app_494` )
       ( group = `Start here` header = `Basics III`
         sub = `Lifecycle: Init, Event, Navigated`
         keywords = `lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated nav_app_call`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_495` )
-      ( group = `Start here` header = `Basics IV` sub = `Events, Views and Roundtrips` keywords = `roundtrip restart second view uncaught error controller basics check_on_navigated get` intro = `` path = `src` app = `z2ui5_cl_smp_app_004` )
+        path = `src` app = `cl_smp_app_495` )
+      ( group = `Start here` header = `Basics IV` sub = `Events, Views and Roundtrips` keywords = `roundtrip restart second view uncaught error controller basics check_on_navigated get` intro = `` path = `src` app = `cl_smp_app_004` )
       ( group = `Start here` header = `Basics V`
         sub = `The Developer Tools (Ctrl+F12)`
         keywords = `developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_496` )
-      ( group = `Start here` header = `Basics VI` sub = `Unit Tests for the App Logic` keywords = `unit test abapunit testclasses assert testable logic method` intro = `` path = `src` app = `z2ui5_cl_smp_app_503` )
-      ( group = `Start here` header = `Basics VII` sub = `Translatable Texts (Text Elements)` keywords = `translation i18n text element text symbol textpool language message class multi language` intro = `` path = `src` app = `z2ui5_cl_smp_app_519` )
+        path = `src` app = `cl_smp_app_496` )
+      ( group = `Start here` header = `Basics VI` sub = `Unit Tests for the App Logic` keywords = `unit test abapunit testclasses assert testable logic method` intro = `` path = `src` app = `cl_smp_app_503` )
+      ( group = `Start here` header = `Basics VII` sub = `Translatable Texts (Text Elements)` keywords = `translation i18n text element text symbol textpool language message class multi language` intro = `` path = `src` app = `cl_smp_app_519` )
       ( group = `Get your data on screen` header = `Binding`
         sub = `A View Built From RTTI, No Field Named`
         keywords = `rtti generic view runtime columns get_components describe_by_data no field name itab structure column cell binding`
         intro = `How an ABAP field becomes something a user reads and edits: binding an attribute, the types that convert it, formatters, and views built from data rather than written out.`
-        path = `src` app = `z2ui5_cl_smp_app_497` )
-      ( group = `Get your data on screen` header = `Binding` sub = `Currency Amounts (sap.ui.model.type.Currency)` keywords = `amount decimals leading zeros number format _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_067` )
-      ( group = `Get your data on screen` header = `Binding` sub = `Dynamic Table Typed at Runtime (RTTI)` keywords = `generic data reference create data ddic dynamic itab rtti handle selkz` intro = `` path = `src` app = `z2ui5_cl_smp_app_061` )
-      ( group = `Get your data on screen` header = `Binding` sub = `Expression Binding, Types and Composite Parts` keywords = `formatter parts conditional regexp visible enabled syntax _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_027` )
-      ( group = `Get your data on screen` header = `Binding` sub = `Model setSizeLimit for Large Tables (A)` keywords = `combobox jsonmodel size limit large itab 100 entries set_size_limit` intro = `` path = `src` app = `z2ui5_cl_smp_app_071` )
+        path = `src` app = `cl_smp_app_497` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Currency Amounts (sap.ui.model.type.Currency)` keywords = `amount decimals leading zeros number format _bind_path` intro = `` path = `src` app = `cl_smp_app_067` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Dynamic Table Typed at Runtime (RTTI)` keywords = `generic data reference create data ddic dynamic itab rtti handle selkz` intro = `` path = `src` app = `cl_smp_app_061` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Expression Binding, Types and Composite Parts` keywords = `formatter parts conditional regexp visible enabled syntax _bind_path` intro = `` path = `src` app = `cl_smp_app_027` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Model setSizeLimit for Large Tables (A)` keywords = `combobox jsonmodel size limit large itab 100 entries set_size_limit` intro = `` path = `src` app = `cl_smp_app_071` )
       ( group = `Get your data on screen` header = `Binding`
         sub = `Omit Initial Values`
         keywords = `binding omit initial default property absent omit_initial omit_initial_paths ratingindicator maxvalue enabled boolean`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_507` )
-      ( group = `Get your data on screen` header = `Binding`
-        sub = `Path Only (_bind_path)`
-        keywords = `binding path only bare path _bind_path expression binding sorter binding info composed raw string`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_508` )
+        path = `src` app = `cl_smp_app_507` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Path Only (_bind_path)` keywords = `binding path only bare path _bind_path expression binding sorter binding info composed raw string` intro = `` path = `src` app = `cl_smp_app_508` )
       ( group = `Get your data on screen` header = `Binding`
         sub = `Pre-serialized JSON (json)`
         keywords = `binding json string spliced model node object array pre-serialized _bind json = abap_true no abap type`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_509` )
-      ( group = `Get your data on screen` header = `Binding` sub = `Single Table Cell (tab_index)` keywords = `cell input internal table row field level` intro = `` path = `src` app = `z2ui5_cl_smp_app_144` )
-      ( group = `Get your data on screen` header = `Binding` sub = `Structure Fields and INCLUDEs` keywords = `structure component include flat form level` intro = `` path = `src` app = `z2ui5_cl_smp_app_166` )
-      ( group = `Get your data on screen` header = `Binding` sub = `Types for Integer, Decimal, Date and Time` keywords = `type conversion sum amount number field` intro = `` path = `src` app = `z2ui5_cl_smp_app_047` )
-      ( group = `Get your data on screen` header = `Formatter` sub = `ABAP Date and Time Strings (DATS/TIMS)` keywords = `dats tims conversion initial date 00000000 sy-datum _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_450` )
-      ( group = `Get your data on screen` header = `Formatter` sub = `Date Object for the DatePicker` keywords = `datepicker datevalue javascript date object iso _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_457` )
-      ( group = `Get your data on screen` header = `Formatter` sub = `Date Objects for the PlanningCalendar` keywords = `planningcalendar appointment javascript date object iso _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_456` )
-      ( group = `Get your data on screen` header = `Formatter` sub = `Inline Icons in a Text` keywords = `icon glyph placeholder text status expandinlineicons _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_466` )
-      ( group = `Get your data on screen` header = `Formatter` sub = `When Not to Use One: Compute in ABAP` keywords = `no formatter computed backend thin frontend prepare` intro = `` path = `src` app = `z2ui5_cl_smp_app_453` )
+        path = `src` app = `cl_smp_app_509` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Single Table Cell (tab_index)` keywords = `cell input internal table row field level` intro = `` path = `src` app = `cl_smp_app_144` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Structure Fields and INCLUDEs` keywords = `structure component include flat form level` intro = `` path = `src` app = `cl_smp_app_166` )
+      ( group = `Get your data on screen` header = `Binding` sub = `Types for Integer, Decimal, Date and Time` keywords = `type conversion sum amount number field` intro = `` path = `src` app = `cl_smp_app_047` )
+      ( group = `Get your data on screen` header = `Formatter` sub = `ABAP Date and Time Strings (DATS/TIMS)` keywords = `dats tims conversion initial date 00000000 sy-datum _bind_path` intro = `` path = `src` app = `cl_smp_app_450` )
+      ( group = `Get your data on screen` header = `Formatter` sub = `Date Object for the DatePicker` keywords = `datepicker datevalue javascript date object iso _bind_path` intro = `` path = `src` app = `cl_smp_app_457` )
+      ( group = `Get your data on screen` header = `Formatter` sub = `Date Objects for the PlanningCalendar` keywords = `planningcalendar appointment javascript date object iso _bind_path` intro = `` path = `src` app = `cl_smp_app_456` )
+      ( group = `Get your data on screen` header = `Formatter` sub = `Inline Icons in a Text` keywords = `icon glyph placeholder text status expandinlineicons _bind_path` intro = `` path = `src` app = `cl_smp_app_466` )
+      ( group = `Get your data on screen` header = `Formatter` sub = `When Not to Use One: Compute in ABAP` keywords = `no formatter computed backend thin frontend prepare` intro = `` path = `src` app = `cl_smp_app_453` )
       ( group = `Get your data on screen` header = `Templating`
         sub = `Dynamic Content in a Nested View`
         keywords = `xml templating xmlpreprocessor template:repeat meta model metamodel metadata driven dynamic columns nested view nest_view_display re-render refresh _bind_path`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_176` )
+        path = `src` app = `cl_smp_app_176` )
       ( group = `Get your data on screen` header = `Templating`
         sub = `Metadata-Driven Table and Form`
         keywords = `xml templating xmlpreprocessor template:repeat template:if template:elseif template:with meta model metamodel metadata driven dynamic columns form nested repeat startindex length _bind_path`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_173` )
+        path = `src` app = `cl_smp_app_173` )
       ( group = `Show many rows` header = `Grid Table`
         sub = `10,000 Rows, Column Sort and Filter on Server`
         keywords = `large table window windowed window_bind_tab ty_s_window_request r_event_data cs_window_reason link grid table scrolling lazy loading skip top odata server sort server filter column menu sortproperty filterproperty 10000 rows`
         intro = `Internal tables on screen - the responsive table, the grid table for large sets, lists and trees - with growing, selection, editing and everything a row can carry.`
-        path = `src` app = `z2ui5_cl_smp_app_547` )
+        path = `src` app = `cl_smp_app_547` )
       ( group = `Show many rows` header = `Grid Table`
         sub = `Collapsible Subtotals in a TreeTable (A)`
         keywords = `tree table treetable subtotal grand total group sum currency hierarchy collapse expand arraynames expandtolevel collapseall control_by_id rowsettings _bind_path`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_545` )
+        path = `src` app = `cl_smp_app_545` )
       ( group = `Show many rows` header = `Grid Table`
         sub = `Copy & Paste, CellSelector (UI5 1.119+) (A)`
         keywords = `clipboard copy paste cellselector copyprovider pasteprovider excel spreadsheet grid control_by_id`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_538` )
-      ( group = `Show many rows` header = `Grid Table` sub = `Events on Cell Level` keywords = `cell enter row index event grid alv` intro = `` path = `src` app = `z2ui5_cl_smp_app_160` )
-      ( group = `Show many rows` header = `Grid Table` sub = `Full Example with sap.ui.table` keywords = `grid alv dynamicpage column row action currency search sort filter` intro = `` path = `src` app = `z2ui5_cl_smp_app_070` )
-      ( group = `Show many rows` header = `Grid Table` sub = `Keep Column Filters on Refresh (C)` keywords = `column filter reset refresh uitableext grid alv` intro = `` path = `src` app = `z2ui5_cl_smp_app_143` )
-      ( group = `Show many rows` header = `Grid Table` sub = `Subtotals and Grand Total per Currency` keywords = `grid table subtotal grand total group sum currency rowsettings writetodom` intro = `` path = `src` app = `z2ui5_cl_smp_app_544` )
-      ( group = `Show many rows` header = `List` sub = `Filter and Sort the Binding from ABAP (A)` keywords = `binding_call getbinding sorter filter follow_up_action` intro = `` path = `src` app = `z2ui5_cl_smp_app_454` )
-      ( group = `Show many rows` header = `List` sub = `Live Filter on the Client, No Roundtrip (A)` keywords = `binding_call live search client side no roundtrip filter` intro = `` path = `src` app = `z2ui5_cl_smp_app_455` )
-      ( group = `Show many rows` header = `List` sub = `StandardListItem, Highlight and Events` keywords = `sap.m.list standardlistitem highlight infostate press selection` intro = `` path = `src` app = `z2ui5_cl_smp_app_048` )
+        path = `src` app = `cl_smp_app_538` )
+      ( group = `Show many rows` header = `Grid Table` sub = `Events on Cell Level` keywords = `cell enter row index event grid alv` intro = `` path = `src` app = `cl_smp_app_160` )
+      ( group = `Show many rows` header = `Grid Table` sub = `Full Example with sap.ui.table` keywords = `grid alv dynamicpage column row action currency search sort filter` intro = `` path = `src` app = `cl_smp_app_070` )
+      ( group = `Show many rows` header = `Grid Table` sub = `Keep Column Filters on Refresh (C)` keywords = `column filter reset refresh uitableext grid alv` intro = `` path = `src` app = `cl_smp_app_143` )
+      ( group = `Show many rows` header = `Grid Table` sub = `Subtotals and Grand Total per Currency` keywords = `grid table subtotal grand total group sum currency rowsettings writetodom` intro = `` path = `src` app = `cl_smp_app_544` )
+      ( group = `Show many rows` header = `List` sub = `Filter and Sort the Binding from ABAP (A)` keywords = `binding_call getbinding sorter filter follow_up_action` intro = `` path = `src` app = `cl_smp_app_454` )
+      ( group = `Show many rows` header = `List` sub = `Live Filter on the Client, No Roundtrip (A)` keywords = `binding_call live search client side no roundtrip filter` intro = `` path = `src` app = `cl_smp_app_455` )
+      ( group = `Show many rows` header = `List` sub = `StandardListItem, Highlight and Events` keywords = `sap.m.list standardlistitem highlight infostate press selection` intro = `` path = `src` app = `cl_smp_app_048` )
       ( group = `Show many rows` header = `Table`
         sub = `10,000 Rows in Windows, Server Search and Sort (A)`
         keywords = `large table window windowed window_bind_tab ty_s_window_request r_event_data _bind_path row press details growing paging lazy loading skip top odata server sort server filter search binding_call follow_up_action 10000 rows selecti` &&
                    `on`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_546` )
+        path = `src` app = `cl_smp_app_546` )
       ( group = `Show many rows` header = `Table`
         sub = `Copy Options of the CopyProvider (UI5 1.119+) (A)`
         keywords = `clipboard copy cellselector copyprovider copysparse copypreference template spreadsheet control_by_id`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_539` )
-      ( group = `Show many rows` header = `Table` sub = `Drag and Drop Rows (A)` keywords = `dnd dragdropinfo reorder rows move` intro = `` path = `src` app = `z2ui5_cl_smp_app_459` )
-      ( group = `Show many rows` header = `Table` sub = `Editable Cells, Add and Delete Rows` keywords = `edit input add row delete multiselect toolbar _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_011` )
-      ( group = `Show many rows` header = `Table` sub = `Filter Rows in the Backend` keywords = `filter server side form growing where` intro = `` path = `src` app = `z2ui5_cl_smp_app_045` )
-      ( group = `Show many rows` header = `Table` sub = `Large Table with Growing and ScrollContainer` keywords = `growing 10000 rows sticky toolbar sort performance` intro = `` path = `src` app = `z2ui5_cl_smp_app_006` )
+        path = `src` app = `cl_smp_app_539` )
+      ( group = `Show many rows` header = `Table` sub = `Drag and Drop Rows (A)` keywords = `dnd dragdropinfo reorder rows move` intro = `` path = `src` app = `cl_smp_app_459` )
+      ( group = `Show many rows` header = `Table` sub = `Editable Cells, Add and Delete Rows` keywords = `edit input add row delete multiselect toolbar _bind_path` intro = `` path = `src` app = `cl_smp_app_011` )
+      ( group = `Show many rows` header = `Table` sub = `Filter Rows in the Backend` keywords = `filter server side form growing where` intro = `` path = `src` app = `cl_smp_app_045` )
+      ( group = `Show many rows` header = `Table` sub = `Large Table with Growing and ScrollContainer` keywords = `growing 10000 rows sticky toolbar sort performance` intro = `` path = `src` app = `cl_smp_app_006` )
       ( group = `Show many rows` header = `Table`
         sub = `Live Search over a Large Table`
         keywords = `live search table filter keystroke roundtrip busy indicator overlay check_queue_last check_no_busy typing`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_059` )
+        path = `src` app = `cl_smp_app_059` )
       ( group = `Show many rows` header = `Table`
         sub = `Refused Cell Values (t_model_skipped)`
         keywords = `table edit refused cell conversion error t_model_skipped valuestate packed price integer nested row_parent`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_504` )
-      ( group = `Show many rows` header = `Table` sub = `Search in the Backend (SearchField)` keywords = `search go enter server side where` intro = `` path = `src` app = `z2ui5_cl_smp_app_053` )
-      ( group = `Show many rows` header = `Table` sub = `Selection Modes: Single and Multi Select` keywords = `selectionmode none single multi segmentedbutton checkbox` intro = `` path = `src` app = `z2ui5_cl_smp_app_019` )
-      ( group = `Show many rows` header = `Tree` sub = `Drag and Drop Nodes (A,C)` keywords = `dnd move node hierarchy binding context` intro = `` path = `src` app = `z2ui5_cl_smp_app_461` )
-      ( group = `Show many rows` header = `Tree` sub = `Editable Nodes with CustomTreeItem (C)` keywords = `customtreeitem rename input binding write back` intro = `` path = `src` app = `z2ui5_cl_smp_app_463` )
-      ( group = `Show many rows` header = `Tree` sub = `Inside a Dialog (C)` keywords = `popup expand state hierarchy nodes popup_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_462` )
-      ( group = `Show many rows` header = `Tree` sub = `Nested ABAP Table in a sap.m.Tree` keywords = `hierarchy nodes nested json items` intro = `` path = `src` app = `z2ui5_cl_smp_app_460` )
+        path = `src` app = `cl_smp_app_504` )
+      ( group = `Show many rows` header = `Table` sub = `Search in the Backend (SearchField)` keywords = `search go enter server side where` intro = `` path = `src` app = `cl_smp_app_053` )
+      ( group = `Show many rows` header = `Table` sub = `Selection Modes: Single and Multi Select` keywords = `selectionmode none single multi segmentedbutton checkbox` intro = `` path = `src` app = `cl_smp_app_019` )
+      ( group = `Show many rows` header = `Tree` sub = `Drag and Drop Nodes (A,C)` keywords = `dnd move node hierarchy binding context` intro = `` path = `src` app = `cl_smp_app_461` )
+      ( group = `Show many rows` header = `Tree` sub = `Editable Nodes with CustomTreeItem (C)` keywords = `customtreeitem rename input binding write back` intro = `` path = `src` app = `cl_smp_app_463` )
+      ( group = `Show many rows` header = `Tree` sub = `Inside a Dialog (C)` keywords = `popup expand state hierarchy nodes popup_display` intro = `` path = `src` app = `cl_smp_app_462` )
+      ( group = `Show many rows` header = `Tree` sub = `Nested ABAP Table in a sap.m.Tree` keywords = `hierarchy nodes nested json items` intro = `` path = `src` app = `cl_smp_app_460` )
       ( group = `Talk to the user` header = `AI`
         sub = `Chat Assistant with FeedInput and FeedListItem (A)`
         keywords = `ai llm chat assistant chatbot prompt conversation feedinput feedlistitem busy start_timer`
         intro = `The other direction: events arriving from the view, messages and message boxes going back, the popups, popovers and menus that ask before something happens - and an assistant that answers back.`
-        path = `src` app = `z2ui5_cl_smp_app_540` )
+        path = `src` app = `cl_smp_app_540` )
       ( group = `Talk to the user` header = `AI`
         sub = `Explain This Data in a DynamicSideContent Panel (A)`
         keywords = `ai llm assistant chat explain summary insight outlier table selection dynamicsidecontent start_timer`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_541` )
-      ( group = `Talk to the user` header = `Event` sub = `Control Objects in t_arg (FacetFilter)` keywords = `facetfilter filter object marshalling selected items` intro = `` path = `src` app = `z2ui5_cl_smp_app_197` )
-      ( group = `Talk to the user` header = `Event` sub = `Custom Data Attached to Controls` keywords = `customdata data app namespace attach control list template t_arg` intro = `` path = `src` app = `z2ui5_cl_smp_app_536` )
-      ( group = `Talk to the user` header = `Event` sub = `Expressions, Formatters and Literals in t_arg` keywords = `argument expression formatter object literal row context t_arg require` intro = `` path = `src` app = `z2ui5_cl_smp_app_537` )
-      ( group = `Talk to the user` header = `Event` sub = `Extra Arguments with t_arg` keywords = `argument parameter payload event data fixed value` intro = `` path = `src` app = `z2ui5_cl_smp_app_167` )
-      ( group = `Talk to the user` header = `Event` sub = `Keep the Last Keystroke with check_queue_last` keywords = `livechange keystroke queue busy roundtrip dropped event check_queue_last s_ctrl` intro = `` path = `src` app = `z2ui5_cl_smp_app_511` )
-      ( group = `Talk to the user` header = `Event` sub = `Keyboard Shortcuts, Ctrl+S (A)` keywords = `shortcut hotkey ctrl key combination keyboard_shortcut` intro = `` path = `src` app = `z2ui5_cl_smp_app_471` )
-      ( group = `Talk to the user` header = `Event` sub = `Link with preventDefault` keywords = `link href default action check_prevent_default` intro = `` path = `src` app = `z2ui5_cl_smp_app_472` )
+        path = `src` app = `cl_smp_app_541` )
+      ( group = `Talk to the user` header = `Event` sub = `Control Objects in t_arg (FacetFilter)` keywords = `facetfilter filter object marshalling selected items` intro = `` path = `src` app = `cl_smp_app_197` )
+      ( group = `Talk to the user` header = `Event` sub = `Custom Data Attached to Controls` keywords = `customdata data app namespace attach control list template t_arg` intro = `` path = `src` app = `cl_smp_app_536` )
+      ( group = `Talk to the user` header = `Event` sub = `Expressions, Formatters and Literals in t_arg` keywords = `argument expression formatter object literal row context t_arg require` intro = `` path = `src` app = `cl_smp_app_537` )
+      ( group = `Talk to the user` header = `Event` sub = `Extra Arguments with t_arg` keywords = `argument parameter payload event data fixed value` intro = `` path = `src` app = `cl_smp_app_167` )
+      ( group = `Talk to the user` header = `Event` sub = `Keep the Last Keystroke with check_queue_last` keywords = `livechange keystroke queue busy roundtrip dropped event check_queue_last s_ctrl` intro = `` path = `src` app = `cl_smp_app_511` )
+      ( group = `Talk to the user` header = `Event` sub = `Keyboard Shortcuts, Ctrl+S (A)` keywords = `shortcut hotkey ctrl key combination keyboard_shortcut` intro = `` path = `src` app = `cl_smp_app_471` )
+      ( group = `Talk to the user` header = `Event` sub = `Link with preventDefault` keywords = `link href default action check_prevent_default` intro = `` path = `src` app = `cl_smp_app_472` )
       ( group = `Talk to the user` header = `Event`
         sub = `Literal Arguments (check_arg_literal)`
         keywords = `event argument literal quoted expression evaluated check_arg_literal t_arg data binding syntax dollar brace _bind_path`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_506` )
-      ( group = `Talk to the user` header = `Event`
-        sub = `Prevent Default per Column`
-        keywords = `grid table sort column prevent default expression prevent_default_expr backend sort client sort per column`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_505` )
-      ( group = `Talk to the user` header = `Menu` sub = `Full Path of the Selected Item (A)` keywords = `menuitem nested submenu textpath controller path control_global` intro = `` path = `src` app = `z2ui5_cl_smp_app_473` )
-      ( group = `Talk to the user` header = `Menu` sub = `Menu as Popover with core:require` keywords = `menu menuitem popover button messagetoast require module popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_163` )
-      ( group = `Talk to the user` header = `Message` sub = `Message Model and MessageManager (C)` keywords = `messagemanager validation target field state central model _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_467` )
-      ( group = `Talk to the user` header = `Message`
-        sub = `MessageBox for Any Data`
-        keywords = `messagebox details table structure tree object reference escape limit action onclose message_box_display`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_502` )
-      ( group = `Talk to the user` header = `Message` sub = `MessageBox from SY, BAPIRET2 or Exception` keywords = `t100 message class number exception cx_root error abend message_box_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_008` )
+        path = `src` app = `cl_smp_app_506` )
+      ( group = `Talk to the user` header = `Event` sub = `Prevent Default per Column` keywords = `grid table sort column prevent default expression prevent_default_expr backend sort client sort per column` intro = `` path = `src` app = `cl_smp_app_505` )
+      ( group = `Talk to the user` header = `Menu` sub = `Full Path of the Selected Item (A)` keywords = `menuitem nested submenu textpath controller path control_global` intro = `` path = `src` app = `cl_smp_app_473` )
+      ( group = `Talk to the user` header = `Menu` sub = `Menu as Popover with core:require` keywords = `menu menuitem popover button messagetoast require module popover_display` intro = `` path = `src` app = `cl_smp_app_163` )
+      ( group = `Talk to the user` header = `Message` sub = `Message Model and MessageManager (C)` keywords = `messagemanager validation target field state central model _bind_path` intro = `` path = `src` app = `cl_smp_app_467` )
+      ( group = `Talk to the user` header = `Message` sub = `MessageBox for Any Data` keywords = `messagebox details table structure tree object reference escape limit action onclose message_box_display` intro = `` path = `src` app = `cl_smp_app_502` )
+      ( group = `Talk to the user` header = `Message` sub = `MessageBox from SY, BAPIRET2 or Exception` keywords = `t100 message class number exception cx_root error abend message_box_display` intro = `` path = `src` app = `cl_smp_app_008` )
       ( group = `Talk to the user` header = `Message`
         sub = `MessageBox via the Global Object (A)`
         keywords = `messagebox global object control_global follow_up_action options icon contentwidth textdirection closeonnavigation dependenton actions onclose`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_512` )
-      ( group = `Talk to the user` header = `Message` sub = `MessageBox, Types and Custom Actions` keywords = `confirm warning error success information dialog action onclose message_box_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_382` )
-      ( group = `Talk to the user` header = `Message` sub = `MessagePopover URL Policy (A)` keywords = `url policy link security validator relative allow deny control_by_id` intro = `` path = `src` app = `z2ui5_cl_smp_app_474` )
+        path = `src` app = `cl_smp_app_512` )
+      ( group = `Talk to the user` header = `Message` sub = `MessageBox, Types and Custom Actions` keywords = `confirm warning error success information dialog action onclose message_box_display` intro = `` path = `src` app = `cl_smp_app_382` )
+      ( group = `Talk to the user` header = `Message` sub = `MessagePopover URL Policy (A)` keywords = `url policy link security validator relative allow deny control_by_id` intro = `` path = `src` app = `cl_smp_app_474` )
       ( group = `Talk to the user` header = `Message`
         sub = `MessageToast via the Global Object (A)`
         keywords = `toast notification global object control_global follow_up_action options duration position animation anchor collision class css template`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_381` )
+        path = `src` app = `cl_smp_app_381` )
       ( group = `Talk to the user` header = `Message`
         sub = `MessageView and MessagePopover (A)`
         keywords = `messagepopover messageitem dialog grouped message list popup_close popup_display popover_close popover_display`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_452` )
-      ( group = `Talk to the user` header = `Popover` sub = `Basic Example with Placement` keywords = `placement anchor button confirm cancel popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_026` )
+        path = `src` app = `cl_smp_app_452` )
+      ( group = `Talk to the user` header = `Popover` sub = `Basic Example with Placement` keywords = `placement anchor button confirm cancel popover_display` intro = `` path = `src` app = `cl_smp_app_026` )
       ( group = `Talk to the user` header = `Popover`
         sub = `Open from a Table Row (A)`
         keywords = `list report dynamicpage row link details table popover slot cs_view focus control_by_id popover_display popover_close`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_052` )
-      ( group = `Talk to the user` header = `Popover` sub = `Open Together with the View Build` keywords = `initial render one roundtrip anchor button popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_490` )
-      ( group = `Talk to the user` header = `Popover` sub = `QuickView Contact Card` keywords = `quickview contact card links grouped fields popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_109` )
-      ( group = `Talk to the user` header = `Popover` sub = `Select from a List` keywords = `list selection placement anchor pick popover_display popover_destroy` intro = `` path = `src` app = `z2ui5_cl_smp_app_081` )
-      ( group = `Talk to the user` header = `Popover` sub = `Toggle by ID (toggleBy) (A)` keywords = `toggleby open close control_by_id whitelisted` intro = `` path = `src` app = `z2ui5_cl_smp_app_465` )
-      ( group = `Talk to the user` header = `Popup` sub = `Dialog inside a Dialog` keywords = `nested stack popup in popup second dialog popup_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_161` )
-      ( group = `Talk to the user` header = `Popup` sub = `Edit a Row in a Second App` keywords = `table edit row popup app nav_app_call get_app_prev add delete save master detail` intro = `` path = `src` app = `z2ui5_cl_smp_app_500` )
+        path = `src` app = `cl_smp_app_052` )
+      ( group = `Talk to the user` header = `Popover` sub = `Open Together with the View Build` keywords = `initial render one roundtrip anchor button popover_display` intro = `` path = `src` app = `cl_smp_app_490` )
+      ( group = `Talk to the user` header = `Popover` sub = `QuickView Contact Card` keywords = `quickview contact card links grouped fields popover_display` intro = `` path = `src` app = `cl_smp_app_109` )
+      ( group = `Talk to the user` header = `Popover` sub = `Select from a List` keywords = `list selection placement anchor pick popover_display popover_destroy` intro = `` path = `src` app = `cl_smp_app_081` )
+      ( group = `Talk to the user` header = `Popover` sub = `Toggle by ID (toggleBy) (A)` keywords = `toggleby open close control_by_id whitelisted` intro = `` path = `src` app = `cl_smp_app_465` )
+      ( group = `Talk to the user` header = `Popup` sub = `Dialog inside a Dialog` keywords = `nested stack popup in popup second dialog popup_display` intro = `` path = `src` app = `cl_smp_app_161` )
+      ( group = `Talk to the user` header = `Popup` sub = `Edit a Row in a Second App` keywords = `table edit row popup app nav_app_call get_app_prev add delete save master detail` intro = `` path = `src` app = `cl_smp_app_500` )
       ( group = `Talk to the user` header = `Popup`
         sub = `Element Binding to the Selected Row (A)`
         keywords = `element binding relative path aggregation dialog row bind_element bindelement popup_close popup_display`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_470` )
-      ( group = `Talk to the user` header = `Popup` sub = `Navigate between Dialogs (NavContainer) (A)` keywords = `navcontainer dialog pages back forward icontabbar control_by_id popup_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_170` )
-      ( group = `Talk to the user` header = `Popup` sub = `Value Help: Suggestions and F4 Dialog` keywords = `f4 search help suggestion input dialog select popup_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_009` )
+        path = `src` app = `cl_smp_app_470` )
+      ( group = `Talk to the user` header = `Popup` sub = `Navigate between Dialogs (NavContainer) (A)` keywords = `navcontainer dialog pages back forward icontabbar control_by_id popup_display` intro = `` path = `src` app = `cl_smp_app_170` )
+      ( group = `Talk to the user` header = `Popup` sub = `Value Help: Suggestions and F4 Dialog` keywords = `f4 search help suggestion input dialog select popup_display` intro = `` path = `src` app = `cl_smp_app_009` )
       ( group = `Talk to the user` header = `Popup`
         sub = `Ways to Open a Dialog (A)`
         keywords = `dialog sub app destroy rerender background view popup_display popup_destroy view_destroy nav_app_call popup_close`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_012` )
+        path = `src` app = `cl_smp_app_012` )
       ( group = `Move through the app` header = `Focus`
         sub = `Focus a Table Cell by Column and Row (A)`
         keywords = `table cell column row aggregation set_focus`
         intro = `More than one view and more than one app: navigation and app calls, views nested inside views, and the small things that decide where the user is looking - focus, scrolling, a timer.`
-        path = `src` app = `z2ui5_cl_smp_app_421` )
-      ( group = `Move through the app` header = `Focus` sub = `Jump to the Next Input on Enter (A)` keywords = `cursor enter tab next field form set_focus` intro = `` path = `src` app = `z2ui5_cl_smp_app_189` )
-      ( group = `Move through the app` header = `Focus` sub = `Set Focus and Select Text in an Input (A)` keywords = `cursor set_focus selection position textfield` intro = `` path = `src` app = `z2ui5_cl_smp_app_133` )
+        path = `src` app = `cl_smp_app_421` )
+      ( group = `Move through the app` header = `Focus` sub = `Jump to the Next Input on Enter (A)` keywords = `cursor enter tab next field form set_focus` intro = `` path = `src` app = `cl_smp_app_189` )
+      ( group = `Move through the app` header = `Focus` sub = `Set Focus and Select Text in an Input (A)` keywords = `cursor set_focus selection position textfield` intro = `` path = `src` app = `cl_smp_app_133` )
       ( group = `Move through the app` header = `Hash`
         sub = `App State, Bookmark and Share (A)`
         keywords = `app state url bookmark share clipboard copy link restore deep link reload app_state_set_active app_state_get_href sap-iapp-state sap-xapp-state switch off event form clipboard_copy`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_498` )
+        path = `src` app = `cl_smp_app_498` )
       ( group = `Move through the app` header = `Hash`
         sub = `App-Owned Routing (#/detail) (A)`
         keywords = `routing hash url page browser back forward history deep link reload hash_set hash_replace hash_back hash_attach_changed navcontainer router onnavback follow_up_action event form control_by_id`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_499` )
-      ( group = `Move through the app` header = `Hash`
-        sub = `Routing Mode FRESH (a New Instance) (A)`
-        keywords = `routing mode fresh default off navigation restart new instance nav_app_call hash_routing`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_468` )
-      ( group = `Move through the app` header = `Hash` sub = `Routing Mode KEEP (Back to the State) (A)` keywords = `routing mode keep navigation state preserved back nav_app_call hash_routing` intro = `` path = `src` app = `z2ui5_cl_smp_app_480` )
-      ( group = `Move through the app` header = `Navigation` sub = `Call and Leave Apps (nav_app_call)` keywords = `nav_app_call nav_app_leave sub app stack call back` intro = `` path = `src` app = `z2ui5_cl_smp_app_024` )
-      ( group = `Move through the app` header = `Navigation`
-        sub = `Data Loss Protection on Leaving (A,C)`
-        keywords = `dirty unsaved changes leave confirmation warning set_focus popup_display popup_close`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_279` )
+        path = `src` app = `cl_smp_app_499` )
+      ( group = `Move through the app` header = `Hash` sub = `Routing Mode FRESH (a New Instance) (A)` keywords = `routing mode fresh default off navigation restart new instance nav_app_call hash_routing` intro = `` path = `src` app = `cl_smp_app_468` )
+      ( group = `Move through the app` header = `Hash` sub = `Routing Mode KEEP (Back to the State) (A)` keywords = `routing mode keep navigation state preserved back nav_app_call hash_routing` intro = `` path = `src` app = `cl_smp_app_480` )
+      ( group = `Move through the app` header = `Navigation` sub = `Call and Leave Apps (nav_app_call)` keywords = `nav_app_call nav_app_leave sub app stack call back` intro = `` path = `src` app = `cl_smp_app_024` )
+      ( group = `Move through the app` header = `Navigation` sub = `Data Loss Protection on Leaving (A,C)` keywords = `dirty unsaved changes leave confirmation warning set_focus popup_display popup_close` intro = `` path = `src` app = `cl_smp_app_279` )
       ( group = `Move through the app` header = `Navigation`
         sub = `Page Transitions (view_display transition) (A)`
         keywords = `transition animation slide fade flip navcontainer transition_back nav_app_leave nav_app_call hash_routing`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_531` )
-      ( group = `Move through the app` header = `Navigation` sub = `Return Data and Events to the Caller` keywords = `r_data r_event_data nav_app_leave result return event payload nav_app_call` intro = `` path = `src` app = `z2ui5_cl_smp_app_488` )
-      ( group = `Move through the app` header = `Navigation` sub = `Uncaught Error and Error Popup` keywords = `exception dump error handling debugtool restart retry` intro = `` path = `src` app = `z2ui5_cl_smp_app_464` )
-      ( group = `Move through the app` header = `Nested View` sub = `Basic Example (nest_view_display)` keywords = `nest_view_display rerender model refresh sub view` intro = `` path = `src` app = `z2ui5_cl_smp_app_065` )
+        path = `src` app = `cl_smp_app_531` )
+      ( group = `Move through the app` header = `Navigation` sub = `Return Data and Events to the Caller` keywords = `r_data r_event_data nav_app_leave result return event payload nav_app_call` intro = `` path = `src` app = `cl_smp_app_488` )
+      ( group = `Move through the app` header = `Navigation` sub = `Uncaught Error and Error Popup` keywords = `exception dump error handling debugtool restart retry` intro = `` path = `src` app = `cl_smp_app_464` )
+      ( group = `Move through the app` header = `Nested View` sub = `Basic Example (nest_view_display)` keywords = `nest_view_display rerender model refresh sub view` intro = `` path = `src` app = `cl_smp_app_065` )
       ( group = `Move through the app` header = `Nested View`
         sub = `Destroy and Target a Slot (A)`
         keywords = `nested view destroy nest_view_destroy nest2_view_destroy slot scope cs_view nested nested2 control_by_id focus nest_view_display nest2_view_display`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_510` )
-      ( group = `Move through the app` header = `Nested View` sub = `Embed Another App's View` keywords = `sub app class embed instantiate another app rtti nest_view_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_104` )
-      ( group = `Move through the app` header = `Nested View` sub = `Master-Detail with FlexibleColumnLayout` keywords = `fcl master detail list report two column split nest_view_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_097` )
-      ( group = `Move through the app` header = `Nested View`
-        sub = `Three Columns with FlexibleColumnLayout`
-        keywords = `fcl three column detail detail deep navigation nest_view_display nest2_view_display`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_098` )
-      ( group = `Move through the app` header = `Scroll` sub = `Scroll a Control into View (A)` keywords = `scroll_into_view control id validation jump` intro = `` path = `src` app = `z2ui5_cl_smp_app_363` )
-      ( group = `Move through the app` header = `Scroll` sub = `Scroll to a Pixel Position (A)` keywords = `position pixel scroll_to restore refresh toolbar` intro = `` path = `src` app = `z2ui5_cl_smp_app_362` )
-      ( group = `Move through the app` header = `Timer` sub = `Progress Indicator during a Backend Call (A)` keywords = `progressindicator busy wait long running backend start_timer _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_064` )
-      ( group = `Move through the app` header = `Timer` sub = `Refresh the View Every n Seconds (A)` keywords = `interval polling auto refresh follow_up_action seconds start_timer` intro = `` path = `src` app = `z2ui5_cl_smp_app_028` )
+        path = `src` app = `cl_smp_app_510` )
+      ( group = `Move through the app` header = `Nested View` sub = `Embed Another App's View` keywords = `sub app class embed instantiate another app rtti nest_view_display` intro = `` path = `src` app = `cl_smp_app_104` )
+      ( group = `Move through the app` header = `Nested View` sub = `Master-Detail with FlexibleColumnLayout` keywords = `fcl master detail list report two column split nest_view_display` intro = `` path = `src` app = `cl_smp_app_097` )
+      ( group = `Move through the app` header = `Nested View` sub = `Three Columns with FlexibleColumnLayout` keywords = `fcl three column detail detail deep navigation nest_view_display nest2_view_display` intro = `` path = `src` app = `cl_smp_app_098` )
+      ( group = `Move through the app` header = `Scroll` sub = `Scroll a Control into View (A)` keywords = `scroll_into_view control id validation jump` intro = `` path = `src` app = `cl_smp_app_363` )
+      ( group = `Move through the app` header = `Scroll` sub = `Scroll to a Pixel Position (A)` keywords = `position pixel scroll_to restore refresh toolbar` intro = `` path = `src` app = `cl_smp_app_362` )
+      ( group = `Move through the app` header = `Timer` sub = `Progress Indicator during a Backend Call (A)` keywords = `progressindicator busy wait long running backend start_timer _bind_path` intro = `` path = `src` app = `cl_smp_app_064` )
+      ( group = `Move through the app` header = `Timer` sub = `Refresh the View Every n Seconds (A)` keywords = `interval polling auto refresh follow_up_action seconds start_timer` intro = `` path = `src` app = `cl_smp_app_028` )
       ( group = `Reach outside the view` header = `Browser`
         sub = `Copy to Clipboard (A)`
         keywords = `clipboard paste copy text area clipboard_copy`
         intro = `Where an app stops being only a view: the browser it runs in, the device it runs on, files in and out, custom CSS, and driving a control from the backend by its id.`
-        path = `src` app = `z2ui5_cl_smp_app_325` )
+        path = `src` app = `cl_smp_app_325` )
       ( group = `Reach outside the view` header = `Browser`
         sub = `Keyboard Layout of an Input (inputmode) (C)`
         keywords = `inputmode soft keyboard numeric keypad barcode scanner mobile inputext bound property`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_516` )
-      ( group = `Reach outside the view` header = `Browser` sub = `Local and Session Storage (A,C)` keywords = `localstorage sessionstorage persist store_data offline` intro = `` path = `src` app = `z2ui5_cl_smp_app_327` )
-      ( group = `Reach outside the view` header = `Browser` sub = `Logout from the Client (A)` keywords = `logoff signout icf session end fiori launchpad system_logout` intro = `` path = `src` app = `z2ui5_cl_smp_app_361` )
-      ( group = `Reach outside the view` header = `Browser` sub = `Open a URL in a New Tab (A)` keywords = `url window open_new_tab link target` intro = `` path = `src` app = `z2ui5_cl_smp_app_073` )
-      ( group = `Reach outside the view` header = `Browser` sub = `Open Mail, Phone and SMS Links (A)` keywords = `mailto tel sms urlhelper redirect native link` intro = `` path = `src` app = `z2ui5_cl_smp_app_316` )
-      ( group = `Reach outside the view` header = `Browser` sub = `Reload the Page (A)` keywords = `reload refresh restart location_reload url` intro = `` path = `src` app = `z2ui5_cl_smp_app_492` )
+        path = `src` app = `cl_smp_app_516` )
+      ( group = `Reach outside the view` header = `Browser` sub = `Local and Session Storage (A,C)` keywords = `localstorage sessionstorage persist store_data offline` intro = `` path = `src` app = `cl_smp_app_327` )
+      ( group = `Reach outside the view` header = `Browser` sub = `Logout from the Client (A)` keywords = `logoff signout icf session end fiori launchpad system_logout` intro = `` path = `src` app = `cl_smp_app_361` )
+      ( group = `Reach outside the view` header = `Browser` sub = `Open a URL in a New Tab (A)` keywords = `url window open_new_tab link target` intro = `` path = `src` app = `cl_smp_app_073` )
+      ( group = `Reach outside the view` header = `Browser` sub = `Open Mail, Phone and SMS Links (A)` keywords = `mailto tel sms urlhelper redirect native link` intro = `` path = `src` app = `cl_smp_app_316` )
+      ( group = `Reach outside the view` header = `Browser` sub = `Reload the Page (A)` keywords = `reload refresh restart location_reload url` intro = `` path = `src` app = `cl_smp_app_492` )
       ( group = `Reach outside the view` header = `Browser`
         sub = `Scan Field with Submit (InputExt) (A,C)`
         keywords = `barcode scanner scan field submit enter soft keyboard none inputext focus warehouse set_focus`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_530` )
-      ( group = `Reach outside the view` header = `Browser` sub = `Set the Tab Favicon (A)` keywords = `favicon icon tab image data uri set_favicon` intro = `` path = `src` app = `z2ui5_cl_smp_app_491` )
-      ( group = `Reach outside the view` header = `Browser` sub = `Set the Tab Title (A)` keywords = `document.title tab caption headline set_title` intro = `` path = `src` app = `z2ui5_cl_smp_app_125` )
-      ( group = `Reach outside the view` header = `Control Behaviour`
-        sub = `Aggregation Item by Index (A)`
-        keywords = `carousel aggregation item index clone template setactivepage positional control_by_id`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_514` )
-      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Expand a Panel by ID (setExpanded) (A)` keywords = `panel collapse expand setexpanded control_by_id whitelisted` intro = `` path = `src` app = `z2ui5_cl_smp_app_448` )
-      ( group = `Reach outside the view` header = `Control Behaviour`
-        sub = `Inline CSS on a Control (css) (A)`
-        keywords = `css inline style background color opacity control_by_id dom node no property`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_513` )
-      ( group = `Reach outside the view` header = `Control Behaviour` sub = `MultiInput with Tokens (C)` keywords = `multiinput token tokens suggestion custom control` intro = `` path = `src` app = `z2ui5_cl_smp_app_078` )
-      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Open the PDF Viewer by ID (A)` keywords = `pdfviewer pdf document viewer popup control_by_id whitelisted` intro = `` path = `src` app = `z2ui5_cl_smp_app_449` )
-      ( group = `Reach outside the view` header = `Control Behaviour`
-        sub = `Register an Icon Font (A)`
-        keywords = `icon font registerfont iconpool tnt collection glyph missing control_global start_timer`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_518` )
-      ( group = `Reach outside the view` header = `Control Behaviour`
-        sub = `Switch NavContainer Page by ID (A)`
-        keywords = `navcontainer icontabbar icontabheader page switch control_by_id whitelisted`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_088` )
+        path = `src` app = `cl_smp_app_530` )
+      ( group = `Reach outside the view` header = `Browser` sub = `Set the Tab Favicon (A)` keywords = `favicon icon tab image data uri set_favicon` intro = `` path = `src` app = `cl_smp_app_491` )
+      ( group = `Reach outside the view` header = `Browser` sub = `Set the Tab Title (A)` keywords = `document.title tab caption headline set_title` intro = `` path = `src` app = `cl_smp_app_125` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Aggregation Item by Index (A)` keywords = `carousel aggregation item index clone template setactivepage positional control_by_id` intro = `` path = `src` app = `cl_smp_app_514` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Expand a Panel by ID (setExpanded) (A)` keywords = `panel collapse expand setexpanded control_by_id whitelisted` intro = `` path = `src` app = `cl_smp_app_448` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Inline CSS on a Control (css) (A)` keywords = `css inline style background color opacity control_by_id dom node no property` intro = `` path = `src` app = `cl_smp_app_513` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `MultiInput with Tokens (C)` keywords = `multiinput token tokens suggestion custom control` intro = `` path = `src` app = `cl_smp_app_078` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Open the PDF Viewer by ID (A)` keywords = `pdfviewer pdf document viewer popup control_by_id whitelisted` intro = `` path = `src` app = `cl_smp_app_449` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Register an Icon Font (A)` keywords = `icon font registerfont iconpool tnt collection glyph missing control_global start_timer` intro = `` path = `src` app = `cl_smp_app_518` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Switch NavContainer Page by ID (A)` keywords = `navcontainer icontabbar icontabheader page switch control_by_id whitelisted` intro = `` path = `src` app = `cl_smp_app_088` )
       ( group = `Reach outside the view` header = `Control Behaviour`
         sub = `The Global Busy Indicator (A)`
         keywords = `busy indicator global control_global show hide blocking wait spinner long running start_timer`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_515` )
-      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Wizard with Steps (A)` keywords = `wizard step branching discardprogress setnextstep control_by_id` intro = `` path = `src` app = `z2ui5_cl_smp_app_202` )
-      ( group = `Reach outside the view` header = `CSS` sub = `Color Table Cells from the Backend` keywords = `color background conditional formatting style data attribute` intro = `` path = `src` app = `z2ui5_cl_smp_app_305` )
-      ( group = `Reach outside the view` header = `CSS` sub = `FlexBox Layouts with Custom Classes` keywords = `flexbox layout responsive navigation tile panel popover_display` intro = `` path = `src` app = `z2ui5_cl_smp_app_255` )
-      ( group = `Reach outside the view` header = `CSS` sub = `Ship Your Own CSS with the View` keywords = `style stylesheet inline html class own design` intro = `` path = `src` app = `z2ui5_cl_smp_app_050` )
-      ( group = `Reach outside the view` header = `CSS` sub = `Style by Data with CustomData writeToDom` keywords = `customdata writetodom data attribute selector marker test anchor` intro = `` path = `src` app = `z2ui5_cl_smp_app_535` )
-      ( group = `Reach outside the view` header = `Device` sub = `Camera, Take Photos (C)` keywords = `camera photo picture webcam capture facing mode _bind_path` intro = `` path = `src` app = `z2ui5_cl_smp_app_306` )
-      ( group = `Reach outside the view` header = `Device`
-        sub = `Device Model: Phone, Tablet, Desktop (A)`
-        keywords = `sap.ui.device responsive orientation resize media model popup_close popup_display`
-        intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_445` )
+        path = `src` app = `cl_smp_app_515` )
+      ( group = `Reach outside the view` header = `Control Behaviour` sub = `Wizard with Steps (A)` keywords = `wizard step branching discardprogress setnextstep control_by_id` intro = `` path = `src` app = `cl_smp_app_202` )
+      ( group = `Reach outside the view` header = `CSS` sub = `Color Table Cells from the Backend` keywords = `color background conditional formatting style data attribute` intro = `` path = `src` app = `cl_smp_app_305` )
+      ( group = `Reach outside the view` header = `CSS` sub = `FlexBox Layouts with Custom Classes` keywords = `flexbox layout responsive navigation tile panel popover_display` intro = `` path = `src` app = `cl_smp_app_255` )
+      ( group = `Reach outside the view` header = `CSS` sub = `Ship Your Own CSS with the View` keywords = `style stylesheet inline html class own design` intro = `` path = `src` app = `cl_smp_app_050` )
+      ( group = `Reach outside the view` header = `CSS` sub = `Style by Data with CustomData writeToDom` keywords = `customdata writetodom data attribute selector marker test anchor` intro = `` path = `src` app = `cl_smp_app_535` )
+      ( group = `Reach outside the view` header = `Device` sub = `Camera, Take Photos (C)` keywords = `camera photo picture webcam capture facing mode _bind_path` intro = `` path = `src` app = `cl_smp_app_306` )
+      ( group = `Reach outside the view` header = `Device` sub = `Device Model: Phone, Tablet, Desktop (A)` keywords = `sap.ui.device responsive orientation resize media model popup_close popup_display` intro = `` path = `src` app = `cl_smp_app_445` )
       ( group = `Reach outside the view` header = `Device`
         sub = `Frontend Info: UI5 Version, Theme, OS, Browser`
         keywords = `client info ui5 version theme os user agent device cs_device browser orientation constants`
         intro = ``
-        path = `src` app = `z2ui5_cl_smp_app_122` )
-      ( group = `Reach outside the view` header = `Device` sub = `Geolocation from the Browser (C)` keywords = `gps position latitude longitude altitude location` intro = `` path = `src` app = `z2ui5_cl_smp_app_120` )
-      ( group = `Reach outside the view` header = `File` sub = `Download to the Browser (A)` keywords = `export save base64 attachment xstring document download_b64_file` intro = `` path = `src` app = `z2ui5_cl_smp_app_186` )
-      ( group = `Reach outside the view` header = `File` sub = `Upload to the Backend (C)` keywords = `fileuploader base64 attachment import picture document` intro = `` path = `src` app = `z2ui5_cl_smp_app_074` )
-      ( group = `Reach outside the view` header = `File` sub = `Upload with an UploadSet (C)` keywords = `uploadset upload drag drop multiple files base64 attachment uploadsetext companion` intro = `` path = `src` app = `z2ui5_cl_smp_app_517` )
-      ( group = `Reach outside the view` header = `File` sub = `ZIP and CSV Download with cl_abap_zip (A)` keywords = `zip cl_abap_zip csv export download_b64_file base64 xstring utf-8 itab` intro = `` path = `src` app = `z2ui5_cl_smp_app_542` ) ).
+        path = `src` app = `cl_smp_app_122` )
+      ( group = `Reach outside the view` header = `Device` sub = `Geolocation from the Browser (C)` keywords = `gps position latitude longitude altitude location` intro = `` path = `src` app = `cl_smp_app_120` )
+      ( group = `Reach outside the view` header = `File` sub = `Download to the Browser (A)` keywords = `export save base64 attachment xstring document download_b64_file` intro = `` path = `src` app = `cl_smp_app_186` )
+      ( group = `Reach outside the view` header = `File` sub = `Upload to the Backend (C)` keywords = `fileuploader base64 attachment import picture document` intro = `` path = `src` app = `cl_smp_app_074` )
+      ( group = `Reach outside the view` header = `File` sub = `Upload with an UploadSet (C)` keywords = `uploadset upload drag drop multiple files base64 attachment uploadsetext companion` intro = `` path = `src` app = `cl_smp_app_517` )
+      ( group = `Reach outside the view` header = `File` sub = `ZIP and CSV Download with cl_abap_zip (A)` keywords = `zip cl_abap_zip csv export download_b64_file base64 xstring utf-8 itab` intro = `` path = `src` app = `cl_smp_app_542` ) ).
 
   ENDMETHOD.
 
@@ -1043,7 +1020,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     DATA(pattern) = to_upper( search ).
     LOOP AT t_catalog INTO DATA(tile).
 
-      IF to_upper( |{ tile-header } { tile-sub } { tile-keywords } { tile-app }| ) CS pattern.
+      IF to_upper( |{ tile-header } { tile-sub } { tile-keywords } { own_prefix( ) }{ tile-app }| ) CS pattern.
         INSERT tile INTO TABLE result.
       ENDIF.
 

@@ -113,8 +113,14 @@ function rewrite(file, list) {
    * never clears, so on the 702 branch the left-out `intro` kept the previous
    * tile's - the first tile's blurb repeated under every tile of its group
    * (abap2UI5 backlog: abaplint-downport-value-row-not-cleared). */
+  /* The class is written WITHOUT its z2ui5_ prefix: the app puts the
+   * installation's in front at runtime (own_prefix( )), because the namespace
+   * rename (npm run rename) rewrites references and never a literal - a
+   * literal z2ui5_cl_smp_app_493 would start the ORIGINAL class in a renamed
+   * installation, and scripts/rename.mjs refuses it. */
+  const unprefixed = (app) => app.replace(/^z2ui5_/i, '');
   const rows = list.map((t) => {
-    const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\` keywords = \`${t.keywords || ''}\` intro = \`\` path = \`${t.path}\` app = \`${t.app}\` )`;
+    const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\` keywords = \`${t.keywords || ''}\` intro = \`\` path = \`${t.path}\` app = \`${unprefixed(t.app)}\` )`;
     // the blurb is a paragraph, never on the one-line shape
     if (one.length <= MAX_LINE && !t.intro) return one;
     const fieldIndent = `${indent}  `;
@@ -123,7 +129,7 @@ function rewrite(file, list) {
       ...chunked('sub', t.sub, fieldIndent),
       ...chunked('keywords', t.keywords || '', fieldIndent),
       ...chunked('intro', t.intro || '', fieldIndent),
-      `${fieldIndent}path = \`${t.path}\` app = \`${t.app}\` )`,
+      `${fieldIndent}path = \`${t.path}\` app = \`${unprefixed(t.app)}\` )`,
     ].join('\n');
   });
   // the last row additionally closes the constructor + statement
