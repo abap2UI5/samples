@@ -9,6 +9,7 @@ CLASS z2ui5_cl_smp_app_112 DEFINITION PUBLIC.
         info    TYPE string,
       END OF ty_s_item.
 
+    " abap2ui5lint-disable-next-line nonserializable-attribute -- handed over by z2ui5_cl_smp_app_104 before every main( ), never read from the draft
     DATA view_parent TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA mv_class_2 TYPE string.
     DATA t_items TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.

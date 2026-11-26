@@ -3,6 +3,7 @@ CLASS z2ui5_cl_smp_app_105 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+    " abap2ui5lint-disable-next-line nonserializable-attribute -- handed over by z2ui5_cl_smp_app_104 before every main( ), never read from the draft
     DATA view_parent TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA mv_class_1 TYPE string.
 
