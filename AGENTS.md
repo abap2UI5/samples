@@ -679,7 +679,7 @@ it never clears - a left-out `intro` repeated the first tile's blurb under
 every tile of its group (§10, VALUE #( ) formatting):
 
 ```abap
-( group = `<stage title>` header = `<display title>` sub = `<short description>` keywords = `<extra search terms>` intro = `<stage blurb, first tile of the group only>` path = `<folder>` app = `<class name, lowercase>` )
+( group = `<stage title>` header = `<display title>` sub = `<short description>` keywords = `<extra search terms>` intro = `<stage blurb, first tile of the group only>` path = `<folder>` app = `<class name without z2ui5_, lowercase>` )
 ```
 
 | Field    | Meaning / rule |
@@ -690,7 +690,7 @@ every tile of its group (§10, VALUE #( ) formatting):
 | `sub`    | Short description shown next to the link. **Derived from the class short text** (see below). May be empty (`` `` ``) → then only the link is rendered. |
 | `keywords` | **Never rendered — search only.** Extra terms so a sample is found by words that do not fit into the 60 characters of its DESCRIPT (see below). **Required on every tile** — `npm run launchpad` refuses an area's overview app if one of its tiles has no `@keywords` line. Three readers depend on them and all three fail the same silent way (the sample stays listed, stays correct, and never comes up): the overview app's search box, `Ctrl+F` on SAMPLES.md, and an agent asking whether a sample for X exists. ZZZ helpers are exempt — a helper is reached BY another sample, never looked up. |
 | `path`   | The class's folder relative to the repository root (`src`, for every sample since §1 flattened the tree). Generated, because the class name does **not** encode the folder — `source_url( )` builds the GitHub link of the sample from it. |
-| `app`    | The app's class name in **lowercase** (folder-independent). Drives navigation. |
+| `app`    | The app's class name in **lowercase**, **without its `z2ui5_` prefix** (`cl_smp_app_493`). Drives navigation: `own_prefix( )` puts the installation's prefix in front at runtime - `z2ui5_`, or the name a renamed installation carries. A literal with the prefix would start the ORIGINAL class in a renamed installation, because the namespace rename rewrites references and never a literal - `npm run rename` refuses one. The header's `cs_class` follows the same rule. |
 
 **`keywords` comes from a plain comment line on the class**, the first line of
 the `*.clas.abap` (above an ABAP Doc block, if the class has one), lowercase and
@@ -963,7 +963,7 @@ In the order they fail fastest:
 | `npm run check:prose` | `check-docs` | every class name written in prose exists, here and in the sibling repositories |
 | `npm run check:docs-links` | `check-docs-links` | every `" @docs` URL resolves, and its page names the class back (§4) |
 | `npm run check:app-rules` | `check-app-rules` | the abaplint rule block still matches its source in abap2UI5 (§6) |
-| `npm run rename` | `check-rename` | the samples still rename out of the `z2ui5` namespace; writes to the gitignored `output/`, never to `src/` |
+| `npm run rename` | `check-rename` | the namespace rename (`scripts/rename.mjs`, the file every renameable repository of the ecosystem shares): every sample and abap2UI5 with it renamed to the longest name allowed (10 characters), the result lints, every name fits, and no literal names a renamed class - except the ones `package.json` `config.renameLiterals` lists with their reason (the sub-apps `z2ui5_cl_smp_app_104` starts by name; abap2UI5 backlog item `samples-rename-semantics`). Writes to the gitignored `.github/abaplint/output/`, never to `src/`; `build-rename` pushes a renamed branch `rename_<name>` |
 | `npm run e2e` (not in `check`) | `e2e` | every sample boots in a headless browser on the transpiled backend and survives its first input, its first row and six button presses: no fatal overlay, no page or console error, no backend 4xx/5xx - [E2E.md](E2E.md) |
 
 `check:launchpad`, `check:catalogue` and `check:derived` run the generators
