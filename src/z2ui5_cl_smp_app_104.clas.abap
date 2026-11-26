@@ -35,7 +35,9 @@ CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA classname   TYPE string.
+    " abap2ui5lint-disable-next-line nonserializable-attribute -- rebuilt by view_display_detail( ) in the roundtrip that hands it to the sub-app, never read from the draft
     DATA grid_sub    TYPE REF TO z2ui5_cl_ui5_view_builder.
+    " abap2ui5lint-disable-next-line nonserializable-attribute -- rebuilt by view_display_detail( ) in the roundtrip that stringifies it, never read from the draft
     DATA view_nested TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA client      TYPE REF TO z2ui5_if_client.
 
