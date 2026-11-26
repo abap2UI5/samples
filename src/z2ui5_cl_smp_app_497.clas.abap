@@ -100,13 +100,14 @@ CLASS z2ui5_cl_smp_app_497 IMPLEMENTATION.
                   )->a( n = `text` t = comp-name ).
     ENDLOOP.
 
-    " one cell per component, bound by field name
+    " one cell per component, bound by field name - component_path( ) keeps
+    " a namespaced column (/CWM/XCWMAT) relative to its row
     DATA(cells) = ui_table->ele( `items`
         )->ele( `ColumnListItem`
             )->ele( `cells` ).
     LOOP AT comps INTO comp.
       cells->tag( `Text`
-          )->a( n = `text` v = |\{{ comp-name }\}| ).
+          )->a( n = `text` v = |\{{ z2ui5_cl_ui5_view_builder=>component_path( comp-name ) }\}| ).
     ENDLOOP.
 
   ENDMETHOD.
