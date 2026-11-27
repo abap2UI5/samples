@@ -33,7 +33,7 @@
     "e2e:build": "node scripts/e2e-build.mjs",
     "e2e": "node scripts/e2e-smoke.mjs",
     "rename": "node scripts/rename.mjs",
-    "syfixes": "find . -type f -name '*.abap' -exec sed -i -e 's/ RAISE EXCEPTION TYPE cx_sy_itab_line_not_found/ ASSERT 1 = 0/g' {} + ",
+    "syfixes": "node scripts/downport-fixes.mjs syfixes .",
     "downport": "abaplint --fix .github/abaplint/abap_702.jsonc && npm run syfixes && node scripts/generate-samples-md.mjs",
     "check": "npm run check:pin && npm run lint && npm run check:cloud && npm run check:abap2ui5 && npm run check:agents && npm run check:orphans && npm run check:keywords && npm run check:api-keywords && npm run check:markers && npm run check:titles && npm run check:launchpad && npm run check:catalogue && npm run check:exercises && npm run check:derived && npm run check:prose && npm run check:docs-links && npm run check:app-rules && npm run check:atc && npm run check:patterns && npm run check:selftest && npm run rename"
   },

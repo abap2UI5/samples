@@ -7,6 +7,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
+import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { abapLiteral, chunkLiteral, rewriteCatalog, MAX_LINE } from '../lib/catalog-block.mjs';
@@ -122,4 +124,25 @@ test('catalog-block: anything else in get_catalog( ) is refused rather than over
     /exactly one result = VALUE/);
   assert.throws(() => rewriteCatalog(CLASS.replace('METHOD get_catalog.', 'METHOD get_tiles.'), [tile()]),
     /no METHOD get_catalog/);
+});
+
+/* ------------------------------------------------ downport-fixes.mjs */
+
+/* `npm run syfixes` was `find . … -exec sed -i -e …`, which BSD and macOS
+ * sed read differently (the argument after -i is a backup suffix there, so
+ * every source got a `<file>-e` copy). The node version has to do what GNU
+ * sed did: every *.abap under the folder, per line, nothing else touched. */
+test('downport-fixes: syfixes rewrites the raise in every *.abap, and nothing else', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'downport-fixes-'));
+  const raise = ' RAISE EXCEPTION TYPE cx_sy_itab_line_not_found';
+  fs.mkdirSync(path.join(root, 'src', 'sub'), { recursive: true });
+  fs.writeFileSync(path.join(root, 'src', 'sub', 'a.clas.abap'), `  IF x.${raise}.${raise}\n  ENDIF.  \nlast`);
+  fs.writeFileSync(path.join(root, 'src', 'note.md'), `${raise}\n`);
+  const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'downport-fixes.mjs'), 'syfixes', '.'],
+    { cwd: root, encoding: 'utf8' });
+  assert.equal(r.status, 0, r.stderr);
+  assert.equal(fs.readFileSync(path.join(root, 'src', 'sub', 'a.clas.abap'), 'utf8'),
+    '  IF x. ASSERT 1 = 0. ASSERT 1 = 0\n  ENDIF.  \nlast');
+  assert.equal(fs.readFileSync(path.join(root, 'src', 'note.md'), 'utf8'), `${raise}\n`);
+  assert.equal(fs.readdirSync(path.join(root, 'src', 'sub')).length, 1, 'no backup file beside the source');
 });
