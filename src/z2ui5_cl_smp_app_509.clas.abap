@@ -83,7 +83,6 @@ CLASS z2ui5_cl_smp_app_509 IMPLEMENTATION.
         )->a( n = `text` v = `a member of the object - its title` ).
     " the bare path of the spliced object, so the view can reach into it
     form->tag( `Text`
-        " abap2ui5lint-disable-next-line unknown-binding-path -- the member lives inside the JSON string, which only the client parses
         )->a( n = `text` v = |\{{ client->_bind( val = config_json json = abap_true path = abap_true ) }/title\}| ).
 
     form->tag( `Label`
