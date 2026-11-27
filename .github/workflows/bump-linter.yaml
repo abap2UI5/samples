@@ -31,16 +31,27 @@ on:
 concurrency:
   group: bump-linter
 
+# read only here - each job below asks for what it needs
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
+  # npm installs a freshly published package and runs it over this
+  # repository - third-party code and its install scripts. So this job has a
+  # read-only token and no credential in .git/config; the two files it
+  # changes travel to `pr` below as an artifact.
   bump-linter:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.pin.outputs.changed }}
+      version: ${{ steps.pin.outputs.version }}
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
     - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
       with:
         node-version: '22'
@@ -78,14 +89,46 @@ jobs:
     - if: steps.pin.outputs.changed == 'true'
       run: npm run check:abap2ui5
 
-    - if: steps.pin.outputs.changed == 'true'
-      uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+    - name: Hand package.json and package-lock.json over
+      if: steps.pin.outputs.changed == 'true'
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: bump-linter
+        path: |
+          package.json
+          package-lock.json
+        if-no-files-found: error
+        retention-days: 1
+
+  # The only job with a write token, and it runs no npm and no code of the
+  # bumped package: a fresh checkout, the two files laid over it, the pull
+  # request. create-pull-request authenticates with its own token input.
+  pr:
+    needs: bump-linter
+    if: needs.bump-linter.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      with:
+        name: bump-linter
+        path: ${{ runner.temp }}/bump-linter
+    - name: Lay the new pin over the checkout
+      run: cp "$RUNNER_TEMP/bump-linter/package.json" "$RUNNER_TEMP/bump-linter/package-lock.json" .
+
+    - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
       with:
         branch: bump-linter
         title: 'chore: bump @abap2ui5/linter'
-        commit-message: 'chore: bump @abap2ui5/linter to ${{ steps.pin.outputs.version }}'
+        commit-message: 'chore: bump @abap2ui5/linter to ${{ needs.bump-linter.outputs.version }}'
         body: |
           Weekly move of `@abap2ui5/linter` and `@abap2ui5/linter-render` to
-          the latest version on npm (${{ steps.pin.outputs.version }}). The
+          the latest version on npm (${{ needs.bump-linter.outputs.version }}). The
           linter gate ran over the full corpus in the workflow that opened
           this PR.
