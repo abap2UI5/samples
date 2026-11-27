@@ -24,7 +24,7 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       " the 8/6-character forms an ABAP DATS/TIMS value has when it travels
       " as a string (a CHAR(8) key, a legacy structure field). A field typed
       " d or t is serialized as ISO by the framework and needs
@@ -33,7 +33,7 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
       tims         = `134501`.
       dats_initial = `00000000`.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -42,7 +42,9 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -58,7 +60,8 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
     " has no date type, so this is the one conversion the backend cannot do.
     view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
 
-    DATA(page) = view->ele( `Shell`
+    
+    page = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Formatter - ABAP Date and Time Strings (DATS/TIMS)`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )

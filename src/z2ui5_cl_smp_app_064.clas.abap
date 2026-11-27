@@ -25,14 +25,14 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       mv_check_enabled = abap_true.
       view_display( ).
 
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -41,7 +41,10 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view)             = z2ui5_cl_ui5_view_builder=>factory(
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA layout TYPE REF TO z2ui5_cl_ui5_view_builder.
+    view             = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
@@ -49,7 +52,8 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
             )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
             )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
 
-    DATA(page)          = view->ele( `Shell`
+    
+    page          = view->ele( `Shell`
         )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Timer - Progress Indicator during a Backend Call`
             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
@@ -64,7 +68,8 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(layout) = page->ele( n = `VerticalLayout` ns = `layout`
+    
+    layout = page->ele( n = `VerticalLayout` ns = `layout`
         )->a( n = `class` v = `sapUiContentPadding`
         )->a( n = `width` v = `100%` ).
     layout->ele( `VBox`
@@ -85,8 +90,11 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
 
   METHOD on_event.
+      DATA lv_start TYPE p LENGTH 8 DECIMALS 0.
+        DATA lv_now TYPE p LENGTH 8 DECIMALS 0.
+        DATA temp1 TYPE string_table.
 
-    IF client->check_on_event( `LOAD` ).
+    IF client->check_on_event( `LOAD` ) IS NOT INITIAL.
 
       " a press starts the bar over, a timer tick carries it on
       IF mv_check_active = abap_false.
@@ -95,9 +103,11 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
       " the long-running backend step this bar reports on: two seconds of
       " work, as a busy loop - WAIT is no statement of ABAP Cloud
-      GET TIME STAMP FIELD DATA(lv_start).
+      
+      GET TIME STAMP FIELD lv_start.
       DO.
-        GET TIME STAMP FIELD DATA(lv_now).
+        
+        GET TIME STAMP FIELD lv_now.
         IF cl_abap_tstmp=>subtract( tstmp1 = lv_now
                                     tstmp2 = lv_start ) >= 2.
           EXIT.
@@ -109,9 +119,13 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
         mv_check_active  = abap_true.
         mv_check_enabled = abap_false.
+        
+        CLEAR temp1.
+        INSERT `LOAD` INTO TABLE temp1.
+        INSERT `0` INTO TABLE temp1.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-start_timer
-            t_arg = VALUE #( ( `LOAD` ) ( `0` ) ) ).
+            t_arg = temp1 ).
 
       ELSE.
 
