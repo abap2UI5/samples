@@ -11,6 +11,7 @@ import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { slugify, anchors } from '../lib/doc-anchors.mjs';
 import { abapLiteral, chunkLiteral, rewriteCatalog, MAX_LINE } from '../lib/catalog-block.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -145,4 +146,50 @@ test('downport-fixes: syfixes rewrites the raise in every *.abap, and nothing el
     '  IF x. ASSERT 1 = 0. ASSERT 1 = 0\n  ENDIF.  \nlast');
   assert.equal(fs.readFileSync(path.join(root, 'src', 'note.md'), 'utf8'), `${raise}\n`);
   assert.equal(fs.readdirSync(path.join(root, 'src', 'sub')).length, 1, 'no backup file beside the source');
+});
+
+/* ---------------------------------------------------- lib/doc-anchors.mjs */
+
+/* check-docs-links compares a `" @docs` URL's #anchor with the ids VitePress
+ * gives the headings. It used GitHub's shape (drop non-word characters,
+ * spaces to hyphens), which differs on punctuation - every case below is one
+ * where it did. The expected ids are what vitepress 1.6 renders (checked
+ * against all 1258 headings of abap2UI5/docs when this was ported). */
+test('doc-anchors: slugify is VitePress\' (@mdit-vue/shared), not GitHub\'s', () => {
+  assert.equal(slugify('A & B'), 'a-b', 'was a--b');
+  assert.equal(slugify('a_b'), 'a-b', 'was a_b');
+  assert.equal(slugify('a -- b --- c'), 'a-b-c', 'repeated hyphens collapse');
+  assert.equal(slugify('-Lead and trail!-'), 'lead-and-trail');
+  assert.equal(slugify('1. Install'), '_1-install', 'never starts with a digit');
+  assert.equal(slugify('Café déjà vu'), 'cafe-deja-vu', 'accents dropped');
+  assert.equal(slugify('client->_bind( )'), 'client-bind');
+});
+
+test('doc-anchors: {#id}, repeated headings, code spans, fences and frontmatter', () => {
+  const page = [
+    '---',
+    '# not a heading: frontmatter',
+    'samples: [z2ui5_cl_x]',
+    '---',
+    '# Title',
+    '## What a Pull Brings {#frontend-branches}',
+    '## Setup',
+    '## Setup',
+    '## Setup ##',
+    '### `BINDING_ERROR` in row <n> of [the table](https://example.org/x)',
+    '### `row <n> of` x',
+    '```sh',
+    '# a shell comment',
+    '```',
+    '~~~',
+    '## inside a tilde fence',
+    '~~~',
+  ].join('\n');
+  assert.deepEqual([...anchors(page)].sort(), [
+    'binding-error-in-row-of-the-table', // <n> outside a code span is an HTML tag
+    'row-n-of-x', //                        and inside one it is text
+    'frontend-branches',
+    'setup', 'setup-1', 'setup-2',
+    'title',
+  ].sort());
 });
