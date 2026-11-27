@@ -666,7 +666,10 @@ ABAP or markdown. The two generators only *render*: how a tile is written as an
 ABAP literal (`generate-launchpad.mjs`, which also decides the groups: the
 stages of `scripts/lib/learning-path.json`, through
 `scripts/lib/learning-path.mjs`, the one reader `generate-catalogue.mjs` uses
-too) and how it is written as a table row (`generate-samples-md.mjs`).
+too; the literal itself is `scripts/lib/catalog-block.mjs`, which doubles a
+backtick in any value and replaces the whole body of `get_catalog( )` up to its
+`ENDMETHOD` - so that method holds the one generated statement and nothing
+else) and how it is written as a table row (`generate-samples-md.mjs`).
 
 ### Tile schema
 
