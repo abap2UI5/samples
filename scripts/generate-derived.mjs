@@ -54,6 +54,11 @@ import { checkAbapSource } from '@abap2ui5/linter';
 import { ROOT, scanSamples } from './lib/scan-samples.mjs';
 import { writeOrCheck } from './lib/emit.mjs';
 
+/* Text order from a FIXED locale: a bare localeCompare( ) collates in the
+ * locale of whoever runs the generator (sv_SE puts 'Ä' after 'z'), so the
+ * committed output would depend on the machine that wrote it. */
+const collate = new Intl.Collator('en').compare;
+
 const OUT = path.join(ROOT, 'catalogue-derived.json');
 
 /** The floor this repository holds every sample to — and the answer for a
@@ -137,7 +142,7 @@ for (const tile of tiles) {
     minUi5,
     /* What made it that release — so a filter result can be argued with
      * rather than only believed. */
-    needs: tooNew.sort((a, b) => cmpVersion(b.since, a.since) || a.name.localeCompare(b.name)),
+    needs: tooNew.sort((a, b) => cmpVersion(b.since, a.since) || collate(a.name, b.name)),
     controls: controls.map(idOf),
     controlCount: Object.values(types).reduce((a, b) => a + b, 0),
     /* A sample the linter found no builder chain in built nothing as far as
@@ -171,7 +176,7 @@ const top = {
  * reason catalogue.json and SAMPLES.md are one row per sample. */
 const head = JSON.stringify(top, null, 2);
 const body = samples
-  .sort((a, b) => a.class.localeCompare(b.class))
+  .sort((a, b) => collate(a.class, b.class))
   .map((s) => `    ${JSON.stringify(s)}`)
   .join(',\n');
 const page = `${head.slice(0, -2)},\n  "samples": [\n${body}\n  ]\n}\n`;
