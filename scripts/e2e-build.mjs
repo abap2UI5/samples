@@ -14,7 +14,7 @@
  *
  * A sample edited after the last build is NOT what the browser runs: rebuild.
  */
-import { execSync } from 'child_process';
+import { execFileSync, execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { ROOT, resolveA2UI5, patchFollowUpAction, transpiledDir } from './lib/e2e.mjs';
@@ -80,7 +80,8 @@ for (const f of fs.readdirSync(downport)) {
 // 4. transpile with the framework's own config (it folds node/srv in first);
 //    an older pin still ships the runtime ASSIGN shim and needs it applied
 const shim = path.join(A2, 'node/setup/patch-abaplint-runtime-assign.mjs');
-if (fs.existsSync(shim)) sh(`node ${shim}`);
+// argument array, not a shell string: A2UI5_HOME may contain a space
+if (fs.existsSync(shim)) execFileSync(process.execPath, [shim], { cwd: A2, stdio: 'inherit' });
 console.log('e2e-build: transpiling into node/output ...');
 sh('node node/setup/downport-fix.mjs prepare-transpile');
 sh('npx abap_transpile ./node/setup/abap_transpile.json');
