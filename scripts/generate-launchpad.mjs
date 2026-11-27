@@ -33,9 +33,9 @@ import fs from 'fs';
 import path from 'path';
 import { ROOT, SRC, scanSamples } from './lib/scan-samples.mjs';
 import { loadLearningPath } from './lib/learning-path.mjs';
-import { markersLine } from './lib/markers.mjs';
 import { unsearchable, unrecognisable, halfDone } from './lib/search-lines.mjs';
 import { CHECK, writeOrCheck } from './lib/emit.mjs';
+import { rewriteCatalog } from './lib/catalog-block.mjs';
 
 /* `--check` renders exactly the same catalog and compares it instead of
  * writing it, so `npm run check` and the `catalogues` job of check-docs.yaml
@@ -80,85 +80,8 @@ const fail = (message) => {
 }
 
 // --- 2. rewrite get_catalog( ) -------------------------------------------
-/** The class with its catalogue block, @summary and legend rewritten - not
- *  yet written back: that is the one branch at the end. */
-function rewrite(file, list) {
-  const text = fs.readFileSync(file, 'utf8');
-
-  const open = text.indexOf('result = VALUE #(');
-  const close = text.indexOf(') ).', open);
-  if (open === -1 || close === -1) throw new Error(`no VALUE block in ${file}`);
-
-  // indentation of the tiles = indent of "result" line + 2 spaces
-  const indent = ' '.repeat((text.slice(0, open).match(/\n( *)$/) || [, ''])[1].length + 2);
-
-  // ABAP sources are limited to 255 characters per line — longer lines break
-  // the abapGit import ("Literals across more than one line are not allowed")
-  const MAX_LINE = 255;
-  // one field on its own line(s), the literal split into && chunks so no line
-  // exceeds the limit; continuation lines align under the opening backtick
-  const chunked = (name, value, fieldIndent) => {
-    const first = `${fieldIndent}${name} = `;
-    const contIndent = ' '.repeat(first.length);
-    const chunkSize = MAX_LINE - contIndent.length - 6;
-    const chunks = [];
-    for (let s = value; s.length; s = s.slice(chunkSize)) chunks.push(s.slice(0, chunkSize));
-    if (chunks.length === 0) chunks.push('');
-    return chunks.map((c, i) =>
-      `${i === 0 ? first : contIndent}\`${c}\`${i < chunks.length - 1 ? ' &&' : ''}`);
-  };
-  /* Every row names every component, `keywords` and `intro` included when
-   * they are empty. A row that leaves one out is initial there on 7.40+, but
-   * the abaplint downport builds all rows of a VALUE in one work area that it
-   * never clears, so on the 702 branch the left-out `intro` kept the previous
-   * tile's - the first tile's blurb repeated under every tile of its group
-   * (abap2UI5 backlog: abaplint-downport-value-row-not-cleared). */
-  /* The class is written WITHOUT its z2ui5_ prefix: the app puts the
-   * installation's in front at runtime (own_prefix( )), because the namespace
-   * rename (npm run rename) rewrites references and never a literal - a
-   * literal z2ui5_cl_smp_app_493 would start the ORIGINAL class in a renamed
-   * installation, and scripts/rename.mjs refuses it. */
-  const unprefixed = (app) => app.replace(/^z2ui5_/i, '');
-  const rows = list.map((t) => {
-    const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\` keywords = \`${t.keywords || ''}\` intro = \`\` path = \`${t.path}\` app = \`${unprefixed(t.app)}\` )`;
-    // the blurb is a paragraph, never on the one-line shape
-    if (one.length <= MAX_LINE && !t.intro) return one;
-    const fieldIndent = `${indent}  `;
-    return [
-      `${indent}( group = \`${t.group}\` header = \`${t.header}\``,
-      ...chunked('sub', t.sub, fieldIndent),
-      ...chunked('keywords', t.keywords || '', fieldIndent),
-      ...chunked('intro', t.intro || '', fieldIndent),
-      `${fieldIndent}path = \`${t.path}\` app = \`${unprefixed(t.app)}\` )`,
-    ].join('\n');
-  });
-  // the last row additionally closes the constructor + statement
-  rows[rows.length - 1] += ' ).';
-
-  const block = `result = VALUE #(\n${rows.join('\n')}`;
-  let next = text.slice(0, open) + block + text.slice(close + ') ).'.length);
-
-  /* The app's own @summary line - the sentence SAMPLES.md, catalogue.json and
-   * the sample catalogue page put under its title - carries the count of what
-   * it lists. Written here, from the list, because a hand-written number on
-   * the one class that is generated anyway is the number that goes stale. */
-  const summary = `" @summary Every sample in this repository as a searchable list, grouped along the learning path - the app the other ${list.length} are reached from.`;
-  if (!/^" @summary .*$/m.test(next)) throw new Error(`no @summary line in ${file}`);
-  next = next.replace(/^" @summary .*$/m, summary);
-
-  /* And the legend of the capability markers some titles end in, rendered by
-   * the app under its list - one source (lib/markers.mjs) for every view of
-   * the catalogue. */
-  const legend = `    CONSTANTS c_legend TYPE string VALUE \`Markers on a title: ${markersLine()}\`.`;
-  if (legend.length > MAX_LINE) throw new Error('the marker legend no longer fits one ABAP line - shorten lib/markers.mjs');
-  if (!/^ {4}CONSTANTS c_legend TYPE string VALUE `.*`\.$/m.test(next)) {
-    throw new Error(`no c_legend constant to write the marker legend into in ${file}`);
-  }
-  next = next.replace(/^ {4}CONSTANTS c_legend TYPE string VALUE `.*`\.$/m, legend);
-
-  return next;
-}
-
+// lib/catalog-block.mjs: the rows, escaped and split under the line limit, and
+// the splice into the method, ended by its ENDMETHOD rather than a text search
 /* A TILE without `@keywords` is a tile nobody can find.
  *
  * DESCRIPT caps the short text at 60 characters, so it carries the name of the
@@ -222,7 +145,7 @@ if (half.length) {
   process.exit(1);
 }
 
-const next = rewrite(TARGET, tiles);
+const next = rewriteCatalog(fs.readFileSync(TARGET, 'utf8'), tiles, TARGET);
 const rel = path.relative(ROOT, TARGET);
 console.log(`${rel}: ${tiles.length} tiles`);
 const total = tiles.length;

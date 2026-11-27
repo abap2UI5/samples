@@ -21,6 +21,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+/* Text order from a FIXED locale: a bare localeCompare( ) collates in the
+ * locale of whoever runs the generator (sv_SE puts 'Ä' after 'z'), so the
+ * committed output would depend on the machine that wrote it. */
+const collate = new Intl.Collator('en').compare;
+
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..', '..');
 const SRC = path.join(ROOT, 'src');
@@ -210,9 +215,9 @@ function scanSamples() {
 
   const ci = (x) => x.toLowerCase();
   const order = (a, b) =>
-    ci(a.header).localeCompare(ci(b.header)) || // by header (keeps I/II/III together)
-    ci(a.sub).localeCompare(ci(b.sub)) ||
-    ci(a.app).localeCompare(ci(b.app));
+    collate(ci(a.header), ci(b.header)) || // by header (keeps I/II/III together)
+    collate(ci(a.sub), ci(b.sub)) ||
+    collate(ci(a.app), ci(b.app));
   tiles.sort(order);
   hidden.sort(order);
 

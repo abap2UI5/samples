@@ -52,6 +52,9 @@
 import fs from 'fs';
 import path from 'path';
 import { ROOT, DOCS_SITE, scanSamples } from './lib/scan-samples.mjs';
+/* the ids VitePress gives the headings - its slugify, `{#id}`, `-1` for a
+ * repeated one; not GitHub's shape, which differs on punctuation */
+import { anchors } from './lib/doc-anchors.mjs';
 
 const RAW = 'https://raw.githubusercontent.com/abap2UI5/docs/main/docs';
 
@@ -90,16 +93,6 @@ function declaredSamples(text) {
     .map((m) => m[1].replace(/^["']|["']$/g, ''));
 }
 
-/** VitePress' heading anchors: lower case, non-word characters dropped,
- *  spaces to hyphens — the same shape GitHub uses. */
-const anchors = (text) => new Set(
-  [...text.matchAll(/^#{1,6}\s+(.+?)\s*$/gm)].map(([, title]) =>
-    title
-      .replace(/`/g, '')
-      .toLowerCase()
-      .replace(/[^\w\- ]/g, '')
-      .replace(/ /g, '-')),
-);
 
 /* ------------------------------------------------------------------ input */
 
